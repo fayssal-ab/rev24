@@ -99,6 +99,13 @@ export default function Home() {
               <span className="block text-sm text-muted">{t('home.statslab.desc')}</span>
             </span>
           </Link>
+          <Link to="/oral/rm-rf" className="card flex items-center gap-3 p-4 hover:border-accent sm:col-span-2">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-rose-500/20 font-mono text-rose-400">🎤</span>
+            <span>
+              <span className="block font-semibold">Coach Oral — rm -rf /</span>
+              <span className="block text-sm text-muted">{lang === 'en' ? 'Slides 9–12: pronunciation, rehearsal, jury questions' : lang === 'dar' ? 'Slides 9–12 : prononciation, répétition, as2ila dyal jury' : 'Slides 9–12 : prononciation, répétition, questions du jury'}</span>
+            </span>
+          </Link>
           <Link to="/glossaire" className="card flex items-center gap-3 p-4 hover:border-accent sm:col-span-2">
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-amber-500/20 text-amber-400">
               <Icon name="book" />

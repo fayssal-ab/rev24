@@ -113,7 +113,9 @@ export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = location;
   const reduce = useReducedMotion();
   useAccent();
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return (
     <div className="min-h-[100dvh] pb-24 md:pb-8">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-bg">

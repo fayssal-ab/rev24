@@ -27,6 +27,52 @@ function voicesReady(): Promise<SpeechSynthesisVoice[]> {
   });
 }
 
+/** Score a voice: natural / neural / Google / Microsoft Online / Apple premium voices first, robotic ones last. */
+function quality(v: SpeechSynthesisVoice, lang: string): number {
+  const n = v.name.toLowerCase();
+  const l = v.lang.replace('_', '-');
+  let q = 0;
+  if (l === lang) q += 20;
+  else if (l.startsWith(lang.slice(0, 2))) q += 10;
+  else return -1;
+  if (/natural|neural|online/.test(n)) q += 50;
+  if (/google/.test(n)) q += 40;
+  if (/microsoft/.test(n)) q += 15;
+  if (/premium|enhanced|siri/.test(n)) q += 35;
+  if (/samantha|daniel|karen|moira|aria|jenny|guy|ava|allison|thomas|amelie|denise|henri/.test(n)) q += 20;
+  if (/espeak|mbrola|festival|pico|robot/.test(n)) q -= 60;
+  if (!v.localService) q += 5; // cloud voices sound better
+  return q;
+}
+
+const PREF = (lang: string) => `rev24-voice-${lang.slice(0, 2)}`;
+
+/** Available voices for a language, best first. */
+export async function listVoices(lang: string): Promise<SpeechSynthesisVoice[]> {
+  const vs = await voicesReady();
+  return vs.filter((v) => quality(v, lang) >= 0).sort((a, b) => quality(b, lang) - quality(a, lang));
+}
+
+export function setPreferredVoice(lang: string, name: string) {
+  try {
+    localStorage.setItem(PREF(lang), name);
+  } catch {
+    /* ignore */
+  }
+}
+
+function pickVoice(voices: SpeechSynthesisVoice[], lang: string) {
+  let pref: string | null = null;
+  try {
+    pref = localStorage.getItem(PREF(lang));
+  } catch {
+    /* ignore */
+  }
+  const chosen = pref && voices.find((v) => v.name === pref);
+  if (chosen) return chosen;
+  return voices.filter((v) => quality(v, lang) >= 0).sort((a, b) => quality(b, lang) - quality(a, lang))[0];
+}
+
 export function stopSpeak() {
   token++;
   synth()?.cancel();
@@ -67,11 +113,11 @@ export async function speak(text: string, o: SpeakOpts = {}) {
   const rate = o.rate ?? 1;
   const voices = await voicesReady();
   if (my !== token) return;
-  const voice = voices.find((v) => v.lang.replace('_', '-') === lang) ?? voices.find((v) => v.lang.startsWith(lang.slice(0, 2)));
+  const voice = pickVoice(voices, lang);
   const s = synth();
   if (s && voice) {
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang;
+    u.lang = voice.lang;
     u.voice = voice;
     u.rate = rate;
     if (o.onWord) u.onboundary = (e) => o.onWord!(e.charIndex);

@@ -2,14 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { PageTitle } from '../components/Layout';
 import { useT } from '../hooks/useT';
 import { CHECKLIST, FACTS, LEXICON, QA, QUIZ, SLIDES, TECH, TRANSITIONS, WARMUP, type Slide } from '../content/oral/rmrf';
-import { speak as tts, stopSpeak } from '../lib/tts';
+import { listVoices, setPreferredVoice, speak as tts, stopSpeak } from '../lib/tts';
 import { countFillers, maskWords, norm, scoreSpeech, words, wpm } from '../lib/oral';
 
 /* ───────── speech helpers ───────── */
 let voicePref: 'en-US' | 'en-GB' = 'en-US';
 function speak(text: string, rate = 1, onWord?: (charIndex: number) => void, onEnd?: () => void) {
   // same length replacements keep charIndex aligned with the displayed text
-  void tts(text.replace(/rm -rf/g, 'RM-RF').replace(/rm -i/g, 'RM-I.'), { lang: voicePref, rate, onWord, onEnd });
+  void tts(text.replace(/rm -rf/g, 'R M dash R F').replace(/rm -i/g, 'R M dash I').replace(/\bGB\b/g, 'gigabytes').replace(/\bpwd\b/g, 'P W D').replace(/\bls\b/g, 'L S'), { lang: voicePref, rate, onWord, onEnd });
 }
 
 
@@ -92,6 +92,7 @@ export default function OralPage() {
           <option value="en-US">🇺🇸 en-US</option>
           <option value="en-GB">🇬🇧 en-GB</option>
         </select>
+        <VoicePicker lang={voice} />
       </div>
       <div className="sticky top-[52px] z-20 -mx-4 mb-4 flex gap-1 overflow-x-auto border-b border-line bg-bg/90 px-4 py-2 backdrop-blur">
         {TABS.map((t) => (
@@ -691,5 +692,51 @@ function DayTab({ l }: { l: Lang3 }) {
         <p className="mt-1 text-sm"><b>×3</b> {last} <button onClick={() => speak(last)}>🔊</button></p>
       </div>
     </div>
+  );
+}
+
+/** Choose the clearest installed voice (saved per language). */
+function VoicePicker({ lang }: { lang: string }) {
+  const [list, setList] = useState<SpeechSynthesisVoice[]>([]);
+  const [cur, setCur] = useState('');
+  useEffect(() => {
+    let alive = true;
+    void listVoices(lang).then((v) => {
+      if (!alive) return;
+      setList(v);
+      let saved = '';
+      try {
+        saved = localStorage.getItem(`rev24-voice-${lang.slice(0, 2)}`) ?? '';
+      } catch {
+        /* ignore */
+      }
+      setCur(v.some((x) => x.name === saved) ? saved : (v[0]?.name ?? ''));
+    });
+    return () => {
+      alive = false;
+    };
+  }, [lang]);
+  if (!list.length) return null;
+  return (
+    <>
+      <select
+        value={cur}
+        onChange={(e) => {
+          setCur(e.target.value);
+          setPreferredVoice(lang, e.target.value);
+          speak('Linux does exactly what you tell it.', 1);
+        }}
+        className="chip max-w-[220px] bg-surface"
+        aria-label="voice"
+      >
+        {list.map((v, i) => (
+          <option key={v.name} value={v.name}>
+            {i === 0 ? '⭐ ' : ''}
+            {v.name}
+          </option>
+        ))}
+      </select>
+      <button className="chip" onClick={() => speak('Linux does exactly what you tell it.', 1)}>▶ test</button>
+    </>
   );
 }

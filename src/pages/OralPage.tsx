@@ -2,24 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { PageTitle } from '../components/Layout';
 import { useT } from '../hooks/useT';
 import { CHECKLIST, FACTS, LEXICON, QA, QUIZ, SLIDES, TECH, TRANSITIONS, WARMUP, type Slide } from '../content/oral/rmrf';
+import { speak as tts, stopSpeak } from '../lib/tts';
 import { countFillers, maskWords, norm, scoreSpeech, words, wpm } from '../lib/oral';
 
 /* ───────── speech helpers ───────── */
 let voicePref: 'en-US' | 'en-GB' = 'en-US';
 function speak(text: string, rate = 1, onWord?: (charIndex: number) => void, onEnd?: () => void) {
-  const synth = typeof window !== 'undefined' ? window.speechSynthesis : undefined;
-  if (!synth) return onEnd?.();
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(text.replace(/rm -rf/g, 'R M dash R F').replace(/rm -i/g, 'R M dash I'));
-  u.lang = voicePref;
-  u.rate = rate;
-  const v = synth.getVoices().find((x) => x.lang === voicePref);
-  if (v) u.voice = v;
-  if (onWord) u.onboundary = (e) => onWord(e.charIndex);
-  u.onend = () => onEnd?.();
-  synth.speak(u);
+  // same length replacements keep charIndex aligned with the displayed text
+  void tts(text.replace(/rm -rf/g, 'RM-RF').replace(/rm -i/g, 'RM-I.'), { lang: voicePref, rate, onWord, onEnd });
 }
-const stopSpeak = () => window.speechSynthesis?.cancel();
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SR: any = typeof window !== 'undefined' ? (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition : undefined;

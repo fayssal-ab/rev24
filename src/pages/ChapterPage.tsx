@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { plain, speak, stopSpeak } from '../lib/tts';
 import { Link, useParams } from 'react-router-dom';
 import { useModuleContent } from '../hooks/useModule';
 import { Loading, PageTitle, useModuleParam } from '../components/Layout';
@@ -35,6 +36,7 @@ export default function ChapterPage() {
           <Icon name="clock" size={14} /> ~{c.estimatedMinutes} {t('common.minutes')}
         </span>
         <Ring value={chapterMastery(data, c.id, st)} size={36} stroke={4} />
+        <ReadAloud text={c.sections.map((x) => (x.type === 'text' || x.type === 'heading' || x.type === 'callout' ? (st.lang === 'en' ? x.body.en : x.body.fr) : '')).join('. ')} en={st.lang === 'en'} />
       </div>
       {headings.length > 2 && (
         <nav className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 py-2" aria-label={t('module.chapters')}>
@@ -83,5 +85,24 @@ export default function ChapterPage() {
         )}
       </div>
     </article>
+  );
+}
+
+/** Read the chapter aloud (French voice for fr/darija, English for en). */
+function ReadAloud({ text, en }: { text: string; en: boolean }) {
+  const [on, setOn] = useState(false);
+  useEffect(() => () => stopSpeak(), []);
+  const toggle = () => {
+    if (on) {
+      stopSpeak();
+      return setOn(false);
+    }
+    setOn(true);
+    void speak(plain(text), { lang: en ? 'en-US' : 'fr-FR', onEnd: () => setOn(false) });
+  };
+  return (
+    <button onClick={toggle} className={`chip ${on ? 'border-accent text-accent' : ''}`}>
+      {on ? '⏹ Stop' : en ? '🔊 Read aloud' : '🔊 Écouter'}
+    </button>
   );
 }

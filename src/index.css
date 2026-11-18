@@ -100,4 +100,4 @@ code, pre, kbd { @apply font-mono; }
 .page-in { animation: page-in 0.18s ease-out; }
 
 /* hide the injected "Powered by Netlify" badge */
-[id*='netlify-badge'], [class*='netlify-badge'], a[href*='netlify.com'][style*='fixed'] { display: none !important; }
+#nl-badge-frame, iframe[id^='nl-badge'], [id*='netlify-badge'] { display: none !important; }

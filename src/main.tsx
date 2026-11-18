@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { App } from './App';
 import { useStore } from './store/store';
-import { reloadOnce } from './components/RouteErrorBoundary';
+import { reloadOnce, RootErrorBoundary } from './components/RouteErrorBoundary';
 
 // a lazily-loaded page from an older build is missing on the server → reload to get the fresh files
 window.addEventListener('vite:preloadError', (e) => {
@@ -17,7 +17,9 @@ document.documentElement.lang = s.lang === 'dar' ? 'ar-MA' : s.lang;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RootErrorBoundary>
+      <App />
+    </RootErrorBoundary>
   </StrictMode>
 );
 

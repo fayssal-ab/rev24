@@ -1,0 +1,82 @@
+[
+ {
+  "id": "ro-x-3",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle — Partie B : Dijkstra B → E",
+   "dar": "Partie B : Dijkstra",
+   "en": "Part B: Dijkstra B → E"
+  },
+  "statement": {
+   "fr": "Même réseau, poids = minutes. Plus court trajet de B à E, avec le tableau d'itérations.",
+   "dar": "Dijkstra B → E b tableau.",
+   "en": "Shortest B → E with the iteration table."
+  },
+  "hints": [
+   {
+    "fr": "Départ : d(B) = 0, autres ∞.",
+    "dar": "d(B) = 0.",
+    "en": "d(B) = 0."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Itérations",
+     "dar": "Itérations",
+     "en": "Iterations"
+    },
+    "body": {
+     "fr": "Fixe B : C 9, D 5. Fixe D(5) : A 8, C 7, E 17, F 10. Fixe C(7). Fixe A(8) : E 15. Fixe F(10) : E 13. Fixe E(13).",
+     "dar": "Tableau.",
+     "en": "Table."
+    }
+   },
+   {
+    "title": {
+     "fr": "Chemin",
+     "dar": "Chemin",
+     "en": "Path"
+    },
+    "body": {
+     "fr": "À rebours : E ← F ← D ← B → **B–D–F–E = 13 min**.",
+     "dar": "13.",
+     "en": "**13 min**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "**13 minutes** (B–D–F–E ; B–D–A–F–E aussi).",
+   "dar": "13.",
+   "en": "**13 minutes**."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Ne pas mettre à jour C (9 → 7).",
+    "dar": "C ma tbeddel.",
+    "en": "Not updating C."
+   },
+   {
+    "fr": "Oublier les prédécesseurs.",
+    "dar": "Prédécesseurs.",
+    "en": "Forgetting predecessors."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gDist",
+     "args": [
+      "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+      "B",
+      "E"
+     ]
+    },
+    "expect": 13,
+    "tolerance": 0
+   }
+  ]
+ }
+]

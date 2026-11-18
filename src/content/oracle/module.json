@@ -1,0 +1,81 @@
+{
+ "id": "oracle",
+ "title": {
+  "fr": "Administration Oracle 1 (DBA1)",
+  "dar": "Administration Oracle 1",
+  "en": "Oracle Administration 1 (DBA1)"
+ },
+ "subtitle": {
+  "fr": "Oracle 19c — architecture, instance, CDB/PDB",
+  "dar": "Oracle 19c — instance, CDB/PDB",
+  "en": "Oracle 19c — architecture, instance, CDB/PDB"
+ },
+ "color": "#dc2626",
+ "icon": "layers",
+ "theme": "crimson",
+ "chapters": [
+  "architecture",
+  "instance"
+ ],
+ "upcoming": [
+  {
+   "id": "o-install",
+   "order": 1,
+   "title": {
+    "fr": "Chap 1 — Introduction et installation",
+    "dar": "Fasl 1 — Installation",
+    "en": "Ch. 1 — Introduction and installation"
+   }
+  },
+  {
+   "id": "o-params",
+   "order": 4,
+   "title": {
+    "fr": "Chap 4 — Paramètres et fichiers de paramètres",
+    "dar": "Fasl 4 — Paramètres",
+    "en": "Ch. 4 — Parameters and parameter files"
+   }
+  },
+  {
+   "id": "o-redo",
+   "order": 5,
+   "title": {
+    "fr": "Chap 5 — Fichiers de journalisation",
+    "dar": "Fasl 5 — Redo logs",
+    "en": "Ch. 5 — Redo log files"
+   }
+  },
+  {
+   "id": "o-archive",
+   "order": 6,
+   "title": {
+    "fr": "Chap 6 — Archivelog",
+    "dar": "Fasl 6 — Archivelog",
+    "en": "Ch. 6 — Archivelog"
+   }
+  },
+  {
+   "id": "o-control",
+   "order": 7,
+   "title": {
+    "fr": "Chap 7 — Fichiers de contrôle",
+    "dar": "Fasl 7 — Control files",
+    "en": "Ch. 7 — Control files"
+   }
+  },
+  {
+   "id": "o-tbs",
+   "order": 8,
+   "title": {
+    "fr": "Chap 8 — Tablespaces",
+    "dar": "Fasl 8 — Tablespaces",
+    "en": "Ch. 8 — Tablespaces"
+   }
+  }
+ ],
+ "annales": [],
+ "weights": {
+  "instance": 5,
+  "architecture": 3
+ }
+}

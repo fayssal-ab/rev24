@@ -1,0 +1,212 @@
+[
+ {
+  "id": "fc-dp-1",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Installer / importer pandas ?",
+   "dar": "pandas ?",
+   "en": "Install / import pandas?"
+  },
+  "back": {
+   "fr": "`pip install pandas` · `import pandas as pd`",
+   "dar": "`pip install pandas`",
+   "en": "`pip install pandas`"
+  }
+ },
+ {
+  "id": "fc-dp-2",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Series vs DataFrame ?",
+   "dar": "Series vs DataFrame ?",
+   "en": "Series vs DataFrame?"
+  },
+  "back": {
+   "fr": "1D (valeurs + index) vs 2D (lignes × colonnes).",
+   "dar": "1D vs 2D.",
+   "en": "1D vs 2D."
+  }
+ },
+ {
+  "id": "fc-dp-3",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "CSV avec ; et virgule décimale ?",
+   "dar": "; w virgule ?",
+   "en": "; and decimal comma?"
+  },
+  "back": {
+   "fr": "`sep=\";\", decimal=\",\"`",
+   "dar": "`sep=\";\", decimal=\",\"`",
+   "en": "`sep=\";\", decimal=\",\"`"
+  }
+ },
+ {
+  "id": "fc-dp-4",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Fichier sans en-tête ?",
+   "dar": "Bla en-tête ?",
+   "en": "No header?"
+  },
+  "back": {
+   "fr": "`header=None`",
+   "dar": "`header=None`",
+   "en": "`header=None`"
+  }
+ },
+ {
+  "id": "fc-dp-5",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Sauter une ligne de commentaire ?",
+   "dar": "Sauter ster ?",
+   "en": "Skip a comment line?"
+  },
+  "back": {
+   "fr": "`skiprows=1`",
+   "dar": "`skiprows=1`",
+   "en": "`skiprows=1`"
+  }
+ },
+ {
+  "id": "fc-dp-6",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "sheet_name = 0 / \"nom\" / None ?",
+   "dar": "sheet_name ?",
+   "en": "sheet_name values?"
+  },
+  "back": {
+   "fr": "1re feuille / cette feuille / toutes (dict)",
+   "dar": "Lowla / smiya / kolchi",
+   "en": "First / named / all (dict)"
+  }
+ },
+ {
+  "id": "fc-dp-7",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Exporter sans index ?",
+   "dar": "Export bla index ?",
+   "en": "Export without index?"
+  },
+  "back": {
+   "fr": "`df.to_csv(\"f.csv\", index=False)`",
+   "dar": "`index=False`",
+   "en": "`index=False`"
+  }
+ },
+ {
+  "id": "fc-dp-8",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "usecols · nrows · index_col ?",
+   "dar": "usecols · nrows · index_col ?",
+   "en": "usecols · nrows · index_col?"
+  },
+  "back": {
+   "fr": "colonnes à lire · nombre de lignes · colonne d'index",
+   "dar": "colonnes · lignes · index",
+   "en": "columns · rows · index"
+  }
+ },
+ {
+  "id": "fc-dp-9",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "na_values ?",
+   "dar": "na_values ?",
+   "en": "na_values?"
+  },
+  "back": {
+   "fr": "Chaînes à lire comme valeurs manquantes (NaN).",
+   "dar": "NaN.",
+   "en": "Strings read as NaN."
+  }
+ },
+ {
+  "id": "fc-dp-10",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Écrire en JSON / Excel ?",
+   "dar": "JSON / Excel ?",
+   "en": "Write JSON / Excel?"
+  },
+  "back": {
+   "fr": "`to_json` · `to_excel`",
+   "dar": "`to_json` · `to_excel`",
+   "en": "`to_json` · `to_excel`"
+  }
+ },
+ {
+  "id": "fc-dp-11",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "3 fonctions read_ « binaires » ?",
+   "dar": "Binaires ?",
+   "en": "Binary readers?"
+  },
+  "back": {
+   "fr": "read_parquet, read_feather, read_pickle (aussi hdf, orc).",
+   "dar": "parquet, feather, pickle.",
+   "en": "parquet, feather, pickle."
+  }
+ },
+ {
+  "id": "fc-dp-12",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "notes_h_s.csv ?",
+   "dar": "notes_h_s ?",
+   "en": "notes_h_s?"
+  },
+  "back": {
+   "fr": "`pd.read_csv(url + \"notes_h_s.csv\", header=None, skiprows=1)`",
+   "dar": "header=None, skiprows=1",
+   "en": "header=None, skiprows=1"
+  }
+ },
+ {
+  "id": "fc-dp-13",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "Sans decimal=\",\" : dtype ?",
+   "dar": "Bla decimal ?",
+   "en": "Without decimal?"
+  },
+  "back": {
+   "fr": "object (texte) : calculs impossibles.",
+   "dar": "object.",
+   "en": "object."
+  }
+ },
+ {
+  "id": "fc-dp-14",
+  "module": "data",
+  "chapter": "pandas",
+  "front": {
+   "fr": "read_csv accepte une URL ?",
+   "dar": "URL ?",
+   "en": "URL?"
+  },
+  "back": {
+   "fr": "Oui : `pd.read_csv(url + \"notes.csv\")`.",
+   "dar": "Ah.",
+   "en": "Yes."
+  }
+ }
+]

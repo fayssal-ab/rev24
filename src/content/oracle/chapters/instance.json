@@ -1,0 +1,298 @@
+{
+ "id": "instance",
+ "module": "oracle",
+ "order": 3,
+ "title": {
+  "fr": "Chap 3 — Instance : SGA, PGA, processus, démarrage/arrêt",
+  "dar": "Fasl 3 — Instance",
+  "en": "Ch. 3 — Instance: SGA, PGA, processes, startup/shutdown"
+ },
+ "summary": {
+  "fr": "Mémoire SGA/PGA, processus d'arrière-plan, exécution d'une requête, STARTUP/SHUTDOWN et TP1 sessions.",
+  "dar": "SGA, processus, STARTUP, SHUTDOWN.",
+  "en": "SGA/PGA, background processes, query flow, startup/shutdown, TP1."
+ },
+ "estimatedMinutes": 60,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "La mémoire",
+    "dar": "Mémoire",
+    "en": "Memory"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Zone",
+     "dar": "Zone",
+     "en": "Area"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    }
+   ],
+   "rows": [
+    [
+     "Shared Pool",
+     {
+      "fr": "Library cache (SQL, plans réutilisés) + dictionary cache",
+      "dar": "Library + dictionary",
+      "en": "Library + dictionary cache"
+     }
+    ],
+    [
+     "Database Buffer Cache",
+     {
+      "fr": "Copies des blocs ; toute lecture passe par lui",
+      "dar": "Blocs",
+      "en": "Block copies"
+     }
+    ],
+    [
+     "Redo Log Buffer",
+     {
+      "fr": "Modifications (redo), vidé par LGWR",
+      "dar": "Redo",
+      "en": "Redo entries"
+     }
+    ],
+    [
+     "Large Pool",
+     {
+      "fr": "UGA en serveur partagé, RMAN, E/S (optionnelle)",
+      "dar": "UGA, RMAN",
+      "en": "UGA, RMAN, I/O"
+     }
+    ],
+    [
+     "Java / Streams Pool",
+     {
+      "fr": "JVM / Oracle Streams",
+      "dar": "Java / Streams",
+      "en": "Java / Streams"
+     }
+    ],
+    [
+     "PGA",
+     {
+      "fr": "Privée par processus serveur : stack + UGA (dédié)",
+      "dar": "Khassa",
+      "en": "Private: stack + UGA"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Serveur dédié** : un processus serveur par utilisateur, PGA = stack + UGA. **Serveur partagé** : l'UGA passe dans la SGA (Shared Pool ou Large Pool).",
+    "dar": "Dédié / partagé.",
+    "en": "Dedicated vs shared server."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les processus d'arrière-plan",
+    "dar": "Processus",
+    "en": "Background processes"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**PMON** nettoie après un processus utilisateur échoué. **SMON** récupère l'instance au démarrage après crash. **DBWn** écrit les blocs dirty (pas au COMMIT). **LGWR** écrit le redo : au COMMIT, toutes les 3 s, au tiers du buffer, avant DBWn. **CKPT** : checkpoints. **ARCn** (facultatif) : archives en ARCHIVELOG.",
+    "dar": "PMON, SMON, DBWn, LGWR, CKPT, ARCn.",
+    "en": "PMON, SMON, DBWn, LGWR, CKPT, ARCn."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**LGWR ≠ DBWn** : au COMMIT c'est LGWR qui écrit ; DBWn écrit plus tard.",
+    "dar": "LGWR f COMMIT ; DBWn mn b3d.",
+    "en": "**LGWR ≠ DBWn**: LGWR at COMMIT; DBWn later."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exécution d'une requête",
+    "dar": "Requête",
+    "en": "Query execution"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "UPDATE customers SET city='Rabat' WHERE id_customer=123;\nCOMMIT;\n-- 1 analyse (Shared Pool)   2 bloc dans le Buffer Cache   3 image avant → undo\n-- 4 bloc modifié (dirty)    5 entrée redo                 6 COMMIT : LGWR → redo logs\n-- 7 plus tard : DBWn écrit le bloc (checkpoint)\n-- SELECT : analyse + buffer + renvoi des lignes (pas d'undo, de redo, de LGWR)"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-25",
+    "or-29",
+    "or-30"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Démarrage et arrêt",
+    "dar": "Démarrage w arrêt",
+    "en": "Startup and shutdown"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**SHUTDOWN → NOMOUNT** (paramètres, SGA, processus) **→ MOUNT** (control files) **→ OPEN** (datafiles + redo). `STARTUP [NOMOUNT|MOUNT|OPEN|FORCE|RESTRICT]` ; `ALTER DATABASE MOUNT;` / `OPEN;`. FORCE = abort + startup.",
+    "dar": "NOMOUNT → MOUNT → OPEN.",
+    "en": "NOMOUNT → MOUNT → OPEN."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Mode",
+     "dar": "Mode",
+     "en": "Mode"
+    },
+    {
+     "fr": "Attend",
+     "dar": "Kaytsenna",
+     "en": "Waits for"
+    },
+    {
+     "fr": "Propre ?",
+     "dar": "Propre ?",
+     "en": "Clean?"
+    }
+   ],
+   "rows": [
+    [
+     "NORMAL",
+     {
+      "fr": "déconnexion de tous",
+      "dar": "ga3 ykhrjou",
+      "en": "all sessions"
+     },
+     {
+      "fr": "oui",
+      "dar": "ah",
+      "en": "yes"
+     }
+    ],
+    [
+     "TRANSACTIONAL",
+     {
+      "fr": "fin des transactions",
+      "dar": "transactions",
+      "en": "transactions"
+     },
+     {
+      "fr": "oui",
+      "dar": "ah",
+      "en": "yes"
+     }
+    ],
+    [
+     "IMMEDIATE",
+     {
+      "fr": "rien (rollback)",
+      "dar": "walou (rollback)",
+      "en": "nothing (rollback)"
+     },
+     {
+      "fr": "oui",
+      "dar": "ah",
+      "en": "yes"
+     }
+    ],
+    [
+     "ABORT",
+     {
+      "fr": "rien",
+      "dar": "walou",
+      "en": "nothing"
+     },
+     {
+      "fr": "non → SMON",
+      "dar": "la → SMON",
+      "en": "no → SMON"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Le tableau des 4 modes de SHUTDOWN et l'ordre NOMOUNT → MOUNT → OPEN tombent souvent.",
+    "dar": "SHUTDOWN w STARTUP kaytl3ou.",
+    "en": "Shutdown modes and startup order are frequent."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-31",
+    "or-37",
+    "or-38"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "TP1 — Sessions",
+    "dar": "TP1 — Sessions",
+    "en": "TP1 — Sessions"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "SET PAGESIZE 1000\nSET LINESIZE 2000\nCOLUMN MACHINE FORMAT A30\nSELECT sid, serial#, username, status, osuser, machine, program, paddr FROM v$session;\nCREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;\nGRANT CREATE SESSION TO C##ETUDIANT;\nSELECT sid, serial#, username, status, seconds_in_wait FROM v$session\n  WHERE status='INACTIVE' AND seconds_in_wait > 60;\nALTER SYSTEM KILL SESSION '45,2311';   -- l'autre reçoit ORA-00028\nSELECT * FROM v$sgainfo;  SELECT * FROM v$sgastat;"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Chaque connexion = une nouvelle session (SID/SERIAL# différents).",
+    "dar": "Kol connexion = session.",
+    "en": "Each connection = a new session."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-43",
+    "or-46"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "SGA partagée (Shared Pool, Buffer Cache, Redo Buffer, Large/Java/Streams) ; PGA privée.",
+   "dar": "SGA / PGA.",
+   "en": "SGA shared; PGA private."
+  },
+  {
+   "fr": "LGWR au COMMIT ; DBWn plus tard ; PMON processus ; SMON instance ; CKPT ; ARCn.",
+   "dar": "Processus.",
+   "en": "Background processes."
+  },
+  {
+   "fr": "NOMOUNT → MOUNT → OPEN ; NORMAL/TRANSACTIONAL/IMMEDIATE propres, ABORT → SMON.",
+   "dar": "STARTUP / SHUTDOWN.",
+   "en": "Startup / shutdown."
+  }
+ ]
+}

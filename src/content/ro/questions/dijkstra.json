@@ -1,0 +1,220 @@
+[
+ {
+  "id": "ro-50",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle : plus court trajet B → E (minutes) ?",
+   "dar": "B → E ?",
+   "en": "Shortest B → E?"
+  },
+  "answer": 13,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gDist",
+   "args": [
+    "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "B",
+    "E"
+   ]
+  },
+  "explanation": {
+   "fr": "B–D–F–E = 5 + 5 + 3 = **13** (B–D–A–F–E aussi).",
+   "dar": "13.",
+   "en": "**13**."
+  },
+  "wrongExplanations": {
+   "17": {
+    "fr": "B–D–E direct (12) n'est pas optimal.",
+    "dar": "D–E twil.",
+    "en": "B–D–E is longer."
+   }
+  },
+  "tags": [
+   "dijkstra",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-51",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même réseau : distance B → A ?",
+   "dar": "B → A ?",
+   "en": "Distance B → A?"
+  },
+  "answer": 8,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gDist",
+   "args": [
+    "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "B",
+    "A"
+   ]
+  },
+  "explanation": {
+   "fr": "B–D–A = 5 + 3 = **8**.",
+   "dar": "8.",
+   "en": "**8**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "dijkstra"
+  ]
+ },
+ {
+  "id": "ro-52",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même réseau : distance A → E ?",
+   "dar": "A → E ?",
+   "en": "Distance A → E?"
+  },
+  "answer": 5,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gDist",
+   "args": [
+    "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "A",
+    "E"
+   ]
+  },
+  "explanation": {
+   "fr": "A–F–E = 2 + 3 = **5**.",
+   "dar": "5.",
+   "en": "**5**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "dijkstra"
+  ]
+ },
+ {
+  "id": "ro-53",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Condition d'utilisation de Dijkstra ?",
+   "dar": "Chart Dijkstra ?",
+   "en": "Dijkstra requires…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "poids ≥ 0",
+     "dar": "poids ≥ 0",
+     "en": "non-negative weights"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "graphe complet",
+     "dar": "complet",
+     "en": "a complete graph"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "graphe sans cycle",
+     "dar": "bla cycle",
+     "en": "an acyclic graph"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Avec un poids négatif, un sommet « fixé » pourrait encore s'améliorer.",
+   "dar": "Poids négatif → ghalat.",
+   "en": "Negative weights break it."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "dijkstra"
+  ]
+ },
+ {
+  "id": "ro-54",
+  "module": "ro",
+  "chapter": "dijkstra",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dijkstra : à chaque itération on fixe…",
+   "dar": "Dijkstra : nfixiw… ?",
+   "en": "Each Dijkstra iteration fixes…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "le sommet non traité de plus petite distance",
+     "dar": "sommet b a9al distance",
+     "en": "the unvisited vertex with smallest distance"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "le sommet de plus grand degré",
+     "dar": "akbar degré",
+     "en": "the highest-degree vertex"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "un voisin de la source",
+     "dar": "jar",
+     "en": "a source neighbour"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Puis relâchement : d(v) = min(d(v), d(u) + w(u,v)) et on note le prédécesseur ; chemin reconstruit à rebours.",
+   "dar": "Relâchement.",
+   "en": "Then relax: d(v) = min(d(v), d(u)+w)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "dijkstra"
+  ]
+ }
+]

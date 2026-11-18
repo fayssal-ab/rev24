@@ -1,0 +1,272 @@
+[
+ {
+  "id": "fc-or-10",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "SGA vs PGA ?",
+   "dar": "SGA vs PGA ?",
+   "en": "SGA vs PGA?"
+  },
+  "back": {
+   "fr": "SGA partagée ; PGA privée (une par processus serveur).",
+   "dar": "Partagée / khassa.",
+   "en": "Shared / private."
+  }
+ },
+ {
+  "id": "fc-or-11",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Shared Pool ?",
+   "dar": "Shared Pool ?",
+   "en": "Shared Pool?"
+  },
+  "back": {
+   "fr": "Library cache (SQL, plans) + dictionary cache (colonnes, privilèges).",
+   "dar": "Library + dictionary.",
+   "en": "Library + dictionary cache."
+  }
+ },
+ {
+  "id": "fc-or-12",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Buffer Cache ?",
+   "dar": "Buffer Cache ?",
+   "en": "Buffer Cache?"
+  },
+  "back": {
+   "fr": "Copies des blocs ; toute lecture passe par lui.",
+   "dar": "Blocs.",
+   "en": "Block copies; all reads go through it."
+  }
+ },
+ {
+  "id": "fc-or-13",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Redo Log Buffer ?",
+   "dar": "Redo buffer ?",
+   "en": "Redo Log Buffer?"
+  },
+  "back": {
+   "fr": "Tampon des modifications, vidé par LGWR.",
+   "dar": "LGWR.",
+   "en": "Change buffer flushed by LGWR."
+  }
+ },
+ {
+  "id": "fc-or-14",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Large / Java / Streams Pool ?",
+   "dar": "Pools ?",
+   "en": "Other pools?"
+  },
+  "back": {
+   "fr": "Large : UGA partagé, RMAN, E/S. Java : JVM. Streams : Oracle Streams.",
+   "dar": "Large, Java, Streams.",
+   "en": "Large, Java, Streams."
+  }
+ },
+ {
+  "id": "fc-or-15",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Dédié vs partagé ?",
+   "dar": "Dédié vs partagé ?",
+   "en": "Dedicated vs shared?"
+  },
+  "back": {
+   "fr": "Dédié : PGA = stack + UGA. Partagé : UGA dans la SGA.",
+   "dar": "UGA f PGA / SGA.",
+   "en": "UGA in PGA / SGA."
+  }
+ },
+ {
+  "id": "fc-or-16",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "PMON ?",
+   "dar": "PMON ?",
+   "en": "PMON?"
+  },
+  "back": {
+   "fr": "Nettoie après l'échec d'un processus utilisateur (rollback, verrous).",
+   "dar": "Nqi processus.",
+   "en": "Cleans failed user processes."
+  }
+ },
+ {
+  "id": "fc-or-17",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "SMON ?",
+   "dar": "SMON ?",
+   "en": "SMON?"
+  },
+  "back": {
+   "fr": "Récupération d'instance au démarrage, segments temporaires, espace libre.",
+   "dar": "Récupération.",
+   "en": "Instance recovery."
+  }
+ },
+ {
+  "id": "fc-or-18",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "DBWn ?",
+   "dar": "DBWn ?",
+   "en": "DBWn?"
+  },
+  "back": {
+   "fr": "Écrit les blocs dirty vers les datafiles (checkpoint…) — pas au COMMIT.",
+   "dar": "Machi f COMMIT.",
+   "en": "Writes dirty blocks — not at COMMIT."
+  }
+ },
+ {
+  "id": "fc-or-19",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "LGWR ?",
+   "dar": "LGWR ?",
+   "en": "LGWR?"
+  },
+  "back": {
+   "fr": "Écrit le redo buffer : au COMMIT, toutes les 3 s, buffer au 1/3, avant DBWn.",
+   "dar": "F COMMIT.",
+   "en": "At COMMIT, every 3 s, 1/3 full, before DBWn."
+  }
+ },
+ {
+  "id": "fc-or-20",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "CKPT / ARCn ?",
+   "dar": "CKPT / ARCn ?",
+   "en": "CKPT / ARCn?"
+  },
+  "back": {
+   "fr": "CKPT : checkpoints, en-têtes et control files. ARCn : archives (ARCHIVELOG).",
+   "dar": "CKPT / archives.",
+   "en": "Checkpoints / archiving."
+  }
+ },
+ {
+  "id": "fc-or-21",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "NOMOUNT / MOUNT / OPEN ?",
+   "dar": "États ?",
+   "en": "States?"
+  },
+  "back": {
+   "fr": "Paramètres + SGA + processus / control files / datafiles + redo.",
+   "dar": "Paramètres / control / datafiles.",
+   "en": "Params / control files / datafiles."
+  }
+ },
+ {
+  "id": "fc-or-22",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "SHUTDOWN NORMAL ?",
+   "dar": "NORMAL ?",
+   "en": "NORMAL?"
+  },
+  "back": {
+   "fr": "Défaut : attend la déconnexion de tous ; propre.",
+   "dar": "Kaytsenna ga3.",
+   "en": "Waits for all sessions."
+  }
+ },
+ {
+  "id": "fc-or-23",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "TRANSACTIONAL ?",
+   "dar": "TRANSACTIONAL ?",
+   "en": "TRANSACTIONAL?"
+  },
+  "back": {
+   "fr": "Attend la fin des transactions puis déconnecte ; propre.",
+   "dar": "Transactions.",
+   "en": "Waits for transactions."
+  }
+ },
+ {
+  "id": "fc-or-24",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "IMMEDIATE ?",
+   "dar": "IMMEDIATE ?",
+   "en": "IMMEDIATE?"
+  },
+  "back": {
+   "fr": "Rollback immédiat, checkpoint, propre.",
+   "dar": "Rollback, propre.",
+   "en": "Rollback, clean."
+  }
+ },
+ {
+  "id": "fc-or-25",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "ABORT ?",
+   "dar": "ABORT ?",
+   "en": "ABORT?"
+  },
+  "back": {
+   "fr": "Coupure brutale, pas de checkpoint → récupération SMON.",
+   "dar": "SMON.",
+   "en": "No checkpoint → SMON recovery."
+  }
+ },
+ {
+  "id": "fc-or-26",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Tuer une session ?",
+   "dar": "Tue session ?",
+   "en": "Kill a session?"
+  },
+  "back": {
+   "fr": "ALTER SYSTEM KILL SESSION 'sid,serial#'; → ORA-00028",
+   "dar": "KILL SESSION.",
+   "en": "ALTER SYSTEM KILL SESSION 'sid,serial#';"
+  }
+ },
+ {
+  "id": "fc-or-27",
+  "module": "oracle",
+  "chapter": "instance",
+  "front": {
+   "fr": "Vues à connaître ?",
+   "dar": "Vues ?",
+   "en": "Key views?"
+  },
+  "back": {
+   "fr": "v$instance, v$database, v$session, v$process, v$sga, v$sgainfo, v$sgastat, v$bgprocess, v$pdbs, v$parameter, v$controlfile, v$logfile, v$log, dba_users, dba_data_files, dba_tablespaces, cdb_users",
+   "dar": "v$… / dba_…",
+   "en": "v$ / dba_ views"
+  }
+ }
+]

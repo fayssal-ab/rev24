@@ -1,0 +1,22 @@
+[
+ {
+  "id": "r-ro-1",
+  "chapter": "defs",
+  "syntax": "Σ deg(v) = 2|A|",
+  "desc": {
+   "fr": "Lemme des poignées de main",
+   "dar": "Somme degrés",
+   "en": "Handshake lemma"
+  }
+ },
+ {
+  "id": "r-ro-2",
+  "chapter": "defs",
+  "syntax": "|A(Kn)| = n(n−1)/2",
+  "desc": {
+   "fr": "Graphe complet",
+   "dar": "Complet",
+   "en": "Complete graph"
+  }
+ }
+]

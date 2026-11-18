@@ -1,0 +1,646 @@
+{
+ "id": "users",
+ "module": "linux",
+ "order": 6,
+ "title": {
+  "fr": "Chap 4 + TP5 — Utilisateurs, groupes et droits",
+  "dar": "Fasl 4 + TP5 — Users, groupes w droits",
+  "en": "Ch. 4 + TP5 — Users, groups and permissions"
+ },
+ "summary": {
+  "fr": "Le chapitre le plus important : comptes, fichiers passwd/shadow/group/gshadow, useradd/usermod/userdel, mots de passe et expiration (passwd, chage), groupes, droits (chmod, chown) et sudo.",
+  "dar": "Ahamm fasl : comptes, fichiers, useradd/usermod, passwd/chage, groupes, chmod/chown, sudo.",
+  "en": "The key chapter: accounts, passwd/shadow/group/gshadow, useradd/usermod/userdel, passwords and aging, groups, permissions, sudo."
+ },
+ "estimatedMinutes": 90,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Types de comptes et groupes",
+    "dar": "Anwa3 comptes w groupes",
+    "en": "Account types and groups"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type",
+     "dar": "Naw3",
+     "en": "Type"
+    },
+    {
+     "fr": "UID",
+     "dar": "UID",
+     "en": "UID"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Super-utilisateur",
+      "dar": "Super-user",
+      "en": "Superuser"
+     },
+     "0",
+     "root"
+    ],
+    [
+     {
+      "fr": "Comptes système (services)",
+      "dar": "Comptes système",
+      "en": "System accounts"
+     },
+     "1–999",
+     "bin, sshd, chrony"
+    ],
+    [
+     {
+      "fr": "Utilisateurs ordinaires",
+      "dar": "Users 3adiyin",
+      "en": "Regular users"
+     },
+     "≥ 1000",
+     "etudiant, tp"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Un **groupe** a un nom, un **GID**, des membres, éventuellement un mot de passe et des administrateurs (rares). Chaque utilisateur a **un groupe primaire** (champ 4 de passwd, propriétaire de groupe des fichiers qu'il crée) et des **groupes secondaires** (`/etc/group`).",
+    "dar": "Groupe : smiya, **GID**, membres. **Primaire** (champ 4) + **secondaires**.",
+    "en": "A **group** has a name, **GID**, members, optional password and admins. Each user has **one primary group** (passwd field 4) and **secondary groups**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-01"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les quatre fichiers",
+    "dar": "4 fichiers",
+    "en": "The four files"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Fichier",
+     "dar": "Fichier",
+     "en": "File"
+    },
+    {
+     "fr": "Format",
+     "dar": "Format",
+     "en": "Format"
+    },
+    {
+     "fr": "Droits",
+     "dar": "Droits",
+     "en": "Mode"
+    }
+   ],
+   "rows": [
+    [
+     "/etc/passwd",
+     "login:x:uid:gid:commentaire:home:shell",
+     {
+      "fr": "lecture pour tous",
+      "dar": "ga3",
+      "en": "world-readable"
+     }
+    ],
+    [
+     "/etc/shadow",
+     "login:mdp:last:min:max:warn:inactif:expire:",
+     {
+      "fr": "root seul",
+      "dar": "ghir root",
+      "en": "root only"
+     }
+    ],
+    [
+     "/etc/group",
+     "groupe:x:gid:membres",
+     {
+      "fr": "lecture pour tous",
+      "dar": "ga3",
+      "en": "world-readable"
+     }
+    ],
+    [
+     "/etc/gshadow",
+     "groupe:mdp:admins:membres",
+     {
+      "fr": "root seul",
+      "dar": "ghir root",
+      "en": "root only"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "PasswdLineExplorer"
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Exemple gshadow : `developpeurs:$6$…:admin1,admin2:user1,user2,user3` ($6$ = SHA-512). Pour éditer ces fichiers à la main, utiliser **`vipw`** et **`vigr`** (verrouillage, `-s` pour shadow/gshadow).",
+    "dar": "Mithal gshadow. `vipw` / `vigr`.",
+    "en": "gshadow example. Edit by hand only with **`vipw`** / **`vigr`** (locking; `-s` for shadow/gshadow)."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "`!!` dans shadow = aucun mot de passe défini (ou `passwd -l`). Champ **vide** = pas de mot de passe du tout (`passwd -d`) : dangereux.",
+    "dar": "`!!` ≠ khawi.",
+    "en": "`!!` = no password set; **empty** = no password at all (dangerous)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-02",
+    "lu-03",
+    "lu-04",
+    "lu-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Valeurs par défaut",
+    "dar": "Défauts",
+    "en": "Defaults"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "useradd -D                  # /etc/default/useradd\nGROUP=100  HOME=/home  INACTIVE=-1  EXPIRE=  SHELL=/bin/bash  SKEL=/etc/skel  CREATE_MAIL_SPOOL=yes\nuseradd -D -s /bin/sh       # changer un défaut\ngrep -E \"^(UID|SYS_UID|PASS|CREATE_HOME|ENCRYPT)\" /etc/login.defs\nls -a /etc/skel             # modèle du répertoire personnel"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-06",
+    "lu-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Créer, modifier, supprimer un utilisateur",
+    "dar": "useradd, usermod, userdel",
+    "en": "Create, modify, delete a user"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Option",
+     "dar": "Option",
+     "en": "Option"
+    },
+    {
+     "fr": "useradd",
+     "dar": "useradd",
+     "en": "useradd"
+    },
+    {
+     "fr": "usermod",
+     "dar": "usermod",
+     "en": "usermod"
+    }
+   ],
+   "rows": [
+    [
+     "-u UID",
+     {
+      "fr": "UID",
+      "dar": "UID",
+      "en": "UID"
+     },
+     {
+      "fr": "changer l'UID",
+      "dar": "beddel UID",
+      "en": "change UID"
+     }
+    ],
+    [
+     "-g G",
+     {
+      "fr": "groupe primaire",
+      "dar": "primaire",
+      "en": "primary group"
+     },
+     {
+      "fr": "changer le primaire",
+      "dar": "beddel primaire",
+      "en": "change primary"
+     }
+    ],
+    [
+     "-G G1,G2",
+     {
+      "fr": "groupes secondaires",
+      "dar": "secondaires",
+      "en": "secondary groups"
+     },
+     {
+      "fr": "⚠ REMPLACE (avec -a : ajoute)",
+      "dar": "⚠ kaybeddel (b -a kayzid)",
+      "en": "⚠ REPLACES (with -a: appends)"
+     }
+    ],
+    [
+     "-d REP",
+     {
+      "fr": "home",
+      "dar": "home",
+      "en": "home"
+     },
+     {
+      "fr": "nouveau home (+ -m déplace)",
+      "dar": "home jdid (+ -m)",
+      "en": "new home (+ -m moves)"
+     }
+    ],
+    [
+     "-m / -M",
+     {
+      "fr": "créer / ne pas créer le home",
+      "dar": "dir / bla home",
+      "en": "create / no home"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     "-s SHELL · -c TEXTE",
+     {
+      "fr": "shell · commentaire",
+      "dar": "shell · commentaire",
+      "en": "shell · comment"
+     },
+     {
+      "fr": "idem",
+      "dar": "idem",
+      "en": "same"
+     }
+    ],
+    [
+     "-e AAAA-MM-JJ",
+     {
+      "fr": "expiration du compte",
+      "dar": "expiration",
+      "en": "account expiry"
+     },
+     {
+      "fr": "idem",
+      "dar": "idem",
+      "en": "same"
+     }
+    ],
+    [
+     "-r · -D",
+     {
+      "fr": "compte système · défauts",
+      "dar": "système · défauts",
+      "en": "system · defaults"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     "-l · -L · -U",
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     },
+     {
+      "fr": "renommer · verrouiller · déverrouiller",
+      "dar": "smiya · sedd · fte7",
+      "en": "rename · lock · unlock"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "useradd tp ; passwd tp\nuseradd -r tpsys                        # compte système\nuseradd -u 2003 -g users -e 2026-12-31 -c \"Utilisateur TP1\" tp1\nusermod -aG IIR tp                      # AJOUTER un groupe secondaire\nusermod -l tp3 tp2 ; usermod -d /home/tp3 -m tp3\nuserdel tp ; userdel -r tp ; userdel -rf tp\nfind / -type f -uid 1002 -print -exec rm {} \\;   # fichiers orphelins"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "**Piège n°1 du contrôle** : `usermod -G IIR tp` sans `-a` **retire** tous les autres groupes secondaires de tp.",
+    "dar": "**Fekh n°1** : `-G` bla `-a`.",
+    "en": "**Exam trap #1**: `usermod -G IIR tp` without `-a` **removes** all other secondary groups."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-tp"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-skel"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-08",
+    "lu-10",
+    "lu-13",
+    "lu-14"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Mots de passe et expiration",
+    "dar": "Mots de passe w expiration",
+    "en": "Passwords and aging"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "passwd tp1              # définir (root : sans l'ancien)\npasswd -l tp1 ; passwd -u tp1     # verrouiller / déverrouiller\npasswd -d tp1           # supprimer le mot de passe (!)\npasswd -e tp1           # expirer : changement forcé\npasswd -S tp1           # état : PS / LK / NP\npasswd -n 1 -x 90 -w 7 -i 3 tp1   # min, max, warn, inactif\nchage -l tp1            # afficher\nchage -d 0 tp1          # changement obligatoire à la prochaine connexion\nchage -M 90 -W 7 alice  # validité 90 j, avertissement 7 j\nchage -m 2 -I 2 -E 2026-12-31 tp1  # min, inactivité, expiration du compte (-E -1 = jamais)"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Teste dans le terminal : `chage -d 0 tp1` puis, en tant qu'`etudiant`, `su - tp1` → on te demande de changer le mot de passe.",
+    "dar": "`chage -d 0` w `su - tp1`.",
+    "en": "Try `chage -d 0 tp1` then, as `etudiant`, `su - tp1` → forced change."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-chage"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-lock"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-17",
+    "lu-19",
+    "lu-20",
+    "lu-21"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Groupes",
+    "dar": "Groupes",
+    "en": "Groups"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "groupadd -g 5000 IIR ; groupadd -r grpsys ; groupadd -f IIR\ngroupmod -n 4IIR IIR ; groupmod -g 5001 4IIR\ngroupdel 4IIR                    # impossible si groupe primaire d'un utilisateur\ngpasswd -a tp IIR ; gpasswd -d tp IIR\ngpasswd -M user1,user2 developpeurs ; gpasswd -A admin1 developpeurs\nwhoami ; who ; groups tp ; id tp ; id -u ; id -g ; id -Gn tp"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-iir"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-22",
+    "lu-24",
+    "lu-25",
+    "lu-26"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Droits d'accès",
+    "dar": "Droits",
+    "en": "Permissions"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "PermissionCalculator"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Droit",
+     "dar": "L7a9",
+     "en": "Right"
+    },
+    {
+     "fr": "Fichier",
+     "dar": "Fichier",
+     "en": "File"
+    },
+    {
+     "fr": "Répertoire",
+     "dar": "Répertoire",
+     "en": "Directory"
+    }
+   ],
+   "rows": [
+    [
+     "r (4)",
+     {
+      "fr": "lire",
+      "dar": "9ra",
+      "en": "read"
+     },
+     {
+      "fr": "lister (ls)",
+      "dar": "lister",
+      "en": "list"
+     }
+    ],
+    [
+     "w (2)",
+     {
+      "fr": "modifier",
+      "dar": "beddel",
+      "en": "modify"
+     },
+     {
+      "fr": "créer/supprimer des entrées (avec x)",
+      "dar": "dir/mse7 (m3a x)",
+      "en": "create/delete entries (with x)"
+     }
+    ],
+    [
+     "x (1)",
+     {
+      "fr": "exécuter",
+      "dar": "nfed",
+      "en": "execute"
+     },
+     {
+      "fr": "traverser (cd)",
+      "dar": "dkhol (cd)",
+      "en": "traverse (cd)"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "chmod u+x,g-w,o= f       # symbolique : u g o a, + - =\nchmod 755 rep ; chmod 644 f ; chmod 600 secret   # octal (777 déconseillé)\nchmod -R 750 /opt/projet\nchown tp f ; chown tp:IIR f ; chown :IIR f ; chown -R tp:IIR rep\nchgrp IIR f ; chgrp -R IIR rep\nls -l f ; ls -ld rep"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-donnees"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-27",
+    "lu-30",
+    "lu-31",
+    "lu-32"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "sudo",
+    "dar": "sudo",
+    "en": "sudo"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "`sudo` exécute une commande en tant qu'un autre utilisateur (root par défaut) en demandant **le mot de passe de l'appelant**. Règles : `/etc/sudoers` et `/etc/sudoers.d/`, toujours éditées avec **`visudo`** (`visudo -c` vérifie).\n\nFormat : `utilisateur hôte=(cible) commandes`\n\n- `%wheel ALL=(ALL) ALL` : le groupe wheel peut tout faire ;\n- `tp1 ALL=(root) /usr/sbin/reboot` : tp1 peut seulement redémarrer ;\n- `%developers ALL=(ALL) /usr/bin/systemctl, /usr/bin/journalctl` ;\n- `NOPASSWD:` devant les commandes : pas de mot de passe.",
+    "dar": "`sudo` b mot de passe dyalek. `visudo`. `user hôte=(cible) cmd`, `%wheel`, `NOPASSWD:`.",
+    "en": "`sudo` runs a command as another user asking **the caller's password**. Rules in sudoers, edited with **`visudo`**.\n\nFormat: `user host=(target) commands`; `%wheel ALL=(ALL) ALL`; `tp1 ALL=(root) /usr/sbin/reboot`; `NOPASSWD:`."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "usermod -aG wheel tp1        # sudo complet\ngpasswd -d tp1 wheel          # le retirer\nvisudo -f /etc/sudoers.d/tp1  # ajouter : tp1 ALL=(root) /usr/sbin/reboot\nvisudo -c\nsu - tp1 ; sudo -l ; sudo reboot"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-wheel"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-sudoers"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lu-33",
+    "lu-34",
+    "lu-35"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "TP5 : les 44 questions",
+    "dar": "TP5 : 44 so2al",
+    "en": "TP5: the 44 questions"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Chaque question du TP5 est couverte par une **mission terminal** (validation automatique) ou un **exercice corrigé** :\n\n- Q1–2, Q6–9 → mission « Créer tp » · Q3–5 → exercice « Explorer les fichiers et défauts »\n- Q10–11 → mission « Compte système tpsys » · Q12–15 → mission « /etc/skel et tmpuser »\n- Q16–18 → mission « Groupe IIR » · Q19–23 → mission « /opt/donnees »\n- Q24–28 → mission « tp1 » · Q29–30, Q34 → mission « Expiration » · Q31–33 → mission « Verrouillage »\n- Q35 → exercice « Renommer et déplacer » · Q36–37 → mission « wheel » · Q38–41 → mission « sudoers »\n- Q42–44 → mission « Nettoyage final ».",
+    "dar": "Kol so2al f TP5 3endo mission wla tamrin.",
+    "en": "Every TP5 question is covered by a **terminal mission** or a **worked exercise** (see list)."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-tpsys"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-tp1"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp5-cleanup"
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "root UID 0, système < 1000, ordinaires ≥ 1000 ; groupe primaire (passwd) + secondaires (group).",
+   "dar": "root 0 ; < 1000 ; ≥ 1000.",
+   "en": "root 0, system < 1000, users ≥ 1000; primary + secondary groups."
+  },
+  {
+   "fr": "passwd 7 champs (login:x:uid:gid:commentaire:home:shell), shadow 9 (`!!` = pas de mdp, $6$ SHA-512), group 4, gshadow 4 (admins:membres).",
+   "dar": "passwd 7, shadow 9, group 4, gshadow 4.",
+   "en": "passwd 7 fields, shadow 9, group 4, gshadow 4."
+  },
+  {
+   "fr": "Défauts : /etc/default/useradd (useradd -D), /etc/login.defs (UID_MIN, PASS_MAX_DAYS…), /etc/skel.",
+   "dar": "default/useradd, login.defs, skel.",
+   "en": "Defaults: default/useradd, login.defs, skel."
+  },
+  {
+   "fr": "usermod -aG pour AJOUTER ; -G seul REMPLACE. -l renomme, -d -m déplace, -L/-U verrouille.",
+   "dar": "-aG zid ; -G kaybeddel.",
+   "en": "-aG appends; -G alone replaces."
+  },
+  {
+   "fr": "passwd -l -u -d -e -S ; chage -l, -d 0, -M -m -W -I -E (ex. chage -M 90 -W 7 alice).",
+   "dar": "passwd + chage.",
+   "en": "passwd and chage options."
+  },
+  {
+   "fr": "groupadd -g -r -f, groupmod -n -g, groupdel (pas un groupe primaire), gpasswd -a -d -M -A.",
+   "dar": "groupadd, groupmod, groupdel, gpasswd.",
+   "en": "groupadd, groupmod, groupdel, gpasswd."
+  },
+  {
+   "fr": "r=4 w=2 x=1 ; 755, 644, 600 ; rwxrw-r-- = 764 ; x sur un répertoire = traverser ; chown réservé à root.",
+   "dar": "r4 w2 x1 ; 764.",
+   "en": "r=4 w=2 x=1; rwxrw-r-- = 764; x on dir = traverse."
+  },
+  {
+   "fr": "sudo : visudo (-c), /etc/sudoers.d/, `user hôte=(cible) cmds`, %wheel ALL=(ALL) ALL, NOPASSWD:.",
+   "dar": "sudo : visudo, wheel, NOPASSWD.",
+   "en": "sudo: visudo, sudoers.d, %wheel, NOPASSWD."
+  }
+ ]
+}

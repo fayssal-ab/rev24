@@ -1,0 +1,99 @@
+{
+ "id": "architecture",
+ "module": "oracle",
+ "order": 2,
+ "title": {
+  "fr": "Chap 2 — Architecture globale (CDB/PDB)",
+  "dar": "Fasl 2 — Architecture",
+  "en": "Ch. 2 — Overall architecture (CDB/PDB)"
+ },
+ "summary": {
+  "fr": "Instance et base, fichiers, connexion/session, multitenant CDB/PDB, utilisateurs communs et locaux, exercices 1 et 2.",
+  "dar": "Instance, base, CDB/PDB, C##.",
+  "en": "Instance vs database, files, CDB/PDB, common/local users."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Instance et base de données",
+    "dar": "Instance w base",
+    "en": "Instance and database"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Serveur Oracle = **instance** (mémoire SGA + processus d'arrière-plan) + **base de données** (fichiers). Base : **datafiles**, **control files**, **redo log files**. Fichiers associés : paramètres (pfile/spfile), mots de passe, **archives**. Client : processus utilisateur → **connexion** → **session** → processus serveur (+ PGA).",
+    "dar": "Instance + base ; fichiers ; session.",
+    "en": "Server = **instance** (SGA + processes) + **database** (files). Client: user process → connection → session → server process."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Multitenant (19c)",
+    "dar": "Multitenant",
+    "en": "Multitenant (19c)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**CDB** = **CDB$ROOT** + **PDB$SEED** + PDB (ex. **ORCLPDB**). Utilisateur **commun** : créé dans la racine avec le préfixe **C##**. Utilisateur **local** : créé dans une PDB.",
+    "dar": "CDB = ROOT + SEED + PDB ; C## / local.",
+    "en": "CDB = ROOT + SEED + PDBs; common users need C##."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "sqlplus / as sysdba\nSHOW PDBS;\nALTER PLUGGABLE DATABASE ORCLPDB OPEN;   -- si MOUNTED\nSHOW CON_NAME;                           -- CDB$ROOT\nCREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- ORA-65096 dans CDB$ROOT\nALTER SESSION SET CONTAINER=ORCLPDB;\nCREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- User created.\nGRANT CREATE SESSION TO ETUDIANT;\nCONNECT etudiant/etudiant123@localhost:1521/ORCLPDB",
+   "caption": {
+    "fr": "Exercice d'application 1",
+    "dar": "Exercice 1",
+    "en": "Exercise 1"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "ORA-65096 = utilisateur non C## dans CDB$ROOT.",
+    "dar": "ORA-65096 = bla C## f ROOT.",
+    "en": "ORA-65096 = non-C## user in CDB$ROOT."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "sqlplus / as sysdba\nSHOW CON_NAME\nSHOW PDBS\nALTER SESSION SET CONTAINER=ORCLPDB\n@C:\\oracle_samples\\db-sample-schemas\\human_resources\\hr_install.sql   -- mdp root, USERS, TEMP\nALTER USER hr ACCOUNT UNLOCK;\nsqlplus hr/root@localhost:1521/ORCLPDB\nSELECT table_name FROM user_tables;",
+   "caption": {
+    "fr": "Exercice d'application 2 (schéma HR, chemin sans espaces ni accents)",
+    "dar": "Exercice 2 (HR)",
+    "en": "Exercise 2 (HR schema)"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-04",
+    "or-07",
+    "or-14"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Serveur = instance (SGA + processus) + base (datafiles, control files, redo logs).",
+   "dar": "Instance + base.",
+   "en": "Server = instance + database."
+  },
+  {
+   "fr": "CDB = CDB$ROOT + PDB$SEED + PDB ; commun = C## (racine), local = PDB ; ORA-65096.",
+   "dar": "CDB/PDB, C##.",
+   "en": "CDB/PDB, C##, ORA-65096."
+  }
+ ]
+}

@@ -1,0 +1,178 @@
+[
+ {
+  "id": "ro-30",
+  "module": "ro",
+  "chapter": "particuliers",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un graphe **biparti** est un graphe dont…",
+   "dar": "Biparti ?",
+   "en": "A **bipartite** graph…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "les sommets se partagent en S1, S2 sans arête interne",
+     "dar": "S1, S2 bla arête dakhel",
+     "en": "splits into S1, S2 with no inner edge"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "il y a deux composantes",
+     "dar": "jouj composantes",
+     "en": "has two components"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "tous les degrés valent 2",
+     "dar": "degré 2",
+     "en": "all degrees are 2"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Biparti ⇔ 2-coloriable ⇔ aucun cycle impair.",
+   "dar": "Bla cycle impair.",
+   "en": "Bipartite ⇔ 2-colourable ⇔ no odd cycle."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "biparti"
+  ]
+ },
+ {
+  "id": "ro-31",
+  "module": "ro",
+  "chapter": "particuliers",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pour un graphe **planaire**, le nombre chromatique est…",
+   "dar": "Planaire : χ ?",
+   "en": "For a **planar** graph χ is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "≤ 4",
+     "dar": "≤ 4",
+     "en": "≤ 4"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "≤ 2",
+     "dar": "≤ 2",
+     "en": "≤ 2"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "= n",
+     "dar": "= n",
+     "en": "= n"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Théorème des 4 couleurs : planaire → χ ≤ 4.",
+   "dar": "4 couleurs.",
+   "en": "Four-colour theorem."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Seulement si biparti.",
+    "dar": "Biparti.",
+    "en": "Only if bipartite."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "coloration"
+  ]
+ },
+ {
+  "id": "ro-32",
+  "module": "ro",
+  "chapter": "particuliers",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre chromatique de K4 ?",
+   "dar": "χ(K4) ?",
+   "en": "χ(K4)?"
+  },
+  "answer": 4,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gChromatic",
+   "args": [
+    "A B C D | A-B A-C A-D B-C B-D C-D"
+   ]
+  },
+  "explanation": {
+   "fr": "Tous adjacents → 4 couleurs.",
+   "dar": "4.",
+   "en": "4."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "coloration"
+  ]
+ },
+ {
+  "id": "ro-33",
+  "module": "ro",
+  "chapter": "particuliers",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre chromatique d'un cycle de longueur 5 ?",
+   "dar": "χ(C5) ?",
+   "en": "χ(C5)?"
+  },
+  "answer": 3,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gChromatic",
+   "args": [
+    "A B C D E | A-B B-C C-D D-E E-A"
+   ]
+  },
+  "explanation": {
+   "fr": "Cycle impair → non biparti → 3.",
+   "dar": "Impair → 3.",
+   "en": "Odd cycle → 3."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "coloration"
+  ]
+ }
+]

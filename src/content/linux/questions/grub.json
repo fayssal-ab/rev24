@@ -1,0 +1,1075 @@
+[
+ {
+  "id": "lg-01",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de GRUB2 ?",
+   "dar": "Chnou dor GRUB2 ?",
+   "en": "What is GRUB2's role?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Gérer les utilisateurs",
+     "dar": "Gérer users",
+     "en": "Manage users"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Afficher un menu, charger le noyau et l'initramfs puis passer la main au noyau",
+     "dar": "Werri menu, chargi noyau w initramfs w 3ti lyed l noyau",
+     "en": "Show a menu, load the kernel and initramfs, then hand over to the kernel"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Monter les partitions de /etc/fstab",
+     "dar": "Monter partitions dyal fstab",
+     "en": "Mount /etc/fstab partitions"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Lancer les services",
+     "dar": "Lancer services",
+     "en": "Start services"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "GRUB2 est le **chargeur de démarrage** : menu, chargement du **noyau** et de l'**initramfs**, puis transfert de contrôle.",
+   "dar": "GRUB2 **chargeur de démarrage** : menu, **noyau** w **initramfs**, w men b3d kay3ti lyed.",
+   "en": "GRUB2 is the **boot loader**: menu, loads the **kernel** and **initramfs**, then transfers control."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est le rôle de useradd & co.",
+    "dar": "Hadchi dyal useradd.",
+    "en": "That is useradd & co."
+   },
+   "c": {
+    "fr": "C'est systemd qui monte fstab.",
+    "dar": "systemd li kaymonti fstab.",
+    "en": "systemd mounts fstab."
+   },
+   "d": {
+    "fr": "C'est systemd (PID 1).",
+    "dar": "systemd (PID 1).",
+    "en": "That is systemd (PID 1)."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-02",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Teste en une ligne si la machine a démarré en UEFI (affiche UEFI ou BIOS).",
+   "dar": "Testi f ster wa7ed wach machine UEFI (werri UEFI wla BIOS).",
+   "en": "Test in one line whether the machine booted in UEFI (print UEFI or BIOS)."
+  },
+  "answer": [
+   "[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS",
+   "test -d /sys/firmware/efi && echo UEFI || echo BIOS"
+  ],
+  "explanation": {
+   "fr": "Le répertoire `/sys/firmware/efi` n'existe que si le noyau a été démarré par un firmware **UEFI**.",
+   "dar": "`/sys/firmware/efi` kayn ghir f **UEFI**.",
+   "en": "`/sys/firmware/efi` only exists when the kernel was booted by **UEFI** firmware."
+  },
+  "wrongExplanations": {
+   "ls /sys/firmware/efi": {
+    "fr": "Ça renseigne, mais n'affiche pas UEFI/BIOS comme demandé.",
+    "dar": "Kay3ti fikra walakin ma kaywerrich UEFI/BIOS.",
+    "en": "Informative, but does not print UEFI/BIOS as asked."
+   }
+  },
+  "tags": [
+   "uefi"
+  ]
+ },
+ {
+  "id": "lg-03",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "En UEFI sur RHEL 9, quel est le rôle de `/boot/efi/EFI/redhat/grub.cfg` ?",
+   "dar": "F UEFI, chnou dor `/boot/efi/EFI/redhat/grub.cfg` ?",
+   "en": "On RHEL 9 UEFI, what does `/boot/efi/EFI/redhat/grub.cfg` do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "C'est la vraie configuration complète",
+     "dar": "Configuration kamla",
+     "en": "It is the full real configuration"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "C'est un relais qui charge /boot/grub2/grub.cfg",
+     "dar": "Relais kaychargi /boot/grub2/grub.cfg",
+     "en": "A relay that loads /boot/grub2/grub.cfg"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il contient le mot de passe GRUB",
+     "dar": "Fih mot de passe GRUB",
+     "en": "It holds the GRUB password"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Il liste les noyaux (BLS)",
+     "dar": "Kaylister noyaux",
+     "en": "It lists kernels (BLS)"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Sur RHEL 9, le fichier EFI est un **relais** (`configfile $prefix/grub.cfg`) : la configuration réelle est toujours **`/boot/grub2/grub.cfg`**.",
+   "dar": "F RHEL 9, fichier EFI **relais** : configuration l7a9i9iya f **`/boot/grub2/grub.cfg`**.",
+   "en": "On RHEL 9 the EFI file is a **relay**: the real config is always **`/boot/grub2/grub.cfg`**."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Non : grub2-mkconfig refuse même d'écrire dans ce fichier.",
+    "dar": "La : grub2-mkconfig kayrfod ykteb fih.",
+    "en": "No: grub2-mkconfig even refuses to write it."
+   },
+   "c": {
+    "fr": "Le mot de passe est dans /boot/grub2/user.cfg.",
+    "dar": "Mot de passe f /boot/grub2/user.cfg.",
+    "en": "The password is in /boot/grub2/user.cfg."
+   },
+   "d": {
+    "fr": "Les noyaux sont dans /boot/loader/entries/ (BLS).",
+    "dar": "Noyaux f /boot/loader/entries/.",
+    "en": "Kernels live in /boot/loader/entries/ (BLS)."
+   }
+  },
+  "tags": [
+   "grub",
+   "uefi"
+  ]
+ },
+ {
+  "id": "lg-04",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche la version du noyau en cours d'exécution.",
+   "dar": "Werri version dyal noyau li khddam.",
+   "en": "Show the running kernel version."
+  },
+  "answer": [
+   "uname -r"
+  ],
+  "explanation": {
+   "fr": "`uname -r` donne la *release* du noyau (ex. `5.14.0-427.13.1.el9_4.x86_64`). `rpm -q kernel-core` liste les noyaux **installés**.",
+   "dar": "`uname -r` = release dyal noyau. `rpm -q kernel-core` = noyaux installés.",
+   "en": "`uname -r` gives the kernel release. `rpm -q kernel-core` lists **installed** kernels."
+  },
+  "wrongExplanations": {
+   "uname": {
+    "fr": "Sans option, affiche seulement « Linux ».",
+    "dar": "Bla option : « Linux ».",
+    "en": "Without options it prints only \"Linux\"."
+   },
+   "uname -a": {
+    "fr": "Fonctionne, mais affiche beaucoup plus que la version.",
+    "dar": "Khddam walakin bzaf.",
+    "en": "Works but prints much more."
+   }
+  },
+  "tags": [
+   "noyau"
+  ]
+ },
+ {
+  "id": "lg-05",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi ne faut-il **jamais** éditer `/boot/grub2/grub.cfg` à la main ?",
+   "dar": "3lach **3omrek** ma tbeddel `/boot/grub2/grub.cfg` b yeddek ?",
+   "en": "Why should you **never** edit `/boot/grub2/grub.cfg` by hand?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Il est en lecture seule même pour root",
+     "dar": "Lecture seule 7ta l root",
+     "en": "It is read-only even for root"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Il est régénéré par grub2-mkconfig : tes modifications seraient écrasées",
+     "dar": "Kayt3awed b grub2-mkconfig : tabdil dyalek ghaytmse7",
+     "en": "It is regenerated by grub2-mkconfig: your edits would be overwritten"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il est chiffré",
+     "dar": "Mchiffré",
+     "en": "It is encrypted"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Il est sur une autre machine",
+     "dar": "F machine khra",
+     "en": "It is on another machine"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`grub.cfg` est **généré** à partir de `/etc/default/grub` et `/etc/grub.d/*` par `grub2-mkconfig -o /boot/grub2/grub.cfg` (« DO NOT EDIT THIS FILE »).",
+   "dar": "`grub.cfg` **kaytgénéra** mn `/etc/default/grub` w `/etc/grub.d/*` b `grub2-mkconfig`.",
+   "en": "`grub.cfg` is **generated** from `/etc/default/grub` and `/etc/grub.d/*` by `grub2-mkconfig -o /boot/grub2/grub.cfg` (\"DO NOT EDIT THIS FILE\")."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "root peut l'écrire (mode 600).",
+    "dar": "root y9der ykteb.",
+    "en": "root can write it (mode 600)."
+   },
+   "c": {
+    "fr": "C'est du texte clair.",
+    "dar": "Texte wad7.",
+    "en": "It is plain text."
+   },
+   "d": {
+    "fr": "Il est local dans /boot.",
+    "dar": "Local f /boot.",
+    "en": "It is local in /boot."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-06",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Régénère la configuration de GRUB après avoir modifié `/etc/default/grub`.",
+   "dar": "3awed configuration GRUB mor ma beddelti `/etc/default/grub`.",
+   "en": "Regenerate the GRUB configuration after editing `/etc/default/grub`."
+  },
+  "answer": [
+   "grub2-mkconfig -o /boot/grub2/grub.cfg",
+   "grub2-mkconfig --output=/boot/grub2/grub.cfg"
+  ],
+  "explanation": {
+   "fr": "`-o` indique le fichier de sortie ; sans `-o`, la configuration est seulement affichée à l'écran.",
+   "dar": "`-o` = fichier ; bla `-o` ghir kayban.",
+   "en": "`-o` sets the output file; without it the config is only printed."
+  },
+  "wrongExplanations": {
+   "grub2-mkconfig": {
+    "fr": "Sans `-o`, rien n'est écrit : la config s'affiche juste à l'écran.",
+    "dar": "Bla `-o`, walou ma kaytktb.",
+    "en": "Without `-o`, nothing is written."
+   },
+   "grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg": {
+    "fr": "Sur RHEL 9, ce fichier est le relais UEFI : la commande refuse de l'écraser.",
+    "dar": "Hada relais UEFI : kayrfod.",
+    "en": "On RHEL 9 that is the UEFI relay: the command refuses to overwrite it."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-07",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles variables se trouvent dans `/etc/default/grub` ?",
+   "dar": "Ach men variables kaynin f `/etc/default/grub` ?",
+   "en": "Which variables live in `/etc/default/grub`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "GRUB_TIMEOUT",
+     "dar": "GRUB_TIMEOUT",
+     "en": "GRUB_TIMEOUT"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "GRUB_DEFAULT",
+     "dar": "GRUB_DEFAULT",
+     "en": "GRUB_DEFAULT"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "GRUB_CMDLINE_LINUX",
+     "dar": "GRUB_CMDLINE_LINUX",
+     "en": "GRUB_CMDLINE_LINUX"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "GRUB_PASSWORD_ROOT",
+     "dar": "GRUB_PASSWORD_ROOT",
+     "en": "GRUB_PASSWORD_ROOT"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "GRUB_ENABLE_BLSCFG",
+     "dar": "GRUB_ENABLE_BLSCFG",
+     "en": "GRUB_ENABLE_BLSCFG"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "e"
+  ],
+  "explanation": {
+   "fr": "`GRUB_TIMEOUT` (délai du menu), `GRUB_DEFAULT` (0, 1, saved), `GRUB_TIMEOUT_STYLE`, `GRUB_CMDLINE_LINUX` (options du noyau), `GRUB_DISABLE_SUBMENU`, `GRUB_ENABLE_BLSCFG`…",
+   "dar": "TIMEOUT, DEFAULT, TIMEOUT_STYLE, CMDLINE_LINUX, DISABLE_SUBMENU, ENABLE_BLSCFG.",
+   "en": "`GRUB_TIMEOUT`, `GRUB_DEFAULT` (0, 1, saved), `GRUB_TIMEOUT_STYLE`, `GRUB_CMDLINE_LINUX` (kernel options), `GRUB_DISABLE_SUBMENU`, `GRUB_ENABLE_BLSCFG`…"
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "N'existe pas : le mot de passe se met avec `grub2-setpassword` (fichier user.cfg).",
+    "dar": "Ma kaynach : `grub2-setpassword`.",
+    "en": "Does not exist: use `grub2-setpassword` (user.cfg)."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-08",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`GRUB_DEFAULT=saved` signifie…",
+   "dar": "`GRUB_DEFAULT=saved` ma3naha…",
+   "en": "`GRUB_DEFAULT=saved` means…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Démarrer toujours la 1re entrée",
+     "dar": "Dima entrée lowla",
+     "en": "Always boot the first entry"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Démarrer l'entrée mémorisée dans grubenv (saved_entry)",
+     "dar": "Entrée li msjjla f grubenv (saved_entry)",
+     "en": "Boot the entry stored in grubenv (saved_entry)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Sauvegarder grub.cfg",
+     "dar": "Sauvegarde dyal grub.cfg",
+     "en": "Back up grub.cfg"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Ne pas afficher le menu",
+     "dar": "Ma ybanch menu",
+     "en": "Hide the menu"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`saved` utilise `saved_entry` stocké dans `/boot/grub2/grubenv` ; `0` = 1re entrée, `1` = 2e (la numérotation commence à 0).",
+   "dar": "`saved` = `saved_entry` f grubenv ; `0` = lowla, `1` = tanya.",
+   "en": "`saved` uses `saved_entry` from `/boot/grub2/grubenv`; `0` = first entry, `1` = second (zero-based)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est `GRUB_DEFAULT=0`.",
+    "dar": "Hadi `0`.",
+    "en": "That is `GRUB_DEFAULT=0`."
+   },
+   "c": {
+    "fr": "La sauvegarde se fait avec `cp -p`.",
+    "dar": "Sauvegarde b `cp -p`.",
+    "en": "Backups are done with `cp -p`."
+   },
+   "d": {
+    "fr": "C'est lié à `GRUB_TIMEOUT_STYLE=hidden`.",
+    "dar": "Hadi `GRUB_TIMEOUT_STYLE`.",
+    "en": "That is `GRUB_TIMEOUT_STYLE=hidden`."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-09",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Sauvegarde `/etc/default/grub` en `/etc/default/grub.bak` en **préservant** droits et dates.",
+   "dar": "Dir sauvegarde dyal `/etc/default/grub` f `.bak` w **7afed** droits w dates.",
+   "en": "Back up `/etc/default/grub` to `/etc/default/grub.bak` **preserving** permissions and dates."
+  },
+  "answer": [
+   "cp -p /etc/default/grub /etc/default/grub.bak",
+   "cp -a /etc/default/grub /etc/default/grub.bak"
+  ],
+  "explanation": {
+   "fr": "`cp -p` (preserve) garde droits, propriétaire et horodatage : la sauvegarde est identique à l'original.",
+   "dar": "`cp -p` kay7afed droits w dates.",
+   "en": "`cp -p` keeps mode, owner and timestamps: an identical backup."
+  },
+  "wrongExplanations": {
+   "cp /etc/default/grub /etc/default/grub.bak": {
+    "fr": "La copie marche mais la date et les droits ne sont pas conservés (le TP demande `-p`).",
+    "dar": "Copie walakin bla `-p`.",
+    "en": "Works, but dates and modes are not kept (the TP asks for `-p`)."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-10",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre la réinitialisation du mot de passe root.",
+   "dar": "Rttab beddel mot de passe root.",
+   "en": "Order the root password reset."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Dans GRUB, appuyer sur e sur l'entrée du noyau",
+     "dar": "F GRUB, e 3la entrée",
+     "en": "In GRUB, press e on the kernel entry"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Ajouter rd.break à la ligne linux puis Ctrl+X",
+     "dar": "Zid rd.break w Ctrl+X",
+     "en": "Append rd.break to the linux line then Ctrl+X"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "mount -o remount,rw /sysroot",
+     "dar": "mount -o remount,rw /sysroot",
+     "en": "mount -o remount,rw /sysroot"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "chroot /sysroot",
+     "dar": "chroot /sysroot",
+     "en": "chroot /sysroot"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "passwd",
+     "dar": "passwd",
+     "en": "passwd"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "touch /.autorelabel",
+     "dar": "touch /.autorelabel",
+     "en": "touch /.autorelabel"
+    }
+   },
+   {
+    "id": "s6",
+    "text": {
+     "fr": "exit, exit",
+     "dar": "exit, exit",
+     "en": "exit, exit"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f",
+   "s6"
+  ],
+  "explanation": {
+   "fr": "`e` → `rd.break` → Ctrl+X → **remount rw** → **chroot** → `passwd` → **`touch /.autorelabel`** (SELinux) → `exit` ×2.",
+   "dar": "`e` → `rd.break` → Ctrl+X → remount rw → chroot → passwd → autorelabel → exit ×2.",
+   "en": "`e` → `rd.break` → Ctrl+X → **remount rw** → **chroot** → `passwd` → **`touch /.autorelabel`** (SELinux) → `exit` ×2."
+  },
+  "tags": [
+   "rdbreak"
+  ]
+ },
+ {
+  "id": "lg-11",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que se passe-t-il si on oublie `touch /.autorelabel` ?",
+   "dar": "Chnou ywqe3 ila nsiti `touch /.autorelabel` ?",
+   "en": "What happens if you forget `touch /.autorelabel`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Rien de grave",
+     "dar": "Walou",
+     "en": "Nothing serious"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "/etc/shadow garde une mauvaise étiquette SELinux : plus personne ne peut se connecter",
+     "dar": "/etc/shadow b étiquette SELinux ghalta : 7ta wa7ed ma ydkhol",
+     "en": "/etc/shadow keeps a wrong SELinux label: nobody can log in"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le noyau ne démarre plus",
+     "dar": "Noyau ma ybdach",
+     "en": "The kernel no longer boots"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le mot de passe n'est pas modifié",
+     "dar": "Mot de passe ma tbeddelch",
+     "en": "The password is not changed"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`passwd` a recréé `/etc/shadow` **sans le bon contexte SELinux** (on était dans l'initramfs). En mode *enforcing*, les programmes de connexion ne peuvent plus le lire → connexion impossible. `/.autorelabel` force un réétiquetage au démarrage.",
+   "dar": "`/etc/shadow` bla contexte SELinux s7i7 → connexion ma ymkench. `/.autorelabel` kay3awed les étiquettes.",
+   "en": "`passwd` recreated `/etc/shadow` **without the right SELinux context**. In *enforcing* mode, login programs can no longer read it → no login. `/.autorelabel` forces a relabel at boot."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Si : la connexion devient impossible.",
+    "dar": "La : connexion ma tb9ach.",
+    "en": "It is serious: logins fail."
+   },
+   "c": {
+    "fr": "Le noyau démarre, c'est la connexion qui échoue.",
+    "dar": "Noyau kaybda, connexion li katfchel.",
+    "en": "The kernel boots; login fails."
+   },
+   "d": {
+    "fr": "Le mot de passe est bien modifié, mais le fichier est mal étiqueté.",
+    "dar": "Mot de passe tbeddel walakin étiquette ghalta.",
+    "en": "The password changed, but the file is mislabelled."
+   }
+  },
+  "tags": [
+   "rdbreak",
+   "selinux"
+  ]
+ },
+ {
+  "id": "lg-12",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi faut-il `mount -o remount,rw /sysroot` avant `passwd` ?",
+   "dar": "3lach khass `mount -o remount,rw /sysroot` 9bel `passwd` ?",
+   "en": "Why is `mount -o remount,rw /sysroot` needed before `passwd`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Pour activer le réseau",
+     "dar": "Bach réseau",
+     "en": "To enable networking"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La racine réelle est montée en lecture seule sur /sysroot : impossible d'écrire /etc/shadow",
+     "dar": "Racine mmontiya lecture seule : ma ymkench tktb /etc/shadow",
+     "en": "The real root is mounted read-only on /sysroot: /etc/shadow cannot be written"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour charger SELinux",
+     "dar": "Bach SELinux",
+     "en": "To load SELinux"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Pour démonter /boot",
+     "dar": "Bach demonter /boot",
+     "en": "To unmount /boot"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Avec `rd.break`, on s'arrête dans l'initramfs : la vraie racine est sur `/sysroot` **en lecture seule**. On la remonte en **rw**, puis `chroot /sysroot` pour que `/etc/shadow` désigne le bon fichier.",
+   "dar": "F `rd.break`, racine f `/sysroot` **lecture seule** → remount **rw** → `chroot`.",
+   "en": "With `rd.break` we stop in the initramfs: the real root is on `/sysroot` **read-only**. Remount it **rw**, then `chroot /sysroot` so `/etc/shadow` points to the right file."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le réseau est sans rapport.",
+    "dar": "Réseau ma 3endo 3ala9a.",
+    "en": "Networking is unrelated."
+   },
+   "c": {
+    "fr": "SELinux est géré par l'autorelabel.",
+    "dar": "SELinux b autorelabel.",
+    "en": "SELinux is handled by autorelabel."
+   },
+   "d": {
+    "fr": "/boot n'est pas concerné.",
+    "dar": "/boot ma 3endo 3ala9a.",
+    "en": "/boot is not involved."
+   }
+  },
+  "tags": [
+   "rdbreak"
+  ]
+ },
+ {
+  "id": "lg-13",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Protège l'accès à l'édition des entrées GRUB par un mot de passe.",
+   "dar": "7mi GRUB b mot de passe.",
+   "en": "Protect GRUB entry editing with a password."
+  },
+  "answer": [
+   "grub2-setpassword"
+  ],
+  "explanation": {
+   "fr": "`grub2-setpassword` demande le mot de passe deux fois et écrit un hachage PBKDF2 dans **`/boot/grub2/user.cfg`**. Supprimer ce fichier enlève la protection.",
+   "dar": "`grub2-setpassword` kayktb **`/boot/grub2/user.cfg`**. Tmse7 fichier = bla protection.",
+   "en": "`grub2-setpassword` asks twice and writes a PBKDF2 hash to **`/boot/grub2/user.cfg`**. Deleting that file removes protection."
+  },
+  "wrongExplanations": {
+   "passwd grub": {
+    "fr": "`passwd` change le mot de passe d'un **utilisateur** Linux, pas de GRUB.",
+    "dar": "`passwd` l users.",
+    "en": "`passwd` changes a Linux **user** password, not GRUB's."
+   }
+  },
+  "tags": [
+   "grub",
+   "securite"
+  ]
+ },
+ {
+  "id": "lg-14",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Pourquoi protéger GRUB par un mot de passe ?",
+   "dar": "3lach n7miw GRUB ?",
+   "en": "Why password-protect GRUB?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Empêcher le passage en mode single-user / rd.break",
+     "dar": "Mna3 single-user / rd.break",
+     "en": "Prevent single-user / rd.break"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Empêcher l'accès à la console GRUB",
+     "dar": "Mna3 console GRUB",
+     "en": "Prevent access to the GRUB console"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Empêcher de démarrer un autre OS non sécurisé",
+     "dar": "Mna3 OS akhor",
+     "en": "Prevent booting another unsafe OS"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Accélérer le démarrage",
+     "dar": "Démarrage asra3",
+     "en": "Speed up booting"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Quiconque a accès physiquement à la machine peut éditer l'entrée (`e`) et ajouter `rd.break` → devenir root. Le mot de passe GRUB bloque l'**édition**, la **console GRUB** et le **démarrage d'OS non sécurisés**.",
+   "dar": "Ay wa7ed 9oddam machine y9der ydir `rd.break` → root. Mot de passe kaymna3 édition, console w OS khrin.",
+   "en": "Anyone with physical access could edit the entry (`e`) and add `rd.break` → root. A GRUB password blocks **editing**, the **GRUB console**, and **unsafe OS boot**."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Aucun gain de vitesse.",
+    "dar": "Ma kaysrr3ch.",
+    "en": "No speed gain."
+   }
+  },
+  "tags": [
+   "securite"
+  ]
+ },
+ {
+  "id": "lg-15",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où ajouter une entrée de menu personnalisée `menuentry \"Redemarrer\" { reboot }` ?",
+   "dar": "Fin nzid `menuentry \"Redemarrer\" { reboot }` ?",
+   "en": "Where do you add a custom `menuentry \"Redemarrer\" { reboot }`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Directement dans /boot/grub2/grub.cfg",
+     "dar": "F grub.cfg",
+     "en": "Directly in /boot/grub2/grub.cfg"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Dans /etc/grub.d/40_custom, puis grub2-mkconfig",
+     "dar": "F /etc/grub.d/40_custom, w grub2-mkconfig",
+     "en": "In /etc/grub.d/40_custom, then grub2-mkconfig"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Dans /etc/default/grub",
+     "dar": "F /etc/default/grub",
+     "en": "In /etc/default/grub"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Dans /boot/loader/entries",
+     "dar": "F loader/entries",
+     "en": "In /boot/loader/entries"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Les entrées personnelles vont **après le commentaire** de `/etc/grub.d/40_custom` (ne pas toucher la ligne `exec tail`), puis on régénère avec `grub2-mkconfig -o /boot/grub2/grub.cfg`.",
+   "dar": "F `40_custom` (mor commentaire), w men b3d `grub2-mkconfig`.",
+   "en": "Custom entries go **after the comment** in `/etc/grub.d/40_custom` (keep the `exec tail` line), then regenerate with `grub2-mkconfig`."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Écrasé à la prochaine génération.",
+    "dar": "Ghaytmse7.",
+    "en": "Overwritten at next generation."
+   },
+   "c": {
+    "fr": "Ce fichier contient des variables, pas des menuentry.",
+    "dar": "Variables machi menuentry.",
+    "en": "That file holds variables, not menuentries."
+   },
+   "d": {
+    "fr": "Réservé aux noyaux au format BLS.",
+    "dar": "L noyaux BLS.",
+    "en": "Reserved for BLS kernel entries."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-16",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Supprime la protection par mot de passe de GRUB.",
+   "dar": "7eyed protection dyal GRUB.",
+   "en": "Remove GRUB password protection."
+  },
+  "answer": [
+   "rm /boot/grub2/user.cfg",
+   "rm -f /boot/grub2/user.cfg"
+  ],
+  "explanation": {
+   "fr": "La protection repose sur `/boot/grub2/user.cfg` (lu par `01_users`). Le supprimer suffit.",
+   "dar": "Protection f `user.cfg` : mse7o.",
+   "en": "Protection relies on `/boot/grub2/user.cfg` (read by `01_users`). Deleting it is enough."
+  },
+  "wrongExplanations": {
+   "grub2-setpassword": {
+    "fr": "Cela **change** le mot de passe au lieu de l'enlever.",
+    "dar": "Kaybeddel machi kay7eyed.",
+    "en": "That **changes** the password instead of removing it."
+   }
+  },
+  "tags": [
+   "securite"
+  ]
+ },
+ {
+  "id": "lg-17",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que contient `/boot/loader/entries/` ?",
+   "dar": "Chnou kayn f `/boot/loader/entries/` ?",
+   "en": "What is in `/boot/loader/entries/`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les journaux de démarrage",
+     "dar": "Logs dyal démarrage",
+     "en": "Boot logs"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Une entrée .conf par noyau installé (format BLS)",
+     "dar": "Entrée .conf l kol noyau (BLS)",
+     "en": "One .conf entry per installed kernel (BLS)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Les mots de passe GRUB",
+     "dar": "Mots de passe GRUB",
+     "en": "GRUB passwords"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Les pilotes",
+     "dar": "Pilotes",
+     "en": "Drivers"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "**BLS** (*Boot Loader Specification*) : chaque noyau a son fichier `.conf` (title, linux, initrd, options). `GRUB_ENABLE_BLSCFG=true` active ce mode.",
+   "dar": "**BLS** : kol noyau 3endo `.conf`.",
+   "en": "**BLS**: each kernel has its `.conf` file (title, linux, initrd, options). `GRUB_ENABLE_BLSCFG=true` enables it."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Les journaux sont via journalctl -b.",
+    "dar": "Logs b journalctl -b.",
+    "en": "Logs are in journalctl -b."
+   },
+   "c": {
+    "fr": "Le mot de passe est dans /boot/grub2/user.cfg.",
+    "dar": "user.cfg.",
+    "en": "It is in /boot/grub2/user.cfg."
+   },
+   "d": {
+    "fr": "Les modules sont dans /lib/modules.",
+    "dar": "/lib/modules.",
+    "en": "Modules are in /lib/modules."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "lg-18",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans `/etc/grub.d/`, quel script génère les entrées des noyaux Linux ?",
+   "dar": "F `/etc/grub.d/`, ach men script kaydir entrées dyal noyaux ?",
+   "en": "In `/etc/grub.d/`, which script generates the Linux kernel entries?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "00_header",
+     "dar": "00_header",
+     "en": "00_header"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "01_users",
+     "dar": "01_users",
+     "en": "01_users"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "10_linux",
+     "dar": "10_linux",
+     "en": "10_linux"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "40_custom",
+     "dar": "40_custom",
+     "en": "40_custom"
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "Les scripts sont exécutés dans l'ordre numérique : `00_header` (réglages), `01_users` (mot de passe), **`10_linux`** (noyaux), `30_uefi-firmware`, `40_custom` (tes entrées).",
+   "dar": "B tartib : 00_header, 01_users, **10_linux**, 30_uefi-firmware, 40_custom.",
+   "en": "Run in numeric order: `00_header` (settings), `01_users` (password), **`10_linux`** (kernels), `30_uefi-firmware`, `40_custom` (yours)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "En-tête : timeout, default…",
+    "dar": "En-tête.",
+    "en": "Header: timeout, default…"
+   },
+   "b": {
+    "fr": "Gère le mot de passe (user.cfg).",
+    "dar": "Mot de passe.",
+    "en": "Handles the password (user.cfg)."
+   },
+   "d": {
+    "fr": "Entrées personnalisées.",
+    "dar": "Entrées dyalek.",
+    "en": "Custom entries."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ }
+]

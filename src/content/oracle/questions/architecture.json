@@ -1,0 +1,622 @@
+[
+ {
+  "id": "or-01",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un serveur Oracle est composé…",
+   "dar": "Serveur Oracle = ?",
+   "en": "An Oracle server is made of…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "d'une instance et d'une base de données",
+     "dar": "instance + base",
+     "en": "an instance and a database"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "d'une base seulement",
+     "dar": "ghir base",
+     "en": "a database only"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "de la SGA seulement",
+     "dar": "ghir SGA",
+     "en": "the SGA only"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Instance** = mémoire (SGA) + processus d'arrière-plan ; **base** = fichiers physiques.",
+   "dar": "Instance (mémoire + processus) + base (fichiers).",
+   "en": "**Instance** = SGA + background processes; **database** = physical files."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il manque l'instance.",
+    "dar": "Na9es instance.",
+    "en": "Missing the instance."
+   },
+   "c": {
+    "fr": "La SGA n'est qu'une partie de l'instance.",
+    "dar": "SGA jouz2.",
+    "en": "SGA is only part of the instance."
+   }
+  },
+  "tags": [
+   "architecture"
+  ]
+ },
+ {
+  "id": "or-02",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quels fichiers constituent la **base de données** ?",
+   "dar": "Fichiers dyal base ?",
+   "en": "Which files make up the **database**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Fichiers de données (datafiles)",
+     "dar": "Datafiles",
+     "en": "Datafiles"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Fichiers de contrôle",
+     "dar": "Control files",
+     "en": "Control files"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Fichiers de journalisation (redo logs)",
+     "dar": "Redo logs",
+     "en": "Redo log files"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Fichier de paramètres (spfile)",
+     "dar": "spfile",
+     "en": "Parameter file (spfile)"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Base = datafiles + control files + redo logs. Fichiers **associés** : paramètres (pfile/spfile), mots de passe, archives.",
+   "dar": "Base = 3 fichiers ; spfile associé.",
+   "en": "Database = datafiles, control files, redo logs; spfile is associated."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Le spfile est un fichier **associé**, pas de la base.",
+    "dar": "spfile associé.",
+    "en": "spfile is an associated file."
+   }
+  },
+  "tags": [
+   "fichiers"
+  ]
+ },
+ {
+  "id": "or-03",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans une CDB 19c, que contient le conteneur ?",
+   "dar": "CDB fiha ?",
+   "en": "What does a 19c CDB contain?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "CDB$ROOT + PDB$SEED + une ou plusieurs PDB",
+     "dar": "ROOT + SEED + PDB",
+     "en": "CDB$ROOT + PDB$SEED + one or more PDBs"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Une seule PDB",
+     "dar": "PDB wa7da",
+     "en": "One PDB only"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Seulement CDB$ROOT",
+     "dar": "Ghir ROOT",
+     "en": "Only CDB$ROOT"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Multitenant : racine **CDB$ROOT**, modèle **PDB$SEED** (lecture seule), PDB applicatives (ex. **ORCLPDB**).",
+   "dar": "ROOT, SEED, PDB.",
+   "en": "Root, seed (read only), application PDBs (ORCLPDB)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "cdb"
+  ]
+ },
+ {
+  "id": "or-04",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "`CREATE USER ETUDIANT ...` dans CDB$ROOT renvoie…",
+   "dar": "CREATE USER f ROOT ?",
+   "en": "In CDB$ROOT, `CREATE USER ETUDIANT` gives…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ORA-65096: invalid common user or role name",
+     "dar": "ORA-65096",
+     "en": "ORA-65096"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "User created.",
+     "dar": "User created.",
+     "en": "User created."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ORA-01017",
+     "dar": "ORA-01017",
+     "en": "ORA-01017"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Dans la racine, un utilisateur **commun** doit commencer par **C##**. Solution : `C##ETUDIANT`, ou `ALTER SESSION SET CONTAINER=ORCLPDB` pour créer un utilisateur **local**.",
+   "dar": "Root → C## ; wla dkhol l ORCLPDB.",
+   "en": "Root needs **C##**; or switch to ORCLPDB for a local user."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il faut le préfixe C## dans la racine.",
+    "dar": "C##.",
+    "en": "C## required."
+   },
+   "c": {
+    "fr": "ORA-01017 = mot de passe invalide à la connexion.",
+    "dar": "Login ghalat.",
+    "en": "Invalid login."
+   }
+  },
+  "tags": [
+   "cdb",
+   "erreurs"
+  ]
+ },
+ {
+  "id": "or-05",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les PDB et leur mode d'ouverture (SQL*Plus).",
+   "dar": "Werri PDB.",
+   "en": "List PDBs and open mode."
+  },
+  "answer": [
+   "SHOW PDBS",
+   "show pdbs"
+  ],
+  "explanation": {
+   "fr": "`SHOW PDBS` : CON_ID, CON_NAME, OPEN MODE (READ WRITE, MOUNTED…).",
+   "dar": "SHOW PDBS.",
+   "en": "`SHOW PDBS`."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "cdb",
+   "sqlplus"
+  ]
+ },
+ {
+  "id": "or-06",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche le conteneur courant.",
+   "dar": "Conteneur daba ?",
+   "en": "Show the current container."
+  },
+  "answer": [
+   "SHOW CON_NAME",
+   "show con_name"
+  ],
+  "explanation": {
+   "fr": "Renvoie CDB$ROOT ou ORCLPDB.",
+   "dar": "CDB$ROOT / ORCLPDB.",
+   "en": "Returns CDB$ROOT or ORCLPDB."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "cdb",
+   "sqlplus"
+  ]
+ },
+ {
+  "id": "or-07",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Bascule la session dans la PDB ORCLPDB.",
+   "dar": "Douz l ORCLPDB.",
+   "en": "Switch the session to ORCLPDB."
+  },
+  "answer": [
+   "ALTER SESSION SET CONTAINER=ORCLPDB;",
+   "ALTER SESSION SET CONTAINER = ORCLPDB;",
+   "alter session set container=orclpdb;"
+  ],
+  "explanation": {
+   "fr": "Ensuite `SHOW CON_NAME` affiche ORCLPDB.",
+   "dar": "Men b3d ORCLPDB.",
+   "en": "Then SHOW CON_NAME shows ORCLPDB."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "cdb"
+  ]
+ },
+ {
+  "id": "or-08",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Ouvre la PDB ORCLPDB qui est en état MOUNTED.",
+   "dar": "Fte7 ORCLPDB.",
+   "en": "Open ORCLPDB (currently MOUNTED)."
+  },
+  "answer": [
+   "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;",
+   "alter pluggable database orclpdb open;"
+  ],
+  "explanation": {
+   "fr": "Sinon : ORA-01109 database not open.",
+   "dar": "Sinon ORA-01109.",
+   "en": "Otherwise ORA-01109."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "cdb"
+  ]
+ },
+ {
+  "id": "or-09",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Crée l'utilisateur commun C##ETUDIANT (mot de passe etudiant123).",
+   "dar": "Dir C##ETUDIANT.",
+   "en": "Create common user C##ETUDIANT."
+  },
+  "answer": [
+   "CREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;",
+   "create user c##etudiant identified by etudiant123;"
+  ],
+  "explanation": {
+   "fr": "Préfixe C## obligatoire dans la racine.",
+   "dar": "C##.",
+   "en": "C## mandatory in the root."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "cdb",
+   "utilisateurs"
+  ]
+ },
+ {
+  "id": "or-10",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Autorise ETUDIANT à se connecter.",
+   "dar": "ETUDIANT ydkhol.",
+   "en": "Allow ETUDIANT to log in."
+  },
+  "answer": [
+   "GRANT CREATE SESSION TO ETUDIANT;",
+   "grant create session to etudiant;"
+  ],
+  "explanation": {
+   "fr": "Sans ce privilège : ORA-01045.",
+   "dar": "Bla : ORA-01045.",
+   "en": "Without it: ORA-01045."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "utilisateurs"
+  ]
+ },
+ {
+  "id": "or-11",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Connecte-toi en etudiant/etudiant123 à ORCLPDB sur localhost:1521.",
+   "dar": "Connexion etudiant ORCLPDB.",
+   "en": "Connect as etudiant to ORCLPDB on localhost:1521."
+  },
+  "answer": [
+   "CONNECT etudiant/etudiant123@localhost:1521/ORCLPDB",
+   "connect etudiant/etudiant123@localhost:1521/orclpdb",
+   "conn etudiant/etudiant123@localhost:1521/ORCLPDB"
+  ],
+  "explanation": {
+   "fr": "Format EZConnect : user/mdp@hôte:port/service.",
+   "dar": "user/mdp@hôte:port/service.",
+   "en": "EZConnect: user/pwd@host:port/service."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "utilisateurs"
+  ]
+ },
+ {
+  "id": "or-12",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Déverrouille le compte hr.",
+   "dar": "Fte7 hr.",
+   "en": "Unlock the hr account."
+  },
+  "answer": [
+   "ALTER USER hr ACCOUNT UNLOCK;",
+   "alter user hr account unlock;"
+  ],
+  "explanation": {
+   "fr": "Après hr_install.sql (sinon ORA-28000).",
+   "dar": "Sinon ORA-28000.",
+   "en": "Otherwise ORA-28000."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "hr"
+  ]
+ },
+ {
+  "id": "or-13",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les tables de l'utilisateur connecté.",
+   "dar": "Tables dyali ?",
+   "en": "List the current user's tables."
+  },
+  "answer": [
+   "SELECT table_name FROM user_tables;",
+   "select table_name from user_tables;"
+  ],
+  "explanation": {
+   "fr": "HR : COUNTRIES, DEPARTMENTS, EMPLOYEES, JOBS, JOB_HISTORY, LOCATIONS, REGIONS.",
+   "dar": "7 tables HR.",
+   "en": "The 7 HR tables."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "hr"
+  ]
+ },
+ {
+  "id": "or-14",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un utilisateur **local** est créé…",
+   "dar": "User local ?",
+   "en": "A **local** user is created…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "dans une PDB, sans préfixe C##",
+     "dar": "f PDB bla C##",
+     "en": "in a PDB, without C##"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "dans CDB$ROOT",
+     "dar": "f ROOT",
+     "en": "in CDB$ROOT"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "dans PDB$SEED",
+     "dar": "f SEED",
+     "en": "in PDB$SEED"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Commun : racine + C## (visible dans tous les conteneurs). Local : dans une PDB. Créer C##X dans une PDB → ORA-65094.",
+   "dar": "Commun = ROOT ; local = PDB.",
+   "en": "Common = root + C##; local = PDB."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Dans la racine → commun.",
+    "dar": "ROOT = commun.",
+    "en": "Root = common."
+   },
+   "c": {
+    "fr": "PDB$SEED est en lecture seule.",
+    "dar": "SEED read only.",
+    "en": "SEED is read only."
+   }
+  },
+  "tags": [
+   "cdb"
+  ]
+ },
+ {
+  "id": "or-15",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "kind": "order",
+  "prompt": {
+   "fr": "Ordre de l'exercice 1 (créer ETUDIANT dans ORCLPDB).",
+   "dar": "Rttab exercice 1.",
+   "en": "Order exercise 1."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "sqlplus / as sysdba",
+     "dar": "sqlplus / as sysdba",
+     "en": "sqlplus / as sysdba"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "SHOW PDBS",
+     "dar": "SHOW PDBS",
+     "en": "SHOW PDBS"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;",
+     "dar": "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;",
+     "en": "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "ALTER SESSION SET CONTAINER=ORCLPDB;",
+     "dar": "ALTER SESSION SET CONTAINER=ORCLPDB;",
+     "en": "ALTER SESSION SET CONTAINER=ORCLPDB;"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "CREATE USER ETUDIANT IDENTIFIED BY etudiant123;",
+     "dar": "CREATE USER ETUDIANT IDENTIFIED BY etudiant123;",
+     "en": "CREATE USER ETUDIANT IDENTIFIED BY etudiant123;"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "GRANT CREATE SESSION TO ETUDIANT;",
+     "dar": "GRANT CREATE SESSION TO ETUDIANT;",
+     "en": "GRANT CREATE SESSION TO ETUDIANT;"
+    }
+   },
+   {
+    "id": "s6",
+    "text": {
+     "fr": "CONNECT etudiant/etudiant123@localhost:1521/ORCLPDB",
+     "dar": "CONNECT etudiant/etudiant123@localhost:1521/ORCLPDB",
+     "en": "CONNECT etudiant/etudiant123@localhost:1521/ORCLPDB"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f",
+   "s6"
+  ],
+  "explanation": {
+   "fr": "Connexion SYSDBA → vérifier/ouvrir la PDB → entrer dans la PDB → créer + GRANT → se connecter.",
+   "dar": "Tartib.",
+   "en": "SYSDBA → open PDB → switch → create + grant → connect."
+  },
+  "tags": [
+   "cdb"
+  ]
+ }
+]

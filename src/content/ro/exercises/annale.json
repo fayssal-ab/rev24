@@ -1,0 +1,172 @@
+[
+ {
+  "id": "ro-x-4",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle — Exercice 1 (graphe A–G)",
+   "dar": "Exercice 1",
+   "en": "Exercise 1 (graph A–G)"
+  },
+  "statement": {
+   "fr": "Graphe (reconstitué) : A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G. 1) Ordre et taille. 2) Degré de C. 3) Sommets impairs. 4) Une chaîne de longueur 3. 5) Voisins de F. 6) Un cycle hamiltonien. 7) Arêtes à ajouter pour être complet.",
+   "dar": "7 so2alat.",
+   "en": "Seven questions."
+  },
+  "hints": [
+   {
+    "fr": "Compte les arêtes une par une.",
+    "dar": "7seb arêtes.",
+    "en": "Count the edges."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1–3",
+     "dar": "1–3",
+     "en": "1–3"
+    },
+    "body": {
+     "fr": "Ordre 7, taille 10. d(C) = 4. Impairs : A, B, D, F (4 sommets, nombre pair ✓).",
+     "dar": "7, 10 ; 4 ; A B D F.",
+     "en": "7, 10; 4; A, B, D, F."
+    }
+   },
+   {
+    "title": {
+     "fr": "4–7",
+     "dar": "4–7",
+     "en": "4–7"
+    },
+    "body": {
+     "fr": "Chaîne : A–B–E–F. Voisins de F : C, E, G. Hamiltonien : A–B–E–F–G–D–C–A. À ajouter : 21 − 10 = **11**.",
+     "dar": "Hamilton ; 11.",
+     "en": "Hamiltonian; 11."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Ordre 7, taille 10, d(C) = 4, impairs A B D F, cycle A–B–E–F–G–D–C–A, 11 arêtes à ajouter.",
+   "dar": "Jawab.",
+   "en": "See answers."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Compter K7 = 42 arêtes (c'est 21).",
+    "dar": "K7 = 21.",
+    "en": "K7 has 21 edges."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gSize",
+     "args": [
+      "A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G"
+     ]
+    },
+    "expect": 10,
+    "tolerance": 0
+   },
+   {
+    "compute": {
+     "fn": "gMissing",
+     "args": [
+      "A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G"
+     ]
+    },
+    "expect": 11,
+    "tolerance": 0
+   }
+  ]
+ },
+ {
+  "id": "ro-x-5",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle — Exercice 3.2 : M^4",
+   "dar": "Exercice 3.2",
+   "en": "Exercise 3.2: M^4"
+  },
+  "statement": {
+   "fr": "Graphe orienté 1→2, 1→3, 2→1, 2→3, 3→1. Écrire M, calculer M^4, le nombre de chemins de longueur 4 de 1 à 1 et le nombre de circuits de longueur 4.",
+   "dar": "M, M^4, trace.",
+   "en": "Write M, compute M^4, walks 1→1 and trace."
+  },
+  "hints": [
+   {
+    "fr": "M² = M × M, puis M^4 = M² × M².",
+    "dar": "M² × M².",
+    "en": "M^4 = M² × M²."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Matrices",
+     "dar": "Matrices",
+     "en": "Matrices"
+    },
+    "body": {
+     "fr": "M = [[0,1,1],[1,0,1],[1,0,0]] ; M² = [[2,0,1],[1,1,1],[0,1,1]] ; M^4 = [[4,1,3],[3,2,3],[1,2,2]].",
+     "dar": "M², M^4.",
+     "en": "M², M^4."
+    }
+   },
+   {
+    "title": {
+     "fr": "Lecture",
+     "dar": "9raya",
+     "en": "Reading"
+    },
+    "body": {
+     "fr": "(M^4)11 = **4** chemins ; trace = 4 + 2 + 2 = **8** circuits fermés de longueur 4.",
+     "dar": "4 w 8.",
+     "en": "4 walks; trace 8."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "(M^4)11 = 4 ; trace(M^4) = 8.",
+   "dar": "4 ; 8.",
+   "en": "4; 8."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Calculer 4 × M au lieu de M^4.",
+    "dar": "4M.",
+    "en": "Computing 4M."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gPaths",
+     "args": [
+      "1 2 3 | 1>2 1>3 2>1 2>3 3>1",
+      4,
+      "1",
+      "1"
+     ]
+    },
+    "expect": 4,
+    "tolerance": 0
+   },
+   {
+    "compute": {
+     "fn": "gTracePow",
+     "args": [
+      "1 2 3 | 1>2 1>3 2>1 2>3 3>1",
+      4
+     ]
+    },
+    "expect": 8,
+    "tolerance": 0
+   }
+  ]
+ }
+]

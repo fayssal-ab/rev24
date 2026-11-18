@@ -1,0 +1,276 @@
+{
+ "id": "systemd",
+ "module": "linux",
+ "order": 4,
+ "title": {
+  "fr": "TP3 — systemd : cibles, services, journal",
+  "dar": "TP3 — systemd : targets, services, journal",
+  "en": "TP3 — systemd: targets, services, journal"
+ },
+ "summary": {
+  "fr": "PID 1, cibles (get/set-default, isolate), gestion des services (start ≠ enable, mask), journalctl, création d'un service personnalisé.",
+  "dar": "PID 1, targets, services (start ≠ enable, mask), journalctl, service dyalek.",
+  "en": "PID 1, targets (get/set-default, isolate), services (start ≠ enable, mask), journalctl, custom service."
+ },
+ "estimatedMinutes": 55,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "systemd, le PID 1",
+    "dar": "systemd, PID 1",
+    "en": "systemd, PID 1"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**systemd** est le gestionnaire de système de RHEL 9 : premier processus (PID 1), il démarre les **unités** (services `.service`, cibles `.target`, montages, sockets…) en parallèle selon leurs dépendances.",
+    "dar": "**systemd** : PID 1, kaybda **unités** (`.service`, `.target`…) f nefs lwe9t.",
+    "en": "**systemd** is RHEL 9's system manager: PID 1, it starts **units** (`.service`, `.target`, mounts, sockets…) in parallel by dependencies."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "systemctl --version\nps aux | head -2              # PID 1 = /usr/lib/systemd/systemd\nwhereis systemd\nsystemd-analyze               # temps de démarrage\nsystemd-analyze blame         # par unité\nsystemd-analyze critical-chain"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ls-01",
+    "ls-19"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les cibles (targets)",
+    "dar": "Targets",
+    "en": "Targets"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Cible",
+     "dar": "Target",
+     "en": "Target"
+    },
+    {
+     "fr": "Ancien runlevel",
+     "dar": "Runlevel",
+     "en": "Runlevel"
+    },
+    {
+     "fr": "Usage",
+     "dar": "Isti3mal",
+     "en": "Use"
+    }
+   ],
+   "rows": [
+    [
+     "poweroff.target",
+     "0",
+     {
+      "fr": "Arrêt",
+      "dar": "Tfi",
+      "en": "Power off"
+     }
+    ],
+    [
+     "rescue.target",
+     "1",
+     {
+      "fr": "Maintenance mono-utilisateur",
+      "dar": "Maintenance",
+      "en": "Single-user maintenance"
+     }
+    ],
+    [
+     "multi-user.target",
+     "3",
+     {
+      "fr": "Texte + réseau (serveurs)",
+      "dar": "Texte + réseau",
+      "en": "Text + network (servers)"
+     }
+    ],
+    [
+     "graphical.target",
+     "5",
+     {
+      "fr": "Interface graphique",
+      "dar": "Graphique",
+      "en": "Graphical"
+     }
+    ],
+    [
+     "reboot.target",
+     "6",
+     {
+      "fr": "Redémarrage",
+      "dar": "Redémarrage",
+      "en": "Reboot"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "systemctl get-default                       # cible par défaut\nsystemctl set-default multi-user.target     # au PROCHAIN démarrage (lien default.target)\nsystemctl isolate multi-user.target         # MAINTENANT\nsystemctl list-units --type target\nsystemctl --failed\nrunlevel ; telinit 3                        # anciennes commandes (compatibilité)"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "**set-default ≠ isolate** : persistant (au boot) vs immédiat.",
+    "dar": "**set-default ≠ isolate**.",
+    "en": "**set-default ≠ isolate**: persistent (boot) vs immediate."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-systemd-target"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ls-03",
+    "ls-04",
+    "ls-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Gérer les services",
+    "dar": "Gestion dyal services",
+    "en": "Managing services"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "SystemdStates"
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "systemctl list-unit-files --type=service\nsystemctl status sshd\nsystemctl start | stop | restart | reload httpd\nsystemctl enable | disable httpd       # au démarrage\nsystemctl enable --now httpd           # les deux\nsystemctl is-active sshd ; systemctl is-enabled sshd\nsystemctl mask bluetooth ; systemctl unmask bluetooth\nsystemctl kill httpd"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "`enable` ne démarre **pas** le service maintenant, et `start` ne l'active **pas** au démarrage. `reload` relit la configuration sans couper (si le service le permet), `restart` arrête puis relance.",
+    "dar": "`enable` ≠ `start`. `reload` ≠ `restart`.",
+    "en": "`enable` does **not** start now and `start` does **not** enable at boot. `reload` re-reads config without stopping; `restart` stops then starts."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-systemd-enable"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ls-08",
+    "ls-10",
+    "ls-11"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Le journal : journalctl",
+    "dar": "Journal : journalctl",
+    "en": "The journal: journalctl"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "journalctl -b                 # depuis le démarrage (-b -1 : précédent)\njournalctl -f                 # suivre en temps réel\njournalctl -u sshd            # une unité\njournalctl -p err             # priorité err et plus grave (warning, info…)\njournalctl --since \"1 hour ago\" ; journalctl -n 20\njournalctl -o json | json-pretty | cat | verbose"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Priorités : 0 emerg, 1 alert, 2 crit, **3 err**, **4 warning**, 5 notice, **6 info**, 7 debug. `-p X` affiche X et tout ce qui est plus grave.",
+    "dar": "0 emerg … 3 err, 4 warning, 6 info, 7 debug.",
+    "en": "Priorities: 0 emerg, 1 alert, 2 crit, **3 err**, **4 warning**, 5 notice, **6 info**, 7 debug. `-p X` shows X and worse."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ls-13",
+    "ls-14"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Créer un service personnalisé",
+    "dar": "Dir service dyalek",
+    "en": "Creating a custom service"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "ini",
+   "code": "[Unit]\nDescription=Mon script de sauvegarde\n\n[Service]\nExecStart=/usr/local/bin/monscript.sh\n\n[Install]\nWantedBy=multi-user.target",
+   "caption": {
+    "fr": "/etc/systemd/system/monscript.service",
+    "dar": "/etc/systemd/system/monscript.service",
+    "en": "/etc/systemd/system/monscript.service"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "chmod +x /usr/local/bin/monscript.sh\nsystemctl daemon-reload            # relire les unités\nsystemctl enable --now monscript\nsystemctl status monscript"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-systemd-service"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ls-16",
+    "ls-17",
+    "ls-18"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "systemd = PID 1 ; `systemd-analyze blame` / `critical-chain`.",
+   "dar": "systemd = PID 1.",
+   "en": "systemd = PID 1; `systemd-analyze blame` / `critical-chain`."
+  },
+  {
+   "fr": "get-default / set-default (lien default.target, au prochain boot) / isolate (immédiat). multi-user = 3, graphical = 5.",
+   "dar": "set-default (boot) ≠ isolate (daba).",
+   "en": "get-default / set-default (next boot) / isolate (now). multi-user = 3, graphical = 5."
+  },
+  {
+   "fr": "start/stop/restart/reload (maintenant) ≠ enable/disable (démarrage) ; enable --now ; mask = lien /dev/null.",
+   "dar": "start ≠ enable ; --now ; mask.",
+   "en": "start/stop/restart/reload (now) ≠ enable/disable (boot); enable --now; mask = /dev/null link."
+  },
+  {
+   "fr": "journalctl -b -f -u -p err|warning|info --since -n -o json|json-pretty|cat|verbose.",
+   "dar": "journalctl -b -f -u -p.",
+   "en": "journalctl -b -f -u -p err|warning|info --since -n -o."
+  },
+  {
+   "fr": "Service perso : [Unit] Description, [Service] ExecStart, [Install] WantedBy=multi-user.target → daemon-reload → enable --now.",
+   "dar": "[Unit] [Service] [Install] → daemon-reload → enable --now.",
+   "en": "Custom service: [Unit] Description, [Service] ExecStart, [Install] WantedBy → daemon-reload → enable --now."
+  }
+ ]
+}

@@ -1,0 +1,182 @@
+[
+ {
+  "id": "fc-grub-1",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Rôle de GRUB2 ?",
+   "dar": "Dor GRUB2 ?",
+   "en": "GRUB2 role?"
+  },
+  "back": {
+   "fr": "Menu, chargement du noyau + initramfs, passage de la main au noyau.",
+   "dar": "Menu, noyau + initramfs, 3ti lyed.",
+   "en": "Menu, loads kernel + initramfs, hands over."
+  }
+ },
+ {
+  "id": "fc-grub-2",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Détecter UEFI ?",
+   "dar": "Kifach n3ref UEFI ?",
+   "en": "Detect UEFI?"
+  },
+  "back": {
+   "fr": "`[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS`",
+   "dar": "`[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS`",
+   "en": "`[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS`"
+  }
+ },
+ {
+  "id": "fc-grub-3",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Fichier de config réel de GRUB ?",
+   "dar": "Config l7a9i9iya ?",
+   "en": "Real GRUB config file?"
+  },
+  "back": {
+   "fr": "/boot/grub2/grub.cfg (en UEFI, /boot/efi/EFI/redhat/grub.cfg n'est qu'un relais).",
+   "dar": "/boot/grub2/grub.cfg.",
+   "en": "/boot/grub2/grub.cfg (UEFI file is just a relay)."
+  }
+ },
+ {
+  "id": "fc-grub-4",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Régénérer grub.cfg ?",
+   "dar": "3awed grub.cfg ?",
+   "en": "Regenerate grub.cfg?"
+  },
+  "back": {
+   "fr": "`grub2-mkconfig -o /boot/grub2/grub.cfg`",
+   "dar": "`grub2-mkconfig -o /boot/grub2/grub.cfg`",
+   "en": "`grub2-mkconfig -o /boot/grub2/grub.cfg`"
+  }
+ },
+ {
+  "id": "fc-grub-5",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Où mettre les réglages (timeout, default) ?",
+   "dar": "Fin réglages ?",
+   "en": "Where do settings go?"
+  },
+  "back": {
+   "fr": "/etc/default/grub (GRUB_TIMEOUT, GRUB_DEFAULT, GRUB_TIMEOUT_STYLE, GRUB_CMDLINE_LINUX…).",
+   "dar": "/etc/default/grub.",
+   "en": "/etc/default/grub."
+  }
+ },
+ {
+  "id": "fc-grub-6",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Entrées personnalisées ?",
+   "dar": "Entrées dyalek ?",
+   "en": "Custom entries?"
+  },
+  "back": {
+   "fr": "/etc/grub.d/40_custom (menuentry \"…\" { reboot })",
+   "dar": "/etc/grub.d/40_custom",
+   "en": "/etc/grub.d/40_custom"
+  }
+ },
+ {
+  "id": "fc-grub-7",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "GRUB_DEFAULT=0 / 1 / saved ?",
+   "dar": "GRUB_DEFAULT=0 / 1 / saved ?",
+   "en": "GRUB_DEFAULT=0 / 1 / saved?"
+  },
+  "back": {
+   "fr": "1re entrée / 2e entrée / entrée mémorisée (saved_entry dans grubenv).",
+   "dar": "Lowla / tanya / msjjla.",
+   "en": "First / second / remembered entry (saved_entry)."
+  }
+ },
+ {
+  "id": "fc-grub-8",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Étapes reset root ?",
+   "dar": "Étapes reset root ?",
+   "en": "Root reset steps?"
+  },
+  "back": {
+   "fr": "e → rd.break → Ctrl+X → mount -o remount,rw /sysroot → chroot /sysroot → passwd → touch /.autorelabel → exit ×2",
+   "dar": "e → rd.break → Ctrl+X → remount → chroot → passwd → autorelabel → exit ×2",
+   "en": "e → rd.break → Ctrl+X → remount rw → chroot → passwd → autorelabel → exit ×2"
+  }
+ },
+ {
+  "id": "fc-grub-9",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Pourquoi /.autorelabel ?",
+   "dar": "3lach /.autorelabel ?",
+   "en": "Why /.autorelabel?"
+  },
+  "back": {
+   "fr": "Réétiqueter SELinux : /etc/shadow modifié hors contexte, sinon plus de connexion possible.",
+   "dar": "SELinux : sinon ma ymkench tdkhol.",
+   "en": "SELinux relabel: /etc/shadow changed out of context, otherwise no login."
+  }
+ },
+ {
+  "id": "fc-grub-10",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Protéger GRUB ?",
+   "dar": "N7miw GRUB ?",
+   "en": "Protect GRUB?"
+  },
+  "back": {
+   "fr": "`grub2-setpassword` → /boot/grub2/user.cfg ; `rm` ce fichier pour retirer.",
+   "dar": "`grub2-setpassword` → user.cfg.",
+   "en": "`grub2-setpassword` → user.cfg; delete it to remove."
+  }
+ },
+ {
+  "id": "fc-grub-11",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "BLS ?",
+   "dar": "BLS ?",
+   "en": "BLS?"
+  },
+  "back": {
+   "fr": "Boot Loader Specification : un .conf par noyau dans /boot/loader/entries/.",
+   "dar": ".conf l kol noyau f loader/entries.",
+   "en": "One .conf per kernel in /boot/loader/entries/."
+  }
+ },
+ {
+  "id": "fc-grub-12",
+  "module": "linux",
+  "chapter": "grub",
+  "front": {
+   "fr": "Ordre des scripts /etc/grub.d ?",
+   "dar": "Tartib dyal scripts ?",
+   "en": "/etc/grub.d script order?"
+  },
+  "back": {
+   "fr": "00_header → 01_users → 10_linux → 30_uefi-firmware → 40_custom",
+   "dar": "00 → 01 → 10 → 30 → 40",
+   "en": "00_header → 01_users → 10_linux → 30_uefi-firmware → 40_custom"
+  }
+ }
+]

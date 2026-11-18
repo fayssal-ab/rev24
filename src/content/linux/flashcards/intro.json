@@ -1,0 +1,182 @@
+[
+ {
+  "id": "fc-intro-1",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Missions de l'administrateur système ?",
+   "dar": "Khdmat l admin système ?",
+   "en": "System administrator duties?"
+  },
+  "back": {
+   "fr": "Maintenir le parc, configurer, résoudre les incidents, installer/mettre à jour, administrer les disques, gérer utilisateurs et accès, planifier l'évolution.",
+   "dar": "Maintenir parc, configurer, 7ell incidents, installer, disques, users w accès, planifier.",
+   "en": "Maintain the fleet, configure, solve incidents, install/update, manage disks, users and access, plan evolution."
+  }
+ },
+ {
+  "id": "fc-intro-2",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Les 5 éléments d'un système informatique ?",
+   "dar": "5 éléments dyal système informatique ?",
+   "en": "The 5 elements of a computer system?"
+  },
+  "back": {
+   "fr": "Matériel, logiciel, individus, données, connectivité.",
+   "dar": "Matériel, logiciel, nas, données, connectivité.",
+   "en": "Hardware, software, people, data, connectivity."
+  }
+ },
+ {
+  "id": "fc-intro-3",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "1969 ?",
+   "dar": "1969 ?",
+   "en": "1969?"
+  },
+  "back": {
+   "fr": "UNIX, écrit par Ken Thompson (Bell Labs) en assembleur.",
+   "dar": "UNIX, Ken Thompson (Bell Labs) b assembleur.",
+   "en": "UNIX, written by Ken Thompson (Bell Labs) in assembly."
+  }
+ },
+ {
+  "id": "fc-intro-4",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "1972 ?",
+   "dar": "1972 ?",
+   "en": "1972?"
+  },
+  "back": {
+   "fr": "Langage C (Dennis Ritchie) ; Unix réécrit en C → portable.",
+   "dar": "Langage C (Ritchie) ; Unix t3awed b C → portable.",
+   "en": "C language (Dennis Ritchie); Unix rewritten in C → portable."
+  }
+ },
+ {
+  "id": "fc-intro-5",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "1977 — BSD ?",
+   "dar": "1977 — BSD ?",
+   "en": "1977 — BSD?"
+  },
+  "back": {
+   "fr": "Berkeley (Bill Joy) : ajoute TCP/IP et la mémoire virtuelle.",
+   "dar": "Berkeley (Bill Joy) : TCP/IP w mémoire virtuelle.",
+   "en": "Berkeley (Bill Joy): adds TCP/IP and virtual memory."
+  }
+ },
+ {
+  "id": "fc-intro-6",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Minix ?",
+   "dar": "Minix ?",
+   "en": "Minix?"
+  },
+  "back": {
+   "fr": "1987, Tanenbaum : micro-noyau pédagogique, non librement distribuable.",
+   "dar": "1987, Tanenbaum : micro-noyau l ta3lim, machi 7orr.",
+   "en": "1987, Tanenbaum: teaching micro-kernel, not freely distributable."
+  }
+ },
+ {
+  "id": "fc-intro-7",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Pourquoi « GNU/Linux » ?",
+   "dar": "3lach « GNU/Linux » ?",
+   "en": "Why \"GNU/Linux\"?"
+  },
+  "back": {
+   "fr": "GNU fournit les outils (système libre sans noyau), Linux (1991, Torvalds) fournit le noyau.",
+   "dar": "GNU 3ta outils, Linux (1991) 3ta noyau.",
+   "en": "GNU provides the tools (free system without a kernel), Linux (1991, Torvalds) the kernel."
+  }
+ },
+ {
+  "id": "fc-intro-8",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Distribution = ?",
+   "dar": "Distribution = ?",
+   "en": "Distribution = ?"
+  },
+  "back": {
+   "fr": "Noyau + programmes + gestionnaire de paquets + installateur.",
+   "dar": "Noyau + programmes + paquets + installateur.",
+   "en": "Kernel + programs + package manager + installer."
+  }
+ },
+ {
+  "id": "fc-intro-9",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Fedora vs CentOS vs RHEL ?",
+   "dar": "Fedora vs CentOS vs RHEL ?",
+   "en": "Fedora vs CentOS vs RHEL?"
+  },
+  "back": {
+   "fr": "RHEL : payante (support). Fedora : laboratoire. CentOS : clone (Red Hat depuis 2014).",
+   "dar": "RHEL : b lflous. Fedora : labo. CentOS : clone (Red Hat mn 2014).",
+   "en": "RHEL: paid (support). Fedora: lab. CentOS: clone (Red Hat since 2014)."
+  }
+ },
+ {
+  "id": "fc-intro-10",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Minimum RHEL 9 ?",
+   "dar": "Minimum RHEL 9 ?",
+   "en": "RHEL 9 minimum?"
+  },
+  "back": {
+   "fr": "64 bits, 1 Go RAM (2+ conseillés), 10 Go disque (20+ conseillés).",
+   "dar": "64 bits, 1 Go RAM (2+), 10 Go disque (20+).",
+   "en": "64-bit, 1 GB RAM (2+ advised), 10 GB disk (20+ advised)."
+  }
+ },
+ {
+  "id": "fc-intro-11",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "/media vs /mnt ?",
+   "dar": "/media vs /mnt ?",
+   "en": "/media vs /mnt?"
+  },
+  "back": {
+   "fr": "/media : montage automatique (USB, CD). /mnt : montage manuel temporaire.",
+   "dar": "/media : automatique. /mnt : manuel.",
+   "en": "/media: automatic mounts (USB, CD). /mnt: temporary manual mounts."
+  }
+ },
+ {
+  "id": "fc-intro-12",
+  "module": "linux",
+  "chapter": "intro",
+  "front": {
+   "fr": "Partitions TP1 (100 Go) ?",
+   "dar": "Partitions TP1 (100 Go) ?",
+   "en": "TP1 partitions (100 GB)?"
+  },
+  "back": {
+   "fr": "/boot 1, /boot/efi 1, / 20, /home 50, /var 24, swap 4 Go.",
+   "dar": "/boot 1, /boot/efi 1, / 20, /home 50, /var 24, swap 4.",
+   "en": "/boot 1, /boot/efi 1, / 20, /home 50, /var 24, swap 4 GB."
+  }
+ }
+]

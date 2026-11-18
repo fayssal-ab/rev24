@@ -1,0 +1,352 @@
+[
+ {
+  "id": "lx-grub-1",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "title": {
+   "fr": "Menu GRUB visible 10 secondes",
+   "dar": "Menu GRUB 10 secondes",
+   "en": "GRUB menu visible for 10 seconds"
+  },
+  "statement": {
+   "fr": "Le menu GRUB est caché et le délai est de 5 s. Fais en sorte qu'il s'affiche pendant **10 secondes**, que la **2e entrée** soit démarrée par défaut, en respectant les bonnes pratiques.",
+   "dar": "Menu mkhbbi w 5 s. Khallih ybane **10 s**, w **entrée tanya** par défaut.",
+   "en": "The GRUB menu is hidden and the delay is 5 s. Make it show for **10 seconds** and boot the **2nd entry** by default, following best practices."
+  },
+  "hints": [
+   {
+    "fr": "Commence par une sauvegarde.",
+    "dar": "Bda b sauvegarde.",
+    "en": "Start with a backup."
+   },
+   {
+    "fr": "Trois variables dans /etc/default/grub.",
+    "dar": "3 variables.",
+    "en": "Three variables in /etc/default/grub."
+   },
+   {
+    "fr": "La numérotation commence à 0.",
+    "dar": "Tartib kaybda mn 0.",
+    "en": "Numbering starts at 0."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Sauvegarder",
+     "dar": "Sauvegarde",
+     "en": "Back up"
+    },
+    "body": {
+     "fr": "Toujours avant de modifier.",
+     "dar": "Dima 9bel.",
+     "en": "Always before editing."
+    },
+    "code": "cp -p /etc/default/grub /etc/default/grub.bak"
+   },
+   {
+    "title": {
+     "fr": "Modifier les variables",
+     "dar": "Beddel variables",
+     "en": "Edit variables"
+    },
+    "body": {
+     "fr": "`GRUB_TIMEOUT=10`, `GRUB_TIMEOUT_STYLE=menu`, `GRUB_DEFAULT=1` (2e entrée).",
+     "dar": "`TIMEOUT=10`, `STYLE=menu`, `DEFAULT=1`.",
+     "en": "`GRUB_TIMEOUT=10`, `GRUB_TIMEOUT_STYLE=menu`, `GRUB_DEFAULT=1` (2nd entry)."
+    },
+    "code": "GRUB_TIMEOUT=10\nGRUB_TIMEOUT_STYLE=menu\nGRUB_DEFAULT=1"
+   },
+   {
+    "title": {
+     "fr": "Régénérer et vérifier",
+     "dar": "3awed w tsdi9",
+     "en": "Regenerate and verify"
+    },
+    "body": {
+     "fr": "Puis contrôler dans grub.cfg.",
+     "dar": "W tsdi9.",
+     "en": "Then check grub.cfg."
+    },
+    "code": "grub2-mkconfig -o /boot/grub2/grub.cfg\ngrep -E \"timeout|default\" /boot/grub2/grub.cfg"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Sauvegarde `cp -p`, `GRUB_TIMEOUT=10`, `GRUB_TIMEOUT_STYLE=menu`, `GRUB_DEFAULT=1`, puis `grub2-mkconfig -o /boot/grub2/grub.cfg`.",
+   "dar": "`cp -p`, TIMEOUT=10, STYLE=menu, DEFAULT=1, `grub2-mkconfig`.",
+   "en": "Backup with `cp -p`, `GRUB_TIMEOUT=10`, `GRUB_TIMEOUT_STYLE=menu`, `GRUB_DEFAULT=1`, then `grub2-mkconfig -o /boot/grub2/grub.cfg`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "`GRUB_DEFAULT=2` pour la 2e entrée (c'est la 3e).",
+    "dar": "`DEFAULT=2` (hadi talta).",
+    "en": "`GRUB_DEFAULT=2` for the 2nd entry (that is the 3rd)."
+   },
+   {
+    "fr": "Oublier de régénérer grub.cfg.",
+    "dar": "Tnsa grub2-mkconfig.",
+    "en": "Forgetting to regenerate grub.cfg."
+   }
+  ],
+  "missionId": "m-grub-timeout"
+ },
+ {
+  "id": "lx-grub-2",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "title": {
+   "fr": "Mot de passe root perdu",
+   "dar": "Mot de passe root dâ3",
+   "en": "Lost root password"
+  },
+  "statement": {
+   "fr": "Tu as perdu le mot de passe root d'une VM RHEL 9 (SELinux en mode *enforcing*). Décris **toutes** les étapes pour le changer en `Rev24#Root`, en expliquant le rôle de chaque commande.",
+   "dar": "Mot de passe root dâ3. 3ti **ga3** les étapes bach tbeddlo l `Rev24#Root`, w fesser kol commande.",
+   "en": "You lost the root password of a RHEL 9 VM (SELinux *enforcing*). Describe **every** step to set it to `Rev24#Root`, explaining each command."
+  },
+  "hints": [
+   {
+    "fr": "On interrompt le démarrage avant le montage définitif de la racine.",
+    "dar": "Nw9fou démarrage 9bel racine.",
+    "en": "Interrupt boot before the root is finally mounted."
+   },
+   {
+    "fr": "La racine est d'abord en lecture seule.",
+    "dar": "Racine lecture seule.",
+    "en": "The root is read-only at first."
+   },
+   {
+    "fr": "N'oublie pas SELinux.",
+    "dar": "Ma tnsach SELinux.",
+    "en": "Don't forget SELinux."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Interrompre dans GRUB",
+     "dar": "W9ef f GRUB",
+     "en": "Interrupt in GRUB"
+    },
+    "body": {
+     "fr": "Au menu, sélectionner le noyau, `e`, ajouter `rd.break` à la fin de la ligne `linux`, **Ctrl+X**.",
+     "dar": "Menu → `e` → `rd.break` → **Ctrl+X**.",
+     "en": "At the menu select the kernel, `e`, append `rd.break` to the `linux` line, **Ctrl+X**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Rendre la racine modifiable",
+     "dar": "Racine rw",
+     "en": "Make the root writable"
+    },
+    "body": {
+     "fr": "Au prompt `switch_root:/#` :",
+     "dar": "F `switch_root:/#` :",
+     "en": "At `switch_root:/#`:"
+    },
+    "code": "mount -o remount,rw /sysroot\nchroot /sysroot"
+   },
+   {
+    "title": {
+     "fr": "Changer le mot de passe",
+     "dar": "Beddel mot de passe",
+     "en": "Change the password"
+    },
+    "body": {
+     "fr": "`passwd` (on est root dans le chroot), saisir 2 fois `Rev24#Root`.",
+     "dar": "`passwd` 2 merrat.",
+     "en": "`passwd` (root inside the chroot), type `Rev24#Root` twice."
+    },
+    "code": "passwd"
+   },
+   {
+    "title": {
+     "fr": "SELinux et sortie",
+     "dar": "SELinux w khrouj",
+     "en": "SELinux and exit"
+    },
+    "body": {
+     "fr": "`touch /.autorelabel` pour réétiqueter `/etc/shadow`, puis deux `exit` (chroot, puis initramfs → démarrage + relabel).",
+     "dar": "`touch /.autorelabel` w `exit` ×2.",
+     "en": "`touch /.autorelabel` to relabel `/etc/shadow`, then two `exit`s."
+    },
+    "code": "touch /.autorelabel\nexit\nexit"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "e → rd.break → Ctrl+X → `mount -o remount,rw /sysroot` → `chroot /sysroot` → `passwd` → `touch /.autorelabel` → `exit` → `exit`.",
+   "dar": "e → rd.break → Ctrl+X → remount → chroot → passwd → autorelabel → exit ×2.",
+   "en": "e → rd.break → Ctrl+X → `mount -o remount,rw /sysroot` → `chroot /sysroot` → `passwd` → `touch /.autorelabel` → `exit` → `exit`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Faire `passwd` avant `chroot` (modifie l'initramfs, pas le vrai système).",
+    "dar": "`passwd` 9bel `chroot`.",
+    "en": "Running `passwd` before `chroot` (changes the initramfs, not the real system)."
+   },
+   {
+    "fr": "Oublier le remount rw → « Authentication token manipulation error ».",
+    "dar": "Tnsa remount rw.",
+    "en": "Forgetting remount rw → \"Authentication token manipulation error\"."
+   },
+   {
+    "fr": "Oublier `/.autorelabel` → plus aucune connexion possible.",
+    "dar": "Tnsa autorelabel.",
+    "en": "Forgetting `/.autorelabel` → no login possible."
+   }
+  ],
+  "missionId": "m-root-reset"
+ },
+ {
+  "id": "lx-grub-3",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 2,
+  "title": {
+   "fr": "Ajouter « Redemarrer » et « Arreter » au menu",
+   "dar": "Zid « Redemarrer » w « Arreter »",
+   "en": "Add \"Redemarrer\" and \"Arreter\" to the menu"
+  },
+  "statement": {
+   "fr": "Ajoute deux entrées au menu GRUB : l'une redémarre la machine, l'autre l'éteint. Où les écrire et comment vérifier qu'elles ont été prises en compte ?",
+   "dar": "Zid jouj entrées : redémarrer w arrêter. Fin w kifach ttsdi9 ?",
+   "en": "Add two GRUB menu entries: one reboots, one powers off. Where do you write them and how do you verify?"
+  },
+  "hints": [
+   {
+    "fr": "Un script de /etc/grub.d/ est prévu pour ça.",
+    "dar": "Kayn script l hadchi.",
+    "en": "A /etc/grub.d/ script exists for this."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Éditer 40_custom",
+     "dar": "Beddel 40_custom",
+     "en": "Edit 40_custom"
+    },
+    "body": {
+     "fr": "Ajouter après le commentaire (sans toucher `exec tail -n +3 $0`).",
+     "dar": "Zid mor commentaire.",
+     "en": "Append after the comment (keep `exec tail -n +3 $0`)."
+    },
+    "code": "menuentry \"Redemarrer\" {\n    reboot\n}\nmenuentry \"Arreter\" {\n    halt\n}"
+   },
+   {
+    "title": {
+     "fr": "Régénérer et vérifier",
+     "dar": "3awed w tsdi9",
+     "en": "Regenerate and verify"
+    },
+    "body": {
+     "fr": "Les entrées doivent apparaître dans la section 40_custom de grub.cfg.",
+     "dar": "Khasshom ybanou f grub.cfg.",
+     "en": "They must appear in grub.cfg's 40_custom section."
+    },
+    "code": "grub2-mkconfig -o /boot/grub2/grub.cfg\ngrep menuentry /boot/grub2/grub.cfg"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Dans `/etc/grub.d/40_custom` : `menuentry \"Redemarrer\" { reboot }` et `menuentry \"Arreter\" { halt }`, puis `grub2-mkconfig -o /boot/grub2/grub.cfg`.",
+   "dar": "F 40_custom w `grub2-mkconfig`.",
+   "en": "In `/etc/grub.d/40_custom`: `menuentry \"Redemarrer\" { reboot }` and `menuentry \"Arreter\" { halt }`, then `grub2-mkconfig -o /boot/grub2/grub.cfg`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire dans grub.cfg directement.",
+    "dar": "Tktb f grub.cfg.",
+    "en": "Writing in grub.cfg directly."
+   },
+   {
+    "fr": "Supprimer la ligne `exec tail` de 40_custom.",
+    "dar": "Tmse7 `exec tail`.",
+    "en": "Deleting the `exec tail` line."
+   }
+  ],
+  "missionId": "m-grub-custom"
+ },
+ {
+  "id": "lx-grub-4",
+  "module": "linux",
+  "chapter": "grub",
+  "difficulty": 3,
+  "title": {
+   "fr": "Sécuriser GRUB puis retirer la protection",
+   "dar": "N7miw GRUB w n7eydou protection",
+   "en": "Secure GRUB then remove protection"
+  },
+  "statement": {
+   "fr": "Explique pourquoi un serveur en salle non fermée doit avoir un mot de passe GRUB. Mets-le en place, indique le fichier créé et comment le retirer.",
+   "dar": "Fesser 3lach serveur f salle ma msdoudach khasso mot de passe GRUB. Dirou, w kifach t7eydo.",
+   "en": "Explain why a server in an unlocked room needs a GRUB password. Set it up, name the file created and how to remove it."
+  },
+  "hints": [
+   {
+    "fr": "Pense à rd.break et au mode single user.",
+    "dar": "Fkker f rd.break.",
+    "en": "Think of rd.break and single-user mode."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Le risque",
+     "dar": "L khatar",
+     "en": "The risk"
+    },
+    "body": {
+     "fr": "Sans protection : `e` → `rd.break` ou mode single user → shell root sans mot de passe ; console GRUB ; démarrage d'un OS non sécurisé.",
+     "dar": "Bla protection → root bla mot de passe.",
+     "en": "Unprotected: `e` → `rd.break` or single user → passwordless root shell; GRUB console; unsafe OS."
+    }
+   },
+   {
+    "title": {
+     "fr": "Mettre le mot de passe",
+     "dar": "Dir mot de passe",
+     "en": "Set the password"
+    },
+    "body": {
+     "fr": "Crée /boot/grub2/user.cfg (GRUB2_PASSWORD=grub.pbkdf2.sha512…).",
+     "dar": "Kaydir user.cfg.",
+     "en": "Creates /boot/grub2/user.cfg."
+    },
+    "code": "grub2-setpassword\ncat /boot/grub2/user.cfg"
+   },
+   {
+    "title": {
+     "fr": "Retirer",
+     "dar": "N7eydou",
+     "en": "Remove"
+    },
+    "body": {
+     "fr": "Supprimer le fichier.",
+     "dar": "Mse7 fichier.",
+     "en": "Delete the file."
+    },
+    "code": "rm /boot/grub2/user.cfg"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`grub2-setpassword` → `/boot/grub2/user.cfg` ; `rm /boot/grub2/user.cfg` pour retirer.",
+   "dar": "`grub2-setpassword` → user.cfg ; `rm` bach t7eyed.",
+   "en": "`grub2-setpassword` → `/boot/grub2/user.cfg`; `rm /boot/grub2/user.cfg` to remove."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que `passwd root` protège GRUB.",
+    "dar": "Tdenn `passwd root` kay7mi GRUB.",
+    "en": "Thinking `passwd root` protects GRUB."
+   },
+   {
+    "fr": "Chercher le mot de passe dans /etc/default/grub.",
+    "dar": "Tqelleb f /etc/default/grub.",
+    "en": "Looking for it in /etc/default/grub."
+   }
+  ]
+ }
+]

@@ -1,0 +1,96 @@
+{
+ "id": "arbres",
+ "module": "ro",
+ "order": 5,
+ "title": {
+  "fr": "Arbres, Kruskal et Prim",
+  "dar": "Arbres, Kruskal, Prim",
+  "en": "Trees, Kruskal and Prim"
+ },
+ "summary": {
+  "fr": "Arbres, arbres couvrants, Cayley, Kruskal, Prim.",
+  "dar": "Kruskal w Prim.",
+  "en": "Trees, spanning trees, Kruskal, Prim."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Arbres",
+    "dar": "Arbres",
+    "en": "Trees"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Arbre** : non orienté, connexe, sans cycle (n sommets → n−1 arêtes). **Arbre couvrant** : contient tous les sommets. Kn possède **n^(n−2)** arbres couvrants (Cayley). Applications : réseaux à moindre coût, routes, câblage.",
+    "dar": "Arbre, n−1, Cayley.",
+    "en": "Tree, n−1 edges, Cayley n^(n−2)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Kruskal",
+    "dar": "Kruskal",
+    "en": "Kruskal"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "1) Trier les arêtes par poids croissant. 2) Partir d'un arbre vide. 3) Ajouter chaque arête si elle **ne crée pas de cycle** (✓), sinon l'éliminer (✗). 4) S'arrêter à **n−1** arêtes. Tableau : « poids | arête | ✓ / ✗ ».",
+    "dar": "Tri → ✓/✗ → n−1.",
+    "en": "Sort → ✓/✗ → n−1 edges."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "poids | arête | décision\n  2   | A–F   | ✓\n  2   | C–D   | ✓\n  3   | A–D   | ✓\n  3   | C–F   | ✗ cycle\n  3   | E–F   | ✓\n  4   | A–C   | ✗ cycle\n  5   | B–D   | ✓   → coût 15",
+   "caption": {
+    "fr": "Contrôle 2025-2026",
+    "dar": "Contrôle",
+    "en": "Exam 2025-2026"
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Prim",
+    "dar": "Prim",
+    "en": "Prim"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Partir d'un sommet ; à chaque étape ajouter l'arête de **poids minimal reliant l'arbre à un sommet hors de l'arbre**. Tableau « Ensemble S | sommets (poids ; prédécesseur) », ∞ au départ. Exemple du cours : arbre {B,D},{B,C},{A,D},{E,F},{C,F}, poids 14.",
+    "dar": "Prim + tableau.",
+    "en": "Grow from one vertex; table \"S | (weight; pred)\"."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-43",
+    "ro-45",
+    "ro-46"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Arbre : connexe, sans cycle, n−1 arêtes ; Kn : n^(n−2) arbres couvrants.",
+   "dar": "n−1, Cayley.",
+   "en": "n−1 edges; Cayley."
+  },
+  {
+   "fr": "Kruskal : tri + rejet des cycles ; Prim : croissance depuis un sommet.",
+   "dar": "Kruskal / Prim.",
+   "en": "Kruskal / Prim."
+  }
+ ]
+}

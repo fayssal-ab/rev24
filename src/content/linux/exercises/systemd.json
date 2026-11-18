@@ -1,0 +1,289 @@
+[
+ {
+  "id": "lx-sd-1",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "title": {
+   "fr": "Serveur sans interface graphique",
+   "dar": "Serveur bla graphique",
+   "en": "Server without GUI"
+  },
+  "statement": {
+   "fr": "Une VM démarre en mode graphique et consomme trop de RAM. Passe-la **tout de suite** en mode texte multi-utilisateur, et fais en sorte qu'elle reste en mode texte **après redémarrage**. Vérifie.",
+   "dar": "VM graphique. Douzha **daba** l texte, w **mor redémarrage** tb9a texte.",
+   "en": "A VM boots graphical and uses too much RAM. Switch it **now** to text multi-user, keep it text **after reboot**, and verify."
+  },
+  "hints": [
+   {
+    "fr": "Deux commandes différentes : maintenant / au démarrage.",
+    "dar": "Jouj commandes.",
+    "en": "Two different commands: now / at boot."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Maintenant",
+     "dar": "Daba",
+     "en": "Now"
+    },
+    "body": {
+     "fr": "`isolate` change de cible immédiatement (gdm s'arrête).",
+     "dar": "`isolate`.",
+     "en": "`isolate` switches immediately."
+    },
+    "code": "systemctl isolate multi-user.target"
+   },
+   {
+    "title": {
+     "fr": "Au démarrage",
+     "dar": "F démarrage",
+     "en": "At boot"
+    },
+    "body": {
+     "fr": "`set-default` remplace le lien default.target.",
+     "dar": "`set-default`.",
+     "en": "`set-default` replaces default.target."
+    },
+    "code": "systemctl set-default multi-user.target\nsystemctl get-default\nls -l /etc/systemd/system/default.target"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`isolate multi-user.target` + `set-default multi-user.target` ; `get-default` affiche multi-user.target.",
+   "dar": "isolate + set-default.",
+   "en": "`isolate multi-user.target` + `set-default multi-user.target`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Faire seulement set-default et croire que c'est immédiat.",
+    "dar": "Ghir set-default.",
+    "en": "Only set-default, thinking it is immediate."
+   },
+   {
+    "fr": "Faire seulement isolate : retour au graphique au reboot.",
+    "dar": "Ghir isolate.",
+    "en": "Only isolate: back to GUI at reboot."
+   }
+  ],
+  "missionId": "m-systemd-target"
+ },
+ {
+  "id": "lx-sd-2",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "title": {
+   "fr": "Service personnalisé de bout en bout",
+   "dar": "Service kaml",
+   "en": "End-to-end custom service"
+  },
+  "statement": {
+   "fr": "Crée un service `hello` qui exécute `/usr/local/bin/hello.sh`, démarré automatiquement en mode multi-utilisateur. Donne le fichier d'unité, les commandes et les vérifications. Que se passe-t-il si on oublie `chmod +x` ?",
+   "dar": "Dir service `hello` → `/usr/local/bin/hello.sh`, automatique. Chnou ywqe3 bla `chmod +x` ?",
+   "en": "Create a `hello` service running `/usr/local/bin/hello.sh`, started automatically in multi-user mode. Give the unit file, commands, checks. What if you forget `chmod +x`?"
+  },
+  "hints": [
+   {
+    "fr": "Trois sections dans l'unité.",
+    "dar": "3 sections.",
+    "en": "Three sections in the unit."
+   },
+   {
+    "fr": "systemd doit relire ses unités.",
+    "dar": "daemon-reload.",
+    "en": "systemd must reload units."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Script",
+     "dar": "Script",
+     "en": "Script"
+    },
+    "body": {
+     "fr": "Créer et rendre exécutable.",
+     "dar": "Dir w chmod +x.",
+     "en": "Create and make executable."
+    },
+    "code": "echo -e '#!/bin/bash\\necho hello' > /usr/local/bin/hello.sh\nchmod +x /usr/local/bin/hello.sh"
+   },
+   {
+    "title": {
+     "fr": "Unité",
+     "dar": "Unité",
+     "en": "Unit"
+    },
+    "body": {
+     "fr": "/etc/systemd/system/hello.service",
+     "dar": "/etc/systemd/system/hello.service",
+     "en": "/etc/systemd/system/hello.service"
+    },
+    "code": "[Unit]\nDescription=Hello\n\n[Service]\nExecStart=/usr/local/bin/hello.sh\n\n[Install]\nWantedBy=multi-user.target"
+   },
+   {
+    "title": {
+     "fr": "Activer et vérifier",
+     "dar": "Activer w tsdi9",
+     "en": "Enable and check"
+    },
+    "body": {
+     "fr": "Sans `chmod +x` : échec « Permission denied » visible dans `journalctl -u hello`.",
+     "dar": "Bla chmod +x : Permission denied.",
+     "en": "Without `chmod +x`: \"Permission denied\" in `journalctl -u hello`."
+    },
+    "code": "systemctl daemon-reload\nsystemctl enable --now hello\nsystemctl status hello\njournalctl -u hello"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Unité [Unit]/[Service]/[Install] + daemon-reload + enable --now ; sans +x → failed (Permission denied).",
+   "dar": "daemon-reload + enable --now.",
+   "en": "Unit + daemon-reload + enable --now; without +x → failed (Permission denied)."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier daemon-reload → « Unit hello.service not found ».",
+    "dar": "Tnsa daemon-reload.",
+    "en": "Forgetting daemon-reload → \"Unit not found\"."
+   },
+   {
+    "fr": "Mettre le fichier dans /usr/lib/systemd/system (réservé aux paquets).",
+    "dar": "F /usr/lib (dyal paquets).",
+    "en": "Putting it in /usr/lib/systemd/system (for packages)."
+   }
+  ],
+  "missionId": "m-systemd-service"
+ },
+ {
+  "id": "lx-sd-3",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "title": {
+   "fr": "Interdire un service",
+   "dar": "Mna3 service",
+   "en": "Forbid a service"
+  },
+  "statement": {
+   "fr": "La politique de sécurité interdit Bluetooth. Fais en sorte qu'il soit arrêté, désactivé et **impossible à démarrer**, même par erreur. Quelle commande annule ?",
+   "dar": "Bluetooth mamnou3. Wa9fo w khallih **ma ymkench ybda**.",
+   "en": "Security policy forbids Bluetooth. Stop it, disable it, make it **impossible to start**. What undoes it?"
+  },
+  "hints": [
+   {
+    "fr": "disable ne suffit pas.",
+    "dar": "disable ma kafich.",
+    "en": "disable is not enough."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Arrêter et masquer",
+     "dar": "W9ef w mask",
+     "en": "Stop and mask"
+    },
+    "body": {
+     "fr": "`mask` pointe l'unité vers /dev/null.",
+     "dar": "mask → /dev/null.",
+     "en": "mask links the unit to /dev/null."
+    },
+    "code": "systemctl stop bluetooth\nsystemctl mask bluetooth\nsystemctl start bluetooth   # → Unit bluetooth.service is masked."
+   },
+   {
+    "title": {
+     "fr": "Annuler",
+     "dar": "Lghi",
+     "en": "Undo"
+    },
+    "body": {
+     "fr": "`unmask`.",
+     "dar": "`unmask`.",
+     "en": "`unmask`."
+    },
+    "code": "systemctl unmask bluetooth"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`systemctl stop bluetooth` + `systemctl mask bluetooth` ; `unmask` pour annuler.",
+   "dar": "stop + mask ; unmask.",
+   "en": "stop + mask; unmask to undo."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Se contenter de disable (un start reste possible).",
+    "dar": "Ghir disable.",
+    "en": "Only disable (start still possible)."
+   }
+  ]
+ },
+ {
+  "id": "lx-sd-4",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "title": {
+   "fr": "Enquête dans le journal",
+   "dar": "Bahth f journal",
+   "en": "Journal investigation"
+  },
+  "statement": {
+   "fr": "Quelqu'un tente de se connecter en root via SSH. Retrouve dans le journal du démarrage courant les échecs d'authentification de sshd, puis les 5 dernières erreurs du système, au format court puis en JSON.",
+   "dar": "Chi wa7ed kayjereb root b SSH. Qelleb f journal.",
+   "en": "Someone tries to log in as root via SSH. Find sshd authentication failures in this boot's journal, then the last 5 system errors, short then JSON."
+  },
+  "hints": [
+   {
+    "fr": "Combine -b et -u, puis filtre avec grep.",
+    "dar": "-b -u w grep.",
+    "en": "Combine -b and -u, then grep."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Échecs sshd",
+     "dar": "Échecs sshd",
+     "en": "sshd failures"
+    },
+    "body": {
+     "fr": "`-b -u sshd` puis `grep Failed`.",
+     "dar": "`grep Failed`.",
+     "en": "`-b -u sshd` then `grep Failed`."
+    },
+    "code": "journalctl -b -u sshd | grep Failed"
+   },
+   {
+    "title": {
+     "fr": "Dernières erreurs",
+     "dar": "Erreurs lekhrin",
+     "en": "Last errors"
+    },
+    "body": {
+     "fr": "`-p err -n 5`, puis `-o json-pretty`.",
+     "dar": "`-p err -n 5`.",
+     "en": "`-p err -n 5`, then `-o json-pretty`."
+    },
+    "code": "journalctl -p err -n 5\njournalctl -p err -n 5 -o json-pretty"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`journalctl -b -u sshd | grep Failed` ; `journalctl -p err -n 5 [-o json-pretty]`.",
+   "dar": "journalctl -b -u sshd ; -p err -n 5.",
+   "en": "`journalctl -b -u sshd | grep Failed`; `journalctl -p err -n 5 [-o json-pretty]`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre -n (nombre) et -b (boot).",
+    "dar": "Tkhalt -n w -b.",
+    "en": "Confusing -n and -b."
+   },
+   {
+    "fr": "Croire que -p err exclut crit/alert.",
+    "dar": "-p err fih crit.",
+    "en": "Thinking -p err excludes crit/alert."
+   }
+  ]
+ }
+]

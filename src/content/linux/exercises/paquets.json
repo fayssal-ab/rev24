@@ -1,0 +1,307 @@
+[
+ {
+  "id": "lx-pkg-1",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "title": {
+   "fr": "Enquête rpm",
+   "dar": "Bahth b rpm",
+   "en": "rpm investigation"
+  },
+  "statement": {
+   "fr": "Un collègue a modifié un fichier système. Trouve à quel paquet appartient `/etc/sudoers`, liste les fichiers de configuration de ce paquet, puis vérifie lesquels ont été modifiés.",
+   "dar": "Chi wa7ed beddel fichier. L ach men paquet `/etc/sudoers` ? Config dyalo ? Chnou tbeddel ?",
+   "en": "A colleague changed a system file. Find the package owning `/etc/sudoers`, list its config files, then check which were modified."
+  },
+  "hints": [
+   {
+    "fr": "-qf, -qc, -V",
+    "dar": "-qf, -qc, -V",
+    "en": "-qf, -qc, -V"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Propriétaire",
+     "dar": "Mol",
+     "en": "Owner"
+    },
+    "body": {
+     "fr": "→ sudo-1.9.5p2-…",
+     "dar": "→ sudo",
+     "en": "→ sudo-…"
+    },
+    "code": "rpm -qf /etc/sudoers"
+   },
+   {
+    "title": {
+     "fr": "Fichiers de config",
+     "dar": "Config",
+     "en": "Config files"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "rpm -qc sudo"
+   },
+   {
+    "title": {
+     "fr": "Vérifier",
+     "dar": "Tsdi9",
+     "en": "Verify"
+    },
+    "body": {
+     "fr": "Une ligne `S.5....T.  c /etc/sudoers` = taille, somme et date changées.",
+     "dar": "`S.5....T.` = tbeddel.",
+     "en": "`S.5....T.  c /etc/sudoers` = size, digest and time changed."
+    },
+    "code": "rpm -V sudo"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`rpm -qf /etc/sudoers` → sudo ; `rpm -qc sudo` ; `rpm -V sudo`.",
+   "dar": "qf → qc → V.",
+   "en": "`rpm -qf` → `rpm -qc sudo` → `rpm -V sudo`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser `rpm -ql` au lieu de `-qf`.",
+    "dar": "`-ql` f blast `-qf`.",
+    "en": "Using `-ql` instead of `-qf`."
+   },
+   {
+    "fr": "Croire qu'une sortie vide de `rpm -V` est une erreur.",
+    "dar": "Sortie khawya = mzyan.",
+    "en": "Thinking empty `rpm -V` output is an error."
+   }
+  ]
+ },
+ {
+  "id": "lx-pkg-2",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "title": {
+   "fr": "rpm échoue, dnf réussit",
+   "dar": "rpm kayfchel, dnf kaynje7",
+   "en": "rpm fails, dnf succeeds"
+  },
+  "statement": {
+   "fr": "Tu as `/root/rpms/wireshark-3.4.10-7.el9.x86_64.rpm`. Essaie de l'installer avec rpm, explique l'échec, puis installe wireshark correctement et annule ensuite cette installation grâce à l'historique.",
+   "dar": "Installi b rpm, fesser, men b3d dnf, w lghi b history.",
+   "en": "Try installing with rpm, explain the failure, install properly, then revert via history."
+  },
+  "hints": [
+   {
+    "fr": "Lis attentivement le message « Dépendances requises ».",
+    "dar": "9ra message.",
+    "en": "Read \"Failed dependencies\"."
+   },
+   {
+    "fr": "history list → numéro → undo.",
+    "dar": "history → undo.",
+    "en": "history → undo."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Avec rpm",
+     "dar": "B rpm",
+     "en": "With rpm"
+    },
+    "body": {
+     "fr": "Échec : wireshark-cli, libQt5Core.so.5, libpcap… manquent ; rpm ne télécharge rien.",
+     "dar": "Dépendances na9sin.",
+     "en": "Fails: missing wireshark-cli, libQt5Core.so.5, libpcap…"
+    },
+    "code": "rpm -ivh /root/rpms/wireshark-3.4.10-7.el9.x86_64.rpm"
+   },
+   {
+    "title": {
+     "fr": "Avec dnf",
+     "dar": "B dnf",
+     "en": "With dnf"
+    },
+    "body": {
+     "fr": "dnf calcule et installe les dépendances.",
+     "dar": "dnf kay7ell.",
+     "en": "dnf resolves and installs them."
+    },
+    "code": "dnf install -y wireshark"
+   },
+   {
+    "title": {
+     "fr": "Annuler",
+     "dar": "Lghi",
+     "en": "Undo"
+    },
+    "body": {
+     "fr": "Repérer l'ID de la transaction puis l'annuler.",
+     "dar": "ID w undo.",
+     "en": "Find the ID then undo."
+    },
+    "code": "dnf history\ndnf history info 2\ndnf history undo 2"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "rpm : « Dépendances requises » ; `dnf install -y wireshark` ; `dnf history undo N`.",
+   "dar": "rpm fchel ; dnf ; undo.",
+   "en": "rpm: failed deps; `dnf install -y wireshark`; `dnf history undo N`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Ajouter --nodeps.",
+    "dar": "--nodeps.",
+    "en": "Adding --nodeps."
+   },
+   {
+    "fr": "Annuler avec `dnf remove wireshark` (laisse les dépendances).",
+    "dar": "`remove` kaykhelli deps.",
+    "en": "Undoing with `dnf remove` (leaves deps)."
+   }
+  ],
+  "missionId": "m-dnf-wireshark"
+ },
+ {
+  "id": "lx-pkg-3",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "title": {
+   "fr": "Dépôt local complet",
+   "dar": "Dépôt local kaml",
+   "en": "Complete local repository"
+  },
+  "statement": {
+   "fr": "Crée un dépôt local `mon_depot` contenant `zsh`, déclare-le, désactive les dépôts Red Hat, puis installe zsh depuis ce dépôt uniquement.",
+   "dar": "Dir dépôt local fih `zsh`, tfi dépôts Red Hat, installi zsh.",
+   "en": "Create a local repo with `zsh`, declare it, disable Red Hat repos, then install zsh from it only."
+  },
+  "hints": [
+   {
+    "fr": "createrepo vient du paquet createrepo_c.",
+    "dar": "createrepo_c.",
+    "en": "createrepo comes from createrepo_c."
+   },
+   {
+    "fr": "baseurl en file:///",
+    "dar": "file:///",
+    "en": "baseurl with file:///"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Préparer",
+     "dar": "Wjjed",
+     "en": "Prepare"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "dnf install -y httpd createrepo_c\nmkdir -p /var/www/html/mon_depot\ndnf install --downloadonly --downloaddir=/var/www/html/mon_depot -y zsh\ncreaterepo /var/www/html/mon_depot"
+   },
+   {
+    "title": {
+     "fr": "Déclarer",
+     "dar": "Déclarer",
+     "en": "Declare"
+    },
+    "body": {
+     "fr": "Fichier /etc/yum.repos.d/local.repo",
+     "dar": "local.repo",
+     "en": "local.repo"
+    },
+    "code": "[local]\nname=Depot local\nbaseurl=file:///var/www/html/mon_depot\ngpgcheck=0\nenabled=1"
+   },
+   {
+    "title": {
+     "fr": "Tester",
+     "dar": "Testi",
+     "en": "Test"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "yum-config-manager --disable rhel-9-for-x86_64-baseos-rpms\nyum-config-manager --disable rhel-9-for-x86_64-appstream-rpms\ndnf repolist\ndnf install -y zsh"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Le dépôt `local` est le seul listé par `dnf repolist` et fournit zsh.",
+   "dar": "local wa7dou.",
+   "en": "`local` is the only repo listed and provides zsh."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier createrepo.",
+    "dar": "Tnsa createrepo.",
+    "en": "Forgetting createrepo."
+   },
+   {
+    "fr": "baseurl sans `file://`.",
+    "dar": "Bla file://.",
+    "en": "baseurl without `file://`."
+   }
+  ],
+  "missionId": "m-dnf-local-repo"
+ },
+ {
+  "id": "lx-pkg-4",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "title": {
+   "fr": "Groupes de paquets",
+   "dar": "Groupes",
+   "en": "Package groups"
+  },
+  "statement": {
+   "fr": "Affiche les groupes disponibles, le contenu du groupe « System Tools », installe-le puis supprime-le.",
+   "dar": "Groupes, contenu, install, remove.",
+   "en": "Show groups, the content of \"System Tools\", install it then remove it."
+  },
+  "hints": [
+   {
+    "fr": "Guillemets !",
+    "dar": "Guillemets !",
+    "en": "Quotes!"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "dnf group list\ndnf group info \"System Tools\"\ndnf group install -y \"System Tools\"\ndnf group remove -y \"System Tools\""
+   }
+  ],
+  "finalAnswer": {
+   "fr": "group list / info / install / remove avec le nom entre guillemets.",
+   "dar": "group + guillemets.",
+   "en": "group list/info/install/remove, quoted name."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Nom sans guillemets.",
+    "dar": "Bla guillemets.",
+    "en": "Unquoted name."
+   }
+  ]
+ }
+]

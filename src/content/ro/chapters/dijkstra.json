@@ -1,0 +1,73 @@
+{
+ "id": "dijkstra",
+ "module": "ro",
+ "order": 6,
+ "title": {
+  "fr": "Plus court chemin : Dijkstra",
+  "dar": "Dijkstra",
+  "en": "Shortest path: Dijkstra"
+ },
+ "summary": {
+  "fr": "Algorithme de Dijkstra et tableau d'itérations.",
+  "dar": "Dijkstra.",
+  "en": "Dijkstra with iteration table."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Algorithme",
+    "dar": "Algorithme",
+    "en": "Algorithm"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Poids **≥ 0**. 1) d(source) = 0, autres = ∞. 2) Fixer le sommet non traité de plus petite distance u. 3) Relâcher ses voisins : **d(v) = min(d(v), d(u) + w(u,v))**, noter le prédécesseur. 4) Recommencer ; reconstruire le chemin à rebours.",
+    "dar": "d = 0 / ∞ ; fixe min ; relâche ; à rebours.",
+    "en": "Init, fix min, relax, backtrack."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "it | fixé |  A    B    C    D    E     F\n 0 |  B   |  ∞    0    9B   5B   ∞     ∞\n 1 |  D   |  8D   -    7D   -    17D   10D\n 2 |  C   |  8D   -    -    -    17D   10D\n 3 |  A   |  -    -    -    -    15A   10D\n 4 |  F   |  -    -    -    -    13F   -\n 5 |  E   |  B–D–F–E = 13",
+   "caption": {
+    "fr": "Tableau d'itérations (format examen)",
+    "dar": "Tableau",
+    "en": "Exam-format table"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Le tableau d'itérations est **obligatoire** au contrôle.",
+    "dar": "Tableau darouri.",
+    "en": "The table is mandatory."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-50",
+    "ro-53",
+    "ro-54"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Dijkstra : poids ≥ 0, fixer le min, relâcher, prédécesseurs.",
+   "dar": "Dijkstra.",
+   "en": "Dijkstra steps."
+  },
+  {
+   "fr": "Contrôle : B → E = 13 min.",
+   "dar": "13.",
+   "en": "Exam: 13 min."
+  }
+ ]
+}

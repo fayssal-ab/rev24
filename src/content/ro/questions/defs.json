@@ -1,0 +1,354 @@
+[
+ {
+  "id": "ro-01",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "L'**ordre** d'un graphe est…",
+   "dar": "**Ordre** dyal graphe howa…",
+   "en": "The **order** of a graph is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "le nombre de sommets",
+     "dar": "ch7al mn sommet",
+     "en": "the number of vertices"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "le nombre d'arêtes",
+     "dar": "ch7al mn arête",
+     "en": "the number of edges"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "le degré maximal",
+     "dar": "akbar degré",
+     "en": "the max degree"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Ordre = nombre de sommets ; **taille** = nombre d'arêtes.",
+   "dar": "Ordre = sommets ; taille = arêtes.",
+   "en": "Order = vertices; **size** = edges."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est la taille.",
+    "dar": "Hadi taille.",
+    "en": "That is the size."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "defs"
+  ]
+ },
+ {
+  "id": "ro-02",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Comment compte-t-on une **boucle** dans le degré ?",
+   "dar": "Boucle f degré ?",
+   "en": "How does a **loop** count in the degree?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "2 fois",
+     "dar": "Jouj merrat",
+     "en": "Twice"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "1 fois",
+     "dar": "Merra",
+     "en": "Once"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Une boucle compte **2** dans le degré du sommet.",
+   "dar": "Boucle = 2.",
+   "en": "A loop counts **2**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Faux : 2.",
+    "dar": "Ghalat : 2.",
+    "en": "Wrong: 2."
+   },
+   "c": {
+    "fr": "Faux : 2.",
+    "dar": "Ghalat : 2.",
+    "en": "Wrong: 2."
+   }
+  },
+  "tags": [
+   "degres"
+  ]
+ },
+ {
+  "id": "ro-03",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi la somme des degrés est-elle toujours paire ?",
+   "dar": "3lach somme dyal degrés dima pair ?",
+   "en": "Why is the degree sum always even?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Σ deg = 2 × nombre d'arêtes",
+     "dar": "Σ deg = 2 × arêtes",
+     "en": "Σ deg = 2 × edges"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les graphes ont un nombre pair de sommets",
+     "dar": "Sommets pair",
+     "en": "Even number of vertices"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Par convention",
+     "dar": "Convention",
+     "en": "By convention"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Chaque arête a 2 extrémités : Σ deg = 2m. Corollaire : le nombre de sommets de degré impair est **pair**.",
+   "dar": "Kol arête 3endha 2 tarf : Σ = 2m.",
+   "en": "Each edge has 2 ends: Σ deg = 2m. Hence an even number of odd vertices."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Faux.",
+    "dar": "Ghalat.",
+    "en": "False."
+   },
+   "c": {
+    "fr": "C'est un théorème.",
+    "dar": "Théorème.",
+    "en": "It is a theorem."
+   }
+  },
+  "tags": [
+   "degres"
+  ]
+ },
+ {
+  "id": "ro-04",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Existe-t-il un graphe de degrés 4, 3, 3, 2, 1 ?",
+   "dar": "Kayn graphe b degrés 4,3,3,2,1 ?",
+   "en": "Is there a graph with degrees 4, 3, 3, 2, 1?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Non, la somme 13 est impaire",
+     "dar": "La, 13 impair",
+     "en": "No, the sum 13 is odd"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Oui",
+     "dar": "Ah",
+     "en": "Yes"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Oui si on ajoute une boucle",
+     "dar": "Ah b boucle",
+     "en": "Yes with a loop"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Σ = 13 impaire, or Σ deg = 2m doit être pair → **impossible** (contrôle, ex. 3.1).",
+   "dar": "13 impair → impossible.",
+   "en": "13 is odd → **impossible**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Impossible.",
+    "dar": "Impossible.",
+    "en": "Impossible."
+   },
+   "c": {
+    "fr": "Une boucle ajoute 2 : la parité ne change pas.",
+    "dar": "Boucle +2.",
+    "en": "A loop adds 2: parity unchanged."
+   }
+  },
+  "tags": [
+   "degres",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-05",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre d'arêtes de K7 ?",
+   "dar": "Ch7al arête f K7 ?",
+   "en": "Edges of K7?"
+  },
+  "answer": 21,
+  "tolerance": 0,
+  "compute": {
+   "fn": "completeEdges",
+   "args": [
+    7
+   ]
+  },
+  "explanation": {
+   "fr": "n(n−1)/2 = 7×6/2 = **21**.",
+   "dar": "7×6/2 = 21.",
+   "en": "7×6/2 = **21**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "complet"
+  ]
+ },
+ {
+  "id": "ro-06",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre d'arêtes de K10 ?",
+   "dar": "K10 ?",
+   "en": "Edges of K10?"
+  },
+  "answer": 45,
+  "tolerance": 0,
+  "compute": {
+   "fn": "completeEdges",
+   "args": [
+    10
+   ]
+  },
+  "explanation": {
+   "fr": "10×9/2 = **45**.",
+   "dar": "45.",
+   "en": "**45**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "complet"
+  ]
+ },
+ {
+  "id": "ro-07",
+  "module": "ro",
+  "chapter": "defs",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Un **graphe simple** est un graphe…",
+   "dar": "Graphe **simple** ?",
+   "en": "A **simple graph** has…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "sans boucle",
+     "dar": "bla boucle",
+     "en": "no loop"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "avec au plus une arête entre deux sommets",
+     "dar": "arête wa7da max",
+     "en": "at most one edge between two vertices"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "forcément connexe",
+     "dar": "dima connexe",
+     "en": "always connected"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "Simple = pas de boucle, pas d'arêtes multiples.",
+   "dar": "Bla boucle, bla multiples.",
+   "en": "No loops, no multiple edges."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Un graphe simple peut être non connexe.",
+    "dar": "Momkin ma connexe.",
+    "en": "May be disconnected."
+   }
+  },
+  "tags": [
+   "defs"
+  ]
+ }
+]

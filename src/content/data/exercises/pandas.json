@@ -1,0 +1,285 @@
+[
+ {
+  "id": "dx-p-1",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "title": {
+   "fr": "Feuille N°1 — lectures CSV",
+   "dar": "Feuille 1 — CSV",
+   "en": "Sheet 1 — CSV reads"
+  },
+  "statement": {
+   "fr": "Écris les instructions pour lire depuis `url` : a) `notes.csv` ; b) `notes_decim.csv` (`;`, virgule décimale) ; c) `notes_h.csv` (sans en-tête) ; d) `notes_h_s.csv` (une ligne de commentaire puis sans en-tête).",
+   "dar": "4 lectures CSV.",
+   "en": "Four CSV reads."
+  },
+  "hints": [
+   {
+    "fr": "Regarde la 1re ligne de chaque fichier.",
+    "dar": "Chouf ster lowel.",
+    "en": "Look at line 1."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Solution",
+     "dar": "Solution",
+     "en": "Solution"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "url = \"http://egallic.fr/Enseignement/Python/Exercices/donnees/\"\na = pd.read_csv(url + \"notes.csv\")\nb = pd.read_csv(url + \"notes_decim.csv\", sep=\";\", decimal=\",\")\nc = pd.read_csv(url + \"notes_h.csv\", header=None)\nd = pd.read_csv(url + \"notes_h_s.csv\", header=None, skiprows=1)"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "a) défaut ; b) sep=\";\", decimal=\",\" ; c) header=None ; d) header=None, skiprows=1.",
+   "dar": "Paramètres.",
+   "en": "See parameters."
+  },
+  "commonMistakes": [
+   {
+    "fr": "skiprows=1 seul pour notes_h (supprime une donnée).",
+    "dar": "skiprows ghalat.",
+    "en": "skiprows alone loses data."
+   },
+   {
+    "fr": "Oublier decimal.",
+    "dar": "Bla decimal.",
+    "en": "Forgetting decimal."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-2",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "title": {
+   "fr": "Feuille N°1 — Excel et export",
+   "dar": "Feuille 1 — Excel",
+   "en": "Sheet 1 — Excel and export"
+  },
+  "statement": {
+   "fr": "Lis la 1re feuille de `notes.xlsx`, puis la feuille `notes_h_s` (en sautant la ligne de commentaire). Exporte enfin le DataFrame en `notes_export.csv`, séparateur `,`, point décimal, sans index.",
+   "dar": "Excel w export.",
+   "en": "Excel reads and export."
+  },
+  "hints": [
+   {
+    "fr": "sheet_name accepte un numéro ou un nom.",
+    "dar": "Ra9m wla smiya.",
+    "en": "Number or name."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Solution",
+     "dar": "Solution",
+     "en": "Solution"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "df1 = pd.read_excel(url + \"notes.xlsx\", sheet_name=0)\ndf2 = pd.read_excel(url + \"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1)\ndf2.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`sheet_name=0` ; `sheet_name=\"notes_h_s\", skiprows=1` ; `to_csv(..., index=False)`.",
+   "dar": "Solution.",
+   "en": "See code."
+  },
+  "commonMistakes": [
+   {
+    "fr": "read_csv sur un .xlsx.",
+    "dar": "read_csv.",
+    "en": "read_csv on xlsx."
+   },
+   {
+    "fr": "Oublier index=False.",
+    "dar": "index=False.",
+    "en": "Forgetting index=False."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-3",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diagnostiquer une lecture ratée",
+   "dar": "Diagnostic",
+   "en": "Debug a failed read"
+  },
+  "statement": {
+   "fr": "`df = pd.read_csv(\"ventes.csv\")` donne une seule colonne nommée `produit;prix;qte` et des valeurs comme `\"pomme;2,5;10\"`. `df[\"prix\"].mean()` plante. Explique et corrige.",
+   "dar": "Colonne wa7da : 3lach ?",
+   "en": "One column only: why? Fix it."
+  },
+  "hints": [
+   {
+    "fr": "Regarde le caractère entre les champs.",
+    "dar": "Séparateur.",
+    "en": "Look at the separator."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Cause",
+     "dar": "Sabab",
+     "en": "Cause"
+    },
+    "body": {
+     "fr": "Séparateur `;` non indiqué → tout dans une colonne ; décimales à virgule → texte.",
+     "dar": "`;` w `,`.",
+     "en": "`;` separator and decimal comma."
+    }
+   },
+   {
+    "title": {
+     "fr": "Correction",
+     "dar": "Tas7i7",
+     "en": "Fix"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "df = pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\")\ndf[\"prix\"].mean()"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\")`.",
+   "dar": "sep + decimal.",
+   "en": "sep + decimal."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre seulement sep : prix reste du texte.",
+    "dar": "Ghir sep.",
+    "en": "Only sep: still text."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-4",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "title": {
+   "fr": "Lecture ciblée d'un classeur",
+   "dar": "Lecture ciblée",
+   "en": "Targeted workbook read"
+  },
+  "statement": {
+   "fr": "Dans `notes.xlsx`, lis seulement les colonnes A et C des 100 premières lignes, utilise la colonne A comme index, traite « abs » comme valeur manquante et lis **toutes** les feuilles. Quel type d'objet obtiens-tu ?",
+   "dar": "usecols, nrows, index_col, na_values, sheet_name=None.",
+   "en": "Columns A,C, 100 rows, index A, \"abs\" as NaN, all sheets."
+  },
+  "hints": [
+   {
+    "fr": "usecols accepte \"A,C\".",
+    "dar": "usecols=\"A,C\".",
+    "en": "usecols=\"A,C\"."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Appel",
+     "dar": "Appel",
+     "en": "Call"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "d = pd.read_excel(\"notes.xlsx\", sheet_name=None, usecols=\"A,C\", nrows=100, index_col=0, na_values=[\"abs\"])\nd.keys()   # noms des feuilles"
+   },
+   {
+    "title": {
+     "fr": "Type",
+     "dar": "Type",
+     "en": "Type"
+    },
+    "body": {
+     "fr": "`sheet_name=None` → **dict** {nom de feuille: DataFrame}.",
+     "dar": "Dict.",
+     "en": "A dict."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Un dictionnaire de DataFrames, un par feuille.",
+   "dar": "Dict.",
+   "en": "A dict of DataFrames."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Attendre un seul DataFrame.",
+    "dar": "DataFrame wa7ed.",
+    "en": "Expecting one DataFrame."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-5",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "title": {
+   "fr": "Series ou DataFrame ?",
+   "dar": "Series wla DataFrame ?",
+   "en": "Series or DataFrame?"
+  },
+  "statement": {
+   "fr": "Après `df = pd.read_csv(\"notes.csv\")` (colonnes nom, note1, note2), quel est le type de `df`, de `df[\"note1\"]` et de `df[[\"note1\", \"note2\"]]` ?",
+   "dar": "Types ?",
+   "en": "Types?"
+  },
+  "hints": [
+   {
+    "fr": "Un seul crochet → une colonne.",
+    "dar": "Crochet wa7ed.",
+    "en": "Single brackets → one column."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponse",
+     "dar": "Jawab",
+     "en": "Answer"
+    },
+    "body": {
+     "fr": "`df` : DataFrame (2D) ; `df[\"note1\"]` : **Series** (1D) ; `df[[\"note1\",\"note2\"]]` : **DataFrame** (liste de colonnes).",
+     "dar": "DataFrame, Series, DataFrame.",
+     "en": "DataFrame, Series, DataFrame."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "DataFrame · Series · DataFrame.",
+   "dar": "DataFrame · Series · DataFrame.",
+   "en": "DataFrame · Series · DataFrame."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que deux crochets donnent une Series.",
+    "dar": "Jouj crochets.",
+    "en": "Double brackets give a DataFrame."
+   }
+  ]
+ }
+]

@@ -1,0 +1,885 @@
+[
+ {
+  "id": "di-01",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 1,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quels sont les 4 objectifs de l'analyse de données ?",
+   "dar": "4 ahdaf dyal analyse ?",
+   "en": "The 4 goals of data analysis?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Décrire",
+     "dar": "Wsef",
+     "en": "Describe"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Relier",
+     "dar": "Rbet",
+     "en": "Relate"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Prédire",
+     "dar": "Tnba2",
+     "en": "Predict"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Décider",
+     "dar": "Qarrer",
+     "en": "Decide"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Chiffrer",
+     "dar": "Chiffrer",
+     "en": "Encrypt"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "Décrire (résumer), **relier** (liens entre variables), **prédire** (anticiper), **décider** (aider la décision).",
+   "dar": "Wsef, rbet, tnba2, qarrer.",
+   "en": "Describe, **relate**, **predict**, **decide**."
+  },
+  "wrongExplanations": {
+   "e": {
+    "fr": "Le chiffrement relève de la sécurité, pas de l'analyse.",
+    "dar": "Sécurité.",
+    "en": "Encryption is security."
+   }
+  },
+  "tags": [
+   "objectifs"
+  ]
+ },
+ {
+  "id": "di-02",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Calculer la moyenne et la variance de l'âge des patients relève de l'analyse…",
+   "dar": "Moyenne w variance = analyse… ?",
+   "en": "Mean and variance of age = … analysis?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "descriptive",
+     "dar": "descriptive",
+     "en": "descriptive"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "prédictive",
+     "dar": "prédictive",
+     "en": "predictive"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "prescriptive",
+     "dar": "prescriptive",
+     "en": "prescriptive"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "confirmatoire",
+     "dar": "confirmatoire",
+     "en": "confirmatory"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Descriptive** : résumer les données (moyenne, variance, graphiques). « Que s'est-il passé ? »",
+   "dar": "Descriptive.",
+   "en": "**Descriptive**: summarise data."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Prédictive : régression, ML pour anticiper.",
+    "dar": "Tnba2.",
+    "en": "Prediction."
+   },
+   "c": {
+    "fr": "Prescriptive : simulation, optimisation pour recommander.",
+    "dar": "Tawsiya.",
+    "en": "Recommendation."
+   },
+   "d": {
+    "fr": "Confirmatoire : tests d'hypothèses.",
+    "dar": "Tests.",
+    "en": "Tests."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-03",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "L'ACP, l'AFC et le clustering appartiennent à l'analyse…",
+   "dar": "ACP, AFC, clustering = ?",
+   "en": "PCA, CA, clustering are…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "descriptive",
+     "dar": "descriptive",
+     "en": "descriptive"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "exploratoire",
+     "dar": "exploratoire",
+     "en": "exploratory"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "confirmatoire",
+     "dar": "confirmatoire",
+     "en": "confirmatory"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "prescriptive",
+     "dar": "prescriptive",
+     "en": "prescriptive"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "**Exploratoire** : découvrir des structures cachées sans hypothèse préalable (ACP, AFC, clustering).",
+   "dar": "Exploratoire.",
+   "en": "**Exploratory**: find hidden structure."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Descriptive = statistiques simples et graphiques.",
+    "dar": "Basita.",
+    "en": "Simple stats."
+   },
+   "c": {
+    "fr": "Confirmatoire = tester une hypothèse posée avant.",
+    "dar": "Tests.",
+    "en": "Testing a prior hypothesis."
+   },
+   "d": {
+    "fr": "Prescriptive = simulation, optimisation.",
+    "dar": "Optimisation.",
+    "en": "Optimisation."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-04",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un test de Student pour vérifier qu'un médicament baisse la glycémie est une analyse…",
+   "dar": "Test Student = ?",
+   "en": "A Student test checking a drug is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "exploratoire",
+     "dar": "exploratoire",
+     "en": "exploratory"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "confirmatoire",
+     "dar": "confirmatoire",
+     "en": "confirmatory"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "prédictive",
+     "dar": "prédictive",
+     "en": "predictive"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "descriptive",
+     "dar": "descriptive",
+     "en": "descriptive"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "**Confirmatoire** : on confirme ou infirme une hypothèse formulée **avant** de voir les données (tests).",
+   "dar": "Confirmatoire.",
+   "en": "**Confirmatory**: tests a prior hypothesis."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Exploratoire = sans hypothèse.",
+    "dar": "Bla hypothèse.",
+    "en": "No prior hypothesis."
+   },
+   "c": {
+    "fr": "Prédictive = anticiper des valeurs futures.",
+    "dar": "Mosta9bal.",
+    "en": "Future values."
+   },
+   "d": {
+    "fr": "Descriptive = résumer.",
+    "dar": "Résumer.",
+    "en": "Summarising."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-05",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Choisir le planning de production qui minimise les coûts relève de l'analyse…",
+   "dar": "Planning b a9al coût = ?",
+   "en": "Choosing a cost-minimising production plan is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "prescriptive",
+     "dar": "prescriptive",
+     "en": "prescriptive"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "prédictive",
+     "dar": "prédictive",
+     "en": "predictive"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "exploratoire",
+     "dar": "exploratoire",
+     "en": "exploratory"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "descriptive",
+     "dar": "descriptive",
+     "en": "descriptive"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Prescriptive** : recommander une action (simulation, **optimisation**) — « que faut-il faire ? ».",
+   "dar": "Prescriptive.",
+   "en": "**Prescriptive**: recommend actions."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Prédire ≠ recommander une action.",
+    "dar": "Tnba2 ≠ tawsiya.",
+    "en": "Predicting ≠ recommending."
+   },
+   "c": {
+    "fr": "Pas de recherche de structure ici.",
+    "dar": "Machi structure.",
+    "en": "No structure search."
+   },
+   "d": {
+    "fr": "On ne se contente pas de résumer.",
+    "dar": "Machi ghir résumé.",
+    "en": "Not just summarising."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-06",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 1,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre les 5 étapes d'une analyse de données.",
+   "dar": "Rttab 5 mara7il.",
+   "en": "Order the 5 steps."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Collecte",
+     "dar": "Jm3",
+     "en": "Collection"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Nettoyage",
+     "dar": "Tnqiya",
+     "en": "Cleaning"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Exploration",
+     "dar": "Istikchaf",
+     "en": "Exploration"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Modélisation",
+     "dar": "Modélisation",
+     "en": "Modelling"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Interprétation",
+     "dar": "Tafsir",
+     "en": "Interpretation"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Collecte → nettoyage → exploration → modélisation → interprétation.",
+   "dar": "Jm3 → tnqiya → istikchaf → modélisation → tafsir.",
+   "en": "Collection → cleaning → exploration → modelling → interpretation."
+  },
+  "tags": [
+   "etapes"
+  ]
+ },
+ {
+  "id": "di-07",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Traiter les valeurs manquantes et les doublons, c'est l'étape de…",
+   "dar": "Valeurs na9sin w doublons = ?",
+   "en": "Missing values and duplicates = which step?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "collecte",
+     "dar": "jm3",
+     "en": "collection"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "nettoyage",
+     "dar": "tnqiya",
+     "en": "cleaning"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "modélisation",
+     "dar": "modélisation",
+     "en": "modelling"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "interprétation",
+     "dar": "tafsir",
+     "en": "interpretation"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Le **nettoyage** corrige valeurs manquantes, doublons, erreurs de saisie, types — souvent l'étape la plus longue.",
+   "dar": "Tnqiya.",
+   "en": "**Cleaning**."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "La collecte récupère les données brutes.",
+    "dar": "Jm3.",
+    "en": "Collection gathers raw data."
+   },
+   "c": {
+    "fr": "La modélisation vient après.",
+    "dar": "Mn b3d.",
+    "en": "Comes later."
+   },
+   "d": {
+    "fr": "L'interprétation est la dernière étape.",
+    "dar": "Lekhra.",
+    "en": "Last step."
+   }
+  },
+  "tags": [
+   "etapes"
+  ]
+ },
+ {
+  "id": "di-08",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quels outils **informatiques** d'analyse cite le cours ?",
+   "dar": "Outils informatiques ?",
+   "en": "Which **software** tools?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Python (Pandas, NumPy, Matplotlib)",
+     "dar": "Python",
+     "en": "Python (Pandas, NumPy, Matplotlib)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "R",
+     "dar": "R",
+     "en": "R"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Excel",
+     "dar": "Excel",
+     "en": "Excel"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "SPSS",
+     "dar": "SPSS",
+     "en": "SPSS"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Power BI",
+     "dar": "Power BI",
+     "en": "Power BI"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "GRUB2",
+     "dar": "GRUB2",
+     "en": "GRUB2"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Python (Pandas, NumPy, Matplotlib), R, Excel, SPSS, Power BI.",
+   "dar": "Python, R, Excel, SPSS, Power BI.",
+   "en": "Python, R, Excel, SPSS, Power BI."
+  },
+  "wrongExplanations": {
+   "f": {
+    "fr": "GRUB2 est un chargeur de démarrage Linux !",
+    "dar": "GRUB2 = Linux.",
+    "en": "GRUB2 is a boot loader!"
+   }
+  },
+  "tags": [
+   "outils"
+  ]
+ },
+ {
+  "id": "di-09",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans l'exemple santé (diabète), prévoir le risque de diabète d'un nouveau patient selon son âge et son IMC est…",
+   "dar": "Diabète : tnba2 = ?",
+   "en": "Diabetes: predicting risk is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "descriptif",
+     "dar": "descriptif",
+     "en": "descriptive"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "prédictif",
+     "dar": "prédictif",
+     "en": "predictive"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "exploratoire",
+     "dar": "exploratoire",
+     "en": "exploratory"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "de la collecte",
+     "dar": "jm3",
+     "en": "collection"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Anticiper une valeur pour un nouvel individu = **prédiction** (régression, ML).",
+   "dar": "Prédictif.",
+   "en": "**Predictive**."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Décrire ne prévoit rien.",
+    "dar": "Wsef.",
+    "en": "Describing predicts nothing."
+   },
+   "c": {
+    "fr": "Pas de recherche de groupes.",
+    "dar": "Machi groupes.",
+    "en": "No grouping."
+   },
+   "d": {
+    "fr": "Ce n'est pas une étape mais un type.",
+    "dar": "Machi étape.",
+    "en": "Not a step."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-10",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Dans quels domaines l'analyse de données est-elle utilisée ?",
+   "dar": "Domaines ?",
+   "en": "Domains?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Santé",
+     "dar": "Sa7a",
+     "en": "Health"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Finance",
+     "dar": "Finance",
+     "en": "Finance"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Marketing",
+     "dar": "Marketing",
+     "en": "Marketing"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Industrie",
+     "dar": "Sina3a",
+     "en": "Industry"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Sciences sociales",
+     "dar": "Sciences sociales",
+     "en": "Social sciences"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "IT",
+     "dar": "IT",
+     "en": "IT"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f"
+  ],
+  "explanation": {
+   "fr": "Tous : santé, finance, marketing, industrie, sciences sociales, IT…",
+   "dar": "Kolchi.",
+   "en": "All of them."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "domaines"
+  ]
+ },
+ {
+  "id": "di-11",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une banque regroupe ses clients en profils sans catégorie définie à l'avance. Type et méthode ?",
+   "dar": "Bank kat-groupi clients : ?",
+   "en": "A bank groups customers without predefined categories. Type/method?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Descriptive, moyenne",
+     "dar": "Descriptive",
+     "en": "Descriptive, mean"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Exploratoire, clustering",
+     "dar": "Exploratoire, clustering",
+     "en": "Exploratory, clustering"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Confirmatoire, χ²",
+     "dar": "Confirmatoire",
+     "en": "Confirmatory, χ²"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Prescriptive, optimisation",
+     "dar": "Prescriptive",
+     "en": "Prescriptive"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Sans catégories préétablies, on **explore** pour découvrir des groupes : **clustering**.",
+   "dar": "Clustering.",
+   "en": "**Clustering** (exploratory)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "La moyenne ne crée pas de groupes.",
+    "dar": "Moyenne.",
+    "en": "Mean does not group."
+   },
+   "c": {
+    "fr": "Aucune hypothèse à tester.",
+    "dar": "Bla hypothèse.",
+    "en": "No hypothesis."
+   },
+   "d": {
+    "fr": "On ne recommande pas encore d'action.",
+    "dar": "Machi tawsiya.",
+    "en": "No action yet."
+   }
+  },
+  "tags": [
+   "types"
+  ]
+ },
+ {
+  "id": "di-12",
+  "module": "data",
+  "chapter": "d-intro",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi l'analyse de données est-elle un outil d'aide à la **décision** ?",
+   "dar": "3lach analyse = aide décision ?",
+   "en": "Why is analysis a decision aid?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Elle remplace le décideur",
+     "dar": "Kat3awed l mas2oul",
+     "en": "It replaces the decision-maker"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Elle transforme des données en informations objectives qui réduisent l'incertitude",
+     "dar": "Kat7awel data l ma3loumat",
+     "en": "It turns data into objective information that reduces uncertainty"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Elle garantit une décision juste",
+     "dar": "Dima s7i7",
+     "en": "It guarantees the right decision"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Elle évite de collecter des données",
+     "dar": "Bla data",
+     "en": "It avoids collecting data"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Elle fournit des faits chiffrés, des tendances, des prévisions avec un **risque d'erreur mesuré** : le décideur reste humain.",
+   "dar": "Faits + risque.",
+   "en": "Facts and measured risk; humans still decide."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le décideur reste responsable.",
+    "dar": "Mas2oul.",
+    "en": "Humans decide."
+   },
+   "c": {
+    "fr": "Il reste toujours un risque d'erreur (α, β).",
+    "dar": "Risque.",
+    "en": "Risk remains."
+   },
+   "d": {
+    "fr": "Elle repose sur les données.",
+    "dar": "Data.",
+    "en": "It needs data."
+   }
+  },
+  "tags": [
+   "decision"
+  ]
+ }
+]

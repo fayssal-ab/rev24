@@ -1,0 +1,321 @@
+[
+ {
+  "id": "lx-tp1-1",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "title": {
+   "fr": "Chemins absolus et relatifs",
+   "dar": "Chemins absolus w relatifs",
+   "en": "Absolute and relative paths"
+  },
+  "statement": {
+   "fr": "Tu es dans `/home/etudiant/tp1/a`. Donne la commande `cd` en chemin **relatif** puis en chemin **absolu** pour aller dans `/home/etudiant/docs`. Que fait ensuite `cd -` ?",
+   "dar": "Nta f `/home/etudiant/tp1/a`. 3ti `cd` **relatif** w **absolu** l `/home/etudiant/docs`. Chnou kaydir `cd -` ?",
+   "en": "You are in `/home/etudiant/tp1/a`. Give the `cd` with a **relative** then an **absolute** path to `/home/etudiant/docs`. What does `cd -` do next?"
+  },
+  "hints": [
+   {
+    "fr": "Compte les niveaux à remonter avec `..`.",
+    "dar": "7seb ch7al mn `..`.",
+    "en": "Count the levels to go up with `..`."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Relatif",
+     "dar": "Relatif",
+     "en": "Relative"
+    },
+    "body": {
+     "fr": "On remonte de `a` → `tp1` → `etudiant` : `cd ../../docs`.",
+     "dar": "Ntl3ou `a` → `tp1` → `etudiant` : `cd ../../docs`.",
+     "en": "Go up `a` → `tp1` → `etudiant`: `cd ../../docs`."
+    },
+    "code": "cd ../../docs"
+   },
+   {
+    "title": {
+     "fr": "Absolu",
+     "dar": "Absolu",
+     "en": "Absolute"
+    },
+    "body": {
+     "fr": "Depuis la racine : `cd /home/etudiant/docs` (ou `cd ~/docs`).",
+     "dar": "Mn racine : `cd /home/etudiant/docs` (wla `~/docs`).",
+     "en": "From the root: `cd /home/etudiant/docs` (or `cd ~/docs`)."
+    },
+    "code": "cd /home/etudiant/docs"
+   },
+   {
+    "title": {
+     "fr": "cd -",
+     "dar": "cd -",
+     "en": "cd -"
+    },
+    "body": {
+     "fr": "Revient au répertoire **précédent** (`/home/etudiant/tp1/a`) et l'affiche.",
+     "dar": "Kayrje3 l répertoire **li 9bel** w kaywerrih.",
+     "en": "Returns to the **previous** directory (`/home/etudiant/tp1/a`) and prints it."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`cd ../../docs` ou `cd /home/etudiant/docs` ; `cd -` ramène dans `/home/etudiant/tp1/a`.",
+   "dar": "`cd ../../docs` wla `cd /home/etudiant/docs` ; `cd -` kayrjje3 l `tp1/a`.",
+   "en": "`cd ../../docs` or `cd /home/etudiant/docs`; `cd -` goes back to `/home/etudiant/tp1/a`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire `cd /docs` (cherche docs à la racine).",
+    "dar": "Tkteb `cd /docs`.",
+    "en": "Writing `cd /docs` (looks for docs at the root)."
+   },
+   {
+    "fr": "Un seul `..` (on reste dans tp1).",
+    "dar": "`..` wa7da.",
+    "en": "Only one `..` (you stay in tp1)."
+   }
+  ],
+  "missionId": "m-tp1-files"
+ },
+ {
+  "id": "lx-tp1-2",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "title": {
+   "fr": "Pipeline d'audit des comptes",
+   "dar": "Pipeline dyal audit dyal comptes",
+   "en": "Account audit pipeline"
+  },
+  "statement": {
+   "fr": "À partir de `/etc/passwd`, écris **une** ligne de commande qui affiche, triés par ordre alphabétique, les logins des comptes ayant `/bin/bash` comme shell, puis une autre qui compte combien de comptes ont `/sbin/nologin`.",
+   "dar": "Mn `/etc/passwd`, kteb **ster wa7ed** kaywerri logins li 3endhom `/bin/bash` mrattbin, w ster akhor kay7seb ch7al 3endhom `/sbin/nologin`.",
+   "en": "From `/etc/passwd`, write **one** command line printing, alphabetically, the logins whose shell is `/bin/bash`, then another counting accounts with `/sbin/nologin`."
+  },
+  "hints": [
+   {
+    "fr": "Filtre d'abord les lignes avec `grep`.",
+    "dar": "Bda b `grep`.",
+    "en": "Filter lines first with `grep`."
+   },
+   {
+    "fr": "Le shell est le 7e champ, le login le 1er.",
+    "dar": "Shell champ 7, login champ 1.",
+    "en": "The shell is field 7, the login field 1."
+   },
+   {
+    "fr": "Pour compter : `grep -c` ou `| wc -l`.",
+    "dar": "7seb : `grep -c` wla `wc -l`.",
+    "en": "To count: `grep -c` or `| wc -l`."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Comptes bash",
+     "dar": "Comptes bash",
+     "en": "bash accounts"
+    },
+    "body": {
+     "fr": "`grep` garde les lignes finissant par `/bin/bash` (`$` = fin de ligne), `cut` garde le login, `sort` trie.",
+     "dar": "`grep` (`$` = lekher), `cut` login, `sort`.",
+     "en": "`grep` keeps lines ending in `/bin/bash` (`$` = end of line), `cut` keeps the login, `sort` sorts."
+    },
+    "code": "grep \"/bin/bash$\" /etc/passwd | cut -d: -f1 | sort"
+   },
+   {
+    "title": {
+     "fr": "Comptes nologin",
+     "dar": "Comptes nologin",
+     "en": "nologin accounts"
+    },
+    "body": {
+     "fr": "`grep -c` compte directement les lignes.",
+     "dar": "`grep -c` kay7seb.",
+     "en": "`grep -c` counts lines directly."
+    },
+    "code": "grep -c \"/sbin/nologin\" /etc/passwd"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`grep \"/bin/bash$\" /etc/passwd | cut -d: -f1 | sort` → etudiant, root ; `grep -c /sbin/nologin /etc/passwd`.",
+   "dar": "Natija : etudiant, root ; w `grep -c`.",
+   "en": "`grep \"/bin/bash$\" /etc/passwd | cut -d: -f1 | sort` → etudiant, root; `grep -c /sbin/nologin /etc/passwd`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier `-d:` dans cut.",
+    "dar": "Tnsa `-d:`.",
+    "en": "Forgetting `-d:` in cut."
+   },
+   {
+    "fr": "`grep bash` attrape aussi d'autres chaînes contenant « bash ».",
+    "dar": "`grep bash` y9der yjib 7wayj khrin.",
+    "en": "`grep bash` may match other strings containing \"bash\"."
+   }
+  ],
+  "missionId": "m-tp1-pipes"
+ },
+ {
+  "id": "lx-tp1-3",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "title": {
+   "fr": "Journal des erreurs",
+   "dar": "Journal dyal les erreurs",
+   "en": "Error log"
+  },
+  "statement": {
+   "fr": "En tant qu'`etudiant`, lance `find /etc -name \"*.conf\"`. Envoie la liste des fichiers trouvés dans `confs.txt` et les erreurs « Permission non accordée » dans `erreurs.txt`. Puis ajoute la date à la fin de `confs.txt`.",
+   "dar": "B `etudiant`, dir `find /etc -name \"*.conf\"`. Résultats f `confs.txt` w erreurs f `erreurs.txt`. Men b3d zid date f lekher dyal `confs.txt`.",
+   "en": "As `etudiant`, run `find /etc -name \"*.conf\"`. Send the found files to `confs.txt` and the \"Permission denied\" errors to `erreurs.txt`. Then append the date to `confs.txt`."
+  },
+  "hints": [
+   {
+    "fr": "Deux redirections sur la même commande.",
+    "dar": "Jouj redirections.",
+    "en": "Two redirections on one command."
+   },
+   {
+    "fr": "Ajouter ≠ écraser.",
+    "dar": "Zid ≠ mse7.",
+    "en": "Append ≠ overwrite."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Séparer les flux",
+     "dar": "Fr9 les flux",
+     "en": "Split the streams"
+    },
+    "body": {
+     "fr": "Sortie standard → `>` ; erreurs → `2>`.",
+     "dar": "stdout → `>` ; erreurs → `2>`.",
+     "en": "stdout → `>`; stderr → `2>`."
+    },
+    "code": "find /etc -name \"*.conf\" > confs.txt 2> erreurs.txt"
+   },
+   {
+    "title": {
+     "fr": "Ajouter la date",
+     "dar": "Zid date",
+     "en": "Append the date"
+    },
+    "body": {
+     "fr": "`>>` ajoute sans écraser.",
+     "dar": "`>>` kayzid.",
+     "en": "`>>` appends."
+    },
+    "code": "date >> confs.txt"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`find /etc -name \"*.conf\" > confs.txt 2> erreurs.txt` puis `date >> confs.txt`.",
+   "dar": "`find … > confs.txt 2> erreurs.txt` w `date >> confs.txt`.",
+   "en": "`find /etc -name \"*.conf\" > confs.txt 2> erreurs.txt` then `date >> confs.txt`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser `&>` (tout part dans le même fichier).",
+    "dar": "Tst3mel `&>`.",
+    "en": "Using `&>` (everything in one file)."
+   },
+   {
+    "fr": "`date > confs.txt` efface la liste.",
+    "dar": "`date > confs.txt` kaymse7 liste.",
+    "en": "`date > confs.txt` wipes the list."
+   }
+  ]
+ },
+ {
+  "id": "lx-tp1-4",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diagnostiquer un SSH refusé",
+   "dar": "Diagnostic dyal SSH mrfoud",
+   "en": "Diagnose a refused SSH"
+  },
+  "statement": {
+   "fr": "`ssh etudiant@192.168.56.10` répond « Connection refused ». Quelles vérifications fais-tu **sur la VM**, dans quel ordre, et quelles commandes corrigent chaque cause possible ?",
+   "dar": "`ssh` kayjaweb « Connection refused ». Chnou ghadi tverifyi **f VM**, b ach men tartib, w kifach t7ell ?",
+   "en": "`ssh etudiant@192.168.56.10` says \"Connection refused\". What do you check **on the VM**, in which order, and which commands fix each cause?"
+  },
+  "hints": [
+   {
+    "fr": "« Refused » = personne n'écoute sur le port 22.",
+    "dar": "« Refused » = 7ta wa7ed ma kaysme3 f port 22.",
+    "en": "\"Refused\" = nobody listening on port 22."
+   },
+   {
+    "fr": "Pense service, démarrage auto, pare-feu.",
+    "dar": "Service, démarrage, pare-feu.",
+    "en": "Think service, autostart, firewall."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Service",
+     "dar": "Service",
+     "en": "Service"
+    },
+    "body": {
+     "fr": "`systemctl status sshd` : s'il est inactif → `systemctl start sshd`.",
+     "dar": "`status sshd` → `start sshd`.",
+     "en": "`systemctl status sshd`: if inactive → `systemctl start sshd`."
+    },
+    "code": "systemctl status sshd\nsystemctl start sshd"
+   },
+   {
+    "title": {
+     "fr": "Démarrage automatique",
+     "dar": "Démarrage automatique",
+     "en": "Autostart"
+    },
+    "body": {
+     "fr": "`systemctl is-enabled sshd` ; sinon `systemctl enable sshd` (ou `enable --now`).",
+     "dar": "`is-enabled` → `enable`.",
+     "en": "`is-enabled`; otherwise `systemctl enable sshd` (or `enable --now`)."
+    },
+    "code": "systemctl enable --now sshd"
+   },
+   {
+    "title": {
+     "fr": "Pare-feu et adresse",
+     "dar": "Pare-feu w adresse",
+     "en": "Firewall and address"
+    },
+    "body": {
+     "fr": "`firewall-cmd --list-services` doit contenir `ssh` (sinon `firewall-cmd --add-service=ssh --permanent ; firewall-cmd --reload`) ; vérifier l'IP avec `hostname -I`.",
+     "dar": "firewall-cmd fih `ssh` ; IP b `hostname -I`.",
+     "en": "`firewall-cmd --list-services` must include `ssh`; check the IP with `hostname -I`."
+    },
+    "code": "firewall-cmd --list-services\nhostname -I"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Service démarré + activé (`enable --now sshd`), service `ssh` autorisé dans firewalld, bonne IP.",
+   "dar": "Service khddam + enable, ssh f firewall, IP s7i7a.",
+   "en": "Service started + enabled (`enable --now sshd`), `ssh` allowed in firewalld, correct IP."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que `enable` démarre le service immédiatement.",
+    "dar": "Tdenn `enable` kaybda daba.",
+    "en": "Thinking `enable` starts the service now."
+   },
+   {
+    "fr": "Oublier `--reload` après `--permanent`.",
+    "dar": "Tnsa `--reload`.",
+    "en": "Forgetting `--reload` after `--permanent`."
+   }
+  ]
+ }
+]

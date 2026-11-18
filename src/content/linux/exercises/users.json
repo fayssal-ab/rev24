@@ -1,0 +1,615 @@
+[
+ {
+  "id": "lx-tp5-q3-q4-q5",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 2,
+  "title": {
+   "fr": "TP5 Q3–5 : explorer fichiers et défauts",
+   "dar": "TP5 Q3–5",
+   "en": "TP5 Q3–5: explore files and defaults"
+  },
+  "statement": {
+   "fr": "Q3 : pourquoi un utilisateur ordinaire ne peut-il pas lire `/etc/shadow` ? Q4 : affiche les valeurs par défaut de useradd. Q5 : dans `/etc/login.defs`, retrouve UID_MIN, PASS_MAX_DAYS et ENCRYPT_METHOD.",
+   "dar": "Q3 shadow, Q4 useradd -D, Q5 login.defs.",
+   "en": "Q3: why can't a regular user read shadow? Q4: show useradd defaults. Q5: find UID_MIN, PASS_MAX_DAYS, ENCRYPT_METHOD."
+  },
+  "hints": [
+   {
+    "fr": "Regarde `ls -l /etc/shadow`.",
+    "dar": "`ls -l /etc/shadow`.",
+    "en": "Look at `ls -l /etc/shadow`."
+   },
+   {
+    "fr": "grep sur login.defs.",
+    "dar": "grep.",
+    "en": "grep login.defs."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Q3",
+     "dar": "Q3",
+     "en": "Q3"
+    },
+    "body": {
+     "fr": "Mode `----------` root : seul root lit les hachages (sinon attaques par dictionnaire hors ligne).",
+     "dar": "Ghir root.",
+     "en": "Mode `----------`: root only (protects hashes)."
+    },
+    "code": "ls -l /etc/shadow /etc/passwd\ncat /etc/shadow    # en etudiant : Permission non accordée"
+   },
+   {
+    "title": {
+     "fr": "Q4",
+     "dar": "Q4",
+     "en": "Q4"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "useradd -D"
+   },
+   {
+    "title": {
+     "fr": "Q5",
+     "dar": "Q5",
+     "en": "Q5"
+    },
+    "body": {
+     "fr": "UID_MIN 1000, PASS_MAX_DAYS 99999, ENCRYPT_METHOD SHA512.",
+     "dar": "1000, 99999, SHA512.",
+     "en": "1000, 99999, SHA512."
+    },
+    "code": "grep -E \"^(UID_MIN|PASS_MAX_DAYS|ENCRYPT_METHOD)\" /etc/login.defs"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "shadow : root seul ; `useradd -D` ; UID_MIN 1000, PASS_MAX_DAYS 99999, ENCRYPT_METHOD SHA512.",
+   "dar": "root ; useradd -D ; 1000/99999/SHA512.",
+   "en": "root only; `useradd -D`; 1000 / 99999 / SHA512."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Chercher les défauts de mot de passe dans /etc/default/useradd.",
+    "dar": "F default/useradd.",
+    "en": "Looking for password defaults in default/useradd."
+   }
+  ]
+ },
+ {
+  "id": "lx-tp5-q35",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "TP5 Q35 : renommer et déplacer",
+   "dar": "TP5 Q35",
+   "en": "TP5 Q35: rename and move"
+  },
+  "statement": {
+   "fr": "Renomme `tp` en `tpnew`, déplace son répertoire en `/home/tpnew` avec son contenu, et renomme son groupe privé. Vérifie avec `id` et `ls -ld`.",
+   "dar": "Beddel tp → tpnew, home w groupe.",
+   "en": "Rename tp → tpnew, move its home, rename its private group; verify."
+  },
+  "hints": [
+   {
+    "fr": "usermod -l ne touche ni au home ni au groupe.",
+    "dar": "-l bou7do.",
+    "en": "usermod -l changes neither home nor group."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Login",
+     "dar": "Login",
+     "en": "Login"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "usermod -l tpnew tp"
+   },
+   {
+    "title": {
+     "fr": "Home",
+     "dar": "Home",
+     "en": "Home"
+    },
+    "body": {
+     "fr": "`-d` + `-m`.",
+     "dar": "`-d -m`.",
+     "en": "`-d` + `-m`."
+    },
+    "code": "usermod -d /home/tpnew -m tpnew"
+   },
+   {
+    "title": {
+     "fr": "Groupe et vérification",
+     "dar": "Groupe w tsdi9",
+     "en": "Group and check"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "groupmod -n tpnew tp\nid tpnew\nls -ld /home/tpnew"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`usermod -l tpnew tp` ; `usermod -d /home/tpnew -m tpnew` ; `groupmod -n tpnew tp`.",
+   "dar": "usermod -l ; -d -m ; groupmod -n.",
+   "en": "`usermod -l`; `usermod -d … -m`; `groupmod -n`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Inverser NOUVEAU/ANCIEN.",
+    "dar": "L3eks.",
+    "en": "Swapping NEW/OLD."
+   },
+   {
+    "fr": "Oublier -m.",
+    "dar": "Bla -m.",
+    "en": "Forgetting -m."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-1",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diagnostic : « je ne suis plus dans le groupe docker »",
+   "dar": "Ma b9itch f docker",
+   "en": "\"I'm no longer in docker\""
+  },
+  "statement": {
+   "fr": "L'admin a tapé `usermod -G IIR tp` pour ajouter tp au groupe IIR. Le lendemain tp ne peut plus utiliser docker ni sudo. Explique et répare (tp était dans wheel et docker).",
+   "dar": "Fesser w sle7.",
+   "en": "Explain and fix (tp was in wheel and docker)."
+  },
+  "hints": [
+   {
+    "fr": "Que fait -G sans -a ?",
+    "dar": "-G bla -a ?",
+    "en": "-G without -a?"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Cause",
+     "dar": "Sabab",
+     "en": "Cause"
+    },
+    "body": {
+     "fr": "`-G` sans `-a` **remplace** les groupes secondaires : tp n'est plus que dans IIR.",
+     "dar": "`-G` kaybeddel.",
+     "en": "`-G` without `-a` **replaces** the list."
+    },
+    "code": "id -Gn tp    # tp IIR"
+   },
+   {
+    "title": {
+     "fr": "Réparation",
+     "dar": "Tasli7",
+     "en": "Fix"
+    },
+    "body": {
+     "fr": "Rajouter avec -a (ou gpasswd -a).",
+     "dar": "`-aG`.",
+     "en": "Re-add with -a."
+    },
+    "code": "usermod -aG wheel,docker tp\nid -Gn tp"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`usermod -aG wheel,docker tp` ; à l'avenir toujours `-aG`.",
+   "dar": "`-aG`.",
+   "en": "`usermod -aG wheel,docker tp`; always `-aG`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Recommencer avec -G.",
+    "dar": "-G 3awtani.",
+    "en": "Using -G again."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-2",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "Calcul de droits",
+   "dar": "7sab droits",
+   "en": "Permission arithmetic"
+  },
+  "statement": {
+   "fr": "Donne l'octal et la commande symbolique pour : a) `rwxr-x---` b) `rw-r-----` c) `rwxrwxr-x`. Puis : un fichier `script.sh` en 644 doit devenir exécutable par son propriétaire seulement.",
+   "dar": "Octal w symbolique.",
+   "en": "Give octal and symbolic for three modes, then make script.sh (644) owner-executable."
+  },
+  "hints": [
+   {
+    "fr": "4+2+1 par triplet.",
+    "dar": "4+2+1.",
+    "en": "4+2+1 per triplet."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "a, b, c",
+     "dar": "a, b, c",
+     "en": "a, b, c"
+    },
+    "body": {
+     "fr": "a) **750** = `u=rwx,g=rx,o=` ; b) **640** = `u=rw,g=r,o=` ; c) **775** = `ug=rwx,o=rx`.",
+     "dar": "750, 640, 775.",
+     "en": "a) 750, b) 640, c) 775."
+    }
+   },
+   {
+    "title": {
+     "fr": "script.sh",
+     "dar": "script.sh",
+     "en": "script.sh"
+    },
+    "body": {
+     "fr": "644 + x pour u = 744.",
+     "dar": "744.",
+     "en": "744."
+    },
+    "code": "chmod u+x script.sh   # ou chmod 744 script.sh"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "750, 640, 775 ; `chmod u+x script.sh` (→ 744).",
+   "dar": "750, 640, 775 ; 744.",
+   "en": "750, 640, 775; `chmod u+x` → 744."
+  },
+  "commonMistakes": [
+   {
+    "fr": "`chmod +x` donne x à tous (755).",
+    "dar": "`+x` l ga3.",
+    "en": "`chmod +x` gives x to all."
+   },
+   {
+    "fr": "Lire les triplets dans le désordre.",
+    "dar": "Tartib ghalat.",
+    "en": "Misreading triplet order."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-3",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "Politique de mots de passe d'une équipe",
+   "dar": "Politique mots de passe",
+   "en": "Team password policy"
+  },
+  "statement": {
+   "fr": "Pour `alice` : changement obligatoire à la 1re connexion, minimum 2 jours entre deux changements, validité 90 jours, avertissement 7 jours, compte désactivé 3 jours après expiration, compte expirant le 30/06/2027. Une commande `chage`, puis vérification.",
+   "dar": "Politique kamla b chage.",
+   "en": "One chage command for the full policy, then verify."
+  },
+  "hints": [
+   {
+    "fr": "-d -m -M -W -I -E",
+    "dar": "-d -m -M -W -I -E",
+    "en": "-d -m -M -W -I -E"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commande",
+     "dar": "Commande",
+     "en": "Command"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "chage -d 0 -m 2 -M 90 -W 7 -I 3 -E 2027-06-30 alice"
+   },
+   {
+    "title": {
+     "fr": "Vérification",
+     "dar": "Tsdi9",
+     "en": "Check"
+    },
+    "body": {
+     "fr": "shadow : `alice:…:0:2:90:7:3:<jour 30/06/2027>:`.",
+     "dar": "shadow.",
+     "en": "shadow fields."
+    },
+    "code": "chage -l alice\ngrep alice /etc/shadow"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`chage -d 0 -m 2 -M 90 -W 7 -I 3 -E 2027-06-30 alice`.",
+   "dar": "chage kamla.",
+   "en": "Full chage command."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre -m et -M.",
+    "dar": "-m ≠ -M.",
+    "en": "Confusing -m/-M."
+   },
+   {
+    "fr": "Confondre -I et -E.",
+    "dar": "-I ≠ -E.",
+    "en": "Confusing -I/-E."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-4",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 2,
+  "title": {
+   "fr": "Supprimer proprement un compte",
+   "dar": "Mse7 compte",
+   "en": "Cleanly delete an account"
+  },
+  "statement": {
+   "fr": "`bob` (UID 1005) quitte l'entreprise : il a des fichiers dans `/tmp` et `/opt`. Supprime le compte, son home, sa boîte mail, puis tous ses fichiers restants.",
+   "dar": "Mse7 bob w fichiers dyalo.",
+   "en": "Delete bob, home, mail, then leftover files."
+  },
+  "hints": [
+   {
+    "fr": "Après userdel, les fichiers n'ont plus de propriétaire nommé : cherche par UID.",
+    "dar": "find -uid.",
+    "en": "Search by UID."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Compte",
+     "dar": "Compte",
+     "en": "Account"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "userdel -r bob"
+   },
+   {
+    "title": {
+     "fr": "Fichiers orphelins",
+     "dar": "Orphelins",
+     "en": "Orphans"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "find / -type f -uid 1005 -print -exec rm {} \\;"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`userdel -r bob` puis `find / -type f -uid 1005 -print -exec rm {} \\;`.",
+   "dar": "userdel -r + find.",
+   "en": "`userdel -r bob` then `find … -uid 1005 -exec rm`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Chercher avec -user bob après suppression.",
+    "dar": "-user bob.",
+    "en": "Using -user bob after deletion."
+   },
+   {
+    "fr": "Oublier `\\;` à la fin de -exec.",
+    "dar": "Tnsa `\\;`.",
+    "en": "Forgetting `\\;`."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-5",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "Répertoire de projet partagé",
+   "dar": "Dossier partagé",
+   "en": "Shared project directory"
+  },
+  "statement": {
+   "fr": "Les membres de `dev` (alice, bob) doivent pouvoir lire/écrire dans `/srv/projet`, les autres n'y ont aucun accès. Propose les commandes.",
+   "dar": "dev : rw ; lokhrin : walou.",
+   "en": "dev members read/write /srv/projet; others nothing."
+  },
+  "hints": [
+   {
+    "fr": "Le groupe propriétaire doit être dev.",
+    "dar": "Groupe dev.",
+    "en": "Group owner dev."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Groupe",
+     "dar": "Groupe",
+     "en": "Group"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "groupadd dev\ngpasswd -M alice,bob dev"
+   },
+   {
+    "title": {
+     "fr": "Répertoire",
+     "dar": "Dossier",
+     "en": "Directory"
+    },
+    "body": {
+     "fr": "770.",
+     "dar": "770.",
+     "en": "770."
+    },
+    "code": "mkdir -p /srv/projet\nchown root:dev /srv/projet\nchmod 770 /srv/projet\nls -ld /srv/projet"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Groupe dev, `chown root:dev`, `chmod 770`.",
+   "dar": "dev + 770.",
+   "en": "dev group, chown root:dev, chmod 770."
+  },
+  "commonMistakes": [
+   {
+    "fr": "777 : tout le monde y accède.",
+    "dar": "777 khatar.",
+    "en": "777 opens to all."
+   },
+   {
+    "fr": "Oublier x sur le répertoire.",
+    "dar": "Bla x.",
+    "en": "Forgetting x."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-6",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 3,
+  "title": {
+   "fr": "Règles sudo ciblées",
+   "dar": "Règles sudo",
+   "en": "Targeted sudo rules"
+  },
+  "statement": {
+   "fr": "Écris les règles pour : a) les membres d'`ops` peuvent gérer les services et lire le journal sans mot de passe ; b) `stagiaire` ne peut que redémarrer. Où et comment les écrire ? Comment tester ?",
+   "dar": "Règles ops w stagiaire.",
+   "en": "Rules for ops (systemctl/journalctl, NOPASSWD) and stagiaire (reboot only)."
+  },
+  "hints": [
+   {
+    "fr": "Fichiers dans /etc/sudoers.d avec visudo -f.",
+    "dar": "visudo -f.",
+    "en": "visudo -f in sudoers.d."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Règles",
+     "dar": "Règles",
+     "en": "Rules"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "%ops ALL=(ALL) NOPASSWD: /usr/bin/systemctl, /usr/bin/journalctl\nstagiaire ALL=(root) /usr/sbin/reboot"
+   },
+   {
+    "title": {
+     "fr": "Écriture et test",
+     "dar": "Ktaba w test",
+     "en": "Write and test"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "visudo -f /etc/sudoers.d/ops\nvisudo -f /etc/sudoers.d/stagiaire\nvisudo -c\nsu - stagiaire -c \"sudo -l\""
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`%ops ALL=(ALL) NOPASSWD: /usr/bin/systemctl, /usr/bin/journalctl` et `stagiaire ALL=(root) /usr/sbin/reboot`, via `visudo -f`.",
+   "dar": "Règles + visudo -f.",
+   "en": "Two rules via `visudo -f`, check with `visudo -c`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Chemins relatifs dans sudoers.",
+    "dar": "Chemins relatifs.",
+    "en": "Relative paths."
+   },
+   {
+    "fr": "Éditer sudoers avec nano.",
+    "dar": "nano.",
+    "en": "Using nano."
+   }
+  ]
+ },
+ {
+  "id": "lx-users-7",
+  "module": "linux",
+  "chapter": "users",
+  "difficulty": 2,
+  "title": {
+   "fr": "Lire /etc/group et /etc/gshadow",
+   "dar": "Qra group w gshadow",
+   "en": "Reading group and gshadow"
+  },
+  "statement": {
+   "fr": "Interprète : `/etc/group` : `developpeurs:x:1010:user1,user2,user3` et `/etc/gshadow` : `developpeurs:$6$Zp…:admin1,admin2:user1,user2,user3`. Qui est membre ? Qui peut ajouter un membre sans être root ? Quel algorithme ?",
+   "dar": "Chkoun membre ? admin ? algorithme ?",
+   "en": "Who is a member? Who can add members without root? Which algorithm?"
+  },
+  "hints": [
+   {
+    "fr": "gshadow = groupe:mdp:admins:membres.",
+    "dar": "gshadow champs.",
+    "en": "gshadow fields."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Lecture",
+     "dar": "9raya",
+     "en": "Reading"
+    },
+    "body": {
+     "fr": "GID 1010 ; membres secondaires user1-3 ; admins admin1, admin2 (gpasswd -a/-d sans root) ; mot de passe $6$ = SHA-512.",
+     "dar": "Membres, admins, SHA-512.",
+     "en": "GID 1010; members user1-3; admins admin1/2; $6$ = SHA-512."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Membres : user1, user2, user3 ; admins : admin1, admin2 ; SHA-512.",
+   "dar": "user1-3 ; admin1-2 ; SHA-512.",
+   "en": "Members user1-3; admins admin1-2; SHA-512."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que les admins sont membres automatiquement.",
+    "dar": "Admins machi membres.",
+    "en": "Admins are not automatically members."
+   }
+  ]
+ }
+]

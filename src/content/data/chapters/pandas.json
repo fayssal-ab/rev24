@@ -1,0 +1,329 @@
+{
+ "id": "pandas",
+ "module": "data",
+ "order": 2,
+ "title": {
+  "fr": "Chap 1 — pandas : lire et écrire des données (Feuille N°1)",
+  "dar": "Fasl 1 — pandas",
+  "en": "Ch. 1 — pandas: reading and writing data"
+ },
+ "summary": {
+  "fr": "Installer pandas, Series et DataFrame, les fonctions read_*, paramètres de read_csv/read_excel et export — avec le corrigé de la Feuille N°1.",
+  "dar": "pandas : read_*, paramètres, export.",
+  "en": "pandas: Series/DataFrame, read_* functions, parameters, export, Exercise sheet 1."
+ },
+ "estimatedMinutes": 45,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Installer et importer",
+    "dar": "Installer w importer",
+    "en": "Install and import"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "pip install pandas\nimport pandas as pd"
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "- **Series** : tableau à **une dimension** (valeurs + index).\n- **DataFrame** : tableau à **deux dimensions** (lignes × colonnes), chaque colonne est une Series.",
+    "dar": "Series 1D, DataFrame 2D.",
+    "en": "**Series** 1D, **DataFrame** 2D."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dp-02"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les fonctions de lecture et d'écriture",
+    "dar": "read_* w to_*",
+    "en": "Reading and writing functions"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Lecture",
+     "dar": "9raya",
+     "en": "Read"
+    },
+    {
+     "fr": "Format",
+     "dar": "Format",
+     "en": "Format"
+    }
+   ],
+   "rows": [
+    [
+     "read_csv · read_fwf · read_clipboard",
+     {
+      "fr": "texte délimité · largeur fixe · presse-papiers",
+      "dar": "CSV · fwf · clipboard",
+      "en": "delimited · fixed width · clipboard"
+     }
+    ],
+    [
+     "read_excel · read_json · read_html · read_xml",
+     {
+      "fr": "Excel · JSON · tableaux HTML · XML",
+      "dar": "Excel · JSON · HTML · XML",
+      "en": "Excel · JSON · HTML · XML"
+     }
+    ],
+    [
+     "read_hdf · read_feather · read_orc · read_parquet · read_pickle",
+     {
+      "fr": "formats binaires",
+      "dar": "binaires",
+      "en": "binary formats"
+     }
+    ],
+    [
+     "read_sas · read_spss · read_stata",
+     {
+      "fr": "logiciels statistiques",
+      "dar": "logiciels stats",
+      "en": "stats software"
+     }
+    ],
+    [
+     "read_sql · read_sql_table",
+     {
+      "fr": "bases de données SQL",
+      "dar": "SQL",
+      "en": "SQL databases"
+     }
+    ],
+    [
+     "to_csv · to_excel · to_json",
+     {
+      "fr": "écriture",
+      "dar": "ktaba",
+      "en": "writing"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dp-09"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Paramètres essentiels",
+    "dar": "Paramètres",
+    "en": "Key parameters"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Paramètre",
+     "dar": "Paramètre",
+     "en": "Parameter"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    }
+   ],
+   "rows": [
+    [
+     "io",
+     {
+      "fr": "chemin ou URL du fichier",
+      "dar": "chemin wla URL",
+      "en": "path or URL"
+     }
+    ],
+    [
+     "sheet_name",
+     {
+      "fr": "0 (1re feuille), \"nom\", None (toutes → dict)",
+      "dar": "0, nom, None",
+      "en": "0, \"name\", None (dict)"
+     }
+    ],
+    [
+     "header",
+     {
+      "fr": "ligne d'en-tête (None = pas d'en-tête)",
+      "dar": "en-tête",
+      "en": "header row (None = none)"
+     }
+    ],
+    [
+     "names",
+     {
+      "fr": "noms à donner aux colonnes",
+      "dar": "smiyat",
+      "en": "column names"
+     }
+    ],
+    [
+     "index_col",
+     {
+      "fr": "colonne servant d'index",
+      "dar": "index",
+      "en": "index column"
+     }
+    ],
+    [
+     "usecols",
+     {
+      "fr": "colonnes à lire",
+      "dar": "colonnes",
+      "en": "columns to read"
+     }
+    ],
+    [
+     "skiprows",
+     {
+      "fr": "lignes à sauter au début",
+      "dar": "sauter lignes",
+      "en": "rows to skip"
+     }
+    ],
+    [
+     "nrows",
+     {
+      "fr": "nombre de lignes à lire",
+      "dar": "ch7al ster",
+      "en": "rows to read"
+     }
+    ],
+    [
+     "dtype · converters",
+     {
+      "fr": "types / fonctions de conversion par colonne",
+      "dar": "types",
+      "en": "types / converters"
+     }
+    ],
+    [
+     "engine",
+     {
+      "fr": "moteur (openpyxl…)",
+      "dar": "moteur",
+      "en": "engine"
+     }
+    ],
+    [
+     "na_values",
+     {
+      "fr": "valeurs à traiter comme manquantes",
+      "dar": "NaN",
+      "en": "values treated as NaN"
+     }
+    ],
+    [
+     "sep · decimal",
+     {
+      "fr": "séparateur de colonnes · séparateur décimal (read_csv)",
+      "dar": "sep · decimal",
+      "en": "separator · decimal mark"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "PandasReadPlayground"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Fichier français (`;` et `12,5`) : il faut **les deux** `sep=\";\"` **et** `decimal=\",\"`, sinon les notes restent du texte.",
+    "dar": "sep w decimal bjouj.",
+    "en": "French files need **both** `sep=\";\"` **and** `decimal=\",\"`."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dp-03",
+    "dp-04",
+    "dp-05",
+    "dp-12"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Feuille N°1 : corrigé de référence",
+    "dar": "Feuille 1 : tas7i7",
+    "en": "Exercise sheet 1: reference answers"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "import pandas as pd\nurl = \"http://egallic.fr/Enseignement/Python/Exercices/donnees/\"\n\npd.read_csv(\"notes.csv\")                                   # fichier local\npd.read_csv(url + \"notes.csv\")                             # depuis une URL\npd.read_csv(url + \"notes_decim.csv\", sep=\";\", decimal=\",\") # ; et virgule décimale\npd.read_csv(url + \"notes_h.csv\", header=None)              # pas d'en-tête\npd.read_csv(url + \"notes_h_s.csv\", header=None, skiprows=1)  # commentaire + pas d'en-tête\npd.read_excel(url + \"notes.xlsx\", sheet_name=0)            # 1re feuille\npd.read_excel(url + \"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1)\ndf.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Le corrigé de la Feuille N°1 est à connaître par cœur : chaque fichier ↔ ses paramètres.",
+    "dar": "7fed tas7i7 dyal Feuille 1.",
+    "en": "Know sheet 1 answers by heart."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "`index=False` à l'export évite une colonne parasite 0, 1, 2… en tête du fichier.",
+    "dar": "`index=False`.",
+    "en": "`index=False` avoids a spurious index column."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dp-06",
+    "dp-07",
+    "dp-08",
+    "dp-17"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "`pip install pandas` ; `import pandas as pd`. Series = 1D, DataFrame = 2D.",
+   "dar": "pip ; Series 1D ; DataFrame 2D.",
+   "en": "pip; Series 1D; DataFrame 2D."
+  },
+  {
+   "fr": "Lecture : read_csv, fwf, clipboard, excel, hdf, html, json, feather, orc, parquet, pickle, sas, spss, sql, sql_table, stata, xml. Écriture : to_csv, to_excel, to_json.",
+   "dar": "read_* w to_*.",
+   "en": "read_* and to_*."
+  },
+  {
+   "fr": "read_excel : io, sheet_name (0 / \"nom\" / None), header, names, index_col, usecols, skiprows, nrows, dtype, engine, na_values, converters.",
+   "dar": "Paramètres.",
+   "en": "read_excel parameters."
+  },
+  {
+   "fr": "notes_decim : sep=\";\", decimal=\",\" · notes_h : header=None · notes_h_s : header=None, skiprows=1 · export : index=False.",
+   "dar": "Feuille 1.",
+   "en": "Sheet 1 answers."
+  }
+ ]
+}

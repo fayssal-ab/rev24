@@ -1,0 +1,249 @@
+[
+ {
+  "id": "lx-intro-1",
+  "module": "linux",
+  "chapter": "intro",
+  "difficulty": 2,
+  "title": {
+   "fr": "Plan de partitionnement d'un serveur",
+   "dar": "Plan dyal partitions l serveur",
+   "en": "Server partitioning plan"
+  },
+  "statement": {
+   "fr": "Un serveur RHEL 9 a un disque de **60 Go**, **4 Go de RAM**, démarre en **UEFI** et hébergera un site web avec beaucoup de journaux. Propose un partitionnement justifié (taille de chaque partition) respectant les minimums du cours.",
+   "dar": "Serveur RHEL 9 3endo disque **60 Go**, **4 Go RAM**, kaydémarri b **UEFI** w ghadi y-héberger site web b bzaf dyal logs. 3ti partitionnement m3a tabrir, w 7tarem les minimums dyal dars.",
+   "en": "A RHEL 9 server has a **60 GB** disk, **4 GB RAM**, boots in **UEFI** and will host a website with many logs. Propose a justified partitioning that respects the course minimums."
+  },
+  "hints": [
+   {
+    "fr": "UEFI ⇒ il faut une partition `/boot/efi`.",
+    "dar": "UEFI ⇒ khass partition `/boot/efi`.",
+    "en": "UEFI ⇒ you need a `/boot/efi` partition."
+   },
+   {
+    "fr": "Beaucoup de journaux ⇒ isoler `/var`.",
+    "dar": "Bzaf dyal logs ⇒ 3zel `/var`.",
+    "en": "Many logs ⇒ isolate `/var`."
+   },
+   {
+    "fr": "Vérifie que la somme fait 60 Go.",
+    "dar": "Tsdi9 belli lmajmou3 60 Go.",
+    "en": "Check the total is 60 GB."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Partitions obligatoires",
+     "dar": "Partitions darouriyin",
+     "en": "Mandatory partitions"
+    },
+    "body": {
+     "fr": "`/boot/efi` 200 Mo–1 Go (UEFI), `/boot` ≥ 1 GiB, `/` ≥ 10 GiB, swap.",
+     "dar": "`/boot/efi` 200 Mo–1 Go, `/boot` ≥ 1 GiB, `/` ≥ 10 GiB, swap.",
+     "en": "`/boot/efi` 200 MB–1 GB, `/boot` ≥ 1 GiB, `/` ≥ 10 GiB, swap."
+    }
+   },
+   {
+    "title": {
+     "fr": "Isoler les données qui grossissent",
+     "dar": "3zel data li katkber",
+     "en": "Isolate growing data"
+    },
+    "body": {
+     "fr": "`/var` séparé (≥ 5 Go) pour que les journaux ne remplissent pas `/` ; `/home` petit (peu d'utilisateurs).",
+     "dar": "`/var` bou7do (≥ 5 Go) bach logs ma y3ammrouch `/` ; `/home` sghir.",
+     "en": "Separate `/var` (≥ 5 GB) so logs cannot fill `/`; small `/home`."
+    }
+   },
+   {
+    "title": {
+     "fr": "Exemple chiffré",
+     "dar": "Mithal b ar9am",
+     "en": "Worked example"
+    },
+    "body": {
+     "fr": "`/boot/efi` 1 Go + `/boot` 1 Go + `/` 20 Go + `/var` 25 Go + `/home` 9 Go + swap 4 Go = **60 Go**.",
+     "dar": "`/boot/efi` 1 + `/boot` 1 + `/` 20 + `/var` 25 + `/home` 9 + swap 4 = **60 Go**.",
+     "en": "`/boot/efi` 1 + `/boot` 1 + `/` 20 + `/var` 25 + `/home` 9 + swap 4 = **60 GB**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Ex. `/boot/efi` 1 · `/boot` 1 · `/` 20 · `/var` 25 · `/home` 9 · swap 4 (Go) — toutes les contraintes respectées.",
+   "dar": "Mithal : `/boot/efi` 1 · `/boot` 1 · `/` 20 · `/var` 25 · `/home` 9 · swap 4 (Go).",
+   "en": "E.g. `/boot/efi` 1 · `/boot` 1 · `/` 20 · `/var` 25 · `/home` 9 · swap 4 (GB)."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier `/boot/efi` alors que la machine est en UEFI.",
+    "dar": "Tnsa `/boot/efi` w machine UEFI.",
+    "en": "Forgetting `/boot/efi` on a UEFI machine."
+   },
+   {
+    "fr": "Confondre `/` et `/root`.",
+    "dar": "Tkhalt `/` m3a `/root`.",
+    "en": "Confusing `/` with `/root`."
+   },
+   {
+    "fr": "Mettre `/` à moins de 10 GiB.",
+    "dar": "T3ti `/` a9al mn 10 GiB.",
+    "en": "Giving `/` less than 10 GiB."
+   }
+  ]
+ },
+ {
+  "id": "lx-intro-2",
+  "module": "linux",
+  "chapter": "intro",
+  "difficulty": 2,
+  "title": {
+   "fr": "Reconstituer la chronologie",
+   "dar": "Rttab tarikh",
+   "en": "Rebuild the timeline"
+  },
+  "statement": {
+   "fr": "Classe dans l'ordre et date : Linux, BSD, Multics, langage C, UNIX, Minix. Pour chacun, donne l'auteur ou l'institution et l'apport principal.",
+   "dar": "Rttab w 3ti tarikh : Linux, BSD, Multics, langage C, UNIX, Minix. L kol wa7ed, 3ti chkoun dar w chnou zad.",
+   "en": "Order and date: Linux, BSD, Multics, C language, UNIX, Minix. For each, give the author or institution and main contribution."
+  },
+  "hints": [
+   {
+    "fr": "Le plus ancien date de 1964.",
+    "dar": "Lowel f 1964.",
+    "en": "The oldest dates from 1964."
+   },
+   {
+    "fr": "UNIX est écrit avant le C, puis réécrit en C.",
+    "dar": "UNIX t-ktb 9bel C, w men b3d t3awed b C.",
+    "en": "UNIX was written before C, then rewritten in C."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Années 60–70",
+     "dar": "Snin 60–70",
+     "en": "The 60s–70s"
+    },
+    "body": {
+     "fr": "**1964** Multics (MIT, GE, Bell Labs) → **1969** UNIX (Ken Thompson, assembleur) → **1972** C (Dennis Ritchie, Unix réécrit en C → portable) → **1977** BSD (Berkeley, Bill Joy : TCP/IP, mémoire virtuelle).",
+     "dar": "**1964** Multics → **1969** UNIX (Thompson) → **1972** C (Ritchie) → **1977** BSD (Bill Joy : TCP/IP, mémoire virtuelle).",
+     "en": "**1964** Multics (MIT, GE, Bell Labs) → **1969** UNIX (Ken Thompson, assembly) → **1972** C (Dennis Ritchie; Unix rewritten → portable) → **1977** BSD (Berkeley, Bill Joy: TCP/IP, virtual memory)."
+    }
+   },
+   {
+    "title": {
+     "fr": "Années 80–90",
+     "dar": "Snin 80–90",
+     "en": "The 80s–90s"
+    },
+    "body": {
+     "fr": "**1987** Minix (Tanenbaum : micro-noyau pédagogique, non libre) → **1991** Linux (Linus Torvalds) + outils GNU = GNU/Linux.",
+     "dar": "**1987** Minix (Tanenbaum) → **1991** Linux (Torvalds) + GNU = GNU/Linux.",
+     "en": "**1987** Minix (Tanenbaum: teaching micro-kernel, not free) → **1991** Linux (Linus Torvalds) + GNU tools = GNU/Linux."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Multics 1964 → UNIX 1969 → C 1972 → BSD 1977 → Minix 1987 → Linux 1991.",
+   "dar": "Multics 1964 → UNIX 1969 → C 1972 → BSD 1977 → Minix 1987 → Linux 1991.",
+   "en": "Multics 1964 → UNIX 1969 → C 1972 → BSD 1977 → Minix 1987 → Linux 1991."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Attribuer UNIX à Dennis Ritchie (il a créé le C).",
+    "dar": "T9oul UNIX dyal Ritchie (howa dar C).",
+    "en": "Crediting UNIX to Dennis Ritchie (he created C)."
+   },
+   {
+    "fr": "Dire que Linux est un système complet (c'est un noyau).",
+    "dar": "T9oul Linux système kaml (howa ghir noyau).",
+    "en": "Saying Linux is a complete system (it is a kernel)."
+   }
+  ]
+ },
+ {
+  "id": "lx-intro-3",
+  "module": "linux",
+  "chapter": "intro",
+  "difficulty": 3,
+  "title": {
+   "fr": "Choisir une distribution pour une PME",
+   "dar": "Khtar distribution l PME",
+   "en": "Choose a distribution for an SME"
+  },
+  "statement": {
+   "fr": "Une PME veut un serveur de production stable avec **support professionnel** et une station de test pour essayer les **dernières nouveautés**. Que proposes-tu (famille, distribution, gestionnaire de paquets) en suivant la démarche du cours ?",
+   "dar": "PME bghat serveur production stable b **support professionnel** w machine test l **jdid**. Chnou tqtare7 (famille, distribution, paquets) b démarche dyal dars ?",
+   "en": "An SME wants a stable production server with **professional support** and a test box to try the **latest features**. What do you propose (family, distribution, package manager) following the course method?"
+  },
+  "hints": [
+   {
+    "fr": "Démarche : besoins → distributions adaptées → version selon la machine → communauté.",
+    "dar": "Démarche : l7ajiyat → distributions → version → communauté.",
+    "en": "Method: needs → suitable distros → version → community."
+   },
+   {
+    "fr": "Red Hat a une distribution payante et un « laboratoire ».",
+    "dar": "Red Hat 3endha distribution b lflous w « labo ».",
+    "en": "Red Hat has a paid distribution and a \"lab\"."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Besoins",
+     "dar": "L7ajiyat",
+     "en": "Needs"
+    },
+    "body": {
+     "fr": "Production : stabilité + support. Test : nouveautés.",
+     "dar": "Production : stabilité + support. Test : jdid.",
+     "en": "Production: stability + support. Test: new features."
+    }
+   },
+   {
+    "title": {
+     "fr": "Choix",
+     "dar": "Lkhtiyar",
+     "en": "Choice"
+    },
+    "body": {
+     "fr": "Famille **Red Hat** (paquets `.rpm`, `dnf`) : **RHEL 9** en production (support payant), **Fedora** sur la station de test (laboratoire de Red Hat, mêmes outils).",
+     "dar": "Famille **Red Hat** (`.rpm`, `dnf`) : **RHEL 9** f production (support), **Fedora** l test (labo dyal Red Hat).",
+     "en": "**Red Hat** family (`.rpm`, `dnf`): **RHEL 9** in production (paid support), **Fedora** on the test box (Red Hat's lab, same tools)."
+    }
+   },
+   {
+    "title": {
+     "fr": "Vérifications",
+     "dar": "Tsdi9",
+     "en": "Checks"
+    },
+    "body": {
+     "fr": "Architecture 64 bits, ressources ≥ minimums, communauté et documentation actives.",
+     "dar": "64 bits, ressources ≥ minimum, communauté active.",
+     "en": "64-bit, resources ≥ minimums, active community and docs."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "RHEL 9 (production, support) + Fedora (test), famille Red Hat, `.rpm`/`dnf`.",
+   "dar": "RHEL 9 (production) + Fedora (test), Red Hat, `.rpm`/`dnf`.",
+   "en": "RHEL 9 (production, support) + Fedora (test), Red Hat family, `.rpm`/`dnf`."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Proposer CentOS comme « version payante ».",
+    "dar": "T9oul CentOS « b lflous ».",
+    "en": "Calling CentOS the \"paid version\"."
+   },
+   {
+    "fr": "Mélanger des familles (.deb en test, .rpm en prod) : outils différents.",
+    "dar": "Tkhalt familles (.deb test, .rpm prod) : outils mkhtalfin.",
+    "en": "Mixing families (.deb in test, .rpm in prod): different tools."
+   }
+  ]
+ }
+]

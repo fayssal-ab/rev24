@@ -1,0 +1,68 @@
+{
+ "id": "annale",
+ "module": "ro",
+ "order": 7,
+ "title": {
+  "fr": "Annales : contrôle continu 2025-2026",
+  "dar": "Annales 2025-2026",
+  "en": "Past exam 2025-2026"
+ },
+ "summary": {
+  "fr": "Contrôle du 28/11/2025 (1h30) corrigé.",
+  "dar": "Contrôle m-sa7e7.",
+  "en": "Corrected exam of 28/11/2025."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Énoncé",
+    "dar": "Énoncé",
+    "en": "Statement"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Exercice 1 : graphe A–G (7 questions). Exercice 2 : réseau de 6 stations — matrice, degrés, chaîne eulérienne, puis **Partie A** (Kruskal ou Prim) **ou Partie B** (Dijkstra). Exercice 3 : degrés 4,3,3,2,1 ; M^4 d'un graphe orienté.",
+    "dar": "3 exercices, Partie A wla B.",
+    "en": "3 exercises, Part A or Part B."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "    A B C D E F\nA   0 0 1 1 1 1\nB   0 0 1 1 0 0\nC   1 1 0 1 0 1\nD   1 1 1 0 1 1\nE   1 0 0 1 0 1\nF   1 0 1 1 1 0",
+   "caption": {
+    "fr": "Matrice de l'exercice 2",
+    "dar": "Matrice",
+    "en": "Exercise 2 matrix"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Résultats : 11 arêtes, non complet (manque 4), connexe ; degrés A4 B2 C4 D5 E3 F4 ; chaîne eulérienne de D à E ; ACM coût **15** ; B → E **13 min**.",
+    "dar": "Natayij.",
+    "en": "Results: 11 edges, degrees, Euler chain D→E, MST 15, B→E 13."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Faites l'examen blanc chronométré (page Examen blanc → « Contrôle continu »).",
+    "dar": "Dir l'examen blanc.",
+    "en": "Take the timed mock exam."
+   }
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Exercice 2 : MST 15, B → E 13, chaîne D…E.",
+   "dar": "15 ; 13.",
+   "en": "MST 15; 13 min."
+  }
+ ]
+}

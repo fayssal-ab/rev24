@@ -1,0 +1,317 @@
+[
+ {
+  "id": "fc-us-1",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "UID root / système / ordinaires ?",
+   "dar": "UID ?",
+   "en": "UIDs?"
+  },
+  "back": {
+   "fr": "0 / 1–999 / ≥ 1000",
+   "dar": "0 / 1–999 / ≥ 1000",
+   "en": "0 / 1–999 / ≥ 1000"
+  }
+ },
+ {
+  "id": "fc-us-2",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "Champs de /etc/passwd ?",
+   "dar": "passwd ?",
+   "en": "/etc/passwd fields?"
+  },
+  "back": {
+   "fr": "login:x:uid:gid:commentaire:home:shell",
+   "dar": "login:x:uid:gid:commentaire:home:shell",
+   "en": "login:x:uid:gid:comment:home:shell"
+  }
+ },
+ {
+  "id": "fc-us-3",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "Champs de /etc/shadow ?",
+   "dar": "shadow ?",
+   "en": "shadow fields?"
+  },
+  "back": {
+   "fr": "login:mdp:last:min:max:warn:inactif:expire:réservé",
+   "dar": "login:mdp:last:min:max:warn:inactif:expire",
+   "en": "login:hash:last:min:max:warn:inactive:expire:reserved"
+  }
+ },
+ {
+  "id": "fc-us-4",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "/etc/group et /etc/gshadow ?",
+   "dar": "group / gshadow ?",
+   "en": "group / gshadow?"
+  },
+  "back": {
+   "fr": "group:x:gid:membres · group:mdp:admins:membres",
+   "dar": "group:x:gid:membres · group:mdp:admins:membres",
+   "en": "group:x:gid:members · group:pw:admins:members"
+  }
+ },
+ {
+  "id": "fc-us-5",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "`!!` dans shadow ?",
+   "dar": "`!!` ?",
+   "en": "`!!`?"
+  },
+  "back": {
+   "fr": "Pas de mot de passe défini / verrouillé.",
+   "dar": "Bla mot de passe.",
+   "en": "No password set / locked."
+  }
+ },
+ {
+  "id": "fc-us-6",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "$6$ ?",
+   "dar": "$6$ ?",
+   "en": "$6$?"
+  },
+  "back": {
+   "fr": "SHA-512",
+   "dar": "SHA-512",
+   "en": "SHA-512"
+  }
+ },
+ {
+  "id": "fc-us-7",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "/etc/default/useradd ?",
+   "dar": "default/useradd ?",
+   "en": "default/useradd?"
+  },
+  "back": {
+   "fr": "GROUP HOME INACTIVE EXPIRE SHELL SKEL CREATE_MAIL_SPOOL (useradd -D)",
+   "dar": "Défauts useradd.",
+   "en": "useradd defaults."
+  }
+ },
+ {
+  "id": "fc-us-8",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "/etc/login.defs ?",
+   "dar": "login.defs ?",
+   "en": "login.defs?"
+  },
+  "back": {
+   "fr": "UID_MIN/MAX, SYS_UID_MIN/MAX, PASS_MAX/MIN_DAYS, PASS_MIN_LEN, CREATE_HOME, ENCRYPT_METHOD",
+   "dar": "UID_MIN, PASS_*…",
+   "en": "UID_MIN, PASS_*, CREATE_HOME…"
+  }
+ },
+ {
+  "id": "fc-us-9",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "usermod -G vs -aG ?",
+   "dar": "-G vs -aG ?",
+   "en": "-G vs -aG?"
+  },
+  "back": {
+   "fr": "-G remplace les groupes secondaires ; -aG ajoute.",
+   "dar": "-G kaybeddel ; -aG kayzid.",
+   "en": "-G replaces; -aG appends."
+  }
+ },
+ {
+  "id": "fc-us-10",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "useradd -r ?",
+   "dar": "useradd -r ?",
+   "en": "useradd -r?"
+  },
+  "back": {
+   "fr": "Compte système (UID < 1000, pas de home).",
+   "dar": "Système.",
+   "en": "System account."
+  }
+ },
+ {
+  "id": "fc-us-11",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "userdel -r ?",
+   "dar": "userdel -r ?",
+   "en": "userdel -r?"
+  },
+  "back": {
+   "fr": "Supprime aussi home et boîte mail.",
+   "dar": "Home + mail.",
+   "en": "Also home and mail."
+  }
+ },
+ {
+  "id": "fc-us-12",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "passwd -l -u -d -e -S ?",
+   "dar": "passwd options ?",
+   "en": "passwd options?"
+  },
+  "back": {
+   "fr": "verrouiller, déverrouiller, supprimer, expirer, état",
+   "dar": "sedd, fte7, mse7, expirer, état",
+   "en": "lock, unlock, delete, expire, status"
+  }
+ },
+ {
+  "id": "fc-us-13",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "chage -d 0 ?",
+   "dar": "chage -d 0 ?",
+   "en": "chage -d 0?"
+  },
+  "back": {
+   "fr": "Changement de mot de passe obligatoire à la prochaine connexion.",
+   "dar": "Beddel f connexion jaya.",
+   "en": "Forced change at next login."
+  }
+ },
+ {
+  "id": "fc-us-14",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "chage -M -m -W -I -E ?",
+   "dar": "chage ?",
+   "en": "chage?"
+  },
+  "back": {
+   "fr": "max, min, warn, inactif, expiration du compte",
+   "dar": "max, min, warn, inactif, expire",
+   "en": "max, min, warn, inactive, account expiry"
+  }
+ },
+ {
+  "id": "fc-us-15",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "gpasswd -a -d -M -A ?",
+   "dar": "gpasswd ?",
+   "en": "gpasswd?"
+  },
+  "back": {
+   "fr": "ajouter, retirer, membres, administrateurs",
+   "dar": "zid, 7eyed, membres, admins",
+   "en": "add, delete, members, admins"
+  }
+ },
+ {
+  "id": "fc-us-16",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "groupdel impossible quand ?",
+   "dar": "groupdel ?",
+   "en": "groupdel fails when?"
+  },
+  "back": {
+   "fr": "Groupe primaire d'un utilisateur.",
+   "dar": "Primaire.",
+   "en": "Primary group of a user."
+  }
+ },
+ {
+  "id": "fc-us-17",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "rwxrw-r-- ?",
+   "dar": "rwxrw-r-- ?",
+   "en": "rwxrw-r--?"
+  },
+  "back": {
+   "fr": "764",
+   "dar": "764",
+   "en": "764"
+  }
+ },
+ {
+  "id": "fc-us-18",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "x sur un répertoire ?",
+   "dar": "x f dossier ?",
+   "en": "x on a directory?"
+  },
+  "back": {
+   "fr": "Le traverser (cd, accéder aux fichiers) ; r = lister.",
+   "dar": "Dkhol ; r = lister.",
+   "en": "Traverse it; r = list."
+  }
+ },
+ {
+  "id": "fc-us-19",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "Format sudoers ?",
+   "dar": "sudoers ?",
+   "en": "sudoers format?"
+  },
+  "back": {
+   "fr": "utilisateur hôte=(cible) commandes ; %groupe ; NOPASSWD:",
+   "dar": "user hôte=(cible) cmd",
+   "en": "user host=(target) cmds; %group; NOPASSWD:"
+  }
+ },
+ {
+  "id": "fc-us-20",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "Retirer tp1 de wheel ?",
+   "dar": "tp1 mn wheel ?",
+   "en": "Remove tp1 from wheel?"
+  },
+  "back": {
+   "fr": "`gpasswd -d tp1 wheel`",
+   "dar": "`gpasswd -d tp1 wheel`",
+   "en": "`gpasswd -d tp1 wheel`"
+  }
+ },
+ {
+  "id": "fc-us-21",
+  "module": "linux",
+  "chapter": "users",
+  "front": {
+   "fr": "vipw / vigr ?",
+   "dar": "vipw / vigr ?",
+   "en": "vipw / vigr?"
+  },
+  "back": {
+   "fr": "Éditer passwd / group avec verrouillage (-s : shadow / gshadow).",
+   "dar": "Beddel b verrou.",
+   "en": "Edit with locking."
+  }
+ }
+]

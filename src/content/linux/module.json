@@ -1,0 +1,34 @@
+{
+ "id": "linux",
+ "title": {
+  "fr": "Administration Unix / Linux RHEL 9",
+  "dar": "Administration Unix / Linux RHEL 9",
+  "en": "Unix / Linux administration (RHEL 9)"
+ },
+ "subtitle": {
+  "fr": "Intro, TP1 → TP5, utilisateurs et droits",
+  "dar": "Intro, TP1 → TP5, users w droits",
+  "en": "Intro, TP1 → TP5, users and permissions"
+ },
+ "color": "#10b981",
+ "icon": "terminal",
+ "theme": "terminal",
+ "chapters": [
+  "intro",
+  "tp1",
+  "grub",
+  "systemd",
+  "paquets",
+  "users"
+ ],
+ "upcoming": [],
+ "annales": [],
+ "weights": {
+  "users": 6,
+  "systemd": 4,
+  "paquets": 3,
+  "grub": 2.5,
+  "tp1": 2,
+  "intro": 1
+ }
+}

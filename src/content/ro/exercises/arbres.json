@@ -1,0 +1,159 @@
+[
+ {
+  "id": "ro-x-1",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle — Partie A : arbre couvrant minimal",
+   "dar": "Partie A : ACM",
+   "en": "Part A: minimum spanning tree"
+  },
+  "statement": {
+   "fr": "Réseau de 6 stations, poids (milliers DH) : A–C 4, A–D 3, A–E 7, A–F 2, B–C 9, B–D 5, C–D 2, C–F 3, D–E 12, D–F 5, E–F 3. Trouver le réseau de coût minimal reliant toutes les stations (Kruskal ou Prim, tableau).",
+   "dar": "ACM b Kruskal wla Prim.",
+   "en": "Find the minimum-cost network (Kruskal or Prim, with table)."
+  },
+  "hints": [
+   {
+    "fr": "Trie les arêtes par poids.",
+    "dar": "Tri.",
+    "en": "Sort edges."
+   },
+   {
+    "fr": "Il faut 5 arêtes.",
+    "dar": "5 arêtes.",
+    "en": "5 edges."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Tableau Kruskal",
+     "dar": "Tableau",
+     "en": "Kruskal table"
+    },
+    "body": {
+     "fr": "A–F 2 ✓ · C–D 2 ✓ · A–D 3 ✓ · C–F 3 ✗ (cycle A–F–C–D–A) · E–F 3 ✓ · A–C 4 ✗ · B–D 5 ✓ → 5 arêtes.",
+     "dar": "Kruskal.",
+     "en": "Kruskal steps."
+    }
+   },
+   {
+    "title": {
+     "fr": "Coût",
+     "dar": "Coût",
+     "en": "Cost"
+    },
+    "body": {
+     "fr": "2 + 2 + 3 + 3 + 5 = **15**. D'autres arbres de coût 15 existent (ex. C–F au lieu de A–D) : toute solution valide est acceptée.",
+     "dar": "15.",
+     "en": "**15**; other 15-trees exist."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Coût minimal **15** (milliers DH).",
+   "dar": "15.",
+   "en": "Minimum cost **15**."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Garder une arête qui crée un cycle.",
+    "dar": "Cycle.",
+    "en": "Keeping a cycle edge."
+   },
+   {
+    "fr": "S'arrêter avant n−1 arêtes.",
+    "dar": "Wa9ef bkri.",
+    "en": "Stopping early."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gMst",
+     "args": [
+      "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3"
+     ]
+    },
+    "expect": 15,
+    "tolerance": 0
+   }
+  ]
+ },
+ {
+  "id": "ro-x-2",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 3,
+  "title": {
+   "fr": "Prim — exercice du cours (9 sommets)",
+   "dar": "Prim 9 sommets",
+   "en": "Prim — 9-vertex exercise"
+  },
+  "statement": {
+   "fr": "Graphe (reconstitué) : 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10. Appliquer Prim depuis 1 avec le tableau « Ensemble S | (poids ; prédécesseur) ».",
+   "dar": "Prim mn 1 b tableau.",
+   "en": "Run Prim from 1 with the course table."
+  },
+  "hints": [
+   {
+    "fr": "Au départ tout est à ∞ sauf 1.",
+    "dar": "∞ sauf 1.",
+    "en": "All ∞ except 1."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Ordre d'ajout",
+     "dar": "Tartib",
+     "en": "Order"
+    },
+    "body": {
+     "fr": "1 → 2 (4) → 3 (5) → 9 (6) → 8 (7) → 5 (6) → 4 (3) → 6 (4) → 7 (2).",
+     "dar": "Tartib.",
+     "en": "Addition order."
+    }
+   },
+   {
+    "title": {
+     "fr": "Arbre",
+     "dar": "Arbre",
+     "en": "Tree"
+    },
+    "body": {
+     "fr": "{1,2},{1,3},{3,9},{8,9},{5,8},{4,5},{5,6},{6,7} ; poids **37**.",
+     "dar": "37.",
+     "en": "Weight **37**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Poids **37**.",
+   "dar": "37.",
+   "en": "Weight **37**."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Choisir l'arête minimale du graphe entier (c'est Kruskal).",
+    "dar": "Kruskal.",
+    "en": "Picking globally (Kruskal)."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gPrim",
+     "args": [
+      "1 2 3 4 5 6 7 8 9 | 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10",
+      "1"
+     ]
+    },
+    "expect": 37,
+    "tolerance": 0
+   }
+  ]
+ }
+]

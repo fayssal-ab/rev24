@@ -1,0 +1,939 @@
+[
+ {
+  "id": "lp-01",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Compte le nombre de paquets RPM installés.",
+   "dar": "7seb paquets installés.",
+   "en": "Count installed RPM packages."
+  },
+  "answer": [
+   "rpm -qa | wc -l"
+  ],
+  "explanation": {
+   "fr": "`rpm -qa` (*query all*) liste un paquet par ligne, `wc -l` compte.",
+   "dar": "`rpm -qa` + `wc -l`.",
+   "en": "`rpm -qa` lists one package per line, `wc -l` counts."
+  },
+  "wrongExplanations": {
+   "rpm -qa": {
+    "fr": "Liste, mais ne compte pas.",
+    "dar": "Kaylister walakin ma kay7sebch.",
+    "en": "Lists but does not count."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-02",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "À quel paquet appartient le fichier `/etc/services` ?",
+   "dar": "L ach men paquet `/etc/services` ?",
+   "en": "Which package owns `/etc/services`?"
+  },
+  "answer": [
+   "rpm -qf /etc/services"
+  ],
+  "explanation": {
+   "fr": "`rpm -qf` (*query file*) → `setup-…`.",
+   "dar": "`-qf` → setup.",
+   "en": "`rpm -qf` → `setup-…`."
+  },
+  "wrongExplanations": {
+   "rpm -ql /etc/services": {
+    "fr": "`-ql` liste les fichiers d'un **paquet** donné, l'inverse.",
+    "dar": "`-ql` l3eks.",
+    "en": "`-ql` lists a **package**'s files: the opposite."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-03",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les informations détaillées du paquet installé `bash`.",
+   "dar": "Werri ma3loumat dyal `bash`.",
+   "en": "Show detailed info on installed `bash`."
+  },
+  "answer": [
+   "rpm -qi bash"
+  ],
+  "explanation": {
+   "fr": "`-qi` : nom, version, release, licence, résumé, date d'installation…",
+   "dar": "`-qi`.",
+   "en": "`-qi`: name, version, licence, summary…"
+  },
+  "wrongExplanations": {
+   "rpm -q bash": {
+    "fr": "Donne seulement nom-version-release.",
+    "dar": "Ghir nom-version.",
+    "en": "Only name-version-release."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-04",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `rpm -ql openssh-server` ?",
+   "dar": "Chnou kaydir `rpm -ql openssh-server` ?",
+   "en": "What does `rpm -ql openssh-server` do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Liste les fichiers installés par ce paquet",
+     "dar": "Kaylister fichiers dyal paquet",
+     "en": "Lists files installed by the package"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Liste ses dépendances",
+     "dar": "Dépendances",
+     "en": "Lists its dependencies"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Vérifie sa signature",
+     "dar": "Signature",
+     "en": "Checks its signature"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "L'installe",
+     "dar": "Kayinstallih",
+     "en": "Installs it"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`-q` query + `-l` list. `-qc` = seulement les fichiers de configuration, `-qd` = documentation.",
+   "dar": "`-ql` fichiers ; `-qc` config.",
+   "en": "`-ql` files; `-qc` config files only; `-qd` docs."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Dépendances : `rpm -qR`.",
+    "dar": "`-qR`.",
+    "en": "Dependencies: `rpm -qR`."
+   },
+   "c": {
+    "fr": "Signature : `rpm -K` sur un fichier .rpm.",
+    "dar": "`-K`.",
+    "en": "Signature: `rpm -K`."
+   },
+   "d": {
+    "fr": "Installation : `rpm -ivh`.",
+    "dar": "`-ivh`.",
+    "en": "Install: `rpm -ivh`."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-05",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Vérifie quels fichiers du paquet `sudo` ont été modifiés depuis l'installation.",
+   "dar": "Chouf ach men fichiers dyal `sudo` tbeddlou.",
+   "en": "Check which files of `sudo` changed since install."
+  },
+  "answer": [
+   "rpm -V sudo"
+  ],
+  "explanation": {
+   "fr": "`rpm -V` compare taille (S), somme MD5 (5), date (T)… avec la base RPM ; `c` = fichier de configuration. Aucune sortie = rien de modifié.",
+   "dar": "`-V` : S, 5, T ; `c` = config.",
+   "en": "`rpm -V` compares size (S), digest (5), time (T)…; `c` = config file. No output = unchanged."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-06",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les fichiers de configuration contenus dans le fichier **non installé** `tree-1.8.0-10.el9.x86_64.rpm`.",
+   "dar": "Werri config dyal fichier **ma installich** `tree-….rpm`.",
+   "en": "List config files inside the **uninstalled** file `tree-1.8.0-10.el9.x86_64.rpm`."
+  },
+  "answer": [
+   "rpm -qpc tree-1.8.0-10.el9.x86_64.rpm",
+   "rpm -qcp tree-1.8.0-10.el9.x86_64.rpm"
+  ],
+  "explanation": {
+   "fr": "`-p` interroge un **fichier .rpm** au lieu de la base installée ; `-c` = configuration.",
+   "dar": "`-p` = fichier .rpm ; `-c` config.",
+   "en": "`-p` queries a **.rpm file** instead of the installed DB; `-c` = config."
+  },
+  "wrongExplanations": {
+   "rpm -qc tree": {
+    "fr": "Sans `-p`, interroge le paquet **installé** (absent ici).",
+    "dar": "Bla `-p` : installé.",
+    "en": "Without `-p`, queries the **installed** package (absent)."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-07",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Vérifie la signature du fichier `wireshark-3.4.10-7.el9.x86_64.rpm`.",
+   "dar": "Tsdi9 signature dyal `wireshark-….rpm`.",
+   "en": "Check the signature of `wireshark-3.4.10-7.el9.x86_64.rpm`."
+  },
+  "answer": [
+   "rpm -K wireshark-3.4.10-7.el9.x86_64.rpm",
+   "rpm --checksig wireshark-3.4.10-7.el9.x86_64.rpm"
+  ],
+  "explanation": {
+   "fr": "`rpm -K` vérifie empreintes et signature GPG (« digests signatures OK »).",
+   "dar": "`rpm -K`.",
+   "en": "`rpm -K` checks digests and GPG signature."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-08",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`rpm -ivh wireshark-*.rpm` échoue avec « Dépendances requises ». Pourquoi ?",
+   "dar": "`rpm -ivh wireshark` kayfchel. 3lach ?",
+   "en": "`rpm -ivh wireshark-*.rpm` fails with \"Failed dependencies\". Why?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le fichier est corrompu",
+     "dar": "Fichier khasser",
+     "en": "The file is corrupt"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "rpm vérifie les dépendances mais ne les résout pas (ne télécharge rien)",
+     "dar": "rpm kaytsdi9 walakin ma kay7ellch dépendances",
+     "en": "rpm checks dependencies but does not resolve them"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il faut être root",
+     "dar": "Khass root",
+     "en": "You must be root"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "wireshark n'existe pas pour RHEL",
+     "dar": "Ma kaynch",
+     "en": "wireshark does not exist for RHEL"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`rpm` travaille sur **un fichier** : il refuse si des paquets requis manquent. `dnf` résout l'arbre des dépendances depuis les dépôts.",
+   "dar": "`rpm` fichier wa7ed ; `dnf` kay7ell.",
+   "en": "`rpm` works on **one file** and refuses if requirements are missing. `dnf` resolves the dependency tree."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le message parle de dépendances, pas de corruption.",
+    "dar": "Machi corruption.",
+    "en": "The message is about dependencies."
+   },
+   "c": {
+    "fr": "Sans root, l'erreur serait un verrou/permission.",
+    "dar": "Bla root : permission.",
+    "en": "Without root, the error would be a lock/permission one."
+   },
+   "d": {
+    "fr": "Il existe (dépôt AppStream).",
+    "dar": "Kayn f AppStream.",
+    "en": "It exists (AppStream)."
+   }
+  },
+  "tags": [
+   "rpm",
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-09",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que risque-t-on avec `rpm -ivh --nodeps paquet.rpm` ?",
+   "dar": "Chnou khatar `--nodeps` ?",
+   "en": "What is the risk of `rpm -ivh --nodeps pkg.rpm`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Rien, c'est recommandé",
+     "dar": "Walou",
+     "en": "Nothing, it is recommended"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Installer un logiciel qui ne fonctionnera pas (bibliothèques manquantes)",
+     "dar": "Logiciel ma ykhdemch (bibliothèques na9sin)",
+     "en": "Install software that will not run (missing libraries)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Supprimer d'autres paquets",
+     "dar": "Ymse7 paquets khrin",
+     "en": "Remove other packages"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Désactiver SELinux",
+     "dar": "Ytfi SELinux",
+     "en": "Disable SELinux"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`--nodeps` force l'installation sans les dépendances : le programme plantera au lancement (ex. libQt5Core.so.5 manquante). À éviter : utiliser dnf.",
+   "dar": "`--nodeps` : programme ma ykhdemch. Dnf a7san.",
+   "en": "`--nodeps` forces install without deps: the program will crash. Use dnf."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Fortement déconseillé.",
+    "dar": "Ma ynsa7ch.",
+    "en": "Strongly discouraged."
+   },
+   "c": {
+    "fr": "Ne supprime rien.",
+    "dar": "Ma kaymse7 walou.",
+    "en": "Removes nothing."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Ma 3endo 3ala9a.",
+    "en": "Unrelated."
+   }
+  },
+  "tags": [
+   "rpm"
+  ]
+ },
+ {
+  "id": "lp-10",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Installe le paquet `tree` avec ses dépendances, sans confirmation.",
+   "dar": "Installi `tree` bla ma ysowel.",
+   "en": "Install `tree` with dependencies, no confirmation."
+  },
+  "answer": [
+   "dnf install -y tree",
+   "dnf -y install tree",
+   "yum install -y tree",
+   "yum -y install tree"
+  ],
+  "explanation": {
+   "fr": "`dnf install` résout les dépendances ; `-y` répond oui. `yum` est un alias de dnf sur RHEL 9.",
+   "dar": "`dnf install -y`.",
+   "en": "`dnf install` resolves deps; `-y` answers yes. `yum` aliases dnf on RHEL 9."
+  },
+  "wrongExplanations": {
+   "rpm -ivh tree": {
+    "fr": "rpm attend un fichier .rpm et ne télécharge rien.",
+    "dar": "rpm khasso fichier.",
+    "en": "rpm needs a .rpm file."
+   }
+  },
+  "tags": [
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-11",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Trouve quel paquet fournit le fichier `/usr/share/magic`.",
+   "dar": "Ach men paquet kay3ti `/usr/share/magic` ?",
+   "en": "Find which package provides `/usr/share/magic`."
+  },
+  "answer": [
+   "dnf provides /usr/share/magic",
+   "yum provides /usr/share/magic",
+   "dnf whatprovides /usr/share/magic"
+  ],
+  "explanation": {
+   "fr": "`dnf provides` cherche dans **tous** les paquets des dépôts (même non installés) → `file-libs`.",
+   "dar": "`provides` → file-libs.",
+   "en": "`dnf provides` searches **all** repo packages → `file-libs`."
+  },
+  "wrongExplanations": {
+   "rpm -qf /usr/share/magic": {
+    "fr": "Fonctionne seulement si le fichier est déjà installé.",
+    "dar": "Ghir ila installé.",
+    "en": "Only if already installed."
+   }
+  },
+  "tags": [
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-12",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `dnf history undo 7` ?",
+   "dar": "Chnou kaydir `dnf history undo 7` ?",
+   "en": "What does `dnf history undo 7` do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Supprime la ligne 7 de l'historique",
+     "dar": "Kaymse7 ster 7",
+     "en": "Deletes history line 7"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Annule la transaction n° 7 (désinstalle ce qu'elle a installé et inversement)",
+     "dar": "Kaylghi transaction 7",
+     "en": "Reverts transaction #7"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Rejoue la transaction 7",
+     "dar": "3awed 7",
+     "en": "Replays transaction 7"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Affiche le détail de la transaction 7",
+     "dar": "Détail 7",
+     "en": "Shows transaction 7 details"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`dnf history` liste les transactions, `history info N` les détaille, **`history undo N`** les annule.",
+   "dar": "list → info → undo.",
+   "en": "`history` lists, `info N` details, **`undo N`** reverts."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "L'historique n'est pas modifié ainsi.",
+    "dar": "Machi hakka.",
+    "en": "History is not edited this way."
+   },
+   "c": {
+    "fr": "C'est `history redo`.",
+    "dar": "`redo`.",
+    "en": "That is `redo`."
+   },
+   "d": {
+    "fr": "C'est `history info 7`.",
+    "dar": "`info`.",
+    "en": "That is `history info 7`."
+   }
+  },
+  "tags": [
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-13",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les paquets pour lesquels une mise à jour est disponible, **sans** rien installer.",
+   "dar": "Lister updates bla ma tinstalli.",
+   "en": "List packages with available updates, **without** installing."
+  },
+  "answer": [
+   "dnf check-update",
+   "yum check-update"
+  ],
+  "explanation": {
+   "fr": "`check-update` liste (code de retour 100 s'il y a des mises à jour) ; `dnf update` les applique.",
+   "dar": "`check-update` ; `update` kaytbe9.",
+   "en": "`check-update` lists (exit code 100 if updates); `dnf update` applies."
+  },
+  "wrongExplanations": {
+   "dnf update": {
+    "fr": "Applique les mises à jour.",
+    "dar": "Kaytbe9.",
+    "en": "Applies them."
+   }
+  },
+  "tags": [
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-14",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Installe le groupe de paquets « System Tools ».",
+   "dar": "Installi groupe « System Tools ».",
+   "en": "Install the \"System Tools\" package group."
+  },
+  "answer": [
+   "dnf group install \"System Tools\"",
+   "dnf groupinstall \"System Tools\"",
+   "dnf group install -y \"System Tools\"",
+   "yum groupinstall \"System Tools\""
+  ],
+  "explanation": {
+   "fr": "Les guillemets sont obligatoires (nom avec espace). `group list`, `group info`, `group remove`.",
+   "dar": "Guillemets darouriyin.",
+   "en": "Quotes are required (space in name)."
+  },
+  "wrongExplanations": {
+   "dnf group install System Tools": {
+    "fr": "Sans guillemets, « System » et « Tools » deviennent deux arguments.",
+    "dar": "Bla guillemets : jouj arguments.",
+    "en": "Without quotes these become two args."
+   }
+  },
+  "tags": [
+   "dnf"
+  ]
+ },
+ {
+  "id": "lp-15",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Comment désactiver un dépôt dans un fichier `.repo` ?",
+   "dar": "Kifach ntfi dépôt f `.repo` ?",
+   "en": "How do you disable a repo in a `.repo` file?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Supprimer baseurl",
+     "dar": "Mse7 baseurl",
+     "en": "Delete baseurl"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Mettre enabled=0 (ou yum-config-manager --disable ID)",
+     "dar": "enabled=0 (wla --disable)",
+     "en": "Set enabled=0 (or yum-config-manager --disable ID)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Mettre gpgcheck=0",
+     "dar": "gpgcheck=0",
+     "en": "Set gpgcheck=0"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Renommer le fichier en .txt",
+     "dar": ".txt",
+     "en": "Rename to .txt"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Chaque section `[id]` de `/etc/yum.repos.d/*.repo` a `enabled=1/0`. `yum-config-manager --enable|--disable ID` le modifie. `dnf repolist` vérifie.",
+   "dar": "`enabled=0` ; `repolist`.",
+   "en": "Each `[id]` section has `enabled=1/0`. `yum-config-manager --enable|--disable ID` edits it; `dnf repolist` checks."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le dépôt serait cassé, pas désactivé proprement.",
+    "dar": "Ykhssar.",
+    "en": "That breaks it."
+   },
+   "c": {
+    "fr": "gpgcheck concerne la vérification des signatures.",
+    "dar": "gpgcheck = signatures.",
+    "en": "gpgcheck is signature checking."
+   },
+   "d": {
+    "fr": "Bricolage : enabled=0 est la bonne méthode.",
+    "dar": "enabled=0 a7san.",
+    "en": "A hack; enabled=0 is right."
+   }
+  },
+  "tags": [
+   "depots"
+  ]
+ },
+ {
+  "id": "lp-16",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre la création d'un dépôt local servi par HTTP.",
+   "dar": "Rttab création dyal dépôt local.",
+   "en": "Order the creation of a local HTTP-served repository."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "dnf install httpd createrepo_c ; systemctl enable --now httpd",
+     "dar": "httpd + createrepo",
+     "en": "Install httpd + createrepo_c, start httpd"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "mkdir /var/www/html/mon_depot",
+     "dar": "mkdir mon_depot",
+     "en": "mkdir /var/www/html/mon_depot"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "dnf install --downloadonly --downloaddir=/var/www/html/mon_depot paquet",
+     "dar": "--downloadonly",
+     "en": "dnf install --downloadonly --downloaddir=… pkg"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "createrepo /var/www/html/mon_depot",
+     "dar": "createrepo",
+     "en": "createrepo /var/www/html/mon_depot"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Créer /etc/yum.repos.d/local.repo (baseurl, gpgcheck=0, enabled=1)",
+     "dar": "local.repo",
+     "en": "Create local.repo (baseurl, gpgcheck=0, enabled=1)"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "dnf repolist puis installation depuis le dépôt",
+     "dar": "repolist w install",
+     "en": "dnf repolist then install from it"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f"
+  ],
+  "explanation": {
+   "fr": "Serveur web → répertoire → paquets téléchargés → **métadonnées (createrepo)** → fichier `.repo` → test.",
+   "dar": "httpd → dossier → paquets → createrepo → .repo → test.",
+   "en": "Web server → directory → packages → **metadata (createrepo)** → `.repo` → test."
+  },
+  "tags": [
+   "depots"
+  ]
+ },
+ {
+  "id": "lp-17",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Sans `createrepo`, que se passe-t-il quand dnf utilise un répertoire plein de .rpm comme dépôt ?",
+   "dar": "Bla `createrepo` chnou ywqe3 ?",
+   "en": "Without `createrepo`, what happens when dnf uses a folder of .rpm files as a repo?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Ça marche",
+     "dar": "Khddam",
+     "en": "It works"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "dnf ne trouve pas de métadonnées (repodata/) : dépôt inutilisable",
+     "dar": "Ma kaynch repodata/ : ma ykhdemch",
+     "en": "dnf finds no metadata (repodata/): unusable repo"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "dnf installe tous les paquets",
+     "dar": "Kayinstalli kolchi",
+     "en": "dnf installs everything"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Les paquets sont supprimés",
+     "dar": "Kaytmse7ou",
+     "en": "Packages get deleted"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Un dépôt = des .rpm **+ un répertoire `repodata/`** (repomd.xml…) généré par `createrepo`. À relancer après chaque ajout de paquet.",
+   "dar": "Dépôt = .rpm + `repodata/`.",
+   "en": "A repo = .rpm files **+ `repodata/`** generated by `createrepo`. Re-run after adding packages."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "dnf lit les métadonnées, pas le dossier.",
+    "dar": "dnf kay9ra repodata.",
+    "en": "dnf reads metadata, not the folder."
+   },
+   "c": {
+    "fr": "Faux.",
+    "dar": "Ghalat.",
+    "en": "False."
+   },
+   "d": {
+    "fr": "Rien n'est supprimé.",
+    "dar": "Walou.",
+    "en": "Nothing is deleted."
+   }
+  },
+  "tags": [
+   "depots"
+  ]
+ },
+ {
+  "id": "lp-18",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Dans un fichier `.repo` local, quelles lignes sont correctes ?",
+   "dar": "F `.repo` local, chnou s7i7 ?",
+   "en": "In a local `.repo`, which lines are correct?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "[local]",
+     "dar": "[local]",
+     "en": "[local]"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "baseurl=file:///var/www/html/mon_depot",
+     "dar": "baseurl=file:///var/www/html/mon_depot",
+     "en": "baseurl=file:///var/www/html/mon_depot"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "gpgcheck=0",
+     "dar": "gpgcheck=0",
+     "en": "gpgcheck=0"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "enabled=1",
+     "dar": "enabled=1",
+     "en": "enabled=1"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "baseurl=/var/www/html/mon_depot",
+     "dar": "baseurl=/var/www/html/mon_depot",
+     "en": "baseurl=/var/www/html/mon_depot"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "Identifiant entre crochets, `name=`, `baseurl=` avec un **schéma** (`file:///` ou `http://IP/mon_depot`), `gpgcheck=0` (paquets non signés par nous), `enabled=1`.",
+   "dar": "baseurl b `file:///` wla `http://`.",
+   "en": "ID in brackets, `baseurl=` with a **scheme** (`file:///` or `http://`), `gpgcheck=0`, `enabled=1`."
+  },
+  "wrongExplanations": {
+   "e": {
+    "fr": "Il manque le schéma `file://` : URL invalide.",
+    "dar": "Na9es `file://`.",
+    "en": "Missing the `file://` scheme."
+   }
+  },
+  "tags": [
+   "depots"
+  ]
+ },
+ {
+  "id": "lp-19",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les dépôts activés.",
+   "dar": "Lister dépôts activés.",
+   "en": "List enabled repositories."
+  },
+  "answer": [
+   "dnf repolist",
+   "yum repolist"
+  ],
+  "explanation": {
+   "fr": "`repolist` (ajouter `--all` pour voir aussi les désactivés).",
+   "dar": "`repolist`.",
+   "en": "`repolist` (`--all` includes disabled)."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "depots"
+  ]
+ },
+ {
+  "id": "lp-20",
+  "module": "linux",
+  "chapter": "paquets",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Désinstalle `tree` avec dnf.",
+   "dar": "Désinstalli `tree`.",
+   "en": "Uninstall `tree` with dnf."
+  },
+  "answer": [
+   "dnf remove tree",
+   "dnf remove -y tree",
+   "yum remove tree",
+   "dnf erase tree"
+  ],
+  "explanation": {
+   "fr": "`dnf remove` retire aussi les dépendances devenues inutiles ; `rpm -e` refuse si d'autres paquets en dépendent.",
+   "dar": "`dnf remove`.",
+   "en": "`dnf remove` also cleans unused deps; `rpm -e` refuses if others depend on it."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "dnf"
+  ]
+ }
+]

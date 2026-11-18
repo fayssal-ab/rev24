@@ -1,0 +1,1083 @@
+[
+ {
+  "id": "ls-01",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le PID de systemd ?",
+   "dar": "Chnou PID dyal systemd ?",
+   "en": "What is systemd's PID?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "1",
+     "dar": "1",
+     "en": "1"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "100",
+     "dar": "100",
+     "en": "100"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Variable",
+     "dar": "Kaytbeddel",
+     "en": "It varies"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "systemd est le **premier processus** lancé par le noyau : **PID 1**, ancêtre de tous les autres (`ps aux | head -2`).",
+   "dar": "systemd howa **awel processus** : **PID 1** (`ps aux | head -2`).",
+   "en": "systemd is the **first process** started by the kernel: **PID 1**, ancestor of all others (`ps aux | head -2`)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le PID 0 n'est pas un processus utilisateur (ordonnanceur du noyau).",
+    "dar": "PID 0 machi processus.",
+    "en": "PID 0 is not a user process."
+   },
+   "c": {
+    "fr": "Les services ont des PID plus élevés.",
+    "dar": "Services PID kbar.",
+    "en": "Services have higher PIDs."
+   },
+   "d": {
+    "fr": "Il est toujours 1.",
+    "dar": "Dima 1.",
+    "en": "Always 1."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ls-02",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche la cible (target) de démarrage par défaut.",
+   "dar": "Werri target par défaut.",
+   "en": "Show the default boot target."
+  },
+  "answer": [
+   "systemctl get-default"
+  ],
+  "explanation": {
+   "fr": "`get-default` lit le lien `/etc/systemd/system/default.target`.",
+   "dar": "`get-default` kay9ra lien `default.target`.",
+   "en": "`get-default` reads the `/etc/systemd/system/default.target` link."
+  },
+  "wrongExplanations": {
+   "systemctl status default.target": {
+    "fr": "Montre l'état d'une unité, pas laquelle est la cible par défaut.",
+    "dar": "Status machi default.",
+    "en": "Shows a unit state, not which target is default."
+   }
+  },
+  "tags": [
+   "targets"
+  ]
+ },
+ {
+  "id": "ls-03",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Fais démarrer la machine en mode texte multi-utilisateur **aux prochains démarrages**.",
+   "dar": "Khalli machine tbda b mode texte **f démarrages jayin**.",
+   "en": "Make the machine boot in text multi-user mode **on future boots**."
+  },
+  "answer": [
+   "systemctl set-default multi-user.target"
+  ],
+  "explanation": {
+   "fr": "`set-default` remplace le lien `default.target` → effet au **prochain** démarrage. Pour basculer **maintenant** : `isolate`.",
+   "dar": "`set-default` → démarrage **jay**. Daba : `isolate`.",
+   "en": "`set-default` replaces the `default.target` link → effective at **next** boot. To switch **now**: `isolate`."
+  },
+  "wrongExplanations": {
+   "systemctl isolate multi-user.target": {
+    "fr": "`isolate` bascule maintenant mais ne change pas le démarrage par défaut.",
+    "dar": "`isolate` daba walakin machi default.",
+    "en": "`isolate` switches now but does not change the default."
+   }
+  },
+  "tags": [
+   "targets"
+  ]
+ },
+ {
+  "id": "ls-04",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence entre `systemctl set-default X` et `systemctl isolate X` ?",
+   "dar": "Lfar9 bin `set-default` w `isolate` ?",
+   "en": "Difference between `set-default X` and `isolate X`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "set-default agit au prochain démarrage, isolate bascule immédiatement",
+     "dar": "set-default f démarrage jay, isolate daba",
+     "en": "set-default applies at next boot, isolate switches now"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "isolate est permanent, set-default temporaire",
+     "dar": "isolate dayem, set-default mo2a9at",
+     "en": "isolate is permanent, set-default temporary"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "set-default arrête les services",
+     "dar": "set-default kaywe9ef services",
+     "en": "set-default stops services"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "**set-default ≠ isolate** : le premier modifie le lien `default.target` (persistant), le second change de cible **tout de suite** (non persistant).",
+   "dar": "**set-default ≠ isolate** : wa7ed dayem, lakhor daba.",
+   "en": "**set-default ≠ isolate**: the first changes `default.target` (persistent), the second switches **now** (not persistent)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Elles diffèrent.",
+    "dar": "Mkhtalfin.",
+    "en": "They differ."
+   },
+   "c": {
+    "fr": "C'est l'inverse.",
+    "dar": "L3eks.",
+    "en": "It is the opposite."
+   },
+   "d": {
+    "fr": "C'est isolate qui arrête ce qui n'appartient pas à la cible.",
+    "dar": "isolate li kaywe9ef.",
+    "en": "isolate is the one stopping units outside the target."
+   }
+  },
+  "tags": [
+   "targets"
+  ]
+ },
+ {
+  "id": "ls-05",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle cible correspond à l'ancien runlevel 5 ?",
+   "dar": "Ach men target = runlevel 5 ?",
+   "en": "Which target matches old runlevel 5?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "multi-user.target",
+     "dar": "multi-user.target",
+     "en": "multi-user.target"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "graphical.target",
+     "dar": "graphical.target",
+     "en": "graphical.target"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "rescue.target",
+     "dar": "rescue.target",
+     "en": "rescue.target"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "reboot.target",
+     "dar": "reboot.target",
+     "en": "reboot.target"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Runlevels : 0 poweroff, 1 rescue, 2-4 multi-user, **5 graphical**, 6 reboot. `runlevel` / `telinit` existent encore pour compatibilité.",
+   "dar": "0 poweroff, 1 rescue, 3 multi-user, **5 graphical**, 6 reboot.",
+   "en": "Runlevels: 0 poweroff, 1 rescue, 2-4 multi-user, **5 graphical**, 6 reboot."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "= runlevel 3.",
+    "dar": "= 3.",
+    "en": "= runlevel 3."
+   },
+   "c": {
+    "fr": "= runlevel 1.",
+    "dar": "= 1.",
+    "en": "= runlevel 1."
+   },
+   "d": {
+    "fr": "= runlevel 6.",
+    "dar": "= 6.",
+    "en": "= runlevel 6."
+   }
+  },
+  "tags": [
+   "targets"
+  ]
+ },
+ {
+  "id": "ls-06",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les cibles (targets) actuellement chargées.",
+   "dar": "Lister targets chargés.",
+   "en": "List the currently loaded targets."
+  },
+  "answer": [
+   "systemctl list-units --type target",
+   "systemctl list-units --type=target",
+   "systemctl list-units -t target"
+  ],
+  "explanation": {
+   "fr": "`list-units` filtre par type avec `--type target` (ou `--type=target`).",
+   "dar": "`--type target`.",
+   "en": "`list-units` filters with `--type target`."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "targets"
+  ]
+ },
+ {
+  "id": "ls-07",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les unités en **échec**.",
+   "dar": "Lister unités li **fchlou**.",
+   "en": "List **failed** units."
+  },
+  "answer": [
+   "systemctl --failed",
+   "systemctl list-units --failed",
+   "systemctl list-units --state=failed"
+  ],
+  "explanation": {
+   "fr": "`--failed` filtre les unités en état `failed` (ex. kdump sur une VM sans mémoire réservée).",
+   "dar": "`--failed`.",
+   "en": "`--failed` shows units in `failed` state."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ls-08",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "`systemctl enable httpd` démarre-t-il httpd immédiatement ?",
+   "dar": "Wach `enable httpd` kaybdah daba ?",
+   "en": "Does `systemctl enable httpd` start httpd now?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Oui",
+     "dar": "Ah",
+     "en": "Yes"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Non : il l'active pour les prochains démarrages seulement",
+     "dar": "La : ghir l démarrages jayin",
+     "en": "No: only for future boots"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Oui, et au démarrage",
+     "dar": "Ah, w f démarrage",
+     "en": "Yes, and at boot"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Non, il le masque",
+     "dar": "La, kaymasquih",
+     "en": "No, it masks it"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "**enable ≠ start**. `enable` crée un lien dans `multi-user.target.wants/`. Pour les deux : `systemctl enable --now httpd`.",
+   "dar": "**enable ≠ start**. Bjouj : `enable --now`.",
+   "en": "**enable ≠ start**. `enable` creates a link in `multi-user.target.wants/`. Both: `enable --now`."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est start qui démarre.",
+    "dar": "start li kaybda.",
+    "en": "start starts it."
+   },
+   "c": {
+    "fr": "Seulement avec --now.",
+    "dar": "Ghir b --now.",
+    "en": "Only with --now."
+   },
+   "d": {
+    "fr": "mask est une autre commande.",
+    "dar": "mask haja khra.",
+    "en": "mask is different."
+   }
+  },
+  "tags": [
+   "services"
+  ]
+ },
+ {
+  "id": "ls-09",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Active httpd au démarrage **et** démarre-le tout de suite, en une commande.",
+   "dar": "Enable httpd **w** bdah daba, f commande wa7da.",
+   "en": "Enable httpd at boot **and** start it now, in one command."
+  },
+  "answer": [
+   "systemctl enable --now httpd",
+   "systemctl enable --now httpd.service",
+   "systemctl --now enable httpd"
+  ],
+  "explanation": {
+   "fr": "`--now` combine `enable` + `start`.",
+   "dar": "`--now` = enable + start.",
+   "en": "`--now` combines enable + start."
+  },
+  "wrongExplanations": {
+   "systemctl enable httpd": {
+    "fr": "Ne démarre pas le service maintenant.",
+    "dar": "Ma kaybdach daba.",
+    "en": "Does not start it now."
+   },
+   "systemctl start httpd": {
+    "fr": "Ne l'active pas au démarrage.",
+    "dar": "Ma kaydirch enable.",
+    "en": "Does not enable it at boot."
+   }
+  },
+  "tags": [
+   "services"
+  ]
+ },
+ {
+  "id": "ls-10",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est l'effet de `systemctl mask bluetooth` ?",
+   "dar": "Chnou kaydir `mask bluetooth` ?",
+   "en": "What does `systemctl mask bluetooth` do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le service est arrêté mais peut redémarrer",
+     "dar": "Kaywe9ef walakin y9der yrje3",
+     "en": "Stops it but it can start again"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Lien vers /dev/null : le service ne peut plus être démarré, même manuellement ou par dépendance",
+     "dar": "Lien l /dev/null : ma ymkench ybda, 7ta b yeddek",
+     "en": "Link to /dev/null: cannot be started at all, even manually or as a dependency"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le cache de l'affichage",
+     "dar": "Kaykhbbih f affichage",
+     "en": "Hides it from listings"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le désinstalle",
+     "dar": "Kaydésinstallih",
+     "en": "Uninstalls it"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`mask` crée `/etc/systemd/system/bluetooth.service → /dev/null` : `start` échoue (« Unit is masked »). `unmask` annule.",
+   "dar": "`mask` → `/dev/null` ; `start` kayfchel ; `unmask`.",
+   "en": "`mask` creates a link to `/dev/null`: `start` fails (\"Unit is masked\"). `unmask` undoes it."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ça, c'est stop (+ disable).",
+    "dar": "Hadi stop.",
+    "en": "That is stop (+ disable)."
+   },
+   "c": {
+    "fr": "Le service apparaît toujours, état masked.",
+    "dar": "Kayban, masked.",
+    "en": "It still shows, as masked."
+   },
+   "d": {
+    "fr": "Le paquet reste installé.",
+    "dar": "Paquet kayb9a.",
+    "en": "The package stays installed."
+   }
+  },
+  "tags": [
+   "services"
+  ]
+ },
+ {
+  "id": "ls-11",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Après `systemctl disable --now sshd`, que se passe-t-il ?",
+   "dar": "Mor `disable --now sshd` ?",
+   "en": "After `systemctl disable --now sshd`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "sshd est arrêté immédiatement",
+     "dar": "sshd wa9ef daba",
+     "en": "sshd stops now"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "sshd ne démarrera plus au boot",
+     "dar": "Ma ghaybdach f boot",
+     "en": "sshd will not start at boot"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "sshd est masqué",
+     "dar": "sshd masqué",
+     "en": "sshd is masked"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "On peut encore le démarrer avec start",
+     "dar": "Y9der ybda b start",
+     "en": "It can still be started with start"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "d"
+  ],
+  "explanation": {
+   "fr": "`disable --now` = disable + stop. Contrairement à `mask`, un `start` manuel reste possible.",
+   "dar": "disable + stop ; start mazal momkin.",
+   "en": "`disable --now` = disable + stop. Unlike `mask`, a manual `start` still works."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Non : seul `mask` empêche tout démarrage.",
+    "dar": "La : ghir `mask`.",
+    "en": "No: only `mask` blocks all starts."
+   }
+  },
+  "tags": [
+   "services"
+  ]
+ },
+ {
+  "id": "ls-12",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`systemctl is-active sshd` affiche `inactive`. Quel est son code de retour ?",
+   "dar": "`is-active` → `inactive`. Code de retour ?",
+   "en": "`is-active sshd` prints `inactive`. Exit code?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Différent de 0 (3)",
+     "dar": "Machi 0 (3)",
+     "en": "Non-zero (3)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "1 toujours",
+     "dar": "1 dima",
+     "en": "Always 1"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Aucun",
+     "dar": "Walou",
+     "en": "None"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`is-active` renvoie **0 si actif**, sinon un code non nul (3) : utilisable dans un script (`systemctl is-active sshd && echo OK`).",
+   "dar": "0 ila active, sinon 3.",
+   "en": "Returns **0 if active**, otherwise non-zero (3): usable in scripts."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "0 = actif.",
+    "dar": "0 = active.",
+    "en": "0 = active."
+   },
+   "c": {
+    "fr": "C'est 3 en pratique.",
+    "dar": "3.",
+    "en": "In practice 3."
+   },
+   "d": {
+    "fr": "Toute commande renvoie un code.",
+    "dar": "Kol commande 3endha code.",
+    "en": "Every command returns a code."
+   }
+  },
+  "tags": [
+   "services"
+  ]
+ },
+ {
+  "id": "ls-13",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les **erreurs** (priorité err et plus grave) du démarrage courant.",
+   "dar": "Werri **erreurs** dyal démarrage daba.",
+   "en": "Show **errors** (priority err and worse) from the current boot."
+  },
+  "answer": [
+   "journalctl -b -p err",
+   "journalctl -p err -b",
+   "journalctl -b -p 3"
+  ],
+  "explanation": {
+   "fr": "`-b` = depuis le démarrage, `-p err` = priorité err (3) **et plus grave** (crit, alert, emerg).",
+   "dar": "`-b` démarrage, `-p err` priorité.",
+   "en": "`-b` = this boot, `-p err` = priority err (3) **and worse**."
+  },
+  "wrongExplanations": {
+   "journalctl -p err": {
+    "fr": "Correct pour les erreurs mais inclut aussi les démarrages précédents.",
+    "dar": "Ma fihach `-b`.",
+    "en": "Includes previous boots too."
+   }
+  },
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ls-14",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Suis en temps réel le journal du service sshd.",
+   "dar": "Tba3 journal dyal sshd b temps réel.",
+   "en": "Follow the sshd journal in real time."
+  },
+  "answer": [
+   "journalctl -u sshd -f",
+   "journalctl -f -u sshd",
+   "journalctl -fu sshd",
+   "journalctl -u sshd.service -f"
+  ],
+  "explanation": {
+   "fr": "`-u` filtre l'unité, `-f` suit (comme `tail -f`).",
+   "dar": "`-u` unité, `-f` tba3.",
+   "en": "`-u` filters the unit, `-f` follows."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ls-15",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les **20 dernières** lignes du journal.",
+   "dar": "Werri **20 lekhrin**.",
+   "en": "Show the **last 20** journal lines."
+  },
+  "answer": [
+   "journalctl -n 20",
+   "journalctl -n20",
+   "journalctl --lines 20"
+  ],
+  "explanation": {
+   "fr": "`-n N` = N dernières lignes.",
+   "dar": "`-n N`.",
+   "en": "`-n N` = last N lines."
+  },
+  "wrongExplanations": {
+   "journalctl | tail -20": {
+    "fr": "Fonctionne mais lit tout le journal ; `-n` est fait pour ça.",
+    "dar": "Khddam walakin `-n` a7san.",
+    "en": "Works but reads everything; `-n` is meant for this."
+   }
+  },
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ls-16",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre la création d'un service personnalisé `monscript`.",
+   "dar": "Rttab création dyal service `monscript`.",
+   "en": "Order the creation of a custom service `monscript`."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Créer le script et le rendre exécutable (chmod +x)",
+     "dar": "Dir script w chmod +x",
+     "en": "Create the script and chmod +x"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Écrire /etc/systemd/system/monscript.service ([Unit] [Service] [Install])",
+     "dar": "Ktb monscript.service",
+     "en": "Write /etc/systemd/system/monscript.service"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "systemctl daemon-reload",
+     "dar": "systemctl daemon-reload",
+     "en": "systemctl daemon-reload"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "systemctl enable --now monscript",
+     "dar": "enable --now",
+     "en": "systemctl enable --now monscript"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "systemctl status monscript",
+     "dar": "status",
+     "en": "systemctl status monscript"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Script exécutable → fichier d'unité → **daemon-reload** (systemd relit les unités) → enable/start → vérification.",
+   "dar": "Script → unité → daemon-reload → enable → status.",
+   "en": "Executable script → unit file → **daemon-reload** → enable/start → verify."
+  },
+  "tags": [
+   "service"
+  ]
+ },
+ {
+  "id": "ls-17",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi lancer `systemctl daemon-reload` après avoir créé ou modifié un fichier `.service` ?",
+   "dar": "3lach `daemon-reload` ?",
+   "en": "Why run `daemon-reload` after creating/editing a `.service`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Pour redémarrer la machine",
+     "dar": "Bach redémarrer",
+     "en": "To reboot"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Pour que systemd relise les fichiers d'unités modifiés",
+     "dar": "Bach systemd y3awed y9ra unités",
+     "en": "So systemd re-reads the unit files"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour démarrer tous les services",
+     "dar": "Bach ybdaw services",
+     "en": "To start all services"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Pour vider le journal",
+     "dar": "Bach ykhwi journal",
+     "en": "To clear the journal"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "systemd garde les unités en mémoire : sans `daemon-reload`, il ignore le nouveau fichier (« Unit not found ») ou l'ancienne version.",
+   "dar": "Bla daemon-reload : « Unit not found ».",
+   "en": "systemd caches units: without `daemon-reload` it ignores the new file (\"Unit not found\") or uses the old version."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Aucun redémarrage.",
+    "dar": "Bla redémarrage.",
+    "en": "No reboot."
+   },
+   "c": {
+    "fr": "Ne démarre rien.",
+    "dar": "Ma kaybda walou.",
+    "en": "Starts nothing."
+   },
+   "d": {
+    "fr": "Sans rapport avec le journal.",
+    "dar": "Ma 3endo 3ala9a.",
+    "en": "Unrelated to the journal."
+   }
+  },
+  "tags": [
+   "service"
+  ]
+ },
+ {
+  "id": "ls-18",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans un fichier `.service`, que signifie `WantedBy=multi-user.target` ?",
+   "dar": "`WantedBy=multi-user.target` ma3naha ?",
+   "en": "What does `WantedBy=multi-user.target` mean?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le service démarre après multi-user",
+     "dar": "Kaybda mor multi-user",
+     "en": "Starts after multi-user"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "enable crée un lien dans multi-user.target.wants/ : le service démarre avec cette cible",
+     "dar": "enable kaydir lien f multi-user.target.wants/",
+     "en": "enable links it in multi-user.target.wants/: it starts with that target"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le service est obligatoire",
+     "dar": "Darouri",
+     "en": "The service is mandatory"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Seul root peut le lancer",
+     "dar": "Ghir root",
+     "en": "Only root can start it"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "La section `[Install]` est utilisée par `enable` : `WantedBy=multi-user.target` → lien dans `/etc/systemd/system/multi-user.target.wants/`.",
+   "dar": "`[Install]` dyal `enable`.",
+   "en": "`[Install]` is used by `enable`: link created in `multi-user.target.wants/`."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "L'ordre se règle avec After=.",
+    "dar": "After=.",
+    "en": "Ordering uses After=."
+   },
+   "c": {
+    "fr": "« Wanted » = dépendance faible.",
+    "dar": "Dépendance d3ifa.",
+    "en": "\"Wanted\" = weak dependency."
+   },
+   "d": {
+    "fr": "Sans rapport avec les droits.",
+    "dar": "Machi droits.",
+    "en": "Unrelated to permissions."
+   }
+  },
+  "tags": [
+   "service"
+  ]
+ },
+ {
+  "id": "ls-19",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les services qui ont pris le plus de temps au démarrage.",
+   "dar": "Werri services li tweltou f démarrage.",
+   "en": "Show which services took longest at boot."
+  },
+  "answer": [
+   "systemd-analyze blame"
+  ],
+  "explanation": {
+   "fr": "`systemd-analyze` donne le temps total ; `blame` le détail par unité ; `critical-chain` la chaîne critique.",
+   "dar": "`blame` détail ; `critical-chain`.",
+   "en": "`blame` per unit; `critical-chain` the critical path."
+  },
+  "wrongExplanations": {
+   "systemd-analyze": {
+    "fr": "Donne seulement le temps total.",
+    "dar": "Ghir total.",
+    "en": "Only the total time."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ls-20",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quels formats accepte `journalctl -o` ?",
+   "dar": "Formats dyal `journalctl -o` ?",
+   "en": "Which formats does `journalctl -o` accept?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "json",
+     "dar": "json",
+     "en": "json"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "json-pretty",
+     "dar": "json-pretty",
+     "en": "json-pretty"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "cat",
+     "dar": "cat",
+     "en": "cat"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "verbose",
+     "dar": "verbose",
+     "en": "verbose"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "xml",
+     "dar": "xml",
+     "en": "xml"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "`-o short` (défaut), `json`, `json-pretty`, `cat` (message seul), `verbose` (tous les champs).",
+   "dar": "short, json, json-pretty, cat, verbose.",
+   "en": "short (default), json, json-pretty, cat, verbose."
+  },
+  "wrongExplanations": {
+   "e": {
+    "fr": "Pas de sortie XML.",
+    "dar": "Ma kaynch XML.",
+    "en": "No XML output."
+   }
+  },
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ls-21",
+  "module": "linux",
+  "chapter": "systemd",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les avertissements (warning et plus grave) du service httpd depuis une heure.",
+   "dar": "Werri warnings dyal httpd mn sa3a.",
+   "en": "Show warnings (and worse) of httpd from the last hour."
+  },
+  "answer": [
+   "journalctl -u httpd -p warning --since \"1 hour ago\"",
+   "journalctl -p warning -u httpd --since \"1 hour ago\""
+  ],
+  "explanation": {
+   "fr": "On combine `-u` (unité), `-p warning` (priorité ≤ 4) et `--since`.",
+   "dar": "`-u` + `-p warning` + `--since`.",
+   "en": "Combine `-u`, `-p warning` and `--since`."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "journal"
+  ]
+ }
+]

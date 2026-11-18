@@ -1,0 +1,62 @@
+[
+ {
+  "id": "fc-ro-1",
+  "module": "ro",
+  "chapter": "defs",
+  "front": {
+   "fr": "Ordre / taille ?",
+   "dar": "Ordre / taille ?",
+   "en": "Order / size?"
+  },
+  "back": {
+   "fr": "Nombre de sommets / nombre d'arêtes.",
+   "dar": "Sommets / arêtes.",
+   "en": "Vertices / edges."
+  }
+ },
+ {
+  "id": "fc-ro-2",
+  "module": "ro",
+  "chapter": "defs",
+  "front": {
+   "fr": "Théorème des degrés ?",
+   "dar": "Théorème degrés ?",
+   "en": "Degree theorem?"
+  },
+  "back": {
+   "fr": "Σ deg = 2 × arêtes ; nb de sommets impairs pair.",
+   "dar": "Σ = 2m.",
+   "en": "Σ deg = 2m; even number of odd vertices."
+  }
+ },
+ {
+  "id": "fc-ro-3",
+  "module": "ro",
+  "chapter": "defs",
+  "front": {
+   "fr": "Arêtes de Kn ?",
+   "dar": "Kn ?",
+   "en": "Edges of Kn?"
+  },
+  "back": {
+   "fr": "n(n−1)/2",
+   "dar": "n(n−1)/2",
+   "en": "n(n−1)/2"
+  }
+ },
+ {
+  "id": "fc-ro-4",
+  "module": "ro",
+  "chapter": "defs",
+  "front": {
+   "fr": "Graphe simple ?",
+   "dar": "Simple ?",
+   "en": "Simple graph?"
+  },
+  "back": {
+   "fr": "Sans boucle ni arête multiple.",
+   "dar": "Bla boucle w multiples.",
+   "en": "No loops, no multi-edges."
+  }
+ }
+]

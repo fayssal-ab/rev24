@@ -1,0 +1,71 @@
+{
+ "id": "ro",
+ "title": {
+  "fr": "Recherche Opérationnelle (graphes)",
+  "dar": "Recherche Opérationnelle",
+  "en": "Operations Research (graphs)"
+ },
+ "subtitle": {
+  "fr": "Graphes, matrices, Euler, arbres, Kruskal, Prim, Dijkstra",
+  "dar": "Graphes, Kruskal, Dijkstra",
+  "en": "Graphs, trees, Kruskal, Prim, Dijkstra"
+ },
+ "color": "#f59e0b",
+ "icon": "layers",
+ "theme": "amber",
+ "chapters": [
+  "defs",
+  "matrices",
+  "euler",
+  "particuliers",
+  "arbres",
+  "dijkstra",
+  "annale"
+ ],
+ "upcoming": [],
+ "annales": [
+  {
+   "id": "cc-2025",
+   "title": {
+    "fr": "Contrôle continu 2025-2026 (28/11/2025)",
+    "dar": "Contrôle 2025-2026",
+    "en": "Mid-term 2025-2026"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "1h30, calculatrice autorisée. Exercice 2 : traiter la Partie A **ou** la Partie B.",
+    "dar": "1h30. Partie A wla B.",
+    "en": "1h30, calculator allowed. Exercise 2: Part A **or** Part B."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-x-4",
+     "points": 6
+    },
+    {
+     "exerciseId": "ro-x-1",
+     "points": 8,
+     "group": "A"
+    },
+    {
+     "exerciseId": "ro-x-3",
+     "points": 8,
+     "group": "B"
+    },
+    {
+     "exerciseId": "ro-x-5",
+     "points": 6
+    }
+   ]
+  }
+ ],
+ "weights": {
+  "defs": 4,
+  "matrices": 4,
+  "arbres": 3,
+  "dijkstra": 3,
+  "euler": 2,
+  "particuliers": 1,
+  "annale": 2
+ }
+}

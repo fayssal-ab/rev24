@@ -1,0 +1,212 @@
+[
+ {
+  "id": "fc-tp1-1",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`mkdir -p` ?",
+   "dar": "`mkdir -p` ?",
+   "en": "`mkdir -p`?"
+  },
+  "back": {
+   "fr": "Crée les répertoires parents manquants, sans erreur si déjà présents.",
+   "dar": "Kaydir parents li na9sin.",
+   "en": "Creates missing parent directories, no error if present."
+  }
+ },
+ {
+  "id": "fc-tp1-2",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`$` vs `#` dans le prompt ?",
+   "dar": "`$` vs `#` ?",
+   "en": "`$` vs `#` in the prompt?"
+  },
+  "back": {
+   "fr": "`$` utilisateur ordinaire, `#` root.",
+   "dar": "`$` user 3adi, `#` root.",
+   "en": "`$` regular user, `#` root."
+  }
+ },
+ {
+  "id": "fc-tp1-3",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "Sections de man 1 / 5 / 8 ?",
+   "dar": "Sections man 1 / 5 / 8 ?",
+   "en": "man sections 1 / 5 / 8?"
+  },
+  "back": {
+   "fr": "1 commandes utilisateur · 5 formats de fichiers · 8 administration.",
+   "dar": "1 commandes · 5 fichiers · 8 admin.",
+   "en": "1 user commands · 5 file formats · 8 administration."
+  }
+ },
+ {
+  "id": "fc-tp1-4",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`man -k mot` ?",
+   "dar": "`man -k mot` ?",
+   "en": "`man -k word`?"
+  },
+  "back": {
+   "fr": "Recherche le mot dans les descriptions (= apropos). Index : `mandb`.",
+   "dar": "Qelleb f descriptions (= apropos).",
+   "en": "Searches descriptions (= apropos). Index: `mandb`."
+  }
+ },
+ {
+  "id": "fc-tp1-5",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`!!` · `!n` · Ctrl+R ?",
+   "dar": "`!!` · `!n` · Ctrl+R ?",
+   "en": "`!!` · `!n` · Ctrl+R?"
+  },
+  "back": {
+   "fr": "Dernière commande · commande n° n · recherche dans l'historique.",
+   "dar": "Lekhra · ra9m n · recherche.",
+   "en": "Last command · command #n · reverse history search."
+  }
+ },
+ {
+  "id": "fc-tp1-6",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`>` vs `>>` ?",
+   "dar": "`>` vs `>>` ?",
+   "en": "`>` vs `>>`?"
+  },
+  "back": {
+   "fr": "`>` écrase, `>>` ajoute à la fin.",
+   "dar": "`>` kaymse7, `>>` kayzid.",
+   "en": "`>` overwrites, `>>` appends."
+  }
+ },
+ {
+  "id": "fc-tp1-7",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`2>/dev/null` ?",
+   "dar": "`2>/dev/null` ?",
+   "en": "`2>/dev/null`?"
+  },
+  "back": {
+   "fr": "Jette les messages d'erreur (flux 2).",
+   "dar": "Kayrmi erreurs.",
+   "en": "Discards error messages (stream 2)."
+  }
+ },
+ {
+  "id": "fc-tp1-8",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "Lister les logins de /etc/passwd ?",
+   "dar": "Logins mn /etc/passwd ?",
+   "en": "List logins from /etc/passwd?"
+  },
+  "back": {
+   "fr": "`cut -d: -f1 /etc/passwd`",
+   "dar": "`cut -d: -f1 /etc/passwd`",
+   "en": "`cut -d: -f1 /etc/passwd`"
+  }
+ },
+ {
+  "id": "fc-tp1-9",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "5 plus gros éléments de /var/log ?",
+   "dar": "5 kbar f /var/log ?",
+   "en": "5 largest items in /var/log?"
+  },
+  "back": {
+   "fr": "`du -sh /var/log/* | sort -h | tail -5`",
+   "dar": "`du -sh /var/log/* | sort -h | tail -5`",
+   "en": "`du -sh /var/log/* | sort -h | tail -5`"
+  }
+ },
+ {
+  "id": "fc-tp1-10",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "find : modifié il y a moins de 7 jours ?",
+   "dar": "find : a9al mn 7 iyam ?",
+   "en": "find: modified less than 7 days ago?"
+  },
+  "back": {
+   "fr": "`-mtime -7` (et `+7` = plus de 7 jours).",
+   "dar": "`-mtime -7` (`+7` = ktar).",
+   "en": "`-mtime -7` (`+7` = more than 7 days)."
+  }
+ },
+ {
+  "id": "fc-tp1-11",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`tee` ?",
+   "dar": "`tee` ?",
+   "en": "`tee`?"
+  },
+  "back": {
+   "fr": "Écrit l'entrée à l'écran ET dans un fichier (`-a` ajoute).",
+   "dar": "Écran W fichier (`-a` zid).",
+   "en": "Writes input to screen AND file (`-a` appends)."
+  }
+ },
+ {
+  "id": "fc-tp1-12",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "Champs de `ls -l` ?",
+   "dar": "Champs dyal `ls -l` ?",
+   "en": "`ls -l` fields?"
+  },
+  "back": {
+   "fr": "type+droits · liens · propriétaire · groupe · taille · date · nom.",
+   "dar": "type+droits · liens · mol · groupe · taille · date · smiya.",
+   "en": "type+perms · links · owner · group · size · date · name."
+  }
+ },
+ {
+  "id": "fc-tp1-13",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "Exécuter 2 commandes à distance en SSH ?",
+   "dar": "2 commandes b SSH ?",
+   "en": "Run 2 commands remotely via SSH?"
+  },
+  "back": {
+   "fr": "`ssh user@IP \"uptime; df -h /\"` (guillemets obligatoires).",
+   "dar": "`ssh user@IP \"uptime; df -h /\"`.",
+   "en": "`ssh user@IP \"uptime; df -h /\"` (quotes required)."
+  }
+ },
+ {
+  "id": "fc-tp1-14",
+  "module": "linux",
+  "chapter": "tp1",
+  "front": {
+   "fr": "`type` vs `which` ?",
+   "dar": "`type` vs `which` ?",
+   "en": "`type` vs `which`?"
+  },
+  "back": {
+   "fr": "`type` dit si c'est une primitive, un alias ou un exécutable ; `which` donne le chemin de l'exécutable.",
+   "dar": "`type` : primitive/alias/exécutable ; `which` : chemin.",
+   "en": "`type` says builtin, alias or executable; `which` gives the executable path."
+  }
+ }
+]

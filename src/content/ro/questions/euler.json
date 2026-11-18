@@ -1,0 +1,329 @@
+[
+ {
+  "id": "ro-20",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un cycle **eulérien** passe une fois par chaque…",
+   "dar": "Eulérien : kol… ?",
+   "en": "An **Eulerian** cycle uses each… once"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "arête",
+     "dar": "arête",
+     "en": "edge"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "sommet",
+     "dar": "sommet",
+     "en": "vertex"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "boucle",
+     "dar": "boucle",
+     "en": "loop"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Euler = arêtes**, **Hamilton = sommets**.",
+   "dar": "Euler = arêtes ; Hamilton = sommets.",
+   "en": "**Euler = edges**, **Hamilton = vertices**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça c'est Hamilton.",
+    "dar": "Hamilton.",
+    "en": "That is Hamilton."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "euler"
+  ]
+ },
+ {
+  "id": "ro-21",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Théorème d'Euler : un graphe connexe admet un cycle eulérien ssi…",
+   "dar": "Théorème Euler ?",
+   "en": "Euler theorem: a connected graph has an Eulerian cycle iff…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "tous les degrés sont pairs",
+     "dar": "kol degré pair",
+     "en": "all degrees are even"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "il a 2 sommets impairs",
+     "dar": "2 impairs",
+     "en": "it has 2 odd vertices"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "il est complet",
+     "dar": "complet",
+     "en": "it is complete"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Cycle ⇔ 0 sommet impair ; chaîne eulérienne ⇔ 0 ou 2 sommets impairs (extrémités = les 2 impairs).",
+   "dar": "0 impair = cycle ; 2 = chaîne.",
+   "en": "0 odd → cycle; 2 odd → chain between them."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "2 impairs → chaîne, pas cycle.",
+    "dar": "Chaîne.",
+    "en": "That gives a chain."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "euler"
+  ]
+ },
+ {
+  "id": "ro-22",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle : réseau A–F. Nombre de sommets de degré impair ?",
+   "dar": "Ch7al sommet impair ?",
+   "en": "How many odd-degree vertices?"
+  },
+  "answer": 2,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gOddCount",
+   "args": [
+    "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3"
+   ]
+  },
+  "explanation": {
+   "fr": "Degrés A4 B2 C4 D5 E3 F4 : D et E impairs.",
+   "dar": "D w E.",
+   "en": "D and E."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "euler",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-23",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Contrôle : peut-on inspecter chaque ligne une seule fois ?",
+   "dar": "Kol ligne merra wa7da ?",
+   "en": "Can each line be inspected exactly once?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Oui, chaîne eulérienne de D à E",
+     "dar": "Ah, mn D l E",
+     "en": "Yes, Euler chain from D to E"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Non, il y a des sommets impairs",
+     "dar": "La",
+     "en": "No, odd vertices exist"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Oui, cycle eulérien",
+     "dar": "Cycle",
+     "en": "Yes, Euler cycle"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Exactement 2 sommets impairs (D, E) → chaîne eulérienne D…E, ex. D–A–C–B–D–C–F–A–E–D–F–E.",
+   "dar": "2 impairs → chaîne D…E.",
+   "en": "Exactly 2 odd vertices → chain D…E."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "2 impairs suffisent pour une chaîne.",
+    "dar": "2 kafiyin.",
+    "en": "2 odd vertices allow a chain."
+   },
+   "c": {
+    "fr": "Cycle impossible : 2 impairs.",
+    "dar": "Cycle la.",
+    "en": "No cycle: 2 odd vertices."
+   }
+  },
+  "tags": [
+   "euler",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-24",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Graphe A–G (exercice 1) : nombre d'arêtes à ajouter pour qu'il soit complet ?",
+   "dar": "Ch7al arête nzidou ?",
+   "en": "Edges to add to make it complete?"
+  },
+  "answer": 11,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gMissing",
+   "args": [
+    "A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G"
+   ]
+  },
+  "explanation": {
+   "fr": "21 − 10 = **11**.",
+   "dar": "21 − 10.",
+   "en": "21 − 10 = **11**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "complet",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-25",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Graphe A–G : degré de C ?",
+   "dar": "Degré C ?",
+   "en": "Degree of C?"
+  },
+  "answer": 4,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gDegree",
+   "args": [
+    "A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G",
+    "C"
+   ]
+  },
+  "explanation": {
+   "fr": "C relié à A, B, D, F.",
+   "dar": "A, B, D, F.",
+   "en": "A, B, D, F."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "degres"
+  ]
+ },
+ {
+  "id": "ro-26",
+  "module": "ro",
+  "chapter": "euler",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un graphe **connexe** est un graphe où…",
+   "dar": "Connexe ?",
+   "en": "A **connected** graph is one where…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "toute paire de sommets est reliée par une chaîne",
+     "dar": "kol jouj sommets mrbouttin",
+     "en": "every pair is joined by a chain"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "tous les sommets sont adjacents",
+     "dar": "kolhom adjacents",
+     "en": "all vertices are adjacent"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "il n'y a pas de cycle",
+     "dar": "bla cycle",
+     "en": "there is no cycle"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Connexe = une chaîne entre toute paire. Tous adjacents = complet.",
+   "dar": "Chaîne bin kol jouj.",
+   "en": "A chain between any pair."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça c'est complet.",
+    "dar": "Complet.",
+    "en": "That is complete."
+   },
+   "c": {
+    "fr": "Ça c'est sans cycle (forêt).",
+    "dar": "Forêt.",
+    "en": "That is acyclic."
+   }
+  },
+  "tags": [
+   "connexite"
+  ]
+ }
+]

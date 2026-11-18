@@ -1,0 +1,1408 @@
+[
+ {
+  "id": "or-20",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "La **SGA** est…",
+   "dar": "SGA ?",
+   "en": "The **SGA** is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "une mémoire partagée par les processus serveur et d'arrière-plan",
+     "dar": "mémoire partagée",
+     "en": "shared memory"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "privée à un processus",
+     "dar": "khassa",
+     "en": "private to one process"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "un fichier",
+     "dar": "fichier",
+     "en": "a file"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "SGA = partagée ; PGA = privée (une par processus serveur).",
+   "dar": "SGA partagée, PGA privée.",
+   "en": "SGA shared; PGA private."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est la PGA.",
+    "dar": "PGA.",
+    "en": "That is the PGA."
+   },
+   "c": {
+    "fr": "C'est de la mémoire.",
+    "dar": "Mémoire.",
+    "en": "It is memory."
+   }
+  },
+  "tags": [
+   "sga"
+  ]
+ },
+ {
+  "id": "or-21",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où sont stockés les plans d'exécution réutilisables ?",
+   "dar": "Plans d'exécution fin ?",
+   "en": "Where are reusable execution plans stored?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Library cache (Shared Pool)",
+     "dar": "Library cache",
+     "en": "Library cache (Shared Pool)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Buffer Cache",
+     "dar": "Buffer Cache",
+     "en": "Buffer Cache"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Redo Log Buffer",
+     "dar": "Redo buffer",
+     "en": "Redo Log Buffer"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Shared Pool = **library cache** (texte SQL, plan, arbre d'analyse) + **dictionary cache** (colonnes, privilèges).",
+   "dar": "Library + dictionary cache.",
+   "en": "Shared Pool = library cache + dictionary cache."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le buffer cache garde des blocs de données.",
+    "dar": "Blocs.",
+    "en": "Data blocks."
+   },
+   "c": {
+    "fr": "Le redo buffer garde les modifications.",
+    "dar": "Modifications.",
+    "en": "Changes."
+   }
+  },
+  "tags": [
+   "sga"
+  ]
+ },
+ {
+  "id": "or-22",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "La lecture des données se fait…",
+   "dar": "Lecture ?",
+   "en": "Data is read…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "toujours via le Database Buffer Cache",
+     "dar": "dima mn buffer cache",
+     "en": "always through the Buffer Cache"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "directement depuis les datafiles",
+     "dar": "mn datafiles",
+     "en": "directly from datafiles"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "depuis le redo log",
+     "dar": "mn redo",
+     "en": "from the redo log"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le bloc est lu du datafile vers le buffer (s'il n'y est pas) ; les blocs fréquents restent en mémoire.",
+   "dar": "Buffer cache dima.",
+   "en": "Always via the buffer cache."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "sga"
+  ]
+ },
+ {
+  "id": "or-23",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Rôles de la **Large Pool** ?",
+   "dar": "Large Pool ?",
+   "en": "**Large Pool** uses?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "UGA en serveur partagé",
+     "dar": "UGA serveur partagé",
+     "en": "UGA in shared server"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Sauvegarde/restauration RMAN",
+     "dar": "RMAN",
+     "en": "RMAN backup/restore"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Processus d'E/S",
+     "dar": "E/S",
+     "en": "I/O processes"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Code Java",
+     "dar": "Java",
+     "en": "Java code"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Large Pool (optionnelle) soulage la Shared Pool. Le Java va dans la **Java Pool**.",
+   "dar": "Java → Java Pool.",
+   "en": "Java goes to the Java Pool."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "C'est la Java Pool.",
+    "dar": "Java Pool.",
+    "en": "Java Pool."
+   }
+  },
+  "tags": [
+   "sga"
+  ]
+ },
+ {
+  "id": "or-24",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "En **serveur partagé**, où se trouve l'UGA ?",
+   "dar": "UGA f serveur partagé ?",
+   "en": "In **shared server**, where is the UGA?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Dans la SGA (Shared Pool, ou Large Pool si configurée)",
+     "dar": "F SGA",
+     "en": "In the SGA (Shared or Large Pool)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Dans la PGA",
+     "dar": "F PGA",
+     "en": "In the PGA"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Dans le buffer cache",
+     "dar": "Buffer",
+     "en": "Buffer cache"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Dédié : PGA = stack + UGA. Partagé : UGA → SGA ; PGA = stack seulement.",
+   "dar": "Partagé : UGA f SGA.",
+   "en": "Shared: UGA moves to the SGA."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est en serveur dédié.",
+    "dar": "Dédié.",
+    "en": "That is dedicated server."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "pga"
+  ]
+ },
+ {
+  "id": "or-25",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel processus écrit au **COMMIT** ?",
+   "dar": "Chkoun kayktb f COMMIT ?",
+   "en": "Which process writes at **COMMIT**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "LGWR",
+     "dar": "LGWR",
+     "en": "LGWR"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "DBWn",
+     "dar": "DBWn",
+     "en": "DBWn"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "CKPT",
+     "dar": "CKPT",
+     "en": "CKPT"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**LGWR** écrit le redo log buffer dans les redo logs au COMMIT (et toutes les 3 s, buffer au tiers, avant DBWn). **DBWn n'écrit pas au COMMIT** : il écrit les blocs « dirty » plus tard.",
+   "dar": "LGWR f COMMIT ; DBWn mn b3d.",
+   "en": "**LGWR** at COMMIT; **DBWn not at COMMIT**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Piège classique : DBWn écrit plus tard (checkpoint, manque de buffers).",
+    "dar": "Fekh : DBWn mn b3d.",
+    "en": "Trap: DBWn writes later."
+   },
+   "c": {
+    "fr": "CKPT déclenche les checkpoints et met à jour les en-têtes.",
+    "dar": "CKPT.",
+    "en": "CKPT signals checkpoints."
+   }
+  },
+  "tags": [
+   "processus"
+  ]
+ },
+ {
+  "id": "or-26",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel processus nettoie après l'échec d'un processus utilisateur ?",
+   "dar": "Chkoun kaynqi ?",
+   "en": "Who cleans up after a failed user process?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "PMON",
+     "dar": "PMON",
+     "en": "PMON"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "SMON",
+     "dar": "SMON",
+     "en": "SMON"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ARCn",
+     "dar": "ARCn",
+     "en": "ARCn"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**PMON** : rollback, libère verrous et ressources. **SMON** : récupération de l'instance au démarrage après crash.",
+   "dar": "PMON processus ; SMON instance.",
+   "en": "**PMON** process cleanup; **SMON** instance recovery."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "SMON = récupération d'instance.",
+    "dar": "SMON = instance.",
+    "en": "SMON = instance recovery."
+   },
+   "c": {
+    "fr": "ARCn archive les redo logs.",
+    "dar": "ARCn archive.",
+    "en": "ARCn archives."
+   }
+  },
+  "tags": [
+   "processus"
+  ]
+ },
+ {
+  "id": "or-27",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Après un SHUTDOWN ABORT, qui fait la récupération au redémarrage ?",
+   "dar": "Mor ABORT ?",
+   "en": "After SHUTDOWN ABORT, who recovers?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "SMON",
+     "dar": "SMON",
+     "en": "SMON"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "PMON",
+     "dar": "PMON",
+     "en": "PMON"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "LGWR",
+     "dar": "LGWR",
+     "en": "LGWR"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "SMON : récupération d'instance, nettoyage des segments temporaires, regroupement de l'espace libre.",
+   "dar": "SMON.",
+   "en": "SMON."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "PMON s'occupe des processus utilisateurs.",
+    "dar": "PMON.",
+    "en": "PMON is user processes."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "processus",
+   "shutdown"
+  ]
+ },
+ {
+  "id": "or-28",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "ARCn est actif seulement…",
+   "dar": "ARCn imta ?",
+   "en": "ARCn runs only…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "en mode ARCHIVELOG",
+     "dar": "ARCHIVELOG",
+     "en": "in ARCHIVELOG mode"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "au démarrage",
+     "dar": "démarrage",
+     "en": "at startup"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "en NOMOUNT",
+     "dar": "NOMOUNT",
+     "en": "in NOMOUNT"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "ARCn copie les redo logs remplis vers les archives (facultatif).",
+   "dar": "Archives.",
+   "en": "Copies full redo logs to archives."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "processus"
+  ]
+ },
+ {
+  "id": "or-29",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "Ordre d'exécution de `UPDATE … ; COMMIT;`",
+   "dar": "Tartib UPDATE + COMMIT",
+   "en": "Order of UPDATE + COMMIT"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Analyse (Shared Pool : plan, dictionnaire)",
+     "dar": "Analyse",
+     "en": "Parse (Shared Pool)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Bloc lu dans le Buffer Cache (sinon depuis le datafile)",
+     "dar": "Buffer Cache",
+     "en": "Block in Buffer Cache"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Image avant dans l'undo",
+     "dar": "Undo",
+     "en": "Before image in undo"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Bloc modifié (dirty)",
+     "dar": "Dirty",
+     "en": "Block modified (dirty)"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Entrée dans le Redo Log Buffer",
+     "dar": "Redo buffer",
+     "en": "Redo entry"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "COMMIT : LGWR écrit les redo logs, confirmation",
+     "dar": "LGWR",
+     "en": "COMMIT: LGWR writes"
+    }
+   },
+   {
+    "id": "s6",
+    "text": {
+     "fr": "Plus tard : DBWn écrit le bloc (checkpoint)",
+     "dar": "DBWn mn b3d",
+     "en": "Later: DBWn writes the block"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f",
+   "s6"
+  ],
+  "explanation": {
+   "fr": "Analyse → buffer → undo → modification → redo → COMMIT (LGWR) → DBWn plus tard.",
+   "dar": "Tartib.",
+   "en": "Parse → buffer → undo → modify → redo → LGWR → DBWn later."
+  },
+  "tags": [
+   "requete"
+  ]
+ },
+ {
+  "id": "or-30",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Un **SELECT** (par rapport à un UPDATE)…",
+   "dar": "SELECT ?",
+   "en": "A **SELECT** (vs UPDATE)…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "passe par l'analyse et le buffer cache",
+     "dar": "analyse + buffer",
+     "en": "parses and uses the buffer cache"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ne génère ni undo ni redo",
+     "dar": "bla undo/redo",
+     "en": "generates no undo/redo"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "n'a pas besoin de COMMIT",
+     "dar": "bla COMMIT",
+     "en": "needs no COMMIT"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "déclenche LGWR",
+     "dar": "LGWR",
+     "en": "triggers LGWR"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "SELECT : analyse + lecture via le buffer + renvoi des lignes ; pas de modification, undo, redo, LGWR ni COMMIT.",
+   "dar": "Bla modification.",
+   "en": "No change, no undo/redo, no LGWR."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Pas de redo → pas de LGWR.",
+    "dar": "Bla LGWR.",
+    "en": "No redo → no LGWR."
+   }
+  },
+  "tags": [
+   "requete"
+  ]
+ },
+ {
+  "id": "or-31",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Ordre des états au démarrage ?",
+   "dar": "Tartib démarrage ?",
+   "en": "Startup state order?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "SHUTDOWN → NOMOUNT → MOUNT → OPEN",
+     "dar": "NOMOUNT → MOUNT → OPEN",
+     "en": "NOMOUNT → MOUNT → OPEN"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "MOUNT → NOMOUNT → OPEN",
+     "dar": "MOUNT → NOMOUNT",
+     "en": "MOUNT → NOMOUNT → OPEN"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "OPEN → MOUNT → NOMOUNT",
+     "dar": "L3eks",
+     "en": "Reverse"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "NOMOUNT : fichier de paramètres lu, SGA créée, processus lancés. MOUNT : fichiers de contrôle lus. OPEN : datafiles + redo logs ouverts.",
+   "dar": "Paramètres → contrôle → datafiles.",
+   "en": "Parameters → control files → datafiles + redo."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-32",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quels fichiers sont lus au passage en **MOUNT** ?",
+   "dar": "MOUNT : chnou kay9ra ?",
+   "en": "Files read when going to **MOUNT**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les fichiers de contrôle",
+     "dar": "Control files",
+     "en": "Control files"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Le fichier de paramètres",
+     "dar": "Paramètres",
+     "en": "Parameter file"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Les datafiles",
+     "dar": "Datafiles",
+     "en": "Datafiles"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "MOUNT associe la base à l'instance grâce aux control files.",
+   "dar": "Control files.",
+   "en": "Control files."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Lu en NOMOUNT.",
+    "dar": "NOMOUNT.",
+    "en": "Read at NOMOUNT."
+   },
+   "c": {
+    "fr": "Ouverts en OPEN.",
+    "dar": "OPEN.",
+    "en": "Opened at OPEN."
+   }
+  },
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-33",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "À quoi sert l'état NOMOUNT ?",
+   "dar": "NOMOUNT 3lach ?",
+   "en": "What is NOMOUNT for?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Créer une base ou recréer les fichiers de contrôle",
+     "dar": "Créer base / control files",
+     "en": "Create a database or recreate control files"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Travail normal des utilisateurs",
+     "dar": "Khdma 3adiya",
+     "en": "Normal user work"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Sauvegarder les datafiles",
+     "dar": "Sauvegarde",
+     "en": "Back up datafiles"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "NOMOUNT : instance démarrée sans base associée.",
+   "dar": "Bla base.",
+   "en": "Instance without a mounted database."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il faut OPEN.",
+    "dar": "OPEN.",
+    "en": "Needs OPEN."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-34",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Démarre l'instance sans monter la base.",
+   "dar": "Bda bla MOUNT.",
+   "en": "Start the instance without mounting."
+  },
+  "answer": [
+   "STARTUP NOMOUNT",
+   "startup nomount",
+   "STARTUP NOMOUNT;"
+  ],
+  "explanation": {
+   "fr": "Ensuite ALTER DATABASE MOUNT; puis ALTER DATABASE OPEN;",
+   "dar": "Men b3d MOUNT w OPEN.",
+   "en": "Then ALTER DATABASE MOUNT / OPEN."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-35",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Depuis MOUNT, ouvre la base.",
+   "dar": "Mn MOUNT, fte7.",
+   "en": "From MOUNT, open the database."
+  },
+  "answer": [
+   "ALTER DATABASE OPEN;",
+   "alter database open;",
+   "ALTER DATABASE OPEN READ WRITE;"
+  ],
+  "explanation": {
+   "fr": "Les datafiles et redo logs sont ouverts.",
+   "dar": "Datafiles mfto7in.",
+   "en": "Opens datafiles and redo logs."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-36",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Passe de NOMOUNT à MOUNT.",
+   "dar": "NOMOUNT → MOUNT.",
+   "en": "Go from NOMOUNT to MOUNT."
+  },
+  "answer": [
+   "ALTER DATABASE MOUNT;",
+   "alter database mount;"
+  ],
+  "explanation": {
+   "fr": "Lecture des fichiers de contrôle.",
+   "dar": "Control files.",
+   "en": "Reads the control files."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-37",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel arrêt fait un **rollback** des transactions non validées sans attendre la déconnexion ?",
+   "dar": "Ach men SHUTDOWN kaydir rollback ?",
+   "en": "Which shutdown rolls back uncommitted work without waiting?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "IMMEDIATE",
+     "dar": "IMMEDIATE",
+     "en": "IMMEDIATE"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "NORMAL",
+     "dar": "NORMAL",
+     "en": "NORMAL"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "TRANSACTIONAL",
+     "dar": "TRANSACTIONAL",
+     "en": "TRANSACTIONAL"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "IMMEDIATE : pas d'attente, rollback, checkpoint, arrêt propre, pas de récupération ensuite.",
+   "dar": "IMMEDIATE.",
+   "en": "IMMEDIATE."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "NORMAL attend la déconnexion de tous.",
+    "dar": "NORMAL kaytsenna.",
+    "en": "NORMAL waits for everyone."
+   },
+   "c": {
+    "fr": "TRANSACTIONAL attend la fin des transactions.",
+    "dar": "Kaytsenna transactions.",
+    "en": "TRANSACTIONAL waits for transactions."
+   }
+  },
+  "tags": [
+   "shutdown"
+  ]
+ },
+ {
+  "id": "or-38",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel arrêt impose une **récupération** au redémarrage ?",
+   "dar": "Ach men arrêt khasso récupération ?",
+   "en": "Which shutdown requires **recovery**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ABORT",
+     "dar": "ABORT",
+     "en": "ABORT"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "IMMEDIATE",
+     "dar": "IMMEDIATE",
+     "en": "IMMEDIATE"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "NORMAL",
+     "dar": "NORMAL",
+     "en": "NORMAL"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "ABORT : pas de checkpoint, fichiers non fermés proprement → SMON récupère au STARTUP.",
+   "dar": "ABORT → SMON.",
+   "en": "ABORT → SMON recovery."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "IMMEDIATE ferme proprement.",
+    "dar": "Propre.",
+    "en": "Clean."
+   },
+   "c": {
+    "fr": "NORMAL ferme proprement.",
+    "dar": "Propre.",
+    "en": "Clean."
+   }
+  },
+  "tags": [
+   "shutdown"
+  ]
+ },
+ {
+  "id": "or-39",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Mode d'arrêt par défaut ?",
+   "dar": "Par défaut ?",
+   "en": "Default shutdown mode?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "NORMAL",
+     "dar": "NORMAL",
+     "en": "NORMAL"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "IMMEDIATE",
+     "dar": "IMMEDIATE",
+     "en": "IMMEDIATE"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ABORT",
+     "dar": "ABORT",
+     "en": "ABORT"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`SHUTDOWN` seul = NORMAL : attend la déconnexion de toutes les sessions.",
+   "dar": "NORMAL.",
+   "en": "NORMAL."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "shutdown"
+  ]
+ },
+ {
+  "id": "or-40",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `STARTUP FORCE` ?",
+   "dar": "STARTUP FORCE ?",
+   "en": "What does STARTUP FORCE do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "SHUTDOWN ABORT puis STARTUP",
+     "dar": "ABORT + STARTUP",
+     "en": "SHUTDOWN ABORT then STARTUP"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "STARTUP en lecture seule",
+     "dar": "Read only",
+     "en": "Read-only startup"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Démarre en mode restreint",
+     "dar": "Restreint",
+     "en": "Restricted startup"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "FORCE = abort + startup. RESTRICT = réservé aux utilisateurs avec RESTRICTED SESSION.",
+   "dar": "FORCE = abort + startup.",
+   "en": "FORCE = abort + startup."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est OPEN READ ONLY.",
+    "dar": "READ ONLY.",
+    "en": "That is READ ONLY."
+   },
+   "c": {
+    "fr": "C'est RESTRICT.",
+    "dar": "RESTRICT.",
+    "en": "That is RESTRICT."
+   }
+  },
+  "tags": [
+   "startup"
+  ]
+ },
+ {
+  "id": "or-41",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Arrête la base en annulant les transactions en cours, proprement.",
+   "dar": "Wa9ef b rollback.",
+   "en": "Shut down rolling back open transactions, cleanly."
+  },
+  "answer": [
+   "SHUTDOWN IMMEDIATE",
+   "shutdown immediate",
+   "SHUTDOWN IMMEDIATE;"
+  ],
+  "explanation": {
+   "fr": "Affiche « Database closed. Database dismounted. ORACLE instance shut down. »",
+   "dar": "Messages.",
+   "en": "Prints the 3 shutdown messages."
+  },
+  "wrongExplanations": {
+   "SHUTDOWN ABORT": {
+    "fr": "ABORT n'est pas propre (récupération ensuite).",
+    "dar": "ABORT machi propre.",
+    "en": "ABORT is not clean."
+   }
+  },
+  "tags": [
+   "shutdown"
+  ]
+ },
+ {
+  "id": "or-42",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les sessions : sid, serial#, username, status depuis la vue dynamique.",
+   "dar": "Sessions ?",
+   "en": "List sessions (sid, serial#, username, status)."
+  },
+  "answer": [
+   "SELECT sid, serial#, username, status FROM v$session;",
+   "select sid, serial#, username, status from v$session;"
+  ],
+  "explanation": {
+   "fr": "Les lignes sans USERNAME sont les processus d'arrière-plan.",
+   "dar": "Bla USERNAME = arrière-plan.",
+   "en": "No USERNAME = background processes."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "sessions"
+  ]
+ },
+ {
+  "id": "or-43",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Tue la session SID 45, SERIAL# 2311.",
+   "dar": "Tue session 45,2311.",
+   "en": "Kill session 45,2311."
+  },
+  "answer": [
+   "ALTER SYSTEM KILL SESSION '45,2311';",
+   "alter system kill session '45,2311';"
+  ],
+  "explanation": {
+   "fr": "La session tuée reçoit ORA-00028: your session has been killed.",
+   "dar": "ORA-00028.",
+   "en": "Killed session gets ORA-00028."
+  },
+  "wrongExplanations": {
+   "ALTER SYSTEM KILL SESSION '2311,45';": {
+    "fr": "Ordre : 'sid,serial#'.",
+    "dar": "sid,serial#.",
+    "en": "Order is sid,serial#."
+   }
+  },
+  "tags": [
+   "sessions"
+  ]
+ },
+ {
+  "id": "or-44",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste les sessions INACTIVE qui attendent depuis plus de 60 s.",
+   "dar": "Sessions INACTIVE > 60 s.",
+   "en": "List INACTIVE sessions waiting > 60 s."
+  },
+  "answer": [
+   "SELECT sid, serial#, username, status, seconds_in_wait FROM v$session WHERE status='INACTIVE' AND seconds_in_wait > 60;",
+   "select sid, serial#, username, status, seconds_in_wait from v$session where status='INACTIVE' and seconds_in_wait > 60;"
+  ],
+  "explanation": {
+   "fr": "Permet au DBA de repérer les sessions à libérer.",
+   "dar": "Bach tlibéri ressources.",
+   "en": "Find sessions to free."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "sessions"
+  ]
+ },
+ {
+  "id": "or-45",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les composants de la SGA.",
+   "dar": "Composants SGA ?",
+   "en": "Show SGA components."
+  },
+  "answer": [
+   "SELECT * FROM v$sgainfo;",
+   "select * from v$sgainfo;",
+   "SHOW SGA"
+  ],
+  "explanation": {
+   "fr": "v$sgainfo (composants), v$sgastat (utilisation), SHOW SGA (résumé).",
+   "dar": "v$sgainfo.",
+   "en": "v$sgainfo / v$sgastat / SHOW SGA."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "sga"
+  ]
+ },
+ {
+  "id": "or-46",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Deux connexions du même utilisateur donnent…",
+   "dar": "Jouj connexions ?",
+   "en": "Two connections by the same user give…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "deux sessions (SID/SERIAL# différents)",
+     "dar": "jouj sessions",
+     "en": "two sessions (different SID/SERIAL#)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "une seule session",
+     "dar": "session wa7da",
+     "en": "one session"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "une erreur",
+     "dar": "erreur",
+     "en": "an error"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Chaque connexion = une nouvelle session ; tuer l'une n'affecte pas l'autre.",
+   "dar": "Kol connexion session.",
+   "en": "Each connection is a new session."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "sessions"
+  ]
+ },
+ {
+  "id": "or-47",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Élargit l'affichage SQL*Plus à 2000 caractères par ligne.",
+   "dar": "LINESIZE 2000.",
+   "en": "Set line width to 2000."
+  },
+  "answer": [
+   "SET LINESIZE 2000",
+   "set linesize 2000",
+   "SET LINES 2000"
+  ],
+  "explanation": {
+   "fr": "Aussi SET PAGESIZE 1000, COLUMN MACHINE FORMAT A30.",
+   "dar": "PAGESIZE, COLUMN.",
+   "en": "Also PAGESIZE, COLUMN … FORMAT."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "sqlplus"
+  ]
+ }
+]

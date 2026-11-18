@@ -1,0 +1,995 @@
+[
+ {
+  "id": "r-intro-1",
+  "chapter": "intro",
+  "syntax": "/etc",
+  "desc": {
+   "fr": "Fichiers de configuration",
+   "dar": "Fichiers dyal configuration",
+   "en": "Configuration files"
+  }
+ },
+ {
+  "id": "r-intro-2",
+  "chapter": "intro",
+  "syntax": "/var",
+  "desc": {
+   "fr": "Données variables : journaux (/var/log), cache, sites (/var/www)",
+   "dar": "Data kaytbeddel : logs, cache, sites",
+   "en": "Variable data: logs (/var/log), cache, websites (/var/www)"
+  }
+ },
+ {
+  "id": "r-intro-3",
+  "chapter": "intro",
+  "syntax": "/tmp",
+  "desc": {
+   "fr": "Temporaires, vidé au redémarrage (sticky bit)",
+   "dar": "Mo2a9atin, kaytkhwa f redémarrage",
+   "en": "Temporary files, emptied at reboot (sticky bit)"
+  }
+ },
+ {
+  "id": "r-intro-4",
+  "chapter": "intro",
+  "syntax": "/boot",
+  "desc": {
+   "fr": "Noyau vmlinuz, initramfs, GRUB, entrées BLS",
+   "dar": "Noyau, initramfs, GRUB, BLS",
+   "en": "Kernel vmlinuz, initramfs, GRUB, BLS entries"
+  }
+ },
+ {
+  "id": "r-intro-5",
+  "chapter": "intro",
+  "syntax": "/dev",
+  "desc": {
+   "fr": "Fichiers de périphériques",
+   "dar": "Fichiers dyal périphériques",
+   "en": "Device files"
+  }
+ },
+ {
+  "id": "r-intro-6",
+  "chapter": "intro",
+  "syntax": "/proc",
+  "desc": {
+   "fr": "Système de fichiers virtuel du noyau (processus, cpuinfo, meminfo)",
+   "dar": "Système virtuel dyal noyau",
+   "en": "Kernel virtual filesystem (processes, cpuinfo, meminfo)"
+  },
+  "example": "cat /proc/cpuinfo"
+ },
+ {
+  "id": "r-intro-7",
+  "chapter": "intro",
+  "syntax": "/media · /mnt",
+  "desc": {
+   "fr": "Montage automatique · montage manuel",
+   "dar": "Montage automatique · manuel",
+   "en": "Automatic mounts · manual mounts"
+  }
+ },
+ {
+  "id": "r-intro-8",
+  "chapter": "intro",
+  "syntax": "/root ≠ /",
+  "desc": {
+   "fr": "Home de root ≠ racine de l'arborescence",
+   "dar": "Home dyal root ≠ racine",
+   "en": "root's home ≠ filesystem root"
+  }
+ },
+ {
+  "id": "r-tp1-1",
+  "chapter": "tp1",
+  "syntax": "pwd · cd [rep] · cd - · cd ~",
+  "desc": {
+   "fr": "Répertoire courant, changer, précédent, home",
+   "dar": "Répertoire, beddel, li 9bel, home",
+   "en": "Current dir, change, previous, home"
+  }
+ },
+ {
+  "id": "r-tp1-2",
+  "chapter": "tp1",
+  "syntax": "ls -l -a -d -R -h",
+  "desc": {
+   "fr": "Lister : long, cachés, le répertoire lui-même, récursif, tailles lisibles",
+   "dar": "Lister : long, mkhbbyin, répertoire, récursif, tailles",
+   "en": "List: long, hidden, the dir itself, recursive, human sizes"
+  },
+  "example": "ls -la /etc"
+ },
+ {
+  "id": "r-tp1-3",
+  "chapter": "tp1",
+  "syntax": "mkdir -p a/b/c",
+  "desc": {
+   "fr": "Créer avec les parents",
+   "dar": "Dir m3a parents",
+   "en": "Create with parents"
+  }
+ },
+ {
+  "id": "r-tp1-4",
+  "chapter": "tp1",
+  "syntax": "cp -r -p src dst",
+  "desc": {
+   "fr": "Copier (récursif, préserver droits et dates)",
+   "dar": "Copier",
+   "en": "Copy (recursive, preserve perms and dates)"
+  }
+ },
+ {
+  "id": "r-tp1-5",
+  "chapter": "tp1",
+  "syntax": "mv src dst",
+  "desc": {
+   "fr": "Déplacer / renommer",
+   "dar": "Nqel / beddel smiya",
+   "en": "Move / rename"
+  }
+ },
+ {
+  "id": "r-tp1-6",
+  "chapter": "tp1",
+  "syntax": "rm -r -f · rmdir",
+  "desc": {
+   "fr": "Supprimer (récursif, forcer) · répertoire vide",
+   "dar": "Mse7 · répertoire khawi",
+   "en": "Remove (recursive, force) · empty dir"
+  }
+ },
+ {
+  "id": "r-tp1-7",
+  "chapter": "tp1",
+  "syntax": "touch f · cat f · head/tail -n N · tail -f · less",
+  "desc": {
+   "fr": "Créer vide · afficher · début/fin · suivre · paginer",
+   "dar": "Dir · werri · bdaya/lekher · tba3 · pager",
+   "en": "Create · print · head/tail · follow · pager"
+  }
+ },
+ {
+  "id": "r-tp1-8",
+  "chapter": "tp1",
+  "syntax": "tty · whoami · who · w · hostname · uname -r",
+  "desc": {
+   "fr": "Terminal · moi · sessions · activité · machine · noyau",
+   "dar": "Terminal · ana · sessions · machine · noyau",
+   "en": "Terminal · me · sessions · activity · host · kernel"
+  }
+ },
+ {
+  "id": "r-tp1-9",
+  "chapter": "tp1",
+  "syntax": "man [1|5|8] cmd · man -k mot · cmd --help · mandb",
+  "desc": {
+   "fr": "Manuel par section · recherche · aide courte · index",
+   "dar": "Man · recherche · aide · index",
+   "en": "Manual by section · search · short help · index"
+  },
+  "example": "man 5 passwd"
+ },
+ {
+  "id": "r-tp1-10",
+  "chapter": "tp1",
+  "syntax": "type cmd · which cmd · whereis cmd",
+  "desc": {
+   "fr": "Nature de la commande · chemin · binaire + man",
+   "dar": "Naw3 · chemin · binaire + man",
+   "en": "Command kind · path · binary + man"
+  }
+ },
+ {
+  "id": "r-tp1-11",
+  "chapter": "tp1",
+  "syntax": "history · !! · !n · Ctrl+R",
+  "desc": {
+   "fr": "Historique, dernière, n° n, recherche",
+   "dar": "Historique, lekhra, ra9m n, recherche",
+   "en": "History, last, #n, search"
+  }
+ },
+ {
+  "id": "r-tp1-12",
+  "chapter": "tp1",
+  "syntax": "date · cal · uptime",
+  "desc": {
+   "fr": "Date, calendrier, durée de fonctionnement et charge",
+   "dar": "Date, calendrier, uptime",
+   "en": "Date, calendar, uptime and load"
+  }
+ },
+ {
+  "id": "r-tp1-13",
+  "chapter": "tp1",
+  "syntax": "> · >> · 2> · &> · 2>/dev/null",
+  "desc": {
+   "fr": "Écraser, ajouter, erreurs, tout, jeter les erreurs",
+   "dar": "Mse7, zid, erreurs, kolchi, rmi",
+   "en": "Overwrite, append, errors, both, discard errors"
+  }
+ },
+ {
+  "id": "r-tp1-14",
+  "chapter": "tp1",
+  "syntax": "cmd1 | cmd2",
+  "desc": {
+   "fr": "Tube : sortie de cmd1 → entrée de cmd2",
+   "dar": "Pipe",
+   "en": "Pipe: cmd1 output → cmd2 input"
+  }
+ },
+ {
+  "id": "r-tp1-15",
+  "chapter": "tp1",
+  "syntax": "grep [-c -i -v -n] motif f",
+  "desc": {
+   "fr": "Lignes contenant le motif (compter, casse, inverser, numéros)",
+   "dar": "Lignes fihom motif",
+   "en": "Matching lines (count, ignore case, invert, numbers)"
+  },
+  "example": "grep -c bash /etc/passwd"
+ },
+ {
+  "id": "r-tp1-16",
+  "chapter": "tp1",
+  "syntax": "cut -d: -f1",
+  "desc": {
+   "fr": "Extraire un champ",
+   "dar": "Champ",
+   "en": "Extract a field"
+  },
+  "example": "cut -d: -f1 /etc/passwd"
+ },
+ {
+  "id": "r-tp1-17",
+  "chapter": "tp1",
+  "syntax": "sort [-n -h -r -t: -k3] · wc -l · uniq",
+  "desc": {
+   "fr": "Trier · compter les lignes · dédoublonner",
+   "dar": "Tri · 7seb · doublons",
+   "en": "Sort · count lines · dedupe"
+  }
+ },
+ {
+  "id": "r-tp1-18",
+  "chapter": "tp1",
+  "syntax": "find rep -name \"*.x\" -type f -mtime -7 -size +10M",
+  "desc": {
+   "fr": "Rechercher des fichiers",
+   "dar": "Qelleb fichiers",
+   "en": "Find files"
+  },
+  "example": "find /etc -name \"*.conf\""
+ },
+ {
+  "id": "r-tp1-19",
+  "chapter": "tp1",
+  "syntax": "du -sh rep/* | sort -h | tail -5",
+  "desc": {
+   "fr": "Plus gros éléments",
+   "dar": "Kbar",
+   "en": "Largest items"
+  }
+ },
+ {
+  "id": "r-tp1-20",
+  "chapter": "tp1",
+  "syntax": "cmd | tee [-a] f",
+  "desc": {
+   "fr": "Écran + fichier",
+   "dar": "Écran + fichier",
+   "en": "Screen + file"
+  }
+ },
+ {
+  "id": "r-tp1-21",
+  "chapter": "tp1",
+  "syntax": "ssh user@IP [\"cmd\"]",
+  "desc": {
+   "fr": "Connexion / exécution à distance",
+   "dar": "Connexion mn b3id",
+   "en": "Remote login / execution"
+  },
+  "example": "ssh etudiant@192.168.56.10 \"uptime; df -h /\""
+ },
+ {
+  "id": "r-tp1-22",
+  "chapter": "tp1",
+  "syntax": "firewall-cmd --list-services",
+  "desc": {
+   "fr": "Services autorisés par le pare-feu",
+   "dar": "Services f pare-feu",
+   "en": "Services allowed by the firewall"
+  }
+ },
+ {
+  "id": "r-tp1-23",
+  "chapter": "tp1",
+  "syntax": "echo $SSH_CONNECTION",
+  "desc": {
+   "fr": "IP/port client et serveur de la session SSH",
+   "dar": "IP/port dyal SSH",
+   "en": "Client/server IP and ports of the SSH session"
+  }
+ },
+ {
+  "id": "r-grub-1",
+  "chapter": "grub",
+  "syntax": "[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS",
+  "desc": {
+   "fr": "Mode de démarrage",
+   "dar": "Mode dyal démarrage",
+   "en": "Boot mode"
+  }
+ },
+ {
+  "id": "r-grub-2",
+  "chapter": "grub",
+  "syntax": "uname -r · rpm -q kernel-core",
+  "desc": {
+   "fr": "Noyau en cours · noyaux installés",
+   "dar": "Noyau daba · installés",
+   "en": "Running kernel · installed kernels"
+  }
+ },
+ {
+  "id": "r-grub-3",
+  "chapter": "grub",
+  "syntax": "cp -p /etc/default/grub /etc/default/grub.bak",
+  "desc": {
+   "fr": "Sauvegarder avant modification",
+   "dar": "Sauvegarde",
+   "en": "Back up before editing"
+  }
+ },
+ {
+  "id": "r-grub-4",
+  "chapter": "grub",
+  "syntax": "GRUB_TIMEOUT · GRUB_DEFAULT · GRUB_TIMEOUT_STYLE=menu · GRUB_CMDLINE_LINUX",
+  "desc": {
+   "fr": "Variables de /etc/default/grub",
+   "dar": "Variables",
+   "en": "/etc/default/grub variables"
+  }
+ },
+ {
+  "id": "r-grub-5",
+  "chapter": "grub",
+  "syntax": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+  "desc": {
+   "fr": "Générer grub.cfg",
+   "dar": "Générer grub.cfg",
+   "en": "Generate grub.cfg"
+  }
+ },
+ {
+  "id": "r-grub-6",
+  "chapter": "grub",
+  "syntax": "/etc/grub.d/40_custom",
+  "desc": {
+   "fr": "Entrées personnalisées (menuentry)",
+   "dar": "Entrées dyalek",
+   "en": "Custom entries (menuentry)"
+  },
+  "example": "menuentry \"Redemarrer\" { reboot }"
+ },
+ {
+  "id": "r-grub-7",
+  "chapter": "grub",
+  "syntax": "rd.break",
+  "desc": {
+   "fr": "Option noyau : s'arrêter dans l'initramfs (reset root)",
+   "dar": "Option noyau : w9ef f initramfs",
+   "en": "Kernel option: stop in the initramfs (root reset)"
+  }
+ },
+ {
+  "id": "r-grub-8",
+  "chapter": "grub",
+  "syntax": "mount -o remount,rw /sysroot · chroot /sysroot",
+  "desc": {
+   "fr": "Racine en écriture · entrer dans le vrai système",
+   "dar": "Racine rw · chroot",
+   "en": "Root writable · enter the real system"
+  }
+ },
+ {
+  "id": "r-grub-9",
+  "chapter": "grub",
+  "syntax": "touch /.autorelabel",
+  "desc": {
+   "fr": "Réétiquetage SELinux au prochain démarrage",
+   "dar": "Relabel SELinux",
+   "en": "SELinux relabel at next boot"
+  }
+ },
+ {
+  "id": "r-grub-10",
+  "chapter": "grub",
+  "syntax": "grub2-setpassword · /boot/grub2/user.cfg",
+  "desc": {
+   "fr": "Protéger GRUB · fichier du mot de passe",
+   "dar": "Protection · fichier",
+   "en": "Protect GRUB · password file"
+  }
+ },
+ {
+  "id": "r-sd-1",
+  "chapter": "systemd",
+  "syntax": "systemctl get-default · set-default T · isolate T",
+  "desc": {
+   "fr": "Cible par défaut / changer au boot / maintenant",
+   "dar": "Target",
+   "en": "Default target / set for boot / now"
+  }
+ },
+ {
+  "id": "r-sd-2",
+  "chapter": "systemd",
+  "syntax": "systemctl list-units --type target · --failed",
+  "desc": {
+   "fr": "Lister les cibles · unités en échec",
+   "dar": "Lister",
+   "en": "List targets · failed units"
+  }
+ },
+ {
+  "id": "r-sd-3",
+  "chapter": "systemd",
+  "syntax": "systemctl list-unit-files --type=service",
+  "desc": {
+   "fr": "Services et leur état enable/disable",
+   "dar": "Services",
+   "en": "Services and enablement"
+  }
+ },
+ {
+  "id": "r-sd-4",
+  "chapter": "systemd",
+  "syntax": "systemctl start|stop|restart|reload S",
+  "desc": {
+   "fr": "Agir maintenant",
+   "dar": "Daba",
+   "en": "Act now"
+  }
+ },
+ {
+  "id": "r-sd-5",
+  "chapter": "systemd",
+  "syntax": "systemctl enable|disable [--now] S",
+  "desc": {
+   "fr": "Au démarrage (--now : aussi maintenant)",
+   "dar": "F démarrage",
+   "en": "At boot (--now: also now)"
+  }
+ },
+ {
+  "id": "r-sd-6",
+  "chapter": "systemd",
+  "syntax": "systemctl status · is-active · is-enabled S",
+  "desc": {
+   "fr": "État détaillé / actif ? / activé ?",
+   "dar": "Status",
+   "en": "State / active? / enabled?"
+  }
+ },
+ {
+  "id": "r-sd-7",
+  "chapter": "systemd",
+  "syntax": "systemctl mask|unmask S",
+  "desc": {
+   "fr": "Interdire / réautoriser le démarrage",
+   "dar": "Mna3 / rjje3",
+   "en": "Forbid / allow start"
+  }
+ },
+ {
+  "id": "r-sd-8",
+  "chapter": "systemd",
+  "syntax": "systemctl daemon-reload",
+  "desc": {
+   "fr": "Relire les fichiers d'unités",
+   "dar": "3awed 9ra unités",
+   "en": "Reload unit files"
+  }
+ },
+ {
+  "id": "r-sd-9",
+  "chapter": "systemd",
+  "syntax": "systemctl kill S",
+  "desc": {
+   "fr": "Envoyer un signal aux processus du service",
+   "dar": "Signal",
+   "en": "Signal the service processes"
+  }
+ },
+ {
+  "id": "r-sd-10",
+  "chapter": "systemd",
+  "syntax": "journalctl -b [-1]",
+  "desc": {
+   "fr": "Journal du démarrage courant / précédent",
+   "dar": "Journal dyal boot",
+   "en": "Current / previous boot journal"
+  }
+ },
+ {
+  "id": "r-sd-11",
+  "chapter": "systemd",
+  "syntax": "journalctl -f · -u S · -n N",
+  "desc": {
+   "fr": "Suivre · une unité · N lignes",
+   "dar": "Tba3 · unité · N",
+   "en": "Follow · unit · N lines"
+  }
+ },
+ {
+  "id": "r-sd-12",
+  "chapter": "systemd",
+  "syntax": "journalctl -p err|warning|info",
+  "desc": {
+   "fr": "Filtrer par priorité",
+   "dar": "Priorité",
+   "en": "Filter by priority"
+  }
+ },
+ {
+  "id": "r-sd-13",
+  "chapter": "systemd",
+  "syntax": "journalctl --since \"1 hour ago\"",
+  "desc": {
+   "fr": "Depuis une date",
+   "dar": "Mn date",
+   "en": "Since a time"
+  }
+ },
+ {
+  "id": "r-sd-14",
+  "chapter": "systemd",
+  "syntax": "journalctl -o json|json-pretty|cat|verbose",
+  "desc": {
+   "fr": "Format de sortie",
+   "dar": "Format",
+   "en": "Output format"
+  }
+ },
+ {
+  "id": "r-sd-15",
+  "chapter": "systemd",
+  "syntax": "systemd-analyze [blame|critical-chain]",
+  "desc": {
+   "fr": "Temps de démarrage",
+   "dar": "Temps boot",
+   "en": "Boot time"
+  }
+ },
+ {
+  "id": "r-sd-16",
+  "chapter": "systemd",
+  "syntax": "[Unit] [Service] ExecStart= [Install] WantedBy=",
+  "desc": {
+   "fr": "Fichier .service minimal",
+   "dar": ".service",
+   "en": "Minimal .service"
+  }
+ },
+ {
+  "id": "r-sd-17",
+  "chapter": "systemd",
+  "syntax": "runlevel · telinit N",
+  "desc": {
+   "fr": "Anciennes commandes SysV",
+   "dar": "SysV",
+   "en": "Legacy SysV commands"
+  }
+ },
+ {
+  "id": "r-sd-18",
+  "chapter": "systemd",
+  "syntax": "ps aux | head -2",
+  "desc": {
+   "fr": "Voir le PID 1",
+   "dar": "PID 1",
+   "en": "See PID 1"
+  }
+ },
+ {
+  "id": "r-pkg-1",
+  "chapter": "paquets",
+  "syntax": "rpm -qa | wc -l",
+  "desc": {
+   "fr": "Nombre de paquets installés",
+   "dar": "Ch7al paquet",
+   "en": "Count installed packages"
+  }
+ },
+ {
+  "id": "r-pkg-2",
+  "chapter": "paquets",
+  "syntax": "rpm -q · -qi · -ql · -qc · -qd P",
+  "desc": {
+   "fr": "Version · infos · fichiers · config · doc",
+   "dar": "Version · infos · fichiers · config",
+   "en": "Version · info · files · config · docs"
+  }
+ },
+ {
+  "id": "r-pkg-3",
+  "chapter": "paquets",
+  "syntax": "rpm -qf /fichier",
+  "desc": {
+   "fr": "Paquet propriétaire",
+   "dar": "Paquet dyal fichier",
+   "en": "Owning package"
+  },
+  "example": "rpm -qf /etc/services"
+ },
+ {
+  "id": "r-pkg-4",
+  "chapter": "paquets",
+  "syntax": "rpm -V P",
+  "desc": {
+   "fr": "Vérifier les fichiers modifiés",
+   "dar": "Tsdi9",
+   "en": "Verify modified files"
+  }
+ },
+ {
+  "id": "r-pkg-5",
+  "chapter": "paquets",
+  "syntax": "rpm -qpc f.rpm · rpm -K f.rpm",
+  "desc": {
+   "fr": "Config d'un .rpm · signature",
+   "dar": "Config · signature",
+   "en": "Config of a .rpm · signature"
+  }
+ },
+ {
+  "id": "r-pkg-6",
+  "chapter": "paquets",
+  "syntax": "rpm -ivh f.rpm [--nodeps] · -Uvh · -e P",
+  "desc": {
+   "fr": "Installer · mettre à jour · supprimer",
+   "dar": "Installer · update · mse7",
+   "en": "Install · upgrade · erase"
+  }
+ },
+ {
+  "id": "r-pkg-7",
+  "chapter": "paquets",
+  "syntax": "dnf install|remove [-y] P",
+  "desc": {
+   "fr": "Installer / supprimer avec dépendances",
+   "dar": "Install / remove",
+   "en": "Install / remove with deps"
+  }
+ },
+ {
+  "id": "r-pkg-8",
+  "chapter": "paquets",
+  "syntax": "dnf check-update · dnf update",
+  "desc": {
+   "fr": "Lister / appliquer les mises à jour",
+   "dar": "Updates",
+   "en": "List / apply updates"
+  }
+ },
+ {
+  "id": "r-pkg-9",
+  "chapter": "paquets",
+  "syntax": "dnf info P · dnf provides /fichier",
+  "desc": {
+   "fr": "Infos · quel paquet fournit",
+   "dar": "Infos · provides",
+   "en": "Info · which package provides"
+  },
+  "example": "dnf provides /usr/share/magic"
+ },
+ {
+  "id": "r-pkg-10",
+  "chapter": "paquets",
+  "syntax": "dnf history [info N | undo N]",
+  "desc": {
+   "fr": "Historique des transactions",
+   "dar": "Historique",
+   "en": "Transaction history"
+  }
+ },
+ {
+  "id": "r-pkg-11",
+  "chapter": "paquets",
+  "syntax": "dnf group list|info|install|remove \"Nom\"",
+  "desc": {
+   "fr": "Groupes de paquets",
+   "dar": "Groupes",
+   "en": "Package groups"
+  }
+ },
+ {
+  "id": "r-pkg-12",
+  "chapter": "paquets",
+  "syntax": "dnf repolist [--all]",
+  "desc": {
+   "fr": "Dépôts activés",
+   "dar": "Dépôts",
+   "en": "Enabled repos"
+  }
+ },
+ {
+  "id": "r-pkg-13",
+  "chapter": "paquets",
+  "syntax": "/etc/yum.repos.d/*.repo",
+  "desc": {
+   "fr": "[id] name baseurl enabled gpgcheck",
+   "dar": "Fichiers .repo",
+   "en": "Repo definition files"
+  }
+ },
+ {
+  "id": "r-pkg-14",
+  "chapter": "paquets",
+  "syntax": "yum-config-manager --enable|--disable ID",
+  "desc": {
+   "fr": "Activer / désactiver un dépôt",
+   "dar": "Activer / tfi",
+   "en": "Enable / disable a repo"
+  }
+ },
+ {
+  "id": "r-pkg-15",
+  "chapter": "paquets",
+  "syntax": "dnf install --downloadonly --downloaddir=REP P",
+  "desc": {
+   "fr": "Télécharger les .rpm",
+   "dar": "Télécharger",
+   "en": "Download .rpm files"
+  }
+ },
+ {
+  "id": "r-pkg-16",
+  "chapter": "paquets",
+  "syntax": "createrepo REP",
+  "desc": {
+   "fr": "Créer les métadonnées d'un dépôt",
+   "dar": "repodata",
+   "en": "Create repo metadata"
+  }
+ },
+ {
+  "id": "r-pkg-17",
+  "chapter": "paquets",
+  "syntax": "baseurl=file:///var/www/html/mon_depot",
+  "desc": {
+   "fr": "Dépôt local (gpgcheck=0, enabled=1)",
+   "dar": "Dépôt local",
+   "en": "Local repo"
+  }
+ },
+ {
+  "id": "r-us-1",
+  "chapter": "users",
+  "syntax": "useradd [-m -M -u -g -G -d -s -c -e -r] login",
+  "desc": {
+   "fr": "Créer un utilisateur",
+   "dar": "Dir user",
+   "en": "Create a user"
+  },
+  "example": "useradd -u 2003 -g users -e 2026-12-31 tp1"
+ },
+ {
+  "id": "r-us-2",
+  "chapter": "users",
+  "syntax": "useradd -D [-s SHELL]",
+  "desc": {
+   "fr": "Voir / changer les défauts",
+   "dar": "Défauts",
+   "en": "Show / set defaults"
+  }
+ },
+ {
+  "id": "r-us-3",
+  "chapter": "users",
+  "syntax": "usermod -aG G login",
+  "desc": {
+   "fr": "AJOUTER un groupe secondaire",
+   "dar": "Zid groupe",
+   "en": "APPEND a secondary group"
+  }
+ },
+ {
+  "id": "r-us-4",
+  "chapter": "users",
+  "syntax": "usermod -G G1,G2 login",
+  "desc": {
+   "fr": "REMPLACER les groupes secondaires",
+   "dar": "Beddel groupes",
+   "en": "REPLACE secondary groups"
+  }
+ },
+ {
+  "id": "r-us-5",
+  "chapter": "users",
+  "syntax": "usermod -l NOUVEAU ANCIEN · -d REP -m · -s · -c · -e · -L · -U",
+  "desc": {
+   "fr": "Renommer, home, shell, commentaire, expiration, verrou",
+   "dar": "Usermod",
+   "en": "Rename, home, shell…"
+  }
+ },
+ {
+  "id": "r-us-6",
+  "chapter": "users",
+  "syntax": "userdel [-r] [-f] login",
+  "desc": {
+   "fr": "Supprimer (avec home)",
+   "dar": "Mse7",
+   "en": "Delete (with home)"
+  }
+ },
+ {
+  "id": "r-us-7",
+  "chapter": "users",
+  "syntax": "find / -type f -uid UID -print -exec rm {} \\;",
+  "desc": {
+   "fr": "Fichiers orphelins",
+   "dar": "Orphelins",
+   "en": "Orphan files"
+  }
+ },
+ {
+  "id": "r-us-8",
+  "chapter": "users",
+  "syntax": "passwd [-l -u -d -e -S -n -x -w -i] [login]",
+  "desc": {
+   "fr": "Mot de passe",
+   "dar": "Mot de passe",
+   "en": "Password"
+  }
+ },
+ {
+  "id": "r-us-9",
+  "chapter": "users",
+  "syntax": "chage -l · -d 0 · -M -m -W -I · -E DATE",
+  "desc": {
+   "fr": "Expiration",
+   "dar": "Expiration",
+   "en": "Aging"
+  },
+  "example": "chage -M 90 -W 7 alice"
+ },
+ {
+  "id": "r-us-10",
+  "chapter": "users",
+  "syntax": "groupadd [-g GID] [-r] [-f] G",
+  "desc": {
+   "fr": "Créer un groupe",
+   "dar": "Dir groupe",
+   "en": "Create a group"
+  }
+ },
+ {
+  "id": "r-us-11",
+  "chapter": "users",
+  "syntax": "groupmod -n NOUVEAU -g GID G · groupdel G",
+  "desc": {
+   "fr": "Modifier / supprimer un groupe",
+   "dar": "Beddel / mse7",
+   "en": "Modify / delete group"
+  }
+ },
+ {
+  "id": "r-us-12",
+  "chapter": "users",
+  "syntax": "gpasswd -a U G · -d U G · -M U1,U2 G · -A U G",
+  "desc": {
+   "fr": "Membres et admins",
+   "dar": "Membres",
+   "en": "Members and admins"
+  }
+ },
+ {
+  "id": "r-us-13",
+  "chapter": "users",
+  "syntax": "whoami · who · groups · id [-u -g -Gn] [login]",
+  "desc": {
+   "fr": "Identité",
+   "dar": "Identité",
+   "en": "Identity"
+  }
+ },
+ {
+  "id": "r-us-14",
+  "chapter": "users",
+  "syntax": "vipw [-s] · vigr [-s]",
+  "desc": {
+   "fr": "Éditer avec verrouillage",
+   "dar": "Beddel",
+   "en": "Edit with locking"
+  }
+ },
+ {
+  "id": "r-us-15",
+  "chapter": "users",
+  "syntax": "chmod [-R] 755|u+x,g-w,o= f",
+  "desc": {
+   "fr": "Droits",
+   "dar": "Droits",
+   "en": "Permissions"
+  }
+ },
+ {
+  "id": "r-us-16",
+  "chapter": "users",
+  "syntax": "chown [-R] user[:group] f · chgrp [-R] G f",
+  "desc": {
+   "fr": "Propriétaire / groupe",
+   "dar": "Mol / groupe",
+   "en": "Owner / group"
+  }
+ },
+ {
+  "id": "r-us-17",
+  "chapter": "users",
+  "syntax": "r=4 w=2 x=1",
+  "desc": {
+   "fr": "755 rwxr-xr-x · 644 rw-r--r-- · 600 rw------- · 764 rwxrw-r--",
+   "dar": "Octal",
+   "en": "Octal"
+  }
+ },
+ {
+  "id": "r-us-18",
+  "chapter": "users",
+  "syntax": "visudo [-c] [-f /etc/sudoers.d/x]",
+  "desc": {
+   "fr": "Éditer / vérifier sudoers",
+   "dar": "sudoers",
+   "en": "Edit / check sudoers"
+  }
+ },
+ {
+  "id": "r-us-19",
+  "chapter": "users",
+  "syntax": "user hôte=(cible) [NOPASSWD:] cmds",
+  "desc": {
+   "fr": "Règle sudoers",
+   "dar": "Règle",
+   "en": "sudoers rule"
+  },
+  "example": "tp1 ALL=(root) /usr/sbin/reboot"
+ },
+ {
+  "id": "r-us-20",
+  "chapter": "users",
+  "syntax": "%wheel ALL=(ALL) ALL",
+  "desc": {
+   "fr": "Groupe wheel = sudo complet",
+   "dar": "wheel",
+   "en": "wheel = full sudo"
+  }
+ },
+ {
+  "id": "r-us-21",
+  "chapter": "users",
+  "syntax": "sudo -l · sudo -i · sudo -u U cmd",
+  "desc": {
+   "fr": "Mes droits · shell root · autre utilisateur",
+   "dar": "sudo",
+   "en": "My rights · root shell · as user"
+  }
+ },
+ {
+  "id": "r-us-22",
+  "chapter": "users",
+  "syntax": "su [-] [login] · su -c \"cmd\" login · exit",
+  "desc": {
+   "fr": "Changer d'utilisateur",
+   "dar": "Beddel user",
+   "en": "Switch user"
+  }
+ }
+]

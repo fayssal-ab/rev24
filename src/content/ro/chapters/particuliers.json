@@ -1,0 +1,54 @@
+{
+ "id": "particuliers",
+ "module": "ro",
+ "order": 4,
+ "title": {
+  "fr": "Graphes particuliers et coloration",
+  "dar": "Graphes khassin",
+  "en": "Special graphs and colouring"
+ },
+ "summary": {
+  "fr": "Simple, complet, planaire, biparti, coloration.",
+  "dar": "Planaire, biparti, couleurs.",
+  "en": "Planar, bipartite, colouring."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Graphes particuliers",
+    "dar": "Graphes khassin",
+    "en": "Special graphs"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Planaire** : arêtes qui ne se croisent qu'aux sommets. **Biparti** : S = S1 ∪ S2, aucune arête à l'intérieur de S1 ni de S2 (⇔ pas de cycle impair). **Coloration** : sommets adjacents de couleurs différentes ; **χ(G)** = minimum de couleurs ; planaire → χ ≤ 4. Algorithme glouton **Welsh-Powell** : trier par degré décroissant, donner la plus petite couleur libre.",
+    "dar": "Planaire, biparti, χ, Welsh-Powell.",
+    "en": "Planar, bipartite, χ, Welsh–Powell greedy colouring."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-30",
+    "ro-31",
+    "ro-33"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Biparti ⇔ pas de cycle impair.",
+   "dar": "Biparti.",
+   "en": "Bipartite ⇔ no odd cycle."
+  },
+  {
+   "fr": "Planaire → χ ≤ 4.",
+   "dar": "χ ≤ 4.",
+   "en": "Planar → χ ≤ 4."
+  }
+ ]
+}

@@ -1,0 +1,212 @@
+[
+ {
+  "id": "fc-dv-1",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Écosystème de visualisation ?",
+   "dar": "Écosystème ?",
+   "en": "Ecosystem?"
+  },
+  "back": {
+   "fr": "Matplotlib (fondamental), pandas (débutant), Seaborn/Altair (intermédiaire), Plotly/Bokeh (avancé).",
+   "dar": "Matplotlib, pandas, Seaborn, Plotly.",
+   "en": "Matplotlib, pandas, Seaborn, Plotly."
+  }
+ },
+ {
+  "id": "fc-dv-2",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Style recommandé ?",
+   "dar": "Style ?",
+   "en": "Recommended style?"
+  },
+  "back": {
+   "fr": "Orienté objet : `fig, ax = plt.subplots()`.",
+   "dar": "OO.",
+   "en": "OO: `fig, ax = plt.subplots()`."
+  }
+ },
+ {
+  "id": "fc-dv-3",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "plt.title en OO ?",
+   "dar": "plt.title ?",
+   "en": "plt.title in OO?"
+  },
+  "back": {
+   "fr": "`ax.set_title()` (set_xlabel, set_xlim…)",
+   "dar": "ax.set_title",
+   "en": "`ax.set_title()`"
+  }
+ },
+ {
+  "id": "fc-dv-4",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "scatter : c, s, alpha, cmap ?",
+   "dar": "scatter ?",
+   "en": "scatter params?"
+  },
+  "back": {
+   "fr": "couleur, taille, transparence, palette (+ fig.colorbar).",
+   "dar": "Lwan, taille, transparence, palette.",
+   "en": "colour, size, transparency, colormap."
+  }
+ },
+ {
+  "id": "fc-dv-5",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "hist : bins, density, cumulative ?",
+   "dar": "hist ?",
+   "en": "hist params?"
+  },
+  "back": {
+   "fr": "nombre de classes, normaliser, cumuler.",
+   "dar": "Classes, normaliser, cumuler.",
+   "en": "bins, normalise, cumulate."
+  }
+ },
+ {
+  "id": "fc-dv-6",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "pie : autopct, explode, startangle ?",
+   "dar": "pie ?",
+   "en": "pie params?"
+  },
+  "back": {
+   "fr": "pourcentages, détacher, angle de départ.",
+   "dar": "%, fr9, angle.",
+   "en": "percentages, explode, start angle."
+  }
+ },
+ {
+  "id": "fc-dv-7",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Grille 2 × 2 ?",
+   "dar": "Grille ?",
+   "en": "2 × 2 grid?"
+  },
+  "back": {
+   "fr": "`fig, axs = plt.subplots(2, 2)` + `fig.tight_layout()`",
+   "dar": "subplots(2,2)",
+   "en": "`subplots(2, 2)` + `tight_layout()`"
+  }
+ },
+ {
+  "id": "fc-dv-8",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Règles d'or ?",
+   "dar": "Qawa3id ?",
+   "en": "Golden rules?"
+  },
+  "back": {
+   "fr": "Simplicité, clarté, précision, couleurs, honnêteté.",
+   "dar": "Basata, wodo7, di9a, alwan, amana.",
+   "en": "Simplicity, clarity, accuracy, colours, honesty."
+  }
+ },
+ {
+  "id": "fc-dv-9",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Comparer des catégories ?",
+   "dar": "Mo9arana ?",
+   "en": "Compare categories?"
+  },
+  "back": {
+   "fr": "Barres (radar) ; éviter camembert et 3D.",
+   "dar": "Barres.",
+   "en": "Bars; avoid pie/3D."
+  }
+ },
+ {
+  "id": "fc-dv-10",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Distribution · composition · relation · évolution ?",
+   "dar": "Choix ?",
+   "en": "Chart choice?"
+  },
+  "back": {
+   "fr": "histogramme/boîte/violon · empilé/treemap · scatter/heatmap · ligne/aire",
+   "dar": "Choix.",
+   "en": "hist/box/violin · stacked/treemap · scatter/heatmap · line/area"
+  }
+ },
+ {
+  "id": "fc-dv-11",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Workflow ?",
+   "dar": "Workflow ?",
+   "en": "Workflow?"
+  },
+  "back": {
+   "fr": "Exploration → analyse → présentation → validation → export.",
+   "dar": "Workflow.",
+   "en": "Exploration → analysis → presentation → validation → export."
+  }
+ },
+ {
+  "id": "fc-dv-12",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Export haute qualité ?",
+   "dar": "Export ?",
+   "en": "Export?"
+  },
+  "back": {
+   "fr": "`fig.savefig(\"f.png\", dpi=300)` (PNG, PDF, SVG, JPG).",
+   "dar": "savefig dpi=300.",
+   "en": "`savefig(dpi=300)`."
+  }
+ },
+ {
+  "id": "fc-dv-13",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Heatmap de corrélation Seaborn ?",
+   "dar": "Heatmap ?",
+   "en": "Correlation heatmap?"
+  },
+  "back": {
+   "fr": "`sns.heatmap(df.corr(), annot=True, cmap=\"coolwarm\", mask=np.triu(...))`",
+   "dar": "heatmap corr.",
+   "en": "heatmap of corr."
+  }
+ },
+ {
+  "id": "fc-dv-14",
+  "module": "data",
+  "chapter": "visu",
+  "front": {
+   "fr": "Datasets Seaborn du cours ?",
+   "dar": "Datasets ?",
+   "en": "Course datasets?"
+  },
+  "back": {
+   "fr": "tips, iris, fmri (`sns.load_dataset`).",
+   "dar": "tips, iris, fmri.",
+   "en": "tips, iris, fmri."
+  }
+ }
+]

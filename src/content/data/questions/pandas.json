@@ -1,0 +1,1214 @@
+[
+ {
+  "id": "dp-01",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Comment installer pandas ?",
+   "dar": "Kifach tinstalli pandas ?",
+   "en": "How to install pandas?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "pip install pandas",
+     "dar": "pip install pandas",
+     "en": "pip install pandas"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "import pandas",
+     "dar": "import pandas",
+     "en": "import pandas"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "pd.install()",
+     "dar": "pd.install()",
+     "en": "pd.install()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "dnf install pandas",
+     "dar": "dnf install pandas",
+     "en": "dnf install pandas"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`pip install pandas` (gestionnaire de paquets Python), puis `import pandas as pd` dans le code.",
+   "dar": "`pip install pandas` w `import pandas as pd`.",
+   "en": "`pip install pandas`, then `import pandas as pd`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "`import` charge une bibliothèque déjà installée.",
+    "dar": "import ≠ install.",
+    "en": "`import` loads an installed library."
+   },
+   "c": {
+    "fr": "Cette fonction n'existe pas.",
+    "dar": "Ma kaynach.",
+    "en": "Does not exist."
+   },
+   "d": {
+    "fr": "On installe les bibliothèques Python avec pip.",
+    "dar": "pip.",
+    "en": "Use pip."
+   }
+  },
+  "tags": [
+   "pandas"
+  ]
+ },
+ {
+  "id": "dp-02",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence entre **Series** et **DataFrame** ?",
+   "dar": "Series vs DataFrame ?",
+   "en": "Series vs DataFrame?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Series = 1D (une colonne indexée), DataFrame = 2D (tableau de colonnes)",
+     "dar": "Series 1D, DataFrame 2D",
+     "en": "Series 1D, DataFrame 2D"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Series = 2D, DataFrame = 1D",
+     "dar": "L3eks",
+     "en": "Reversed"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Series ne contient que du texte",
+     "dar": "Ghir texte",
+     "en": "Series holds text only"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Series** : structure à **une dimension** (valeurs + index). **DataFrame** : **deux dimensions** (lignes × colonnes), chaque colonne est une Series.",
+   "dar": "Series 1D ; DataFrame 2D.",
+   "en": "**Series** 1D; **DataFrame** 2D, each column is a Series."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Inversé.",
+    "dar": "L3eks.",
+    "en": "Reversed."
+   },
+   "c": {
+    "fr": "Elles diffèrent par la dimension.",
+    "dar": "Dimension.",
+    "en": "Different dimension."
+   },
+   "d": {
+    "fr": "Une Series peut contenir des nombres.",
+    "dar": "Ar9am.",
+    "en": "It can hold numbers."
+   }
+  },
+  "tags": [
+   "pandas"
+  ]
+ },
+ {
+  "id": "dp-03",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`notes_decim.csv` utilise `;` comme séparateur et la virgule comme séparateur décimal. Quel appel est correct ?",
+   "dar": "notes_decim.csv : ?",
+   "en": "Which call reads notes_decim.csv?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "pd.read_csv(\"notes_decim.csv\", sep=\";\", decimal=\",\")",
+     "dar": "pd.read_csv(\"notes_decim.csv\", sep=\";\", decimal=\",\")",
+     "en": "pd.read_csv(\"notes_decim.csv\", sep=\";\", decimal=\",\")"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "pd.read_csv(\"notes_decim.csv\", sep=\",\", decimal=\";\")",
+     "dar": "pd.read_csv(\"notes_decim.csv\", sep=\",\", decimal=\";\")",
+     "en": "pd.read_csv(\"notes_decim.csv\", sep=\",\", decimal=\";\")"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "pd.read_csv(\"notes_decim.csv\", delimiter=\",\")",
+     "dar": "pd.read_csv(\"notes_decim.csv\", delimiter=\",\")",
+     "en": "pd.read_csv(\"notes_decim.csv\", delimiter=\",\")"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "pd.read_excel(\"notes_decim.csv\")",
+     "dar": "pd.read_excel(\"notes_decim.csv\")",
+     "en": "pd.read_excel(\"notes_decim.csv\")"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`sep=\";\"` découpe les colonnes, `decimal=\",\"` convertit « 12,5 » en 12.5 (float).",
+   "dar": "sep=\";\" w decimal=\",\".",
+   "en": "`sep=\";\"` and `decimal=\",\"`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Paramètres inversés.",
+    "dar": "L3eks.",
+    "en": "Swapped."
+   },
+   "c": {
+    "fr": "Le séparateur est `;`, pas `,` ; et le décimal n'est pas géré.",
+    "dar": "Ghalat.",
+    "en": "Wrong separator."
+   },
+   "d": {
+    "fr": "C'est un CSV, pas un classeur Excel.",
+    "dar": "CSV.",
+    "en": "It is a CSV."
+   }
+  },
+  "tags": [
+   "read_csv"
+  ],
+  "code": "pd.read_csv(url + \"notes_decim.csv\", ...)"
+ },
+ {
+  "id": "dp-04",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Le fichier `notes_h.csv` n'a **pas** de ligne d'en-tête. Que faut-il ajouter ?",
+   "dar": "Bla en-tête : ?",
+   "en": "No header line: add?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "header=None",
+     "dar": "header=None",
+     "en": "header=None"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "header=0",
+     "dar": "header=0",
+     "en": "header=0"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "skiprows=1",
+     "dar": "skiprows=1",
+     "en": "skiprows=1"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "index_col=0",
+     "dar": "index_col=0",
+     "en": "index_col=0"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Par défaut pandas prend la 1re ligne comme noms de colonnes ; `header=None` indique qu'il n'y en a pas (colonnes 0, 1, 2…).",
+   "dar": "`header=None`.",
+   "en": "`header=None` (columns numbered 0, 1, 2…)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "header=0 est le défaut : la 1re ligne de données deviendrait l'en-tête.",
+    "dar": "Défaut.",
+    "en": "Default: first row becomes header."
+   },
+   "c": {
+    "fr": "skiprows supprime une ligne de données !",
+    "dar": "Kaymse7 ster.",
+    "en": "Drops a data row!"
+   },
+   "d": {
+    "fr": "index_col choisit la colonne d'index.",
+    "dar": "Index.",
+    "en": "Picks the index column."
+   }
+  },
+  "tags": [
+   "read_csv"
+  ]
+ },
+ {
+  "id": "dp-05",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "`notes_h_s.csv` commence par une ligne de commentaire, puis les données sans en-tête. Appel correct ?",
+   "dar": "Commentaire + bla en-tête ?",
+   "en": "Comment line + no header?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "pd.read_csv(\"notes_h_s.csv\", header=None, skiprows=1)",
+     "dar": "pd.read_csv(\"notes_h_s.csv\", header=None, skiprows=1)",
+     "en": "pd.read_csv(\"notes_h_s.csv\", header=None, skiprows=1)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "pd.read_csv(\"notes_h_s.csv\", skiprows=1)",
+     "dar": "pd.read_csv(\"notes_h_s.csv\", skiprows=1)",
+     "en": "pd.read_csv(\"notes_h_s.csv\", skiprows=1)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "pd.read_csv(\"notes_h_s.csv\", header=None)",
+     "dar": "pd.read_csv(\"notes_h_s.csv\", header=None)",
+     "en": "pd.read_csv(\"notes_h_s.csv\", header=None)"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "pd.read_csv(\"notes_h_s.csv\", header=1)",
+     "dar": "pd.read_csv(\"notes_h_s.csv\", header=1)",
+     "en": "pd.read_csv(\"notes_h_s.csv\", header=1)"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`skiprows=1` saute le commentaire, `header=None` évite de prendre la 1re ligne de données comme en-tête.",
+   "dar": "skiprows=1 + header=None.",
+   "en": "`skiprows=1` + `header=None`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Sans header=None, la 1re ligne de données devient l'en-tête.",
+    "dar": "Na9es header=None.",
+    "en": "First data row becomes the header."
+   },
+   "c": {
+    "fr": "Le commentaire serait lu comme donnée.",
+    "dar": "Commentaire = data.",
+    "en": "Comment read as data."
+   },
+   "d": {
+    "fr": "header=1 prend la 2e ligne comme en-tête.",
+    "dar": "Ster tani en-tête.",
+    "en": "Second line as header."
+   }
+  },
+  "tags": [
+   "read_csv"
+  ]
+ },
+ {
+  "id": "dp-06",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Lire la **première feuille** de `notes.xlsx` ?",
+   "dar": "Feuille lowla ?",
+   "en": "Read the **first sheet**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "pd.read_excel(\"notes.xlsx\", sheet_name=0)",
+     "dar": "pd.read_excel(\"notes.xlsx\", sheet_name=0)",
+     "en": "pd.read_excel(\"notes.xlsx\", sheet_name=0)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "pd.read_csv(\"notes.xlsx\")",
+     "dar": "pd.read_csv(\"notes.xlsx\")",
+     "en": "pd.read_csv(\"notes.xlsx\")"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "pd.read_excel(\"notes.xlsx\", sheet_name=1)",
+     "dar": "pd.read_excel(\"notes.xlsx\", sheet_name=1)",
+     "en": "pd.read_excel(\"notes.xlsx\", sheet_name=1)"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "pd.read_excel(\"notes.xlsx\", sheet_name=None)",
+     "dar": "pd.read_excel(\"notes.xlsx\", sheet_name=None)",
+     "en": "pd.read_excel(\"notes.xlsx\", sheet_name=None)"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`sheet_name=0` = 1re feuille (défaut), un **nom** (`\"notes_h_s\"`) = cette feuille, `None` = **toutes** dans un dictionnaire.",
+   "dar": "0 = lowla ; nom ; None = kolchi.",
+   "en": "0 first; name; None = all (dict)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "read_csv ne lit pas les .xlsx.",
+    "dar": "CSV.",
+    "en": "Not for xlsx."
+   },
+   "c": {
+    "fr": "1 = 2e feuille.",
+    "dar": "1 = tanya.",
+    "en": "1 = second."
+   },
+   "d": {
+    "fr": "None renvoie un dict de toutes les feuilles.",
+    "dar": "Dict.",
+    "en": "Returns a dict."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-07",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que renvoie `pd.read_excel(\"notes.xlsx\", sheet_name=None)` ?",
+   "dar": "sheet_name=None ?",
+   "en": "sheet_name=None returns?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Un dictionnaire {nom de feuille: DataFrame}",
+     "dar": "Dict",
+     "en": "A dict {sheet name: DataFrame}"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La première feuille",
+     "dar": "Lowla",
+     "en": "The first sheet"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Une erreur",
+     "dar": "Erreur",
+     "en": "An error"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Une Series",
+     "dar": "Series",
+     "en": "A Series"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`None` = toutes les feuilles, dans un **dict** dont les clés sont les noms des feuilles.",
+   "dar": "Dict.",
+   "en": "A **dict** of all sheets."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est sheet_name=0.",
+    "dar": "0.",
+    "en": "That is 0."
+   },
+   "c": {
+    "fr": "Valeur permise.",
+    "dar": "Permise.",
+    "en": "Allowed."
+   },
+   "d": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-08",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Exporter `df` en CSV standard **sans** la colonne d'index ?",
+   "dar": "Export bla index ?",
+   "en": "Export without index?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "df.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)",
+     "dar": "df.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)",
+     "en": "df.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "df.to_csv(\"notes_export.csv\")",
+     "dar": "df.to_csv(\"notes_export.csv\")",
+     "en": "df.to_csv(\"notes_export.csv\")"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "pd.to_csv(df, \"notes_export.csv\")",
+     "dar": "pd.to_csv(df, \"notes_export.csv\")",
+     "en": "pd.to_csv(df, \"notes_export.csv\")"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "df.to_excel(\"notes_export.csv\", index=False)",
+     "dar": "df.to_excel(\"notes_export.csv\", index=False)",
+     "en": "df.to_excel(\"notes_export.csv\", index=False)"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`index=False` empêche l'écriture de l'index 0, 1, 2… ; `sep` et `decimal` fixent le format.",
+   "dar": "`index=False`.",
+   "en": "`index=False` drops the index column."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Écrit l'index en 1re colonne.",
+    "dar": "Index kaytktb.",
+    "en": "Writes the index."
+   },
+   "c": {
+    "fr": "to_csv est une méthode du DataFrame.",
+    "dar": "Méthode.",
+    "en": "It is a DataFrame method."
+   },
+   "d": {
+    "fr": "to_excel produit un xlsx.",
+    "dar": "xlsx.",
+    "en": "Writes xlsx."
+   }
+  },
+  "tags": [
+   "to_csv"
+  ]
+ },
+ {
+  "id": "dp-09",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Lesquelles sont de vraies fonctions de lecture pandas ?",
+   "dar": "Fonctions read_ s7a7 ?",
+   "en": "Which are real pandas readers?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "read_csv",
+     "dar": "read_csv",
+     "en": "read_csv"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "read_json",
+     "dar": "read_json",
+     "en": "read_json"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "read_parquet",
+     "dar": "read_parquet",
+     "en": "read_parquet"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "read_sql",
+     "dar": "read_sql",
+     "en": "read_sql"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "read_word",
+     "dar": "read_word",
+     "en": "read_word"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "read_html",
+     "dar": "read_html",
+     "en": "read_html"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "f"
+  ],
+  "explanation": {
+   "fr": "csv, fwf, clipboard, excel, hdf, html, json, feather, orc, parquet, pickle, sas, spss, sql, sql_table, stata, xml.",
+   "dar": "read_* liste.",
+   "en": "Full read_* list."
+  },
+  "wrongExplanations": {
+   "e": {
+    "fr": "Pas de read_word (Word n'est pas un format de données tabulaires).",
+    "dar": "Ma kaynch.",
+    "en": "No read_word."
+   }
+  },
+  "tags": [
+   "read"
+  ]
+ },
+ {
+  "id": "dp-10",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel paramètre de `read_excel` choisit les colonnes à lire ?",
+   "dar": "Ach men paramètre colonnes ?",
+   "en": "Which read_excel parameter selects columns?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "usecols",
+     "dar": "usecols",
+     "en": "usecols"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "names",
+     "dar": "names",
+     "en": "names"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "index_col",
+     "dar": "index_col",
+     "en": "index_col"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "nrows",
+     "dar": "nrows",
+     "en": "nrows"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`usecols` : colonnes à lire ; `names` : noms à donner ; `index_col` : colonne d'index ; `nrows` : nombre de lignes.",
+   "dar": "usecols.",
+   "en": "`usecols`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "names renomme.",
+    "dar": "Smiyat.",
+    "en": "names renames."
+   },
+   "c": {
+    "fr": "index_col choisit l'index.",
+    "dar": "Index.",
+    "en": "Index column."
+   },
+   "d": {
+    "fr": "nrows limite les lignes.",
+    "dar": "Lignes.",
+    "en": "Rows limit."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-11",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `na_values=[\"-\", \"NA\"]` ?",
+   "dar": "na_values ?",
+   "en": "What does na_values do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Traite « - » et « NA » comme valeurs manquantes (NaN)",
+     "dar": "Kay3tabrhom NaN",
+     "en": "Treats \"-\" and \"NA\" as missing (NaN)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Supprime ces lignes",
+     "dar": "Kaymse7",
+     "en": "Deletes those rows"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Remplace NaN par « - »",
+     "dar": "L3eks",
+     "en": "Replaces NaN with \"-\""
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Renomme des colonnes",
+     "dar": "Smiyat",
+     "en": "Renames columns"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`na_values` liste les chaînes à interpréter comme manquantes : utile au **nettoyage** (sinon la colonne devient de type object).",
+   "dar": "NaN.",
+   "en": "Strings read as NaN."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Rien n'est supprimé à la lecture.",
+    "dar": "Ma kaymse7ch.",
+    "en": "Nothing deleted."
+   },
+   "c": {
+    "fr": "C'est l'inverse (fillna à l'écriture).",
+    "dar": "L3eks.",
+    "en": "Opposite."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Walou.",
+    "en": "Unrelated."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-12",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Sans `decimal=\",\"`, la colonne `note1` de `notes_decim.csv` (lue avec `sep=\";\"`) aura le type…",
+   "dar": "Bla decimal : type ?",
+   "en": "Without decimal=\",\": dtype?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "object (texte)",
+     "dar": "object (texte)",
+     "en": "object (texte)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "float64",
+     "dar": "float64",
+     "en": "float64"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "int64",
+     "dar": "int64",
+     "en": "int64"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "bool",
+     "dar": "bool",
+     "en": "bool"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "« 12,5 » n'est pas un nombre pour pandas sans `decimal=\",\"` → la colonne reste **object** et les calculs (moyenne) échouent.",
+   "dar": "object.",
+   "en": "**object**: computations fail."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Seulement avec decimal=\",\".",
+    "dar": "B decimal.",
+    "en": "Only with decimal."
+   },
+   "c": {
+    "fr": "Il y a des décimales.",
+    "dar": "Décimales.",
+    "en": "There are decimals."
+   },
+   "d": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "read_csv",
+   "nettoyage"
+  ]
+ },
+ {
+  "id": "dp-13",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel paramètre fixe le moteur de lecture d'un .xlsx ?",
+   "dar": "Moteur xlsx ?",
+   "en": "Engine parameter?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "engine=\"openpyxl\"",
+     "dar": "engine=\"openpyxl\"",
+     "en": "engine=\"openpyxl\""
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "driver=\"xlsx\"",
+     "dar": "driver=\"xlsx\"",
+     "en": "driver=\"xlsx\""
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "mode=\"excel\"",
+     "dar": "mode=\"excel\"",
+     "en": "mode=\"excel\""
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "reader=\"xl\"",
+     "dar": "reader=\"xl\"",
+     "en": "reader=\"xl\""
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`engine` choisit la bibliothèque (openpyxl pour .xlsx).",
+   "dar": "engine.",
+   "en": "`engine`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynch.",
+    "en": "Does not exist."
+   },
+   "c": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynch.",
+    "en": "Does not exist."
+   },
+   "d": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynch.",
+    "en": "Does not exist."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-14",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "`notes_h.csv` contient 4 lignes de données sans en-tête. Combien de lignes aura le DataFrame lu **sans** `header=None` ?",
+   "dar": "Ch7al ster bla header=None ?",
+   "en": "Rows read without header=None?"
+  },
+  "answer": 3,
+  "tolerance": 0,
+  "explanation": {
+   "fr": "La 1re ligne de données devient l'en-tête : il reste **3** lignes (une donnée perdue).",
+   "dar": "3.",
+   "en": "**3** (one row lost)."
+  },
+  "wrongExplanations": {
+   "4": {
+    "fr": "Ce serait avec header=None.",
+    "dar": "B header=None.",
+    "en": "With header=None."
+   }
+  },
+  "tags": [
+   "read_csv"
+  ]
+ },
+ {
+  "id": "dp-15",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "`notes_h_s.csv` : 1 ligne de commentaire + 4 lignes de données. Lu avec `header=None, skiprows=1`, combien de lignes ?",
+   "dar": "Ch7al ster ?",
+   "en": "How many rows?"
+  },
+  "answer": 4,
+  "tolerance": 0,
+  "explanation": {
+   "fr": "Le commentaire est sauté, aucune ligne prise comme en-tête → **4**.",
+   "dar": "4.",
+   "en": "**4**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "read_csv"
+  ]
+ },
+ {
+  "id": "dp-16",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi utiliser `url + \"notes.csv\"` dans le corrigé de la Feuille N°1 ?",
+   "dar": "3lach url + \"notes.csv\" ?",
+   "en": "Why url + \"notes.csv\"?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "read_csv peut lire directement un fichier depuis une URL HTTP",
+     "dar": "read_csv y9ra mn URL",
+     "en": "read_csv reads directly from an HTTP URL"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Pour télécharger pandas",
+     "dar": "Telecharger pandas",
+     "en": "To download pandas"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "C'est obligatoire",
+     "dar": "Darouri",
+     "en": "It is mandatory"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Pour convertir en Excel",
+     "dar": "Excel",
+     "en": "To convert to Excel"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "pandas accepte un chemin local **ou une URL** : la concaténation de chaînes construit l'adresse complète.",
+   "dar": "URL.",
+   "en": "Paths or URLs are accepted."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "pandas est déjà installé.",
+    "dar": "Installé.",
+    "en": "Already installed."
+   },
+   "c": {
+    "fr": "Un chemin local marche aussi.",
+    "dar": "Local.",
+    "en": "Local paths work."
+   },
+   "d": {
+    "fr": "Aucune conversion.",
+    "dar": "Walou.",
+    "en": "No conversion."
+   }
+  },
+  "tags": [
+   "read_csv"
+  ]
+ },
+ {
+  "id": "dp-17",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Pour `pd.read_excel(url + \"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1)`, quelles affirmations sont vraies ?",
+   "dar": "read_excel : chnou s7i7 ?",
+   "en": "Which statements are true?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "On lit la feuille nommée notes_h_s",
+     "dar": "Feuille notes_h_s",
+     "en": "Reads sheet notes_h_s"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La 1re ligne de la feuille est ignorée",
+     "dar": "Ster lowel tzad",
+     "en": "First line skipped"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Toutes les feuilles sont lues",
+     "dar": "Kolchi",
+     "en": "All sheets read"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le résultat est un DataFrame",
+     "dar": "DataFrame",
+     "en": "Result is a DataFrame"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "d"
+  ],
+  "explanation": {
+   "fr": "Un nom de feuille → un seul DataFrame ; `skiprows=1` saute la ligne de commentaire.",
+   "dar": "Feuille wa7da.",
+   "en": "One sheet → one DataFrame."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Seulement avec sheet_name=None.",
+    "dar": "None.",
+    "en": "Only with None."
+   }
+  },
+  "tags": [
+   "read_excel"
+  ]
+ },
+ {
+  "id": "dp-18",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle méthode écrit un DataFrame en JSON ?",
+   "dar": "JSON ?",
+   "en": "Write JSON?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "df.to_json()",
+     "dar": "df.to_json()",
+     "en": "df.to_json()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "pd.write_json(df)",
+     "dar": "pd.write_json(df)",
+     "en": "pd.write_json(df)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "df.save_json()",
+     "dar": "df.save_json()",
+     "en": "df.save_json()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "df.json()",
+     "dar": "df.json()",
+     "en": "df.json()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Écriture : `to_csv`, `to_excel`, `to_json`.",
+   "dar": "to_json.",
+   "en": "`to_json`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynach.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynach.",
+    "en": "No."
+   },
+   "d": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynach.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "to_csv"
+  ]
+ }
+]

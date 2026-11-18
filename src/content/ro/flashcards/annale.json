@@ -1,0 +1,17 @@
+[
+ {
+  "id": "fc-ro-22",
+  "module": "ro",
+  "chapter": "annale",
+  "front": {
+   "fr": "Contrôle : degrés 4,3,3,2,1 ?",
+   "dar": "Degrés 4,3,3,2,1 ?",
+   "en": "Degrees 4,3,3,2,1?"
+  },
+  "back": {
+   "fr": "Impossible : somme 13 impaire.",
+   "dar": "Impossible.",
+   "en": "Impossible: odd sum."
+  }
+ }
+]

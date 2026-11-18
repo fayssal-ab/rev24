@@ -1,0 +1,114 @@
+[
+ {
+  "id": "or-x-4",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diagnostiquer ORA-65096",
+   "dar": "ORA-65096",
+   "en": "Diagnose ORA-65096"
+  },
+  "statement": {
+   "fr": "Connecté `sqlplus / as sysdba`, `CREATE USER ETUDIANT IDENTIFIED BY etudiant123;` renvoie ORA-65096. Explique et propose deux solutions.",
+   "dar": "Fesser w 2 7oloul.",
+   "en": "Explain and give two fixes."
+  },
+  "hints": [
+   {
+    "fr": "Regarde SHOW CON_NAME.",
+    "dar": "SHOW CON_NAME.",
+    "en": "Check SHOW CON_NAME."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Cause",
+     "dar": "Sabab",
+     "en": "Cause"
+    },
+    "body": {
+     "fr": "On est dans CDB$ROOT : un utilisateur y est commun et doit commencer par C##.",
+     "dar": "ROOT → C##.",
+     "en": "In CDB$ROOT users are common → C##."
+    }
+   },
+   {
+    "title": {
+     "fr": "Solutions",
+     "dar": "7oloul",
+     "en": "Fixes"
+    },
+    "body": {
+     "fr": "1) Utilisateur local dans la PDB. 2) Utilisateur commun C##ETUDIANT.",
+     "dar": "PDB wla C##.",
+     "en": "Local in PDB, or common C##."
+    },
+    "code": "ALTER SESSION SET CONTAINER=ORCLPDB;\nCREATE USER ETUDIANT IDENTIFIED BY etudiant123;\nGRANT CREATE SESSION TO ETUDIANT;\n-- ou : CREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Passer dans ORCLPDB (utilisateur local) ou nommer l'utilisateur C##ETUDIANT.",
+   "dar": "ORCLPDB wla C##.",
+   "en": "Switch to ORCLPDB or use C##."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier GRANT CREATE SESSION (ORA-01045).",
+    "dar": "ORA-01045.",
+    "en": "Forgetting CREATE SESSION."
+   }
+  ]
+ },
+ {
+  "id": "or-x-5",
+  "module": "oracle",
+  "chapter": "architecture",
+  "difficulty": 2,
+  "title": {
+   "fr": "Installer le schéma HR",
+   "dar": "Installer HR",
+   "en": "Install the HR schema"
+  },
+  "statement": {
+   "fr": "Donne la suite de commandes pour installer HR dans ORCLPDB et lister ses tables.",
+   "dar": "Commandes HR.",
+   "en": "Commands to install HR and list its tables."
+  },
+  "hints": [
+   {
+    "fr": "Le script doit tourner dans la PDB.",
+    "dar": "F PDB.",
+    "en": "Run it in the PDB."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Mot de passe root, tablespace USERS, temporaire TEMP.",
+     "dar": "root, USERS, TEMP.",
+     "en": "Password root, USERS, TEMP."
+    },
+    "code": "sqlplus / as sysdba\nALTER SESSION SET CONTAINER=ORCLPDB;\n@C:\\oracle_samples\\db-sample-schemas\\human_resources\\hr_install.sql\nALTER USER hr ACCOUNT UNLOCK;\nCONNECT hr/root@localhost:1521/ORCLPDB\nSELECT table_name FROM user_tables;"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "7 tables : COUNTRIES, DEPARTMENTS, EMPLOYEES, JOBS, JOB_HISTORY, LOCATIONS, REGIONS.",
+   "dar": "7 tables.",
+   "en": "7 tables."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Chemin avec espaces ou accents.",
+    "dar": "Espaces f chemin.",
+    "en": "Path with spaces/accents."
+   }
+  ]
+ }
+]

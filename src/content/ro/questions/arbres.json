@@ -1,0 +1,303 @@
+[
+ {
+  "id": "ro-40",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un **arbre** est un graphe…",
+   "dar": "Arbre ?",
+   "en": "A **tree** is a graph that is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "connexe et sans cycle",
+     "dar": "connexe bla cycle",
+     "en": "connected and acyclic"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "complet",
+     "dar": "complet",
+     "en": "complete"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "biparti",
+     "dar": "biparti",
+     "en": "bipartite"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Arbre = non orienté, connexe, sans cycle ⇔ connexe avec n−1 arêtes ⇔ sans cycle avec n−1 arêtes.",
+   "dar": "Connexe bla cycle, n−1.",
+   "en": "Connected, acyclic, n−1 edges."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Un arbre est biparti, mais ce n'est pas la définition.",
+    "dar": "Machi ta3rif.",
+    "en": "Not the definition."
+   }
+  },
+  "tags": [
+   "arbres"
+  ]
+ },
+ {
+  "id": "ro-41",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre d'arêtes d'un arbre à 12 sommets ?",
+   "dar": "Arbre 12 sommets ?",
+   "en": "Edges of a 12-vertex tree?"
+  },
+  "answer": 11,
+  "tolerance": 0,
+  "compute": {
+   "fn": "arith",
+   "args": [
+    11
+   ]
+  },
+  "explanation": {
+   "fr": "n − 1 = 11.",
+   "dar": "11.",
+   "en": "11."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "arbres"
+  ]
+ },
+ {
+  "id": "ro-42",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Nombre d'arbres couvrants de K5 (Cayley) ?",
+   "dar": "Cayley K5 ?",
+   "en": "Spanning trees of K5?"
+  },
+  "answer": 125,
+  "tolerance": 0,
+  "compute": {
+   "fn": "cayley",
+   "args": [
+    5
+   ]
+  },
+  "explanation": {
+   "fr": "n^(n−2) = 5³ = **125**.",
+   "dar": "125.",
+   "en": "**125**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "arbres"
+  ]
+ },
+ {
+  "id": "ro-43",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle : coût de l'arbre couvrant minimal du réseau A–F (milliers DH) ?",
+   "dar": "Coût ACM ?",
+   "en": "Minimum spanning tree cost?"
+  },
+  "answer": 15,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gMst",
+   "args": [
+    "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3"
+   ]
+  },
+  "explanation": {
+   "fr": "Kruskal : A–F 2, C–D 2, A–D 3, (C–F rejeté), E–F 3, B–D 5 → **15**.",
+   "dar": "15.",
+   "en": "**15**."
+  },
+  "wrongExplanations": {
+   "13": {
+    "fr": "Tu as gardé C–F qui crée un cycle.",
+    "dar": "C–F cycle.",
+    "en": "C–F creates a cycle."
+   }
+  },
+  "tags": [
+   "kruskal",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-44",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Exercice du cours (9 sommets, Prim depuis 1) : poids de l'arbre ?",
+   "dar": "Prim 9 sommets ?",
+   "en": "Prim, 9 vertices: weight?"
+  },
+  "answer": 37,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gPrim",
+   "args": [
+    "1 2 3 4 5 6 7 8 9 | 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10",
+    "1"
+   ]
+  },
+  "explanation": {
+   "fr": "Arbre {1,2},{1,3},{4,5},{5,8},{5,6},{6,7},{8,9},{3,9} → **37**.",
+   "dar": "37.",
+   "en": "**37**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "prim"
+  ]
+ },
+ {
+  "id": "ro-45",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Kruskal : quand rejette-t-on une arête ?",
+   "dar": "Kruskal : imta nrfdou arête ?",
+   "en": "Kruskal rejects an edge when…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "quand elle crée un cycle",
+     "dar": "cycle",
+     "en": "it creates a cycle"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "quand son poids est pair",
+     "dar": "pair",
+     "en": "its weight is even"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "jamais",
+     "dar": "jamais",
+     "en": "never"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Arêtes triées par poids croissant ; on ajoute si pas de cycle ; on s'arrête à n−1 arêtes.",
+   "dar": "Tri, bla cycle, n−1.",
+   "en": "Sort, skip cycles, stop at n−1."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Si : cycle → ✗.",
+    "dar": "Cycle → ✗.",
+    "en": "Cycle → ✗."
+   }
+  },
+  "tags": [
+   "kruskal"
+  ]
+ },
+ {
+  "id": "ro-46",
+  "module": "ro",
+  "chapter": "arbres",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Prim, à chaque étape, ajoute…",
+   "dar": "Prim kayzid… ?",
+   "en": "Prim adds at each step…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "l'arête minimale reliant l'arbre à un sommet hors de l'arbre",
+     "dar": "arête min mn arbre l bra",
+     "en": "the cheapest edge from the tree to outside"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "l'arête minimale du graphe",
+     "dar": "arête min f graphe",
+     "en": "the cheapest edge overall"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "un sommet au hasard",
+     "dar": "zher",
+     "en": "a random vertex"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Prim fait grandir **un seul arbre** depuis un sommet ; Kruskal prend la plus petite arête globale (forêt).",
+   "dar": "Prim : arbre wa7ed.",
+   "en": "Prim grows one tree; Kruskal picks globally."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça c'est Kruskal.",
+    "dar": "Kruskal.",
+    "en": "That is Kruskal."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "prim"
+  ]
+ }
+]

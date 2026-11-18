@@ -1,0 +1,47 @@
+[
+ {
+  "id": "fc-ro-5",
+  "module": "ro",
+  "chapter": "matrices",
+  "front": {
+   "fr": "Matrice d'adjacence ?",
+   "dar": "Matrice ?",
+   "en": "Adjacency matrix?"
+  },
+  "back": {
+   "fr": "mij = nombre d'arêtes (arcs i→j) ; symétrique si non orienté.",
+   "dar": "mij = arêtes.",
+   "en": "mij = number of edges (arcs i→j)."
+  }
+ },
+ {
+  "id": "fc-ro-6",
+  "module": "ro",
+  "chapter": "matrices",
+  "front": {
+   "fr": "M^k ?",
+   "dar": "M^k ?",
+   "en": "M^k?"
+  },
+  "back": {
+   "fr": "(M^k)ij = chemins de longueur k ; trace = circuits de longueur k.",
+   "dar": "Chemins / circuits.",
+   "en": "Walks of length k; trace = closed walks."
+  }
+ },
+ {
+  "id": "fc-ro-7",
+  "module": "ro",
+  "chapter": "matrices",
+  "front": {
+   "fr": "Matrice sommet-arc ?",
+   "dar": "Sommet-arc ?",
+   "en": "Incidence matrix?"
+  },
+  "back": {
+   "fr": "1 sortant, −1 entrant, 0 sinon.",
+   "dar": "1, −1, 0.",
+   "en": "1 out, −1 in, 0 otherwise."
+  }
+ }
+]

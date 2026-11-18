@@ -1,0 +1,1718 @@
+[
+ {
+  "id": "dt-01",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Qu'est-ce qu'une hypothèse **paramétrique** ?",
+   "dar": "Chnou hiya hypothèse **paramétrique** ?",
+   "en": "What is a **parametric** hypothesis?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Une hypothèse sur la valeur d'un paramètre (µ, σ, p…) d'une loi supposée connue",
+     "dar": "Hypothèse 3la qimat paramètre (µ, σ, p…)",
+     "en": "A hypothesis about a parameter value (µ, σ, p…) of an assumed law"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Une hypothèse sur la forme de la loi",
+     "dar": "3la chkl dyal loi",
+     "en": "A hypothesis on the shape of the law"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Une hypothèse toujours vraie",
+     "dar": "Dima s7i7a",
+     "en": "Always true"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Une hypothèse sans données",
+     "dar": "Bla data",
+     "en": "Without data"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Paramétrique : porte sur un **paramètre** (ex. H0 : µ = 40). Non paramétrique : porte sur la **loi** elle-même (ex. « X suit une loi normale », test du χ² d'ajustement).",
+   "dar": "Paramétrique = paramètre ; non paramétrique = loi.",
+   "en": "Parametric: about a **parameter** (H0: µ = 40). Non-parametric: about the **law** itself (χ² fit test)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça, c'est non paramétrique.",
+    "dar": "Hadi non paramétrique.",
+    "en": "That is non-parametric."
+   },
+   "c": {
+    "fr": "Une hypothèse est testée, pas supposée vraie.",
+    "dar": "Kantestiwha.",
+    "en": "It is tested, not assumed true."
+   },
+   "d": {
+    "fr": "Un test utilise un échantillon.",
+    "dar": "Test b 3ayyina.",
+    "en": "Tests use a sample."
+   }
+  },
+  "tags": [
+   "tests",
+   "hypotheses"
+  ]
+ },
+ {
+  "id": "dt-02",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pour tester si une machine reste réglée sur µ0 = 40 cm, quelle est l'hypothèse nulle H0 ?",
+   "dar": "H0 l machine µ0 = 40 ?",
+   "en": "H0 to test a machine set at µ0 = 40 cm?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "µ ≠ 40",
+     "dar": "µ ≠ 40",
+     "en": "µ ≠ 40"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "µ = 40",
+     "dar": "µ = 40",
+     "en": "µ = 40"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "µ > 40",
+     "dar": "µ > 40",
+     "en": "µ > 40"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "x̄ = 40",
+     "dar": "x̄ = 40",
+     "en": "x̄ = 40"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "H0 contient toujours l'**égalité** (statu quo, valeur de référence) ; H1 est l'alternative : µ ≠ 40 (bilatéral), µ < 40 (gauche), µ > 40 (droite).",
+   "dar": "H0 = **égalité**.",
+   "en": "H0 always holds the **equality**; H1 is the alternative."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est H1 bilatérale.",
+    "dar": "H1.",
+    "en": "That is two-sided H1."
+   },
+   "c": {
+    "fr": "C'est une H1 unilatérale droite.",
+    "dar": "H1 droite.",
+    "en": "Right-tailed H1."
+   },
+   "d": {
+    "fr": "Les hypothèses portent sur µ (population), pas sur x̄ (échantillon).",
+    "dar": "µ machi x̄.",
+    "en": "Hypotheses concern µ, not x̄."
+   }
+  },
+  "tags": [
+   "tests",
+   "hypotheses"
+  ]
+ },
+ {
+  "id": "dt-03",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Le risque **α** est…",
+   "dar": "**α** howa…",
+   "en": "The risk **α** is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "La probabilité de rejeter H0 alors qu'elle est vraie (erreur de 1re espèce)",
+     "dar": "Nrfdou H0 w hiya s7i7a",
+     "en": "P(reject H0 | H0 true) — type I error"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La probabilité de ne pas rejeter H0 alors qu'elle est fausse",
+     "dar": "Ma nrfdouch H0 w hiya ghalta",
+     "en": "P(keep H0 | H0 false)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La puissance du test",
+     "dar": "Puissance",
+     "en": "The power"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "La P-value",
+     "dar": "P-value",
+     "en": "The P-value"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**α** = P(rejeter H0 | H0 vraie) = erreur de **1re espèce** (fixée à l'avance, ex. 5 %). **β** = P(ne pas rejeter H0 | H0 fausse) = 2e espèce. **Puissance = 1 − β**.",
+   "dar": "α = naw3 1 ; β = naw3 2 ; puissance = 1 − β.",
+   "en": "**α** = type I; **β** = type II; **power = 1 − β**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est β.",
+    "dar": "β.",
+    "en": "That is β."
+   },
+   "c": {
+    "fr": "La puissance est 1 − β.",
+    "dar": "1 − β.",
+    "en": "Power is 1 − β."
+   },
+   "d": {
+    "fr": "La P-value se calcule à partir des données ; α est fixé avant.",
+    "dar": "PV mn data ; α 9bel.",
+    "en": "P-value comes from data; α is fixed beforehand."
+   }
+  },
+  "tags": [
+   "tests",
+   "erreurs"
+  ]
+ },
+ {
+  "id": "dt-04",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Exemple du procès (H0 = « l'accusé est innocent »). Quelles affirmations sont justes ?",
+   "dar": "Lm7akama : chnou s7i7 ?",
+   "en": "Trial example (H0 = innocent). Which are right?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Condamner un innocent = erreur de 1re espèce (α)",
+     "dar": "Bri2 t7kem = α",
+     "en": "Convicting an innocent = type I (α)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Acquitter un coupable = erreur de 2e espèce (β)",
+     "dar": "Moujrim khrej = β",
+     "en": "Acquitting a guilty person = type II (β)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Acquitter faute de preuves prouve l'innocence",
+     "dar": "Kaybayen bara2a",
+     "en": "Acquittal proves innocence"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Condamner un coupable : probabilité 1 − β",
+     "dar": "Moujrim t7kem : 1 − β",
+     "en": "Convicting a guilty person: probability 1 − β"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "d"
+  ],
+  "explanation": {
+   "fr": "Ne pas rejeter H0 est une conclusion **faible** : on n'a pas prouvé H0, on manque de preuves contre elle. Rejeter H0 est une conclusion **forte** (risque α contrôlé).",
+   "dar": "Ma nrfdouch = conclusion d3ifa.",
+   "en": "Not rejecting H0 is a **weak** conclusion; rejecting is **strong**."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Faux : « non coupable » ≠ « innocent prouvé » ; conclusion faible.",
+    "dar": "Ghalat : conclusion d3ifa.",
+    "en": "False: weak conclusion."
+   }
+  },
+  "tags": [
+   "tests",
+   "erreurs"
+  ]
+ },
+ {
+  "id": "dt-05",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "À taille d'échantillon fixée, que se passe-t-il si on diminue α ?",
+   "dar": "Ila n9essna α ?",
+   "en": "At fixed n, what if α decreases?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "β diminue aussi",
+     "dar": "β tn9es",
+     "en": "β decreases too"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "β augmente (la puissance baisse)",
+     "dar": "β tzid",
+     "en": "β increases (power drops)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "β ne change pas",
+     "dar": "β ma tbeddel",
+     "en": "β unchanged"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "n augmente",
+     "dar": "n tzid",
+     "en": "n increases"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "La région critique rétrécit : on rejette moins souvent, donc on rate plus souvent un H0 faux → **β augmente**. Seul un **n plus grand** réduit les deux.",
+   "dar": "β tzid ; ghir n kbir.",
+   "en": "Smaller critical region → **β increases**. Only larger **n** reduces both."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Les deux erreurs varient en sens inverse.",
+    "dar": "L3eks.",
+    "en": "They move in opposite directions."
+   },
+   "c": {
+    "fr": "Si, β change.",
+    "dar": "Kaytbeddel.",
+    "en": "β does change."
+   },
+   "d": {
+    "fr": "n est choisi par l'expérimentateur.",
+    "dar": "n kankhtarouh.",
+    "en": "n is chosen by us."
+   }
+  },
+  "tags": [
+   "tests",
+   "erreurs"
+  ]
+ },
+ {
+  "id": "dt-06",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre les étapes d'un test d'hypothèse.",
+   "dar": "Rttab étapes dyal test.",
+   "en": "Order the steps of a hypothesis test."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Formuler H0 et H1",
+     "dar": "H0 w H1",
+     "en": "State H0 and H1"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Choisir le risque α",
+     "dar": "Khtar α",
+     "en": "Choose α"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Choisir la statistique de test et sa loi sous H0",
+     "dar": "Statistique w loi dyalha",
+     "en": "Choose the test statistic and its law under H0"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Déterminer la région critique",
+     "dar": "Région critique",
+     "en": "Find the critical region"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Calculer la statistique sur l'échantillon",
+     "dar": "7seb statistique",
+     "en": "Compute the statistic"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "Décider : rejeter ou non H0",
+     "dar": "Qarar",
+     "en": "Decide"
+    }
+   },
+   {
+    "id": "s6",
+    "text": {
+     "fr": "Conclure dans le contexte",
+     "dar": "Conclusion",
+     "en": "Conclude in context"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f",
+   "s6"
+  ],
+  "explanation": {
+   "fr": "Les 7 étapes du cours : hypothèses → α → statistique (Z0 si σ connu, T0 sinon) → région critique → calcul → décision → conclusion en français dans le contexte.",
+   "dar": "7 étapes.",
+   "en": "The 7 steps of the course."
+  },
+  "tags": [
+   "tests"
+  ]
+ },
+ {
+  "id": "dt-07",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "**Fusée** : µ0 = 40, σ = 2, n = 25, x̄ = 41,25. Calcule Z0.",
+   "dar": "**Fusée** : 7seb Z0.",
+   "en": "**Rocket**: compute Z0."
+  },
+  "answer": 3.125,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "zStat",
+   "args": [
+    41.25,
+    40,
+    2,
+    25
+   ]
+  },
+  "explanation": {
+   "fr": "$Z_0 = \\frac{\\bar x - \\mu_0}{\\sigma/\\sqrt n} = \\frac{41{,}25 - 40}{2/5} = \\frac{1{,}25}{0{,}4} = 3{,}125$",
+   "dar": "$Z_0 = 1{,}25/0{,}4 = 3{,}125$",
+   "en": "$Z_0 = 1.25/0.4 = 3.125$"
+  },
+  "wrongExplanations": {
+   "0.625": {
+    "fr": "Tu as divisé par σ sans √n : l'écart-type de x̄ est σ/√n = 0,4.",
+    "dar": "Na9es √n.",
+    "en": "Forgot √n."
+   },
+   "1.25": {
+    "fr": "C'est x̄ − µ0, il faut encore diviser par σ/√n.",
+    "dar": "Khass t9sem.",
+    "en": "Still divide by σ/√n."
+   }
+  },
+  "tags": [
+   "tests",
+   "z"
+  ]
+ },
+ {
+  "id": "dt-08",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Fusée (bilatéral, α = 5 %) : Z0 = 3,125. Décision ?",
+   "dar": "Fusée : qarar ?",
+   "en": "Rocket: decision?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "On rejette H0 car |Z0| > 1,96",
+     "dar": "Nrfdou H0 : |Z0| > 1,96",
+     "en": "Reject H0: |Z0| > 1.96"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "On ne rejette pas H0",
+     "dar": "Ma nrfdouch",
+     "en": "Do not reject"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "On rejette H0 car Z0 > 1,645",
+     "dar": "Z0 > 1,645",
+     "en": "Reject: Z0 > 1.645"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Impossible de conclure",
+     "dar": "Ma ymkench",
+     "en": "Cannot conclude"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Bilatéral à 5 % : région critique |Z0| > z(0,025) = **1,96**. 3,125 > 1,96 → **rejet de H0** : la machine est déréglée (PV ≈ 0,0018 < 0,05).",
+   "dar": "|Z0| > 1,96 → rejet.",
+   "en": "Two-sided 5 %: |Z0| > 1.96 → **reject** (PV ≈ 0.0018)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "3,125 est dans la région critique.",
+    "dar": "F région critique.",
+    "en": "3.125 is in the critical region."
+   },
+   "c": {
+    "fr": "1,645 est le seuil unilatéral ; ici le test est bilatéral (α/2 de chaque côté).",
+    "dar": "1,645 unilatéral.",
+    "en": "1.645 is one-sided; this test is two-sided."
+   },
+   "d": {
+    "fr": "On peut conclure.",
+    "dar": "Momkin.",
+    "en": "We can conclude."
+   }
+  },
+  "tags": [
+   "tests",
+   "z"
+  ]
+ },
+ {
+  "id": "dt-09",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Fusée : calcule la **P-value** bilatérale associée à Z0 = 3,125 (4 décimales).",
+   "dar": "PV dyal Z0 = 3,125 ?",
+   "en": "Two-sided P-value for Z0 = 3.125 (4 decimals)?"
+  },
+  "answer": 0.0018,
+  "tolerance": 0.0002,
+  "compute": {
+   "fn": "pValueZ",
+   "args": [
+    3.125,
+    "two"
+   ]
+  },
+  "explanation": {
+   "fr": "$PV = 2(1 - \\Phi(|Z_0|)) = 2(1 - \\Phi(3{,}125)) \\approx 0{,}0018$. PV < α = 0,05 → rejet.",
+   "dar": "$PV = 2(1-\\Phi(3{,}125))$.",
+   "en": "$PV = 2(1-\\Phi(3.125)) \\approx 0.0018$."
+  },
+  "wrongExplanations": {
+   "0.0009": {
+    "fr": "Tu as oublié le facteur 2 du test bilatéral.",
+    "dar": "Na9es ×2.",
+    "en": "Missing ×2 for two-sided."
+   }
+  },
+  "tags": [
+   "tests",
+   "pvalue"
+  ]
+ },
+ {
+  "id": "dt-10",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Comprimés : calcule x̄ (0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80).",
+   "dar": "Comprimés : x̄ ?",
+   "en": "Tablets: x̄?"
+  },
+  "answer": 0.831,
+  "tolerance": 0.0005,
+  "compute": {
+   "fn": "mean",
+   "args": [
+    [
+     0.81,
+     0.84,
+     0.83,
+     0.8,
+     0.85,
+     0.86,
+     0.85,
+     0.83,
+     0.84,
+     0.8
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "Somme = 8,31 ; n = 10 → x̄ = **0,831**.",
+   "dar": "8,31 / 10.",
+   "en": "Sum 8.31 / 10 = **0.831**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "descriptive"
+  ]
+ },
+ {
+  "id": "dt-11",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Comprimés : calcule l'écart-type corrigé S (diviseur n − 1), 4 décimales.",
+   "dar": "Comprimés : S ?",
+   "en": "Tablets: corrected S (n − 1)?"
+  },
+  "answer": 0.0213,
+  "tolerance": 0.0002,
+  "compute": {
+   "fn": "sampleSd",
+   "args": [
+    [
+     0.81,
+     0.84,
+     0.83,
+     0.8,
+     0.85,
+     0.86,
+     0.85,
+     0.83,
+     0.84,
+     0.8
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "$S = \\sqrt{\\frac{1}{n-1}\\sum (x_i-\\bar x)^2} = \\sqrt{0{,}00409/9} \\approx 0{,}0213$.",
+   "dar": "$S \\approx 0{,}0213$.",
+   "en": "$S \\approx 0.0213$."
+  },
+  "wrongExplanations": {
+   "0.0202": {
+    "fr": "Diviseur n au lieu de n − 1 (écart-type de l'échantillon non corrigé).",
+    "dar": "n f blast n − 1.",
+    "en": "Divided by n instead of n − 1."
+   }
+  },
+  "tags": [
+   "tests",
+   "descriptive"
+  ]
+ },
+ {
+  "id": "dt-12",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Comprimés : µ0 = 0,83. Calcule T0 (3 décimales).",
+   "dar": "Comprimés : T0 ?",
+   "en": "Tablets: T0?"
+  },
+  "answer": 0.148,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "tStatData",
+   "args": [
+    [
+     0.81,
+     0.84,
+     0.83,
+     0.8,
+     0.85,
+     0.86,
+     0.85,
+     0.83,
+     0.84,
+     0.8
+    ],
+    0.83
+   ]
+  },
+  "explanation": {
+   "fr": "$T_0 = \\frac{\\bar x - \\mu_0}{S/\\sqrt n} = \\frac{0{,}001}{0{,}0213/\\sqrt{10}} \\approx 0{,}148$",
+   "dar": "$T_0 \\approx 0{,}148$.",
+   "en": "$T_0 \\approx 0.148$."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "student"
+  ]
+ },
+ {
+  "id": "dt-13",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Comprimés, seuil de confiance 98 % bilatéral : valeur critique t(0,01 ; 9) ?",
+   "dar": "t(0,01 ; 9) ?",
+   "en": "Critical value t(0.01; 9)?"
+  },
+  "answer": 2.821,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "tCrit",
+   "args": [
+    0.01,
+    9
+   ]
+  },
+  "explanation": {
+   "fr": "Bilatéral à α = 2 % → α/2 = 0,01 dans chaque queue, ν = n − 1 = 9 → **2,821**.",
+   "dar": "α/2 = 0,01, ν = 9.",
+   "en": "α/2 = 0.01, ν = 9 → **2.821**."
+  },
+  "wrongExplanations": {
+   "2.398": {
+    "fr": "C'est t(0,02 ; 9) : tu as oublié de diviser α par 2.",
+    "dar": "Na9es α/2.",
+    "en": "Forgot α/2."
+   },
+   "2.764": {
+    "fr": "ν = 10 au lieu de 9.",
+    "dar": "ν = n − 1.",
+    "en": "ν should be n − 1 = 9."
+   }
+  },
+  "tags": [
+   "tests",
+   "student"
+  ]
+ },
+ {
+  "id": "dt-14",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Comprimés : T0 ≈ 0,148 et t(0,01 ; 9) = 2,821. Conclusion ?",
+   "dar": "Conclusion ?",
+   "en": "Conclusion?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "On rejette H0",
+     "dar": "Nrfdou",
+     "en": "Reject H0"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "On ne rejette pas H0 : rien ne prouve que le poids moyen diffère de 0,83",
+     "dar": "Ma nrfdouch",
+     "en": "Do not reject H0"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "On accepte H1",
+     "dar": "H1",
+     "en": "Accept H1"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le test est invalide",
+     "dar": "Ghalat",
+     "en": "Invalid test"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "|T0| = 0,148 < 2,821 → **on ne rejette pas H0** (conclusion faible : les données sont compatibles avec µ = 0,83).",
+   "dar": "|T0| < 2,821.",
+   "en": "|T0| < 2.821 → **do not reject H0**."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "T0 est loin de la région critique.",
+    "dar": "Machi f région.",
+    "en": "Far from the critical region."
+   },
+   "c": {
+    "fr": "On n'« accepte » jamais H1 sans rejeter H0.",
+    "dar": "Ma kayn-ch.",
+    "en": "H1 only follows a rejection."
+   },
+   "d": {
+    "fr": "Valide (σ inconnu → Student).",
+    "dar": "Valide.",
+    "en": "Valid (Student)."
+   }
+  },
+  "tags": [
+   "tests",
+   "student"
+  ]
+ },
+ {
+  "id": "dt-15",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "**Glycémie** : µ0 = 1, σ = 0,1, n = 9, x̄ = 1,12. Calcule Z0.",
+   "dar": "**Glycémie** : Z0 ?",
+   "en": "**Blood sugar**: Z0?"
+  },
+  "answer": 3.6,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "zStat",
+   "args": [
+    1.12,
+    1,
+    0.1,
+    9
+   ]
+  },
+  "explanation": {
+   "fr": "$Z_0 = \\frac{1{,}12 - 1}{0{,}1/3} = \\frac{0{,}12}{0{,}0333} = 3{,}6$",
+   "dar": "$Z_0 = 3{,}6$.",
+   "en": "$Z_0 = 3.6$."
+  },
+  "wrongExplanations": {
+   "1.2": {
+    "fr": "Oubli de √9 = 3.",
+    "dar": "Na9es √n.",
+    "en": "Forgot √9."
+   }
+  },
+  "tags": [
+   "tests",
+   "z"
+  ]
+ },
+ {
+  "id": "dt-16",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Glycémie : test **unilatéral gauche** (H1 : µ < 1), α = 5 %, Z0 = 3,6. Décision ?",
+   "dar": "Glycémie gauche, Z0 = 3,6 ?",
+   "en": "Left-tailed, Z0 = 3.6. Decision?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Rejet de H0 car |Z0| > 1,645",
+     "dar": "Rejet : |Z0| > 1,645",
+     "en": "Reject: |Z0| > 1.645"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "On ne rejette pas H0 : la région critique est Z0 < −1,645",
+     "dar": "Ma nrfdouch : Z0 < −1,645",
+     "en": "Do not reject: region is Z0 < −1.645"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Rejet de H0 car Z0 > 1,96",
+     "dar": "Rejet",
+     "en": "Reject: Z0 > 1.96"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Impossible",
+     "dar": "Ma ymkench",
+     "en": "Impossible"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Unilatéral gauche : on ne rejette que pour des valeurs **très négatives** (Z0 < −1,645). Z0 = +3,6 va dans le sens **opposé** à H1 → on ne rejette pas H0 (PV ≈ 0,9998).",
+   "dar": "Z0 positif → ma nrfdouch.",
+   "en": "Left-tailed rejects only very negative Z0. +3.6 → **do not reject** (PV ≈ 0.9998)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Piège : on ne prend pas la valeur absolue en unilatéral.",
+    "dar": "Fekh : bla valeur absolue.",
+    "en": "Trap: no absolute value in one-sided tests."
+   },
+   "c": {
+    "fr": "1,96 est le seuil bilatéral et le signe compte.",
+    "dar": "Bilatéral.",
+    "en": "1.96 is two-sided."
+   },
+   "d": {
+    "fr": "On peut conclure.",
+    "dar": "Momkin.",
+    "en": "We can."
+   }
+  },
+  "tags": [
+   "tests",
+   "z",
+   "unilateral"
+  ]
+ },
+ {
+  "id": "dt-17",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Glycémie (unilatéral gauche) : P-value pour Z0 = 3,6 ?",
+   "dar": "PV gauche Z0 = 3,6 ?",
+   "en": "Left-tailed P-value for Z0 = 3.6?"
+  },
+  "answer": 0.9998,
+  "tolerance": 0.0002,
+  "compute": {
+   "fn": "pValueZ",
+   "args": [
+    3.6,
+    "left"
+   ]
+  },
+  "explanation": {
+   "fr": "Gauche : $PV = \\Phi(Z_0) = \\Phi(3{,}6) \\approx 0{,}9998$ — énorme, aucune raison de rejeter H0.",
+   "dar": "$PV = \\Phi(3{,}6)$.",
+   "en": "Left: $PV = \\Phi(3.6) \\approx 0.9998$."
+  },
+  "wrongExplanations": {
+   "0.0002": {
+    "fr": "C'est 1 − Φ(3,6), la P-value d'un test **droit**.",
+    "dar": "Hadi droite.",
+    "en": "That is the right-tailed PV."
+   }
+  },
+  "tags": [
+   "tests",
+   "pvalue"
+  ]
+ },
+ {
+  "id": "dt-18",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Valeur de z telle que P(Z > z) = 0,025 ?",
+   "dar": "z : P(Z > z) = 0,025 ?",
+   "en": "z such that P(Z > z) = 0.025?"
+  },
+  "answer": 1.96,
+  "tolerance": 0.005,
+  "compute": {
+   "fn": "zCrit",
+   "args": [
+    0.025
+   ]
+  },
+  "explanation": {
+   "fr": "z(0,025) = **1,96** (seuil bilatéral à 5 %). Table : 1,282 (10 %), 1,645 (5 %), 1,96 (2,5 %), 2,054 (2 %), 2,326 (1 %), 2,576 (0,5 %).",
+   "dar": "1,96.",
+   "en": "**1.96**."
+  },
+  "wrongExplanations": {
+   "1.645": {
+    "fr": "C'est z(0,05).",
+    "dar": "z(0,05).",
+    "en": "That is z(0.05)."
+   }
+  },
+  "tags": [
+   "tests",
+   "tables"
+  ]
+ },
+ {
+  "id": "dt-19",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Valeur de z(0,05) (unilatéral 5 %) ?",
+   "dar": "z(0,05) ?",
+   "en": "z(0.05)?"
+  },
+  "answer": 1.645,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "zCrit",
+   "args": [
+    0.05
+   ]
+  },
+  "explanation": {
+   "fr": "z(0,05) = **1,645**.",
+   "dar": "1,645.",
+   "en": "**1.645**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "tables"
+  ]
+ },
+ {
+  "id": "dt-20",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Calcule Φ(1,96).",
+   "dar": "Φ(1,96) ?",
+   "en": "Φ(1.96)?"
+  },
+  "answer": 0.975,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "phi",
+   "args": [
+    1.96
+   ]
+  },
+  "explanation": {
+   "fr": "Φ(1,96) = P(Z ≤ 1,96) = **0,975**, d'où 2,5 % dans chaque queue.",
+   "dar": "0,975.",
+   "en": "**0.975**."
+  },
+  "wrongExplanations": {
+   "0.025": {
+    "fr": "C'est 1 − Φ(1,96).",
+    "dar": "1 − Φ.",
+    "en": "That is 1 − Φ."
+   }
+  },
+  "tags": [
+   "tests",
+   "tables"
+  ]
+ },
+ {
+  "id": "dt-21",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "P(Z > 2,5) pour Z ~ N(0, 1) ?",
+   "dar": "P(Z > 2,5) ?",
+   "en": "P(Z > 2.5)?"
+  },
+  "answer": 0.0062,
+  "tolerance": 0.0003,
+  "compute": {
+   "fn": "pValueZ",
+   "args": [
+    2.5,
+    "right"
+   ]
+  },
+  "explanation": {
+   "fr": "$1 - \\Phi(2{,}5) \\approx 0{,}0062$.",
+   "dar": "$1-\\Phi(2{,}5)$.",
+   "en": "$1-\\Phi(2.5)$."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "tables"
+  ]
+ },
+ {
+  "id": "dt-22",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quand utilise-t-on la statistique T0 (Student) plutôt que Z0 ?",
+   "dar": "Imta T0 ?",
+   "en": "When T0 rather than Z0?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Quand σ est inconnu et estimé par S",
+     "dar": "σ ma m3roufch",
+     "en": "When σ is unknown (estimated by S)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La loi de T0 est Student à n − 1 ddl",
+     "dar": "Student n − 1",
+     "en": "T0 ~ Student with n − 1 df"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Quand σ est connu",
+     "dar": "σ m3rouf",
+     "en": "When σ is known"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Uniquement pour n > 1000",
+     "dar": "n > 1000",
+     "en": "Only for n > 1000"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "σ connu → $Z_0 \\sim \\mathcal N(0,1)$ ; σ inconnu → $T_0 = \\frac{\\bar x - \\mu_0}{S/\\sqrt n} \\sim t(n-1)$ (S avec n − 1).",
+   "dar": "σ connu → Z ; inconnu → T.",
+   "en": "σ known → Z; unknown → T ~ t(n−1)."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "σ connu → Z0.",
+    "dar": "Z0.",
+    "en": "Then Z0."
+   },
+   "d": {
+    "fr": "Pour n grand Student ≈ normale, mais c'est σ inconnu qui justifie T0.",
+    "dar": "Machi n.",
+    "en": "It is σ unknown that matters."
+   }
+  },
+  "tags": [
+   "tests",
+   "student"
+  ]
+ },
+ {
+  "id": "dt-23",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Règle de décision avec la P-value ?",
+   "dar": "Qa3ida b PV ?",
+   "en": "Decision rule with the P-value?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Rejeter H0 si PV > α",
+     "dar": "PV > α",
+     "en": "Reject if PV > α"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Rejeter H0 si α > PV",
+     "dar": "α > PV",
+     "en": "Reject if α > PV"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Rejeter H0 si PV > 0,5",
+     "dar": "PV > 0,5",
+     "en": "Reject if PV > 0.5"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "La PV ne sert pas à décider",
+     "dar": "Ma kat3awench",
+     "en": "PV is not used"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "La P-value est la probabilité, sous H0, d'obtenir une statistique au moins aussi extrême que celle observée. **On rejette H0 si α > PV.**",
+   "dar": "**Rejet ila α > PV.**",
+   "en": "**Reject H0 if α > PV.**"
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est l'inverse.",
+    "dar": "L3eks.",
+    "en": "Opposite."
+   },
+   "c": {
+    "fr": "Le seuil est α, pas 0,5.",
+    "dar": "α.",
+    "en": "Threshold is α."
+   },
+   "d": {
+    "fr": "Elle sert justement à décider.",
+    "dar": "Kat3awen.",
+    "en": "It is used to decide."
+   }
+  },
+  "tags": [
+   "tests",
+   "pvalue"
+  ]
+ },
+ {
+  "id": "dt-24",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "χ² normalité (n = 50, x̄ = 1,168, S = 0,591) : calcule p1 = P(X < 0,5).",
+   "dar": "p1 = P(X < 0,5) ?",
+   "en": "p1 = P(X < 0.5)?"
+  },
+  "answer": 0.129,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "chi2Normal",
+   "args": [
+    [
+     0.5,
+     1,
+     1.5
+    ],
+    [
+     2,
+     23,
+     17,
+     8
+    ],
+    1.168,
+    0.591,
+    0.05
+   ],
+   "pick": "p.0"
+  },
+  "explanation": {
+   "fr": "$p_1 = \\Phi\\left(\\frac{0{,}5 - 1{,}168}{0{,}591}\\right) = \\Phi(-1{,}130) \\approx 0{,}129$",
+   "dar": "$\\Phi(-1{,}13) \\approx 0{,}129$.",
+   "en": "$\\Phi(-1.130) \\approx 0.129$."
+  },
+  "wrongExplanations": {
+   "0.871": {
+    "fr": "C'est 1 − p1 : le signe de la borne centrée est négatif.",
+    "dar": "1 − p1.",
+    "en": "That is 1 − p1."
+   }
+  },
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-25",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "χ² normalité : E1 = n·p1 (2 décimales) ?",
+   "dar": "E1 ?",
+   "en": "E1?"
+  },
+  "answer": 6.46,
+  "tolerance": 0.02,
+  "compute": {
+   "fn": "chi2Normal",
+   "args": [
+    [
+     0.5,
+     1,
+     1.5
+    ],
+    [
+     2,
+     23,
+     17,
+     8
+    ],
+    1.168,
+    0.591,
+    0.05
+   ],
+   "pick": "E.0"
+  },
+  "explanation": {
+   "fr": "E1 = 50 × 0,1292 ≈ **6,46** (> 5, pas besoin de regrouper).",
+   "dar": "50 × 0,129.",
+   "en": "50 × 0.1292 ≈ **6.46**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-26",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "χ² normalité : valeur de la statistique χ² (2 décimales) ?",
+   "dar": "χ² ?",
+   "en": "χ² statistic?"
+  },
+  "answer": 13.74,
+  "tolerance": 0.02,
+  "compute": {
+   "fn": "chi2Normal",
+   "args": [
+    [
+     0.5,
+     1,
+     1.5
+    ],
+    [
+     2,
+     23,
+     17,
+     8
+    ],
+    1.168,
+    0.591,
+    0.05
+   ],
+   "pick": "chi2"
+  },
+  "explanation": {
+   "fr": "$\\chi^2 = \\frac{(2-6{,}46)^2}{6{,}46} + \\frac{(23-12{,}95)^2}{12{,}95} + \\frac{(17-16{,}24)^2}{16{,}24} + \\frac{(8-14{,}36)^2}{14{,}36} \\approx 13{,}74$",
+   "dar": "$\\chi^2 \\approx 13{,}74$.",
+   "en": "$\\chi^2 \\approx 13.74$."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-27",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "χ² normalité : 4 classes, µ et σ estimés. Nombre de degrés de liberté ν ?",
+   "dar": "ν ?",
+   "en": "Degrees of freedom ν?"
+  },
+  "answer": 1,
+  "tolerance": 0,
+  "compute": {
+   "fn": "chi2Normal",
+   "args": [
+    [
+     0.5,
+     1,
+     1.5
+    ],
+    [
+     2,
+     23,
+     17,
+     8
+    ],
+    1.168,
+    0.591,
+    0.05
+   ],
+   "pick": "nu"
+  },
+  "explanation": {
+   "fr": "ν = k − p − 1 = 4 − 2 − 1 = **1** (p = 2 paramètres estimés : µ et σ).",
+   "dar": "4 − 2 − 1.",
+   "en": "4 − 2 − 1 = **1**."
+  },
+  "wrongExplanations": {
+   "2": {
+    "fr": "k − p, il faut encore retirer 1.",
+    "dar": "Khass −1.",
+    "en": "Still subtract 1."
+   },
+   "3": {
+    "fr": "Tu as oublié de retirer les 2 paramètres estimés.",
+    "dar": "Na9es p.",
+    "en": "Forgot the 2 estimated parameters."
+   }
+  },
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-28",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Seuil χ²(0,05 ; 2) ?",
+   "dar": "χ²(0,05 ; 2) ?",
+   "en": "χ²(0.05; 2)?"
+  },
+  "answer": 5.991,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "chi2Crit",
+   "args": [
+    0.05,
+    2
+   ]
+  },
+  "explanation": {
+   "fr": "Table : **3,841** (ν = 1), **5,991** (ν = 2), **7,815** (ν = 3).",
+   "dar": "5,991.",
+   "en": "**5.991**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "tables"
+  ]
+ },
+ {
+  "id": "dt-29",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "χ² normalité : χ² ≈ 13,74 > 3,841. Conclusion ?",
+   "dar": "Conclusion ?",
+   "en": "Conclusion?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "On rejette l'hypothèse de normalité au risque 5 %",
+     "dar": "Nrfdou normalité",
+     "en": "Reject normality at 5 %"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les données sont normales",
+     "dar": "Normales",
+     "en": "Data are normal"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "On ne peut pas conclure car E1 > 5",
+     "dar": "E1 > 5",
+     "en": "Cannot conclude since E1 > 5"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "On rejette au risque 50 %",
+     "dar": "50 %",
+     "en": "Reject at 50 %"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "13,74 > χ²(0,05 ; 1) = 3,841 → **rejet de H0** : la variable ne suit pas une loi normale (au risque 5 %).",
+   "dar": "Rejet.",
+   "en": "Reject H0: not normal."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce serait si χ² < seuil (et ce serait une conclusion faible).",
+    "dar": "L3eks.",
+    "en": "Would need χ² < threshold."
+   },
+   "c": {
+    "fr": "E1 > 5 est justement la condition de validité.",
+    "dar": "Condition.",
+    "en": "E1 > 5 is the validity condition."
+   },
+   "d": {
+    "fr": "Le risque est α = 5 %.",
+    "dar": "α = 5 %.",
+    "en": "Risk is 5 %."
+   }
+  },
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-30",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Un dé lancé 60 fois donne 8, 12, 9, 11, 6, 14. Statistique χ² d'équiprobabilité ?",
+   "dar": "Dé : χ² ?",
+   "en": "Die: χ² for fairness?"
+  },
+  "answer": 4.2,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "chi2Uniform",
+   "args": [
+    [
+     8,
+     12,
+     9,
+     11,
+     6,
+     14
+    ],
+    0.05
+   ],
+   "pick": "chi2"
+  },
+  "explanation": {
+   "fr": "Ei = 60/6 = 10 ; χ² = (4 + 4 + 1 + 1 + 16 + 16)/10 = **4,2** ; ν = 6 − 0 − 1 = 5 ; seuil 11,07 → on ne rejette pas « dé équilibré ».",
+   "dar": "Ei = 10 ; χ² = 4,2.",
+   "en": "Ei = 10; χ² = **4.2**; ν = 5; 11.07 → keep H0."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dt-31",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle unilatéral droit : µ0 = 500 g, σ = 12, n = 36, x̄ = 504. Z0 ?",
+   "dar": "Z0 ?",
+   "en": "Z0?"
+  },
+  "answer": 2,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "zStat",
+   "args": [
+    504,
+    500,
+    12,
+    36
+   ]
+  },
+  "explanation": {
+   "fr": "$Z_0 = \\frac{4}{12/6} = 2$ > 1,645 → rejet de H0 (le poids moyen dépasse 500 g).",
+   "dar": "$Z_0 = 2$.",
+   "en": "$Z_0 = 2$ > 1.645 → reject."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "z"
+  ]
+ },
+ {
+  "id": "dt-32",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "n = 16, x̄ = 48,5, S = 3,2, µ0 = 50, H1 : µ < 50. Calcule T0.",
+   "dar": "T0 ?",
+   "en": "T0?"
+  },
+  "answer": -1.875,
+  "tolerance": 0.005,
+  "compute": {
+   "fn": "tStat",
+   "args": [
+    48.5,
+    50,
+    3.2,
+    16
+   ]
+  },
+  "explanation": {
+   "fr": "$T_0 = \\frac{48{,}5-50}{3{,}2/4} = -1{,}875$ < −t(0,05 ; 15) = −1,753 → rejet de H0.",
+   "dar": "$T_0 = -1{,}875$.",
+   "en": "$T_0 = -1.875$ < −1.753 → reject."
+  },
+  "wrongExplanations": {
+   "1.875": {
+    "fr": "Le signe compte en unilatéral gauche !",
+    "dar": "Signe !",
+    "en": "Sign matters!"
+   }
+  },
+  "tags": [
+   "tests",
+   "student",
+   "unilateral"
+  ]
+ },
+ {
+  "id": "dt-33",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Puissance du test bilatéral (µ0 = 40, σ = 2, n = 25, α = 5 %) si en réalité µ = 41 ?",
+   "dar": "Puissance ?",
+   "en": "Power if µ = 41?"
+  },
+  "answer": 0.7054,
+  "tolerance": 0.003,
+  "compute": {
+   "fn": "zPower",
+   "args": [
+    40,
+    41,
+    2,
+    25,
+    0.05,
+    "two"
+   ]
+  },
+  "explanation": {
+   "fr": "$1-\\beta = P(|Z_0|>1{,}96 \\mid \\mu=41)$ avec $d = \\frac{41-40}{0{,}4} = 2{,}5$ : $1-\\Phi(1{,}96-2{,}5)+\\Phi(-1{,}96-2{,}5) \\approx 0{,}705$.",
+   "dar": "≈ 0,705.",
+   "en": "≈ 0.705."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "tests",
+   "erreurs"
+  ]
+ }
+]

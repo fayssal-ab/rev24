@@ -1,0 +1,79 @@
+{
+ "id": "euler",
+ "module": "ro",
+ "order": 3,
+ "title": {
+  "fr": "Chaînes, cycles, connexité, Euler, Hamilton",
+  "dar": "Chaînes, Euler, Hamilton",
+  "en": "Chains, connectivity, Euler, Hamilton"
+ },
+ "summary": {
+  "fr": "Chaînes, cycles, connexité, graphes eulériens et hamiltoniens.",
+  "dar": "Euler w Hamilton.",
+  "en": "Chains, cycles, Euler and Hamilton."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Chaînes et cycles",
+    "dar": "Chaînes w cycles",
+    "en": "Chains and cycles"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Chaîne** = suite d'arêtes adjacentes (longueur = nombre d'arêtes) ; **simple** = arêtes distinctes ; **élémentaire** = sommets distincts ; **cycle** = chaîne fermée à arêtes distinctes (orienté : chemin, circuit). **Connexe** : chaîne entre toute paire ; **fortement connexe** (orienté) : chemin pour tout couple.",
+    "dar": "Chaîne, simple, élémentaire, cycle, connexe.",
+    "en": "Chain, simple, elementary, cycle, connected, strongly connected."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Euler et Hamilton",
+    "dar": "Euler w Hamilton",
+    "en": "Euler and Hamilton"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Eulérien** : passe une fois par chaque **arête**. **Hamiltonien** : passe une fois par chaque **sommet**. **Théorème d'Euler** : connexe → cycle eulérien ⇔ tous les degrés pairs ; chaîne eulérienne ⇔ 0 ou 2 sommets impairs (ce sont les extrémités).",
+    "dar": "Euler = arêtes ; Hamilton = sommets ; théorème.",
+    "en": "**Eulerian** = every edge once; **Hamiltonian** = every vertex once; Euler theorem."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Ne pas confondre : Euler ↔ **arêtes**, Hamilton ↔ **sommets**.",
+    "dar": "Euler = arêtes, Hamilton = sommets.",
+    "en": "Euler ↔ edges, Hamilton ↔ vertices."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-20",
+    "ro-21",
+    "ro-23"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Euler : tous degrés pairs (cycle) ou 2 impairs (chaîne).",
+   "dar": "Euler.",
+   "en": "Euler: all even (cycle) or 2 odd (chain)."
+  },
+  {
+   "fr": "Hamilton : chaque sommet une fois.",
+   "dar": "Hamilton.",
+   "en": "Hamilton: each vertex once."
+  }
+ ]
+}

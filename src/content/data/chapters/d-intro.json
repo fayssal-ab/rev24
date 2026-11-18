@@ -1,0 +1,258 @@
+{
+ "id": "d-intro",
+ "module": "data",
+ "order": 1,
+ "title": {
+  "fr": "Chap 0 — Introduction à l'analyse de données",
+  "dar": "Fasl 0 — Mo9addima",
+  "en": "Ch. 0 — Introduction to data analysis"
+ },
+ "summary": {
+  "fr": "Définition, objectifs, 5 types d'analyse, 5 étapes, outils, domaines et rôle dans la décision.",
+  "dar": "Ta3rif, ahdaf, 5 anwa3, 5 mara7il, outils.",
+  "en": "Definition, goals, 5 types, 5 steps, tools, domains, decision."
+ },
+ "estimatedMinutes": 25,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Définition et objectifs",
+    "dar": "Ta3rif w ahdaf",
+    "en": "Definition and goals"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "L'**analyse de données** est l'ensemble des méthodes qui transforment des données brutes en **informations utiles** : résumer, comprendre, expliquer et anticiper. Ses 4 objectifs : **décrire**, **relier** (liens entre variables), **prédire**, **décider**.",
+    "dar": "**Analyse de données** = kat7awel data l **ma3loumat**. 4 ahdaf : **wsef, rbet, tnba2, qarrer**.",
+    "en": "**Data analysis** turns raw data into **useful information**. Four goals: **describe, relate, predict, decide**."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Exemple santé (diabète)** : on collecte glycémie, âge, IMC… on **décrit** (glycémie moyenne), on **relie** (IMC ↔ glycémie), on **prédit** le risque d'un nouveau patient, on **décide** d'un programme de prévention.",
+    "dar": "Mithal diabète.",
+    "en": "**Health example (diabetes)**: describe, relate, predict, decide."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-01",
+    "di-09"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les 5 types d'analyse",
+    "dar": "5 anwa3",
+    "en": "The 5 types"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type",
+     "dar": "Naw3",
+     "en": "Type"
+    },
+    {
+     "fr": "Question",
+     "dar": "So2al",
+     "en": "Question"
+    },
+    {
+     "fr": "Méthodes",
+     "dar": "Méthodes",
+     "en": "Methods"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Descriptive",
+      "dar": "Descriptive",
+      "en": "Descriptive"
+     },
+     {
+      "fr": "Que s'est-il passé ?",
+      "dar": "Chnou wqe3 ?",
+      "en": "What happened?"
+     },
+     {
+      "fr": "moyenne, variance, graphiques",
+      "dar": "moyenne, variance",
+      "en": "mean, variance, charts"
+     }
+    ],
+    [
+     {
+      "fr": "Exploratoire",
+      "dar": "Exploratoire",
+      "en": "Exploratory"
+     },
+     {
+      "fr": "Quelles structures ?",
+      "dar": "Chnou mkhbbi ?",
+      "en": "What structures?"
+     },
+     {
+      "fr": "ACP, AFC, clustering",
+      "dar": "ACP, AFC, clustering",
+      "en": "PCA, CA, clustering"
+     }
+    ],
+    [
+     {
+      "fr": "Confirmatoire",
+      "dar": "Confirmatoire",
+      "en": "Confirmatory"
+     },
+     {
+      "fr": "L'hypothèse est-elle vraie ?",
+      "dar": "Hypothèse s7i7a ?",
+      "en": "Is it true?"
+     },
+     {
+      "fr": "tests statistiques",
+      "dar": "tests",
+      "en": "tests"
+     }
+    ],
+    [
+     {
+      "fr": "Prédictive",
+      "dar": "Prédictive",
+      "en": "Predictive"
+     },
+     {
+      "fr": "Que va-t-il se passer ?",
+      "dar": "Chnou ghaywqe3 ?",
+      "en": "What will happen?"
+     },
+     {
+      "fr": "régression, machine learning",
+      "dar": "régression, ML",
+      "en": "regression, ML"
+     }
+    ],
+    [
+     {
+      "fr": "Prescriptive",
+      "dar": "Prescriptive",
+      "en": "Prescriptive"
+     },
+     {
+      "fr": "Que faut-il faire ?",
+      "dar": "Chnou ndirou ?",
+      "en": "What to do?"
+     },
+     {
+      "fr": "simulation, optimisation",
+      "dar": "simulation, optimisation",
+      "en": "simulation, optimisation"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "AnalysisTypesCards"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-02",
+    "di-03",
+    "di-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les 5 étapes",
+    "dar": "5 mara7il",
+    "en": "The 5 steps"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "DataPipeline"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Retiens l'ordre : **collecte → nettoyage → exploration → modélisation → interprétation**.",
+    "dar": "Tartib.",
+    "en": "Remember the order."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-06",
+    "di-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Outils et domaines",
+    "dar": "Outils w domaines",
+    "en": "Tools and domains"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "- **Outils statistiques** : statistique descriptive, inférentielle, analyse multivariée.\n- **Outils informatiques** : **Python** (Pandas, NumPy, Matplotlib), **R**, **Excel**, **SPSS**, **Power BI**.\n- **Outils de visualisation** : graphiques, tableaux de bord.\n\nDomaines : **santé, finance, marketing, industrie, sciences sociales, IT**. Rôle : rendre la **décision** objective, fondée sur des faits et un risque d'erreur maîtrisé.",
+    "dar": "Python, R, Excel, SPSS, Power BI ; sa7a, finance, marketing…",
+    "en": "Statistical, software (Python, R, Excel, SPSS, Power BI) and visualisation tools; domains; decision role."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Dans ce module, on utilise Python : pandas (chap 1), Matplotlib/Seaborn (chap 4), et les tests statistiques (chap 5).",
+    "dar": "Python f had module.",
+    "en": "This module uses Python."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-08",
+    "di-12"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "4 objectifs : décrire, relier, prédire, décider.",
+   "dar": "Wsef, rbet, tnba2, qarrer.",
+   "en": "Describe, relate, predict, decide."
+  },
+  {
+   "fr": "5 types : descriptive (moyenne, variance, graphiques), exploratoire (ACP, AFC, clustering), confirmatoire (tests), prédictive (régression, ML), prescriptive (simulation, optimisation).",
+   "dar": "5 anwa3.",
+   "en": "5 types with methods."
+  },
+  {
+   "fr": "5 étapes : collecte → nettoyage → exploration → modélisation → interprétation.",
+   "dar": "5 mara7il.",
+   "en": "5 steps."
+  },
+  {
+   "fr": "Outils : Python (Pandas, NumPy, Matplotlib), R, Excel, SPSS, Power BI. Domaines : santé, finance, marketing, industrie, sciences sociales, IT.",
+   "dar": "Outils w domaines.",
+   "en": "Tools and domains."
+  }
+ ]
+}

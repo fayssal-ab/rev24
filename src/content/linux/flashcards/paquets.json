@@ -1,0 +1,182 @@
+[
+ {
+  "id": "fc-pkg-1",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "Nombre de paquets installés ?",
+   "dar": "Ch7al paquet ?",
+   "en": "Number of installed packages?"
+  },
+  "back": {
+   "fr": "`rpm -qa | wc -l`",
+   "dar": "`rpm -qa | wc -l`",
+   "en": "`rpm -qa | wc -l`"
+  }
+ },
+ {
+  "id": "fc-pkg-2",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "À quel paquet appartient un fichier ?",
+   "dar": "Paquet dyal fichier ?",
+   "en": "Package owning a file?"
+  },
+  "back": {
+   "fr": "`rpm -qf /chemin` (ou `dnf provides` si non installé).",
+   "dar": "`rpm -qf`.",
+   "en": "`rpm -qf` (or `dnf provides`)."
+  }
+ },
+ {
+  "id": "fc-pkg-3",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "rpm -qi / -ql / -qc ?",
+   "dar": "-qi -ql -qc ?",
+   "en": "-qi / -ql / -qc?"
+  },
+  "back": {
+   "fr": "Infos / fichiers / fichiers de config.",
+   "dar": "Infos / fichiers / config.",
+   "en": "Info / files / config files."
+  }
+ },
+ {
+  "id": "fc-pkg-4",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "rpm -V ?",
+   "dar": "rpm -V ?",
+   "en": "rpm -V?"
+  },
+  "back": {
+   "fr": "Vérifie les fichiers modifiés (S taille, 5 somme, T date ; c = config).",
+   "dar": "Fichiers tbeddlou.",
+   "en": "Verifies modified files."
+  }
+ },
+ {
+  "id": "fc-pkg-5",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "rpm -qpc f.rpm ?",
+   "dar": "-qpc ?",
+   "en": "-qpc?"
+  },
+  "back": {
+   "fr": "Config d'un fichier .rpm non installé.",
+   "dar": "Config dyal .rpm.",
+   "en": "Config of an uninstalled .rpm."
+  }
+ },
+ {
+  "id": "fc-pkg-6",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "rpm -K ?",
+   "dar": "rpm -K ?",
+   "en": "rpm -K?"
+  },
+  "back": {
+   "fr": "Vérifie la signature d'un .rpm.",
+   "dar": "Signature.",
+   "en": "Checks .rpm signature."
+  }
+ },
+ {
+  "id": "fc-pkg-7",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "rpm vs dnf ?",
+   "dar": "rpm vs dnf ?",
+   "en": "rpm vs dnf?"
+  },
+  "back": {
+   "fr": "rpm : un fichier, ne résout pas les dépendances. dnf : dépôts + résolution.",
+   "dar": "rpm fichier ; dnf dépôts.",
+   "en": "rpm: one file, no resolution. dnf: repos + resolution."
+  }
+ },
+ {
+  "id": "fc-pkg-8",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "Annuler une installation dnf ?",
+   "dar": "Lghi dnf ?",
+   "en": "Undo a dnf install?"
+  },
+  "back": {
+   "fr": "`dnf history` → `dnf history undo N`",
+   "dar": "history undo N",
+   "en": "`dnf history undo N`"
+  }
+ },
+ {
+  "id": "fc-pkg-9",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "Groupe de paquets ?",
+   "dar": "Groupe ?",
+   "en": "Package group?"
+  },
+  "back": {
+   "fr": "`dnf group list|info|install|remove \"System Tools\"`",
+   "dar": "dnf group",
+   "en": "`dnf group …`"
+  }
+ },
+ {
+  "id": "fc-pkg-10",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "Désactiver un dépôt ?",
+   "dar": "Tfi dépôt ?",
+   "en": "Disable a repo?"
+  },
+  "back": {
+   "fr": "`enabled=0` dans le .repo, ou `yum-config-manager --disable ID`.",
+   "dar": "enabled=0.",
+   "en": "`enabled=0` or `yum-config-manager --disable`."
+  }
+ },
+ {
+  "id": "fc-pkg-11",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "Télécharger sans installer ?",
+   "dar": "Télécharger bla installation ?",
+   "en": "Download without installing?"
+  },
+  "back": {
+   "fr": "`dnf install --downloadonly --downloaddir=REP pkg`",
+   "dar": "--downloadonly",
+   "en": "`--downloadonly --downloaddir=`"
+  }
+ },
+ {
+  "id": "fc-pkg-12",
+  "module": "linux",
+  "chapter": "paquets",
+  "front": {
+   "fr": "createrepo ?",
+   "dar": "createrepo ?",
+   "en": "createrepo?"
+  },
+  "back": {
+   "fr": "Génère repodata/ (métadonnées) d'un dépôt local.",
+   "dar": "repodata/.",
+   "en": "Generates repodata/."
+  }
+ }
+]

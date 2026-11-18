@@ -1,0 +1,67 @@
+{
+ "id": "matrices",
+ "module": "ro",
+ "order": 2,
+ "title": {
+  "fr": "Représentation matricielle",
+  "dar": "Matrices",
+  "en": "Matrix representation"
+ },
+ "summary": {
+  "fr": "Matrices d'adjacence et d'incidence, puissances M^k.",
+  "dar": "Adjacence, M^k.",
+  "en": "Adjacency, incidence, powers."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Matrice d'adjacence",
+    "dar": "Matrice d'adjacence",
+    "en": "Adjacency matrix"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "M(G) n×n : **mij = nombre d'arêtes** entre si et sj (orienté : arcs de si vers sj). Non orienté → symétrique ; simple → diagonale nulle ; orienté → somme des coefficients = nombre d'arcs. Matrice **sommet-arc** : 1 sortant, −1 entrant, 0 sinon.",
+    "dar": "mij = arêtes ; symétrique ; sommet-arc 1/−1/0.",
+    "en": "mij = number of edges; symmetric if undirected; incidence 1/−1/0."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**(M^k)ij = nombre de chemins de longueur k** de si à sj ; **trace(M^k)** = nombre de circuits fermés de longueur k.",
+    "dar": "M^k = chemins ; trace = circuits.",
+    "en": "**(M^k)ij** = length-k walks; **trace** = closed walks."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "M = [[0,1,1],\n     [1,0,1],\n     [1,0,0]]    # arcs 1→2 1→3 2→1 2→3 3→1"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-11",
+    "ro-12",
+    "ro-13"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "M symétrique (non orienté), diagonale nulle (simple).",
+   "dar": "Symétrique.",
+   "en": "Symmetric, zero diagonal."
+  },
+  {
+   "fr": "(M^k)ij = chemins de longueur k ; trace(M^k) = circuits.",
+   "dar": "M^k.",
+   "en": "M^k walks; trace closed."
+  }
+ ]
+}

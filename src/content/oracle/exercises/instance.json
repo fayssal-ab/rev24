@@ -1,0 +1,163 @@
+[
+ {
+  "id": "or-x-1",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 2,
+  "title": {
+   "fr": "Choisir le mode de SHUTDOWN",
+   "dar": "Mode SHUTDOWN",
+   "en": "Choose a shutdown mode"
+  },
+  "statement": {
+   "fr": "a) Maintenance planifiée, on veut laisser finir les transactions. b) Arrêt urgent sans perte, des utilisateurs restent connectés. c) L'instance est bloquée.",
+   "dar": "3 cas.",
+   "en": "Three scenarios."
+  },
+  "hints": [
+   {
+    "fr": "Qui attend quoi ?",
+    "dar": "Chkoun kaytsenna ?",
+    "en": "Who waits for what?"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "a) TRANSACTIONAL. b) IMMEDIATE (rollback, arrêt propre). c) ABORT, puis STARTUP : SMON récupère.",
+     "dar": "TRANSACTIONAL, IMMEDIATE, ABORT.",
+     "en": "TRANSACTIONAL, IMMEDIATE, ABORT."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "a TRANSACTIONAL · b IMMEDIATE · c ABORT (+ récupération SMON).",
+   "dar": "a · b · c.",
+   "en": "a TRANSACTIONAL · b IMMEDIATE · c ABORT."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser ABORT par confort.",
+    "dar": "ABORT dima.",
+    "en": "Using ABORT casually."
+   }
+  ]
+ },
+ {
+  "id": "or-x-2",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "title": {
+   "fr": "De SHUTDOWN à OPEN pas à pas",
+   "dar": "Mn SHUTDOWN l OPEN",
+   "en": "From SHUTDOWN to OPEN"
+  },
+  "statement": {
+   "fr": "L'instance est arrêtée. Démarre-la étape par étape et indique ce qui est lu à chaque étape.",
+   "dar": "Démarrage étape b étape.",
+   "en": "Start step by step and say what is read."
+  },
+  "hints": [
+   {
+    "fr": "Trois états.",
+    "dar": "3 états.",
+    "en": "Three states."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "NOMOUNT : paramètres (spfile), SGA, processus. MOUNT : control files. OPEN : datafiles + redo logs.",
+     "dar": "Paramètres → control → datafiles.",
+     "en": "Params → control → datafiles."
+    },
+    "code": "STARTUP NOMOUNT\nALTER DATABASE MOUNT;\nALTER DATABASE OPEN;"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "STARTUP NOMOUNT → ALTER DATABASE MOUNT → ALTER DATABASE OPEN.",
+   "dar": "NOMOUNT → MOUNT → OPEN.",
+   "en": "NOMOUNT → MOUNT → OPEN."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Faire ALTER DATABASE OPEN depuis NOMOUNT (ORA-01507).",
+    "dar": "ORA-01507.",
+    "en": "OPEN from NOMOUNT fails."
+   }
+  ]
+ },
+ {
+  "id": "or-x-3",
+  "module": "oracle",
+  "chapter": "instance",
+  "difficulty": 3,
+  "title": {
+   "fr": "Trouver et tuer une session inactive",
+   "dar": "Tue session inactive",
+   "en": "Kill an idle session"
+  },
+  "statement": {
+   "fr": "C##ETUDIANT a deux sessions ; l'une est INACTIVE depuis 10 minutes. Trouve-la et tue-la. Que voit chaque session ?",
+   "dar": "Lqaha w qtelha.",
+   "en": "Find and kill it; what does each session see?"
+  },
+  "hints": [
+   {
+    "fr": "Filtre sur status et seconds_in_wait.",
+    "dar": "status w seconds_in_wait.",
+    "en": "Filter on status and seconds_in_wait."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Requête et kill",
+     "dar": "Requête w kill",
+     "en": "Query and kill"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "SELECT sid, serial#, username, status, seconds_in_wait FROM v$session\n WHERE username='C##ETUDIANT' AND status='INACTIVE' AND seconds_in_wait > 60;\nALTER SYSTEM KILL SESSION '45,2311';"
+   },
+   {
+    "title": {
+     "fr": "Effet",
+     "dar": "Natija",
+     "en": "Effect"
+    },
+    "body": {
+     "fr": "Session tuée : ORA-00028 à la prochaine commande. L'autre continue normalement.",
+     "dar": "ORA-00028.",
+     "en": "ORA-00028; the other continues."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Requête v$session filtrée + ALTER SYSTEM KILL SESSION 'sid,serial#'.",
+   "dar": "v$session + KILL.",
+   "en": "Filtered v$session + KILL SESSION."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Inverser sid et serial#.",
+    "dar": "L3eks.",
+    "en": "Swapping sid and serial#."
+   }
+  ]
+ }
+]

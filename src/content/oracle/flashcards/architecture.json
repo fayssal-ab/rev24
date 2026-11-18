@@ -1,0 +1,122 @@
+[
+ {
+  "id": "fc-or-1",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Serveur Oracle ?",
+   "dar": "Serveur ?",
+   "en": "Oracle server?"
+  },
+  "back": {
+   "fr": "Instance (SGA + processus) + base (fichiers).",
+   "dar": "Instance + base.",
+   "en": "Instance + database."
+  }
+ },
+ {
+  "id": "fc-or-2",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Fichiers de la base ?",
+   "dar": "Fichiers ?",
+   "en": "Database files?"
+  },
+  "back": {
+   "fr": "Datafiles, control files, redo logs (+ associés : spfile, password file, archives).",
+   "dar": "Datafiles, control, redo.",
+   "en": "Datafiles, control, redo logs."
+  }
+ },
+ {
+  "id": "fc-or-3",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "CDB ?",
+   "dar": "CDB ?",
+   "en": "CDB?"
+  },
+  "back": {
+   "fr": "CDB$ROOT + PDB$SEED + PDB (ORCLPDB).",
+   "dar": "ROOT + SEED + PDB.",
+   "en": "ROOT + SEED + PDBs."
+  }
+ },
+ {
+  "id": "fc-or-4",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "ORA-65096 ?",
+   "dar": "ORA-65096 ?",
+   "en": "ORA-65096?"
+  },
+  "back": {
+   "fr": "Utilisateur sans C## dans CDB$ROOT → passer en PDB ou préfixer C##.",
+   "dar": "C## wla PDB.",
+   "en": "Use C## or switch to a PDB."
+  }
+ },
+ {
+  "id": "fc-or-5",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Utilisateur commun / local ?",
+   "dar": "Commun / local ?",
+   "en": "Common / local?"
+  },
+  "back": {
+   "fr": "Commun : C## dans la racine. Local : dans une PDB.",
+   "dar": "C## / PDB.",
+   "en": "C## in root / inside a PDB."
+  }
+ },
+ {
+  "id": "fc-or-6",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Changer de conteneur ?",
+   "dar": "Beddel conteneur ?",
+   "en": "Switch container?"
+  },
+  "back": {
+   "fr": "ALTER SESSION SET CONTAINER=ORCLPDB;",
+   "dar": "ALTER SESSION SET CONTAINER",
+   "en": "ALTER SESSION SET CONTAINER=ORCLPDB;"
+  }
+ },
+ {
+  "id": "fc-or-7",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Ouvrir une PDB ?",
+   "dar": "Fte7 PDB ?",
+   "en": "Open a PDB?"
+  },
+  "back": {
+   "fr": "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;",
+   "dar": "ALTER PLUGGABLE DATABASE … OPEN",
+   "en": "ALTER PLUGGABLE DATABASE … OPEN;"
+  }
+ },
+ {
+  "id": "fc-or-8",
+  "module": "oracle",
+  "chapter": "architecture",
+  "front": {
+   "fr": "Installer HR ?",
+   "dar": "HR ?",
+   "en": "Install HR?"
+  },
+  "back": {
+   "fr": "Dans ORCLPDB : @…\\hr_install.sql, puis ALTER USER hr ACCOUNT UNLOCK.",
+   "dar": "hr_install + unlock.",
+   "en": "hr_install.sql then unlock."
+  }
+ }
+]

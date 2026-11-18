@@ -1,0 +1,302 @@
+[
+ {
+  "id": "fc-dt-1",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "H0 contient… ?",
+   "dar": "H0 ?",
+   "en": "H0 holds…?"
+  },
+  "back": {
+   "fr": "L'égalité (valeur de référence, statu quo).",
+   "dar": "Égalité.",
+   "en": "The equality."
+  }
+ },
+ {
+  "id": "fc-dt-2",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "α ?",
+   "dar": "α ?",
+   "en": "α?"
+  },
+  "back": {
+   "fr": "P(rejeter H0 | H0 vraie) — erreur de 1re espèce.",
+   "dar": "Naw3 1.",
+   "en": "Type I error."
+  }
+ },
+ {
+  "id": "fc-dt-3",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "β et puissance ?",
+   "dar": "β w puissance ?",
+   "en": "β and power?"
+  },
+  "back": {
+   "fr": "β = P(ne pas rejeter H0 | H0 fausse) ; puissance = 1 − β.",
+   "dar": "β ; 1 − β.",
+   "en": "β type II; power 1 − β."
+  }
+ },
+ {
+  "id": "fc-dt-4",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Conclusion forte / faible ?",
+   "dar": "Forte / d3ifa ?",
+   "en": "Strong / weak?"
+  },
+  "back": {
+   "fr": "Rejet de H0 = forte ; non-rejet = faible (H0 non prouvée).",
+   "dar": "Rejet forte.",
+   "en": "Reject = strong; keep = weak."
+  }
+ },
+ {
+  "id": "fc-dt-5",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Z0 ?",
+   "dar": "Z0 ?",
+   "en": "Z0?"
+  },
+  "back": {
+   "fr": "(x̄ − µ0)/(σ/√n), σ connu, ~ N(0,1).",
+   "dar": "σ m3rouf.",
+   "en": "σ known."
+  }
+ },
+ {
+  "id": "fc-dt-6",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "T0 ?",
+   "dar": "T0 ?",
+   "en": "T0?"
+  },
+  "back": {
+   "fr": "(x̄ − µ0)/(S/√n), σ inconnu, ~ t(n − 1).",
+   "dar": "σ ma m3roufch.",
+   "en": "σ unknown, t(n−1)."
+  }
+ },
+ {
+  "id": "fc-dt-7",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "S ?",
+   "dar": "S ?",
+   "en": "S?"
+  },
+  "back": {
+   "fr": "√(Σ(xi − x̄)²/(n − 1)).",
+   "dar": "n − 1.",
+   "en": "n − 1 divisor."
+  }
+ },
+ {
+  "id": "fc-dt-8",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Région critique bilatérale ?",
+   "dar": "Bilatéral ?",
+   "en": "Two-sided region?"
+  },
+  "back": {
+   "fr": "|Z0| > z(α/2) (5 % → 1,96).",
+   "dar": "1,96.",
+   "en": "|Z0| > 1.96 at 5 %."
+  }
+ },
+ {
+  "id": "fc-dt-9",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Région critique gauche / droite ?",
+   "dar": "Gauche / droite ?",
+   "en": "Left / right region?"
+  },
+  "back": {
+   "fr": "Z0 < −z(α) / Z0 > z(α) (5 % → 1,645).",
+   "dar": "±1,645.",
+   "en": "±1.645."
+  }
+ },
+ {
+  "id": "fc-dt-10",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Table des z ?",
+   "dar": "z ?",
+   "en": "z table?"
+  },
+  "back": {
+   "fr": "1,282 (10 %) · 1,645 (5 %) · 1,96 (2,5 %) · 2,054 (2 %) · 2,326 (1 %) · 2,576 (0,5 %)",
+   "dar": "1,282 · 1,645 · 1,96 · 2,054 · 2,326 · 2,576",
+   "en": "1.282 · 1.645 · 1.96 · 2.054 · 2.326 · 2.576"
+  }
+ },
+ {
+  "id": "fc-dt-11",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "P-value (définition) ?",
+   "dar": "P-value ?",
+   "en": "P-value?"
+  },
+  "back": {
+   "fr": "Probabilité sous H0 d'une statistique au moins aussi extrême que l'observée. Rejet si α > PV.",
+   "dar": "Rejet ila α > PV.",
+   "en": "Reject if α > PV."
+  }
+ },
+ {
+  "id": "fc-dt-12",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Formules de la PV ?",
+   "dar": "PV ?",
+   "en": "PV formulas?"
+  },
+  "back": {
+   "fr": "Bilatéral 2(1 − Φ(|Z0|)) · gauche Φ(Z0) · droite 1 − Φ(Z0)",
+   "dar": "2(1−Φ) · Φ · 1−Φ",
+   "en": "2(1−Φ(|Z0|)) · Φ(Z0) · 1−Φ(Z0)"
+  }
+ },
+ {
+  "id": "fc-dt-13",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "χ² d'ajustement ?",
+   "dar": "χ² ?",
+   "en": "χ² fit?"
+  },
+  "back": {
+   "fr": "Σ(Oi − Ei)²/Ei, Ei = n·pi",
+   "dar": "Σ(Oi − Ei)²/Ei",
+   "en": "Σ(Oi − Ei)²/Ei"
+  }
+ },
+ {
+  "id": "fc-dt-14",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "ν du χ² ?",
+   "dar": "ν ?",
+   "en": "χ² ν?"
+  },
+  "back": {
+   "fr": "k − p − 1 (p paramètres estimés).",
+   "dar": "k − p − 1.",
+   "en": "k − p − 1."
+  }
+ },
+ {
+  "id": "fc-dt-15",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Si Ei < 5 ?",
+   "dar": "Ei < 5 ?",
+   "en": "If Ei < 5?"
+  },
+  "back": {
+   "fr": "Regrouper des classes voisines.",
+   "dar": "Jm3 classes.",
+   "en": "Merge neighbouring classes."
+  }
+ },
+ {
+  "id": "fc-dt-16",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Seuils χ²(0,05) ν = 1, 2, 3 ?",
+   "dar": "χ² seuils ?",
+   "en": "χ² thresholds?"
+  },
+  "back": {
+   "fr": "3,841 · 5,991 · 7,815",
+   "dar": "3,841 · 5,991 · 7,815",
+   "en": "3.841 · 5.991 · 7.815"
+  }
+ },
+ {
+  "id": "fc-dt-17",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Fusée : résultat ?",
+   "dar": "Fusée ?",
+   "en": "Rocket result?"
+  },
+  "back": {
+   "fr": "Z0 = 3,125 > 1,96 → rejet, PV ≈ 0,0018.",
+   "dar": "Rejet.",
+   "en": "Reject, PV ≈ 0.0018."
+  }
+ },
+ {
+  "id": "fc-dt-18",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Comprimés : résultat ?",
+   "dar": "Comprimés ?",
+   "en": "Tablets result?"
+  },
+  "back": {
+   "fr": "x̄ = 0,831, S ≈ 0,0213, T0 ≈ 0,148 < 2,821 → non-rejet.",
+   "dar": "Ma nrfdouch.",
+   "en": "Keep H0."
+  }
+ },
+ {
+  "id": "fc-dt-19",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "Glycémie : résultat ?",
+   "dar": "Glycémie ?",
+   "en": "Blood sugar result?"
+  },
+  "back": {
+   "fr": "Z0 = 3,6 ; gauche : Z0 < −1,645 ? non → non-rejet.",
+   "dar": "Ma nrfdouch.",
+   "en": "Keep H0."
+  }
+ },
+ {
+  "id": "fc-dt-20",
+  "module": "data",
+  "chapter": "tests",
+  "front": {
+   "fr": "χ² normalité : résultat ?",
+   "dar": "χ² ?",
+   "en": "χ² normality result?"
+  },
+  "back": {
+   "fr": "χ² ≈ 13,74 > 3,841 (ν = 1) → rejet.",
+   "dar": "Rejet.",
+   "en": "Reject."
+  }
+ }
+]

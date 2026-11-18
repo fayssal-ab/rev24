@@ -1,0 +1,363 @@
+{
+ "id": "tests",
+ "module": "data",
+ "order": 4,
+ "title": {
+  "fr": "Chap 5 — Tests d'hypothèses",
+  "dar": "Fasl 5 — Tests d'hypothèses",
+  "en": "Ch. 5 — Hypothesis tests"
+ },
+ "summary": {
+  "fr": "H0/H1, risques α et β, puissance, étapes d'un test, tests sur une moyenne (Z0, T0), P-value et test du χ² d'ajustement — avec les 4 exemples du cours.",
+  "dar": "H0/H1, α, β, Z0, T0, P-value, χ².",
+  "en": "H0/H1, α and β, power, test steps, mean tests (Z0, T0), P-value and χ² fit test — with the 4 course examples."
+ },
+ "estimatedMinutes": 90,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Hypothèses statistiques",
+    "dar": "Hypothèses",
+    "en": "Statistical hypotheses"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Une **hypothèse paramétrique** porte sur un paramètre d'une loi (µ = 40, p = 0,5…) ; une hypothèse **non paramétrique** porte sur la loi elle-même (« X suit une loi normale »).\n\n- **H0** (hypothèse nulle) : contient l'égalité, le statu quo, la valeur de référence (norme, réglage machine, ancienne valeur, affirmation à vérifier).\n- **H1** (alternative) : **bilatérale** µ ≠ µ0, **unilatérale gauche** µ < µ0, **unilatérale droite** µ > µ0.",
+    "dar": "**Paramétrique** = paramètre ; **non paramétrique** = loi. H0 = égalité ; H1 bilatéral / gauche / droite.",
+    "en": "A **parametric** hypothesis concerns a parameter; **non-parametric** the law itself. H0 holds equality; H1 two-sided / left / right."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-01",
+    "dt-02"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Risques d'erreur et puissance",
+    "dar": "Risques w puissance",
+    "en": "Error risks and power"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "ErrorTable"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    {
+     "fr": "H0 vraie",
+     "dar": "H0 s7i7a",
+     "en": "H0 true"
+    },
+    {
+     "fr": "H0 fausse",
+     "dar": "H0 ghalta",
+     "en": "H0 false"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Ne pas rejeter H0",
+      "dar": "Ma nrfdouch",
+      "en": "Keep H0"
+     },
+     {
+      "fr": "OK (1 − α)",
+      "dar": "OK (1 − α)",
+      "en": "OK (1 − α)"
+     },
+     {
+      "fr": "Erreur de 2e espèce β",
+      "dar": "Ghalta 2 β",
+      "en": "Type II β"
+     }
+    ],
+    [
+     {
+      "fr": "Rejeter H0",
+      "dar": "Nrfdou",
+      "en": "Reject H0"
+     },
+     {
+      "fr": "Erreur de 1re espèce α",
+      "dar": "Ghalta 1 α",
+      "en": "Type I α"
+     },
+     {
+      "fr": "OK : puissance 1 − β",
+      "dar": "Puissance 1 − β",
+      "en": "Power 1 − β"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Rejeter H0** est une conclusion **forte** (le risque d'erreur α est maîtrisé). **Ne pas rejeter H0** est une conclusion **faible** : on n'a pas prouvé H0, on manque seulement de preuves contre elle.",
+    "dar": "Rejet = forte ; ma nrfdouch = d3ifa.",
+    "en": "Rejecting is **strong**; not rejecting is **weak**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-03",
+    "dt-04",
+    "dt-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les 7 étapes d'un test",
+    "dar": "7 étapes",
+    "en": "The 7 steps"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "1. Formuler **H0 et H1**. 2. Fixer **α**. 3. Choisir la **statistique** et sa loi sous H0. 4. Déterminer la **région critique**. 5. **Calculer** la statistique. 6. **Décider**. 7. **Conclure** dans le contexte.",
+    "dar": "1. H0/H1 2. α 3. statistique 4. région 5. calcul 6. qarar 7. conclusion.",
+    "en": "1. H0/H1 2. α 3. statistic 4. critical region 5. compute 6. decide 7. conclude."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-06"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Test sur une moyenne",
+    "dar": "Test 3la moyenne",
+    "en": "Test on a mean"
+   }
+  },
+  {
+   "type": "formula",
+   "tex": "Z_0 = \\frac{\\bar x - \\mu_0}{\\sigma/\\sqrt n} \\sim \\mathcal N(0,1) \\quad (\\sigma\\ \\text{connu})",
+   "caption": {
+    "fr": "σ connu",
+    "dar": "σ m3rouf",
+    "en": "σ known"
+   }
+  },
+  {
+   "type": "formula",
+   "tex": "T_0 = \\frac{\\bar x - \\mu_0}{S/\\sqrt n} \\sim t(n-1), \\qquad S = \\sqrt{\\frac{1}{n-1}\\sum_{i=1}^n (x_i-\\bar x)^2}",
+   "caption": {
+    "fr": "σ inconnu (Student, n − 1 ddl)",
+    "dar": "σ ma m3roufch",
+    "en": "σ unknown (Student, n − 1 df)"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "H1",
+     "dar": "H1",
+     "en": "H1"
+    },
+    {
+     "fr": "Région critique",
+     "dar": "Région critique",
+     "en": "Critical region"
+    },
+    {
+     "fr": "P-value",
+     "dar": "P-value",
+     "en": "P-value"
+    }
+   ],
+   "rows": [
+    [
+     "µ ≠ µ0",
+     "|Z0| > z(α/2)",
+     "2(1 − Φ(|Z0|))"
+    ],
+    [
+     "µ < µ0",
+     "Z0 < −z(α)",
+     "Φ(Z0)"
+    ],
+    [
+     "µ > µ0",
+     "Z0 > z(α)",
+     "1 − Φ(Z0)"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Valeurs utiles : z = **1,282** (10 %), **1,645** (5 %), **1,96** (2,5 %), **2,054** (2 %), **2,326** (1 %), **2,576** (0,5 %). Avec σ inconnu, on remplace z par t(·; n − 1) (table de Student).",
+    "dar": "z : 1,282 / 1,645 / 1,96 / 2,054 / 2,326 / 2,576.",
+    "en": "z: 1.282 / 1.645 / 1.96 / 2.054 / 2.326 / 2.576."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "En **unilatéral**, le **signe** compte : pas de valeur absolue. Avec H1 : µ < µ0, une statistique positive (même grande) ne permet jamais de rejeter H0 (exemple de la glycémie).",
+    "dar": "F unilatéral, signe mohim.",
+    "en": "In one-sided tests the **sign** matters: no absolute value."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "HypothesisTestVisualizer",
+   "props": {
+    "preset": "fusee"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Les 4 exemples du cours (fusée, comprimés, glycémie, χ² normalité) tombent très souvent : refais-les dans le Labo stats.",
+    "dar": "4 amthila dyal dars kaytl3ou bzaf.",
+    "en": "The 4 course examples come up very often: redo them in the Stats lab."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-07",
+    "dt-08",
+    "dt-12",
+    "dt-16"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "La P-value",
+    "dar": "P-value",
+    "en": "The P-value"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "La **P-value** est la probabilité, si H0 est vraie, d'observer une statistique **au moins aussi extrême** que celle obtenue. Petite P-value = données peu compatibles avec H0. **On rejette H0 si α > PV.** Exemple fusée : PV = 2(1 − Φ(3,125)) ≈ 0,0018 < 0,05 → rejet.",
+    "dar": "PV = i7timal statistique extrême ta7t H0. **Rejet ila α > PV.**",
+    "en": "The **P-value** is the probability under H0 of a statistic at least as extreme. **Reject H0 if α > PV.**"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-09",
+    "dt-23"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Test d'ajustement du χ²",
+    "dar": "Test du χ²",
+    "en": "χ² goodness-of-fit test"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "On teste si une variable suit une loi donnée (normale, uniforme…). Pour k classes d'effectifs observés Oi : probabilités théoriques pi, effectifs théoriques **Ei = n·pi** (regrouper les classes si Ei < 5), puis :",
+    "dar": "Ei = n·pi, regrouper ila Ei < 5.",
+    "en": "Test whether a variable follows a law. Expected counts **Ei = n·pi** (merge classes if Ei < 5):"
+   }
+  },
+  {
+   "type": "formula",
+   "tex": "\\chi^2 = \\sum_{i=1}^{k} \\frac{(O_i - E_i)^2}{E_i} \\sim \\chi^2(\\nu), \\qquad \\nu = k - p - 1",
+   "caption": {
+    "fr": "p = nombre de paramètres estimés ; rejet si χ² > χ²(α ; ν)",
+    "dar": "p = paramètres ; rejet ila χ² > seuil",
+    "en": "p = estimated parameters; reject if χ² > χ²(α; ν)"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "ChiSquareBuilder"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Seuils χ²(0,05) : **3,841** (ν = 1), **5,991** (ν = 2), **7,815** (ν = 3).",
+    "dar": "3,841 / 5,991 / 7,815.",
+    "en": "3.841 / 5.991 / 7.815."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dt-26",
+    "dt-27",
+    "dt-29"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "H0 = égalité ; H1 bilatérale / gauche / droite. Paramétrique (paramètre) vs non paramétrique (loi).",
+   "dar": "H0 = égalité.",
+   "en": "H0 = equality; H1 two-sided / left / right."
+  },
+  {
+   "fr": "α = P(rejeter H0 | H0 vraie) (1re espèce) ; β = 2e espèce ; puissance 1 − β. Rejet = conclusion forte, non-rejet = faible.",
+   "dar": "α, β, 1 − β.",
+   "en": "α type I, β type II, power 1 − β."
+  },
+  {
+   "fr": "7 étapes : hypothèses, α, statistique, région critique, calcul, décision, conclusion.",
+   "dar": "7 étapes.",
+   "en": "7 steps."
+  },
+  {
+   "fr": "Z0 = (x̄ − µ0)/(σ/√n) si σ connu ; T0 = (x̄ − µ0)/(S/√n) ~ t(n − 1) sinon (S avec n − 1).",
+   "dar": "Z0 / T0.",
+   "en": "Z0 if σ known; T0 ~ t(n−1) otherwise."
+  },
+  {
+   "fr": "Bilatéral |Z0| > z(α/2) ; gauche Z0 < −z(α) ; droite Z0 > z(α). z : 1,645 / 1,96 / 2,326 / 2,576.",
+   "dar": "Régions critiques.",
+   "en": "Critical regions."
+  },
+  {
+   "fr": "P-value : bilatéral 2(1 − Φ(|Z0|)), gauche Φ(Z0), droite 1 − Φ(Z0) ; rejet si α > PV.",
+   "dar": "PV ; rejet ila α > PV.",
+   "en": "P-value formulas; reject if α > PV."
+  },
+  {
+   "fr": "χ² = Σ(Oi − Ei)²/Ei, Ei = n·pi (regrouper si < 5), ν = k − p − 1 ; seuils 3,841 / 5,991 / 7,815.",
+   "dar": "χ² ; ν = k − p − 1.",
+   "en": "χ², Ei = n·pi, ν = k − p − 1."
+  },
+  {
+   "fr": "Exemples : fusée Z0 = 3,125 → rejet (PV ≈ 0,0018) ; comprimés T0 ≈ 0,148 < 2,821 ; glycémie Z0 = 3,6, gauche → non-rejet ; χ² ≈ 13,74 > 3,841 → rejet.",
+   "dar": "Amthila dyal dars.",
+   "en": "Course examples results."
+  }
+ ]
+}

@@ -1,0 +1,334 @@
+{
+ "id": "tp1",
+ "module": "linux",
+ "order": 2,
+ "title": {
+  "fr": "TP1 — Prise en main du shell",
+  "dar": "TP1 — Bda m3a shell",
+  "en": "TP1 — Getting started with the shell"
+ },
+ "summary": {
+  "fr": "Fichiers et répertoires, aide (man), historique, redirections, filtres et tubes, find, ls -l et connexion SSH.",
+  "dar": "Fichiers w répertoires, man, historique, redirections, filtres, pipes, find, ls -l w SSH.",
+  "en": "Files and directories, help (man), history, redirections, filters and pipes, find, ls -l and SSH."
+ },
+ "estimatedMinutes": 60,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Fichiers et répertoires",
+    "dar": "Fichiers w répertoires",
+    "en": "Files and directories"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Un chemin **absolu** commence par `/` (`/home/etudiant/tp1`), un chemin **relatif** part du répertoire courant (`tp1`, `../etc`). `.` = ici, `..` = parent, `~` = répertoire personnel.",
+    "dar": "Chemin **absolu** kaybda b `/`, **relatif** mn répertoire courant. `.` = hna, `..` = parent, `~` = home.",
+    "en": "An **absolute** path starts with `/` (`/home/etudiant/tp1`), a **relative** path starts from the current directory (`tp1`, `../etc`). `.` = here, `..` = parent, `~` = home."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "pwd                      # où suis-je ?\nmkdir -p tp1/a/b         # crée les parents manquants\ncd tp1/a                 # relatif\ncd /etc                  # absolu\ncd ~   ;  cd -           # home ; répertoire précédent\nls -la                   # tout, format long\ntouch notes.txt          # fichier vide / met à jour la date\ncp notes.txt copie.txt   # copier (-r pour un répertoire, -p pour garder droits et dates)\nmv copie.txt doc.txt     # renommer / déplacer\nrm doc.txt ; rm -rf tp1  # supprimer (irréversible !)\ncat /etc/hostname        # afficher un fichier\nnano f.txt  /  vi f.txt  # éditer"
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp1-files"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lt-01",
+    "lt-02",
+    "lt-03"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Terminaux, prompt et aide",
+    "dar": "Terminaux, prompt w l'aide",
+    "en": "Terminals, prompt and help"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "- `tty` : `/dev/pts/0` (terminal graphique ou SSH) ou `/dev/tty3` (console texte, **Ctrl+Alt+F3**).\n- Prompt `[etudiant@rhel9 ~]$` : utilisateur ordinaire ; `[root@rhel9 ~]#` : **root**.\n- `man commande` : `/mot` pour chercher, `n` suivant, `q` quitter. Sections : **1** commandes, **5** formats de fichiers, **8** administration (`man 5 passwd`).\n- `commande --help` : aide courte ; `man -k mot` (= `apropos`) : recherche ; `mandb` : reconstruit l'index.\n- `type ls` / `which ls` : primitive, alias ou exécutable ?",
+    "dar": "- `tty` : `/dev/pts/0` (graphique wla SSH) wla `/dev/tty3` (console, **Ctrl+Alt+F3**).\n- `$` = user 3adi ; `#` = **root**.\n- `man` : `/mot` qelleb, `n` li jay, `q` khrej. Sections : **1** commandes, **5** fichiers, **8** admin.\n- `--help` ; `man -k` (= `apropos`) ; `mandb`.\n- `type` / `which`.",
+    "en": "- `tty`: `/dev/pts/0` (GUI terminal or SSH) or `/dev/tty3` (text console, **Ctrl+Alt+F3**).\n- Prompt `$` = regular user; `#` = **root**.\n- `man command`: `/word` search, `n` next, `q` quit. Sections: **1** commands, **5** file formats, **8** admin (`man 5 passwd`).\n- `--help`: short help; `man -k word` (= `apropos`): search; `mandb`: rebuild the index.\n- `type ls` / `which ls`: builtin, alias or executable?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "`man 1 passwd` (la commande) ≠ `man 5 passwd` (le fichier `/etc/passwd`) : question classique.",
+    "dar": "`man 1 passwd` ≠ `man 5 passwd` : so2al m3rouf.",
+    "en": "`man 1 passwd` (command) ≠ `man 5 passwd` (file): a classic question."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lt-04",
+    "lt-05",
+    "lt-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Historique et raccourcis",
+    "dar": "Historique w raccourcis",
+    "en": "History and shortcuts"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Raccourci",
+     "dar": "Raccourci",
+     "en": "Shortcut"
+    },
+    {
+     "fr": "Effet",
+     "dar": "Chnou kaydir",
+     "en": "Effect"
+    }
+   ],
+   "rows": [
+    [
+     "Tab",
+     {
+      "fr": "Complétion des commandes et chemins (2× : liste les possibilités)",
+      "dar": "Complétion (2× : liste)",
+      "en": "Complete commands and paths (twice: list options)"
+     }
+    ],
+    [
+     "↑ / ↓ · history · !! · !n",
+     {
+      "fr": "Rappel / liste / dernière commande / commande n° n",
+      "dar": "Rappel / liste / lekhra / ra9m n",
+      "en": "Recall / list / last command / command #n"
+     }
+    ],
+    [
+     "Ctrl+R",
+     {
+      "fr": "Recherche dans l'historique",
+      "dar": "Recherche f historique",
+      "en": "Reverse-search the history"
+     }
+    ],
+    [
+     "Ctrl+C · Ctrl+D",
+     {
+      "fr": "Interrompre · fin d'entrée (déconnexion)",
+      "dar": "W9ef · fin (déconnexion)",
+      "en": "Interrupt · end of input (logout)"
+     }
+    ],
+    [
+     "Ctrl+L · Ctrl+A · Ctrl+E · Ctrl+U",
+     {
+      "fr": "Effacer l'écran · début · fin de ligne · effacer avant le curseur",
+      "dar": "Msse7 · bdaya · lekher · msse7 9bel curseur",
+      "en": "Clear · line start · line end · delete before cursor"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "date ; cal ; uptime        # date, calendrier, durée de fonctionnement + charge"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lt-08",
+    "lt-09"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Redirections, filtres et tubes",
+    "dar": "Redirections, filtres w pipes",
+    "en": "Redirections, filters and pipes"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Syntaxe",
+     "dar": "Syntaxe",
+     "en": "Syntax"
+    },
+    {
+     "fr": "Effet",
+     "dar": "Chnou kaydir",
+     "en": "Effect"
+    }
+   ],
+   "rows": [
+    [
+     "cmd > f",
+     {
+      "fr": "Sortie standard dans f (écrase)",
+      "dar": "Sortie f f (kaymse7)",
+      "en": "stdout to f (overwrite)"
+     }
+    ],
+    [
+     "cmd >> f",
+     {
+      "fr": "Ajoute à la fin de f",
+      "dar": "Kayzid f lekher",
+      "en": "Append to f"
+     }
+    ],
+    [
+     "cmd 2> f",
+     {
+      "fr": "Erreurs dans f",
+      "dar": "Erreurs f f",
+      "en": "stderr to f"
+     }
+    ],
+    [
+     "cmd &> f",
+     {
+      "fr": "Sortie + erreurs dans f",
+      "dar": "Bjouj f f",
+      "en": "stdout + stderr to f"
+     }
+    ],
+    [
+     "cmd 2>/dev/null",
+     {
+      "fr": "Jeter les erreurs",
+      "dar": "Rmi erreurs",
+      "en": "Discard errors"
+     }
+    ],
+    [
+     "cmd1 | cmd2",
+     {
+      "fr": "La sortie de cmd1 devient l'entrée de cmd2",
+      "dar": "Sortie dyal cmd1 = entrée dyal cmd2",
+      "en": "cmd1 output becomes cmd2 input"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "head -n 3 /etc/passwd            # 3 premières lignes (tail : dernières, tail -f : suivre)\nless /var/log/messages            # pager (/ recherche, q quitter)\ngrep -c bash /etc/passwd          # nombre de lignes contenant bash\ncut -d: -f1 /etc/passwd | sort    # logins triés\ncat /etc/passwd | wc -l           # nombre de comptes\nfind /etc -name \"*.conf\" -mtime -7     # .conf modifiés il y a < 7 jours\nfind /var -size +10M 2>/dev/null       # fichiers > 10 Mo\ndu -sh /var/log/* | sort -h | tail -5  # 5 plus gros\nls -l /etc | tee liste.txt        # écran ET fichier"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Toujours mettre le motif de `find -name` entre guillemets : `-name \"*.conf\"`. Sinon le shell remplace `*.conf` avant que find ne le voie.",
+    "dar": "Dima dir guillemets : `-name \"*.conf\"`.",
+    "en": "Always quote the `find -name` pattern: `-name \"*.conf\"`. Otherwise the shell expands it first."
+   }
+  },
+  {
+   "type": "mission",
+   "missionId": "m-tp1-pipes"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lt-10",
+    "lt-12",
+    "lt-14"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Lire `ls -l`",
+    "dar": "Kifach t9ra `ls -l`",
+    "en": "Reading `ls -l`"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "-rw-r--r--. 1 root root 2840 nov. 18 13:01 /etc/passwd\n│└┬┘└┬┘└┬┘  │  │    │     │         │\n│ u  g  o   │  │    │     │         └ nom\n│           │  │    │     └ date de modification\n│           │  │    └ taille (octets)\n│           │  └ groupe propriétaire\n│           └ nombre de liens (puis propriétaire : root)\n└ type : - fichier, d répertoire, l lien"
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Connexion SSH",
+    "dar": "Connexion SSH",
+    "en": "SSH connection"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "systemctl status sshd              # le service tourne ?\nsystemctl is-enabled sshd          # démarre au boot ?\nfirewall-cmd --list-services       # ssh autorisé par le pare-feu ?\nhostname ; hostname -I             # nom et IP de la VM\nssh etudiant@192.168.56.10         # se connecter\necho $SSH_CONNECTION ; who ; w     # vérifier la session\nssh etudiant@192.168.56.10 \"uptime; df -h /\"   # exécuter à distance"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Dans le terminal du site, `ssh etudiant@localhost` fonctionne (mot de passe `etudiant`) : teste un mot de passe verrouillé ou expiré !",
+    "dar": "F terminal dyal site, `ssh etudiant@localhost` khddam (mot de passe `etudiant`).",
+    "en": "In the site's terminal, `ssh etudiant@localhost` works (password `etudiant`): try a locked or expired password!"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lt-18",
+    "lt-19"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "`mkdir -p`, `rm -rf` (irréversible), `cp -p` (garde droits/dates), chemins absolus (`/…`) vs relatifs.",
+   "dar": "`mkdir -p`, `rm -rf`, `cp -p`, absolu vs relatif.",
+   "en": "`mkdir -p`, `rm -rf` (irreversible), `cp -p` (keeps perms/dates), absolute vs relative paths."
+  },
+  {
+   "fr": "`$` utilisateur, `#` root ; `tty` → /dev/pts/N ou /dev/ttyN.",
+   "dar": "`$` user, `#` root ; `tty`.",
+   "en": "`$` user, `#` root; `tty` → /dev/pts/N or /dev/ttyN."
+  },
+  {
+   "fr": "man : sections 1 (commandes), 5 (fichiers), 8 (admin) ; `man -k` = apropos ; `mandb`.",
+   "dar": "man : 1, 5, 8 ; `man -k` ; `mandb`.",
+   "en": "man: sections 1 (commands), 5 (files), 8 (admin); `man -k` = apropos; `mandb`."
+  },
+  {
+   "fr": "`>` écrase, `>>` ajoute, `2>` erreurs, `&>` tout, `2>/dev/null` jeter ; `|` tube ; `tee` écran + fichier.",
+   "dar": "`>` mse7, `>>` zid, `2>` erreurs, `&>` kolchi ; `|` ; `tee`.",
+   "en": "`>` overwrite, `>>` append, `2>` errors, `&>` both, `2>/dev/null` discard; `|` pipe; `tee` screen + file."
+  },
+  {
+   "fr": "`cut -d: -f1`, `grep -c`, `sort -h`, `wc -l`, `find -name \"*.x\" -mtime -7 -size +10M`, `du -sh … | sort -h | tail -5`.",
+   "dar": "Filtres : cut, grep -c, sort -h, wc -l, find, du.",
+   "en": "Filters: `cut -d: -f1`, `grep -c`, `sort -h`, `wc -l`, `find`, `du -sh … | sort -h | tail -5`."
+  },
+  {
+   "fr": "SSH : `systemctl status sshd`, `firewall-cmd --list-services`, `ssh user@IP \"cmd1; cmd2\"`, `$SSH_CONNECTION`.",
+   "dar": "SSH : status sshd, firewall-cmd, ssh user@IP.",
+   "en": "SSH: `systemctl status sshd`, `firewall-cmd --list-services`, `ssh user@IP \"cmd1; cmd2\"`, `$SSH_CONNECTION`."
+  }
+ ]
+}

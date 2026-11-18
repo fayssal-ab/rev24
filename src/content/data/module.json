@@ -1,0 +1,47 @@
+{
+ "id": "data",
+ "title": {
+  "fr": "Analyse de données",
+  "dar": "Analyse de données",
+  "en": "Data analysis"
+ },
+ "subtitle": {
+  "fr": "Pr. A. Kadiri — pandas, visualisation, tests d'hypothèses",
+  "dar": "Pr. A. Kadiri — pandas, visualisation, tests",
+  "en": "Pr. A. Kadiri — pandas, visualisation, hypothesis tests"
+ },
+ "color": "#8b5cf6",
+ "icon": "chart",
+ "theme": "violet",
+ "chapters": [
+  "d-intro",
+  "pandas",
+  "visu",
+  "tests"
+ ],
+ "upcoming": [
+  {
+   "id": "chap2",
+   "title": {
+    "fr": "Chap 2 — (à venir)",
+    "dar": "Fasl 2 — (jay)",
+    "en": "Ch. 2 — (coming)"
+   }
+  },
+  {
+   "id": "chap3",
+   "title": {
+    "fr": "Chap 3 — (à venir)",
+    "dar": "Fasl 3 — (jay)",
+    "en": "Ch. 3 — (coming)"
+   }
+  }
+ ],
+ "annales": [],
+ "weights": {
+  "tests": 5,
+  "pandas": 3,
+  "visu": 2,
+  "d-intro": 1
+ }
+}

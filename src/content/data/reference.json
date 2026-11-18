@@ -1,0 +1,252 @@
+[
+ {
+  "id": "r-di-1",
+  "chapter": "d-intro",
+  "syntax": "Décrire · relier · prédire · décider",
+  "desc": {
+   "fr": "4 objectifs",
+   "dar": "4 ahdaf",
+   "en": "4 goals"
+  }
+ },
+ {
+  "id": "r-di-2",
+  "chapter": "d-intro",
+  "syntax": "Descriptive · exploratoire · confirmatoire · prédictive · prescriptive",
+  "desc": {
+   "fr": "5 types",
+   "dar": "5 anwa3",
+   "en": "5 types"
+  }
+ },
+ {
+  "id": "r-di-3",
+  "chapter": "d-intro",
+  "syntax": "Collecte → nettoyage → exploration → modélisation → interprétation",
+  "desc": {
+   "fr": "5 étapes",
+   "dar": "5 mara7il",
+   "en": "5 steps"
+  }
+ },
+ {
+  "id": "r-dp-1",
+  "chapter": "pandas",
+  "syntax": "pd.read_csv(f, sep=\";\", decimal=\",\", header=None, skiprows=1)",
+  "desc": {
+   "fr": "Lire un CSV",
+   "dar": "9ra CSV",
+   "en": "Read a CSV"
+  }
+ },
+ {
+  "id": "r-dp-2",
+  "chapter": "pandas",
+  "syntax": "pd.read_excel(f, sheet_name=0|\"nom\"|None, usecols, nrows, index_col)",
+  "desc": {
+   "fr": "Lire un classeur",
+   "dar": "9ra Excel",
+   "en": "Read Excel"
+  }
+ },
+ {
+  "id": "r-dp-3",
+  "chapter": "pandas",
+  "syntax": "df.to_csv(f, sep=\",\", decimal=\".\", index=False)",
+  "desc": {
+   "fr": "Exporter",
+   "dar": "Export",
+   "en": "Export"
+  }
+ },
+ {
+  "id": "r-dp-4",
+  "chapter": "pandas",
+  "syntax": "df.to_excel · df.to_json",
+  "desc": {
+   "fr": "Autres exports",
+   "dar": "Exports",
+   "en": "Other exports"
+  }
+ },
+ {
+  "id": "r-dp-5",
+  "chapter": "pandas",
+  "syntax": "pd.Series · pd.DataFrame",
+  "desc": {
+   "fr": "1D · 2D",
+   "dar": "1D · 2D",
+   "en": "1D · 2D"
+  }
+ },
+ {
+  "id": "r-dv-1",
+  "chapter": "visu",
+  "syntax": "fig, ax = plt.subplots() · ax.set_title/xlabel/ylabel/xlim",
+  "desc": {
+   "fr": "Style orienté objet",
+   "dar": "OO",
+   "en": "OO style"
+  }
+ },
+ {
+  "id": "r-dv-2",
+  "chapter": "visu",
+  "syntax": "ax.plot · ax.scatter(c, s, alpha, cmap) · fig.colorbar",
+  "desc": {
+   "fr": "Courbe · nuage de points",
+   "dar": "Courbe · scatter",
+   "en": "Line · scatter"
+  }
+ },
+ {
+  "id": "r-dv-3",
+  "chapter": "visu",
+  "syntax": "ax.hist(bins, density, cumulative) · ax.bar · ax.pie(autopct, explode, startangle)",
+  "desc": {
+   "fr": "Histogramme · barres · camembert",
+   "dar": "Hist · barres · pie",
+   "en": "Histogram · bars · pie"
+  }
+ },
+ {
+  "id": "r-dv-4",
+  "chapter": "visu",
+  "syntax": "plt.subplots(2, 2) · fig.tight_layout()",
+  "desc": {
+   "fr": "Grille de graphiques",
+   "dar": "Grille",
+   "en": "Grid"
+  }
+ },
+ {
+  "id": "r-dv-5",
+  "chapter": "visu",
+  "syntax": "fig.savefig(\"f.png\", dpi=300) · plt.rcParams",
+  "desc": {
+   "fr": "Export · réglages",
+   "dar": "Export",
+   "en": "Export · settings"
+  }
+ },
+ {
+  "id": "r-dv-6",
+  "chapter": "visu",
+  "syntax": "sns.histplot(kde=True) · kdeplot · ecdfplot · boxplot",
+  "desc": {
+   "fr": "Distributions Seaborn",
+   "dar": "Distributions",
+   "en": "Seaborn distributions"
+  }
+ },
+ {
+  "id": "r-dv-7",
+  "chapter": "visu",
+  "syntax": "sns.scatterplot(hue) · lineplot · relplot(col)",
+  "desc": {
+   "fr": "Relations Seaborn",
+   "dar": "Relations",
+   "en": "Seaborn relations"
+  }
+ },
+ {
+  "id": "r-dv-8",
+  "chapter": "visu",
+  "syntax": "sns.heatmap(corr, annot=True, cmap=\"coolwarm\", mask=np.triu(...))",
+  "desc": {
+   "fr": "Matrice de corrélation",
+   "dar": "Corrélation",
+   "en": "Correlation matrix"
+  }
+ },
+ {
+  "id": "r-dv-9",
+  "chapter": "visu",
+  "syntax": "df.plot() · df.hist() · df.plot.box/area/scatter",
+  "desc": {
+   "fr": "Graphiques pandas",
+   "dar": "pandas",
+   "en": "pandas plots"
+  }
+ },
+ {
+  "id": "r-dt-1",
+  "chapter": "tests",
+  "syntax": "Z0 = (x̄ − µ0)/(σ/√n)",
+  "desc": {
+   "fr": "σ connu",
+   "dar": "σ m3rouf",
+   "en": "σ known"
+  }
+ },
+ {
+  "id": "r-dt-2",
+  "chapter": "tests",
+  "syntax": "T0 = (x̄ − µ0)/(S/√n) ~ t(n−1)",
+  "desc": {
+   "fr": "σ inconnu",
+   "dar": "σ ma m3roufch",
+   "en": "σ unknown"
+  }
+ },
+ {
+  "id": "r-dt-3",
+  "chapter": "tests",
+  "syntax": "S = √(Σ(xi − x̄)²/(n−1))",
+  "desc": {
+   "fr": "Écart-type corrigé",
+   "dar": "S",
+   "en": "Corrected SD"
+  }
+ },
+ {
+  "id": "r-dt-4",
+  "chapter": "tests",
+  "syntax": "|Z0| > z(α/2) · Z0 < −z(α) · Z0 > z(α)",
+  "desc": {
+   "fr": "Régions critiques",
+   "dar": "Régions",
+   "en": "Critical regions"
+  }
+ },
+ {
+  "id": "r-dt-5",
+  "chapter": "tests",
+  "syntax": "PV = 2(1−Φ(|Z0|)) · Φ(Z0) · 1−Φ(Z0)",
+  "desc": {
+   "fr": "P-values ; rejet si α > PV",
+   "dar": "PV",
+   "en": "P-values"
+  }
+ },
+ {
+  "id": "r-dt-6",
+  "chapter": "tests",
+  "syntax": "z : 1,282 · 1,645 · 1,96 · 2,054 · 2,326 · 2,576",
+  "desc": {
+   "fr": "10 %, 5 %, 2,5 %, 2 %, 1 %, 0,5 %",
+   "dar": "Seuils",
+   "en": "Upper quantiles"
+  }
+ },
+ {
+  "id": "r-dt-7",
+  "chapter": "tests",
+  "syntax": "χ² = Σ(Oi − Ei)²/Ei ; Ei = n·pi ; ν = k − p − 1",
+  "desc": {
+   "fr": "Ajustement du χ²",
+   "dar": "χ²",
+   "en": "χ² fit"
+  }
+ },
+ {
+  "id": "r-dt-8",
+  "chapter": "tests",
+  "syntax": "χ²(0,05) : 3,841 · 5,991 · 7,815",
+  "desc": {
+   "fr": "ν = 1, 2, 3",
+   "dar": "ν = 1, 2, 3",
+   "en": "ν = 1, 2, 3"
+  }
+ }
+]

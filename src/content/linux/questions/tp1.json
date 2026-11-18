@@ -1,0 +1,1146 @@
+[
+ {
+  "id": "lt-01",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Crée en une seule commande l'arborescence `projets/web/css` (les répertoires parents n'existent pas).",
+   "dar": "Dir b commande wa7da `projets/web/css` (les parents ma kaynin-ch).",
+   "en": "Create the tree `projets/web/css` in one command (parents do not exist)."
+  },
+  "answer": [
+   "mkdir -p projets/web/css"
+  ],
+  "explanation": {
+   "fr": "`-p` (*parents*) crée les répertoires intermédiaires manquants, sans erreur s'ils existent déjà.",
+   "dar": "`-p` (*parents*) kaydir les répertoires li na9sin, bla erreur ila kaynin.",
+   "en": "`-p` (*parents*) creates missing intermediate directories, with no error if they exist."
+  },
+  "wrongExplanations": {
+   "mkdir projets/web/css": {
+    "fr": "Sans `-p`, `mkdir` échoue : « Aucun fichier ou dossier de ce type » car `projets/web` n'existe pas.",
+    "dar": "Bla `-p`, `mkdir` kayfchel 7it `projets/web` ma kaynch.",
+    "en": "Without `-p`, `mkdir` fails because `projets/web` does not exist."
+   }
+  },
+  "tags": [
+   "fichiers"
+  ]
+ },
+ {
+  "id": "lt-02",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche **tous** les fichiers du répertoire courant, y compris cachés, au format long.",
+   "dar": "Werri **ga3** les fichiers, 7ta li mkhbbyin, b format long.",
+   "en": "List **all** files in the current directory, including hidden ones, in long format."
+  },
+  "answer": [
+   "ls -la",
+   "ls -al",
+   "ls -l -a",
+   "ls -a -l"
+  ],
+  "explanation": {
+   "fr": "`-l` = format long, `-a` = *all* (inclut les fichiers commençant par un point comme `.bashrc`). L'ordre des options courtes est libre.",
+   "dar": "`-l` = format long, `-a` = *all* (7ta `.bashrc`). Tartib dyal options ma kayhemmch.",
+   "en": "`-l` = long format, `-a` = *all* (includes dot files like `.bashrc`). Short option order does not matter."
+  },
+  "wrongExplanations": {
+   "ls -l": {
+    "fr": "Il manque `-a` : les fichiers cachés n'apparaissent pas.",
+    "dar": "Na9es `-a` : fichiers mkhbbyin ma kaybanouch.",
+    "en": "Missing `-a`: hidden files are not shown."
+   }
+  },
+  "tags": [
+   "fichiers"
+  ]
+ },
+ {
+  "id": "lt-03",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Supprime le répertoire `projets` et **tout son contenu**, sans confirmation.",
+   "dar": "Mse7 `projets` w **ga3 li fih**, bla ma ysowlek.",
+   "en": "Delete `projets` and **all its content**, without confirmation."
+  },
+  "answer": [
+   "rm -rf projets",
+   "rm -fr projets",
+   "rm -r -f projets",
+   "rm -Rf projets"
+  ],
+  "explanation": {
+   "fr": "`-r` récursif (répertoires), `-f` force (pas de question, pas d'erreur si absent). Irréversible : pas de corbeille !",
+   "dar": "`-r` récursif, `-f` force. Ma kayrje3ch : ma kaynach corbeille !",
+   "en": "`-r` recursive (directories), `-f` force (no prompt, no error if missing). Irreversible: there is no trash!"
+  },
+  "wrongExplanations": {
+   "rm projets": {
+    "fr": "« est un dossier » : sans `-r`, `rm` refuse les répertoires.",
+    "dar": "« est un dossier » : bla `-r`, `rm` ma kaymse7ch répertoires.",
+    "en": "\"is a directory\": without `-r`, `rm` refuses directories."
+   },
+   "rmdir projets": {
+    "fr": "`rmdir` ne supprime que des répertoires **vides**.",
+    "dar": "`rmdir` kaymse7 ghir répertoires **khawyin**.",
+    "en": "`rmdir` only removes **empty** directories."
+   }
+  },
+  "tags": [
+   "fichiers"
+  ]
+ },
+ {
+  "id": "lt-04",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que signifie le `#` à la fin du prompt `[root@rhel9 ~]#` ?",
+   "dar": "Chnou ma3na `#` f lekher dyal `[root@rhel9 ~]#` ?",
+   "en": "What does the `#` at the end of `[root@rhel9 ~]#` mean?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "On est connecté en root (administrateur)",
+     "dar": "Nta root (admin)",
+     "en": "You are logged in as root (administrator)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "On est dans un commentaire",
+     "dar": "Nta f commentaire",
+     "en": "You are in a comment"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La commande précédente a échoué",
+     "dar": "Commande li fatet fchlat",
+     "en": "The previous command failed"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "On est connecté en SSH",
+     "dar": "Nta f SSH",
+     "en": "You are connected via SSH"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`#` = **root**, `$` = utilisateur ordinaire. Le `~` indique qu'on est dans son répertoire personnel.",
+   "dar": "`#` = **root**, `$` = user 3adi. `~` = répertoire personnel.",
+   "en": "`#` = **root**, `$` = regular user. `~` means you are in your home directory."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le `#` du prompt n'a rien à voir avec les commentaires de script.",
+    "dar": "`#` dyal prompt machi commentaire.",
+    "en": "The prompt `#` is unrelated to script comments."
+   },
+   "c": {
+    "fr": "Le statut se voit avec `echo $?`, pas dans le prompt.",
+    "dar": "Statut kayban b `echo $?`.",
+    "en": "Exit status is shown by `echo $?`, not the prompt."
+   },
+   "d": {
+    "fr": "SSH ou pas, le symbole dépend uniquement de l'utilisateur.",
+    "dar": "SSH wla la, rmz kay3tamed 3la user.",
+    "en": "SSH or not, the symbol depends only on the user."
+   }
+  },
+  "tags": [
+   "shell"
+  ]
+ },
+ {
+  "id": "lt-05",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence entre `man 1 passwd` et `man 5 passwd` ?",
+   "dar": "Chnou lfar9 bin `man 1 passwd` w `man 5 passwd` ?",
+   "en": "Difference between `man 1 passwd` and `man 5 passwd`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Section 1 = la commande passwd ; section 5 = le format du fichier /etc/passwd",
+     "dar": "Section 1 = commande ; section 5 = format dyal /etc/passwd",
+     "en": "Section 1 = the passwd command; section 5 = the /etc/passwd file format"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Section 5 = version 5 de passwd",
+     "dar": "Section 5 = version 5",
+     "en": "Section 5 = passwd version 5"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Section 1 = page en anglais, 5 = en français",
+     "dar": "Section 1 = anglais, 5 = français",
+     "en": "Section 1 = English, 5 = French"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Le manuel est divisé en sections : **1** commandes utilisateur, **5** formats de fichiers, **8** administration. `man 5 passwd` décrit les 7 champs de `/etc/passwd`.",
+   "dar": "Man fih sections : **1** commandes, **5** formats dyal fichiers, **8** administration.",
+   "en": "The manual has sections: **1** user commands, **5** file formats, **8** administration. `man 5 passwd` describes the 7 fields of `/etc/passwd`."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Les deux pages sont différentes.",
+    "dar": "Bjouj mkhtalfin.",
+    "en": "The two pages differ."
+   },
+   "c": {
+    "fr": "Le chiffre est une section, pas une version.",
+    "dar": "Ra9m = section, machi version.",
+    "en": "The number is a section, not a version."
+   },
+   "d": {
+    "fr": "La langue dépend de `LANG`, pas de la section.",
+    "dar": "Logha kat3tamed 3la `LANG`.",
+    "en": "Language depends on `LANG`, not the section."
+   }
+  },
+  "tags": [
+   "man"
+  ]
+ },
+ {
+  "id": "lt-06",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Recherche toutes les pages de manuel dont la description contient le mot « password ».",
+   "dar": "Qelleb 3la ga3 pages man li fihom « password ».",
+   "en": "Search all manual pages whose description contains \"password\"."
+  },
+  "answer": [
+   "man -k password",
+   "apropos password"
+  ],
+  "explanation": {
+   "fr": "`man -k` (équivalent `apropos`) cherche dans les descriptions. Si l'index est vide : `mandb` (root) le reconstruit.",
+   "dar": "`man -k` (= `apropos`) kayqelleb f descriptions. Ila index khawi : `mandb`.",
+   "en": "`man -k` (same as `apropos`) searches descriptions. If the index is empty, `mandb` (root) rebuilds it."
+  },
+  "wrongExplanations": {
+   "man password": {
+    "fr": "Il n'existe pas de page nommée « password » : il faut chercher par mot-clé avec `-k`.",
+    "dar": "Ma kaynach page smitha « password » : qelleb b `-k`.",
+    "en": "There is no page named \"password\": search by keyword with `-k`."
+   }
+  },
+  "tags": [
+   "man"
+  ]
+ },
+ {
+  "id": "lt-07",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que répond `type cd` ?",
+   "dar": "Chnou kayjaweb `type cd` ?",
+   "en": "What does `type cd` print?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "cd est /usr/bin/cd",
+     "dar": "cd est /usr/bin/cd",
+     "en": "cd is /usr/bin/cd"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "cd est une primitive du shell",
+     "dar": "cd est une primitive du shell",
+     "en": "cd is a shell builtin"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "cd est un alias",
+     "dar": "cd est un alias",
+     "en": "cd is an alias"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "cd : non trouvé",
+     "dar": "cd : non trouvé",
+     "en": "cd: not found"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`cd` est une **primitive** (builtin) : elle doit modifier le répertoire du shell lui-même, ce qu'un programme externe ne peut pas faire. `type` distingue primitive, alias (`ls`) et exécutable (`useradd est /usr/sbin/useradd`).",
+   "dar": "`cd` **primitive** (builtin) : khassha tbeddel répertoire dyal shell bra7o.",
+   "en": "`cd` is a **builtin**: it must change the shell's own directory, which an external program cannot do. `type` tells builtins, aliases (`ls`) and executables apart."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Il n'y a pas de binaire `cd` dans /usr/bin.",
+    "dar": "Ma kaynch binaire `cd`.",
+    "en": "There is no `cd` binary."
+   },
+   "c": {
+    "fr": "C'est `ls` qui est un alias (`ls --color=auto`).",
+    "dar": "`ls` howa alias.",
+    "en": "`ls` is the alias (`ls --color=auto`)."
+   },
+   "d": {
+    "fr": "`cd` existe toujours dans bash.",
+    "dar": "`cd` dima kayn.",
+    "en": "`cd` always exists in bash."
+   }
+  },
+  "tags": [
+   "shell"
+  ]
+ },
+ {
+  "id": "lt-08",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `!!` dans bash ?",
+   "dar": "Chnou kaydir `!!` f bash ?",
+   "en": "What does `!!` do in bash?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Annule la dernière commande",
+     "dar": "Kaylghi commande lekhra",
+     "en": "Undoes the last command"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Réexécute la dernière commande",
+     "dar": "Kay3awed commande lekhra",
+     "en": "Re-runs the last command"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Affiche l'historique",
+     "dar": "Kayban historique",
+     "en": "Shows the history"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Passe en root",
+     "dar": "Kaydouz root",
+     "en": "Switches to root"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`!!` réexécute la dernière commande (utile : `sudo !!`). `!n` exécute la commande n° n de `history`, **Ctrl+R** recherche dans l'historique.",
+   "dar": "`!!` kay3awed commande lekhra (`sudo !!`). `!n` = commande ra9m n, **Ctrl+R** = recherche.",
+   "en": "`!!` re-runs the last command (handy: `sudo !!`). `!n` runs command #n from `history`, **Ctrl+R** searches history."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "On ne peut pas « annuler » une commande dans le shell.",
+    "dar": "Ma ymkench tlghi commande.",
+    "en": "You cannot \"undo\" a command in the shell."
+   },
+   "c": {
+    "fr": "C'est `history`.",
+    "dar": "Hadi `history`.",
+    "en": "That is `history`."
+   },
+   "d": {
+    "fr": "C'est `su -` ou `sudo -i`.",
+    "dar": "Hadi `su -` wla `sudo -i`.",
+    "en": "That is `su -` or `sudo -i`."
+   }
+  },
+  "tags": [
+   "shell"
+  ]
+ },
+ {
+  "id": "lt-09",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quels raccourcis clavier sont corrects ?",
+   "dar": "Ach men raccourcis s7a7 ?",
+   "en": "Which shortcuts are correct?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Ctrl+C : interrompre la commande en cours",
+     "dar": "Ctrl+C : w9ef commande",
+     "en": "Ctrl+C: interrupt the running command"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Ctrl+L : effacer l'écran",
+     "dar": "Ctrl+L : msse7 écran",
+     "en": "Ctrl+L: clear the screen"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Ctrl+A : aller en début de ligne",
+     "dar": "Ctrl+A : bdayat ster",
+     "en": "Ctrl+A: go to line start"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Ctrl+E : effacer la ligne",
+     "dar": "Ctrl+E : msse7 ster",
+     "en": "Ctrl+E: erase the line"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Ctrl+D : fin d'entrée / déconnexion",
+     "dar": "Ctrl+D : fin / déconnexion",
+     "en": "Ctrl+D: end of input / logout"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Ctrl+C interrompt, Ctrl+L efface, Ctrl+A début, **Ctrl+E fin de ligne**, Ctrl+U efface avant le curseur, Ctrl+D fin d'entrée (quitte le shell si ligne vide).",
+   "dar": "Ctrl+C w9ef, Ctrl+L msse7, Ctrl+A bdaya, **Ctrl+E lekher**, Ctrl+U msse7 9bel curseur, Ctrl+D fin.",
+   "en": "Ctrl+C interrupts, Ctrl+L clears, Ctrl+A start, **Ctrl+E end of line**, Ctrl+U deletes before cursor, Ctrl+D end of input."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Ctrl+E va en **fin** de ligne ; c'est Ctrl+U qui efface (avant le curseur).",
+    "dar": "Ctrl+E l **lekher** ; Ctrl+U howa li kaymse7.",
+    "en": "Ctrl+E goes to the **end**; Ctrl+U erases (before cursor)."
+   }
+  },
+  "tags": [
+   "shell"
+  ]
+ },
+ {
+  "id": "lt-10",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `commande > fichier` si `fichier` existe déjà ?",
+   "dar": "Chnou kaydir `commande > fichier` ila fichier kayn ?",
+   "en": "What does `command > file` do if `file` exists?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Ajoute à la fin",
+     "dar": "Kayzid f lekher",
+     "en": "Appends to the end"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Écrase le contenu",
+     "dar": "Kaymse7 contenu w ykteb",
+     "en": "Overwrites the content"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Refuse",
+     "dar": "Kayrfod",
+     "en": "Refuses"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Écrit les erreurs",
+     "dar": "Kayktb les erreurs",
+     "en": "Writes the errors"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`>` **écrase** (tronque) ; `>>` **ajoute** ; `2>` redirige les **erreurs** ; `&>` sortie + erreurs ; `2>/dev/null` jette les erreurs.",
+   "dar": "`>` kay**mse7** ; `>>` kay**zid** ; `2>` les **erreurs** ; `&>` bjouj ; `2>/dev/null` kayrmi erreurs.",
+   "en": "`>` **overwrites**; `>>` **appends**; `2>` redirects **errors**; `&>` stdout + stderr; `2>/dev/null` discards errors."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est `>>`.",
+    "dar": "Hadi `>>`.",
+    "en": "That is `>>`."
+   },
+   "c": {
+    "fr": "bash écrase sans demander (sauf option noclobber).",
+    "dar": "bash kaymse7 bla ma ysowel.",
+    "en": "bash overwrites without asking (unless noclobber)."
+   },
+   "d": {
+    "fr": "Les erreurs, c'est `2>`.",
+    "dar": "Erreurs : `2>`.",
+    "en": "Errors are `2>`."
+   }
+  },
+  "tags": [
+   "redirections"
+  ]
+ },
+ {
+  "id": "lt-11",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Liste `/root` en tant qu'utilisateur ordinaire en **jetant** les messages d'erreur.",
+   "dar": "Lister `/root` b user 3adi w **rmi** les erreurs.",
+   "en": "List `/root` as a regular user while **discarding** error messages."
+  },
+  "answer": [
+   "ls /root 2>/dev/null",
+   "ls /root 2> /dev/null"
+  ],
+  "explanation": {
+   "fr": "`2>` redirige le flux d'erreur (descripteur 2) ; `/dev/null` est un « trou noir » qui avale tout.",
+   "dar": "`2>` kaydi flux dyal erreurs (2) ; `/dev/null` kayblle3 kolchi.",
+   "en": "`2>` redirects the error stream (fd 2); `/dev/null` swallows everything."
+  },
+  "wrongExplanations": {
+   "ls /root > /dev/null": {
+    "fr": "`>` redirige la sortie **standard**, pas les erreurs : le message « Permission non accordée » s'affiche quand même.",
+    "dar": "`>` kaydi sortie standard, machi erreurs.",
+    "en": "`>` redirects **stdout**, not errors: \"Permission denied\" still shows."
+   }
+  },
+  "tags": [
+   "redirections"
+  ]
+ },
+ {
+  "id": "lt-12",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche **uniquement les noms de connexion** (1er champ) de `/etc/passwd`.",
+   "dar": "Werri **ghir les logins** (champ lowel) mn `/etc/passwd`.",
+   "en": "Print **only the login names** (1st field) of `/etc/passwd`."
+  },
+  "answer": [
+   "cut -d: -f1 /etc/passwd",
+   "cut -d : -f 1 /etc/passwd",
+   "cut -f1 -d: /etc/passwd"
+  ],
+  "explanation": {
+   "fr": "`cut -d:` choisit `:` comme délimiteur, `-f1` garde le 1er champ.",
+   "dar": "`-d:` délimiteur `:`, `-f1` champ lowel.",
+   "en": "`-d:` sets `:` as the delimiter, `-f1` keeps field 1."
+  },
+  "wrongExplanations": {
+   "cut -f1 /etc/passwd": {
+    "fr": "Sans `-d:`, le délimiteur par défaut est la tabulation : toute la ligne est affichée.",
+    "dar": "Bla `-d:`, délimiteur = tabulation : ster kaml kayban.",
+    "en": "Without `-d:`, the default delimiter is TAB: whole lines are printed."
+   }
+  },
+  "tags": [
+   "filtres"
+  ]
+ },
+ {
+  "id": "lt-13",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Compte le nombre de lignes de `/etc/passwd` qui contiennent `bash`.",
+   "dar": "7seb ch7al mn ster f `/etc/passwd` fih `bash`.",
+   "en": "Count the lines of `/etc/passwd` that contain `bash`."
+  },
+  "answer": [
+   "grep -c bash /etc/passwd",
+   "grep bash /etc/passwd | wc -l"
+  ],
+  "explanation": {
+   "fr": "`grep -c` compte les lignes correspondantes (équivaut à `grep … | wc -l`).",
+   "dar": "`grep -c` kay7seb lignes (= `grep … | wc -l`).",
+   "en": "`grep -c` counts matching lines (same as `grep … | wc -l`)."
+  },
+  "wrongExplanations": {
+   "wc -l /etc/passwd": {
+    "fr": "Compte **toutes** les lignes, pas seulement celles avec bash.",
+    "dar": "Kay7seb **ga3** lignes.",
+    "en": "Counts **all** lines, not only bash ones."
+   }
+  },
+  "tags": [
+   "filtres"
+  ]
+ },
+ {
+  "id": "lt-14",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les **5 plus gros** éléments de `/var/log` (taille lisible), du plus petit au plus grand.",
+   "dar": "Werri **5 kbar** f `/var/log` (taille lisible), mn sghir l kbir.",
+   "en": "Show the **5 largest** items in `/var/log` (human sizes), smallest to largest."
+  },
+  "answer": [
+   "du -sh /var/log/* | sort -h | tail -5",
+   "du -sh /var/log/* | sort -h | tail -n 5"
+  ],
+  "explanation": {
+   "fr": "`du -sh` : taille totale lisible de chaque élément ; `sort -h` trie des tailles humaines (K < M < G) ; `tail -5` garde les 5 dernières (les plus grosses).",
+   "dar": "`du -sh` taille ; `sort -h` tri humain ; `tail -5` 5 lekhrin.",
+   "en": "`du -sh`: human total per item; `sort -h` sorts human sizes (K < M < G); `tail -5` keeps the last 5 (largest)."
+  },
+  "wrongExplanations": {
+   "du -sh /var/log/* | sort -n | tail -5": {
+    "fr": "`sort -n` compare des nombres : « 2,3M » < « 6,1K »… il faut `-h` pour les unités.",
+    "dar": "`sort -n` ma kayfhemch unités : khass `-h`.",
+    "en": "`sort -n` ignores units (2.3M < 6.1K numerically): use `-h`."
+   },
+   "du -sh /var/log/* | sort -h | head -5": {
+    "fr": "`head` donne les 5 plus **petits**.",
+    "dar": "`head` kay3ti 5 **sghar**.",
+    "en": "`head` gives the 5 **smallest**."
+   }
+  },
+  "tags": [
+   "filtres",
+   "pipes"
+  ]
+ },
+ {
+  "id": "lt-15",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Cherche dans `/etc` les fichiers dont le nom se termine par `.conf`, modifiés il y a **moins de 7 jours**.",
+   "dar": "Qelleb f `/etc` 3la fichiers `.conf` tbeddlou **a9al mn 7 iyam**.",
+   "en": "Find files in `/etc` ending in `.conf`, modified **less than 7 days** ago."
+  },
+  "answer": [
+   "find /etc -name \"*.conf\" -mtime -7",
+   "find /etc -mtime -7 -name \"*.conf\"",
+   "find /etc -type f -name \"*.conf\" -mtime -7"
+  ],
+  "explanation": {
+   "fr": "`-name` avec motif entre guillemets (sinon le shell l'étend), `-mtime -7` = moins de 7 jours (`+7` = plus de 7).",
+   "dar": "`-name` b guillemets, `-mtime -7` = a9al mn 7 iyam.",
+   "en": "`-name` with a quoted pattern (otherwise the shell expands it), `-mtime -7` = less than 7 days (`+7` = more than 7)."
+  },
+  "wrongExplanations": {
+   "find /etc -name \"*.conf\" -mtime +7": {
+    "fr": "`+7` = **plus** de 7 jours.",
+    "dar": "`+7` = **ktar** mn 7.",
+    "en": "`+7` = **more** than 7 days."
+   }
+  },
+  "tags": [
+   "find"
+  ]
+ },
+ {
+  "id": "lt-16",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans `-rw-r--r--. 1 root root 2840 nov. 18 13:01 passwd`, que vaut le 3e champ (`root`) ?",
+   "dar": "F `-rw-r--r--. 1 root root 2840 … passwd`, chnou howa champ 3 (`root`) ?",
+   "en": "In `-rw-r--r--. 1 root root 2840 … passwd`, what is the 3rd field (`root`)?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le groupe propriétaire",
+     "dar": "Groupe",
+     "en": "The owning group"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "L'utilisateur propriétaire",
+     "dar": "Mol l fichier (user)",
+     "en": "The owning user"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le nombre de liens",
+     "dar": "Nombre de liens",
+     "en": "The link count"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le type de fichier",
+     "dar": "Type dyal fichier",
+     "en": "The file type"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`ls -l` : type+droits (`-rw-r--r--`), nombre de liens (`1`), **propriétaire** (`root`), **groupe** (`root`), taille, date, nom. Le `.` final = contexte SELinux.",
+   "dar": "`ls -l` : type+droits, liens, **propriétaire**, **groupe**, taille, date, smiya.",
+   "en": "`ls -l`: type+permissions, link count, **owner**, **group**, size, date, name. The trailing `.` = SELinux context."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Le groupe est le 4e champ.",
+    "dar": "Groupe howa champ 4.",
+    "en": "The group is field 4."
+   },
+   "c": {
+    "fr": "Le nombre de liens est le 2e champ (`1`).",
+    "dar": "Liens = champ 2.",
+    "en": "The link count is field 2 (`1`)."
+   },
+   "d": {
+    "fr": "Le type est le 1er caractère (`-` fichier, `d` répertoire, `l` lien).",
+    "dar": "Type = 7arf lowel.",
+    "en": "The type is the first character (`-` file, `d` dir, `l` link)."
+   }
+  },
+  "tags": [
+   "ls"
+  ]
+ },
+ {
+  "id": "lt-17",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle commande affiche le terminal dans lequel tu es (ex. `/dev/pts/0`) ?",
+   "dar": "Ach men commande katwerri terminal (`/dev/pts/0`) ?",
+   "en": "Which command shows your terminal (e.g. `/dev/pts/0`)?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "who",
+     "dar": "who",
+     "en": "who"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "tty",
+     "dar": "tty",
+     "en": "tty"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "uname",
+     "dar": "uname",
+     "en": "uname"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "hostname",
+     "dar": "hostname",
+     "en": "hostname"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "`tty` affiche le terminal : `/dev/pts/N` = pseudo-terminal (graphique ou SSH), `/dev/ttyN` = console texte (Ctrl+Alt+F3…).",
+   "dar": "`tty` : `/dev/pts/N` = pseudo-terminal, `/dev/ttyN` = console (Ctrl+Alt+F3).",
+   "en": "`tty` prints the terminal: `/dev/pts/N` = pseudo-terminal (GUI or SSH), `/dev/ttyN` = text console (Ctrl+Alt+F3…)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "`who` liste les sessions de tous les utilisateurs.",
+    "dar": "`who` kaylister sessions dyal ga3.",
+    "en": "`who` lists every user's sessions."
+   },
+   "c": {
+    "fr": "`uname` affiche le noyau / système.",
+    "dar": "`uname` noyau.",
+    "en": "`uname` shows kernel/system info."
+   },
+   "d": {
+    "fr": "`hostname` affiche le nom de la machine.",
+    "dar": "`hostname` smiya dyal machine.",
+    "en": "`hostname` shows the machine name."
+   }
+  },
+  "tags": [
+   "shell"
+  ]
+ },
+ {
+  "id": "lt-18",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Vérifie si le service SSH est **activé au démarrage**.",
+   "dar": "Chouf wach SSH **activé f démarrage**.",
+   "en": "Check whether the SSH service is **enabled at boot**."
+  },
+  "answer": [
+   "systemctl is-enabled sshd",
+   "systemctl is-enabled sshd.service"
+  ],
+  "explanation": {
+   "fr": "`is-enabled` répond `enabled`/`disabled` (démarrage auto), `is-active` répond `active`/`inactive` (état actuel), `status` donne le détail.",
+   "dar": "`is-enabled` (démarrage), `is-active` (daba), `status` (détail).",
+   "en": "`is-enabled` answers `enabled`/`disabled` (boot), `is-active` answers `active`/`inactive` (now), `status` shows details."
+  },
+  "wrongExplanations": {
+   "systemctl is-active sshd": {
+    "fr": "`is-active` donne l'état **actuel**, pas le démarrage automatique.",
+    "dar": "`is-active` = l7ala **daba**.",
+    "en": "`is-active` gives the **current** state, not boot enablement."
+   }
+  },
+  "tags": [
+   "ssh"
+  ]
+ },
+ {
+  "id": "lt-19",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "kind": "command",
+  "prompt": {
+   "fr": "Depuis ton poste, exécute **à distance** sur `192.168.56.10` (compte `etudiant`) les commandes `uptime` puis `df -h /`, sans ouvrir de session interactive.",
+   "dar": "Mn PC dyalek, nfed **mn b3id** 3la `192.168.56.10` (`etudiant`) `uptime` w `df -h /`, bla session.",
+   "en": "From your PC, run **remotely** on `192.168.56.10` (account `etudiant`) `uptime` then `df -h /`, without an interactive session."
+  },
+  "answer": [
+   "ssh etudiant@192.168.56.10 \"uptime; df -h /\"",
+   "ssh etudiant@192.168.56.10 'uptime; df -h /'"
+  ],
+  "explanation": {
+   "fr": "Les guillemets passent les deux commandes au shell **distant** ; sans eux, `df -h /` serait exécuté localement après la fin de ssh.",
+   "dar": "Guillemets kaysifto bjouj l shell **dyal b3id**.",
+   "en": "Quotes send both commands to the **remote** shell; without them `df -h /` would run locally after ssh ends."
+  },
+  "wrongExplanations": {
+   "ssh etudiant@192.168.56.10 uptime; df -h /": {
+    "fr": "Le `;` est interprété par ton shell local : `df -h /` s'exécute sur ton poste.",
+    "dar": "`;` kayfhmo shell local : `df` kaytnfed 3endek.",
+    "en": "The `;` is interpreted locally: `df -h /` runs on your machine."
+   }
+  },
+  "tags": [
+   "ssh"
+  ]
+ },
+ {
+  "id": "lt-20",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 2,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets dans l'ordre la vérification d'un accès SSH à une VM.",
+   "dar": "Rttab tsdi9 dyal SSH l VM.",
+   "en": "Order the steps to check SSH access to a VM."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "systemctl status sshd (service actif ?)",
+     "dar": "systemctl status sshd",
+     "en": "systemctl status sshd (service running?)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "firewall-cmd --list-services (ssh autorisé ?)",
+     "dar": "firewall-cmd --list-services",
+     "en": "firewall-cmd --list-services (ssh allowed?)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ip a / hostname -I (adresse IP de la VM)",
+     "dar": "ip a / hostname -I",
+     "en": "ip a / hostname -I (VM IP address)"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "ssh etudiant@IP depuis le poste",
+     "dar": "ssh etudiant@IP",
+     "en": "ssh etudiant@IP from your PC"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "echo $SSH_CONNECTION / who (vérifier la session)",
+     "dar": "echo $SSH_CONNECTION / who",
+     "en": "echo $SSH_CONNECTION / who (check the session)"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "On vérifie le **service**, le **pare-feu**, l'**adresse**, puis on se connecte et on contrôle la session (`$SSH_CONNECTION` contient IP/port client et serveur).",
+   "dar": "Service → pare-feu → adresse → connexion → tsdi9.",
+   "en": "Check the **service**, **firewall**, **address**, then connect and verify the session (`$SSH_CONNECTION` holds client/server IP and ports)."
+  },
+  "tags": [
+   "ssh"
+  ]
+ },
+ {
+  "id": "lt-21",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi `find / -name *.conf` peut-il donner un résultat inattendu ?",
+   "dar": "3lach `find / -name *.conf` ymken y3ti natija ghariba ?",
+   "en": "Why can `find / -name *.conf` give an unexpected result?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "find ne connaît pas `*`",
+     "dar": "find ma kay3refch `*`",
+     "en": "find does not understand `*`"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Le shell remplace `*.conf` par les fichiers .conf du **répertoire courant** avant d'appeler find",
+     "dar": "Shell kaybeddel `*.conf` b fichiers dyal **répertoire courant** 9bel find",
+     "en": "The shell expands `*.conf` to **current-directory** .conf files before calling find"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "`-name` est sensible à la casse",
+     "dar": "`-name` sensible l casse",
+     "en": "`-name` is case-sensitive"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "find ne cherche pas dans /",
+     "dar": "find ma kayqellebch f /",
+     "en": "find does not search /"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Sans guillemets, **bash développe le motif** : s'il y a `a.conf` dans le répertoire courant, find reçoit `-name a.conf`. Toujours écrire `-name \"*.conf\"`.",
+   "dar": "Bla guillemets, **bash kayt-développer** motif. Dima kteb `-name \"*.conf\"`.",
+   "en": "Unquoted, **bash expands the glob**: if `a.conf` exists here, find gets `-name a.conf`. Always write `-name \"*.conf\"`."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "find comprend très bien les motifs… s'ils lui parviennent.",
+    "dar": "find kayfhem motifs… ila wslou lih.",
+    "en": "find handles patterns fine… if it receives them."
+   },
+   "c": {
+    "fr": "Vrai, mais ce n'est pas la cause ici (`-iname` ignore la casse).",
+    "dar": "S7i7 walakin machi hada sabab.",
+    "en": "True, but not the cause here (`-iname` ignores case)."
+   },
+   "d": {
+    "fr": "find parcourt bien `/`.",
+    "dar": "find kayqelleb f `/`.",
+    "en": "find does search `/`."
+   }
+  },
+  "tags": [
+   "find"
+  ]
+ },
+ {
+  "id": "lt-22",
+  "module": "linux",
+  "chapter": "tp1",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "`commande | tee resultat.txt` : quelles affirmations sont vraies ?",
+   "dar": "`commande | tee resultat.txt` : chnou s7i7 ?",
+   "en": "`command | tee result.txt`: which statements are true?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "La sortie s'affiche à l'écran",
+     "dar": "Sortie katban f écran",
+     "en": "Output is shown on screen"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La sortie est écrite dans resultat.txt",
+     "dar": "Sortie katktb f resultat.txt",
+     "en": "Output is written to result.txt"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "tee -a ajoute au lieu d'écraser",
+     "dar": "tee -a kayzid",
+     "en": "tee -a appends instead of overwriting"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Les erreurs de commande sont aussi capturées",
+     "dar": "Erreurs 7ta homa",
+     "en": "The command's errors are captured too"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "`tee` lit l'entrée standard et l'écrit **à la fois** à l'écran et dans le fichier (`-a` pour ajouter). Le tube `|` ne transmet que la sortie standard.",
+   "dar": "`tee` kayktb f écran **w** f fichier (`-a` zid). `|` kaydi ghir sortie standard.",
+   "en": "`tee` writes stdin **both** to the screen and the file (`-a` appends). The pipe only carries stdout."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Les erreurs (stderr) ne passent pas dans le tube : il faudrait `2>&1 |` ou `|&`.",
+    "dar": "Erreurs ma kaydouzouch f `|`.",
+    "en": "stderr does not go through the pipe: you need `2>&1 |` or `|&`."
+   }
+  },
+  "tags": [
+   "redirections",
+   "pipes"
+  ]
+ }
+]

@@ -1,0 +1,197 @@
+[
+ {
+  "id": "fc-sd-1",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "PID de systemd ?",
+   "dar": "PID systemd ?",
+   "en": "systemd PID?"
+  },
+  "back": {
+   "fr": "1 (`ps aux | head -2`).",
+   "dar": "1.",
+   "en": "1."
+  }
+ },
+ {
+  "id": "fc-sd-2",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "set-default vs isolate ?",
+   "dar": "set-default vs isolate ?",
+   "en": "set-default vs isolate?"
+  },
+  "back": {
+   "fr": "set-default : prochain démarrage (lien default.target). isolate : immédiat.",
+   "dar": "Boot vs daba.",
+   "en": "Next boot (link) vs now."
+  }
+ },
+ {
+  "id": "fc-sd-3",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "multi-user / graphical = quels runlevels ?",
+   "dar": "Runlevels ?",
+   "en": "Runlevels?"
+  },
+  "back": {
+   "fr": "multi-user = 3, graphical = 5 (rescue 1, poweroff 0, reboot 6).",
+   "dar": "3 / 5.",
+   "en": "3 / 5."
+  }
+ },
+ {
+  "id": "fc-sd-4",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "enable vs start ?",
+   "dar": "enable vs start ?",
+   "en": "enable vs start?"
+  },
+  "back": {
+   "fr": "enable : au démarrage (lien .wants) ; start : maintenant. `enable --now` = les deux.",
+   "dar": "Boot vs daba ; --now.",
+   "en": "Boot vs now; `--now` both."
+  }
+ },
+ {
+  "id": "fc-sd-5",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "mask ?",
+   "dar": "mask ?",
+   "en": "mask?"
+  },
+  "back": {
+   "fr": "Lien vers /dev/null : impossible de démarrer le service. unmask annule.",
+   "dar": "/dev/null ; unmask.",
+   "en": "Link to /dev/null: cannot start. unmask undoes."
+  }
+ },
+ {
+  "id": "fc-sd-6",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "reload vs restart ?",
+   "dar": "reload vs restart ?",
+   "en": "reload vs restart?"
+  },
+  "back": {
+   "fr": "reload relit la config sans arrêter ; restart arrête puis relance.",
+   "dar": "reload bla wa9f ; restart.",
+   "en": "reload re-reads config; restart stops and starts."
+  }
+ },
+ {
+  "id": "fc-sd-7",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Unités en échec ?",
+   "dar": "Unités fchlou ?",
+   "en": "Failed units?"
+  },
+  "back": {
+   "fr": "`systemctl --failed`",
+   "dar": "`systemctl --failed`",
+   "en": "`systemctl --failed`"
+  }
+ },
+ {
+  "id": "fc-sd-8",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "journalctl -b / -f / -u / -p ?",
+   "dar": "journalctl options ?",
+   "en": "journalctl options?"
+  },
+  "back": {
+   "fr": "Depuis le boot / suivre / unité / priorité.",
+   "dar": "Boot / tba3 / unité / priorité.",
+   "en": "This boot / follow / unit / priority."
+  }
+ },
+ {
+  "id": "fc-sd-9",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Priorités err, warning, info ?",
+   "dar": "Priorités ?",
+   "en": "Priorities?"
+  },
+  "back": {
+   "fr": "err = 3, warning = 4, info = 6 (0 emerg … 7 debug).",
+   "dar": "3, 4, 6.",
+   "en": "3, 4, 6."
+  }
+ },
+ {
+  "id": "fc-sd-10",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Sections d'un .service ?",
+   "dar": "Sections .service ?",
+   "en": ".service sections?"
+  },
+  "back": {
+   "fr": "[Unit] Description · [Service] ExecStart · [Install] WantedBy=multi-user.target",
+   "dar": "[Unit] [Service] [Install]",
+   "en": "[Unit] [Service] [Install]"
+  }
+ },
+ {
+  "id": "fc-sd-11",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Après avoir créé un .service ?",
+   "dar": "Mor .service ?",
+   "en": "After creating a .service?"
+  },
+  "back": {
+   "fr": "`systemctl daemon-reload` puis `enable --now`.",
+   "dar": "daemon-reload → enable --now.",
+   "en": "`daemon-reload` then `enable --now`."
+  }
+ },
+ {
+  "id": "fc-sd-12",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Analyser le temps de boot ?",
+   "dar": "Temps boot ?",
+   "en": "Analyse boot time?"
+  },
+  "back": {
+   "fr": "`systemd-analyze`, `blame`, `critical-chain`.",
+   "dar": "systemd-analyze blame.",
+   "en": "`systemd-analyze blame` / `critical-chain`."
+  }
+ },
+ {
+  "id": "fc-sd-13",
+  "module": "linux",
+  "chapter": "systemd",
+  "front": {
+   "fr": "Où mettre ses propres unités ?",
+   "dar": "Fin unités dyalek ?",
+   "en": "Where do your own units go?"
+  },
+  "back": {
+   "fr": "/etc/systemd/system/ (/usr/lib/systemd/system/ = paquets).",
+   "dar": "/etc/systemd/system/.",
+   "en": "/etc/systemd/system/."
+  }
+ }
+]

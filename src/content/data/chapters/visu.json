@@ -1,0 +1,366 @@
+{
+ "id": "visu",
+ "module": "data",
+ "order": 3,
+ "title": {
+  "fr": "Chap 4 — Visualisation des données",
+  "dar": "Fasl 4 — Visualisation",
+  "en": "Ch. 4 — Data visualisation"
+ },
+ "summary": {
+  "fr": "Pourquoi visualiser, écosystème Python, Matplotlib procédural vs orienté objet, principaux graphiques, règles d'or, choisir le bon graphique, export, Seaborn et pandas.",
+  "dar": "Matplotlib, Seaborn, choix, règles.",
+  "en": "Why visualise, ecosystem, Matplotlib styles, main charts, rules, choosing, export, Seaborn, pandas."
+ },
+ "estimatedMinutes": 50,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Pourquoi visualiser ?",
+    "dar": "3lach visualisation ?",
+    "en": "Why visualise?"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Un graphique révèle en un coup d'œil tendances, écarts, valeurs aberrantes et relations qu'un tableau de chiffres cache. Écosystème Python : **Matplotlib** (fondamental), **pandas** (débutant, `df.plot`), **Seaborn** / Altair (intermédiaire, statistique), **Plotly** / Bokeh (avancé, interactif).",
+    "dar": "Graphique kaywerri tendances. Matplotlib, pandas, Seaborn, Plotly.",
+    "en": "Charts reveal trends and outliers. Ecosystem: Matplotlib (core), pandas (beginner), Seaborn/Altair (intermediate), Plotly/Bokeh (advanced)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-01"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Deux styles Matplotlib",
+    "dar": "Jouj styles",
+    "en": "Two Matplotlib styles"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "MatplotlibStyles"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-02",
+    "dv-03"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Les graphiques de base",
+    "dar": "Graphiques",
+    "en": "Basic charts"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "fig, axs = plt.subplots(2, 2, figsize=(10, 8))\naxs[0, 0].plot(x, y, marker=\"o\")                         # courbe\nsc = axs[0, 1].scatter(x, y, c=z, s=40, alpha=0.6, cmap=\"viridis\")\nfig.colorbar(sc, ax=axs[0, 1])                           # échelle de couleurs\naxs[1, 0].hist(data, bins=20, density=True)              # cumulative=True : cumulé\naxs[1, 1].pie(parts, autopct=\"%1.1f%%\", explode=(0.1, 0, 0), startangle=90)\nfig.tight_layout()\nfig.savefig(\"tableau.png\", dpi=300)                      # PNG, PDF, SVG, JPG"
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "import numpy as np\nx = np.arange(3); w = 0.35\nax.bar(x - w/2, ventes_2024, w, label=\"2024\")            # barres groupées\nax.bar(x + w/2, ventes_2025, w, label=\"2025\")\nax.set_xticks(x, [\"A\", \"B\", \"C\"]); ax.legend()",
+   "caption": {
+    "fr": "Diagramme en barres groupé",
+    "dar": "Barres groupées",
+    "en": "Grouped bar chart"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-08",
+    "dv-09",
+    "dv-10",
+    "dv-11"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Règles d'or et erreurs",
+    "dar": "Qawa3id w akhta2",
+    "en": "Golden rules and mistakes"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Règles d'or** : simplicité, clarté (titre, axes, unités, légende), précision, couleurs adaptées et accessibles, **honnêteté** (pas d'axe tronqué trompeur).\n\n**Erreurs fréquentes** : 3D inutile, couleurs non accessibles (rouge/vert), échelle logarithmique injustifiée, surcharge d'informations, labels illisibles.",
+    "dar": "Qawa3id : basata, wodo7, di9a, alwan, amana. Akhta2 : 3D, alwan, log, bzaf, labels.",
+    "en": "**Rules**: simplicity, clarity, accuracy, colours, honesty. **Mistakes**: 3D, inaccessible colours, unjustified log, overload, unreadable labels."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Le camembert est à éviter pour **comparer** (et la 3D partout).",
+    "dar": "Camembert ma ynsa7ch l comparaison.",
+    "en": "Avoid pies for **comparison**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-07",
+    "dv-18"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Quel graphique pour quel objectif ?",
+    "dar": "Ach men graphique ?",
+    "en": "Which chart for which goal?"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Objectif",
+     "dar": "Hadaf",
+     "en": "Goal"
+    },
+    {
+     "fr": "Recommandé",
+     "dar": "Mzyan",
+     "en": "Recommended"
+    },
+    {
+     "fr": "À éviter",
+     "dar": "Tjenneb",
+     "en": "Avoid"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Comparaison",
+      "dar": "Mo9arana",
+      "en": "Comparison"
+     },
+     {
+      "fr": "barres, radar",
+      "dar": "barres, radar",
+      "en": "bars, radar"
+     },
+     {
+      "fr": "camembert, 3D",
+      "dar": "camembert, 3D",
+      "en": "pie, 3D"
+     }
+    ],
+    [
+     {
+      "fr": "Distribution",
+      "dar": "Distribution",
+      "en": "Distribution"
+     },
+     {
+      "fr": "histogramme, boîte, violon",
+      "dar": "histogramme, box, violon",
+      "en": "histogram, box, violin"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     {
+      "fr": "Composition",
+      "dar": "Composition",
+      "en": "Composition"
+     },
+     {
+      "fr": "barres empilées, treemap",
+      "dar": "empilées, treemap",
+      "en": "stacked bars, treemap"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     {
+      "fr": "Relation",
+      "dar": "3ala9a",
+      "en": "Relationship"
+     },
+     {
+      "fr": "nuage de points, ligne, heatmap",
+      "dar": "scatter, ligne, heatmap",
+      "en": "scatter, line, heatmap"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     {
+      "fr": "Évolution",
+      "dar": "Tatawwor",
+      "en": "Change over time"
+     },
+     {
+      "fr": "ligne, aire",
+      "dar": "ligne, aire",
+      "en": "line, area"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     {
+      "fr": "Spatial",
+      "dar": "Makani",
+      "en": "Spatial"
+     },
+     {
+      "fr": "cartes",
+      "dar": "cartes",
+      "en": "maps"
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "ChartChooser"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Le tableau objectif → graphique est une question de cours classique.",
+    "dar": "Tableau dyal choix kaytl3.",
+    "en": "The goal → chart table is a classic question."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-04",
+    "dv-05",
+    "dv-06"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Workflow, export et réglages",
+    "dar": "Workflow w export",
+    "en": "Workflow, export, settings"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Workflow : **exploration → analyse → présentation → validation → export**. Export : `savefig` en PNG, PDF, SVG, JPG (`dpi=300` pour l'impression). Réglages globaux : `plt.rcParams[\"font.size\"] = 12`.",
+    "dar": "Workflow ; savefig ; rcParams.",
+    "en": "Workflow; savefig; rcParams."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-12",
+    "dv-17"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Seaborn et pandas",
+    "dar": "Seaborn w pandas",
+    "en": "Seaborn and pandas"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "import seaborn as sns\ntips = sns.load_dataset(\"tips\"); iris = sns.load_dataset(\"iris\"); fmri = sns.load_dataset(\"fmri\")\nsns.histplot(data=tips, x=\"total_bill\", kde=True)\nsns.kdeplot(data=tips, x=\"total_bill\") ; sns.ecdfplot(data=tips, x=\"total_bill\")\nsns.boxplot(data=tips, x=\"day\", y=\"total_bill\")\nsns.scatterplot(data=tips, x=\"total_bill\", y=\"tip\", hue=\"sex\")\nsns.lineplot(data=fmri, x=\"timepoint\", y=\"signal\")\nsns.relplot(data=tips, x=\"total_bill\", y=\"tip\", col=\"time\")\ncorr = iris.drop(columns=\"species\").corr()\nmask = np.triu(np.ones_like(corr, dtype=bool))\nsns.heatmap(corr, annot=True, cmap=\"coolwarm\", mask=mask)\n\ndf.plot() ; df.hist() ; df.plot.box() ; df.plot.area() ; df.plot.scatter(x=\"a\", y=\"b\")"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "`hue` colore par catégorie, `col` crée un sous-graphique par catégorie (`relplot`).",
+    "dar": "hue ; col.",
+    "en": "`hue` colours; `col` facets."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-13",
+    "dv-14",
+    "dv-15"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Écosystème : Matplotlib (fondamental), pandas (débutant), Seaborn/Altair (intermédiaire), Plotly/Bokeh (avancé).",
+   "dar": "Écosystème.",
+   "en": "Ecosystem."
+  },
+  {
+   "fr": "Orienté objet recommandé : fig, ax = plt.subplots() ; ax.set_title / set_xlabel ; subplots(2, 2) + tight_layout().",
+   "dar": "fig, ax ; ax.set_*.",
+   "en": "OO style recommended."
+  },
+  {
+   "fr": "plot, scatter (c, s, alpha, cmap, colorbar), hist (bins, cumulative, density), bar groupé, pie (autopct, explode, startangle).",
+   "dar": "Graphiques.",
+   "en": "Basic charts and parameters."
+  },
+  {
+   "fr": "Règles d'or : simplicité, clarté, précision, couleurs, honnêteté. Erreurs : 3D, couleurs, log injustifié, surcharge, labels.",
+   "dar": "Qawa3id.",
+   "en": "Golden rules and mistakes."
+  },
+  {
+   "fr": "Comparaison : barres (pas camembert/3D) ; distribution : histogramme/boîte/violon ; composition : empilé/treemap ; relation : scatter/heatmap ; évolution : ligne/aire ; spatial : cartes.",
+   "dar": "Choix.",
+   "en": "Goal → chart."
+  },
+  {
+   "fr": "Workflow : exploration → analyse → présentation → validation → export ; savefig(dpi=300) ; rcParams.",
+   "dar": "Workflow.",
+   "en": "Workflow & export."
+  },
+  {
+   "fr": "Seaborn : histplot(kde), kdeplot, ecdfplot, boxplot, scatterplot(hue), lineplot, relplot(col), heatmap(corr, annot, cmap coolwarm, mask triu) ; datasets tips, iris, fmri.",
+   "dar": "Seaborn.",
+   "en": "Seaborn functions."
+  }
+ ]
+}

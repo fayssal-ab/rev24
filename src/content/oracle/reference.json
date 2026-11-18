@@ -1,0 +1,92 @@
+[
+ {
+  "id": "r-or-1",
+  "chapter": "architecture",
+  "syntax": "SHOW PDBS · SHOW CON_NAME · SHOW SGA · SHOW PARAMETER x",
+  "desc": {
+   "fr": "Commandes SQL*Plus",
+   "dar": "SQL*Plus",
+   "en": "SQL*Plus commands"
+  }
+ },
+ {
+  "id": "r-or-2",
+  "chapter": "architecture",
+  "syntax": "ALTER SESSION SET CONTAINER=ORCLPDB;",
+  "desc": {
+   "fr": "Changer de conteneur",
+   "dar": "Beddel conteneur",
+   "en": "Switch container"
+  }
+ },
+ {
+  "id": "r-or-3",
+  "chapter": "architecture",
+  "syntax": "ALTER PLUGGABLE DATABASE ORCLPDB OPEN;",
+  "desc": {
+   "fr": "Ouvrir une PDB",
+   "dar": "Fte7 PDB",
+   "en": "Open a PDB"
+  }
+ },
+ {
+  "id": "r-or-4",
+  "chapter": "architecture",
+  "syntax": "CREATE USER C##X IDENTIFIED BY p; GRANT CREATE SESSION TO C##X;",
+  "desc": {
+   "fr": "Utilisateur commun",
+   "dar": "User commun",
+   "en": "Common user"
+  }
+ },
+ {
+  "id": "r-or-5",
+  "chapter": "architecture",
+  "syntax": "STARTUP [NOMOUNT|MOUNT|OPEN|FORCE|RESTRICT]",
+  "desc": {
+   "fr": "Démarrage",
+   "dar": "Démarrage",
+   "en": "Startup"
+  }
+ },
+ {
+  "id": "r-or-6",
+  "chapter": "architecture",
+  "syntax": "ALTER DATABASE MOUNT; · ALTER DATABASE OPEN;",
+  "desc": {
+   "fr": "Changer d'état",
+   "dar": "Beddel état",
+   "en": "Change state"
+  }
+ },
+ {
+  "id": "r-or-7",
+  "chapter": "architecture",
+  "syntax": "SHUTDOWN [NORMAL|TRANSACTIONAL|IMMEDIATE|ABORT]",
+  "desc": {
+   "fr": "Arrêt",
+   "dar": "Arrêt",
+   "en": "Shutdown"
+  }
+ },
+ {
+  "id": "r-or-8",
+  "chapter": "architecture",
+  "syntax": "ALTER SYSTEM KILL SESSION 'sid,serial#';",
+  "desc": {
+   "fr": "Tuer une session (ORA-00028)",
+   "dar": "Tue session",
+   "en": "Kill a session"
+  }
+ },
+ {
+  "id": "r-or-9",
+  "chapter": "architecture",
+  "syntax": "v$session · v$sgainfo · v$sgastat · v$instance · v$pdbs · dba_users",
+  "desc": {
+   "fr": "Vues utiles",
+   "dar": "Vues",
+   "en": "Useful views"
+  }
+ }
+]

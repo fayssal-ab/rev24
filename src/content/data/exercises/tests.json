@@ -1,0 +1,1193 @@
+[
+ {
+  "id": "dx-t-1",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Fusée : test bilatéral complet",
+   "dar": "Fusée : test kaml",
+   "en": "Rocket: full two-sided test"
+  },
+  "statement": {
+   "fr": "Une machine fabrique des pièces de fusée de longueur µ0 = 40 cm (σ = 2 cm connu). Sur n = 25 pièces, x̄ = 41,25 cm. Au risque α = 5 %, la machine est-elle déréglée ? Calcule aussi la P-value.",
+   "dar": "Machine µ0 = 40, σ = 2, n = 25, x̄ = 41,25. Déréglée ? PV ?",
+   "en": "Machine µ0 = 40, σ = 2, n = 25, x̄ = 41.25. Out of adjustment at 5 %? P-value?"
+  },
+  "hints": [
+   {
+    "fr": "σ connu → Z0.",
+    "dar": "Z0.",
+    "en": "σ known → Z0."
+   },
+   {
+    "fr": "« Déréglée » = différente de 40, dans un sens ou l'autre → bilatéral.",
+    "dar": "Bilatéral.",
+    "en": "Two-sided."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 40 ; H1 : µ ≠ 40 ; α = 5 %.",
+     "dar": "H0 µ = 40, H1 µ ≠ 40.",
+     "en": "H0: µ = 40; H1: µ ≠ 40."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "Z_0 = \\frac{41{,}25-40}{2/\\sqrt{25}} = \\frac{1{,}25}{0{,}4} = 3{,}125"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "|Z0| = 3,125 > z(0,025) = 1,96 → rejet de H0.",
+     "dar": "3,125 > 1,96.",
+     "en": "3.125 > 1.96 → reject."
+    }
+   },
+   {
+    "title": {
+     "fr": "P-value",
+     "dar": "P-value",
+     "en": "P-value"
+    },
+    "body": {
+     "fr": "PV < 0,05 confirme le rejet.",
+     "dar": "PV < 0,05.",
+     "en": "PV < 0.05 confirms."
+    },
+    "tex": "PV = 2(1-\\Phi(3{,}125)) \\approx 0{,}0018"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Z0 = 3,125 > 1,96 → on rejette H0 : la machine est déréglée (PV ≈ 0,0018).",
+   "dar": "Rejet, PV ≈ 0,0018.",
+   "en": "Z0 = 3.125 > 1.96 → reject H0 (PV ≈ 0.0018)."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier √n.",
+    "dar": "Tnsa √n.",
+    "en": "Forgetting √n."
+   },
+   {
+    "fr": "Utiliser 1,645 (unilatéral).",
+    "dar": "1,645.",
+    "en": "Using 1.645."
+   },
+   {
+    "fr": "Oublier ×2 dans la PV.",
+    "dar": "Bla ×2.",
+    "en": "Forgetting ×2."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zStat",
+     "args": [
+      41.25,
+      40,
+      2,
+      25
+     ]
+    },
+    "expect": 3.125,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      3.125,
+      "two"
+     ]
+    },
+    "expect": 0.0018,
+    "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.025
+     ]
+    },
+    "expect": 1.96,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-2",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Comprimés : test de Student",
+   "dar": "Comprimés : Student",
+   "en": "Tablets: Student test"
+  },
+  "statement": {
+   "fr": "Poids (g) de 10 comprimés : 0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80. Le fabricant annonce µ0 = 0,83 g. Au seuil de confiance 98 % (bilatéral), l'annonce est-elle crédible ?",
+   "dar": "10 comprimés ; µ0 = 0,83 ; 98 %.",
+   "en": "10 tablets; µ0 = 0.83; 98 % two-sided."
+  },
+  "hints": [
+   {
+    "fr": "σ inconnu : calcule S avec n − 1.",
+    "dar": "S b n − 1.",
+    "en": "Compute S with n − 1."
+   },
+   {
+    "fr": "98 % → α = 2 % → α/2 = 1 %.",
+    "dar": "α/2 = 1 %.",
+    "en": "α/2 = 1 %."
+   },
+   {
+    "fr": "ν = n − 1 = 9.",
+    "dar": "ν = 9.",
+    "en": "ν = 9."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Moyenne et écart-type",
+     "dar": "Moyenne w S",
+     "en": "Mean and S"
+    },
+    "body": {
+     "fr": "x̄ = 8,31/10 = 0,831 ; Σ(xi − x̄)² ≈ 0,00409 ; S = √(0,00409/9) ≈ 0,0213.",
+     "dar": "x̄ = 0,831 ; S ≈ 0,0213.",
+     "en": "x̄ = 0.831; S ≈ 0.0213."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "T_0 = \\frac{0{,}831-0{,}83}{0{,}0213/\\sqrt{10}} \\approx 0{,}148"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "|T0| = 0,148 < t(0,01 ; 9) = 2,821 → on ne rejette pas H0.",
+     "dar": "0,148 < 2,821.",
+     "en": "0.148 < 2.821 → keep H0."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "T0 ≈ 0,148 < 2,821 : on ne rejette pas H0, l'annonce µ = 0,83 g est compatible avec les données.",
+   "dar": "Ma nrfdouch H0.",
+   "en": "Do not reject H0."
+  },
+  "commonMistakes": [
+   {
+    "fr": "S avec n au lieu de n − 1.",
+    "dar": "n f blast n − 1.",
+    "en": "S with n."
+   },
+   {
+    "fr": "t(0,02 ; 9) au lieu de t(0,01 ; 9).",
+    "dar": "α/2 !",
+    "en": "Forgot α/2."
+   },
+   {
+    "fr": "Utiliser la loi normale.",
+    "dar": "Normale.",
+    "en": "Using the normal law."
+   }
+  ],
+  "data": "0.81  0.84  0.83  0.8  0.85  0.86  0.85  0.83  0.84  0.8",
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       0.81,
+       0.84,
+       0.83,
+       0.8,
+       0.85,
+       0.86,
+       0.85,
+       0.83,
+       0.84,
+       0.8
+      ]
+     ]
+    },
+    "expect": 0.831,
+    "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "sampleSd",
+     "args": [
+      [
+       0.81,
+       0.84,
+       0.83,
+       0.8,
+       0.85,
+       0.86,
+       0.85,
+       0.83,
+       0.84,
+       0.8
+      ]
+     ]
+    },
+    "expect": 0.0213,
+    "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "tStatData",
+     "args": [
+      [
+       0.81,
+       0.84,
+       0.83,
+       0.8,
+       0.85,
+       0.86,
+       0.85,
+       0.83,
+       0.84,
+       0.8
+      ],
+      0.83
+     ]
+    },
+    "expect": 0.148,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.01,
+      9
+     ]
+    },
+    "expect": 2.821,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-3",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Glycémie : test unilatéral gauche",
+   "dar": "Glycémie : gauche",
+   "en": "Blood sugar: left-tailed test"
+  },
+  "statement": {
+   "fr": "Un traitement doit faire **baisser** la glycémie sous µ0 = 1 g/L (σ = 0,1). Sur 9 patients traités, x̄ = 1,12. Au risque 5 %, le traitement est-il efficace ?",
+   "dar": "Traitement : baisse ? x̄ = 1,12.",
+   "en": "A treatment should **lower** blood sugar below 1 g/L (σ = 0.1). 9 patients, x̄ = 1.12. Effective at 5 %?"
+  },
+  "hints": [
+   {
+    "fr": "« Baisser » → H1 : µ < 1.",
+    "dar": "H1 µ < 1.",
+    "en": "H1: µ < 1."
+   },
+   {
+    "fr": "Le signe de Z0 compte.",
+    "dar": "Signe.",
+    "en": "Mind the sign."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 1 ; H1 : µ < 1 (unilatéral gauche).",
+     "dar": "Gauche.",
+     "en": "Left-tailed."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "Z_0 = \\frac{1{,}12-1}{0{,}1/3} = 3{,}6"
+   },
+   {
+    "title": {
+     "fr": "Région critique",
+     "dar": "Région critique",
+     "en": "Critical region"
+    },
+    "body": {
+     "fr": "Z0 < −1,645. Or Z0 = +3,6 → hors de la région critique. PV = Φ(3,6) ≈ 0,9998.",
+     "dar": "Z0 < −1,645.",
+     "en": "Z0 < −1.645; +3.6 is outside."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "On ne rejette pas H0 : aucune preuve d'efficacité (la moyenne observée est même au-dessus de 1).",
+   "dar": "Ma nrfdouch.",
+   "en": "Do not reject: no evidence of effect."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Prendre |Z0| et conclure au rejet.",
+    "dar": "|Z0|.",
+    "en": "Taking |Z0|."
+   },
+   {
+    "fr": "Utiliser 1,96.",
+    "dar": "1,96.",
+    "en": "Using 1.96."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zStat",
+     "args": [
+      1.12,
+      1,
+      0.1,
+      9
+     ]
+    },
+    "expect": 3.6,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      3.6,
+      "left"
+     ]
+    },
+    "expect": 0.9998,
+    "tolerance": 0.0002
+   }
+  ]
+ },
+ {
+  "id": "dx-t-4",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "χ² : la variable est-elle normale ?",
+   "dar": "χ² normalité",
+   "en": "χ²: is the variable normal?"
+  },
+  "statement": {
+   "fr": "n = 50 mesures réparties en classes < 0,5 ; [0,5 ; 1[ ; [1 ; 1,5[ ; ≥ 1,5 avec Oi = 2, 23, 17, 8. On a x̄ = 1,168 et S = 0,591. Au risque 5 %, peut-on admettre que X suit une loi normale ?",
+   "dar": "χ² normalité, Oi = 2, 23, 17, 8.",
+   "en": "Normality χ² test, Oi = 2, 23, 17, 8."
+  },
+  "hints": [
+   {
+    "fr": "Centre-réduis les bornes.",
+    "dar": "Centrer-réduire.",
+    "en": "Standardise the bounds."
+   },
+   {
+    "fr": "µ et σ estimés → p = 2.",
+    "dar": "p = 2.",
+    "en": "p = 2."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Probabilités",
+     "dar": "I7timalat",
+     "en": "Probabilities"
+    },
+    "body": {
+     "fr": "p1 = Φ(−1,130) ≈ 0,129 ; p2 = Φ(−0,284) − p1 ≈ 0,259 ; p3 = Φ(0,562) − Φ(−0,284) ≈ 0,325 ; p4 = 1 − Φ(0,562) ≈ 0,287.",
+     "dar": "0,129 ; 0,259 ; 0,325 ; 0,287.",
+     "en": "0.129; 0.259; 0.325; 0.287."
+    }
+   },
+   {
+    "title": {
+     "fr": "Effectifs théoriques",
+     "dar": "Ei",
+     "en": "Expected counts"
+    },
+    "body": {
+     "fr": "Ei = 50 pi ≈ 6,46 ; 12,95 ; 16,24 ; 14,36 (tous ≥ 5).",
+     "dar": "6,46 ; 12,95 ; 16,24 ; 14,36.",
+     "en": "6.46; 12.95; 16.24; 14.36."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "\\chi^2 \\approx 3{,}08 + 7{,}80 + 0{,}04 + 2{,}82 \\approx 13{,}74"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "ν = 4 − 2 − 1 = 1 ; χ²(0,05 ; 1) = 3,841 ; 13,74 > 3,841 → rejet.",
+     "dar": "Rejet.",
+     "en": "Reject."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "χ² ≈ 13,74 > 3,841 → on rejette H0 : X ne suit pas une loi normale (au risque 5 %).",
+   "dar": "Rejet normalité.",
+   "en": "Reject normality."
+  },
+  "commonMistakes": [
+   {
+    "fr": "ν = 3 (oubli des paramètres estimés).",
+    "dar": "ν = 3.",
+    "en": "ν = 3."
+   },
+   {
+    "fr": "Diviser par Oi au lieu de Ei.",
+    "dar": "Oi f blast Ei.",
+    "en": "Dividing by Oi."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "chi2Normal",
+     "args": [
+      [
+       0.5,
+       1,
+       1.5
+      ],
+      [
+       2,
+       23,
+       17,
+       8
+      ],
+      1.168,
+      0.591,
+      0.05
+     ],
+     "pick": "chi2"
+    },
+    "expect": 13.74,
+    "tolerance": 0.02
+   },
+   {
+    "compute": {
+     "fn": "chi2Normal",
+     "args": [
+      [
+       0.5,
+       1,
+       1.5
+      ],
+      [
+       2,
+       23,
+       17,
+       8
+      ],
+      1.168,
+      0.591,
+      0.05
+     ],
+     "pick": "E.3"
+    },
+    "expect": 14.36,
+    "tolerance": 0.02
+   },
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.05,
+      1
+     ]
+    },
+    "expect": 3.841,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-5",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Paquets de 500 g",
+   "dar": "Paquets 500 g",
+   "en": "500 g packets"
+  },
+  "statement": {
+   "fr": "Une association de consommateurs soupçonne que les paquets **dépassent** 500 g (σ = 12 g). Sur 36 paquets, x̄ = 504 g. Test au risque 5 % et P-value.",
+   "dar": "36 paquets, x̄ = 504.",
+   "en": "36 packets, x̄ = 504, σ = 12. Test at 5 % + P-value."
+  },
+  "hints": [
+   {
+    "fr": "« Dépassent » → unilatéral droit.",
+    "dar": "Droite.",
+    "en": "Right-tailed."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "Z_0 = \\frac{504-500}{12/6} = 2"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "Z0 = 2 > z(0,05) = 1,645 → rejet ; PV = 1 − Φ(2) ≈ 0,0228 < 0,05.",
+     "dar": "Rejet ; PV ≈ 0,0228.",
+     "en": "Reject; PV ≈ 0.0228."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "On rejette H0 : la masse moyenne dépasse 500 g (PV ≈ 0,023).",
+   "dar": "Rejet.",
+   "en": "Reject H0 (PV ≈ 0.023)."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Faire un test bilatéral (seuil 1,96 : on rejetterait aussi, mais la PV serait 0,0455).",
+    "dar": "Bilatéral.",
+    "en": "Two-sided test."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zStat",
+     "args": [
+      504,
+      500,
+      12,
+      36
+     ]
+    },
+    "expect": 2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      2,
+      "right"
+     ]
+    },
+    "expect": 0.0228,
+    "tolerance": 0.0002
+   }
+  ]
+ },
+ {
+  "id": "dx-t-6",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Temps de réponse d'un serveur",
+   "dar": "Temps de réponse",
+   "en": "Server response time"
+  },
+  "statement": {
+   "fr": "Après optimisation, on veut montrer que le temps de réponse moyen est **inférieur** à 50 ms. Sur 16 requêtes : x̄ = 48,5 ms, S = 3,2 ms. Test au risque 5 %.",
+   "dar": "16 requêtes, x̄ = 48,5, S = 3,2.",
+   "en": "16 requests, x̄ = 48.5, S = 3.2. Show mean < 50 at 5 %."
+  },
+  "hints": [
+   {
+    "fr": "σ inconnu, n = 16 → Student à 15 ddl.",
+    "dar": "Student 15.",
+    "en": "Student 15 df."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "T_0 = \\frac{48{,}5-50}{3{,}2/4} = -1{,}875"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "Région : T0 < −t(0,05 ; 15) = −1,753. −1,875 < −1,753 → rejet de H0.",
+     "dar": "Rejet.",
+     "en": "Reject."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "On rejette H0 : l'optimisation a réduit le temps moyen sous 50 ms (au risque 5 %).",
+   "dar": "Rejet.",
+   "en": "Reject H0."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser z = 1,645 (σ inconnu → Student).",
+    "dar": "z.",
+    "en": "Using z."
+   },
+   {
+    "fr": "ν = 16.",
+    "dar": "ν = 16.",
+    "en": "ν = 16."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "tStat",
+     "args": [
+      48.5,
+      50,
+      3.2,
+      16
+     ]
+    },
+    "expect": -1.875,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.05,
+      15
+     ]
+    },
+    "expect": 1.753,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-7",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Le dé est-il équilibré ?",
+   "dar": "Dé",
+   "en": "Is the die fair?"
+  },
+  "statement": {
+   "fr": "60 lancers : faces 1 à 6 sorties 8, 12, 9, 11, 6, 14 fois. Au risque 5 %, le dé est-il équilibré ?",
+   "dar": "60 lancers.",
+   "en": "60 rolls: 8, 12, 9, 11, 6, 14."
+  },
+  "hints": [
+   {
+    "fr": "Équilibré → pi = 1/6, aucun paramètre estimé.",
+    "dar": "pi = 1/6.",
+    "en": "pi = 1/6, p = 0."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Effectifs théoriques",
+     "dar": "Ei",
+     "en": "Expected"
+    },
+    "body": {
+     "fr": "Ei = 60/6 = 10 pour chaque face.",
+     "dar": "10.",
+     "en": "10 each."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "\\chi^2 = \\frac{4+4+1+1+16+16}{10} = 4{,}2"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "ν = 6 − 0 − 1 = 5 ; χ²(0,05 ; 5) = 11,07 ; 4,2 < 11,07 → on ne rejette pas H0.",
+     "dar": "Ma nrfdouch.",
+     "en": "Keep H0."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "χ² = 4,2 < 11,07 : rien ne permet de dire que le dé est truqué.",
+   "dar": "Dé équilibré (conclusion d3ifa).",
+   "en": "No evidence the die is loaded."
+  },
+  "commonMistakes": [
+   {
+    "fr": "ν = 6.",
+    "dar": "ν = 6.",
+    "en": "ν = 6."
+   },
+   {
+    "fr": "Retirer des paramètres alors qu'aucun n'est estimé.",
+    "dar": "p = 0.",
+    "en": "Subtracting parameters though none estimated."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "chi2Uniform",
+     "args": [
+      [
+       8,
+       12,
+       9,
+       11,
+       6,
+       14
+      ],
+      0.05
+     ],
+     "pick": "chi2"
+    },
+    "expect": 4.2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.05,
+      5
+     ]
+    },
+    "expect": 11.07,
+    "tolerance": 0.01
+   }
+  ]
+ },
+ {
+  "id": "dx-t-8",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Puissance et risque β",
+   "dar": "Puissance",
+   "en": "Power and β"
+  },
+  "statement": {
+   "fr": "Reprends la fusée (µ0 = 40, σ = 2, n = 25, bilatéral 5 %). Si la vraie moyenne est µ = 41, quelle est la puissance du test ? Que vaut β ? Comment augmenter la puissance sans toucher à α ?",
+   "dar": "Puissance ila µ = 41 ?",
+   "en": "Rocket: power if µ = 41? β? How to raise power?"
+  },
+  "hints": [
+   {
+    "fr": "Sous µ = 41, Z0 ~ N(d, 1) avec d = (41 − 40)/(σ/√n).",
+    "dar": "d = 2,5.",
+    "en": "d = 2.5."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Décalage",
+     "dar": "Décalage",
+     "en": "Shift"
+    },
+    "body": {
+     "fr": "d = 1/0,4 = 2,5.",
+     "dar": "d = 2,5.",
+     "en": "d = 2.5."
+    }
+   },
+   {
+    "title": {
+     "fr": "Puissance",
+     "dar": "Puissance",
+     "en": "Power"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "1-\\beta = 1-\\Phi(1{,}96-2{,}5)+\\Phi(-1{,}96-2{,}5) \\approx 0{,}705"
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "β ≈ 0,295. Augmenter n réduit σ/√n, donc augmente d et la puissance.",
+     "dar": "Zid n.",
+     "en": "Increase n."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Puissance ≈ 0,705, β ≈ 0,295 ; augmenter n.",
+   "dar": "0,705 ; zid n.",
+   "en": "Power ≈ 0.705, β ≈ 0.295; increase n."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre puissance et 1 − α.",
+    "dar": "1 − α.",
+    "en": "Confusing power with 1 − α."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zPower",
+     "args": [
+      40,
+      41,
+      2,
+      25,
+      0.05,
+      "two"
+     ]
+    },
+    "expect": 0.7054,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-9",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diamètre de pièces : données brutes",
+   "dar": "Données brutes",
+   "en": "Raw data test"
+  },
+  "statement": {
+   "fr": "Diamètres (mm) de 8 pièces : 12,1 11,8 12,4 12,0 11,6 12,3 12,2 11,9. Norme : 12 mm. Au risque 5 %, les pièces respectent-elles la norme en moyenne ? Donne x̄, S, T0, la valeur critique et la P-value.",
+   "dar": "8 pièces, norme 12.",
+   "en": "8 parts, standard 12 mm."
+  },
+  "hints": [
+   {
+    "fr": "ν = 7.",
+    "dar": "ν = 7.",
+    "en": "ν = 7."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Descriptif",
+     "dar": "Descriptif",
+     "en": "Descriptive"
+    },
+    "body": {
+     "fr": "x̄ = 96,3/8 = 12,0375 ; S ≈ 0,2669.",
+     "dar": "x̄ = 12,0375 ; S ≈ 0,267.",
+     "en": "x̄ = 12.0375; S ≈ 0.267."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique",
+     "dar": "Statistique",
+     "en": "Statistic"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "T_0 = \\frac{12{,}0375-12}{0{,}2669/\\sqrt8} \\approx 0{,}397"
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "t(0,025 ; 7) = 2,365 ; 0,397 < 2,365 ; PV ≈ 0,703 > 0,05 → non-rejet.",
+     "dar": "Ma nrfdouch.",
+     "en": "Keep H0."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "On ne rejette pas H0 : moyenne compatible avec 12 mm.",
+   "dar": "Compatible.",
+   "en": "Compatible with 12 mm."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser ν = 8.",
+    "dar": "ν = 8.",
+    "en": "ν = 8."
+   }
+  ],
+  "data": "12.1  11.8  12.4  12  11.6  12.3  12.2  11.9",
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       12.1,
+       11.8,
+       12.4,
+       12,
+       11.6,
+       12.3,
+       12.2,
+       11.9
+      ]
+     ]
+    },
+    "expect": 12.0375,
+    "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "tStatData",
+     "args": [
+      [
+       12.1,
+       11.8,
+       12.4,
+       12,
+       11.6,
+       12.3,
+       12.2,
+       11.9
+      ],
+      12
+     ]
+    },
+    "expect": 0.397,
+    "tolerance": 0.002
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.025,
+      7
+     ]
+    },
+    "expect": 2.365,
+    "tolerance": 0.002
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      0.3974,
+      7,
+      "two"
+     ]
+    },
+    "expect": 0.703,
+    "tolerance": 0.003
+   }
+  ]
+ },
+ {
+  "id": "dx-t-10",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Intervalle de confiance et test",
+   "dar": "Intervalle w test",
+   "en": "Confidence interval and test"
+  },
+  "statement": {
+   "fr": "Pour la fusée, construis l'intervalle de confiance à 95 % de µ. Explique pourquoi on retrouve la conclusion du test bilatéral.",
+   "dar": "IC 95 % fusée.",
+   "en": "Build the 95 % CI for the rocket mean."
+  },
+  "hints": [
+   {
+    "fr": "x̄ ± 1,96·σ/√n.",
+    "dar": "x̄ ± 1,96·0,4.",
+    "en": "x̄ ± 1.96·0.4."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Intervalle",
+     "dar": "Intervalle",
+     "en": "Interval"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "41{,}25 \\pm 1{,}96 \\times 0{,}4 = [40{,}47 \\; ; \\; 42{,}03]"
+   },
+   {
+    "title": {
+     "fr": "Lien avec le test",
+     "dar": "3ala9a",
+     "en": "Link"
+    },
+    "body": {
+     "fr": "40 n'appartient pas à l'intervalle → rejet de H0 : µ = 40 au risque 5 % (même conclusion).",
+     "dar": "40 bra intervalle.",
+     "en": "40 is outside → reject (same conclusion)."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "IC95 % = [40,47 ; 42,03] ; 40 ∉ IC → rejet de H0.",
+   "dar": "40 ∉ IC.",
+   "en": "CI = [40.47; 42.03]; 40 ∉ CI → reject."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser S au lieu de σ.",
+    "dar": "S.",
+    "en": "Using S."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "ciZ",
+     "args": [
+      41.25,
+      2,
+      25,
+      0.05
+     ],
+     "pick": "0"
+    },
+    "expect": 40.466,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "ciZ",
+     "args": [
+      41.25,
+      2,
+      25,
+      0.05
+     ],
+     "pick": "1"
+    },
+    "expect": 42.034,
+    "tolerance": 0.001
+   }
+  ]
+ }
+]

@@ -19,7 +19,7 @@ export function SectionView({ s, questions, missions, id }: { s: Section; questi
   const tl = useL();
   const reduce = useReducedMotion();
   const wrap = (child: React.ReactNode) => (
-    <motion.div id={id} initial={reduce ? false : { opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.35 }} className="my-4">
+    <motion.div id={id} initial={reduce ? false : { opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="my-4">
       {child}
     </motion.div>
   );

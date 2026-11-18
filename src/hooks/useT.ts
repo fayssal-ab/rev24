@@ -22,5 +22,14 @@ export function useT() {
 /** Pick a localised value. */
 export function useL() {
   const lang = useStore((s) => s.lang);
-  return useCallback((v: L10n | string | undefined) => (v === undefined ? '' : typeof v === 'string' ? v : v[lang] || v.fr), [lang]);
+  return useCallback(
+    (v: L10n | string | undefined) => {
+      if (v === undefined) return '';
+      if (typeof v === 'string') return v;
+      // Darija text is often a short summary: append the full French explanation so no content is lost
+      if (lang === 'dar' && v.dar && v.fr && v.dar !== v.fr && v.fr.length > 60 && v.dar.length < v.fr.length * 0.5) return `${v.dar}\n\n${v.fr}`;
+      return v[lang] || v.fr;
+    },
+    [lang]
+  );
 }

@@ -10,7 +10,7 @@ import { Icon } from '../components/Icon';
 import { L } from '../components/Text';
 
 export default function Home() {
-  const { t } = useT();
+  const { t, lang } = useT();
   const tl = useL();
   const reduce = useReducedMotion();
   const content = useAllModules(MODULES.map((m) => m.id));
@@ -97,6 +97,15 @@ export default function Home() {
             <span>
               <span className="block font-semibold">{t('nav.statslab')}</span>
               <span className="block text-sm text-muted">{t('home.statslab.desc')}</span>
+            </span>
+          </Link>
+          <Link to="/glossaire" className="card flex items-center gap-3 p-4 hover:border-accent sm:col-span-2">
+            <span className="grid h-11 w-11 place-items-center rounded-xl bg-amber-500/20 text-amber-400">
+              <Icon name="book" />
+            </span>
+            <span>
+              <span className="block font-semibold">{lang === 'en' ? 'Glossary' : lang === 'dar' ? 'Lexique (lmoustala7at)' : 'Lexique'}</span>
+              <span className="block text-sm text-muted">{lang === 'en' ? 'ACP, CDB, SGA, Dijkstra… explained simply' : lang === 'dar' ? 'ACP, CDB, SGA, Dijkstra… mcharhin b sahl' : 'ACP, CDB, SGA, Dijkstra… expliqués simplement'}</span>
             </span>
           </Link>
         </div>

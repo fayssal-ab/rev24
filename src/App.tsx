@@ -19,6 +19,7 @@ const Rev24Page = lazy(() => import('./pages/Rev24Page'));
 const TerminalPage = lazy(() => import('./pages/TerminalPage'));
 const StatsLabPage = lazy(() => import('./pages/StatsLabPage'));
 const ProgressPage = lazy(() => import('./pages/ProgressPage'));
+const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 /** Unlock badges whenever progress changes. */
@@ -63,6 +64,7 @@ export function App() {
             <Route path="/terminal" element={<TerminalPage />} />
             <Route path="/stats-lab" element={<StatsLabPage />} />
             <Route path="/progression" element={<ProgressPage />} />
+            <Route path="/glossaire" element={<GlossaryPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

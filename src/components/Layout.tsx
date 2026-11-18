@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { useStore } from '../store/store';
 import { useT } from '../hooks/useT';
@@ -121,16 +121,9 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
       <TopBar />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
-      <motion.main
-        id="main"
-        key={location.key}
-        initial={reduce ? false : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.18 }}
-        className="mx-auto max-w-5xl px-4 pt-4"
-      >
+      <main id="main" key={location.key} className={`mx-auto max-w-5xl px-4 pt-4 ${reduce ? '' : 'page-in'}`}>
         <RouteErrorBoundary>{children}</RouteErrorBoundary>
-      </motion.main>
+      </main>
       <BottomNav />
       <BadgeToast />
     </div>

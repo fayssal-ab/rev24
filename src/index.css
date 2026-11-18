@@ -94,3 +94,10 @@ code, pre, kbd { @apply font-mono; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* page enter: CSS only, content stays visible even if the animation never runs */
+@keyframes page-in { from { opacity: 0; transform: translateY(8px); } }
+.page-in { animation: page-in 0.18s ease-out; }
+
+/* hide the injected "Powered by Netlify" badge */
+[id*='netlify-badge'], [class*='netlify-badge'], a[href*='netlify.com'][style*='fixed'] { display: none !important; }

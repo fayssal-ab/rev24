@@ -28,6 +28,10 @@ const KIND_CLS: Record<ResourceKind, string> = {
   annexe: 'border-line text-muted'
 };
 
+/** Library call code of a subject, e.g. DATA, ORA — printed like a shelf mark. */
+const CALL: Record<string, string> = { data: 'DATA', linux: 'LNX', oracle: 'ORA', ro: 'RO', ml: 'ML', virtualisation: 'VIRT' };
+export const callCode = (subject: string) => CALL[subject] ?? subject.slice(0, 4).toUpperCase();
+
 export function ResourceTypeBadge({ kind }: { kind: ResourceKind }) {
   return <span className={`inline-flex h-5 items-center rounded border px-1.5 text-[10px] font-semibold uppercase tracking-wide ${KIND_CLS[kind]}`}>{KIND_SHORT[kind]}</span>;
 }
@@ -118,18 +122,22 @@ export function ResourceRow({ r, showSubject = true }: { r: Resource; showSubjec
   const activate = () => (r.route ? navigate(r.route) : r.ext === 'pdf' ? open(r) : window.open(r.url, '_blank', 'noopener'));
   return (
     <li className="group flex items-center gap-4 border-b border-line px-1 py-3.5 last:border-b-0" data-testid="resource-row">
+      <span className="hidden w-16 shrink-0 font-mono text-[11px] leading-tight text-muted sm:block">
+        {callCode(r.subject)}
+        <span className="block text-accent">·{String(r.order).padStart(2, '0')}</span>
+      </span>
       <FileIcon ext={r.ext} />
       <button className="min-w-0 flex-1 text-left" onClick={activate} data-testid="resource-open">
-        <span className="block truncate font-medium text-fg transition-colors group-hover:text-accent">{r.title}</span>
+        <span className="block truncate text-[15px] font-medium text-fg underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:text-accent group-hover:decoration-accent/40">{r.title}</span>
         <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
           <ResourceTypeBadge kind={r.kind} />
           {showSubject && subject && <span className="truncate">{tl(subject.title)}</span>}
-          <span className="hidden sm:inline">· S1 · 2026/2027</span>
+          <span className="hidden font-mono text-[11px] sm:inline">· S1 · 2026/27</span>
           {r.pages && <span>· {r.pages} p.</span>}
           {r.date && <span className="hidden md:inline">· {formatDate(r.date, lang)}</span>}
         </span>
       </button>
-      <span className="hidden w-16 text-right text-xs tabular-nums text-muted lg:block">{formatSize(r.size)}</span>
+      <span className="hidden w-16 text-right font-mono text-[11px] tabular-nums text-muted lg:block">{formatSize(r.size)}</span>
       {r.route ? (
         <Link to={r.route} className="btn-ghost btn-sm" aria-label={t('res.open')}>
           <Icon name="arrowRight" size={14} />
@@ -195,14 +203,17 @@ export function Skeleton({ className = '' }: { className?: string }) {
   return <div className={`animate-pulse rounded bg-surface2 ${className}`} />;
 }
 
-export function SectionHeader({ title, action, eyebrow }: { title: ReactNode; action?: ReactNode; eyebrow?: ReactNode }) {
+/** Editorial section header: mono index, serif title, a hairline rule running to the action. */
+export function SectionHeader({ title, action, eyebrow, n }: { title: ReactNode; action?: ReactNode; eyebrow?: ReactNode; n?: number }) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-4 border-b border-line pb-3">
-      <div>
-        {eyebrow && <div className="eyebrow mb-1">{eyebrow}</div>}
-        <h2 className="font-display text-lg font-bold tracking-tight sm:text-xl">{title}</h2>
+    <div className="mb-6">
+      {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
+      <div className="flex items-baseline gap-4">
+        {n !== undefined && <span className="font-mono text-xs text-accent">{String(n).padStart(2, '0')}</span>}
+        <h2 className="font-display text-2xl font-medium tracking-tight sm:text-[1.9rem]">{title}</h2>
+        <span className="h-px min-w-6 flex-1 translate-y-[-0.35rem] bg-line" />
+        {action}
       </div>
-      {action}
     </div>
   );
 }

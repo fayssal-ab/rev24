@@ -7,7 +7,7 @@ import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
 import { Icon } from './Icon';
 import { getModule } from '../lib/content';
-import { SUBJECTS } from '../lib/catalog';
+import { ACADEMIC_YEAR, RESOURCES, SEMESTER, SUBJECTS } from '../lib/catalog';
 import type { Lang } from '../lib/schema';
 import { BadgeToast } from './BadgeToast';
 import type { UIKey } from '../i18n/ui';
@@ -63,27 +63,59 @@ export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
   }
 ];
 
-/** GROUP22 mark: a navy square, the group number set in Manrope, and a gold rule — the group's own mark. */
+/** GROUP22 mark: an eight-pointed zellige star (khatam) in Majorelle blue, the group number set in mono. */
 export function BrandMark({ small = false }: { small?: boolean }) {
-  const sz = small ? 30 : 34;
+  const sz = small ? 32 : 38;
   return (
     <svg width={sz} height={sz} viewBox="0 0 40 40" aria-hidden className="shrink-0">
-      <rect width="40" height="40" rx="5" fill="#14243A" />
-      <text x="20" y="25.5" textAnchor="middle" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="17" fontWeight="800" fill="#FFFFFF" letterSpacing="-0.5">
+      <g fill="rgb(var(--accent))">
+        <rect x="7" y="7" width="26" height="26" rx="1.5" />
+        <rect x="7" y="7" width="26" height="26" rx="1.5" transform="rotate(45 20 20)" />
+      </g>
+      <circle cx="20" cy="20" r="10.2" fill="none" stroke="#fff" strokeWidth="0.8" opacity=".45" />
+      <text x="20" y="24.2" textAnchor="middle" fontFamily="Geist Mono, monospace" fontSize="11.5" fontWeight="600" fill="#fff" letterSpacing="-0.3">
         22
       </text>
-      <rect x="11" y="30" width="18" height="2.2" fill="#D8A34D" />
-      <rect x="31" y="6" width="3" height="3" fill="#16758A" />
     </svg>
   );
 }
 
-/** Wordmark "GROUP22" (Manrope), "22" in academic teal. */
+/** Wordmark: "Group" in Fraunces italic, "22" in mono Majorelle. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`font-display font-extrabold tracking-tight ${className}`}>
-      GROUP<span className="text-accent">22</span>
+    <span className={`font-display font-semibold italic tracking-tight ${className}`}>
+      Group<span className="ml-0.5 font-mono text-[0.8em] font-semibold not-italic text-accent">22</span>
     </span>
+  );
+}
+
+/** Thin ink strip above the navbar: real facts about the semester, scrolling slowly. */
+function Ticker() {
+  const { t } = useT();
+  const tl = useL();
+  const items = ['4IIR · G22', 'EMSI Rabat', `${tl(SEMESTER.title)} · ${ACADEMIC_YEAR}`, `${SUBJECTS.length} modules`, `${RESOURCES.length} ${t('sup.files')}`, t('ticker.search')];
+  const row = (k: string) => (
+    <span key={k} className="flex shrink-0 items-center" aria-hidden={k === 'b' ? true : undefined}>
+      {items.map((x, i) => (
+        <span key={i} className="flex items-center gap-6 pr-6">
+          {x}
+          <svg width="9" height="9" viewBox="0 0 40 40" className="text-accent2" aria-hidden>
+            <g fill="currentColor">
+              <rect x="7" y="7" width="26" height="26" />
+              <rect x="7" y="7" width="26" height="26" transform="rotate(45 20 20)" />
+            </g>
+          </svg>
+        </span>
+      ))}
+    </span>
+  );
+  return (
+    <div className="overflow-hidden bg-fg py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-bg/80">
+      <div className="ticker-track flex w-max">
+        {row('a')}
+        {row('b')}
+      </div>
+    </div>
   );
 }
 
@@ -144,7 +176,7 @@ function LangSwitch() {
   const { t } = useT();
   const { lang, setLang } = useStore();
   return (
-    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-lg border border-line p-0.5">
+    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-full border border-line p-0.5">
       {LANGS.map((l) => (
         <button
           key={l.code}
@@ -152,7 +184,7 @@ function LangSwitch() {
           aria-checked={lang === l.code}
           onClick={() => setLang(l.code)}
           data-testid={`lang-${l.code}`}
-          className={`min-h-[34px] rounded-md px-2.5 text-xs font-bold tracking-wide transition-colors ${lang === l.code ? 'bg-navy text-white dark:bg-surface2 dark:text-fg' : 'text-muted hover:text-fg'}`}
+          className={`min-h-[34px] rounded-full px-2.5 font-mono text-[11px] font-semibold tracking-wide transition-colors ${lang === l.code ? 'bg-fg text-bg' : 'text-muted hover:text-fg'}`}
         >
           {l.label}
         </button>
@@ -169,7 +201,7 @@ function ThemeButton() {
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       aria-label={t('theme.toggle')}
       title={t('theme.toggle')}
-      className="grid h-10 w-10 place-items-center rounded-lg border border-line text-muted transition-colors hover:text-fg"
+      className="grid h-10 w-10 place-items-center rounded-full border border-line text-muted transition-colors hover:text-fg"
     >
       <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
     </button>
@@ -182,7 +214,7 @@ function SearchButton() {
   return (
     <button
       onClick={() => setOpen(true)}
-      className="flex h-10 items-center gap-2 rounded-lg border border-line px-3 text-[15px] font-medium text-muted transition-colors hover:border-fg/25 hover:text-fg"
+      className="flex h-10 items-center gap-2 rounded-full border border-line px-3.5 text-[15px] font-medium text-muted transition-colors hover:border-fg/25 hover:text-fg"
       aria-label={t('search.placeholder')}
       title="Ctrl K"
       data-testid="open-search"
@@ -208,11 +240,11 @@ export function TopBar() {
   const inModule = pathname.startsWith('/m/') && !pathname.endsWith('/formulaire');
   const inTools = TOOLS.some((x) => pathname.startsWith(x.to)) || pathname === '/bibliotheque';
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85">
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
         <Link to="/" className="mr-4 flex items-center gap-2.5" aria-label={t('nav.home')}>
           <BrandMark />
-          <Wordmark className="text-lg" />
+          <Wordmark className="text-[1.45rem]" />
         </Link>
 
         {!locked && (
@@ -252,14 +284,14 @@ export function TopBar() {
           <ThemeButton />
           <Link
             to="/profil"
-            className={`h-10 w-10 place-items-center rounded-full bg-navy text-sm font-bold text-white transition-opacity hover:opacity-90 ${authEnabled && !user ? 'hidden' : 'grid'}`}
+            className={`h-10 w-10 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white transition-opacity hover:opacity-90 ${authEnabled && !user ? 'hidden' : 'grid'}`}
             aria-label={t('nav.profile')}
             title={user ? user.displayName || user.email : t('nav.profile')}
           >
             {user ? initials(user.displayName || user.email) : <Icon name="user" size={18} />}
           </Link>
           {!locked && (
-            <button className="grid h-10 w-10 place-items-center rounded-lg border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
+            <button className="grid h-10 w-10 place-items-center rounded-full border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
               <Icon name="menu" size={20} />
             </button>
           )}
@@ -305,13 +337,13 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               <span className="flex items-center gap-2">
                 <BrandMark small /> <Wordmark />
               </span>
-              <button className="grid h-10 w-10 place-items-center rounded-lg border border-line" onClick={onClose} aria-label={t('common.close')}>
+              <button className="grid h-10 w-10 place-items-center rounded-full border border-line" onClick={onClose} aria-label={t('common.close')}>
                 <Icon name="x" size={18} />
               </button>
             </div>
             {user && (
               <Link to="/profil" className="mb-4 flex items-center gap-3 rounded-xl border border-line p-3 transition-colors hover:bg-surface2" data-testid="drawer-user">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy text-sm font-bold text-white">{initials(user.displayName || user.email)}</span>
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white">{initials(user.displayName || user.email)}</span>
                 <span className="min-w-0">
                   <span className="block truncate font-semibold">{user.displayName || user.email}</span>
                   <span className="block truncate text-sm text-muted">{user.email}</span>
@@ -452,6 +484,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-white">
         {t('a11y.skip')}
       </a>
+      <Ticker />
       <TopBar />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
       <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-7xl flex-1 px-4 pt-8 sm:px-6 ${reduce ? '' : 'page-in'}`}>

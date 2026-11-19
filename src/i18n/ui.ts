@@ -370,7 +370,12 @@ export const UI = {
   'explore.sort.module': { fr: 'Module', dar: 'Module', en: 'Module' },
   'explore.results': { fr: 'résultats', dar: 'natija', en: 'results' },
   'explore.empty': { fr: 'Aucun document ne correspond à ces filtres.', dar: 'Ta document ma mtaba9 m3a had les filtres.', en: 'No document matches these filters.' },
-  'explore.show': { fr: 'Afficher les résultats', dar: 'Wrri natayij', en: 'Show results' }
+  'explore.show': { fr: 'Afficher les résultats', dar: 'Wrri natayij', en: 'Show results' },
+  'ticker.search': { fr: 'Ctrl K pour chercher partout', dar: 'Ctrl K bach tqelleb f kolchi', en: 'Ctrl K to search everything' },
+  'home.hero.titleA': { fr: 'Nos cours, TD et contrôles,', dar: 'Les cours, TD w contrôles dyalna,', en: 'Our courses, tutorials and tests,' },
+  'home.hero.titleB': { fr: 'au même endroit.', dar: 'f blasa wa7da.', en: 'all in one place.' },
+  'home.hint': { fr: 'essaie : ACP, khi-deux, simplexe…', dar: 'jerreb : ACP, khi-deux, simplexe…', en: 'try: PCA, chi-square, simplex…' },
+  'home.notebook': { fr: 'Sommaire du semestre', dar: 'Fihris dyal semestre', en: 'This semester' }
 } as const;
 
 export type UIKey = keyof typeof UI;

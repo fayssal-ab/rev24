@@ -7,7 +7,7 @@ import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
 import { Icon } from './Icon';
 import { getModule } from '../lib/content';
-import { ACADEMIC_YEAR, RESOURCES, SEMESTER, SUBJECTS } from '../lib/catalog';
+import { SUBJECTS } from '../lib/catalog';
 import type { Lang } from '../lib/schema';
 import { BadgeToast } from './BadgeToast';
 import type { UIKey } from '../i18n/ui';
@@ -80,42 +80,12 @@ export function BrandMark({ small = false }: { small?: boolean }) {
   );
 }
 
-/** Wordmark: "Group" in Fraunces italic, "22" in mono Majorelle. */
+/** Wordmark: "Group" in Bricolage Grotesque, "22" in mono Majorelle. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`font-display font-semibold italic tracking-tight ${className}`}>
+    <span className={`font-display font-bold tracking-tight ${className}`}>
       Group<span className="ml-0.5 font-mono text-[0.8em] font-semibold not-italic text-accent">22</span>
     </span>
-  );
-}
-
-/** Thin ink strip above the navbar: real facts about the semester, scrolling slowly. */
-function Ticker() {
-  const { t } = useT();
-  const tl = useL();
-  const items = ['4IIR · G22', 'EMSI Rabat', `${tl(SEMESTER.title)} · ${ACADEMIC_YEAR}`, `${SUBJECTS.length} modules`, `${RESOURCES.length} ${t('sup.files')}`, t('ticker.search')];
-  const row = (k: string) => (
-    <span key={k} className="flex shrink-0 items-center" aria-hidden={k === 'b' ? true : undefined}>
-      {items.map((x, i) => (
-        <span key={i} className="flex items-center gap-6 pr-6">
-          {x}
-          <svg width="9" height="9" viewBox="0 0 40 40" className="text-accent2" aria-hidden>
-            <g fill="currentColor">
-              <rect x="7" y="7" width="26" height="26" />
-              <rect x="7" y="7" width="26" height="26" transform="rotate(45 20 20)" />
-            </g>
-          </svg>
-        </span>
-      ))}
-    </span>
-  );
-  return (
-    <div className="overflow-hidden bg-fg py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-bg/80">
-      <div className="ticker-track flex w-max">
-        {row('a')}
-        {row('b')}
-      </div>
-    </div>
   );
 }
 
@@ -244,7 +214,7 @@ export function TopBar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
         <Link to="/" className="mr-4 flex items-center gap-2.5" aria-label={t('nav.home')}>
           <BrandMark />
-          <Wordmark className="text-[1.45rem]" />
+          <Wordmark className="text-[1.35rem]" />
         </Link>
 
         {!locked && (
@@ -484,7 +454,6 @@ export function Layout({ children }: { children: ReactNode }) {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-white">
         {t('a11y.skip')}
       </a>
-      <Ticker />
       <TopBar />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
       <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-7xl flex-1 px-4 pt-8 sm:px-6 ${reduce ? '' : 'page-in'}`}>

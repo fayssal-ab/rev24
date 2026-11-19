@@ -53,9 +53,9 @@ export default function Home() {
             <span className="h-px w-8 bg-line" />
             {t('home.hero.eyebrow')}
           </div>
-          <h1 className="mt-6 font-display text-[2.7rem] font-light leading-[1.02] tracking-[-0.035em] text-fg sm:text-[4.4rem]">
+          <h1 className="mt-6 font-display text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.04em] text-fg sm:text-[4.2rem]">
             {t('home.hero.titleA')}{' '}
-            <em className="relative whitespace-nowrap font-normal text-accent">
+            <em className="relative whitespace-nowrap font-serif text-[1.12em] font-normal tracking-[-0.01em] text-accent">
               {t('home.hero.titleB')}
               <svg viewBox="0 0 300 18" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-3 w-full text-accent2" aria-hidden>
                 <path className="draw" pathLength={1} d="M3 12 C 60 4, 120 3, 170 8 S 260 14, 297 5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />

@@ -5,13 +5,22 @@ import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
 import { Icon } from './Icon';
-import { getModule, MODULES } from '../lib/content';
+import { getModule } from '../lib/content';
+import { SUBJECTS } from '../lib/catalog';
 import type { Lang } from '../lib/schema';
 import { BadgeToast } from './BadgeToast';
 import type { UIKey } from '../i18n/ui';
 import { authEnabled, signOut, useAuth, useCanSeeOral } from '../auth/auth';
+import { DocumentPreview } from './ui';
+import { GlobalSearch, useSearch } from './GlobalSearch';
 
-const initials = (name: string) => name.split(/[\s.@_-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join('') || '?';
+const initials = (name: string) =>
+  name
+    .split(/[\s.@_-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join('') || '?';
 
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'fr', label: 'FR' },
@@ -19,56 +28,70 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' }
 ];
 
-/** Global tools shown in the "Outils" menu of the navbar. */
+/** Study tools and reference material ("Ressources" menu). */
 export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
-  { to: '/bibliotheque', icon: 'inbox', key: 'nav.library', desc: 'tools.library.desc' },
-  { to: '/terminal', icon: 'terminal', key: 'nav.terminal', desc: 'home.terminal.desc' },
-  { to: '/stats-lab', icon: 'sigma', key: 'nav.statslab', desc: 'home.statslab.desc' },
-  { to: '/glossaire', icon: 'book', key: 'nav.glossary', desc: 'tools.glossary.desc' },
-  { to: '/m/data/formulaire', icon: 'file', key: 'tools.dataRef', desc: 'tools.dataRef.desc' }
+  {
+    to: '/explorer',
+    icon: 'inbox',
+    key: 'nav.library',
+    desc: 'tools.library.desc'
+  },
+  {
+    to: '/m/data/formulaire',
+    icon: 'file',
+    key: 'tools.dataRef',
+    desc: 'tools.dataRef.desc'
+  },
+  {
+    to: '/glossaire',
+    icon: 'book',
+    key: 'nav.glossary',
+    desc: 'tools.glossary.desc'
+  },
+  {
+    to: '/stats-lab',
+    icon: 'sigma',
+    key: 'nav.statslab',
+    desc: 'home.statslab.desc'
+  },
+  {
+    to: '/terminal',
+    icon: 'terminal',
+    key: 'nav.terminal',
+    desc: 'home.terminal.desc'
+  }
 ];
 
-/**
- * GROUP22 mark: an engineering hexagon in EMSI green, an open book whose spine rises into an arrow
- * (learning → progress), and a burgundy dot. The group's own mark, not the school logo.
- */
+/** GROUP22 mark: a navy square, the group number set in Manrope, and a gold rule — the group's own mark. */
 export function BrandMark({ small = false }: { small?: boolean }) {
-  const sz = small ? 34 : 40;
+  const sz = small ? 30 : 34;
   return (
-    <svg width={sz} height={sz} viewBox="0 0 64 64" aria-hidden className="shrink-0">
-      <defs>
-        <linearGradient id="g22hex" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#1fae55" />
-          <stop offset="1" stopColor="#006b29" />
-        </linearGradient>
-      </defs>
-      <path d="M32 3 L57 17.5 V46.5 L32 61 L7 46.5 V17.5 Z" fill="url(#g22hex)" />
-      <path d="M32 3 L57 17.5 V46.5 L32 61 L7 46.5 V17.5 Z" fill="none" stroke="#ffffff" strokeOpacity=".18" strokeWidth="1.5" />
-      {/* open book */}
-      <path d="M15 40 C21 37 27 37 32 41 C37 37 43 37 49 40 V25 C43 22 37 22 32 26 C27 22 21 22 15 25 Z" fill="#ffffff" />
-      <path d="M32 26 V41" stroke="#008d36" strokeWidth="2" />
-      {/* rising arrow from the spine */}
-      <path d="M32 22 V12 M27 16.5 L32 11.5 L37 16.5" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="47" cy="47" r="4" fill="#741823" stroke="#ffffff" strokeWidth="1.5" />
+    <svg width={sz} height={sz} viewBox="0 0 40 40" aria-hidden className="shrink-0">
+      <rect width="40" height="40" rx="5" fill="#14243A" />
+      <text x="20" y="25.5" textAnchor="middle" fontFamily="Manrope, Inter, sans-serif" fontSize="17" fontWeight="800" fill="#FFFFFF" letterSpacing="-0.5">
+        22
+      </text>
+      <rect x="11" y="30" width="18" height="2.2" fill="#D8A34D" />
+      <rect x="31" y="6" width="3" height="3" fill="#16758A" />
     </svg>
   );
 }
 
-/** Wordmark "GROUP22": Outfit, "22" in EMSI burgundy. */
+/** Wordmark "GROUP22" (Manrope), "22" in academic teal. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
     <span className={`font-display font-extrabold tracking-tight ${className}`}>
-      GROUP<span className="text-accent2">22</span>
+      GROUP<span className="text-accent">22</span>
     </span>
   );
 }
 
-/** A small accessible dropdown used by the navbar. Closes on outside click, Escape and navigation. */
-function Dropdown({ label, icon, children, active }: { label: string; icon: string; children: (close: () => void) => ReactNode; active?: boolean }) {
+/** Small accessible dropdown. Closes on outside click, Escape and navigation. */
+function Dropdown({ label, children, active, wide = false }: { label: string; children: ReactNode; active?: boolean; wide?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { pathname } = useLocation();
-  useEffect(() => setOpen(false), [pathname]);
+  const { pathname, search } = useLocation();
+  useEffect(() => setOpen(false), [pathname, search]);
   useEffect(() => {
     if (!open) return;
     const onDoc = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
@@ -82,21 +105,21 @@ function Dropdown({ label, icon, children, active }: { label: string; icon: stri
   }, [open]);
   return (
     <div className="relative" ref={ref}>
-      <button className={`nav-link ${active || open ? 'nav-link-active' : ''}`} aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen(!open)}>
-        <Icon name={icon} size={16} /> {label}
-        <Icon name="down" size={14} className={`transition ${open ? 'rotate-180' : ''}`} />
+      <button className={`nav-link ${active ? 'nav-link-active' : ''} ${open ? 'text-fg' : ''}`} aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen(!open)}>
+        {label}
+        <Icon name="down" size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence>
         {open && (
           <motion.div
             role="menu"
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full z-50 mt-2 w-[22rem] origin-top-left rounded-xl border border-line bg-surface p-2 shadow-xl"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.12 }}
+            className={`absolute left-0 top-full z-50 mt-3 rounded-lg border border-line bg-surface p-1.5 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)] ${wide ? 'w-[34rem]' : 'w-80'}`}
           >
-            {children(() => setOpen(false))}
+            {children}
           </motion.div>
         )}
       </AnimatePresence>
@@ -106,23 +129,23 @@ function Dropdown({ label, icon, children, active }: { label: string; icon: stri
 
 function MenuItem({ to, icon, title, desc, color }: { to: string; icon: string; title: ReactNode; desc?: ReactNode; color?: string }) {
   return (
-    <Link to={to} role="menuitem" className="flex items-start gap-3 rounded-lg p-2.5 transition hover:bg-surface2">
-      <span className="icon-tile h-9 w-9 text-white" style={{ background: color ?? 'rgb(var(--accent2))' }}>
-        <Icon name={icon} size={18} />
+    <Link to={to} role="menuitem" className="flex items-start gap-3 rounded-md p-2.5 transition-colors hover:bg-surface2">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line" style={color ? { color } : undefined}>
+        <Icon name={icon} size={16} />
       </span>
       <span className="min-w-0">
         <span className="block text-sm font-semibold text-fg">{title}</span>
-        {desc && <span className="block text-xs leading-snug text-muted">{desc}</span>}
+        {desc && <span className="mt-0.5 block text-xs leading-snug text-muted">{desc}</span>}
       </span>
     </Link>
   );
 }
 
-function LangSwitch({ compact = false }: { compact?: boolean }) {
+function LangSwitch() {
   const { t } = useT();
   const { lang, setLang } = useStore();
   return (
-    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-lg border border-line bg-surface2 p-0.5">
+    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-md border border-line p-0.5">
       {LANGS.map((l) => (
         <button
           key={l.code}
@@ -130,7 +153,7 @@ function LangSwitch({ compact = false }: { compact?: boolean }) {
           aria-checked={lang === l.code}
           onClick={() => setLang(l.code)}
           data-testid={`lang-${l.code}`}
-          className={`rounded-md px-2 text-[11px] font-bold tracking-wide transition ${compact ? 'min-h-[30px]' : 'min-h-[32px]'} ${lang === l.code ? 'bg-surface text-accent shadow-sm' : 'text-muted hover:text-fg'}`}
+          className={`min-h-[28px] rounded px-2 text-[11px] font-semibold tracking-wide transition-colors ${lang === l.code ? 'bg-navy text-white dark:bg-surface2 dark:text-fg' : 'text-muted hover:text-fg'}`}
         >
           {l.label}
         </button>
@@ -143,11 +166,41 @@ function ThemeButton() {
   const { t } = useT();
   const { theme, setTheme } = useStore();
   return (
-    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={t('theme.toggle')} title={t('theme.toggle')} className="grid h-9 w-9 place-items-center rounded-lg border border-line text-muted transition hover:text-fg">
-      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={17} />
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      aria-label={t('theme.toggle')}
+      title={t('theme.toggle')}
+      className="grid h-8 w-8 place-items-center rounded-md border border-line text-muted transition-colors hover:text-fg"
+    >
+      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={15} />
     </button>
   );
 }
+
+function SearchButton({ compact = false }: { compact?: boolean }) {
+  const { t } = useT();
+  const setOpen = useSearch((s) => s.setOpen);
+  if (compact)
+    return (
+      <button onClick={() => setOpen(true)} className="grid h-8 w-8 place-items-center rounded-md border border-line text-muted" aria-label={t('search.placeholder')}>
+        <Icon name="search" size={15} />
+      </button>
+    );
+  return (
+    <button
+      onClick={() => setOpen(true)}
+      className="flex h-8 w-56 items-center gap-2 rounded-md border border-line bg-surface2/60 px-2.5 text-left text-xs text-muted transition-colors hover:border-fg/25"
+      data-testid="open-search"
+    >
+      <Icon name="search" size={14} />
+      <span className="flex-1 truncate">{t('search.short')}</span>
+      <kbd className="rounded border border-line bg-surface px-1 text-[10px]">Ctrl K</kbd>
+    </button>
+  );
+}
+
+/** Private group site: signed-out visitors only see the sign-in page. */
+const useLocked = () => useAuth((s) => authEnabled && !s.user);
 
 export function TopBar() {
   const { t } = useT();
@@ -156,75 +209,88 @@ export function TopBar() {
   const xp = useStore((s) => s.xp);
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
+  const locked = useLocked();
   const [drawer, setDrawer] = useState(false);
   useEffect(() => setDrawer(false), [pathname]);
-  const inModule = pathname.startsWith('/m/');
-  const inTools = TOOLS.some((x) => pathname.startsWith(x.to));
+  const inModule = pathname.startsWith('/m/') && !pathname.endsWith('/formulaire');
+  const inTools = TOOLS.some((x) => pathname.startsWith(x.to)) || pathname === '/bibliotheque';
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur supports-[backdrop-filter]:bg-surface/75">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2.5" aria-label={t('nav.home')}>
+    <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 sm:px-6">
+        <Link to="/" className="mr-4 flex items-center gap-2.5" aria-label={t('nav.home')}>
           <BrandMark />
-          <span className="leading-tight">
-            <Wordmark className="block text-[16px]" />
-            <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-accent">{t('app.sub')}</span>
+          <span className="leading-none">
+            <Wordmark className="block text-[15px]" />
+            <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.14em] text-muted">{t('app.sub')}</span>
           </span>
         </Link>
 
-        <nav className="ml-6 hidden items-center gap-1 lg:flex" aria-label={t('a11y.menu')}>
-          <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
-            <Icon name="home" size={16} /> {t('nav.home')}
-          </NavLink>
-          <Dropdown label={t('nav.modules')} icon="grid" active={inModule}>
-            {() => (
-              <div className="grid gap-0.5">
-                <div className="eyebrow px-2.5 pb-1 pt-1">{t('nav.modules')}</div>
-                {MODULES.map((m) => (
-                  <MenuItem key={m.id} to={`/m/${m.id}`} icon={m.icon} title={tl(m.title)} desc={tl(m.subtitle)} color={m.color} />
-                ))}
-              </div>
-            )}
-          </Dropdown>
-          <Dropdown label={t('nav.tools')} icon="tool" active={inTools}>
-            {() => (
-              <div className="grid gap-0.5">
-                <div className="eyebrow px-2.5 pb-1 pt-1">{t('nav.tools')}</div>
-                {TOOLS.map((x) => (
-                  <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} desc={t(x.desc)} />
-                ))}
-              </div>
-            )}
-          </Dropdown>
-          <NavLink to="/profil" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
-            <Icon name="chart" size={16} /> {t('nav.progress')}
-          </NavLink>
-          {canSeeOral && (
-            <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
-              <Icon name="mic" size={16} /> {t('nav.presentation')}
+        {!locked && (
+          <nav className="hidden items-center lg:flex" aria-label={t('a11y.menu')}>
+            <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
+              {t('nav.home')}
             </NavLink>
-          )}
-        </nav>
+            <NavLink to="/explorer" className={({ isActive }) => `nav-link ${isActive || pathname === '/bibliotheque' ? 'nav-link-active' : ''}`} data-testid="nav-explore">
+              {t('nav.explore')}
+            </NavLink>
+            <Dropdown label={t('nav.modules')} active={inModule} wide>
+              <div className="grid grid-cols-2 gap-0.5">
+                {SUBJECTS.map((s) => (
+                  <MenuItem
+                    key={s.id}
+                    to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`}
+                    icon={s.icon}
+                    title={tl(s.title)}
+                    desc={s.interactive ? t('nav.module.interactive') : t('nav.module.docs')}
+                    color={s.color}
+                  />
+                ))}
+              </div>
+            </Dropdown>
+            <Dropdown label={t('nav.resources')} active={inTools}>
+              {TOOLS.map((x) => (
+                <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} desc={t(x.desc)} />
+              ))}
+            </Dropdown>
+            {canSeeOral && (
+              <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
+                {t('nav.presentation')}
+              </NavLink>
+            )}
+          </nav>
+        )}
 
         <div className="ml-auto flex items-center gap-2">
-          <div className="hidden items-center gap-2 md:flex">
-            <LangSwitch />
-          </div>
-          <ThemeButton />
-          {authEnabled && !user && (
-            <Link to="/connexion" className="btn-primary btn-sm hidden sm:inline-flex" data-testid="nav-login">
-              <Icon name="user" size={14} /> {t('auth.signin')}
-            </Link>
+          {!locked && (
+            <>
+              <span className="hidden xl:block">
+                <SearchButton />
+              </span>
+              <span className="xl:hidden">
+                <SearchButton compact />
+              </span>
+            </>
           )}
-          <Link to="/profil" className={`items-center gap-2 rounded-lg border border-line py-1 pl-1 pr-3 transition hover:border-accent/50 ${authEnabled && !user ? 'hidden' : 'hidden sm:flex'}`} aria-label={t('nav.profile')}>
-            <span className="icon-tile h-7 w-7 bg-navy text-[11px] font-bold text-white">{user ? initials(user.displayName || user.email) : <Icon name="user" size={15} />}</span>
+          <span className={locked ? '' : 'hidden md:block'}>
+            <LangSwitch />
+          </span>
+          <ThemeButton />
+          <Link
+            to="/profil"
+            className={`items-center gap-2 rounded-md border border-line py-0.5 pl-0.5 pr-2.5 transition-colors hover:border-fg/25 ${authEnabled && !user ? 'hidden' : 'hidden sm:flex'}`}
+            aria-label={t('nav.profile')}
+          >
+            <span className="grid h-7 w-7 place-items-center rounded bg-navy text-[11px] font-bold text-white">{user ? initials(user.displayName || user.email) : <Icon name="user" size={14} />}</span>
             <span className="leading-tight">
-              {user && <span className="block max-w-[9rem] truncate text-xs font-semibold">{user.displayName || user.email}</span>}
+              {user && <span className="block max-w-[8rem] truncate text-xs font-semibold">{user.displayName || user.email}</span>}
               <span className={`block tabular-nums ${user ? 'text-[10px] text-muted' : 'text-xs font-semibold'}`}>{xp} XP</span>
             </span>
           </Link>
-          <button className="grid h-9 w-9 place-items-center rounded-lg border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
-            <Icon name="menu" size={18} />
-          </button>
+          {!locked && (
+            <button className="grid h-8 w-8 place-items-center rounded-md border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
+              <Icon name="menu" size={16} />
+            </button>
+          )}
         </div>
       </div>
       <MobileDrawer open={drawer} onClose={() => setDrawer(false)} />
@@ -237,66 +303,68 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   const tl = useL();
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
+  const link = ({ isActive }: { isActive: boolean }) => `side-link ${isActive ? 'side-link-active' : ''}`;
   return (
     <AnimatePresence>
       {open && (
         <>
-          <motion.div className="fixed inset-0 z-50 bg-black/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
+          <motion.div className="fixed inset-0 z-50 bg-navy/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.aside
             className="scroll-thin fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col overflow-y-auto border-l border-line bg-surface p-4 lg:hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
             aria-label={t('a11y.menu')}
           >
             <div className="mb-4 flex items-center justify-between">
-              <span className="flex items-center gap-2 font-bold">
+              <span className="flex items-center gap-2">
                 <BrandMark small /> <Wordmark />
               </span>
-              <button className="grid h-9 w-9 place-items-center rounded-lg border border-line" onClick={onClose} aria-label={t('common.close')}>
-                <Icon name="x" size={18} />
+              <button className="grid h-8 w-8 place-items-center rounded-md border border-line" onClick={onClose} aria-label={t('common.close')}>
+                <Icon name="x" size={16} />
               </button>
             </div>
-            <NavLink to="/" end className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
-              <Icon name="home" size={18} /> {t('nav.home')}
+            <NavLink to="/" end className={link}>
+              <Icon name="home" size={17} /> {t('nav.home')}
             </NavLink>
-            <NavLink to="/profil" className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
-              <Icon name="user" size={18} /> {t('nav.profile')}
+            <NavLink to="/explorer" className={link}>
+              <Icon name="inbox" size={17} /> {t('nav.explore')}
+            </NavLink>
+            <NavLink to="/profil" end className={link}>
+              <Icon name="user" size={17} /> {t('nav.profile')}
             </NavLink>
             {canSeeOral && (
-              <NavLink to="/profil/oral" className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
-                <Icon name="mic" size={18} /> {t('nav.presentation')}
+              <NavLink to="/profil/oral" className={link}>
+                <Icon name="mic" size={17} /> {t('nav.presentation')}
               </NavLink>
             )}
-            <div className="eyebrow mb-1 mt-4 px-3">{t('nav.modules')}</div>
-            {MODULES.map((m) => (
-              <NavLink key={m.id} to={`/m/${m.id}`} className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
-                <span className="icon-tile h-7 w-7 text-white" style={{ background: m.color }}>
-                  <Icon name={m.icon} size={15} />
-                </span>
-                {tl(m.title)}
+            <div className="eyebrow mb-1 mt-5 px-3">{t('nav.modules')}</div>
+            {SUBJECTS.map((s) => (
+              <NavLink key={s.id} to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className={link}>
+                <span className="h-2 w-2 rounded-sm" style={{ background: s.color }} />
+                {tl(s.title)}
               </NavLink>
             ))}
-            <div className="eyebrow mb-1 mt-4 px-3">{t('nav.tools')}</div>
+            <div className="eyebrow mb-1 mt-5 px-3">{t('nav.resources')}</div>
             {TOOLS.map((x) => (
-              <NavLink key={x.to} to={x.to} className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
-                <Icon name={x.icon} size={18} /> {t(x.key)}
+              <NavLink key={x.to} to={x.to} className={link}>
+                <Icon name={x.icon} size={17} /> {t(x.key)}
               </NavLink>
             ))}
             <div className="mt-auto space-y-3 border-t border-line pt-4">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-semibold text-muted">{t('lang.label')}</span>
-                <LangSwitch compact />
+                <LangSwitch />
               </div>
               {authEnabled && !user && (
                 <Link to="/connexion" className="btn-primary w-full">
-                  <Icon name="user" size={16} /> {t('auth.signin')}
+                  {t('auth.signin')}
                 </Link>
               )}
               {authEnabled && user && (
                 <button className="btn-ghost w-full text-bad" onClick={() => void signOut()}>
-                  <Icon name="external" size={16} /> {t('auth.signout')} · <span className="truncate font-normal">{user.email}</span>
+                  <Icon name="external" size={15} /> {t('auth.signout')} · <span className="truncate font-normal">{user.email}</span>
                 </button>
               )}
             </div>
@@ -312,33 +380,33 @@ function Footer() {
   const tl = useL();
   const canSeeOral = useCanSeeOral();
   return (
-    <footer className="mt-16 border-t border-line bg-surface">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-4">
-        <div className="md:col-span-1">
+    <footer className="mt-20 border-t border-line bg-surface">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div>
           <div className="flex items-center gap-2.5">
             <BrandMark small />
-            <Wordmark className="text-lg" />
+            <Wordmark className="text-base" />
           </div>
-          <p className="mt-3 text-sm text-muted">{t('footer.about')}</p>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{t('footer.about')}</p>
         </div>
         <div>
           <div className="eyebrow mb-3">{t('nav.modules')}</div>
           <ul className="space-y-2 text-sm">
-            {MODULES.map((m) => (
-              <li key={m.id}>
-                <Link to={`/m/${m.id}`} className="text-muted hover:text-accent">
-                  {tl(m.title)}
+            {SUBJECTS.map((s) => (
+              <li key={s.id}>
+                <Link to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className="text-muted hover:text-fg">
+                  {tl(s.title)}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <div className="eyebrow mb-3">{t('nav.tools')}</div>
+          <div className="eyebrow mb-3">{t('nav.resources')}</div>
           <ul className="space-y-2 text-sm">
             {TOOLS.map((x) => (
               <li key={x.to}>
-                <Link to={x.to} className="text-muted hover:text-accent">
+                <Link to={x.to} className="text-muted hover:text-fg">
                   {t(x.key)}
                 </Link>
               </li>
@@ -346,27 +414,32 @@ function Footer() {
           </ul>
         </div>
         <div>
-          <div className="eyebrow mb-3">{t('nav.profile')}</div>
+          <div className="eyebrow mb-3">GROUP22</div>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link to="/profil" className="text-muted hover:text-accent">
+              <Link to="/profil" className="text-muted hover:text-fg">
                 {t('nav.progress')}
               </Link>
             </li>
             {canSeeOral && (
               <li>
-                <Link to="/profil/oral" className="text-muted hover:text-accent">
+                <Link to="/profil/oral" className="text-muted hover:text-fg">
                   {t('nav.oral')}
                 </Link>
               </li>
             )}
           </ul>
-          <p className="mt-4 flex items-start gap-2 text-xs text-muted">
-            <Icon name="database" size={14} className="mt-0.5 shrink-0" /> {t(authEnabled ? 'auth.aside.l1' : 'footer.local')}
+          <p className="mt-5 flex items-start gap-2 text-xs text-muted">
+            <Icon name="database" size={13} className="mt-0.5 shrink-0" /> {t(authEnabled ? 'auth.aside.l1' : 'footer.local')}
           </p>
         </div>
       </div>
-      <div className="border-t border-line py-4 text-center text-xs text-muted">GROUP22 · 4IIR G22 · EMSI Rabat · 2026/2027</div>
+      <div className="border-t border-line">
+        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 px-4 py-4 text-xs text-muted sm:px-6">
+          <span>GROUP22 · 4IIR · EMSI Rabat · 2026/2027</span>
+          <span>{t('footer.sources')}</span>
+        </div>
+      </div>
     </footer>
   );
 }
@@ -376,6 +449,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { pathname } = location;
   const reduce = useReducedMotion();
+  const locked = useLocked();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -386,11 +460,17 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
       <TopBar />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
-      <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-7xl flex-1 px-4 pt-6 sm:px-6 ${reduce ? '' : 'page-in'}`}>
+      <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-7xl flex-1 px-4 pt-8 sm:px-6 ${reduce ? '' : 'page-in'}`}>
         <RouteErrorBoundary>{children}</RouteErrorBoundary>
       </main>
-      <Footer />
-      <BadgeToast />
+      {!locked && (
+        <>
+          <Footer />
+          <BadgeToast />
+          <DocumentPreview />
+          <GlobalSearch />
+        </>
+      )}
     </div>
   );
 }
@@ -398,17 +478,17 @@ export function Layout({ children }: { children: ReactNode }) {
 export function PageTitle({ title, sub, back, eyebrow, actions }: { title: ReactNode; sub?: ReactNode; back?: string; eyebrow?: ReactNode; actions?: ReactNode }) {
   const { t } = useT();
   return (
-    <div className="mb-6">
+    <div className="mb-8 border-b border-line pb-6">
       {back && (
         <Link to={back} className="mb-3 inline-flex items-center gap-1 text-sm text-muted hover:text-fg">
-          <Icon name="left" size={16} /> {t('nav.back')}
+          <Icon name="left" size={15} /> {t('nav.back')}
         </Link>
       )}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
-          {eyebrow && <div className="eyebrow mb-1">{eyebrow}</div>}
+          {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
           <h1 className="h1">{title}</h1>
-          {sub && <p className="mt-1.5 max-w-3xl text-muted">{sub}</p>}
+          {sub && <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-muted">{sub}</p>}
         </div>
         {actions}
       </div>

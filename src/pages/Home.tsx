@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useState, type FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { MODULES } from '../lib/content';
 import { useAllModules } from '../hooks/useModule';
 import { useStore } from '../store/store';
@@ -7,237 +7,196 @@ import { useT, useL } from '../hooks/useT';
 import { moduleMastery } from '../lib/mastery';
 import { Icon } from '../components/Icon';
 import { TOOLS } from '../components/Layout';
-
-/** Data analysis comes first: it is the module the class is preparing now. */
-const ORDER = ['data', 'linux', 'ro', 'oracle'];
+import { KIND_LABEL, ResourceList, SectionHeader } from '../components/ui';
+import { ACADEMIC_YEAR, FILIERE, KINDS, RESOURCES, SEMESTER, SUBJECTS, YEAR_OF_STUDY, countByKind, recentResources, resourcesOf } from '../lib/catalog';
 
 export default function Home() {
   const { t } = useT();
   const tl = useL();
-  const reduce = useReducedMotion();
+  const navigate = useNavigate();
+  const [q, setQ] = useState('');
   const content = useAllModules(MODULES.map((m) => m.id));
   const st = useStore();
-  const masteries = Object.fromEntries((content ?? []).map((c) => [c.module.id, moduleMastery(c, st)]));
-  const vals = Object.values(masteries);
-  const global = vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : 0;
-  const modules = [...MODULES].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
+  const kindCount = countByKind(RESOURCES);
   const last = st.lastVisit;
   const lastContent = last && content?.find((c) => c.module.id === last.module);
   const lastChapter = last?.chapter ? lastContent?.chapters.find((c) => c.id === last.chapter) : undefined;
-  const lastPct = last?.chapter ? (st.read[`${last.module}/${last.chapter}`] ? 100 : st.chapterPos[`${last.module}/${last.chapter}`]?.pct ?? 0) : null;
-  const fade = (i: number) => (reduce ? {} : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { delay: i * 0.06, duration: 0.4 } });
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    navigate(q.trim() ? `/explorer?q=${encodeURIComponent(q.trim())}` : '/explorer');
+  };
 
   return (
-    <div className="space-y-16 pb-4">
-      {/* hero — light, learning-platform style in the EMSI palette */}
-      <section className="relative left-1/2 -mt-6 w-screen -translate-x-1/2 overflow-hidden border-b border-line bg-mint px-4 pb-14 pt-12 sm:px-10 lg:pt-16">
-        <div className="dots pointer-events-none absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brandlight/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-40 left-1/3 h-80 w-80 rounded-full bg-accent2/10 blur-3xl" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
-          <div className="fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface px-3 py-1 text-xs font-bold text-accent shadow-sm">
-              <Icon name="sparkles" size={14} /> {t('home.hero.eyebrow')}
-            </div>
-            <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-fg sm:text-6xl">
-              {t('home.hero.title1')} <span className="relative whitespace-nowrap text-accent">
-                {t('home.hero.title2')}
-                <svg viewBox="0 0 200 12" className="absolute -bottom-2 left-0 h-3 w-full" preserveAspectRatio="none" aria-hidden>
-                  <path d="M2 9 C50 2 150 2 198 8" fill="none" stroke="rgb(var(--brand-light))" strokeWidth="5" strokeLinecap="round" />
-                </svg>
-              </span>
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{t('home.hero.sub')}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/m/data" className="btn-primary px-6 py-3 text-base shadow-lg shadow-accent/25" data-testid="home-start">
-                {t('home.hero.cta')} <Icon name="arrowRight" size={18} />
+    <div className="space-y-16">
+      {/* hero */}
+      <section className="grid gap-10 border-b border-line pb-14 pt-4 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+        <div>
+          <div className="eyebrow">{t('home.hero.eyebrow')}</div>
+          <h1 className="mt-4 max-w-2xl font-display text-[2.35rem] font-extrabold leading-[1.08] tracking-tight text-fg sm:text-[3.25rem]">{t('home.hero.title')}</h1>
+          <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-muted">{t('home.hero.sub')}</p>
+          <form onSubmit={submit} className="mt-8 flex max-w-xl items-center gap-2 rounded-lg border border-line bg-surface p-1.5 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/15" role="search">
+            <Icon name="search" size={18} className="ml-2 shrink-0 text-muted" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('home.searchPh')} className="h-10 min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted" aria-label={t('home.searchPh')} data-testid="home-search" />
+            <button className="btn-primary" data-testid="home-start">
+              {t('home.search')}
+            </button>
+          </form>
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            {(['cours', 'td', 'tp', 'controle'] as const).map((k) => (
+              <Link key={k} to={`/explorer?type=${k}`} className="text-muted underline decoration-line underline-offset-4 hover:text-fg hover:decoration-fg">
+                {t(KIND_LABEL[k])}
               </Link>
-              <Link to="/bibliotheque" className="btn border border-line bg-surface px-6 py-3 text-base text-fg hover:border-accent/50">
-                <Icon name="inbox" size={18} /> {t('nav.library')}
-              </Link>
-            </div>
-            <div className="mt-10 flex flex-wrap gap-8">
-              {[
-                { v: `${global}%`, k: t('home.global') },
-                { v: st.xp, k: 'XP' },
-                { v: Object.values(st.read).filter(Boolean).length, k: t('prog.chaptersRead') },
-                { v: st.streak.count, k: t('home.streak') }
-              ].map((x) => (
-                <div key={x.k}>
-                  <div className="font-display text-3xl font-extrabold tabular-nums text-fg">{x.v}</div>
-                  <div className="text-xs font-semibold uppercase tracking-wide text-muted">{x.k}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* floating learning cards */}
-          <div className="relative hidden h-[420px] lg:block" aria-hidden>
-            <div className="float absolute left-6 top-4 w-72 rounded-3xl border border-line bg-surface p-5 shadow-xl shadow-accent/10">
-              <div className="flex items-center gap-3">
-                <span className="icon-tile h-11 w-11 rounded-2xl bg-accent text-white">
-                  <Icon name="chart" size={20} />
-                </span>
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wide text-accent2">{t('home.card.next')}</div>
-                  <div className="font-display font-bold">Tests d&apos;hypothèses</div>
-                </div>
-              </div>
-              <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface2">
-                <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-accent to-brandlight" />
-              </div>
-              <div className="mt-2 flex justify-between text-xs text-muted">
-                <span>Chap 5</span>
-                <span>66%</span>
-              </div>
-            </div>
-            <div className="float-slow absolute right-0 top-36 w-64 rounded-3xl border border-line bg-surface p-5 shadow-xl shadow-accent2/10">
-              <div className="text-xs font-bold uppercase tracking-wide text-muted">QCM</div>
-              <div className="mt-2 font-display text-lg font-bold">Z0 = 3,125 → ?</div>
-              <div className="mt-3 space-y-2 text-sm">
-                <div className="flex items-center gap-2 rounded-xl border border-accent bg-accent/10 px-3 py-2 font-semibold text-accent">
-                  <Icon name="checkCircle" size={16} /> Rejeter H0
-                </div>
-                <div className="rounded-xl border border-line px-3 py-2 text-muted">Ne pas rejeter</div>
-              </div>
-            </div>
-            <div className="float absolute bottom-2 left-16 flex w-60 items-center gap-3 rounded-3xl bg-navy p-4 text-white shadow-xl [animation-delay:-3s]">
-              <span className="icon-tile h-11 w-11 rounded-2xl bg-white/15">
-                <Icon name="award" size={20} />
-              </span>
-              <div>
-                <div className="font-display font-bold">+40 XP</div>
-                <div className="text-xs text-white/70">{t('home.card.exercise')}</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+
+        {/* academic navigation: filière → year → semester → modules */}
+        <nav aria-label={t('home.academic')} className="self-start rounded-lg border border-line bg-surface">
+          <div className="border-b border-line px-5 py-4">
+            <div className="eyebrow">{t('home.academic')}</div>
+          </div>
+          <dl className="divide-y divide-line text-sm">
+            {[
+              [t('explore.filiere'), `${FILIERE.id} · ${tl(FILIERE.title)}`],
+              [t('explore.year'), `${tl(YEAR_OF_STUDY)} · ${ACADEMIC_YEAR}`],
+              [t('explore.semester'), tl(SEMESTER.title)]
+            ].map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4 px-5 py-3">
+                <dt className="text-muted">{k}</dt>
+                <dd className="text-right font-medium">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <ul className="border-t border-line px-2 py-2">
+            {SUBJECTS.map((s) => (
+              <li key={s.id}>
+                <Link to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className="group flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-surface2">
+                  <span className="h-2 w-2 shrink-0 rounded-sm" style={{ background: s.color }} />
+                  <span className="min-w-0 flex-1 truncate">{tl(s.title)}</span>
+                  <span className="text-xs tabular-nums text-muted">{resourcesOf(s.id).length}</span>
+                  <Icon name="right" size={13} className="text-muted opacity-0 transition-opacity group-hover:opacity-100" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </section>
 
-      {/* resume */}
+      {/* resume where the student stopped */}
       {last && lastContent && (
-        <motion.section {...fade(0)}>
-          <Link to={last.path} className="card card-hover flex items-center gap-4 p-4 sm:p-5" data-testid="resume">
-            <span className="icon-tile h-12 w-12 text-white" style={{ background: lastContent.module.color }}>
-              <Icon name="history" size={22} />
+        <Link to={last.path} className="flex items-center gap-4 rounded-lg border border-line bg-surface px-5 py-4 transition-colors hover:border-fg/25" data-testid="resume">
+          <Icon name="history" size={18} className="text-accent" />
+          <span className="min-w-0 flex-1">
+            <span className="block text-xs text-muted">{t('home.resume')}</span>
+            <span className="block truncate font-medium">
+              {lastChapter ? tl(lastChapter.title) : tl(lastContent.module.title)} <span className="text-muted">· {tl(lastContent.module.title)}</span>
             </span>
-            <span className="min-w-0 flex-1">
-              <span className="eyebrow">{t('home.resume')}</span>
-              <span className="mt-0.5 block truncate font-semibold">{lastChapter ? tl(lastChapter.title) : tl(lastContent.module.title)}</span>
-              <span className="block text-xs text-muted">{tl(lastContent.module.title)}</span>
-              {lastPct !== null && (
-                <span className="mt-2 block h-1.5 max-w-sm overflow-hidden rounded-full bg-surface2">
-                  <span className="block h-full rounded-full bg-accent" style={{ width: `${lastPct}%` }} />
-                </span>
-              )}
-            </span>
-            <span className="btn-primary hidden sm:inline-flex">
-              {t('module.continue')} <Icon name="arrowRight" size={16} />
-            </span>
-          </Link>
-        </motion.section>
+          </span>
+          <span className="text-sm font-semibold text-accent">{t('module.continue')} →</span>
+        </Link>
       )}
+
+      {/* recently added */}
+      <section>
+        <SectionHeader
+          title={t('home.recent')}
+          action={
+            <Link to="/explorer" className="text-sm font-semibold text-accent hover:underline">
+              {t('home.seeAll')} ({RESOURCES.length})
+            </Link>
+          }
+        />
+        <ResourceList items={recentResources(6)} />
+      </section>
 
       {/* modules */}
       <section id="modules" className="scroll-mt-24">
-        <div className="mb-5">
-          <div className="eyebrow">{t('nav.modules')}</div>
-          <h2 className="mt-1 text-2xl font-bold">{t('home.modules')}</h2>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {modules.map((m, i) => {
-            const c = content?.find((x) => x.module.id === m.id);
-            const v = masteries[m.id] ?? 0;
-            return (
-              <motion.div key={m.id} {...fade(i)}>
-                <Link to={`/m/${m.id}`} className="card card-hover group relative flex h-full flex-col overflow-hidden p-5" data-testid={`module-${m.id}`}>
-                  <span className="absolute inset-x-0 top-0 h-1" style={{ background: m.color }} />
-                  <div className="flex items-start gap-4">
-                    <span className="icon-tile h-12 w-12 text-white" style={{ background: m.color }}>
-                      <Icon name={m.icon} size={24} />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-lg font-bold">{tl(m.title)}</span>
-                      <span className="block text-sm text-muted">{tl(m.subtitle)}</span>
-                    </span>
-                    {m.id === 'data' && <span className="chip !border-accent/40 !bg-accent/10 !text-accent">Focus</span>}
-                  </div>
-                  {c && (
-                    <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
-                      <span className="inline-flex items-center gap-1">
-                        <Icon name="book" size={13} /> {c.chapters.length} {t('home.stat.chapters')}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Icon name="quiz" size={13} /> {c.questions.length} {t('module.questions')}
-                      </span>
-                      <span className="inline-flex items-center gap-1">
-                        <Icon name="dumbbell" size={13} /> {c.exercises.length} {t('module.exercises')}
-                      </span>
-                    </div>
-                  )}
-                  <div className="mt-auto pt-5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted">{t('module.mastery')}</span>
-                      <span className="font-semibold tabular-nums">{v}%</span>
-                    </div>
-                    <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-surface2">
-                      <motion.div className="h-full rounded-full" style={{ background: m.color }} initial={{ width: 0 }} animate={{ width: `${v}%` }} transition={{ duration: 0.8, ease: 'easeOut' }} />
-                    </div>
-                  </div>
-                  <Icon name="arrowRight" size={18} className="absolute bottom-5 right-5 text-muted opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100" />
-                </Link>
-              </motion.div>
-            );
-          })}
+        <SectionHeader title={t('home.modules')} eyebrow={`${FILIERE.id} · ${tl(SEMESTER.title)} · ${ACADEMIC_YEAR}`} />
+        <div className="overflow-hidden rounded-lg border border-line bg-surface">
+          <table className="w-full text-sm">
+            <thead className="hidden border-b border-line text-left text-xs text-muted sm:table-header-group">
+              <tr>
+                <th className="px-5 py-2.5 font-medium">{t('explore.module')}</th>
+                <th className="px-3 py-2.5 font-medium">{t('home.col.lessons')}</th>
+                <th className="px-3 py-2.5 font-medium">{t('home.col.docs')}</th>
+                <th className="px-3 py-2.5 font-medium">{t('module.mastery')}</th>
+                <th className="w-10" />
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {SUBJECTS.map((s) => {
+                const c = content?.find((x) => x.module.id === s.id);
+                const to = s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`;
+                return (
+                  <tr key={s.id} className="group cursor-pointer transition-colors hover:bg-surface2/60" onClick={() => navigate(to)} data-testid={`module-${s.id}`}>
+                    <td className="px-5 py-4">
+                      <Link to={to} className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line" style={{ color: s.color }}>
+                          <Icon name={s.icon} size={16} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-semibold">{tl(s.title)}</span>
+                          {s.subtitle && <span className="block truncate text-xs text-muted">{tl(s.subtitle)}</span>}
+                        </span>
+                      </Link>
+                    </td>
+                    <td className="hidden px-3 py-4 tabular-nums text-muted sm:table-cell">{c ? `${c.chapters.length} ch. · ${c.questions.length} QCM` : s.interactive ? '…' : '—'}</td>
+                    <td className="hidden px-3 py-4 tabular-nums text-muted sm:table-cell">{resourcesOf(s.id).length}</td>
+                    <td className="hidden px-3 py-4 sm:table-cell">
+                      {c ? (
+                        <span className="flex items-center gap-2">
+                          <span className="h-1 w-16 overflow-hidden rounded-full bg-surface2">
+                            <span className="block h-full bg-accent" style={{ width: `${moduleMastery(c, st)}%` }} />
+                          </span>
+                          <span className="text-xs tabular-nums text-muted">{moduleMastery(c, st)}%</span>
+                        </span>
+                      ) : (
+                        <span className="text-muted">—</span>
+                      )}
+                    </td>
+                    <td className="pr-4 text-right">
+                      <Icon name="right" size={14} className="text-muted" />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
 
-      {/* method */}
+      {/* browse by type */}
       <section>
-        <div className="mb-5">
-          <div className="eyebrow">{t('home.method')}</div>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {[
-            { icon: 'book', k: 'home.m1', d: 'home.m1.d' },
-            { icon: 'sigma', k: 'home.m2', d: 'home.m2.d' },
-            { icon: 'target', k: 'home.m3', d: 'home.m3.d' }
-          ].map((x, i) => (
-            <motion.div key={x.k} {...fade(i)} className="card p-5">
-              <div className="flex items-center gap-3">
-                <span className="icon-tile h-10 w-10 bg-accent/10 text-accent">
-                  <Icon name={x.icon} size={20} />
-                </span>
-                <span className="font-mono text-xs text-muted">0{i + 1}</span>
+        <SectionHeader title={t('home.byType')} />
+        <div className="grid grid-cols-2 border-l border-t border-line sm:grid-cols-3 lg:grid-cols-6">
+          {KINDS.map((k) => (
+            <Link key={k} to={`/explorer?type=${k}`} className="group border-b border-r border-line bg-surface p-5 transition-colors hover:bg-surface2/60">
+              <div className="font-display text-2xl font-bold tabular-nums">{kindCount[k]}</div>
+              <div className="mt-1 flex items-center justify-between text-sm text-muted group-hover:text-fg">
+                {t(KIND_LABEL[k])} <Icon name="arrowRight" size={13} />
               </div>
-              <h3 className="mt-4 font-semibold">{t(x.k as 'home.m1')}</h3>
-              <p className="mt-1 text-sm text-muted">{t(x.d as 'home.m1.d')}</p>
-            </motion.div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* tools */}
+      {/* study tools */}
       <section>
-        <div className="mb-5">
-          <div className="eyebrow">{t('nav.tools')}</div>
-          <h2 className="mt-1 text-2xl font-bold">{t('home.tools')}</h2>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {TOOLS.map((x, i) => (
-            <motion.div key={x.to} {...fade(i)}>
-              <Link to={x.to} className="card card-hover flex h-full flex-col gap-3 p-4">
-                <span className="icon-tile h-10 w-10 bg-navy text-white">
-                  <Icon name={x.icon} size={19} />
-                </span>
-                <span>
-                  <span className="block font-semibold">{t(x.key)}</span>
+        <SectionHeader title={t('home.tools')} />
+        <ul className="grid gap-x-10 sm:grid-cols-2">
+          {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
+            <li key={x.to} className="border-b border-line">
+              <Link to={x.to} className="group flex items-start gap-3 py-4">
+                <Icon name={x.icon} size={17} className="mt-0.5 text-accent" />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-semibold group-hover:text-accent">{t(x.key)}</span>
                   <span className="block text-sm text-muted">{t(x.desc)}</span>
                 </span>
               </Link>
-            </motion.div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </div>
   );

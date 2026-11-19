@@ -1,0 +1,177 @@
+{
+ "data/01 - Cours - Chap 0 - Introduction à l'analyse de données.pdf": {
+  "pages": 25,
+  "date": "2026-10-04",
+  "size": 215131
+ },
+ "data/02 - Cours - Chap 1 - Manipulation de différents formats de données (pandas).pdf": {
+  "pages": 20,
+  "date": "2026-10-11",
+  "size": 447215
+ },
+ "data/03 - Cours - Chap 2 - Nettoyage et prétraitement des données.pdf": {
+  "pages": 30,
+  "date": "2026-10-19",
+  "size": 232266
+ },
+ "data/04 - Cours - Chap 4 - Visualisation des données.pdf": {
+  "pages": 47,
+  "date": "2026-10-26",
+  "size": 4234702
+ },
+ "data/05 - Cours - Chap 5 - Tests d'hypothèses.pdf": {
+  "pages": 36,
+  "date": "2026-11-02",
+  "size": 322481
+ },
+ "data/06 - TP - Feuille d'exercices N°1 (importer et exporter avec pandas).pdf": {
+  "pages": 1,
+  "date": "2026-10-11",
+  "size": 82985
+ },
+ "linux/01 - Cours - Chapitre 1 - Introduction et installation.pdf": {
+  "pages": 80,
+  "date": "2026-10-13",
+  "size": 6357191
+ },
+ "linux/02 - Cours - Gestion des utilisateurs sous Linux.pdf": {
+  "pages": 75,
+  "date": "2026-11-07",
+  "size": 3769073
+ },
+ "linux/03 - TP - TP1 - Installation et prise en main.pdf": {
+  "pages": 6,
+  "date": "2026-10-10",
+  "size": 722217
+ },
+ "linux/04 - TP - TP2 - Configuration de GRUB2.pdf": {
+  "pages": 5,
+  "date": "2026-10-19",
+  "size": 859687
+ },
+ "linux/05 - TP - TP3 - Cibles, services et journalctl.pdf": {
+  "pages": 6,
+  "date": "2026-10-27",
+  "size": 805661
+ },
+ "ml/01 - Cours - IA Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
+  "pages": 40,
+  "date": "2026-10-07",
+  "size": 909559
+ },
+ "ml/02 - Cours - IA Chapitre 2 - Fondements de l'intelligence artificielle.pdf": {
+  "pages": 95,
+  "date": "2026-10-07",
+  "size": 2863821
+ },
+ "ml/03 - Cours - IA Chapitre 3 - RGPD.pdf": {
+  "pages": 39,
+  "date": "2026-10-19",
+  "size": 1114436
+ },
+ "ml/04 - Cours - IA Chapitre 4 - Éthique de l'IA.pdf": {
+  "pages": 44,
+  "date": "2026-10-20",
+  "size": 1002140
+ },
+ "ml/05 - Cours - ML Chapitre 1 - Introduction au Machine Learning et régression linéaire.pdf": {
+  "pages": 106,
+  "date": "2026-11-10",
+  "size": 4244956
+ },
+ "ml/06 - TD - IA Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
+  "pages": 5,
+  "date": "2026-10-07",
+  "size": 293562
+ },
+ "ml/07 - TP - TP1 - Régression linéaire simple.pdf": {
+  "pages": 3,
+  "date": "2026-11-09",
+  "size": 86534
+ },
+ "ml/08 - TP - TP2 - Régression multiple et polynomiale.pdf": {
+  "pages": 3,
+  "date": "2026-11-09",
+  "size": 99317
+ },
+ "ml/09 - TP - TP KNN (k plus proches voisins).pdf": {
+  "pages": 6,
+  "date": "2025-12-07",
+  "size": 314751
+ },
+ "ml/10 - Annexe - Rappel sur la dérivation.pdf": {
+  "pages": 9,
+  "date": "2026-03-13",
+  "size": 4564843
+ },
+ "ml/11 - Annexe - Jeu de données employés (démo ML).pdf": {
+  "pages": 2,
+  "date": "2026-11-15",
+  "size": 32694
+ },
+ "oracle/02 - Cours - Chapitre 2 - Architecture globale.pdf": {
+  "pages": 17,
+  "date": "2026-10-24",
+  "size": 1158611
+ },
+ "oracle/03 - Cours - Chapitre 3 - Instance Oracle.pdf": {
+  "pages": 31,
+  "date": "2026-11-14",
+  "size": 1704630
+ },
+ "oracle/04 - TP - TP1 - Architecture et instance (sessions, arrêt et démarrage).pdf": {
+  "pages": 4,
+  "date": "2026-10-17",
+  "size": 112580
+ },
+ "ro/01 - Cours - Graphes - définitions et terminologie.pdf": {
+  "pages": 16,
+  "date": "2026-10-03",
+  "size": 173740
+ },
+ "ro/02 - Cours - Arbres et forêts (Kruskal, Prim).pdf": {
+  "pages": 6,
+  "date": "2026-11-08",
+  "size": 172443
+ },
+ "ro/03 - TD - Théorie des graphes P1.pdf": {
+  "pages": 1,
+  "date": "2026-11-15",
+  "size": 6338857
+ },
+ "ro/04 - TD - Théorie des graphes P2.pdf": {
+  "pages": 1,
+  "date": "2026-11-15",
+  "size": 6360101
+ },
+ "ro/05 - Contrôle - Contrôle continu RO 2025-2026.pdf": {
+  "pages": 2,
+  "date": "2025-11-18",
+  "size": 162199
+ },
+ "virtualisation/01 - Cours - Chapitre 1 - Introduction à la virtualisation.pdf": {
+  "pages": 45,
+  "date": "2026-11-15",
+  "size": 2732609
+ },
+ "virtualisation/02 - Cours - Chapitre 2 - Fondamentaux de la virtualisation (partie 1).pdf": {
+  "pages": 30,
+  "date": "2026-11-15",
+  "size": 1115472
+ },
+ "virtualisation/03 - TP - TP1 - Hyperviseur de type 2 (VirtualBox).pdf": {
+  "pages": 5,
+  "date": "2025-03-02",
+  "size": 770478
+ },
+ "virtualisation/04 - TP - TP2 - Hyperviseur de type 2 (VMware Workstation).pdf": {
+  "pages": 5,
+  "date": "2025-03-02",
+  "size": 559098
+ },
+ "virtualisation/05 - TP - TP3 - Hyperviseur de type 1 (VMware vSphere ESXi).pdf": {
+  "pages": 5,
+  "date": "2025-03-25",
+  "size": 210694
+ }
+}

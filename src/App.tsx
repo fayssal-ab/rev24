@@ -25,10 +25,14 @@ const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 const SupportsPage = lazy(() => import('./pages/SupportsPage'));
+const ExplorePage = lazy(() => import('./pages/ExplorePage'));
 
-/** Accounts are optional: everything is readable without one; signing in only syncs progress across devices. */
+/** Private group site: when accounts are on, every page requires signing in. */
 function AuthGate({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  const { ready, user } = useAuth();
+  if (!authEnabled) return <>{children}</>;
+  if (!ready) return <Loading />;
+  return user ? <>{children}</> : <AuthPage />;
 }
 
 function LoginRoute() {
@@ -69,33 +73,48 @@ export function App() {
       <Layout>
         <Suspense fallback={<Loading />}>
           <AuthGate>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/m/:module" element={<ModuleShell />}>
-              <Route index element={<ModulePage />} />
-              <Route path="c/:chapter" element={<ChapterPage />} />
-              <Route path="qcm" element={<QcmPage />} />
-              <Route path="exercices" element={<ExercisesPage />} />
-              <Route path="fiche" element={<SheetPage />} />
-              <Route path="formulaire" element={<ReferencePage />} />
-              <Route path="flashcards" element={<FlashcardsPage />} />
-              <Route path="examen" element={<ExamPage />} />
-              <Route path="supports" element={<SupportsPage />} />
-            </Route>
-            <Route path="/bibliotheque" element={<SupportsPage />} />
-            <Route path="/terminal" element={<TerminalPage />} />
-            <Route path="/stats-lab" element={<Narrow><StatsLabPage /></Narrow>} />
-            <Route path="/glossaire" element={<Narrow><GlossaryPage /></Narrow>} />
-            <Route path="/profil" element={<ProfilePage />} />
-            <Route path="/profil/oral" element={<OralRoute />} />
-            <Route path="/profil/donnees" element={<ProfilePage tab="data" />} />
-            {/* old links */}
-            <Route path="/progression" element={<Navigate to="/profil" replace />} />
-            <Route path="/oral/rm-rf" element={<Navigate to="/profil/oral" replace />} />
-            <Route path="/connexion" element={<LoginRoute />} />
-            <Route path="/24h" element={<Navigate to="/" replace />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/m/:module" element={<ModuleShell />}>
+                <Route index element={<ModulePage />} />
+                <Route path="c/:chapter" element={<ChapterPage />} />
+                <Route path="qcm" element={<QcmPage />} />
+                <Route path="exercices" element={<ExercisesPage />} />
+                <Route path="fiche" element={<SheetPage />} />
+                <Route path="formulaire" element={<ReferencePage />} />
+                <Route path="flashcards" element={<FlashcardsPage />} />
+                <Route path="examen" element={<ExamPage />} />
+                <Route path="supports" element={<SupportsPage />} />
+              </Route>
+              <Route path="/explorer" element={<ExplorePage />} />
+              <Route path="/bibliotheque" element={<Navigate to="/explorer" replace />} />
+              <Route path="/terminal" element={<TerminalPage />} />
+              <Route
+                path="/stats-lab"
+                element={
+                  <Narrow>
+                    <StatsLabPage />
+                  </Narrow>
+                }
+              />
+              <Route
+                path="/glossaire"
+                element={
+                  <Narrow>
+                    <GlossaryPage />
+                  </Narrow>
+                }
+              />
+              <Route path="/profil" element={<ProfilePage />} />
+              <Route path="/profil/oral" element={<OralRoute />} />
+              <Route path="/profil/donnees" element={<ProfilePage tab="data" />} />
+              {/* old links */}
+              <Route path="/progression" element={<Navigate to="/profil" replace />} />
+              <Route path="/oral/rm-rf" element={<Navigate to="/profil/oral" replace />} />
+              <Route path="/connexion" element={<LoginRoute />} />
+              <Route path="/24h" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </AuthGate>
         </Suspense>
       </Layout>

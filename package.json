@@ -15,6 +15,7 @@
     "content:check": "tsx scripts/content-check.ts",
     "i18n:check": "tsx scripts/i18n-check.ts",
     "stats": "tsx scripts/stats.ts",
+    "catalog": "tsx scripts/build-catalog.ts",
     "content:build": "tsx scripts/build-content.ts"
   },
   "dependencies": {

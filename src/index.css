@@ -3,40 +3,40 @@
 @tailwind utilities;
 
 :root {
-  /* EMSI palette (emsi.ma): green #008D36, light green #61CE70, mint #F2F9F5, burgundy #741823, text #333 */
-  --bg: 246 250 247;
-  --surface: 255 255 255;
-  --surface2: 238 246 241;
-  --fg: 31 41 36;
-  --muted: 92 108 99;
-  --line: 218 232 223;
-  --ok: 0 141 54;
-  --bad: 190 32 52;
-  --warn: 196 120 10;
-  --accent: 0 141 54;
-  --accent2: 116 24 35;
-  --brand: 0 141 54;
-  --brand-light: 97 206 112;
-  --navy: 8 58 31;
-  --mint: 242 249 245;
+  /* GROUP22 academic palette */
+  --bg: 247 247 244;          /* #F7F7F4 */
+  --surface: 255 255 255;     /* #FFFFFF */
+  --surface2: 241 242 238;
+  --fg: 20 36 58;             /* #14243A navy */
+  --muted: 92 104 120;
+  --line: 230 232 232;        /* #E6E8E8 */
+  --ok: 22 117 138;
+  --bad: 178 52 52;
+  --warn: 176 122 32;
+  --accent: 22 117 138;       /* #16758A teal */
+  --accent2: 216 163 77;      /* #D8A34D gold */
+  --brand: 22 117 138;
+  --brand-light: 216 163 77;
+  --navy: 20 36 58;
+  --mint: 241 242 238;
   color-scheme: light;
 }
 .dark {
-  --bg: 10 20 15;
-  --surface: 17 31 24;
-  --surface2: 24 42 33;
-  --fg: 230 240 234;
-  --muted: 150 172 160;
-  --line: 36 60 47;
-  --ok: 97 206 112;
-  --bad: 240 120 135;
-  --warn: 240 180 70;
-  --accent: 97 206 112;
-  --accent2: 236 132 146;
-  --brand: 0 141 54;
-  --brand-light: 97 206 112;
-  --navy: 6 44 24;
-  --mint: 17 31 24;
+  --bg: 12 18 28;
+  --surface: 18 26 38;
+  --surface2: 25 35 50;
+  --fg: 232 236 241;
+  --muted: 150 162 178;
+  --line: 38 50 66;
+  --ok: 92 189 206;
+  --bad: 236 120 120;
+  --warn: 226 182 104;
+  --accent: 92 189 206;
+  --accent2: 226 182 104;
+  --brand: 22 117 138;
+  --brand-light: 226 182 104;
+  --navy: 10 18 30;
+  --mint: 18 26 38;
   color-scheme: dark;
 }
 
@@ -48,25 +48,25 @@ body {
   min-height: 100dvh;
 }
 code, pre, kbd { @apply font-mono; }
-h1, h2, h3, .font-display { font-family: 'Outfit', 'Lato', system-ui, sans-serif; letter-spacing: -0.01em; }
+h1, h2, h3, .font-display { font-family: 'Manrope', 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
 :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 6px; }
 
 @layer components {
-  .card { @apply bg-surface border border-line rounded-2xl shadow-[0_1px_2px_rgba(8,58,31,0.05),0_8px_24px_-18px_rgba(8,58,31,0.25)]; }
-  .card-hover { @apply transition duration-200 hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_16px_32px_-16px_rgba(0,141,54,0.35)]; }
-  .eyebrow { @apply text-[11px] font-bold uppercase tracking-[0.14em] text-accent2; }
-  .nav-link { @apply inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-surface2 hover:text-fg; }
-  .nav-link-active { @apply bg-accent/10 text-accent hover:bg-accent/10 hover:text-accent; }
-  .side-link { @apply flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-surface2 hover:text-fg; }
-  .side-link-active { @apply bg-accent/10 font-semibold text-accent hover:bg-accent/10 hover:text-accent; }
+  .card { @apply bg-surface border border-line rounded-lg; }
+  .card-hover { @apply transition-colors duration-150 hover:border-fg/25 hover:bg-surface; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-muted; }
+  .nav-link { @apply relative inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-fg; }
+  .nav-link-active { @apply text-fg after:absolute after:inset-x-3 after:-bottom-[13px] after:h-0.5 after:bg-accent; }
+  .side-link { @apply flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted transition-colors hover:bg-surface2 hover:text-fg; }
+  .side-link-active { @apply bg-surface2 font-semibold text-fg shadow-[inset_2px_0_0_rgb(var(--accent))] hover:bg-surface2; }
   .icon-tile { @apply grid shrink-0 place-items-center rounded-lg; }
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none min-h-[44px]; }
-  .btn-primary { @apply btn bg-accent text-white shadow-sm hover:brightness-110 dark:text-bg; }
-  .btn-ghost { @apply btn bg-surface2 text-fg hover:bg-line; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none min-h-[44px]; }
+  .btn-primary { @apply btn bg-navy text-white hover:bg-accent dark:bg-accent dark:text-bg; }
+  .btn-ghost { @apply btn border border-line bg-surface text-fg hover:border-fg/30; }
   .btn-sm { @apply px-3 py-1.5 min-h-[36px] text-xs; }
-  .chip { @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface2 px-2.5 py-1 text-xs text-muted; }
-  .input { @apply w-full rounded-xl border border-line bg-surface2 px-3 py-2.5 text-fg placeholder:text-muted focus:border-accent focus:outline-none min-h-[44px]; }
-  .h1 { @apply font-display text-2xl font-bold tracking-tight sm:text-[2.1rem] sm:leading-tight; }
+  .chip { @apply inline-flex items-center gap-1 rounded-md border border-line bg-surface px-2 py-0.5 text-xs text-muted; }
+  .input { @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15 min-h-[40px]; }
+  .h1 { @apply font-display text-2xl font-bold tracking-tight sm:text-[2rem] sm:leading-tight; }
   .h2 { @apply font-display text-lg font-semibold sm:text-xl; }
   .prose-rev p { @apply my-2 leading-relaxed; }
   .prose-rev ul { @apply my-2 list-disc pl-5 space-y-1; }

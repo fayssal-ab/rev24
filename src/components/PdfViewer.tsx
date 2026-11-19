@@ -48,11 +48,11 @@ function Page({ doc, n, width, ratio }: { doc: PDFDocumentProxy; n: number; widt
     };
   }, [visible, width, doc, n]);
 
-  return <canvas ref={canvas} className="mx-auto block bg-white shadow-md" style={{ width, height: width * r }} aria-label={`page ${n}`} />;
+  return <canvas ref={canvas} className="mx-auto block bg-white shadow-sm ring-1 ring-line" style={{ width, height: width * r }} aria-label={`page ${n}`} />;
 }
 
 /** In-app PDF reader (works the same in every browser, including phones and Brave). */
-export function PdfViewer({ url, title }: { url: string; title: string }) {
+export function PdfViewer({ url, title, fill = false }: { url: string; title: string; fill?: boolean }) {
   const { t } = useT();
   const box = useRef<HTMLDivElement>(null);
   const [doc, setDoc] = useState<PDFDocumentProxy | null>(null);
@@ -101,7 +101,7 @@ export function PdfViewer({ url, title }: { url: string; title: string }) {
   const width = Math.max(200, Math.round((boxWidth - 32) * zoom));
 
   return (
-    <div>
+    <div className={fill ? 'flex h-full flex-col' : ''}>
       <div className="flex items-center gap-2 border-b border-line bg-surface px-4 py-2 text-xs text-muted">
         {doc && (
           <span className="tabular-nums">
@@ -118,7 +118,7 @@ export function PdfViewer({ url, title }: { url: string; title: string }) {
           </button>
         </span>
       </div>
-      <div ref={box} className="scroll-thin h-[78vh] overflow-auto bg-surface2/70 py-4" data-testid="pdf-viewer">
+      <div ref={box} className={`scroll-thin overflow-auto bg-surface2 py-4 ${fill ? 'min-h-0 flex-1' : 'h-[78vh]'}`} data-testid="pdf-viewer">
         {error ? (
           <p className="flex items-center justify-center gap-2 p-10 text-sm text-bad">
             <Icon name="alert" size={16} /> {t('sup.error')}

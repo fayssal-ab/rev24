@@ -68,17 +68,16 @@ export default function AuthPage() {
     <div className="mx-auto grid max-w-5xl overflow-hidden rounded-2xl border border-line bg-surface shadow-sm lg:grid-cols-[1fr_1.1fr]">
       <aside className="relative hidden overflow-hidden bg-navy p-10 text-white lg:block">
         <div className="hero-grid pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-emerald-500/25 blur-3xl" />
         <div className="relative flex h-full flex-col">
           <div className="flex items-center gap-3">
             <BrandMark />
-            <Wordmark className="text-xl [&>span]:text-emerald-300" />
+            <Wordmark className="text-xl [&>span]:text-[#D8A34D]" />
           </div>
           <h2 className="mt-10 text-3xl font-extrabold leading-tight">{t('auth.aside.title')}</h2>
           <ul className="mt-6 space-y-3 text-sm text-white/80">
             {(['auth.aside.l1', 'auth.aside.l2', 'auth.aside.l3'] as const).map((k) => (
               <li key={k} className="flex items-start gap-2.5">
-                <Icon name="checkCircle" size={17} className="mt-0.5 shrink-0 text-emerald-300" /> {t(k)}
+                <Icon name="checkCircle" size={17} className="mt-0.5 shrink-0 text-[#D8A34D]" /> {t(k)}
               </li>
             ))}
           </ul>

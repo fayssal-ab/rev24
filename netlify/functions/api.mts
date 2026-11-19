@@ -171,6 +171,22 @@ async function route(req: Request): Promise<Response> {
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for') ?? 'ip';
 
   if (method === 'GET' && path === '/health') return json(200, { ok: true });
+  // Diagnostics without secrets: which variables are set, and the database error code if the connection fails.
+  if (method === 'GET' && path === '/health/db') {
+    const env = {
+      DATABASE_URL: !!process.env.DATABASE_URL,
+      DB_CA_CERT: !!process.env.DB_CA_CERT && /BEGIN CERTIFICATE/.test(process.env.DB_CA_CERT),
+      JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32
+    };
+    try {
+      await migrate();
+      return json(200, { ok: true, env });
+    } catch (e) {
+      const err = e as { code?: string; errno?: number; message?: string };
+      // keep only the error code / a short message, never the URL or credentials
+      return json(500, { ok: false, env, code: err.code ?? null, errno: err.errno ?? null, message: (err.message ?? '').replace(/\/\/[^@]*@/g, '//***@').slice(0, 160) });
+    }
+  }
   await migrate();
 
   if (method === 'POST' && path === '/auth/signup') {

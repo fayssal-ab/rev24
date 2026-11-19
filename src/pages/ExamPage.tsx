@@ -115,7 +115,7 @@ export function ExamRunner({ pool, weights, module, onDone, size = EXAM_SIZE, mi
   const answered = Object.values(resp).filter((x) => x !== undefined).length;
   return (
     <div className="space-y-3" data-testid="exam-running">
-      <div className="sticky top-14 z-10 -mx-4 flex items-center gap-3 bg-bg/90 px-4 py-2 backdrop-blur">
+      <div className="sticky top-16 z-10 -mx-4 flex items-center gap-3 bg-bg/90 px-4 py-2 backdrop-blur">
         <span className={`font-mono text-lg font-bold tabular-nums ${left < 5 * 60000 ? 'text-bad' : ''}`} aria-label={t('exam.timeLeft')}>
           {String(mm).padStart(2, '0')}:{String(ss).padStart(2, '0')}
         </span>
@@ -226,7 +226,7 @@ function AnnaleRunner({ annale, exercises, module }: { annale: Module['annales']
   return (
     <div className="space-y-4" data-testid="annale-running">
       <PageTitle title={<Txt v={annale.title} />} />
-      <div className="sticky top-14 z-10 -mx-4 flex items-center gap-3 bg-bg/90 px-4 py-2 backdrop-blur">
+      <div className="sticky top-16 z-10 -mx-4 flex items-center gap-3 bg-bg/90 px-4 py-2 backdrop-blur">
         <span className="font-mono text-lg font-bold tabular-nums">
           {String(Math.floor(left / 60000)).padStart(2, '0')}:{String(Math.floor((left % 60000) / 1000)).padStart(2, '0')}
         </span>

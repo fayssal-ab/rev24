@@ -110,7 +110,7 @@ export default function ExplorePage() {
 
       <div className="lg:grid lg:grid-cols-[15.5rem_minmax(0,1fr)] lg:gap-10">
         <aside className="hidden lg:block" aria-label={t('explore.filters')}>
-          <div className="sticky top-20">{filters}</div>
+          <div className="sticky top-24">{filters}</div>
         </aside>
 
         <section className="min-w-0">

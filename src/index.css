@@ -48,16 +48,16 @@ body {
   min-height: 100dvh;
 }
 code, pre, kbd { @apply font-mono; }
-h1, h2, h3, .font-display { font-family: 'Manrope', 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
+h1, h2, h3, .font-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.015em; }
 :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 6px; }
 
 @layer components {
   .card { @apply bg-surface border border-line rounded-lg; }
   .card-hover { @apply transition-colors duration-150 hover:border-fg/25 hover:bg-surface; }
   .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-muted; }
-  .nav-link { @apply relative inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-fg; }
-  .nav-link-active { @apply text-fg after:absolute after:inset-x-3 after:-bottom-[13px] after:h-0.5 after:bg-accent; }
-  .side-link { @apply flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted transition-colors hover:bg-surface2 hover:text-fg; }
+  .nav-link { @apply inline-flex h-10 items-center gap-2 rounded-lg px-3.5 text-[15px] font-semibold text-muted transition-colors hover:bg-surface2 hover:text-fg; }
+  .nav-link-active { @apply bg-accent/10 text-accent hover:bg-accent/10 hover:text-accent; }
+  .side-link { @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium text-muted transition-colors hover:bg-surface2 hover:text-fg; }
   .side-link-active { @apply bg-surface2 font-semibold text-fg shadow-[inset_2px_0_0_rgb(var(--accent))] hover:bg-surface2; }
   .icon-tile { @apply grid shrink-0 place-items-center rounded-lg; }
   .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none min-h-[44px]; }

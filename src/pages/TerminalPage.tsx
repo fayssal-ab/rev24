@@ -118,7 +118,7 @@ export default function TerminalPage() {
             ))}
           </select>
         )}
-        <ul className="grid gap-2 sm:grid-cols-2">
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-2 sm:grid-cols-2">
           {list.map((m) => (
             <li key={m.id}>
               <button onClick={() => setParams({ mission: m.id })} className="card flex w-full items-center gap-3 p-3 text-left hover:border-accent" data-testid={`mission-${m.id}`}>

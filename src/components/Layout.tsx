@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { useStore } from '../store/store';
@@ -68,7 +69,7 @@ export function BrandMark({ small = false }: { small?: boolean }) {
   return (
     <svg width={sz} height={sz} viewBox="0 0 40 40" aria-hidden className="shrink-0">
       <rect width="40" height="40" rx="5" fill="#14243A" />
-      <text x="20" y="25.5" textAnchor="middle" fontFamily="Manrope, Inter, sans-serif" fontSize="17" fontWeight="800" fill="#FFFFFF" letterSpacing="-0.5">
+      <text x="20" y="25.5" textAnchor="middle" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="17" fontWeight="800" fill="#FFFFFF" letterSpacing="-0.5">
         22
       </text>
       <rect x="11" y="30" width="18" height="2.2" fill="#D8A34D" />
@@ -87,7 +88,7 @@ export function Wordmark({ className = '' }: { className?: string }) {
 }
 
 /** Small accessible dropdown. Closes on outside click, Escape and navigation. */
-function Dropdown({ label, children, active, wide = false }: { label: string; children: ReactNode; active?: boolean; wide?: boolean }) {
+function Dropdown({ label, icon, children, active }: { label: string; icon: string; children: ReactNode; active?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { pathname, search } = useLocation();
@@ -106,8 +107,9 @@ function Dropdown({ label, children, active, wide = false }: { label: string; ch
   return (
     <div className="relative" ref={ref}>
       <button className={`nav-link ${active ? 'nav-link-active' : ''} ${open ? 'text-fg' : ''}`} aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen(!open)}>
+        <Icon name={icon} size={18} />
         {label}
-        <Icon name="down" size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+        <Icon name="down" size={14} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence>
         {open && (
@@ -117,7 +119,7 @@ function Dropdown({ label, children, active, wide = false }: { label: string; ch
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.12 }}
-            className={`absolute left-0 top-full z-50 mt-3 rounded-lg border border-line bg-surface p-1.5 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)] ${wide ? 'w-[34rem]' : 'w-80'}`}
+            className="absolute left-0 top-full z-50 mt-2 w-80 rounded-xl border border-line bg-surface p-2 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)]"
           >
             {children}
           </motion.div>
@@ -127,16 +129,13 @@ function Dropdown({ label, children, active, wide = false }: { label: string; ch
   );
 }
 
-function MenuItem({ to, icon, title, desc, color }: { to: string; icon: string; title: ReactNode; desc?: ReactNode; color?: string }) {
+function MenuItem({ to, icon, title, color }: { to: string; icon: string; title: ReactNode; color?: string }) {
   return (
-    <Link to={to} role="menuitem" className="flex items-start gap-3 rounded-md p-2.5 transition-colors hover:bg-surface2">
-      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line" style={color ? { color } : undefined}>
-        <Icon name={icon} size={16} />
+    <Link to={to} role="menuitem" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium text-fg transition-colors hover:bg-surface2">
+      <span className={`flex ${color ? '' : 'text-accent'}`} style={color ? { color } : undefined}>
+        <Icon name={icon} size={18} />
       </span>
-      <span className="min-w-0">
-        <span className="block text-sm font-semibold text-fg">{title}</span>
-        {desc && <span className="mt-0.5 block text-xs leading-snug text-muted">{desc}</span>}
-      </span>
+      {title}
     </Link>
   );
 }
@@ -145,7 +144,7 @@ function LangSwitch() {
   const { t } = useT();
   const { lang, setLang } = useStore();
   return (
-    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-md border border-line p-0.5">
+    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-lg border border-line p-0.5">
       {LANGS.map((l) => (
         <button
           key={l.code}
@@ -153,7 +152,7 @@ function LangSwitch() {
           aria-checked={lang === l.code}
           onClick={() => setLang(l.code)}
           data-testid={`lang-${l.code}`}
-          className={`min-h-[28px] rounded px-2 text-[11px] font-semibold tracking-wide transition-colors ${lang === l.code ? 'bg-navy text-white dark:bg-surface2 dark:text-fg' : 'text-muted hover:text-fg'}`}
+          className={`min-h-[34px] rounded-md px-2.5 text-xs font-bold tracking-wide transition-colors ${lang === l.code ? 'bg-navy text-white dark:bg-surface2 dark:text-fg' : 'text-muted hover:text-fg'}`}
         >
           {l.label}
         </button>
@@ -170,31 +169,26 @@ function ThemeButton() {
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       aria-label={t('theme.toggle')}
       title={t('theme.toggle')}
-      className="grid h-8 w-8 place-items-center rounded-md border border-line text-muted transition-colors hover:text-fg"
+      className="grid h-10 w-10 place-items-center rounded-lg border border-line text-muted transition-colors hover:text-fg"
     >
-      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={15} />
+      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
     </button>
   );
 }
 
-function SearchButton({ compact = false }: { compact?: boolean }) {
+function SearchButton() {
   const { t } = useT();
   const setOpen = useSearch((s) => s.setOpen);
-  if (compact)
-    return (
-      <button onClick={() => setOpen(true)} className="grid h-8 w-8 place-items-center rounded-md border border-line text-muted" aria-label={t('search.placeholder')}>
-        <Icon name="search" size={15} />
-      </button>
-    );
   return (
     <button
       onClick={() => setOpen(true)}
-      className="flex h-8 w-56 items-center gap-2 rounded-md border border-line bg-surface2/60 px-2.5 text-left text-xs text-muted transition-colors hover:border-fg/25"
+      className="flex h-10 items-center gap-2 rounded-lg border border-line px-3 text-[15px] font-medium text-muted transition-colors hover:border-fg/25 hover:text-fg"
+      aria-label={t('search.placeholder')}
+      title="Ctrl K"
       data-testid="open-search"
     >
-      <Icon name="search" size={14} />
-      <span className="flex-1 truncate">{t('search.short')}</span>
-      <kbd className="rounded border border-line bg-surface px-1 text-[10px]">Ctrl K</kbd>
+      <Icon name="search" size={18} />
+      <span className="hidden xl:inline">{t('search.short')}</span>
     </button>
   );
 }
@@ -206,7 +200,6 @@ export function TopBar() {
   const { t } = useT();
   const tl = useL();
   const { pathname } = useLocation();
-  const xp = useStore((s) => s.xp);
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
   const locked = useLocked();
@@ -216,44 +209,35 @@ export function TopBar() {
   const inTools = TOOLS.some((x) => pathname.startsWith(x.to)) || pathname === '/bibliotheque';
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/85">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
         <Link to="/" className="mr-4 flex items-center gap-2.5" aria-label={t('nav.home')}>
           <BrandMark />
-          <span className="leading-none">
-            <Wordmark className="block text-[15px]" />
-            <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.14em] text-muted">{t('app.sub')}</span>
-          </span>
+          <Wordmark className="text-lg" />
         </Link>
 
         {!locked && (
-          <nav className="hidden items-center lg:flex" aria-label={t('a11y.menu')}>
+          <nav className="hidden items-center gap-1 lg:flex" aria-label={t('a11y.menu')}>
             <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
+              <Icon name="home" size={18} />
               {t('nav.home')}
             </NavLink>
             <NavLink to="/explorer" className={({ isActive }) => `nav-link ${isActive || pathname === '/bibliotheque' ? 'nav-link-active' : ''}`} data-testid="nav-explore">
+              <Icon name="search" size={18} />
               {t('nav.explore')}
             </NavLink>
-            <Dropdown label={t('nav.modules')} active={inModule} wide>
-              <div className="grid grid-cols-2 gap-0.5">
-                {SUBJECTS.map((s) => (
-                  <MenuItem
-                    key={s.id}
-                    to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`}
-                    icon={s.icon}
-                    title={tl(s.title)}
-                    desc={s.interactive ? t('nav.module.interactive') : t('nav.module.docs')}
-                    color={s.color}
-                  />
-                ))}
-              </div>
+            <Dropdown label={t('nav.modules')} icon="grid" active={inModule}>
+              {SUBJECTS.map((s) => (
+                <MenuItem key={s.id} to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} icon={s.icon} title={tl(s.title)} color={s.color} />
+              ))}
             </Dropdown>
-            <Dropdown label={t('nav.resources')} active={inTools}>
-              {TOOLS.map((x) => (
-                <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} desc={t(x.desc)} />
+            <Dropdown label={t('nav.resources')} icon="tool" active={inTools}>
+              {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
+                <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} />
               ))}
             </Dropdown>
             {canSeeOral && (
               <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
+                <Icon name="mic" size={18} />
                 {t('nav.presentation')}
               </NavLink>
             )}
@@ -261,34 +245,22 @@ export function TopBar() {
         )}
 
         <div className="ml-auto flex items-center gap-2">
-          {!locked && (
-            <>
-              <span className="hidden xl:block">
-                <SearchButton />
-              </span>
-              <span className="xl:hidden">
-                <SearchButton compact />
-              </span>
-            </>
-          )}
+          {!locked && <SearchButton />}
           <span className={locked ? '' : 'hidden md:block'}>
             <LangSwitch />
           </span>
           <ThemeButton />
           <Link
             to="/profil"
-            className={`items-center gap-2 rounded-md border border-line py-0.5 pl-0.5 pr-2.5 transition-colors hover:border-fg/25 ${authEnabled && !user ? 'hidden' : 'hidden sm:flex'}`}
+            className={`h-10 w-10 place-items-center rounded-full bg-navy text-sm font-bold text-white transition-opacity hover:opacity-90 ${authEnabled && !user ? 'hidden' : 'grid'}`}
             aria-label={t('nav.profile')}
+            title={user ? user.displayName || user.email : t('nav.profile')}
           >
-            <span className="grid h-7 w-7 place-items-center rounded bg-navy text-[11px] font-bold text-white">{user ? initials(user.displayName || user.email) : <Icon name="user" size={14} />}</span>
-            <span className="leading-tight">
-              {user && <span className="block max-w-[8rem] truncate text-xs font-semibold">{user.displayName || user.email}</span>}
-              <span className={`block tabular-nums ${user ? 'text-[10px] text-muted' : 'text-xs font-semibold'}`}>{xp} XP</span>
-            </span>
+            {user ? initials(user.displayName || user.email) : <Icon name="user" size={18} />}
           </Link>
           {!locked && (
-            <button className="grid h-8 w-8 place-items-center rounded-md border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
-              <Icon name="menu" size={16} />
+            <button className="grid h-10 w-10 place-items-center rounded-lg border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
+              <Icon name="menu" size={20} />
             </button>
           )}
         </div>
@@ -304,13 +276,25 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
   const link = ({ isActive }: { isActive: boolean }) => `side-link ${isActive ? 'side-link-active' : ''}`;
-  return (
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open, onClose]);
+  // portal: the sticky header uses backdrop-filter, which would trap a fixed child inside the header box
+  return createPortal(
     <AnimatePresence>
       {open && (
         <>
           <motion.div className="fixed inset-0 z-50 bg-navy/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.aside
-            className="scroll-thin fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col overflow-y-auto border-l border-line bg-surface p-4 lg:hidden"
+            className="scroll-thin fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col overflow-y-auto [&>*]:shrink-0 border-l border-line bg-surface p-4 lg:hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -321,22 +305,31 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               <span className="flex items-center gap-2">
                 <BrandMark small /> <Wordmark />
               </span>
-              <button className="grid h-8 w-8 place-items-center rounded-md border border-line" onClick={onClose} aria-label={t('common.close')}>
-                <Icon name="x" size={16} />
+              <button className="grid h-10 w-10 place-items-center rounded-lg border border-line" onClick={onClose} aria-label={t('common.close')}>
+                <Icon name="x" size={18} />
               </button>
             </div>
+            {user && (
+              <Link to="/profil" className="mb-4 flex items-center gap-3 rounded-xl border border-line p-3 transition-colors hover:bg-surface2" data-testid="drawer-user">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy text-sm font-bold text-white">{initials(user.displayName || user.email)}</span>
+                <span className="min-w-0">
+                  <span className="block truncate font-semibold">{user.displayName || user.email}</span>
+                  <span className="block truncate text-sm text-muted">{user.email}</span>
+                </span>
+              </Link>
+            )}
             <NavLink to="/" end className={link}>
-              <Icon name="home" size={17} /> {t('nav.home')}
+              <Icon name="home" size={19} /> {t('nav.home')}
             </NavLink>
             <NavLink to="/explorer" className={link}>
-              <Icon name="inbox" size={17} /> {t('nav.explore')}
+              <Icon name="inbox" size={19} /> {t('nav.explore')}
             </NavLink>
             <NavLink to="/profil" end className={link}>
-              <Icon name="user" size={17} /> {t('nav.profile')}
+              <Icon name="user" size={19} /> {t('nav.profile')}
             </NavLink>
             {canSeeOral && (
               <NavLink to="/profil/oral" className={link}>
-                <Icon name="mic" size={17} /> {t('nav.presentation')}
+                <Icon name="mic" size={19} /> {t('nav.presentation')}
               </NavLink>
             )}
             <div className="eyebrow mb-1 mt-5 px-3">{t('nav.modules')}</div>
@@ -347,9 +340,9 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               </NavLink>
             ))}
             <div className="eyebrow mb-1 mt-5 px-3">{t('nav.resources')}</div>
-            {TOOLS.map((x) => (
+            {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
               <NavLink key={x.to} to={x.to} className={link}>
-                <Icon name={x.icon} size={17} /> {t(x.key)}
+                <Icon name={x.icon} size={19} /> {t(x.key)}
               </NavLink>
             ))}
             <div className="mt-auto space-y-3 border-t border-line pt-4">
@@ -371,7 +364,8 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           </motion.aside>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 

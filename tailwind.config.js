@@ -7,8 +7,8 @@ export default {
       // restrained corners everywhere (existing rounded-xl / 2xl / 3xl classes shrink with this scale)
       borderRadius: { lg: '6px', xl: '8px', '2xl': '10px', '3xl': '12px' },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace']
       },
       colors: {

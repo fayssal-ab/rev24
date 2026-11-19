@@ -130,8 +130,8 @@ export default function Home() {
                 const to = s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`;
                 return (
                   <tr key={s.id} className="group cursor-pointer transition-colors hover:bg-surface2/60" onClick={() => navigate(to)} data-testid={`module-${s.id}`}>
-                    <td className="px-5 py-4">
-                      <Link to={to} className="flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                    <td className="w-full max-w-0 px-5 py-4 sm:w-auto sm:max-w-none">
+                      <Link to={to} className="flex min-w-0 items-center gap-3" onClick={(e) => e.stopPropagation()}>
                         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line" style={{ color: s.color }}>
                           <Icon name={s.icon} size={16} />
                         </span>

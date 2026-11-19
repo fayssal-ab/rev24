@@ -77,7 +77,7 @@ export default function ChapterPage() {
   return (
     <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-10">
       {/* reading progress */}
-      <div className="fixed inset-x-0 top-14 z-30 h-0.5 bg-transparent">
+      <div className="fixed inset-x-0 top-16 z-30 h-0.5 bg-transparent">
         <div className="h-full bg-accent transition-[width] duration-150" style={{ width: `${progress}%` }} />
       </div>
 
@@ -166,7 +166,7 @@ export default function ChapterPage() {
                   {t('chapter.relatedAll')} ({related.length})
                 </Link>
               </div>
-              <ul className="grid gap-2 sm:grid-cols-2">
+              <ul className="grid grid-cols-[minmax(0,1fr)] gap-2 sm:grid-cols-2">
                 {related.slice(0, 6).map((e) => {
                   const stx = st.exercises[e.id];
                   return (

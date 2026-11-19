@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Lato', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'Lato', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace']
       },
       colors: {
@@ -19,6 +20,8 @@ export default {
         accent2: 'rgb(var(--accent2) / <alpha-value>)',
         brand: 'rgb(var(--brand) / <alpha-value>)',
         navy: 'rgb(var(--navy) / <alpha-value>)',
+        mint: 'rgb(var(--mint) / <alpha-value>)',
+        brandlight: 'rgb(var(--brand-light) / <alpha-value>)',
         ok: 'rgb(var(--ok) / <alpha-value>)',
         bad: 'rgb(var(--bad) / <alpha-value>)',
         warn: 'rgb(var(--warn) / <alpha-value>)'

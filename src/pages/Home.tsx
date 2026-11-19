@@ -5,7 +5,6 @@ import { useAllModules } from '../hooks/useModule';
 import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
 import { moduleMastery } from '../lib/mastery';
-import { Ring } from '../components/Ring';
 import { Icon } from '../components/Icon';
 import { TOOLS } from '../components/Layout';
 
@@ -29,49 +28,87 @@ export default function Home() {
   const fade = (i: number) => (reduce ? {} : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { delay: i * 0.06, duration: 0.4 } });
 
   return (
-    <div className="space-y-14 pb-4">
-      {/* hero */}
-      <section className="relative -mx-4 -mt-6 overflow-hidden bg-navy px-4 py-12 text-white sm:-mx-6 sm:px-10 sm:py-16 lg:rounded-b-3xl">
-        <div className="hero-grid pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-emerald-500/25 blur-3xl" />
-        <div className="relative grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+    <div className="space-y-16 pb-4">
+      {/* hero — light, learning-platform style in the EMSI palette */}
+      <section className="relative left-1/2 -mt-6 w-screen -translate-x-1/2 overflow-hidden border-b border-line bg-mint px-4 pb-14 pt-12 sm:px-10 lg:pt-16">
+        <div className="dots pointer-events-none absolute inset-0 opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
+        <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brandlight/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 left-1/3 h-80 w-80 rounded-full bg-accent2/10 blur-3xl" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
           <div className="fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {t('home.hero.eyebrow')}
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-surface px-3 py-1 text-xs font-bold text-accent shadow-sm">
+              <Icon name="sparkles" size={14} /> {t('home.hero.eyebrow')}
             </div>
-            <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl">{t('home.hero.title')}</h1>
-            <p className="mt-4 max-w-xl text-base text-white/75 sm:text-lg">{t('home.hero.sub')}</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link to="/m/data" className="btn bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 hover:bg-emerald-400" data-testid="home-start">
-                <Icon name="chart" size={17} /> {t('home.hero.cta')}
+            <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-fg sm:text-6xl">
+              {t('home.hero.title1')} <span className="relative whitespace-nowrap text-accent">
+                {t('home.hero.title2')}
+                <svg viewBox="0 0 200 12" className="absolute -bottom-2 left-0 h-3 w-full" preserveAspectRatio="none" aria-hidden>
+                  <path d="M2 9 C50 2 150 2 198 8" fill="none" stroke="rgb(var(--brand-light))" strokeWidth="5" strokeLinecap="round" />
+                </svg>
+              </span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{t('home.hero.sub')}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/m/data" className="btn-primary px-6 py-3 text-base shadow-lg shadow-accent/25" data-testid="home-start">
+                {t('home.hero.cta')} <Icon name="arrowRight" size={18} />
               </Link>
-              <a href="#modules" onClick={(e) => { e.preventDefault(); document.getElementById('modules')?.scrollIntoView({ behavior: 'smooth' }); }} className="btn border border-white/20 bg-white/5 text-white hover:bg-white/10">
-                {t('home.hero.cta2')} <Icon name="down" size={16} />
-              </a>
+              <Link to="/bibliotheque" className="btn border border-line bg-surface px-6 py-3 text-base text-fg hover:border-accent/50">
+                <Icon name="inbox" size={18} /> {t('nav.library')}
+              </Link>
             </div>
-          </div>
-          <div className="fade-up rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur [animation-delay:120ms]">
-            <div className="flex items-center gap-4">
-              <div className="rounded-full bg-white p-1">
-                <Ring value={global} size={72} stroke={7} label={t('home.global')} />
-              </div>
-              <div>
-                <div className="text-sm text-white/70">{t('home.global')}</div>
-                <div className="text-3xl font-extrabold tabular-nums">{global}%</div>
-              </div>
-            </div>
-            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+            <div className="mt-10 flex flex-wrap gap-8">
               {[
-                { v: st.xp, k: 'XP', icon: 'bolt' },
-                { v: st.streak.count, k: t('home.streak'), icon: 'flame' },
-                { v: Object.values(st.read).filter(Boolean).length, k: t('prog.chaptersRead'), icon: 'book' }
+                { v: `${global}%`, k: t('home.global') },
+                { v: st.xp, k: 'XP' },
+                { v: Object.values(st.read).filter(Boolean).length, k: t('prog.chaptersRead') },
+                { v: st.streak.count, k: t('home.streak') }
               ].map((x) => (
-                <div key={x.k} className="rounded-xl bg-white/5 px-2 py-3 ring-1 ring-white/10">
-                  <Icon name={x.icon} size={15} className="mx-auto text-emerald-300" />
-                  <div className="mt-1 text-lg font-bold tabular-nums">{x.v}</div>
-                  <div className="text-[10px] leading-tight text-white/60">{x.k}</div>
+                <div key={x.k}>
+                  <div className="font-display text-3xl font-extrabold tabular-nums text-fg">{x.v}</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-muted">{x.k}</div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* floating learning cards */}
+          <div className="relative hidden h-[420px] lg:block" aria-hidden>
+            <div className="float absolute left-6 top-4 w-72 rounded-3xl border border-line bg-surface p-5 shadow-xl shadow-accent/10">
+              <div className="flex items-center gap-3">
+                <span className="icon-tile h-11 w-11 rounded-2xl bg-accent text-white">
+                  <Icon name="chart" size={20} />
+                </span>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wide text-accent2">{t('home.card.next')}</div>
+                  <div className="font-display font-bold">Tests d&apos;hypothèses</div>
+                </div>
+              </div>
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface2">
+                <div className="h-full w-2/3 rounded-full bg-gradient-to-r from-accent to-brandlight" />
+              </div>
+              <div className="mt-2 flex justify-between text-xs text-muted">
+                <span>Chap 5</span>
+                <span>66%</span>
+              </div>
+            </div>
+            <div className="float-slow absolute right-0 top-36 w-64 rounded-3xl border border-line bg-surface p-5 shadow-xl shadow-accent2/10">
+              <div className="text-xs font-bold uppercase tracking-wide text-muted">QCM</div>
+              <div className="mt-2 font-display text-lg font-bold">Z0 = 3,125 → ?</div>
+              <div className="mt-3 space-y-2 text-sm">
+                <div className="flex items-center gap-2 rounded-xl border border-accent bg-accent/10 px-3 py-2 font-semibold text-accent">
+                  <Icon name="checkCircle" size={16} /> Rejeter H0
+                </div>
+                <div className="rounded-xl border border-line px-3 py-2 text-muted">Ne pas rejeter</div>
+              </div>
+            </div>
+            <div className="float absolute bottom-2 left-16 flex w-60 items-center gap-3 rounded-3xl bg-navy p-4 text-white shadow-xl [animation-delay:-3s]">
+              <span className="icon-tile h-11 w-11 rounded-2xl bg-white/15">
+                <Icon name="award" size={20} />
+              </span>
+              <div>
+                <div className="font-display font-bold">+40 XP</div>
+                <div className="text-xs text-white/70">{t('home.card.exercise')}</div>
+              </div>
             </div>
           </div>
         </div>

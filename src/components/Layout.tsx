@@ -21,38 +21,44 @@ const LANGS: { code: Lang; label: string }[] = [
 
 /** Global tools shown in the "Outils" menu of the navbar. */
 export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
+  { to: '/bibliotheque', icon: 'inbox', key: 'nav.library', desc: 'tools.library.desc' },
   { to: '/terminal', icon: 'terminal', key: 'nav.terminal', desc: 'home.terminal.desc' },
   { to: '/stats-lab', icon: 'sigma', key: 'nav.statslab', desc: 'home.statslab.desc' },
   { to: '/glossaire', icon: 'book', key: 'nav.glossary', desc: 'tools.glossary.desc' },
   { to: '/m/data/formulaire', icon: 'file', key: 'tools.dataRef', desc: 'tools.dataRef.desc' }
 ];
 
-/** GROUP22 monogram: "22" on the EMSI green → navy gradient (the group's own mark, not the school logo). */
+/**
+ * GROUP22 mark: an engineering hexagon in EMSI green, an open book whose spine rises into an arrow
+ * (learning → progress), and a burgundy dot. The group's own mark, not the school logo.
+ */
 export function BrandMark({ small = false }: { small?: boolean }) {
-  const sz = small ? 32 : 38;
+  const sz = small ? 34 : 40;
   return (
-    <svg width={sz} height={sz} viewBox="0 0 64 64" aria-hidden className="shrink-0 drop-shadow-sm">
+    <svg width={sz} height={sz} viewBox="0 0 64 64" aria-hidden className="shrink-0">
       <defs>
-        <linearGradient id="g22" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#008c52" />
-          <stop offset="1" stopColor="#0e2446" />
+        <linearGradient id="g22hex" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#1fae55" />
+          <stop offset="1" stopColor="#006b29" />
         </linearGradient>
       </defs>
-      <rect width="64" height="64" rx="15" fill="url(#g22)" />
-      <path d="M12 19 L32 9 L52 19" fill="none" stroke="#fff" strokeOpacity=".4" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-      <text x="32" y="45" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontSize="28" fontWeight="800" fill="#fff" letterSpacing="-1">
-        22
-      </text>
-      <rect x="19" y="50" width="26" height="2.6" rx="1.3" fill="#34d399" />
+      <path d="M32 3 L57 17.5 V46.5 L32 61 L7 46.5 V17.5 Z" fill="url(#g22hex)" />
+      <path d="M32 3 L57 17.5 V46.5 L32 61 L7 46.5 V17.5 Z" fill="none" stroke="#ffffff" strokeOpacity=".18" strokeWidth="1.5" />
+      {/* open book */}
+      <path d="M15 40 C21 37 27 37 32 41 C37 37 43 37 49 40 V25 C43 22 37 22 32 26 C27 22 21 22 15 25 Z" fill="#ffffff" />
+      <path d="M32 26 V41" stroke="#008d36" strokeWidth="2" />
+      {/* rising arrow from the spine */}
+      <path d="M32 22 V12 M27 16.5 L32 11.5 L37 16.5" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="47" cy="47" r="4" fill="#741823" stroke="#ffffff" strokeWidth="1.5" />
     </svg>
   );
 }
 
-/** Wordmark "GROUP22" with the "22" in EMSI green. */
+/** Wordmark "GROUP22": Outfit, "22" in EMSI burgundy. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`font-extrabold tracking-tight ${className}`}>
-      GROUP<span className="text-accent">22</span>
+    <span className={`font-display font-extrabold tracking-tight ${className}`}>
+      GROUP<span className="text-accent2">22</span>
     </span>
   );
 }
@@ -177,7 +183,7 @@ export function TopBar() {
           <BrandMark />
           <span className="leading-tight">
             <Wordmark className="block text-[16px]" />
-            <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">{t('app.sub')}</span>
+            <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-accent">{t('app.sub')}</span>
           </span>
         </Link>
 

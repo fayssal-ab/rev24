@@ -24,6 +24,7 @@ const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
+const SupportsPage = lazy(() => import('./pages/SupportsPage'));
 
 /** With accounts enabled, nobody gets past this point without being signed in. */
 function AuthGate({ children }: { children: ReactNode }) {
@@ -77,7 +78,9 @@ export function App() {
               <Route path="formulaire" element={<ReferencePage />} />
               <Route path="flashcards" element={<FlashcardsPage />} />
               <Route path="examen" element={<ExamPage />} />
+              <Route path="supports" element={<SupportsPage />} />
             </Route>
+            <Route path="/bibliotheque" element={<SupportsPage />} />
             <Route path="/terminal" element={<TerminalPage />} />
             <Route path="/stats-lab" element={<Narrow><StatsLabPage /></Narrow>} />
             <Route path="/glossaire" element={<Narrow><GlossaryPage /></Narrow>} />

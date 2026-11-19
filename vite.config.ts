@@ -15,8 +15,8 @@ export default defineConfig({
         name: 'GROUP22 · EMSI — Study Hub 4IIR',
         short_name: 'GROUP22',
         description: 'Cours pas à pas, exercices corrigés et QCM — 4IIR G22, EMSI Rabat',
-        theme_color: '#0e2446',
-        background_color: '#0e2446',
+        theme_color: '#008d36',
+        background_color: '#f2f9f5',
         display: 'standalone',
         start_url: './',
         icons: [

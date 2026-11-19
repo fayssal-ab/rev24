@@ -20,6 +20,7 @@ const PRACTICE: { to: string; icon: string; key: UIKey; count?: (d: ModuleConten
   { to: 'examen', icon: 'target', key: 'nav.exam' }
 ];
 const RESOURCES: { to: string; icon: string; key: UIKey }[] = [
+  { to: 'supports', icon: 'inbox', key: 'sup.title' },
   { to: 'fiche', icon: 'print', key: 'nav.sheet' },
   { to: 'formulaire', icon: 'file', key: 'nav.reference' }
 ];

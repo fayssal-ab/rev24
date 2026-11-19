@@ -33,12 +33,28 @@ const MAX_PROGRESS_BYTES = 2_000_000;
 let pool: Pool | null = null;
 let migrated: Promise<void> | null = null;
 
+/**
+ * Rebuilds a valid PEM from however the certificate was pasted in the Netlify UI
+ * (newlines turned into spaces, literal "\n", one long line, several certificates…).
+ */
+export function normalizePem(raw: string | undefined): string | undefined {
+  if (!raw) return undefined;
+  const blocks = [...raw.replace(/\\n/g, '\n').matchAll(/-----BEGIN CERTIFICATE-----([\s\S]*?)-----END CERTIFICATE-----/g)];
+  if (!blocks.length) return undefined;
+  return blocks
+    .map((m) => {
+      const b64 = m[1].replace(/[^A-Za-z0-9+/=]/g, '');
+      return `-----BEGIN CERTIFICATE-----\n${b64.match(/.{1,64}/g)!.join('\n')}\n-----END CERTIFICATE-----`;
+    })
+    .join('\n');
+}
+
 function db(): Pool {
   if (pool) return pool;
   const url = process.env.DATABASE_URL;
   if (!url) throw new HttpError(500, 'server_not_configured');
   const u = new URL(url);
-  const ca = process.env.DB_CA_CERT?.replace(/\\n/g, '\n');
+  const ca = normalizePem(process.env.DB_CA_CERT);
   pool = mysql.createPool({
     host: u.hostname,
     port: Number(u.port || 3306),
@@ -176,6 +192,8 @@ async function route(req: Request): Promise<Response> {
     const env = {
       DATABASE_URL: !!process.env.DATABASE_URL,
       DB_CA_CERT: !!process.env.DB_CA_CERT && /BEGIN CERTIFICATE/.test(process.env.DB_CA_CERT),
+      DB_CA_CERT_blocks: (process.env.DB_CA_CERT?.match(/BEGIN CERTIFICATE/g) ?? []).length,
+      DB_CA_CERT_newlines: (process.env.DB_CA_CERT?.match(/\n/g) ?? []).length,
       JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32
     };
     try {

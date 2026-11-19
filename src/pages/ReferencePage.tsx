@@ -22,7 +22,7 @@ export default function ReferencePage() {
   const chapters = data.chapters.filter((c) => list.some((r) => r.chapter === c.id));
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={t('ref.title')} />
+      <PageTitle title={t('ref.title')} />
       <div className="sticky top-14 z-10 -mx-4 bg-bg/90 px-4 py-2 backdrop-blur">
         <label className="relative block">
           <Icon name="search" size={18} className="absolute left-3 top-3 text-muted" />

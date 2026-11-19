@@ -3,65 +3,350 @@
  "module": "ro",
  "order": 2,
  "title": {
-  "fr": "Représentation matricielle",
-  "dar": "Matrices",
-  "en": "Matrix representation"
+  "fr": "Chap 2 — Représentation matricielle d'un graphe",
+  "dar": "Fasl 2 — Matrices dyal graphe",
+  "en": "Ch. 2 — Matrix representation of a graph"
  },
  "summary": {
-  "fr": "Matrices d'adjacence et d'incidence, puissances M^k.",
-  "dar": "Adjacence, M^k.",
-  "en": "Adjacency, incidence, powers."
+  "fr": "Matrice d'adjacence (orientée et non orientée), matrices sommet-arc, sommet-arête et sommet-sommet, et la puissance M^k pour compter les chemins de longueur k (contrôle).",
+  "dar": "Matrice d'adjacence, sommet-arc, sommet-arête, M^k.",
+  "en": "Adjacency matrix, vertex-arc and vertex-edge matrices, and M^k to count walks of length k."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 35,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Matrice d'adjacence",
-    "dar": "Matrice d'adjacence",
-    "en": "Adjacency matrix"
+    "fr": "1. La matrice d'adjacence",
+    "dar": "1. Matrice d'adjacence",
+    "en": "1. The adjacency matrix"
    }
   },
   {
-   "type": "text",
+   "type": "callout",
+   "kind": "def",
    "body": {
-    "fr": "M(G) n×n : **mij = nombre d'arêtes** entre si et sj (orienté : arcs de si vers sj). Non orienté → symétrique ; simple → diagonale nulle ; orienté → somme des coefficients = nombre d'arcs. Matrice **sommet-arc** : 1 sortant, −1 entrant, 0 sinon.",
-    "dar": "mij = arêtes ; symétrique ; sommet-arc 1/−1/0.",
-    "en": "mij = number of edges; symmetric if undirected; incidence 1/−1/0."
+    "fr": "Sommets numérotés de 1 à n. La **matrice d'adjacence** M(G) = (m_ij) est une matrice carrée **n × n** où m_ij = **nombre d'arêtes d'extrémités si et sj**. Pour un graphe **orienté**, m_ij = **nombre d'arcs d'origine si et d'extrémité sj**.",
+    "dar": "Matrice **n × n** : m_ij = **3adad arêtes** bin si w sj. F **orienté** : 3adad arcs **mn si l sj**.",
+    "en": "An **n × n** matrix where m_ij = **number of edges between si and sj**; for a **directed** graph, number of arcs **from si to sj**."
    }
   },
   {
-   "type": "text",
-   "body": {
-    "fr": "**(M^k)ij = nombre de chemins de longueur k** de si à sj ; **trace(M^k)** = nombre de circuits fermés de longueur k.",
-    "dar": "M^k = chemins ; trace = circuits.",
-    "en": "**(M^k)ij** = length-k walks; **trace** = closed walks."
-   }
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Remarque du cours",
+     "dar": "Molahada",
+     "en": "Course remark"
+    },
+    {
+     "fr": "Pourquoi",
+     "dar": "3lach",
+     "en": "Why"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Non orienté → **symétrique** (m_ij = m_ji)",
+      "dar": "Non orienté → **mtamatla**",
+      "en": "Undirected → **symmetric**"
+     },
+     {
+      "fr": "L'arête {i, j} compte de i vers j et de j vers i",
+      "dar": "{i, j} f jouj jihat",
+      "en": "{i, j} counts both ways"
+     }
+    ],
+    [
+     {
+      "fr": "Graphe simple → **diagonale de 0**",
+      "dar": "Simple → **diagonale 0**",
+      "en": "Simple → **zero diagonal**"
+     },
+     {
+      "fr": "Pas de boucle (m_ii = 0)",
+      "dar": "Bla boucle",
+      "en": "No loop"
+     }
+    ],
+    [
+     {
+      "fr": "Orienté : **somme des coefficients = nombre d'arcs**",
+      "dar": "Orienté : majmou3 = 3adad arcs",
+      "en": "Directed: **sum = number of arcs**"
+     },
+     {
+      "fr": "Chaque arc ajoute 1 dans une seule case",
+      "dar": "Kol arc = 1",
+      "en": "Each arc adds 1 once"
+     }
+    ],
+    [
+     {
+      "fr": "Non orienté : somme de la ligne i = **degré** de i",
+      "dar": "Majmou3 str i = **degré**",
+      "en": "Row sum = **degree**"
+     },
+     {
+      "fr": "Chaque arête issue de i ajoute 1 à sa ligne",
+      "dar": "Kol arête mn i katzid 1",
+      "en": "Each edge from i adds 1 to its row"
+     }
+    ]
+   ]
   },
   {
-   "type": "code",
-   "lang": "text",
-   "code": "M = [[0,1,1],\n     [1,0,1],\n     [1,0,0]]    # arcs 1→2 1→3 2→1 2→3 3→1"
+   "type": "steps",
+   "title": {
+    "fr": "Écrire la matrice d'adjacence du réseau du contrôle (stations A à F)",
+    "dar": "Matrice dyal réseau dyal contrôle (A l F)",
+    "en": "Adjacency matrix of the exam network (A to F)"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Lister les arêtes",
+      "dar": "Lister arêtes",
+      "en": "List the edges"
+     },
+     "body": {
+      "fr": "A–C, A–D, A–E, A–F, B–C, B–D, C–D, C–F, D–E, D–F, E–F (11 arêtes).",
+      "dar": "11 arêtes.",
+      "en": "11 edges."
+     }
+    },
+    {
+     "title": {
+      "fr": "Remplir ligne par ligne",
+      "dar": "3mmer str b str",
+      "en": "Fill row by row"
+     },
+     "body": {
+      "fr": "Ligne A : 0 0 1 1 1 1 · B : 0 0 1 1 0 0 · C : 1 1 0 1 0 1 · D : 1 1 1 0 1 1 · E : 1 0 0 1 0 1 · F : 1 0 1 1 1 0.",
+      "dar": "A : 001111 · B : 001100 · C : 110101 · D : 111011 · E : 100101 · F : 101110.",
+      "en": "A: 001111 · B: 001100 · C: 110101 · D: 111011 · E: 100101 · F: 101110."
+     }
+    },
+    {
+     "title": {
+      "fr": "Vérifier",
+      "dar": "Verifi",
+      "en": "Check"
+     },
+     "body": {
+      "fr": "Symétrique ✓, diagonale nulle ✓, somme totale 22 = 2 × 11 ✓.",
+      "dar": "Mtamatla, diagonale 0, 22 = 2 × 11.",
+      "en": "Symmetric, zero diagonal, 22 = 2 × 11."
+     }
+    }
+   ]
   },
   {
    "type": "miniQuiz",
    "questionIds": [
-    "ro-11",
+    "ro-10",
+    "ro-11"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Les autres représentations",
+    "dar": "2. Representations khrin",
+    "en": "2. Other representations"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Matrice",
+     "dar": "Matrice",
+     "en": "Matrix"
+    },
+    {
+     "fr": "Taille",
+     "dar": "Taille",
+     "en": "Size"
+    },
+    {
+     "fr": "Coefficient",
+     "dar": "Coefficient",
+     "en": "Entry"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Sommet-arc** (orienté)",
+      "dar": "**Sommet-arc**",
+      "en": "**Vertex-arc** (directed)"
+     },
+     {
+      "fr": "n sommets × m arcs",
+      "dar": "n × m",
+      "en": "n × m"
+     },
+     {
+      "fr": "m_i,a = **1** si l'arc a **sort** de i, **−1** s'il **entre** dans i, **0** sinon",
+      "dar": "**1** khrej, **−1** dkhel, **0**",
+      "en": "**1** if a leaves i, **−1** if it enters, **0** otherwise"
+     }
+    ],
+    [
+     {
+      "fr": "**Sommet-arête** (non orienté)",
+      "dar": "**Sommet-arête**",
+      "en": "**Vertex-edge**"
+     },
+     {
+      "fr": "n × m",
+      "dar": "n × m",
+      "en": "n × m"
+     },
+     {
+      "fr": "**1** si le sommet est une extrémité de l'arête, 0 sinon (chaque colonne contient deux 1)",
+      "dar": "**1** ila sommet f arête",
+      "en": "**1** if the vertex is an endpoint"
+     }
+    ],
+    [
+     {
+      "fr": "**Sommet-sommet**",
+      "dar": "**Sommet-sommet**",
+      "en": "**Vertex-vertex**"
+     },
+     {
+      "fr": "n × n",
+      "dar": "n × n",
+      "en": "n × n"
+     },
+     {
+      "fr": "C'est la matrice d'adjacence (1 si adjacents)",
+      "dar": "Hiya matrice d'adjacence",
+      "en": "It is the adjacency matrix"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Dans la matrice sommet-arc, **chaque colonne contient exactement un 1 et un −1** (un arc sort d'un sommet et entre dans un autre). Si ta colonne a deux 1, tu as oublié le sens.",
+    "dar": "Sommet-arc : **kol colonne fiha 1 w −1**.",
+    "en": "Vertex-arc: **each column has one 1 and one −1**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Puissances de M : compter les chemins (contrôle, exercice 3)",
+    "dar": "3. M^k : 7seb chemins",
+    "en": "3. Powers of M: counting walks (exam, exercise 3)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "(M^k)_{ij} = \\text{nombre de chemins de longueur } k \\text{ de } s_i \\text{ à } s_j \\qquad \\mathrm{tr}(M^k) = \\text{nombre de circuits de longueur } k",
+   "body": {
+    "fr": "On calcule M² = M × M, puis M⁴ = M² × M². La **trace** (somme de la diagonale) compte les chemins qui reviennent à leur point de départ.",
+    "dar": "M² = M × M, M⁴ = M² × M². **Trace** = circuits.",
+    "en": "Compute M² = M × M, then M⁴ = M² × M². The **trace** counts closed walks."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Contrôle 2025 : graphe A → B, A → C, B → A, B → C, C → A",
+    "dar": "Contrôle 2025 : A→B, A→C, B→A, B→C, C→A",
+    "en": "Exam 2025: A→B, A→C, B→A, B→C, C→A"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Matrice M",
+      "dar": "Matrice M",
+      "en": "Matrix M"
+     },
+     "body": {
+      "fr": "Lignes A, B, C : **A = (0 1 1)**, **B = (1 0 1)**, **C = (1 0 0)**.",
+      "dar": "A = 011, B = 101, C = 100.",
+      "en": "A = 011, B = 101, C = 100."
+     },
+     "tex": "M = \\begin{pmatrix} 0&1&1\\\\ 1&0&1\\\\ 1&0&0 \\end{pmatrix}"
+    },
+    {
+     "title": {
+      "fr": "M²",
+      "dar": "M²",
+      "en": "M²"
+     },
+     "body": {
+      "fr": "Case (i, j) = ligne i de M · colonne j de M. Ex. (A, A) = 0·0 + 1·1 + 1·1 = 2.",
+      "dar": "(A, A) = 0 + 1 + 1 = 2.",
+      "en": "(A, A) = 0 + 1 + 1 = 2."
+     },
+     "tex": "M^2 = \\begin{pmatrix} 2&0&1\\\\ 1&1&1\\\\ 0&1&1 \\end{pmatrix}"
+    },
+    {
+     "title": {
+      "fr": "M⁴ = M² × M²",
+      "dar": "M⁴ = M² × M²",
+      "en": "M⁴ = M² × M²"
+     },
+     "body": {
+      "fr": "Même méthode avec M² : ex. (A, B) = 2·0 + 0·1 + 1·1 = 1.",
+      "dar": "(A, B) = 1.",
+      "en": "(A, B) = 1."
+     },
+     "tex": "M^4 = \\begin{pmatrix} 4&1&3\\\\ 3&2&3\\\\ 1&2&2 \\end{pmatrix}"
+    },
+    {
+     "title": {
+      "fr": "Lire les réponses",
+      "dar": "9ra jawabat",
+      "en": "Read the answers"
+     },
+     "body": {
+      "fr": "De A à B : **1** chemin de longueur 4 ; de B à A : **3** ; de B à C : **3**. Circuits de longueur 4 : trace = 4 + 2 + 2 = **8**.",
+      "dar": "A→B : 1 ; B→A : 3 ; B→C : 3 ; trace = **8**.",
+      "en": "A→B: 1; B→A: 3; B→C: 3; trace = **8**."
+     },
+     "why": {
+      "fr": "« Décrire ces chemins » : le seul chemin de longueur 4 de A à B est **A → B → C → A → B** (chaque flèche existe bien). Vérifie toujours en suivant les arcs, la matrice te dit seulement **combien** il y en a.",
+      "dar": "Chemin wa7ed A → B : **A → B → C → A → B**.",
+      "en": "The single A → B walk is **A → B → C → A → B**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
     "ro-12",
-    "ro-13"
+    "ro-13",
+    "ro-14"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "M symétrique (non orienté), diagonale nulle (simple).",
-   "dar": "Symétrique.",
-   "en": "Symmetric, zero diagonal."
+   "fr": "m_ij = nombre d'arêtes entre si et sj (arcs de si vers sj si orienté) ; non orienté → symétrique ; simple → diagonale nulle.",
+   "dar": "Adjacence : symétrique, diagonale 0.",
+   "en": "Adjacency matrix rules."
   },
   {
-   "fr": "(M^k)ij = chemins de longueur k ; trace(M^k) = circuits.",
-   "dar": "M^k.",
-   "en": "M^k walks; trace closed."
+   "fr": "Sommet-arc : 1 sortant, −1 entrant, 0 sinon ; sommet-arête : 1 si extrémité.",
+   "dar": "Sommet-arc / sommet-arête.",
+   "en": "Vertex-arc / vertex-edge."
+  },
+  {
+   "fr": "(M^k)_ij = chemins de longueur k de i à j ; trace(M^k) = circuits de longueur k.",
+   "dar": "M^k w trace.",
+   "en": "M^k and its trace."
   }
  ]
 }

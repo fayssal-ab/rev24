@@ -3,77 +3,336 @@
  "module": "ro",
  "order": 3,
  "title": {
-  "fr": "Chaînes, cycles, connexité, Euler, Hamilton",
-  "dar": "Chaînes, Euler, Hamilton",
-  "en": "Chains, connectivity, Euler, Hamilton"
+  "fr": "Chap 3 — Chaînes, cycles, connexité, Euler et Hamilton",
+  "dar": "Fasl 3 — Chaînes, cycles, connexité, Euler w Hamilton",
+  "en": "Ch. 3 — Chains, cycles, connectivity, Euler and Hamilton"
  },
  "summary": {
-  "fr": "Chaînes, cycles, connexité, graphes eulériens et hamiltoniens.",
-  "dar": "Euler w Hamilton.",
-  "en": "Chains, cycles, Euler and Hamilton."
+  "fr": "Chaîne, longueur, chaîne simple / élémentaire / fermée, cycle (avec les 6 exemples du cours), connexité et forte connexité, cycles et chaînes eulériens et hamiltoniens, théorèmes d'Euler.",
+  "dar": "Chaîne, cycle, connexité, Euler w Hamilton.",
+  "en": "Chains, cycles, connectivity, Eulerian and Hamiltonian cycles, Euler's theorems."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 40,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Chaînes et cycles",
-    "dar": "Chaînes w cycles",
-    "en": "Chains and cycles"
+    "fr": "1. Chaînes et cycles",
+    "dar": "1. Chaînes w cycles",
+    "en": "1. Chains and cycles"
    }
   },
   {
-   "type": "text",
-   "body": {
-    "fr": "**Chaîne** = suite d'arêtes adjacentes (longueur = nombre d'arêtes) ; **simple** = arêtes distinctes ; **élémentaire** = sommets distincts ; **cycle** = chaîne fermée à arêtes distinctes (orienté : chemin, circuit). **Connexe** : chaîne entre toute paire ; **fortement connexe** (orienté) : chemin pour tout couple.",
-    "dar": "Chaîne, simple, élémentaire, cycle, connexe.",
-    "en": "Chain, simple, elementary, cycle, connected, strongly connected."
-   }
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Notion",
+     "dar": "Fikra",
+     "en": "Notion"
+    },
+    {
+     "fr": "Définition du cours",
+     "dar": "Ta3rif",
+     "en": "Course definition"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Chaîne**",
+      "dar": "**Chaîne**",
+      "en": "**Chain**"
+     },
+     {
+      "fr": "Succession d'arêtes telle que deux arêtes qui se suivent sont **adjacentes**",
+      "dar": "Arêtes mtab3in, kol jouj mlas9in",
+      "en": "Sequence of edges, consecutive ones **adjacent**"
+     }
+    ],
+    [
+     {
+      "fr": "**Longueur**",
+      "dar": "**Tol**",
+      "en": "**Length**"
+     },
+     {
+      "fr": "**Nombre d'arêtes** de la chaîne (pas le nombre de sommets !)",
+      "dar": "**3adad arêtes**",
+      "en": "**Number of edges**"
+     }
+    ],
+    [
+     {
+      "fr": "**Chaîne simple**",
+      "dar": "**Simple**",
+      "en": "**Simple**"
+     },
+     {
+      "fr": "Toutes les **arêtes** sont distinctes",
+      "dar": "Arêtes **mokhtalfin**",
+      "en": "All **edges** distinct"
+     }
+    ],
+    [
+     {
+      "fr": "**Chaîne élémentaire**",
+      "dar": "**Élémentaire**",
+      "en": "**Elementary**"
+     },
+     {
+      "fr": "Tous les **sommets** sont distincts (sauf peut-être les extrémités)",
+      "dar": "Sommets **mokhtalfin**",
+      "en": "All **vertices** distinct"
+     }
+    ],
+    [
+     {
+      "fr": "**Chaîne fermée**",
+      "dar": "**Fermée**",
+      "en": "**Closed**"
+     },
+     {
+      "fr": "L'origine et l'extrémité **coïncident**",
+      "dar": "Bdya = nihaya",
+      "en": "Start = end"
+     }
+    ],
+    [
+     {
+      "fr": "**Cycle**",
+      "dar": "**Cycle**",
+      "en": "**Cycle**"
+     },
+     {
+      "fr": "Chaîne **fermée** dont les arêtes sont **toutes distinctes**",
+      "dar": "**Fermée** + arêtes mokhtalfin",
+      "en": "**Closed** chain with **distinct edges**"
+     }
+    ]
+   ]
   },
   {
-   "type": "heading",
+   "type": "callout",
+   "kind": "example",
    "body": {
-    "fr": "Euler et Hamilton",
-    "dar": "Euler w Hamilton",
-    "en": "Euler and Hamilton"
-   }
-  },
-  {
-   "type": "text",
-   "body": {
-    "fr": "**Eulérien** : passe une fois par chaque **arête**. **Hamiltonien** : passe une fois par chaque **sommet**. **Théorème d'Euler** : connexe → cycle eulérien ⇔ tous les degrés pairs ; chaîne eulérienne ⇔ 0 ou 2 sommets impairs (ce sont les extrémités).",
-    "dar": "Euler = arêtes ; Hamilton = sommets ; théorème.",
-    "en": "**Eulerian** = every edge once; **Hamiltonian** = every vertex once; Euler theorem."
+    "fr": "Les 6 exemples du cours (graphe s0…s5) :\n1. {s0, s1, s2, s0, s1, s0, s5, s0, s3} : chaîne de longueur **8** (9 sommets cités → 8 arêtes).\n2. {s0, s1, s2, s3, s4, s0, s5} : chaîne **simple** de longueur 6.\n3. {s1, s2, s3, s0, s4, s5} : chaîne **élémentaire** de longueur 5.\n4. {s0, s1, s2, s0, s1, s0, s5, s0, s3, s0} : chaîne **fermée** de longueur 9.\n5. {s1, s2, s0, s3, s4, s0, s5, s1} : **cycle** de longueur 7.\n6. {s0, s1, s2, s3, s0, s5, s1, s0} : chaîne fermée de longueur 7 mais **pas un cycle** : l'arête s0–s1 est parcourue **deux fois**.",
+    "dar": "6 amthila dyal dars : longueur = 3adad sommets − 1 ; cycle khass arêtes mokhtalfin (mithal 6 machi cycle 7it s0–s1 jouj merrat).",
+    "en": "The 6 course examples: length = listed vertices − 1; example 6 is not a cycle because s0–s1 is used twice."
    }
   },
   {
    "type": "callout",
-   "kind": "trap",
+   "kind": "tip",
    "body": {
-    "fr": "Ne pas confondre : Euler ↔ **arêtes**, Hamilton ↔ **sommets**.",
-    "dar": "Euler = arêtes, Hamilton = sommets.",
-    "en": "Euler ↔ edges, Hamilton ↔ vertices."
+    "fr": "Astuce longueur : **longueur = nombre de sommets écrits − 1**.",
+    "dar": "Tol = 3adad sommets mktoubin − 1.",
+    "en": "Length = number of listed vertices − 1."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
     "ro-20",
-    "ro-21",
-    "ro-23"
+    "ro-21"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Connexité",
+    "dar": "2. Connexité",
+    "en": "2. Connectivity"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un graphe est **connexe** si deux sommets distincts quelconques peuvent être **reliés par une chaîne**. Un graphe **orienté** est **fortement connexe** si pour tout couple (s1, s2) il existe un **chemin** (qui respecte le sens des arcs) de s1 à s2.",
+    "dar": "**Connexe** : ay jouj sommets mrboutin b chaîne. **Fortement connexe** (orienté) : chemin b ittijah mn ay wa7ed l ay wa7ed.",
+    "en": "**Connected**: any two vertices joined by a chain. **Strongly connected** (directed): a **path** respecting arc directions between every ordered pair."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Euler et Hamilton",
+    "dar": "3. Euler w Hamilton",
+    "en": "3. Euler and Hamilton"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Eulérien",
+     "dar": "Eulérien",
+     "en": "Eulerian"
+    },
+    {
+     "fr": "Hamiltonien",
+     "dar": "Hamiltonien",
+     "en": "Hamiltonian"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Passe exactement une fois par…",
+      "dar": "Kaydouz merra wa7da 3la…",
+      "en": "Uses exactly once…"
+     },
+     {
+      "fr": "chaque **ARÊTE**",
+      "dar": "kol **ARÊTE**",
+      "en": "every **EDGE**"
+     },
+     {
+      "fr": "chaque **SOMMET**",
+      "dar": "kol **SOMMET**",
+      "en": "every **VERTEX**"
+     }
+    ],
+    [
+     {
+      "fr": "Cycle / chaîne",
+      "dar": "Cycle / chaîne",
+      "en": "Cycle / chain"
+     },
+     {
+      "fr": "Cycle eulérien (revient au départ) / chaîne eulérienne",
+      "dar": "Cycle / chaîne eulérienne",
+      "en": "Eulerian cycle / chain"
+     },
+     {
+      "fr": "Cycle hamiltonien / chaîne hamiltonienne",
+      "dar": "Cycle / chaîne hamiltonienne",
+      "en": "Hamiltonian cycle / chain"
+     }
+    ],
+    [
+     {
+      "fr": "Test",
+      "dar": "Test",
+      "en": "Test"
+     },
+     {
+      "fr": "**Théorème simple** sur les degrés",
+      "dar": "**Théorème** 3la degrés",
+      "en": "**Simple theorem** on degrees"
+     },
+     {
+      "fr": "**Pas de théorème simple** : on cherche un cycle à la main",
+      "dar": "**Bla théorème** : 9elleb b yddik",
+      "en": "**No simple test**: search by hand"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\text{connexe et tous les degrés pairs} \\iff \\text{cycle eulérien} \\qquad 0 \\text{ ou } 2 \\text{ sommets impairs} \\iff \\text{chaîne eulérienne}",
+   "body": {
+    "fr": "**Théorème d'Euler** : un graphe simple connexe admet un **cycle eulérien** si et seulement si **tous ses sommets ont un degré pair**. Il admet une **chaîne eulérienne** (graphe **semi-eulérien**) si et seulement si le nombre de sommets de degré impair est **0 ou 2** ; s'il vaut 2, ces deux sommets sont les **extrémités** de la chaîne.",
+    "dar": "**Euler** : cycle ⇔ ga3 degrés **zawjiyin** ; chaîne ⇔ **0 wla 2** impairs (homa l bdya w nihaya).",
+    "en": "**Euler**: cycle ⇔ **all degrees even**; chain ⇔ **0 or 2** odd vertices (the chain's endpoints)."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Contrôle, exercice 2, question 4 : le contrôleur peut-il emprunter chaque ligne une seule fois ?",
+    "dar": "Contrôle ex. 2 Q4 : kol ligne merra wa7da ?",
+    "en": "Exam ex. 2 Q4: each line exactly once?"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Traduire la question",
+      "dar": "Fhem sou2al",
+      "en": "Translate the question"
+     },
+     "body": {
+      "fr": "« Chaque **ligne** (arête) une et une seule fois » = une **chaîne eulérienne**.",
+      "dar": "« Kol **ligne** merra wa7da » = **chaîne eulérienne**.",
+      "en": "\"Each **line** (edge) once\" = an **Eulerian chain**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Degrés",
+      "dar": "Degrés",
+      "en": "Degrees"
+     },
+     "body": {
+      "fr": "A 4, B 2, C 4, **D 5**, **E 3**, F 4 → **2 sommets impairs** (D et E). Le graphe est connexe.",
+      "dar": "D w E impairs (2). Connexe.",
+      "en": "**D** and **E** odd (2 vertices). Connected."
+     }
+    },
+    {
+     "title": {
+      "fr": "Conclure",
+      "dar": "Conclure",
+      "en": "Conclude"
+     },
+     "body": {
+      "fr": "Réalisable (chaîne eulérienne) mais **pas un cycle** : il faut partir de **D** et arriver en **E** (ou l'inverse).",
+      "dar": "Momkin, mn **D** l **E**.",
+      "en": "Possible, from **D** to **E**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Exemple de trajet",
+      "dar": "Mithal",
+      "en": "Example route"
+     },
+     "body": {
+      "fr": "**D–A–C–B–D–C–F–A–E–D–F–E** : 11 arêtes, toutes différentes ✓.",
+      "dar": "**D–A–C–B–D–C–F–A–E–D–F–E**.",
+      "en": "**D–A–C–B–D–C–F–A–E–D–F–E**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-22",
+    "ro-23",
+    "ro-24",
+    "ro-25",
+    "ro-26"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "Euler : tous degrés pairs (cycle) ou 2 impairs (chaîne).",
-   "dar": "Euler.",
-   "en": "Euler: all even (cycle) or 2 odd (chain)."
+   "fr": "Longueur d'une chaîne = nombre d'arêtes ; simple = arêtes distinctes ; élémentaire = sommets distincts ; cycle = fermée + arêtes distinctes.",
+   "dar": "Chaînes w cycles.",
+   "en": "Chains and cycles."
   },
   {
-   "fr": "Hamilton : chaque sommet une fois.",
-   "dar": "Hamilton.",
-   "en": "Hamilton: each vertex once."
+   "fr": "Connexe : une chaîne entre deux sommets quelconques ; fortement connexe : un chemin orienté dans les deux sens.",
+   "dar": "Connexité.",
+   "en": "Connectivity."
+  },
+  {
+   "fr": "Eulérien = chaque arête une fois ; hamiltonien = chaque sommet une fois.",
+   "dar": "Euler = arêtes ; Hamilton = sommets.",
+   "en": "Euler = edges; Hamilton = vertices."
+  },
+  {
+   "fr": "Euler : cycle ⇔ tous degrés pairs ; chaîne ⇔ 0 ou 2 sommets impairs (extrémités).",
+   "dar": "Théorème d'Euler.",
+   "en": "Euler's theorem."
   }
  ]
 }

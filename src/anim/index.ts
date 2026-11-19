@@ -21,5 +21,9 @@ export const ANIMATIONS: Record<string, Anim> = {
   DataPipeline: lazy(() => import('./data/DataPipeline')),
   ChartChooser: lazy(() => import('./data/ChartChooser')),
   PandasReadPlayground: lazy(() => import('./data/PandasReadPlayground')),
-  MatplotlibStyles: lazy(() => import('./data/MatplotlibStyles'))
+  MatplotlibStyles: lazy(() => import('./data/MatplotlibStyles')),
+  OracleArchitecture: lazy(() => import('./oracle/OracleArchitecture')),
+  OracleStartup: lazy(() => import('./oracle/OracleStartup')),
+  InstanceDiagram: lazy(() => import('./oracle/InstanceDiagram')),
+  GraphAlgo: lazy(() => import('./ro/GraphAlgo'))
 };

@@ -47,7 +47,7 @@ export default function QcmPage() {
 
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={t('qcm.title')} sub={`${data.questions.length} ${t('module.questions')}`} />
+      <PageTitle title={t('qcm.title')} sub={`${data.questions.length} ${t('module.questions')}`} />
       <div className="card space-y-4 p-4">
         <div className="flex flex-wrap gap-2" role="tablist">
           <button role="tab" aria-selected={!mistakes} className={!mistakes ? 'btn-primary btn-sm' : 'btn-ghost btn-sm'} onClick={() => setMistakes(false)}>

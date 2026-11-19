@@ -56,8 +56,9 @@ function MissionPanel({ m, onExit }: { m: Mission; onExit: () => void }) {
           ))}
         </ul>
         {(all || done) && (
-          <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="mt-3 font-semibold text-ok" data-testid="mission-done">
-            ✅ {t('term.missionDone')}
+          <motion.p initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="mt-3 flex items-center gap-2 font-semibold text-ok" data-testid="mission-done">
+            <Icon name="checkCircle" size={18} />
+            {t('term.missionDone')}
           </motion.p>
         )}
       </div>

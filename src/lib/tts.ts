@@ -145,6 +145,6 @@ function online(_text: string, _lang: string, _rate: number, _my: number, o: Spe
   if (warned) return;
   warned = true;
   alert(
-    "🔇 Ce navigateur n'a pas de voix de synthèse.\n\n• Brave : la synthèse vocale est souvent bloquée → utilise Google Chrome ou Edge (ou ton téléphone).\n• Linux : installe une voix : sudo apt install speech-dispatcher espeak-ng, puis redémarre le navigateur.\n\nNavigateur ma fihch sout : khdem b Chrome, Edge wla telephone."
+    "Ce navigateur n'a pas de voix de synthèse.\n\n• Brave : la synthèse vocale est souvent bloquée → utilise Google Chrome ou Edge (ou ton téléphone).\n• Linux : installe une voix : sudo apt install speech-dispatcher espeak-ng, puis redémarre le navigateur.\n\nNavigateur ma fihch sout : khdem b Chrome, Edge wla telephone."
   );
 }

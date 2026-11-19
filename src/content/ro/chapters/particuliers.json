@@ -3,52 +3,187 @@
  "module": "ro",
  "order": 4,
  "title": {
-  "fr": "Graphes particuliers et coloration",
-  "dar": "Graphes khassin",
-  "en": "Special graphs and colouring"
+  "fr": "Chap 4 — Graphes particuliers et coloration",
+  "dar": "Fasl 4 — Graphes khassin w coloration",
+  "en": "Ch. 4 — Special graphs and colouring"
  },
  "summary": {
-  "fr": "Simple, complet, planaire, biparti, coloration.",
-  "dar": "Planaire, biparti, couleurs.",
-  "en": "Planar, bipartite, colouring."
+  "fr": "Graphe simple, complet Kn, planaire, biparti, coloration et nombre chromatique, avec la méthode pour l'exercice des bancs du TD.",
+  "dar": "Simple, complet, planaire, biparti, coloration.",
+  "en": "Simple, complete, planar, bipartite graphs; colouring and chromatic number."
  },
  "estimatedMinutes": 30,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Graphes particuliers",
-    "dar": "Graphes khassin",
-    "en": "Special graphs"
+    "fr": "1. Graphe simple et graphe complet",
+    "dar": "1. Simple w complet",
+    "en": "1. Simple and complete graphs"
    }
   },
   {
-   "type": "text",
+   "type": "callout",
+   "kind": "def",
    "body": {
-    "fr": "**Planaire** : arêtes qui ne se croisent qu'aux sommets. **Biparti** : S = S1 ∪ S2, aucune arête à l'intérieur de S1 ni de S2 (⇔ pas de cycle impair). **Coloration** : sommets adjacents de couleurs différentes ; **χ(G)** = minimum de couleurs ; planaire → χ ≤ 4. Algorithme glouton **Welsh-Powell** : trier par degré décroissant, donner la plus petite couleur libre.",
-    "dar": "Planaire, biparti, χ, Welsh-Powell.",
-    "en": "Planar, bipartite, χ, Welsh–Powell greedy colouring."
+    "fr": "Un graphe est **simple** s'il est **sans boucle** et si deux sommets distincts sont reliés par **au plus une arête**. Un **graphe complet Kn** est un graphe simple d'ordre n dont **tous les sommets sont deux à deux adjacents**. À tout graphe orienté on peut associer un graphe simple (on oublie le sens et les doublons).",
+    "dar": "**Simple** : bla boucle, w jouj sommets b **arête wa7da max**. **Kn** : ga3 sommets mrboutin m3a ba3d.",
+    "en": "**Simple**: no loop, at most one edge between two vertices. **Kn**: every pair of vertices adjacent."
    }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "|A(K_n)| = \\frac{n(n-1)}{2} \\qquad \\text{arêtes à ajouter} = \\frac{n(n-1)}{2} - |A|",
+   "body": {
+    "fr": "Chaque sommet est relié aux n − 1 autres ; on divise par 2 car chaque arête est comptée deux fois.",
+    "dar": "Kol sommet m3a n − 1 ; / 2.",
+    "en": "Each vertex to the n − 1 others, divided by 2."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**Contrôle, exercice 1, Q7** : graphe d'ordre 7 avec 10 arêtes. K7 a 7 × 6 / 2 = **21** arêtes → il faut en ajouter **21 − 10 = 11**.",
+    "dar": "K7 = 21 → zid **11**.",
+    "en": "K7 has 21 edges → add **11**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-05",
+    "ro-06",
+    "ro-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Graphe planaire et graphe biparti",
+    "dar": "2. Planaire w biparti",
+    "en": "2. Planar and bipartite graphs"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**Planaire** : on peut le dessiner de sorte que les arêtes **ne se rencontrent qu'aux sommets** (aucun croisement). **Biparti** : on peut partager S en deux parties **S1 et S2** telles qu'il n'y ait **aucune arête entre éléments de S1** et **aucune entre éléments de S2** (toutes les arêtes vont de S1 à S2).",
+    "dar": "**Planaire** : bla croisement. **Biparti** : S = S1 + S2, arêtes ghir bin S1 w S2.",
+    "en": "**Planar**: drawable with no crossing. **Bipartite**: S splits into S1, S2 with edges only between them."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Test rapide : un graphe est biparti **si et seulement s'il n'a aucun cycle de longueur impaire** (ex. un triangle l'empêche d'être biparti).",
+    "dar": "Biparti ⇔ **bla cycle impair** (triangle = la).",
+    "en": "Bipartite ⇔ **no odd cycle**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Coloration et nombre chromatique",
+    "dar": "3. Coloration w nombre chromatique",
+    "en": "3. Colouring and chromatic number"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Une **coloration** attribue une couleur à chaque sommet de sorte que **deux sommets adjacents n'aient jamais la même couleur**. Le **nombre chromatique χ(G)** est le **nombre minimal de couleurs** nécessaire. Pour un graphe **planaire**, χ(G) ≤ **4**.",
+    "dar": "**Coloration** : jiran ma ykounouch b nefs lloun. **χ(G)** = **a9al 3adad alwan**. Planaire → χ ≤ **4**.",
+    "en": "**Colouring**: adjacent vertices never share a colour. **χ(G)** = the **minimum number of colours**. Planar → χ ≤ **4**."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Méthode pour encadrer puis trouver χ (exercice des bancs du TD)",
+    "dar": "Méthode bach tl9a χ",
+    "en": "How to bound then find χ"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Minorant",
+      "dar": "Minorant",
+      "en": "Lower bound"
+     },
+     "body": {
+      "fr": "χ ≥ taille de la plus grande **clique** (sommets tous reliés entre eux). Un triangle → χ ≥ 3.",
+      "dar": "χ ≥ akbar **clique** (triangle → 3).",
+      "en": "χ ≥ largest **clique** (triangle → 3)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Majorant",
+      "dar": "Majorant",
+      "en": "Upper bound"
+     },
+     "body": {
+      "fr": "χ ≤ **degré maximal + 1** (on trouve toujours une couleur libre).",
+      "dar": "χ ≤ **degré max + 1**.",
+      "en": "χ ≤ **max degree + 1**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Colorier (Welsh-Powell)",
+      "dar": "Lowwen (Welsh-Powell)",
+      "en": "Colour (Welsh-Powell)"
+     },
+     "body": {
+      "fr": "Trier les sommets par **degré décroissant** ; donner la couleur 1 au premier puis à tous les sommets non adjacents à ceux déjà en couleur 1 ; recommencer avec la couleur 2…",
+      "dar": "Rtteb b **degré mn kbir l sghir** ; lloun 1 l ay wa7ed ma jarch…",
+      "en": "Sort by **decreasing degree**; give colour 1 to each vertex not adjacent to colour-1 ones; repeat."
+     }
+    },
+    {
+     "title": {
+      "fr": "Conclure",
+      "dar": "Conclure",
+      "en": "Conclude"
+     },
+     "body": {
+      "fr": "Si le nombre de couleurs utilisé = le minorant, c'est **χ**.",
+      "dar": "Ila = minorant → **χ**.",
+      "en": "If it equals the lower bound, that is **χ**."
+     }
+    }
+   ]
   },
   {
    "type": "miniQuiz",
    "questionIds": [
     "ro-30",
     "ro-31",
+    "ro-32",
     "ro-33"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "Biparti ⇔ pas de cycle impair.",
-   "dar": "Biparti.",
-   "en": "Bipartite ⇔ no odd cycle."
+   "fr": "Simple : sans boucle, au plus une arête entre deux sommets. Kn : n(n−1)/2 arêtes.",
+   "dar": "Simple ; Kn = n(n−1)/2.",
+   "en": "Simple; Kn has n(n−1)/2 edges."
   },
   {
-   "fr": "Planaire → χ ≤ 4.",
-   "dar": "χ ≤ 4.",
-   "en": "Planar → χ ≤ 4."
+   "fr": "Planaire : sans croisement ; biparti : S1 / S2 sans arête interne ⇔ pas de cycle impair.",
+   "dar": "Planaire, biparti.",
+   "en": "Planar; bipartite ⇔ no odd cycle."
+  },
+  {
+   "fr": "χ(G) = minimum de couleurs ; clique ≤ χ ≤ degré max + 1 ; planaire → χ ≤ 4.",
+   "dar": "χ(G).",
+   "en": "χ(G) bounds."
   }
  ]
 }

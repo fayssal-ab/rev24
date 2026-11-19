@@ -30,6 +30,94 @@
   }
  },
  {
+  "id": "dr-r1",
+  "chapter": "rappel",
+  "syntax": "x̄ = Σxᵢ / n",
+  "desc": {
+   "fr": "Moyenne arithmétique",
+   "dar": "Moyenne",
+   "en": "Arithmetic mean"
+  },
+  "example": "df[\"x\"].mean()"
+ },
+ {
+  "id": "dr-r2",
+  "chapter": "rappel",
+  "syntax": "Me = valeur du milieu (série triée)",
+  "desc": {
+   "fr": "Médiane",
+   "dar": "Médiane",
+   "en": "Median"
+  },
+  "example": "df[\"x\"].median()"
+ },
+ {
+  "id": "dr-r3",
+  "chapter": "rappel",
+  "syntax": "V = Σ(xᵢ − x̄)² / n   ·   S² = Σ(xᵢ − x̄)² / (n − 1)",
+  "desc": {
+   "fr": "Variance et variance corrigée (pandas : n − 1)",
+   "dar": "Variance (n) w corrigée (n − 1)",
+   "en": "Variance and corrected variance (pandas: n − 1)"
+  },
+  "example": "df[\"x\"].var()  # n-1 ; df[\"x\"].var(ddof=0)  # n"
+ },
+ {
+  "id": "dr-r4",
+  "chapter": "rappel",
+  "syntax": "σ = √V   ·   S = √S²",
+  "desc": {
+   "fr": "Écart-type",
+   "dar": "Écart-type",
+   "en": "Standard deviation"
+  },
+  "example": "df[\"x\"].std()"
+ },
+ {
+  "id": "dr-r5",
+  "chapter": "rappel",
+  "syntax": "IQR = Q3 − Q1",
+  "desc": {
+   "fr": "Écart interquartile",
+   "dar": "IQR",
+   "en": "Interquartile range"
+  },
+  "example": "df[\"x\"].quantile(0.75) - df[\"x\"].quantile(0.25)"
+ },
+ {
+  "id": "dr-r6",
+  "chapter": "rappel",
+  "syntax": "cov(x,y) = Σ(xᵢ − x̄)(yᵢ − ȳ) / n",
+  "desc": {
+   "fr": "Covariance",
+   "dar": "Covariance",
+   "en": "Covariance"
+  },
+  "example": "np.cov(x, y, ddof=0)"
+ },
+ {
+  "id": "dr-r7",
+  "chapter": "rappel",
+  "syntax": "r = cov(x,y) / (σx σy)",
+  "desc": {
+   "fr": "Coefficient de corrélation linéaire",
+   "dar": "Corrélation",
+   "en": "Linear correlation coefficient"
+  },
+  "example": "df[\"x\"].corr(df[\"y\"])"
+ },
+ {
+  "id": "dr-r8",
+  "chapter": "rappel",
+  "syntax": "ŷ = a x + b,  a = cov(x,y)/V(x),  b = ȳ − a x̄,  R² = r²",
+  "desc": {
+   "fr": "Régression linéaire (moindres carrés)",
+   "dar": "Régression linéaire",
+   "en": "Linear regression (least squares)"
+  },
+  "example": "a, b = np.polyfit(x, y, 1)"
+ },
+ {
   "id": "r-dp-1",
   "chapter": "pandas",
   "syntax": "pd.read_csv(f, sep=\";\", decimal=\",\", header=None, skiprows=1)",
@@ -77,6 +165,79 @@
    "fr": "1D · 2D",
    "dar": "1D · 2D",
    "en": "1D · 2D"
+  }
+ },
+ {
+  "id": "dn-r1",
+  "chapter": "nettoyage",
+  "syntax": "df.isnull()  ·  df.isnull().sum()",
+  "desc": {
+   "fr": "Détecter / compter les valeurs manquantes",
+   "dar": "Kchef / 7seb NaN",
+   "en": "Detect / count missing values"
+  }
+ },
+ {
+  "id": "dn-r2",
+  "chapter": "nettoyage",
+  "syntax": "df.dropna()  ·  df.dropna(axis=1)",
+  "desc": {
+   "fr": "Supprimer les lignes / colonnes contenant des NaN",
+   "dar": "7iyed stour / colonnes",
+   "en": "Drop rows / columns with NaN"
+  }
+ },
+ {
+  "id": "dn-r3",
+  "chapter": "nettoyage",
+  "syntax": "df['c'].fillna(df['c'].mean())",
+  "desc": {
+   "fr": "Imputer par la moyenne (ou .median(), .mode()[0], une valeur fixe)",
+   "dar": "Imputer",
+   "en": "Impute with the mean (or median, mode, fixed value)"
+  }
+ },
+ {
+  "id": "dn-r4",
+  "chapter": "nettoyage",
+  "syntax": "IQR = Q3 − Q1 ; aberrante si x ∉ [Q1 − 1,5·IQR ; Q3 + 1,5·IQR]",
+  "desc": {
+   "fr": "Méthode IQR",
+   "dar": "Méthode IQR",
+   "en": "IQR method"
+  },
+  "example": "df['c'].quantile([0.25, 0.75])"
+ },
+ {
+  "id": "dn-r5",
+  "chapter": "nettoyage",
+  "syntax": "Xnorm = (X − Xmin) / (Xmax − Xmin)",
+  "desc": {
+   "fr": "Normalisation Min-Max",
+   "dar": "Min-Max",
+   "en": "Min-Max normalisation"
+  },
+  "example": "(df - df.min()) / (df.max() - df.min())"
+ },
+ {
+  "id": "dn-r6",
+  "chapter": "nettoyage",
+  "syntax": "Xz = (X − μ) / σ",
+  "desc": {
+   "fr": "Standardisation Z-score",
+   "dar": "Z-score",
+   "en": "Z-score standardisation"
+  },
+  "example": "(df - df.mean()) / df.std()"
+ },
+ {
+  "id": "dn-r7",
+  "chapter": "nettoyage",
+  "syntax": "df.duplicated()  ·  df.drop_duplicates()",
+  "desc": {
+   "fr": "Détecter / supprimer les doublons",
+   "dar": "Doublons",
+   "en": "Detect / drop duplicates"
   }
  },
  {
@@ -242,11 +403,51 @@
  {
   "id": "r-dt-8",
   "chapter": "tests",
-  "syntax": "χ²(0,05) : 3,841 · 5,991 · 7,815",
+  "syntax": "χ²(0,05) : 3,841 · 5,991 · 7,815 · 9,488 · 11,070",
   "desc": {
-   "fr": "ν = 1, 2, 3",
-   "dar": "ν = 1, 2, 3",
-   "en": "ν = 1, 2, 3"
+   "fr": "ν = 1, 2, 3, 4, 5",
+   "dar": "ν = 1, 2, 3, 4, 5",
+   "en": "ν = 1, 2, 3, 4, 5"
+  }
+ },
+ {
+  "id": "r-dt-9",
+  "chapter": "tests",
+  "syntax": "α = P(rejeter H0 | H0 vraie) · β = P(accepter H0 | H0 fausse) · puissance = 1 − β",
+  "desc": {
+   "fr": "Erreurs de type I et II, puissance du test",
+   "dar": "Ghalat naw3 I w II, puissance",
+   "en": "Type I and II errors, power"
+  }
+ },
+ {
+  "id": "r-dt-10",
+  "chapter": "tests",
+  "syntax": "Z ~ N(0, 1) : Φ(z) = P(Z ≤ z), Φ(−z) = 1 − Φ(z), P(Z > zα) = α",
+  "desc": {
+   "fr": "Loi normale centrée réduite",
+   "dar": "Loi normale",
+   "en": "Standard normal law"
+  }
+ },
+ {
+  "id": "r-dt-11",
+  "chapter": "tests",
+  "syntax": "t(α ; 9) : 1,833 (5 %) · 2,262 (2,5 %) · 2,821 (1 %) · 3,250 (0,5 %)",
+  "desc": {
+   "fr": "Loi de Student à ν = n − 1 ddl (exemple ν = 9)",
+   "dar": "Student ν = 9",
+   "en": "Student law with ν = n − 1 df (ν = 9)"
+  }
+ },
+ {
+  "id": "r-dt-12",
+  "chapter": "tests",
+  "syntax": "H0 : θ = θ0 ; H1 : θ ≠ θ0 (bilatéral), θ < θ0 (gauche), θ > θ0 (droite)",
+  "desc": {
+   "fr": "Formes des hypothèses",
+   "dar": "Hypothèses",
+   "en": "Forms of the hypotheses"
   }
  }
 ]

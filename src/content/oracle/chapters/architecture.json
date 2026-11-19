@@ -3,97 +3,670 @@
  "module": "oracle",
  "order": 2,
  "title": {
-  "fr": "Chap 2 — Architecture globale (CDB/PDB)",
-  "dar": "Fasl 2 — Architecture",
-  "en": "Ch. 2 — Overall architecture (CDB/PDB)"
+  "fr": "Chap 2 — Architecture globale Oracle (connexion, instance, base, CDB/PDB)",
+  "dar": "Fasl 2 — Architecture globale Oracle (connexion, instance, base, CDB/PDB)",
+  "en": "Ch. 2 — Oracle overall architecture (connection, instance, database, CDB/PDB)"
  },
  "summary": {
-  "fr": "Instance et base, fichiers, connexion/session, multitenant CDB/PDB, utilisateurs communs et locaux, exercices 1 et 2.",
-  "dar": "Instance, base, CDB/PDB, C##.",
-  "en": "Instance vs database, files, CDB/PDB, common/local users."
+  "fr": "Les 3 façons de se connecter, processus utilisateur et serveur, connexion et session, serveur = instance + base, les 3 types de structures, l'architecture multitenant CDB / PDB et les exercices d'application 1 et 2 (CDB/PDB, schéma HR) corrigés.",
+  "dar": "3 tor9an dyal connexion, processus utilisateur w serveur, connexion w session, serveur = instance + base, 3 anwa3 dyal structures, multitenant CDB / PDB w exercices 1 w 2 m-corrigin.",
+  "en": "The 3 ways to connect, user and server processes, connection vs session, server = instance + database, the 3 kinds of structures, the CDB / PDB multitenant architecture and application exercises 1 and 2 solved."
  },
- "estimatedMinutes": 40,
+ "estimatedMinutes": 50,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Instance et base de données",
-    "dar": "Instance w base",
-    "en": "Instance and database"
+    "fr": "1. Se connecter à un serveur Oracle",
+    "dar": "1. Connexion l serveur Oracle",
+    "en": "1. Connecting to an Oracle server"
    }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Architecture",
+     "dar": "Architecture",
+     "en": "Architecture"
+    },
+    {
+     "fr": "Principe",
+     "dar": "Kifach",
+     "en": "How it works"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Connexion locale**",
+      "dar": "**Connexion locale**",
+      "en": "**Local connection**"
+     },
+     {
+      "fr": "L'utilisateur est **directement connecté sur la machine** qui fait office de serveur Oracle",
+      "dar": "User **mconnecti direct f machine** li fiha serveur Oracle",
+      "en": "The user is **logged on the machine** that runs the Oracle server"
+     },
+     {
+      "fr": "Toi, en TP : `sqlplus / as sysdba` sur ton PC",
+      "dar": "Nta f TP : `sqlplus / as sysdba` f PC dyalek",
+      "en": "You in the lab: `sqlplus / as sysdba` on your PC"
+     }
+    ],
+    [
+     {
+      "fr": "**Client / serveur**",
+      "dar": "**Client / serveur**",
+      "en": "**Client / server**"
+     },
+     {
+      "fr": "L'utilisateur se connecte **depuis une autre machine** reliée directement au serveur",
+      "dar": "User kayconnecta **mn machine khra** mrbouta b serveur",
+      "en": "The user connects **from another machine** linked to the server"
+     },
+     {
+      "fr": "SQL Developer sur ton portable → serveur de l'école",
+      "dar": "SQL Developer f portable → serveur dyal l'école",
+      "en": "SQL Developer on a laptop → school server"
+     }
+    ],
+    [
+     {
+      "fr": "**Multi-tiers**",
+      "dar": "**Multi-tiers**",
+      "en": "**Multi-tier**"
+     },
+     {
+      "fr": "Le client passe par **un serveur applicatif intermédiaire** (ex. serveur Web)",
+      "dar": "Client kaydouz mn **serveur applicatif f l west** (serveur Web)",
+      "en": "The client goes through **an application server** (e.g. a web server)"
+     },
+     {
+      "fr": "Navigateur → site web → Oracle",
+      "dar": "Navigateur → site → Oracle",
+      "en": "Browser → website → Oracle"
+     }
+    ]
+   ]
   },
   {
    "type": "text",
    "body": {
-    "fr": "Serveur Oracle = **instance** (mémoire SGA + processus d'arrière-plan) + **base de données** (fichiers). Base : **datafiles**, **control files**, **redo log files**. Fichiers associés : paramètres (pfile/spfile), mots de passe, **archives**. Client : processus utilisateur → **connexion** → **session** → processus serveur (+ PGA).",
-    "dar": "Instance + base ; fichiers ; session.",
-    "en": "Server = **instance** (SGA + processes) + **database** (files). Client: user process → connection → session → server process."
+    "fr": "Une connexion fait toujours appel à **deux processus** :\n- le **processus utilisateur** (*user process*) : le code de l'outil ou de l'application qui se connecte (client local ou distant, ex. SQL*Plus) ;\n- le **processus serveur** (*server process*) : il **dialogue** avec le processus utilisateur, **analyse (parse) et exécute** les instructions SQL et **renvoie les résultats**.",
+    "dar": "Ay connexion fiha **jouj processus** :\n- **processus utilisateur** : code dyal l outil li kayconnecta (b7al SQL*Plus) ;\n- **processus serveur** : kay**hder** m3a processus utilisateur, kay**analysi w kay-exécuti** SQL w kay**rje3 natija**.",
+    "en": "A connection always uses **two processes**:\n- the **user process**: the code of the tool or app that connects (e.g. SQL*Plus);\n- the **server process**: it **talks** to the user process, **parses and executes** SQL and **returns the results**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**Connexion** : le **lien** entre le processus utilisateur et le processus serveur.\n\n**Session** : la **connexion spécifique d'un utilisateur** au serveur Oracle. Elle **démarre** quand la connexion de l'utilisateur est **validée** par le serveur, et **se termine** quand l'utilisateur se **déconnecte** ou en cas de **fin prématurée** de la connexion.",
+    "dar": "**Connexion** : **lien** bin processus utilisateur w processus serveur.\n\n**Session** : **connexion khassa b user** f serveur Oracle. Kat**bda** mli serveur **kayvalidi** connexion, w kat**sali** mli user **kaydéconnecta** wla connexion kat9te3.",
+    "en": "**Connection**: the **link** between the user process and the server process.\n\n**Session**: a **user's specific connection** to the Oracle server. It **starts** when the server **validates** the login, and **ends** when the user **disconnects** or the connection ends prematurely."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Connexion = le **câble**. Session = **l'appel téléphonique** passé sur ce câble. Une même connexion peut porter plusieurs sessions (tu le verras au TP1 avec `SET AUTOTRACE`), et quand on tue une session, l'utilisateur doit se reconnecter.",
+    "dar": "Connexion = **l khit**. Session = **l mokalama** li f had l khit. Connexion wa7da t9der tchd bzaf d sessions (ghadi tchoufha f TP1 b `SET AUTOTRACE`).",
+    "en": "Connection = the **cable**. Session = **the phone call** on that cable. One connection can carry several sessions (TP1, `SET AUTOTRACE`)."
    }
   },
   {
    "type": "heading",
    "body": {
-    "fr": "Multitenant (19c)",
-    "dar": "Multitenant",
-    "en": "Multitenant (19c)"
+    "fr": "2. Le serveur de base de données = instance + base de données",
+    "dar": "2. Serveur = instance + base de données",
+    "en": "2. The database server = instance + database"
    }
+  },
+  {
+   "type": "animation",
+   "component": "OracleArchitecture"
   },
   {
    "type": "text",
    "body": {
-    "fr": "**CDB** = **CDB$ROOT** + **PDB$SEED** + PDB (ex. **ORCLPDB**). Utilisateur **commun** : créé dans la racine avec le préfixe **C##**. Utilisateur **local** : créé dans une PDB.",
-    "dar": "CDB = ROOT + SEED + PDB ; C## / local.",
-    "en": "CDB = ROOT + SEED + PDBs; common users need C##."
-   }
-  },
-  {
-   "type": "code",
-   "lang": "text",
-   "code": "sqlplus / as sysdba\nSHOW PDBS;\nALTER PLUGGABLE DATABASE ORCLPDB OPEN;   -- si MOUNTED\nSHOW CON_NAME;                           -- CDB$ROOT\nCREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- ORA-65096 dans CDB$ROOT\nALTER SESSION SET CONTAINER=ORCLPDB;\nCREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- User created.\nGRANT CREATE SESSION TO ETUDIANT;\nCONNECT etudiant/etudiant123@localhost:1521/ORCLPDB",
-   "caption": {
-    "fr": "Exercice d'application 1",
-    "dar": "Exercice 1",
-    "en": "Exercise 1"
+    "fr": "Le serveur de base de données Oracle comporte **deux composants** : l'**instance** et la **base de données**. Il comporte aussi **trois types de structures** :\n1. **Structures mémoire** (SGA, PGA) ;\n2. **Structures de processus** (processus utilisateur, serveur, d'arrière-plan) ;\n3. **Structures de stockage** (les fichiers de la base).",
+    "dar": "Serveur Oracle fih **jouj composants** : **instance** w **base de données**. W fih **tlata anwa3 dyal structures** :\n1. **Structures mémoire** (SGA, PGA) ;\n2. **Structures dyal processus** (utilisateur, serveur, arrière-plan) ;\n3. **Structures dyal stockage** (fichiers dyal base).",
+    "en": "The Oracle database server has **two components**: the **instance** and the **database**. It also has **three kinds of structures**:\n1. **Memory structures** (SGA, PGA);\n2. **Process structures** (user, server, background);\n3. **Storage structures** (the database files)."
    }
   },
   {
    "type": "callout",
-   "kind": "trap",
+   "kind": "def",
    "body": {
-    "fr": "ORA-65096 = utilisateur non C## dans CDB$ROOT.",
-    "dar": "ORA-65096 = bla C## f ROOT.",
-    "en": "ORA-65096 = non-C## user in CDB$ROOT."
+    "fr": "Une **instance** Oracle est un **programme chargé sur la RAM** du serveur. Elle **existe uniquement en mémoire**, est **créée à chaque démarrage** de la base et **disparaît** à chaque arrêt. À chaque démarrage, deux actions ont lieu : **allocation de la SGA** (mémoire partagée) et **lancement des processus en arrière-plan**.",
+    "dar": "**Instance** Oracle = **programme mchargé f RAM** dyal serveur. **Kayna ghir f mémoire**, kat**tsayb f kol démarrage** w kat**ghber** f kol arrêt. F kol démarrage : **allocation dyal SGA** w **lancement dyal processus d'arrière-plan**.",
+    "en": "An Oracle **instance** is a **program loaded into the server's RAM**. It **exists only in memory**, is **created at every startup** and **disappears** at every shutdown. At startup: **the SGA is allocated** and **the background processes are started**."
    }
   },
   {
-   "type": "code",
-   "lang": "text",
-   "code": "sqlplus / as sysdba\nSHOW CON_NAME\nSHOW PDBS\nALTER SESSION SET CONTAINER=ORCLPDB\n@C:\\oracle_samples\\db-sample-schemas\\human_resources\\hr_install.sql   -- mdp root, USERS, TEMP\nALTER USER hr ACCOUNT UNLOCK;\nsqlplus hr/root@localhost:1521/ORCLPDB\nSELECT table_name FROM user_tables;",
-   "caption": {
-    "fr": "Exercice d'application 2 (schéma HR, chemin sans espaces ni accents)",
-    "dar": "Exercice 2 (HR)",
-    "en": "Exercise 2 (HR schema)"
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Règle",
+     "dar": "9a3ida",
+     "en": "Rule"
+    },
+    {
+     "fr": "Explication",
+     "dar": "Charh",
+     "en": "Explanation"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "1 instance ↔ 1 seule base",
+      "dar": "1 instance ↔ base wa7da",
+      "en": "1 instance ↔ 1 database"
+     },
+     {
+      "fr": "Chaque instance est associée à **une seule base**. Plusieurs bases sur le même serveur = **une instance distincte pour chacune**.",
+      "dar": "Kol instance mrbouta b **base wa7da**. Bzaf d bases = **instance l kol wa7da**.",
+      "en": "Each instance serves **one database**. Several databases = **one instance each**."
+     }
+    ],
+    [
+     {
+      "fr": "Une instance n'est pas partagée",
+      "dar": "Instance machi mchtaraka",
+      "en": "An instance is not shared"
+     },
+     {
+      "fr": "Une instance ne peut pas servir deux bases.",
+      "dar": "Ma t9derch tkhdem jouj bases.",
+      "en": "It cannot serve two databases."
+     }
+    ],
+    [
+     {
+      "fr": "1 base ↔ plusieurs instances (RAC)",
+      "dar": "1 base ↔ bzaf d instances (RAC)",
+      "en": "1 database ↔ several instances (RAC)"
+     },
+     {
+      "fr": "Une **base** peut être ouverte par **plusieurs instances** sur des nœuds distincts : **RAC** (*Real Application Cluster*).",
+      "dar": "**Base** wa7da t9der tfte7ha **bzaf d instances** f machines mokhtalifa : **RAC**.",
+      "en": "A **database** can be opened by **several instances** on different nodes: **RAC**."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**Stockage de la base de données** = **ensemble de fichiers** utilisés pour **préserver les données** provenant de l'instance Oracle **sur un disque physique** : fichiers de données (*datafiles*), fichiers de contrôle (*control files*), fichiers de journalisation (*redo log files*). Fichiers associés : fichier de paramètres, fichier de mots de passe, archives.",
+    "dar": "**Stockage** = **majmou3a d fichiers** bach n**7fdou data** dyal instance **f disque**: datafiles, control files, redo log files. W fichiers m3ahom : paramètres, mots de passe, archives.",
+    "en": "**Database storage** = **set of files** that **preserve the instance's data on disk**: datafiles, control files, redo log files. Related files: parameter file, password file, archives."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Question type : « Quelle différence entre instance et base de données ? » → **instance = mémoire (SGA) + processus, en RAM, éphémère** ; **base = fichiers sur disque, permanente**. Une instance ↔ une base ; une base peut avoir plusieurs instances (RAC).",
+    "dar": "Sou2al : « far9 bin instance w base ? » → **instance = mémoire + processus f RAM, katmout** ; **base = fichiers f disque, dayma**.",
+    "en": "Typical question: \"Instance vs database?\" → **instance = memory + processes, in RAM, temporary**; **database = files on disk, permanent**."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
+    "or-01",
+    "or-02",
+    "or-03"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. L'architecture multitenant : CDB et PDB",
+    "dar": "3. Multitenant : CDB w PDB",
+    "en": "3. Multitenant architecture: CDB and PDB"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Depuis **Oracle 12c**, on parle de **conteneur** (*container*) et d'**architecture mutualisée** (*multitenant*). En 19c, c'est le modèle par défaut.",
+    "dar": "Mn **Oracle 12c**, kayn **conteneur** w **architecture mutualisée** (*multitenant*). F 19c hiya par défaut.",
+    "en": "Since **Oracle 12c** there are **containers** and a **multitenant** architecture; it is the default in 19c."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Conteneur (CDB)",
+     "dar": "Conteneur (CDB)",
+     "en": "Container (CDB)"
+    },
+    {
+     "fr": "Pluggable database (PDB)",
+     "dar": "PDB",
+     "en": "Pluggable database (PDB)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Définition",
+      "dar": "Ta3rif",
+      "en": "Definition"
+     },
+     {
+      "fr": "**Collection logique** de données et de métadonnées dans une architecture mutualisée",
+      "dar": "**Majmou3a mantiqiya** dyal data w métadonnées",
+      "en": "**Logical collection** of data and metadata"
+     },
+     {
+      "fr": "**Collection d'objets**, schémas, données…",
+      "dar": "**Majmou3a d objets**, schémas, data",
+      "en": "**Collection of objects**, schemas, data…"
+     }
+    ],
+    [
+     {
+      "fr": "Contenu",
+      "dar": "Chnou fiha",
+      "en": "Content"
+     },
+     {
+      "fr": "**0, 1 ou plusieurs PDB**",
+      "dar": "**0, 1 wla bzaf d PDB**",
+      "en": "**0, 1 or several PDBs**"
+     },
+     {
+      "fr": "Ses propres tables, utilisateurs locaux, schémas (ex. HR)",
+      "dar": "Tables, users locaux, schémas (HR)",
+      "en": "Its own tables, local users, schemas (HR)"
+     }
+    ],
+    [
+     {
+      "fr": "Rôle",
+      "dar": "Dor",
+      "en": "Role"
+     },
+     {
+      "fr": "**Regrouper** plusieurs bases pour **partager les fonctionnalités communes**",
+      "dar": "**Jme3** bzaf d bases bach **ytchark** fonctionnalités",
+      "en": "**Group** databases to **share common features**"
+     },
+     {
+      "fr": "**Apparaît** aux utilisateurs et applications **comme une base non-CDB**",
+      "dar": "Katban l users **b7al base 3adiya**",
+      "en": "**Looks like a non-CDB** to users and apps"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Une CDB comporte **par défaut 2 conteneurs** :\n- **CDB$ROOT** (*Root*) : contient les **métadonnées** et les **utilisateurs communs**. **1 CDB contient exactement un Root.**\n- **PDB$SEED** (*Seed*) : **modèle (template)** pour créer d'autres PDB. **1 CDB contient exactement un Seed.**\n\nPuis les PDB créées (ex. **ORCLPDB** à l'installation). Une PDB est « **pluggable** » : on peut la **débrancher** d'un conteneur et la **brancher** dans un autre ; elle peut être **générée à partir du Seed**.",
+    "dar": "CDB fiha **par défaut 2 conteneurs** :\n- **CDB$ROOT** : fih **métadonnées** w **users communs**. **CDB fiha Root wa7ed bdbt.**\n- **PDB$SEED** : **modèle** bach tsayb PDB jdad. **Seed wa7ed bdbt.**\n\nW mn b3d les PDB (b7al **ORCLPDB**). PDB « **pluggable** » : t9der t**7iydha** mn conteneur w t**rkkebha** f wa7ed akhor ; w t9der t**tsayb mn Seed**.",
+    "en": "A CDB has **2 containers by default**:\n- **CDB$ROOT**: holds **metadata** and **common users**. **Exactly one Root per CDB.**\n- **PDB$SEED**: **template** to create PDBs. **Exactly one Seed per CDB.**\n\nThen the PDBs (e.g. **ORCLPDB**). A PDB is **pluggable**: it can be **unplugged** from one container and **plugged** into another, and **created from the Seed**."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Avantages** de l'architecture mutualisée : **partage des ressources** (une seule SGA et un seul jeu de processus pour toutes les PDB), **déplacement facile** des données et du code d'un conteneur à un autre, **administration simplifiée** (sauvegarde, mises à jour une seule fois).",
+    "dar": "**Mzayat** : **partage dyal ressources** (SGA w processus wa7din l ga3 PDB), **nkl sahl** mn conteneur l akhor, **administration sahla**.",
+    "en": "**Benefits**: **resource sharing** (one SGA and process set for all PDBs), **easy moving** between containers, **simpler administration**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Utilisateur",
+     "dar": "User",
+     "en": "User"
+    },
+    {
+     "fr": "Créé dans",
+     "dar": "Fin kaytsayb",
+     "en": "Created in"
+    },
+    {
+     "fr": "Nom",
+     "dar": "Smiya",
+     "en": "Name"
+    },
+    {
+     "fr": "Visible",
+     "dar": "Kayban",
+     "en": "Visible"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Commun**",
+      "dar": "**Commun**",
+      "en": "**Common**"
+     },
+     "CDB$ROOT",
+     {
+      "fr": "**Doit commencer par C##**",
+      "dar": "**Khass ybda b C##**",
+      "en": "**Must start with C##**"
+     },
+     {
+      "fr": "Dans toutes les PDB",
+      "dar": "F ga3 PDB",
+      "en": "In every PDB"
+     }
+    ],
+    [
+     {
+      "fr": "**Local**",
+      "dar": "**Local**",
+      "en": "**Local**"
+     },
+     {
+      "fr": "Une PDB (ex. ORCLPDB)",
+      "dar": "PDB (ORCLPDB)",
+      "en": "A PDB (e.g. ORCLPDB)"
+     },
+     {
+      "fr": "Nom libre (ETUDIANT)",
+      "dar": "Smiya 7orra",
+      "en": "Any name"
+     },
+     {
+      "fr": "Dans sa PDB seulement",
+      "dar": "Ghir f PDB dyalo",
+      "en": "Only in its PDB"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
     "or-04",
-    "or-07",
+    "or-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Exercice d'application 1 : CDB and PDB (corrigé)",
+    "dar": "4. Exercice 1 : CDB w PDB (corrigé)",
+    "en": "4. Application exercise 1: CDB and PDB (solved)"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Les 7 questions, avec ce que tu dois voir à l'écran",
+    "dar": "7 questions, m3a chnou ghadi tchouf",
+    "en": "The 7 questions, with what you should see"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Se connecter en SYSDBA",
+      "dar": "Connecta b SYSDBA",
+      "en": "Connect as SYSDBA"
+     },
+     "body": {
+      "fr": "Dans l'invite de commande (CMD). `/` = authentification par le système d'exploitation, `as sysdba` = privilège d'administration complet.",
+      "dar": "F CMD. `/` = authentification b système, `as sysdba` = privilège admin kamel.",
+      "en": "In CMD. `/` = OS authentication, `as sysdba` = full admin privilege."
+     },
+     "code": "sqlplus / as sysdba"
+    },
+    {
+     "title": {
+      "fr": "Afficher les PDB",
+      "dar": "Wrri PDB",
+      "en": "Show the PDBs"
+     },
+     "body": {
+      "fr": "Tu vois PDB$SEED (READ ONLY) et ORCLPDB. **Si ORCLPDB est MOUNTED**, il faut l'ouvrir.",
+      "dar": "Katchouf PDB$SEED (READ ONLY) w ORCLPDB. **Ila ORCLPDB MOUNTED**, khass t7elha.",
+      "en": "You see PDB$SEED (READ ONLY) and ORCLPDB. **If ORCLPDB is MOUNTED**, open it."
+     },
+     "code": "SQL> show pdbs\n    CON_ID CON_NAME     OPEN MODE  RESTRICTED\n         2 PDB$SEED     READ ONLY  NO\n         3 ORCLPDB      MOUNTED\nSQL> alter pluggable database ORCLPDB open;"
+    },
+    {
+     "title": {
+      "fr": "Nom du conteneur courant",
+      "dar": "Smiyat conteneur",
+      "en": "Current container name"
+     },
+     "body": {
+      "fr": "Juste après la connexion on est dans la racine : **CDB$ROOT**.",
+      "dar": "Mn b3d connexion nta f **CDB$ROOT**.",
+      "en": "Right after login you are in **CDB$ROOT**."
+     },
+     "code": "SQL> show con_name\nCON_NAME\n------------------------------\nCDB$ROOT"
+    },
+    {
+     "title": {
+      "fr": "Créer ETUDIANT dans la racine — quelle réponse ?",
+      "dar": "Sayb ETUDIANT f root — chnou jawab ?",
+      "en": "Create ETUDIANT in the root — what answer?"
+     },
+     "body": {
+      "fr": "**Erreur ORA-65096 : nom d'utilisateur ou de rôle commun non valide.** Dans CDB$ROOT, on ne peut créer que des **utilisateurs communs**, dont le nom commence par **C##**.",
+      "dar": "**ORA-65096** : f CDB$ROOT ghir **users communs** b **C##**.",
+      "en": "**ORA-65096: invalid common user or role name.** Only **common users** (prefix **C##**) can be created in CDB$ROOT."
+     },
+     "code": "SQL> CREATE USER ETUDIANT IDENTIFIED BY etudiant123;\nORA-65096: invalid common user or role name"
+    },
+    {
+     "title": {
+      "fr": "Changer de conteneur",
+      "dar": "Beddel conteneur",
+      "en": "Switch container"
+     },
+     "body": {
+      "fr": "On entre dans la PDB, puis on vérifie.",
+      "dar": "Kandkhlou l PDB w kant2akdou.",
+      "en": "Enter the PDB, then check."
+     },
+     "code": "SQL> alter session set container=ORCLPDB;\nSession altered.\nSQL> show con_name\nCON_NAME\n------------------------------\nORCLPDB"
+    },
+    {
+     "title": {
+      "fr": "Refaire la création — conclusion ?",
+      "dar": "3awed — conclusion ?",
+      "en": "Create again — conclusion?"
+     },
+     "body": {
+      "fr": "Cette fois : **User created. Grant succeeded.** Conclusion : un utilisateur **sans C##** est un **utilisateur local**, il se crée **dans une PDB** ; la racine n'accepte que des utilisateurs communs.",
+      "dar": "Daba : **User created**. Conclusion : user **bla C##** = **local**, kaytsayb **f PDB**.",
+      "en": "Now: **User created. Grant succeeded.** Conclusion: a user **without C##** is **local** and lives **in a PDB**; the root only accepts common users."
+     },
+     "code": "SQL> CREATE USER ETUDIANT IDENTIFIED BY etudiant123;\nUser created.\nSQL> GRANT CREATE SESSION TO ETUDIANT;\nGrant succeeded."
+    },
+    {
+     "title": {
+      "fr": "Se connecter en ETUDIANT",
+      "dar": "Connecta b ETUDIANT",
+      "en": "Connect as ETUDIANT"
+     },
+     "body": {
+      "fr": "On donne le **service de la PDB** dans la chaîne de connexion (*Easy Connect* : hôte:port/service). `show con_name` affiche **ORCLPDB**.",
+      "dar": "Kan3tiw **service dyal PDB** f chaîne (hôte:port/service). `show con_name` → **ORCLPDB**.",
+      "en": "Give the **PDB service** in the connect string (host:port/service). `show con_name` → **ORCLPDB**."
+     },
+     "code": "SQL> connect etudiant/etudiant123@localhost:1521/ORCLPDB\nConnected.\nSQL> show con_name\nORCLPDB",
+     "why": {
+      "fr": "Sans `@…/ORCLPDB`, la connexion vise la racine, où ETUDIANT n'existe pas → ORA-01017.",
+      "dar": "Bla `@…/ORCLPDB` kaymchi l root fin ETUDIANT ma kaynch → ORA-01017.",
+      "en": "Without `@…/ORCLPDB` you reach the root where ETUDIANT does not exist → ORA-01017."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Exercice d'application 2 : installer le schéma HR (corrigé)",
+    "dar": "5. Exercice 2 : installer schéma HR",
+    "en": "5. Application exercise 2: install the HR schema (solved)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Oracle 19c **n'installe pas le schéma HR par défaut**. Étape 1 : télécharger le dépôt GitHub **oracle-samples/db-sample-schemas** en ZIP, le décompresser et le copier dans un chemin **simple, sans espaces ni accents** (ex. `C:\\oracle_samples\\`). Le dossier du schéma s'appelle **human_resources** et contient **hr_install.sql**.",
+    "dar": "Oracle 19c **ma kayinstallich HR par défaut**. Étape 1 : télécharger **oracle-samples/db-sample-schemas**, décompresser f chemin **bla espaces w bla accents** (`C:\\oracle_samples\\`). Dossier **human_resources** fih **hr_install.sql**.",
+    "en": "Oracle 19c **does not install HR by default**. Step 1: download **oracle-samples/db-sample-schemas**, unzip to a path **without spaces or accents** (`C:\\oracle_samples\\`). Folder **human_resources** holds **hr_install.sql**."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Étapes 2 à 7",
+    "dar": "Étapes 2 l 7",
+    "en": "Steps 2 to 7"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "CMD en administrateur, connexion SYSDBA",
+      "dar": "CMD admin, SYSDBA",
+      "en": "Admin CMD, SYSDBA"
+     },
+     "body": {
+      "fr": "Clic droit sur CMD → Exécuter en tant qu'administrateur.",
+      "dar": "Clic droit → administrateur.",
+      "en": "Right-click → run as administrator."
+     },
+     "code": "sqlplus / as sysdba"
+    },
+    {
+     "title": {
+      "fr": "Nom du conteneur",
+      "dar": "Smiyat conteneur",
+      "en": "Container name"
+     },
+     "body": {
+      "fr": "La commande demandée : `show con_name` (→ CDB$ROOT).",
+      "dar": "`show con_name`.",
+      "en": "`show con_name`."
+     },
+     "code": "SQL> show con_name"
+    },
+    {
+     "title": {
+      "fr": "Lister les PDB",
+      "dar": "Lister PDB",
+      "en": "List PDBs"
+     },
+     "body": {
+      "fr": "Vérifier qu'ORCLPDB est en READ WRITE (sinon l'ouvrir).",
+      "dar": "T2akked ORCLPDB READ WRITE.",
+      "en": "Check ORCLPDB is READ WRITE."
+     },
+     "code": "SQL> show pdbs"
+    },
+    {
+     "title": {
+      "fr": "Entrer dans ORCLPDB",
+      "dar": "Dkhol l ORCLPDB",
+      "en": "Enter ORCLPDB"
+     },
+     "body": {
+      "fr": "HR est un utilisateur **local** : il doit être créé **dans la PDB**.",
+      "dar": "HR user **local** → **f PDB**.",
+      "en": "HR is a **local** user → created **in the PDB**."
+     },
+     "code": "SQL> alter session set container=ORCLPDB;"
+    },
+    {
+     "title": {
+      "fr": "Lancer le script",
+      "dar": "Lancer script",
+      "en": "Run the script"
+     },
+     "body": {
+      "fr": "Avec **@** et le **chemin complet**. Réponses : mot de passe HR = **root**, tablespace par défaut = **USERS**, tablespace temporaire = **TEMP**.",
+      "dar": "B **@** w **chemin kamel**. HR = **root**, **USERS**, **TEMP**.",
+      "en": "With **@** and the **full path**. HR password **root**, default **USERS**, temporary **TEMP**."
+     },
+     "code": "SQL> @C:\\oracle_samples\\db-sample-schemas-main\\human_resources\\hr_install.sql"
+    },
+    {
+     "title": {
+      "fr": "Activer HR et vérifier",
+      "dar": "Activer HR w verifi",
+      "en": "Unlock HR and check"
+     },
+     "body": {
+      "fr": "On déverrouille le compte, on se connecte, on liste les tables : **REGIONS, COUNTRIES, LOCATIONS, DEPARTMENTS, JOBS, EMPLOYEES, JOB_HISTORY** (7 tables).",
+      "dar": "Unlock, connecta, lister tables : **7 tables**.",
+      "en": "Unlock, connect, list the tables: **7 tables** (REGIONS … JOB_HISTORY)."
+     },
+     "code": "SQL> ALTER USER hr ACCOUNT UNLOCK;\n$ sqlplus hr/root@localhost:1521/ORCLPDB\nSQL> SELECT table_name FROM user_tables;"
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Le chemin du script **ne doit contenir ni espace ni accent** (« Mes Documents », « Téléchargements » font échouer `@`). C'est pour ça que le cours impose `C:\\oracle_samples\\`.",
+    "dar": "Chemin **bla espaces w bla accents**, sinon `@` kayfchel.",
+    "en": "The script path must have **no spaces or accents**, otherwise `@` fails."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
     "or-14"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "Serveur = instance (SGA + processus) + base (datafiles, control files, redo logs).",
-   "dar": "Instance + base.",
-   "en": "Server = instance + database."
+   "fr": "3 architectures de connexion : locale, client/serveur, multi-tiers. Processus utilisateur ↔ processus serveur.",
+   "dar": "3 connexions : locale, client/serveur, multi-tiers.",
+   "en": "3 connection architectures: local, client/server, multi-tier."
   },
   {
-   "fr": "CDB = CDB$ROOT + PDB$SEED + PDB ; commun = C## (racine), local = PDB ; ORA-65096.",
-   "dar": "CDB/PDB, C##.",
-   "en": "CDB/PDB, C##, ORA-65096."
+   "fr": "Connexion = lien entre processus utilisateur et serveur ; session = connexion d'un utilisateur, de la validation à la déconnexion.",
+   "dar": "Connexion = lien ; session = connexion dyal user.",
+   "en": "Connection = link; session = a user's connection from login to logout."
+  },
+  {
+   "fr": "Serveur = instance (SGA + processus, en RAM, recréée à chaque démarrage) + base (fichiers sur disque). 1 instance ↔ 1 base ; RAC = 1 base, plusieurs instances.",
+   "dar": "Instance + base ; RAC.",
+   "en": "Server = instance + database; RAC."
+  },
+  {
+   "fr": "CDB = CDB$ROOT (1) + PDB$SEED (1) + PDB ; avantages : partage des ressources, déplacement facile, administration simplifiée.",
+   "dar": "CDB = ROOT + SEED + PDB.",
+   "en": "CDB = ROOT + SEED + PDBs."
+  },
+  {
+   "fr": "Utilisateur commun = C## dans CDB$ROOT ; sinon ORA-65096. Utilisateur local = dans une PDB, connexion `user/mdp@localhost:1521/ORCLPDB`.",
+   "dar": "C## / local ; ORA-65096.",
+   "en": "Common user = C##; local user in a PDB; ORA-65096."
   }
  ]
 }

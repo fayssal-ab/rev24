@@ -6,41 +6,38 @@
   "en": "Data analysis"
  },
  "subtitle": {
-  "fr": "Pr. A. Kadiri — pandas, visualisation, tests d'hypothèses",
-  "dar": "Pr. A. Kadiri — pandas, visualisation, tests",
-  "en": "Pr. A. Kadiri — pandas, visualisation, hypothesis tests"
+  "fr": "Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests d'hypothèses",
+  "dar": "Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests",
+  "en": "Pr. A. Kadiri — statistics, pandas, cleaning, visualisation, hypothesis tests"
  },
- "color": "#8b5cf6",
+ "color": "#00844e",
  "icon": "chart",
  "theme": "violet",
  "chapters": [
   "d-intro",
+  "rappel",
   "pandas",
+  "nettoyage",
   "visu",
   "tests"
  ],
  "upcoming": [
   {
-   "id": "chap2",
-   "title": {
-    "fr": "Chap 2 — (à venir)",
-    "dar": "Fasl 2 — (jay)",
-    "en": "Ch. 2 — (coming)"
-   }
-  },
-  {
    "id": "chap3",
+   "order": 4.5,
    "title": {
-    "fr": "Chap 3 — (à venir)",
-    "dar": "Fasl 3 — (jay)",
-    "en": "Ch. 3 — (coming)"
+    "fr": "Chap 3 — (pas encore sur le Drive)",
+    "dar": "Fasl 3 — (mazal ma kaynch f Drive)",
+    "en": "Ch. 3 — (not on the Drive yet)"
    }
   }
  ],
  "annales": [],
  "weights": {
   "tests": 5,
+  "nettoyage": 3,
   "pandas": 3,
+  "rappel": 3,
   "visu": 2,
   "d-intro": 1
  }

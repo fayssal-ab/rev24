@@ -3,79 +3,293 @@
  "module": "ro",
  "order": 1,
  "title": {
-  "fr": "Graphes : définitions et terminologie",
-  "dar": "Graphes : ta3arif",
-  "en": "Graphs: definitions"
+  "fr": "Chap 1 — Graphes : définitions et terminologie",
+  "dar": "Fasl 1 — Graphes : ta3arif w mofradat",
+  "en": "Ch. 1 — Graphs: definitions and terminology"
  },
  "summary": {
-  "fr": "Sommets, arêtes, arcs, ordre, taille, degré, graphe simple et complet.",
-  "dar": "Sommets, arêtes, degré.",
-  "en": "Vertices, edges, degree, simple and complete graphs."
+  "fr": "Graphe non orienté et orienté, sommets, arêtes, arcs, boucle, adjacence, ordre, degré, théorème des degrés et son corollaire, avec les exemples et exercices du cours.",
+  "dar": "Graphe orienté w non orienté, sommets, arêtes, arcs, boucle, ordre, degré, théorème dyal degrés.",
+  "en": "Undirected and directed graphs, vertices, edges, arcs, loops, adjacency, order, degree, the handshake theorem and its corollary."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 35,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Définitions",
-    "dar": "Ta3arif",
-    "en": "Definitions"
-   }
-  },
-  {
-   "type": "text",
-   "body": {
-    "fr": "Un graphe **non orienté** G = (S, A) : S ensemble non vide de **sommets**, A ensemble d'**arêtes** {s1, s2} (s1 et s2 sont **adjacents** ; boucle = extrémités confondues). **Orienté** : couples (s1, s2) = **arcs**. Applications : transports, réseaux, tournois.",
-    "dar": "G = (S, A) : sommets w arêtes. Orienté : arcs.",
-    "en": "An **undirected** graph G = (S, A): vertices and **edges** {s1, s2}; **directed**: **arcs** (s1, s2)."
-   }
-  },
-  {
-   "type": "code",
-   "lang": "text",
-   "code": "S = {1,…,7}\nA = {{1,3},{1,4},{7,1},{3,4},{5,3},{3,6},{3,7},{7,4},{3}}",
-   "caption": {
-    "fr": "Exemple du cours ({3} = boucle)",
-    "dar": "Mithal ({3} = boucle)",
-    "en": "Course example ({3} = loop)"
-   }
-  },
-  {
-   "type": "text",
-   "body": {
-    "fr": "**Ordre** = nombre de sommets, **taille** = nombre d'arêtes, **degré** d(s) = arêtes incidentes (boucle = 2). **Σ deg = 2 × taille**. **Simple** : sans boucle ni arête multiple. **Complet Kn** : tous les sommets adjacents, **n(n−1)/2** arêtes.",
-    "dar": "Ordre, taille, degré (boucle = 2), Σ = 2m, Kn = n(n−1)/2.",
-    "en": "Order, size, degree (loop = 2), Σ deg = 2m, Kn has n(n−1)/2 edges."
+    "fr": "1. C'est quoi un graphe ?",
+    "dar": "1. Chnou howa graphe ?",
+    "en": "1. What is a graph?"
    }
   },
   {
    "type": "callout",
-   "kind": "exam",
+   "kind": "def",
    "body": {
-    "fr": "« Degrés 4, 3, 3, 2, 1 » : impossible car la somme est impaire.",
-    "dar": "4,3,3,2,1 : impossible.",
-    "en": "\"Degrees 4,3,3,2,1\": impossible (odd sum)."
+    "fr": "Un **graphe** est un **ensemble de sommets** et d'**arêtes** (ou **arcs**) reliant ces sommets. Il existe des graphes **orientés** et **non orientés**.",
+    "dar": "**Graphe** = **majmou3a d sommets** w **arêtes** (wla **arcs**) li kayrbtou binathom. Kayn **orienté** w **non orienté**.",
+    "en": "A **graph** is a **set of vertices** and **edges** (or **arcs**) linking them. Graphs can be **directed** or **undirected**."
    }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Les points = les **sommets** (villes, ordinateurs, personnes). Les traits = les **arêtes** (routes, câbles, amitiés). Applications du cours : **plan de transport en commun**, **réseau d'ordinateurs**, **tournois sportifs**.",
+    "dar": "Les points = **sommets** (mdon, PC, nas). Les traits = **arêtes** (trou9, câbles, s7ab). Applications : **transport**, **réseau**, **tournois**.",
+    "en": "Dots = **vertices** (cities, computers, people). Lines = **edges** (roads, cables, friendships). Course applications: **public transport map**, **computer network**, **sports tournaments**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Graphe non orienté",
+    "dar": "2. Graphe non orienté",
+    "en": "2. Undirected graph"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "G = (S, A) \\qquad A \\subseteq \\{\\,\\{s_1, s_2\\} : s_1, s_2 \\in S\\,\\}",
+   "body": {
+    "fr": "**S** : ensemble non vide de **sommets** (nœuds). **A** : ensemble de **paires non ordonnées** de sommets, appelées **arêtes**.",
+    "dar": "**S** : sommets. **A** : **paires bla tartib** = **arêtes**.",
+    "en": "**S**: non-empty set of **vertices**. **A**: set of **unordered pairs** of vertices called **edges**."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "- Si a = {s1, s2} ∈ A, a est l'**arête d'extrémités** s1 et s2 ; s1 et s2 sont **adjacents**.\n- Si les deux extrémités sont **confondues** ({s, s}), l'arête est une **boucle**.",
+    "dar": "- a = {s1, s2} : arête bin s1 w s2 ; s1 w s2 **adjacents** (jiran).\n- Ila jouj tarafat **nefs sommet** → **boucle**.",
+    "en": "- If a = {s1, s2}, a is the edge with **endpoints** s1 and s2; they are **adjacent**.\n- If both endpoints are the **same** vertex, the edge is a **loop**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**Exemple du cours** : S = {1, 2, 3, 4, 5, 6, 7} et A = {{1,3}, {1,4}, {7,1}, {3,4}, {5,3}, {3,6}, {3,7}, {7,4}, {3,3}}. Le sommet **2 est isolé** (degré 0) et {3,3} est une **boucle**.",
+    "dar": "**Mithal** : S = {1…7}, A = {{1,3}, {1,4}, {7,1}, {3,4}, {5,3}, {3,6}, {3,7}, {7,4}, {3,3}}. **2 isolé**, {3,3} **boucle**.",
+    "en": "**Course example**: S = {1…7}, A = {{1,3}, {1,4}, {7,1}, {3,4}, {5,3}, {3,6}, {3,7}, {7,4}, {3,3}}. Vertex **2 is isolated**, {3,3} is a **loop**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "1 2 3 4 5 6 7 | 1-3 1-4 7-1 3-4 5-3 3-6 3-7 7-4 3-3",
+    "algo": "degrees"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Le degré de 3 vaut **7** : 5 arêtes ordinaires (vers 1, 4, 5, 6, 7) + la **boucle {3,3} comptée deux fois**.",
+    "dar": "Degré dyal 3 = **7** : boucle kat7seb **jouj merrat**.",
+    "en": "Vertex 3 has degree **7**: the **loop counts twice**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Graphe orienté",
+    "dar": "3. Graphe orienté",
+    "en": "3. Directed graph"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un **graphe orienté** G = (S, A) : S ensemble non vide de sommets, A ensemble de **couples ordonnés** (s1, s2), appelés **arcs**. Un arc a un **sens** : de s1 (origine) vers s2 (extrémité).",
+    "dar": "**Graphe orienté** : A fih **couples b tartib** (s1, s2) = **arcs**. Arc 3ando **ittijah** : mn s1 l s2.",
+    "en": "A **directed graph** G = (S, A): A is a set of **ordered pairs** (s1, s2) called **arcs**, going from s1 to s2."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**Exemple du cours** : S = {1, …, 6}, A = {(1,2), (2,4), (2,5), (4,1), (4,4), (4,5), (5,4), (6,3)}. (4,4) est une boucle ; (4,5) et (5,4) sont deux arcs **différents**.",
+    "dar": "S = {1…6}, A = {(1,2), (2,4), (2,5), (4,1), (4,4), (4,5), (5,4), (6,3)}. (4,5) ≠ (5,4).",
+    "en": "S = {1…6}, A = {(1,2), (2,4), (2,5), (4,1), (4,4), (4,5), (5,4), (6,3)}. (4,5) and (5,4) are **different** arcs."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Ordre et degré",
+    "dar": "4. Ordre w degré",
+    "en": "4. Order and degree"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**Ordre** d'un graphe = **nombre de sommets**. **Taille** = nombre d'arêtes. **Degré** d(a) d'un sommet a = nombre d'arêtes (ou arcs) qui ont a pour extrémité, **les boucles comptées deux fois**. Degré 0 → sommet **isolé**.",
+    "dar": "**Ordre** = 3adad sommets. **Taille** = 3adad arêtes. **Degré** d(a) = 3adad arêtes li fihom a, **boucle = 2**. Degré 0 → **isolé**.",
+    "en": "**Order** = number of vertices. **Size** = number of edges. **Degree** d(a) = number of edges touching a, **loops counted twice**. Degree 0 → **isolated**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\sum_{s \\in S} d(s) = 2\\,|A|",
+   "body": {
+    "fr": "**Théorème** : la somme des degrés est égale à **deux fois le nombre d'arêtes** — c'est donc toujours un nombre **pair**. (Chaque arête a 2 extrémités : elle est comptée 2 fois.)",
+    "dar": "**Théorème** : majmou3 degrés = **2 × 3adad arêtes** → dima **zawji**.",
+    "en": "**Theorem**: the sum of degrees is **twice the number of edges** — always **even**."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Corollaire** : dans un graphe, le **nombre de sommets de degré impair est pair**. Exemple du cours : degrés a = 2, b = 3, c = 3, d = 2 → somme 10 = 2 × 5 arêtes, et 2 sommets impairs (b, c).",
+    "dar": "**Corollaire** : 3adad sommets **impairs** howa **zawji**. Mithal : 2, 3, 3, 2 → 10 = 2 × 5.",
+    "en": "**Corollary**: the **number of odd-degree vertices is even**. Course example: 2, 3, 3, 2 → 10 = 2 × 5 edges, 2 odd vertices."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Exercice type du contrôle : « Peut-on tracer un graphe simple à 5 sommets de degrés 4, 3, 3, 2, 1 ? »",
+    "dar": "Exercice dyal contrôle : degrés 4, 3, 3, 2, 1 ?",
+    "en": "Exam exercise: a simple graph with degrees 4, 3, 3, 2, 1?"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Additionner les degrés",
+      "dar": "Jme3 degrés",
+      "en": "Add the degrees"
+     },
+     "body": {
+      "fr": "4 + 3 + 3 + 2 + 1 = **13**.",
+      "dar": "= **13**.",
+      "en": "= **13**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Appliquer le théorème",
+      "dar": "Théorème",
+      "en": "Apply the theorem"
+     },
+     "body": {
+      "fr": "La somme doit être **paire** (= 2 × nombre d'arêtes). 13 est **impair**.",
+      "dar": "Khass **zawji** ; 13 **fardi**.",
+      "en": "It must be **even**; 13 is **odd**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Conclure",
+      "dar": "Conclure",
+      "en": "Conclude"
+     },
+     "body": {
+      "fr": "**Impossible**. (Autre façon : il y a 3 sommets impairs — 3, 3, 1 — or ce nombre doit être pair.)",
+      "dar": "**Impossible** (3 sommets impairs).",
+      "en": "**Impossible** (3 odd vertices)."
+     }
+    }
+   ]
   },
   {
    "type": "miniQuiz",
    "questionIds": [
+    "ro-01",
+    "ro-02",
     "ro-03",
-    "ro-04",
-    "ro-05"
+    "ro-04"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Exercices du cours",
+    "dar": "5. Exercices dyal dars",
+    "en": "5. Course exercises"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "« Sommets 2 à 8, on relie i et j s'ils sont premiers entre eux »",
+    "dar": "« Sommets 2 l 8, rbet i w j ila premiers entre eux »",
+    "en": "\"Vertices 2 to 8, link i and j if coprime\""
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Rappel",
+      "dar": "Tadkir",
+      "en": "Reminder"
+     },
+     "body": {
+      "fr": "i et j sont **premiers entre eux** si leur seul diviseur commun est 1 (pgcd = 1).",
+      "dar": "**Premiers entre eux** = pgcd = 1.",
+      "en": "**Coprime** = gcd 1."
+     }
+    },
+    {
+     "title": {
+      "fr": "Arêtes de 2 et 3",
+      "dar": "Arêtes dyal 2 w 3",
+      "en": "Edges from 2 and 3"
+     },
+     "body": {
+      "fr": "2 : avec 3, 5, 7. 3 : avec 2, 4, 5, 7, 8.",
+      "dar": "2 : 3, 5, 7. 3 : 2, 4, 5, 7, 8.",
+      "en": "2: 3, 5, 7. 3: 2, 4, 5, 7, 8."
+     }
+    },
+    {
+     "title": {
+      "fr": "Les autres",
+      "dar": "L ba9i",
+      "en": "The rest"
+     },
+     "body": {
+      "fr": "4 : 3, 5, 7. 5 : 2, 3, 4, 6, 7, 8. 6 : 5, 7. 7 : 2, 3, 4, 5, 6, 8. 8 : 3, 5, 7.",
+      "dar": "4 : 3, 5, 7 ; 5 : 2, 3, 4, 6, 7, 8 ; 6 : 5, 7 ; 7 : 2…8 ; 8 : 3, 5, 7.",
+      "en": "4: 3, 5, 7; 5: 2, 3, 4, 6, 7, 8; 6: 5, 7; 7: 2, 3, 4, 5, 6, 8; 8: 3, 5, 7."
+     }
+    },
+    {
+     "title": {
+      "fr": "Vérification",
+      "dar": "Verification",
+      "en": "Check"
+     },
+     "body": {
+      "fr": "Degrés 3, 5, 3, 6, 2, 6, 3 → somme 28 → **14 arêtes** (pair ✓).",
+      "dar": "Somme 28 → **14 arêtes**.",
+      "en": "Sum 28 → **14 edges**."
+     }
+    }
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "Σ deg = 2 × taille ; nombre pair de sommets impairs.",
-   "dar": "Σ = 2m.",
-   "en": "Σ deg = 2m."
+   "fr": "Non orienté : G = (S, A), arêtes = paires {s1, s2} ; orienté : arcs = couples (s1, s2).",
+   "dar": "Arêtes {s1, s2} ; arcs (s1, s2).",
+   "en": "Edges {s1, s2}; arcs (s1, s2)."
   },
   {
-   "fr": "Kn : n(n−1)/2 arêtes.",
-   "dar": "Kn.",
-   "en": "Kn: n(n−1)/2."
+   "fr": "Ordre = nombre de sommets ; taille = nombre d'arêtes ; degré = arêtes incidentes, boucle comptée 2 fois.",
+   "dar": "Ordre, taille, degré.",
+   "en": "Order, size, degree (loop counts twice)."
+  },
+  {
+   "fr": "Σ d(s) = 2 |A| (toujours pair) ; nombre de sommets impairs toujours pair.",
+   "dar": "Σ d = 2|A|.",
+   "en": "Σ d = 2|A|; even number of odd vertices."
   }
  ]
 }

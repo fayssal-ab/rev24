@@ -15,6 +15,18 @@ export const tex = (t: string, cap?: T): Section => ({ type: 'formula', tex: t, 
 export const tip = (t: T): Section => ({ type: 'callout', kind: 'tip', body: L(t) });
 export const trap = (t: T): Section => ({ type: 'callout', kind: 'trap', body: L(t) });
 export const exam = (t: T): Section => ({ type: 'callout', kind: 'exam', body: L(t) });
+export const def = (t: T): Section => ({ type: 'callout', kind: 'def', body: L(t) });
+export const example = (t: T): Section => ({ type: 'callout', kind: 'example', body: L(t) });
+/** "in plain words": the idea re-explained very simply */
+export const plain = (t: T): Section => ({ type: 'callout', kind: 'darija', body: L(t) });
+export const formula = (texStr: string, t: T): Section => ({ type: 'callout', kind: 'formula', tex: texStr, body: L(t) });
+/** worked solution, revealed one step at a time: [title, body, tex?, why?] */
+export type StepT = { t: T; b: T; tex?: string; code?: string; why?: T };
+export const steps = (title: T | null, items: StepT[]): Section => ({
+  type: 'steps',
+  ...(title ? { title: L(title) } : {}),
+  items: items.map((x) => ({ title: L(x.t), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}), ...(x.code ? { code: x.code } : {}), ...(x.why ? { why: L(x.why) } : {}) }))
+});
 export const table = (headers: T[], rows: T[][]): Section => ({ type: 'table', headers: headers.map(L), rows: rows.map((r) => r.map((c) => (typeof c === 'string' ? c : L(c)))) });
 export const anim = (component: string, props?: Record<string, unknown>): Section => ({ type: 'animation', component, ...(props ? { props } : {}) });
 export const quiz = (...questionIds: string[]): Section => ({ type: 'miniQuiz', questionIds });

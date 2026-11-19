@@ -3,32 +3,516 @@
  "module": "oracle",
  "order": 3,
  "title": {
-  "fr": "Chap 3 — Instance : SGA, PGA, processus, démarrage/arrêt",
-  "dar": "Fasl 3 — Instance",
-  "en": "Ch. 3 — Instance: SGA, PGA, processes, startup/shutdown"
+  "fr": "Chap 3 — Instance Oracle : SGA, PGA, processus, démarrage et arrêt",
+  "dar": "Fasl 3 — Instance Oracle : SGA, PGA, processus, démarrage w arrêt",
+  "en": "Ch. 3 — Oracle instance: SGA, PGA, processes, startup and shutdown"
  },
  "summary": {
-  "fr": "Mémoire SGA/PGA, processus d'arrière-plan, exécution d'une requête, STARTUP/SHUTDOWN et TP1 sessions.",
-  "dar": "SGA, processus, STARTUP, SHUTDOWN.",
-  "en": "SGA/PGA, background processes, query flow, startup/shutdown, TP1."
+  "fr": "SGA vs PGA, chaque composant de la SGA, PGA en serveur dédié et partagé, processus client / serveur / d'arrière-plan (PMON, SMON, DBWn, LGWR, CKPT, ARCn), exécution d'un UPDATE puis d'un SELECT, modes de démarrage et d'arrêt.",
+  "dar": "SGA vs PGA, kol composant dyal SGA, PGA f dédié w partagé, processus (PMON, SMON, DBWn, LGWR, CKPT, ARCn), exécution dyal UPDATE w SELECT, démarrage w arrêt.",
+  "en": "SGA vs PGA, every SGA component, PGA in dedicated and shared server, processes (PMON, SMON, DBWn, LGWR, CKPT, ARCn), running an UPDATE then a SELECT, startup and shutdown modes."
  },
- "estimatedMinutes": 60,
+ "estimatedMinutes": 70,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "La mémoire",
-    "dar": "Mémoire",
-    "en": "Memory"
+    "fr": "1. Le schéma de l'instance (à savoir dessiner)",
+    "dar": "1. Schéma dyal instance (khassek t3ref trsmo)",
+    "en": "1. The instance diagram (know how to draw it)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Instance Oracle = mémoire partagée (SGA) + processus en arrière-plan.** Avant tout le reste, retiens **ce qu'il y a dedans** et **qui écrit où** : c'est le schéma qu'on te demande de dessiner ou de compléter au contrôle.",
+    "dar": "**Instance = SGA + processus d'arrière-plan.** 9bel kolchi, 7fed **chnou fiha** w **chkoun kaykteb fin** : hada howa schéma li ghaytleb mnek f contrôle.",
+    "en": "**Instance = shared memory (SGA) + background processes.** First learn **what is inside** and **who writes where**: this is the diagram you must draw or complete in the test."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "InstanceDiagram"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "À l'intérieur",
+     "dar": "Dakhel",
+     "en": "Inside"
+    },
+    {
+     "fr": "Composants",
+     "dar": "Composants",
+     "en": "Components"
+    },
+    {
+     "fr": "Qui écrit où (flèches du schéma)",
+     "dar": "Chkoun kaykteb fin",
+     "en": "Who writes where (diagram arrows)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**SGA** (mémoire partagée)",
+      "dar": "**SGA**",
+      "en": "**SGA** (shared memory)"
+     },
+     {
+      "fr": "Shared Pool (Library cache + Data dictionary cache), Database Buffer Cache, Redo Log Buffer, Large Pool, Java Pool, Streams Pool",
+      "dar": "Shared Pool, Buffer Cache, Redo Log Buffer, Large, Java, Streams",
+      "en": "Shared Pool, Buffer Cache, Redo Log Buffer, Large, Java, Streams"
+     },
+     {
+      "fr": "Processus serveur → Buffer Cache (modifie les blocs) et → Redo Log Buffer (entrées redo)",
+      "dar": "Processus serveur → Buffer Cache w → Redo Log Buffer",
+      "en": "Server process → Buffer Cache and → Redo Log Buffer"
+     }
+    ],
+    [
+     {
+      "fr": "**Processus d'arrière-plan**",
+      "dar": "**Processus**",
+      "en": "**Background processes**"
+     },
+     {
+      "fr": "PMON, SMON, DBWn, LGWR, CKPT (+ ARCn facultatif)",
+      "dar": "PMON, SMON, DBWn, LGWR, CKPT (+ ARCn)",
+      "en": "PMON, SMON, DBWn, LGWR, CKPT (+ ARCn)"
+     },
+     {
+      "fr": "**DBWn** : Buffer Cache → **datafiles** · **LGWR** : Redo Log Buffer → **redo log files** · **CKPT** → **control files** + en-têtes · **ARCn** : redo logs → **archives**",
+      "dar": "DBWn → datafiles · LGWR → redo logs · CKPT → control files · ARCn → archives",
+      "en": "DBWn → datafiles · LGWR → redo log files · CKPT → control files · ARCn → archives"
+     }
+    ],
+    [
+     {
+      "fr": "**Base de données** (disque)",
+      "dar": "**Base** (disque)",
+      "en": "**Database** (disk)"
+     },
+     {
+      "fr": "Data files, Control files, Redo log files (+ fichier de paramètres, mot de passe, archives)",
+      "dar": "Data files, Control files, Redo log files",
+      "en": "Data files, Control files, Redo log files"
+     },
+     {
+      "fr": "Lue au démarrage : paramètres (NOMOUNT) → control files (MOUNT) → datafiles + redo (OPEN)",
+      "dar": "NOMOUNT → MOUNT → OPEN",
+      "en": "NOMOUNT → MOUNT → OPEN"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "**Au contrôle**, dessine : un grand cadre **INSTANCE** contenant la **SGA** (Shared Pool, Buffer Cache, Redo Log Buffer, Large/Java/Streams Pool) et en dessous la ligne des **processus** (PMON, SMON, DBWn, LGWR, CKPT) ; sous l'instance, la **BASE** (datafiles, control files, redo log files) ; au-dessus, le **processus utilisateur** relié au **processus serveur + PGA**. Puis trace **3 flèches** : **DBWn → datafiles**, **LGWR → redo log files**, **CKPT → control files**. Entraîne-toi avec le mode « Teste-toi » ci-dessus.",
+    "dar": "**F contrôle** rsem : cadre **INSTANCE** fih **SGA** (Shared Pool, Buffer Cache, Redo Log Buffer, Large/Java/Streams) w t7tha **processus** (PMON, SMON, DBWn, LGWR, CKPT) ; t7t instance **BASE** (datafiles, control files, redo logs) ; fou9 **processus utilisateur** ↔ **processus serveur + PGA**. W 3 flèches : **DBWn → datafiles**, **LGWR → redo logs**, **CKPT → control files**. Tmrren b mode « Testi rasek ».",
+    "en": "**In the test**, draw: a big **INSTANCE** frame with the **SGA** (Shared Pool, Buffer Cache, Redo Log Buffer, Large/Java/Streams) and below it the **processes** (PMON, SMON, DBWn, LGWR, CKPT); under it the **DATABASE** (datafiles, control files, redo log files); on top the **user process** linked to the **server process + PGA**. Then 3 arrows: **DBWn → datafiles**, **LGWR → redo log files**, **CKPT → control files**. Practise with \"Test yourself\" above."
    }
   },
   {
    "type": "table",
    "headers": [
     {
-     "fr": "Zone",
-     "dar": "Zone",
-     "en": "Area"
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "SGA (System Global Area)",
+     "dar": "SGA",
+     "en": "SGA (System Global Area)"
+    },
+    {
+     "fr": "PGA (Program Global Area)",
+     "dar": "PGA",
+     "en": "PGA (Program Global Area)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Contenu",
+      "dar": "Chnou fiha",
+      "en": "Content"
+     },
+     {
+      "fr": "Données et informations de contrôle **d'une instance**",
+      "dar": "Data w contrôle dyal **instance**",
+      "en": "Data and control info **of an instance**"
+     },
+     {
+      "fr": "Données et informations de contrôle **d'un processus serveur**",
+      "dar": "Data w contrôle dyal **processus serveur**",
+      "en": "Data and control info **of a server process**"
+     }
+    ],
+    [
+     {
+      "fr": "Partage",
+      "dar": "Partage",
+      "en": "Sharing"
+     },
+     {
+      "fr": "**Partagée** par les processus serveur et d'arrière-plan",
+      "dar": "**Mchtaraka**",
+      "en": "**Shared** by server and background processes"
+     },
+     {
+      "fr": "**Non partagée** : chaque processus serveur a **sa propre PGA**",
+      "dar": "**Khassa** : kol processus 3ando **PGA dyalo**",
+      "en": "**Not shared**: each server process has **its own PGA**"
+     }
+    ],
+    [
+     {
+      "fr": "Combien ?",
+      "dar": "Ch7al ?",
+      "en": "How many?"
+     },
+     {
+      "fr": "**Une** par instance",
+      "dar": "**Wa7da** l kol instance",
+      "en": "**One** per instance"
+     },
+     {
+      "fr": "**Une par processus serveur**",
+      "dar": "**Wa7da l kol processus**",
+      "en": "**One per server process**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Les composants de la SGA",
+    "dar": "2. Composants dyal SGA",
+    "en": "2. The SGA components"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "La SGA est un **groupe de structures mémoire partagées** appelées **composants SGA** :",
+    "dar": "SGA = **majmou3a d structures mémoire mchtaraka** smithom **composants SGA** :",
+    "en": "The SGA is a **group of shared memory structures** called **SGA components**:"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Composant",
+     "dar": "Composant",
+     "en": "Component"
+    },
+    {
+     "fr": "Rôle (mots du cours)",
+     "dar": "Dor",
+     "en": "Role (course wording)"
+    },
+    {
+     "fr": "À retenir",
+     "dar": "Khassek t7fed",
+     "en": "Remember"
+    }
+   ],
+   "rows": [
+    [
+     "Shared Pool",
+     {
+      "fr": "Met en cache le **code SQL / PL/SQL analysé**, les paramètres système, le **dictionnaire de données**. Impliquée dans (presque) **toutes** les opérations.",
+      "dar": "Cache dyal **SQL m-analysé**, paramètres, **dictionnaire**. F (ta9riban) **ga3** l opérations.",
+      "en": "Caches **parsed SQL / PL/SQL**, parameters, **data dictionary**; involved in almost **every** operation."
+     },
+     {
+      "fr": "**Library cache** : texte, plan d'exécution, arbre de parcours des requêtes récentes (réutilisés même par d'autres utilisateurs). **Data dictionary cache** : structure des colonnes, privilèges…",
+      "dar": "**Library cache** w **Data dictionary cache**.",
+      "en": "**Library cache** (text, plan, parse tree) and **Data dictionary cache**."
+     }
+    ],
+    [
+     "Database Buffer Cache",
+     {
+      "fr": "Stocke des **copies des blocs de données** lus depuis les datafiles ; optimise les I/O (blocs fréquents en mémoire, rares sur disque).",
+      "dar": "**Nousakh dyal blocs** mn datafiles ; ki7ssen I/O.",
+      "en": "Stores **copies of data blocks** read from datafiles; optimises I/O."
+     },
+     {
+      "fr": "**La lecture des blocs se fait toujours à partir du buffer.**",
+      "dar": "**9raya dima mn buffer.**",
+      "en": "**Blocks are always read through the buffer.**"
+     }
+    ],
+    [
+     "Redo Log Buffer",
+     {
+      "fr": "Tampon **réutilisable** contenant les **modifications** faites par le LMD, le LDD ou en interne ; permet l'**annulation**/reconstruction des modifications.",
+      "dar": "Tampon **kayt3awed**, fih **tbdilat** (LMD, LDD).",
+      "en": "**Reusable** buffer holding **changes** from DML, DDL or internal operations."
+     },
+     {
+      "fr": "Si le serveur modifie le Buffer Cache → des **entrées de journalisation** sont écrites dans le Redo Log Buffer.",
+      "dar": "Tbdil f buffer → **entrées redo** hna.",
+      "en": "Change in the buffer cache → **redo entries** here."
+     }
+    ],
+    [
+     "Large Pool",
+     {
+      "fr": "Zone **optionnelle** pour de grandes allocations : **UGA** (serveur partagé), processus d'E/S, **sauvegarde / restauration**.",
+      "dar": "**Ikhtiyariya** : UGA, E/S, sauvegarde.",
+      "en": "**Optional**: UGA, I/O, backup / restore."
+     },
+     {
+      "fr": "Elle **soulage la Shared Pool**, réservée aux requêtes SQL partagées.",
+      "dar": "Kat**khffef** 3la Shared Pool.",
+      "en": "It **relieves the Shared Pool**."
+     }
+    ],
+    [
+     "Java Pool",
+     {
+      "fr": "Code **Java** et données de session dans la **JVM**.",
+      "dar": "**Java** f **JVM**.",
+      "en": "**Java** code and session data in the **JVM**."
+     },
+     {
+      "fr": "—",
+      "dar": "—",
+      "en": "—"
+     }
+    ],
+    [
+     "Streams Pool",
+     {
+      "fr": "Mémoire des processus **Oracle Streams** (capture et application des modifications).",
+      "dar": "**Oracle Streams**.",
+      "en": "**Oracle Streams** processes."
+     },
+     {
+      "fr": "Oracle Streams : partager des données entre bases.",
+      "dar": "Partage bin bases.",
+      "en": "Shares data between databases."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Commandes pour voir la SGA : `SHOW SGA`, `SELECT * FROM v$sgainfo;` (tailles des composants) et `SELECT * FROM v$sgastat;` (utilisation détaillée) — ce sont les dernières questions du TP1.",
+    "dar": "Bach tchouf SGA : `SHOW SGA`, `v$sgainfo`, `v$sgastat` (TP1).",
+    "en": "To see the SGA: `SHOW SGA`, `v$sgainfo`, `v$sgastat` (TP1)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-20",
+    "or-21",
+    "or-22"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. La PGA : mode serveur dédié et partagé",
+    "dar": "3. PGA : dédié w partagé",
+    "en": "3. The PGA: dedicated and shared server"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Serveur dédié",
+     "dar": "Dédié",
+     "en": "Dedicated server"
+    },
+    {
+     "fr": "Serveur partagé",
+     "dar": "Partagé",
+     "en": "Shared server"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Principe",
+      "dar": "Fikra",
+      "en": "Idea"
+     },
+     {
+      "fr": "Chaque utilisateur a **son propre processus serveur**",
+      "dar": "Kol user 3ando **processus dyalo**",
+      "en": "Each user has **its own server process**"
+     },
+     {
+      "fr": "**Plusieurs clients partagent** un même processus serveur",
+      "dar": "**Bzaf d clients kaytcharkou** processus wa7ed",
+      "en": "**Several clients share** one server process"
+     }
+    ],
+    [
+     {
+      "fr": "PGA",
+      "dar": "PGA",
+      "en": "PGA"
+     },
+     {
+      "fr": "**Stack space** (pile) + **UGA** (*User Global Area*)",
+      "dar": "**Stack** + **UGA**",
+      "en": "**Stack space** + **UGA**"
+     },
+     {
+      "fr": "**Uniquement le stack space**",
+      "dar": "**Ghir stack**",
+      "en": "**Stack space only**"
+     }
+    ],
+    [
+     {
+      "fr": "UGA",
+      "dar": "UGA",
+      "en": "UGA"
+     },
+     {
+      "fr": "Dans la PGA : curseurs, informations de session, traitement des instructions SQL",
+      "dar": "F PGA : curseurs, session, SQL",
+      "en": "In the PGA: cursors, session info, SQL work areas"
+     },
+     {
+      "fr": "**Transférée dans la SGA** : Shared Pool, ou **Large Pool** si elle est configurée",
+      "dar": "**Katmchi l SGA** (Shared Pool wla Large Pool)",
+      "en": "**Moved to the SGA**: Shared Pool or **Large Pool** if configured"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Pourquoi ? En partagé, n'importe quel processus serveur peut reprendre la session d'un client : les infos de session (UGA) doivent donc être dans une mémoire **partagée** (la SGA), pas dans la mémoire privée d'un processus.",
+    "dar": "3lach ? F partagé, ay processus y9der ykmmel session : donc UGA khassha tkoun f mémoire **mchtaraka** (SGA).",
+    "en": "Why? In shared mode any server process may continue a client's session, so session info (UGA) must live in **shared** memory (the SGA)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Les processus",
+    "dar": "4. Les processus",
+    "en": "4. The processes"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type",
+     "dar": "Naw3",
+     "en": "Type"
+    },
+    {
+     "fr": "Où / quand",
+     "dar": "Fin / imta",
+     "en": "Where / when"
+    },
+    {
+     "fr": "Ce qu'il fait",
+     "dar": "Chnou kaydir",
+     "en": "What it does"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Processus client**",
+      "dar": "**Processus client**",
+      "en": "**Client process**"
+     },
+     {
+      "fr": "Sur la machine client ; l'outil qui lance les requêtes (SQL*Plus)",
+      "dar": "F machine client (SQL*Plus)",
+      "en": "On the client machine (SQL*Plus)"
+     },
+     {
+      "fr": "Envoie les requêtes",
+      "dar": "Kaysift requêtes",
+      "en": "Sends queries"
+     }
+    ],
+    [
+     {
+      "fr": "**Processus serveur**",
+      "dar": "**Processus serveur**",
+      "en": "**Server process**"
+     },
+     {
+      "fr": "Sur le serveur, un par session (mode dédié)",
+      "dar": "F serveur",
+      "en": "On the server"
+     },
+     {
+      "fr": "Exécute les tâches de la requête : **analyse (parse)**, place le résultat dans la Shared Pool, **crée et exécute le plan**, **lit à partir du buffer cache ou du disque**",
+      "dar": "**Parse**, plan, **9raya mn buffer wla disque**",
+      "en": "**Parses**, builds and runs the plan, **reads from buffer cache or disk**"
+     }
+    ],
+    [
+     {
+      "fr": "**Processus d'arrière-plan**",
+      "dar": "**Arrière-plan**",
+      "en": "**Background**"
+     },
+     {
+      "fr": "Démarrent **au lancement de l'instance**",
+      "dar": "Kaybdaw **m3a instance**",
+      "en": "Start **with the instance**"
+     },
+     {
+      "fr": "Tâches de maintenance : nettoyage des processus, reprise de l'instance…",
+      "dar": "Maintenance : nettoyage, reprise…",
+      "en": "Maintenance: cleanup, instance recovery…"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Intérêt** des processus d'arrière-plan : **consolider** des fonctionnalités (au lieu de plusieurs programmes par utilisateur), effectuer les **opérations d'E/S mémoire ↔ disque**, permettre le **parallélisme**, **améliorer les performances** et assurer la **consistance** des données.",
+    "dar": "**Fa2ida** : **jme3** fonctionnalités, **E/S mémoire ↔ disque**, **parallélisme**, **performance**, **consistance**.",
+    "en": "**Why** background processes: **consolidate** functions, do **memory ↔ disk I/O**, allow **parallelism**, **improve performance**, ensure **consistency**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Processus",
+     "dar": "Processus",
+     "en": "Process"
+    },
+    {
+     "fr": "Obligatoire ?",
+     "dar": "Daroury ?",
+     "en": "Mandatory?"
     },
     {
      "fr": "Rôle",
@@ -38,51 +522,81 @@
    ],
    "rows": [
     [
-     "Shared Pool",
+     "PMON (+ CLMN, CLnn)",
      {
-      "fr": "Library cache (SQL, plans réutilisés) + dictionary cache",
-      "dar": "Library + dictionary",
-      "en": "Library + dictionary cache"
+      "fr": "Oui",
+      "dar": "Ah",
+      "en": "Yes"
+     },
+     {
+      "fr": "**Process Monitor** : détecte les processus terminés ou **anormalement** terminés (ex. après `ALTER SYSTEM KILL SESSION`), supervise le **nettoyage** du buffer cache et la **libération des ressources**. CLMN nettoie (processus, sessions, transactions, connexions réseau terminées, sessions inactives) ; les CLnn l'aident selon la charge.",
+      "dar": "**PMON** : kaykchef processus tsalaw b ghalat w **kaynaddef** ressources (CLMN, CLnn kay3awnouh).",
+      "en": "**Process Monitor**: detects (abnormally) ended processes, supervises **cleanup** and **resource release** (helped by CLMN / CLnn)."
      }
     ],
     [
-     "Database Buffer Cache",
+     "SMON",
      {
-      "fr": "Copies des blocs ; toute lecture passe par lui",
-      "dar": "Blocs",
-      "en": "Block copies"
+      "fr": "Oui",
+      "dar": "Ah",
+      "en": "Yes"
+     },
+     {
+      "fr": "**System Monitor** : **reprise de l'instance au redémarrage** après une défaillance ; **libère les segments temporaires** inutilisés ; **récupère les transactions terminées** mais ignorées pendant la défaillance.",
+      "dar": "**SMON** : **reprise dyal instance** mn b3d crash, **segments temporaires**, transactions.",
+      "en": "**System Monitor**: **instance recovery** at restart, frees **temporary segments**, recovers skipped transactions."
      }
     ],
     [
-     "Redo Log Buffer",
+     "DBWn",
      {
-      "fr": "Modifications (redo), vidé par LGWR",
-      "dar": "Redo",
-      "en": "Redo entries"
+      "fr": "Oui",
+      "dar": "Ah",
+      "en": "Yes"
+     },
+     {
+      "fr": "**Database Writer** : écrit les **blocs modifiés (dirty)** du buffer cache vers les **datafiles** quand le serveur ne trouve plus de buffer « clean » (après un seuil) ou quand le **checkpoint** l'exige. Jusqu'à **100** (paramètre `DB_WRITER_PROCESSES`).",
+      "dar": "**DBWn** : **blocs dirty** → **datafiles** mli buffer 3amer wla **checkpoint**. Ta 100.",
+      "en": "**Database Writer**: **dirty blocks** → **datafiles** when clean buffers run out or at **checkpoint**. Up to **100**."
      }
     ],
     [
-     "Large Pool",
+     "LGWR",
      {
-      "fr": "UGA en serveur partagé, RMAN, E/S (optionnelle)",
-      "dar": "UGA, RMAN",
-      "en": "UGA, RMAN, I/O"
+      "fr": "Oui",
+      "dar": "Ah",
+      "en": "Yes"
+     },
+     {
+      "fr": "**Log Writer** : écrit le Redo Log Buffer dans les **redo log files** ; le buffer se libère pour de nouvelles entrées. Écrit : **quand un utilisateur valide (COMMIT)**, **quand un tiers du buffer est plein**, **avant que DBWn écrive** des tampons modifiés, **toutes les 3 secondes**.",
+      "dar": "**LGWR** : redo buffer → **redo log files** : **COMMIT**, **tolot 3amer**, **9bel DBWn**, **kol 3 s**.",
+      "en": "**Log Writer**: redo buffer → **redo log files** at **COMMIT**, **one third full**, **before DBWn**, **every 3 s**."
      }
     ],
     [
-     "Java / Streams Pool",
+     "CKPT",
      {
-      "fr": "JVM / Oracle Streams",
-      "dar": "Java / Streams",
-      "en": "Java / Streams"
+      "fr": "Oui",
+      "dar": "Ah",
+      "en": "Yes"
+     },
+     {
+      "fr": "**Checkpoint** : met à jour le **fichier de contrôle** et l'**en-tête des datafiles** (checkpoint, **SCN** = *System Change Number*) et **indique à DBWn d'écrire** les blocs sur disque.",
+      "dar": "**CKPT** : **control file** + **en-têtes** (SCN) w kaygoul l **DBWn ykteb**.",
+      "en": "**Checkpoint**: updates **control file** and **datafile headers** (SCN) and **signals DBWn**."
      }
     ],
     [
-     "PGA",
+     "ARCn",
      {
-      "fr": "Privée par processus serveur : stack + UGA (dédié)",
-      "dar": "Khassa",
-      "en": "Private: stack + UGA"
+      "fr": "**Facultatif**",
+      "dar": "**Ikhtiyari**",
+      "en": "**Optional**"
+     },
+     {
+      "fr": "**Archiver** : archive les redo logs (mode ARCHIVELOG, Chap 6). Autres facultatifs : **CJQ0 / Jnnn** (jobs), **FBDA** (Flashback Data Archive), **SMCO** (gestion de l'espace).",
+      "dar": "**ARCn** + CJQ0/Jnnn, FBDA, SMCO.",
+      "en": "**Archiver** (ARCHIVELOG); others: CJQ0/Jnnn, FBDA, SMCO."
      }
     ]
    ]
@@ -90,48 +604,19 @@
   {
    "type": "text",
    "body": {
-    "fr": "**Serveur dédié** : un processus serveur par utilisateur, PGA = stack + UGA. **Serveur partagé** : l'UGA passe dans la SGA (Shared Pool ou Large Pool).",
-    "dar": "Dédié / partagé.",
-    "en": "Dedicated vs shared server."
-   }
-  },
-  {
-   "type": "heading",
-   "body": {
-    "fr": "Les processus d'arrière-plan",
-    "dar": "Processus",
-    "en": "Background processes"
-   }
-  },
-  {
-   "type": "text",
-   "body": {
-    "fr": "**PMON** nettoie après un processus utilisateur échoué. **SMON** récupère l'instance au démarrage après crash. **DBWn** écrit les blocs dirty (pas au COMMIT). **LGWR** écrit le redo : au COMMIT, toutes les 3 s, au tiers du buffer, avant DBWn. **CKPT** : checkpoints. **ARCn** (facultatif) : archives en ARCHIVELOG.",
-    "dar": "PMON, SMON, DBWn, LGWR, CKPT, ARCn.",
-    "en": "PMON, SMON, DBWn, LGWR, CKPT, ARCn."
+    "fr": "Autres processus obligatoires cités par le cours : **LREG** (*Listener Registration*), **PMAN** (*Process Manager*), **MMON / MMNL** (*Manageability Monitor*), **RECO** (*Recoverer*, transactions distribuées).",
+    "dar": "Processus khrin : **LREG**, **PMAN**, **MMON / MMNL**, **RECO**.",
+    "en": "Other mandatory ones listed: **LREG**, **PMAN**, **MMON / MMNL**, **RECO**."
    }
   },
   {
    "type": "callout",
    "kind": "trap",
    "body": {
-    "fr": "**LGWR ≠ DBWn** : au COMMIT c'est LGWR qui écrit ; DBWn écrit plus tard.",
-    "dar": "LGWR f COMMIT ; DBWn mn b3d.",
-    "en": "**LGWR ≠ DBWn**: LGWR at COMMIT; DBWn later."
+    "fr": "**Piège n°1 du contrôle** : au **COMMIT**, c'est **LGWR** qui écrit (les redo logs), **pas DBWn**. Les blocs de données sont écrits **plus tard** par DBWn. Un COMMIT est donc rapide : il n'écrit que le journal.",
+    "dar": "**Fekh 1** : f **COMMIT**, **LGWR** li kaykteb, **machi DBWn**. DBWn kaykteb **mn b3d**.",
+    "en": "**Trap #1**: at **COMMIT**, **LGWR** writes the redo logs, **not DBWn**. DBWn writes data blocks **later**."
    }
-  },
-  {
-   "type": "heading",
-   "body": {
-    "fr": "Exécution d'une requête",
-    "dar": "Requête",
-    "en": "Query execution"
-   }
-  },
-  {
-   "type": "code",
-   "lang": "text",
-   "code": "UPDATE customers SET city='Rabat' WHERE id_customer=123;\nCOMMIT;\n-- 1 analyse (Shared Pool)   2 bloc dans le Buffer Cache   3 image avant → undo\n-- 4 bloc modifié (dirty)    5 entrée redo                 6 COMMIT : LGWR → redo logs\n-- 7 plus tard : DBWn écrit le bloc (checkpoint)\n-- SELECT : analyse + buffer + renvoi des lignes (pas d'undo, de redo, de LGWR)"
   },
   {
    "type": "miniQuiz",
@@ -144,154 +629,459 @@
   {
    "type": "heading",
    "body": {
-    "fr": "Démarrage et arrêt",
-    "dar": "Démarrage w arrêt",
-    "en": "Startup and shutdown"
+    "fr": "5. Exercice du cours : exécution d'un UPDATE puis d'un SELECT",
+    "dar": "5. Exercice : exécution dyal UPDATE w SELECT",
+    "en": "5. Course exercise: running an UPDATE then a SELECT"
    }
   },
   {
-   "type": "text",
+   "type": "code",
+   "lang": "text",
+   "code": "UPDATE customers SET city = 'Rabat' WHERE id_customer = 123;\nCOMMIT;"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
    "body": {
-    "fr": "**SHUTDOWN → NOMOUNT** (paramètres, SGA, processus) **→ MOUNT** (control files) **→ OPEN** (datafiles + redo). `STARTUP [NOMOUNT|MOUNT|OPEN|FORCE|RESTRICT]` ; `ALTER DATABASE MOUNT;` / `OPEN;`. FORCE = abort + startup.",
-    "dar": "NOMOUNT → MOUNT → OPEN.",
-    "en": "NOMOUNT → MOUNT → OPEN."
+    "fr": "Suis ces étapes sur le **schéma de l'instance** en haut du chapitre : scénario « UPDATE + COMMIT », puis « SELECT ».",
+    "dar": "Tb3 had étapes 3la **schéma** f lowl dyal fasl : « UPDATE + COMMIT » w « SELECT ».",
+    "en": "Follow these steps on the **instance diagram** at the top: \"UPDATE + COMMIT\", then \"SELECT\"."
    }
   },
   {
-   "type": "table",
-   "headers": [
+   "type": "steps",
+   "title": {
+    "fr": "1- Les étapes et les éléments qui interviennent",
+    "dar": "1- Les étapes w les éléments",
+    "en": "1- The steps and the components involved"
+   },
+   "items": [
     {
-     "fr": "Mode",
-     "dar": "Mode",
-     "en": "Mode"
+     "title": {
+      "fr": "Envoi de la requête",
+      "dar": "Irsal",
+      "en": "Sending the query"
+     },
+     "body": {
+      "fr": "Le **processus utilisateur** (SQL*Plus) envoie l'instruction au **processus serveur** via la session.",
+      "dar": "**Processus utilisateur** kaysift l **processus serveur**.",
+      "en": "The **user process** sends the statement to the **server process**."
+     }
     },
     {
-     "fr": "Attend",
-     "dar": "Kaytsenna",
-     "en": "Waits for"
+     "title": {
+      "fr": "Analyse (parse) — Shared Pool",
+      "dar": "Parse — Shared Pool",
+      "en": "Parse — Shared Pool"
+     },
+     "body": {
+      "fr": "Le serveur vérifie la **syntaxe**, l'existence de la table et les **privilèges** grâce au **Data dictionary cache**, puis cherche un plan déjà prêt dans le **Library cache** (sinon il crée le plan d'exécution et l'y range).",
+      "dar": "Kayverifi **syntaxe** w **privilèges** (**dictionary cache**), w kaygelleb 3la plan f **Library cache**.",
+      "en": "Checks **syntax** and **privileges** (dictionary cache), looks for a plan in the **Library cache** or builds one."
+     }
     },
     {
-     "fr": "Propre ?",
-     "dar": "Propre ?",
-     "en": "Clean?"
+     "title": {
+      "fr": "Lecture du bloc — Buffer Cache",
+      "dar": "9raya — Buffer Cache",
+      "en": "Read the block — Buffer Cache"
+     },
+     "body": {
+      "fr": "Le bloc contenant le client 123 est cherché dans le **Database Buffer Cache** ; s'il n'y est pas, le serveur le **lit depuis le datafile** et le copie dans le buffer.",
+      "dar": "Bloc dyal client 123 f **Buffer Cache** ; sinon **mn datafile**.",
+      "en": "The block is looked up in the **Buffer Cache**; if absent it is **read from the datafile**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Image avant (undo)",
+      "dar": "Image 9bel (undo)",
+      "en": "Before image (undo)"
+     },
+     "body": {
+      "fr": "L'ancienne valeur de `city` est sauvegardée (segment d'annulation) pour pouvoir faire un **ROLLBACK** et pour que les autres sessions voient encore l'ancienne valeur.",
+      "dar": "Qima l9dima kat7fd (undo) bach **ROLLBACK** momkin.",
+      "en": "The old value is kept (undo) to allow **ROLLBACK** and read consistency."
+     }
+    },
+    {
+     "title": {
+      "fr": "Modification + redo",
+      "dar": "Tbdil + redo",
+      "en": "Change + redo"
+     },
+     "body": {
+      "fr": "Le bloc est modifié **dans le buffer** (il devient **dirty**) et une **entrée de journalisation** est écrite dans le **Redo Log Buffer**.",
+      "dar": "Bloc kaytbeddel **f buffer** (**dirty**) w **entrée redo** f **Redo Log Buffer**.",
+      "en": "The block is changed **in the buffer** (**dirty**) and a **redo entry** goes into the **Redo Log Buffer**."
+     }
+    },
+    {
+     "title": {
+      "fr": "COMMIT — LGWR",
+      "dar": "COMMIT — LGWR",
+      "en": "COMMIT — LGWR"
+     },
+     "body": {
+      "fr": "**LGWR** écrit le Redo Log Buffer dans les **redo log files** (avec un **SCN**), puis le client reçoit « **Commit complete** ». La modification est maintenant **définitive** même en cas de panne.",
+      "dar": "**LGWR** kaykteb f **redo log files** (SCN) → « **Commit complete** ».",
+      "en": "**LGWR** writes the redo to the **redo log files** (with an **SCN**) → \"**Commit complete**\"."
+     }
+    },
+    {
+     "title": {
+      "fr": "Plus tard — CKPT et DBWn",
+      "dar": "Mn b3d — CKPT w DBWn",
+      "en": "Later — CKPT and DBWn"
+     },
+     "body": {
+      "fr": "Au **checkpoint**, **CKPT** met à jour le fichier de contrôle et les en-têtes, et **DBWn** écrit le bloc dirty dans le **datafile**.",
+      "dar": "F **checkpoint** : **CKPT** + **DBWn** kaykteb bloc f **datafile**.",
+      "en": "At **checkpoint**, **CKPT** updates headers and **DBWn** writes the dirty block to the **datafile**."
+     }
     }
-   ],
-   "rows": [
-    [
-     "NORMAL",
-     {
-      "fr": "déconnexion de tous",
-      "dar": "ga3 ykhrjou",
-      "en": "all sessions"
-     },
-     {
-      "fr": "oui",
-      "dar": "ah",
-      "en": "yes"
-     }
-    ],
-    [
-     "TRANSACTIONAL",
-     {
-      "fr": "fin des transactions",
-      "dar": "transactions",
-      "en": "transactions"
-     },
-     {
-      "fr": "oui",
-      "dar": "ah",
-      "en": "yes"
-     }
-    ],
-    [
-     "IMMEDIATE",
-     {
-      "fr": "rien (rollback)",
-      "dar": "walou (rollback)",
-      "en": "nothing (rollback)"
-     },
-     {
-      "fr": "oui",
-      "dar": "ah",
-      "en": "yes"
-     }
-    ],
-    [
-     "ABORT",
-     {
-      "fr": "rien",
-      "dar": "walou",
-      "en": "nothing"
-     },
-     {
-      "fr": "non → SMON",
-      "dar": "la → SMON",
-      "en": "no → SMON"
-     }
-    ]
    ]
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**2- Différence avec un SELECT** : un SELECT ne modifie rien. Il fait seulement : **parse** (Shared Pool) → **lecture des blocs** (Buffer Cache, ou datafile puis Buffer Cache) → **renvoi des lignes** au client. **Pas d'undo, pas de redo, pas de LGWR, pas de bloc dirty, pas de COMMIT nécessaire.**",
+    "dar": "**2- Far9 m3a SELECT** : SELECT ma kaybeddel walou : **parse** → **9raya dyal blocs** → **irsal natija**. **Bla undo, bla redo, bla LGWR, bla COMMIT.**",
+    "en": "**2- Difference with a SELECT**: nothing changes: **parse** → **read blocks** → **return rows**. **No undo, no redo, no LGWR, no dirty block, no COMMIT needed.**"
+   }
   },
   {
    "type": "callout",
    "kind": "exam",
    "body": {
-    "fr": "Le tableau des 4 modes de SHUTDOWN et l'ordre NOMOUNT → MOUNT → OPEN tombent souvent.",
-    "dar": "SHUTDOWN w STARTUP kaytl3ou.",
-    "en": "Shutdown modes and startup order are frequent."
+    "fr": "Cet exercice (UPDATE + COMMIT, puis « différence avec SELECT ») est posé **deux fois** dans les slides : prépare-le pour le contrôle. Cite toujours : Shared Pool (parse), Buffer Cache, undo, Redo Log Buffer, LGWR au COMMIT, DBWn plus tard.",
+    "dar": "Had l exercice kayn **jouj merrat** f slides : wjjdo. Dkar : Shared Pool, Buffer Cache, undo, Redo Buffer, LGWR f COMMIT, DBWn mn b3d.",
+    "en": "This exercise appears **twice** in the slides: prepare it. Mention Shared Pool, Buffer Cache, undo, Redo Log Buffer, LGWR at COMMIT, DBWn later."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. Les modes de démarrage de l'instance",
+    "dar": "6. Modes dyal démarrage",
+    "en": "6. Instance startup modes"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "OracleStartup"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Option de STARTUP",
+     "dar": "Option",
+     "en": "STARTUP option"
+    },
+    {
+     "fr": "Effet",
+     "dar": "Chnou kaydir",
+     "en": "Effect"
+    }
+   ],
+   "rows": [
+    [
+     "OPEN",
+     {
+      "fr": "Les utilisateurs accèdent à la BD : ouvre les **datafiles** et les **redo log files** en ligne (par défaut)",
+      "dar": "Kayfte7 **datafiles** w **redo logs** (par défaut)",
+      "en": "Opens **datafiles** and **online redo logs** (default)"
+     }
+    ],
+    [
+     "OPEN READ ONLY / READ WRITE",
+     {
+      "fr": "Ouverture en **lecture seule** / en **lecture-écriture**",
+      "dar": "**9raya ghir** / **9raya w ktaba**",
+      "en": "**Read-only** / **read-write**"
+     }
+    ],
+    [
+     "MOUNT",
+     {
+      "fr": "**Monte** la base sans y donner accès (associe la base à l'instance démarrée)",
+      "dar": "**Kayrbet** base b instance bla access",
+      "en": "**Mounts** without access"
+     }
+    ],
+    [
+     "NOMOUNT",
+     {
+      "fr": "Crée la **SGA** et démarre les **processus**, sans accès. Seulement pour **créer une base** ou **recréer les fichiers de contrôle**",
+      "dar": "**SGA** + **processus** ; ghir l **création** wla **control files**",
+      "en": "Creates **SGA** + **processes**; only to **create a DB** or **re-create control files**"
+     }
+    ],
+    [
+     "FORCE",
+     {
+      "fr": "Quand le démarrage classique ne marche pas : fait un **SHUTDOWN ABORT** puis un **redémarrage**",
+      "dar": "**SHUTDOWN ABORT** + redémarrage",
+      "en": "**SHUTDOWN ABORT** then restart"
+     }
+    ],
+    [
+     "RESTRICT",
+     {
+      "fr": "Ouvre la base mais donne accès **seulement aux utilisateurs privilégiés**",
+      "dar": "Ghir users **privilégiés**",
+      "en": "Only **privileged users**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "STARTUP [OPEN [READ {ONLY | WRITE}] | MOUNT | NOMOUNT | FORCE | RESTRICT]\nALTER DATABASE { MOUNT | OPEN };          -- NOMOUNT → MOUNT → OPEN\nALTER DATABASE OPEN [READ WRITE | READ ONLY];",
+   "caption": {
+    "fr": "Les syntaxes exactes du cours.",
+    "dar": "Syntaxes dyal dars.",
+    "en": "The course syntaxes."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
     "or-31",
-    "or-37",
-    "or-38"
+    "or-37"
    ]
   },
   {
    "type": "heading",
    "body": {
-    "fr": "TP1 — Sessions",
-    "dar": "TP1 — Sessions",
-    "en": "TP1 — Sessions"
+    "fr": "7. L'arrêt de l'instance (SHUTDOWN)",
+    "dar": "7. Arrêt (SHUTDOWN)",
+    "en": "7. Shutting down (SHUTDOWN)"
    }
   },
   {
-   "type": "code",
-   "lang": "text",
-   "code": "SET PAGESIZE 1000\nSET LINESIZE 2000\nCOLUMN MACHINE FORMAT A30\nSELECT sid, serial#, username, status, osuser, machine, program, paddr FROM v$session;\nCREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;\nGRANT CREATE SESSION TO C##ETUDIANT;\nSELECT sid, serial#, username, status, seconds_in_wait FROM v$session\n  WHERE status='INACTIVE' AND seconds_in_wait > 60;\nALTER SYSTEM KILL SESSION '45,2311';   -- l'autre reçoit ORA-00028\nSELECT * FROM v$sgainfo;  SELECT * FROM v$sgastat;"
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "NORMAL",
+     "dar": "NORMAL",
+     "en": "NORMAL"
+    },
+    {
+     "fr": "TRANSACTIONAL",
+     "dar": "TRANSACTIONAL",
+     "en": "TRANSACTIONAL"
+    },
+    {
+     "fr": "IMMEDIATE",
+     "dar": "IMMEDIATE",
+     "en": "IMMEDIATE"
+    },
+    {
+     "fr": "ABORT",
+     "dar": "ABORT",
+     "en": "ABORT"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Nouvelles connexions permises",
+      "dar": "Connexions jdad",
+      "en": "New connections allowed"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     }
+    ],
+    [
+     {
+      "fr": "Attend la fin des sessions",
+      "dar": "Kaytsenna sessions",
+      "en": "Waits for sessions to end"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     }
+    ],
+    [
+     {
+      "fr": "Attend la fin des transactions",
+      "dar": "Kaytsenna transactions",
+      "en": "Waits for transactions to end"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "Non (rollback)",
+      "dar": "La (rollback)",
+      "en": "No (rollback)"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     }
+    ],
+    [
+     {
+      "fr": "Checkpoint et fermeture des fichiers",
+      "dar": "Checkpoint w sedd fichiers",
+      "en": "Checkpoint and close files"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "**Oui**",
+      "dar": "**Ah**",
+      "en": "**Yes**"
+     },
+     {
+      "fr": "**Non**",
+      "dar": "**La**",
+      "en": "**No**"
+     }
+    ],
+    [
+     {
+      "fr": "Restauration au démarrage suivant",
+      "dar": "Récupération mn b3d",
+      "en": "Recovery at next startup"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "Non",
+      "dar": "La",
+      "en": "No"
+     },
+     {
+      "fr": "**Oui (SMON)**",
+      "dar": "**Ah (SMON)**",
+      "en": "**Yes (SMON)**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "- **NORMAL** (par défaut) : Oracle attend la **déconnexion de tous les utilisateurs** (attente parfois longue, sans délai prévisible), puis ferme et démonte la base avant d'arrêter l'instance.\n- **TRANSACTIONAL** : chaque client est déconnecté **dès la fin de sa transaction en cours**.\n- **IMMEDIATE** : n'attend pas les utilisateurs ; les ordres SQL en cours **ne sont pas traités**, les transactions non validées sont **annulées (rollback)** ; arrêt **propre**.\n- **ABORT** : l'instance s'arrête **sans fermer les fichiers** ; transactions non commitées non effectuées → **restauration de l'instance au prochain démarrage**.",
+    "dar": "- **NORMAL** (par défaut) : kaytsenna **ga3 users ykhrjou**, 3ad kaysedd w kaydémonti.\n- **TRANSACTIONAL** : kol client kaykhrej **mli tsali transaction dyalo**.\n- **IMMEDIATE** : ma kaytsenna 7ta wa7ed ; transactions **rollback** ; arrêt **n9i**.\n- **ABORT** : kay7bes **bla ma ysedd fichiers** → **récupération f démarrage jay**.",
+    "en": "- **NORMAL** (default): waits for **all users to disconnect**, then closes and dismounts.\n- **TRANSACTIONAL**: each client is disconnected **when its current transaction ends**.\n- **IMMEDIATE**: no waiting; running SQL is not processed, uncommitted work is **rolled back**; **clean** stop.\n- **ABORT**: stops **without closing files** → **instance recovery at next startup**."
+   }
   },
   {
    "type": "callout",
-   "kind": "tip",
+   "kind": "exam",
    "body": {
-    "fr": "Chaque connexion = une nouvelle session (SID/SERIAL# différents).",
-    "dar": "Kol connexion = session.",
-    "en": "Each connection = a new session."
+    "fr": "Retiens le tableau en 2 lignes : **plus on va vers ABORT, moins on attend**. Seul **ABORT** n'est pas propre et oblige **SMON** à restaurer l'instance au démarrage suivant. `STARTUP FORCE` = `SHUTDOWN ABORT` + `STARTUP`.",
+    "dar": "**Kolma mchiti l ABORT, kolma tsennit 9ell**. Ghir **ABORT** machi n9i → **SMON**.",
+    "en": "**The closer to ABORT, the less waiting.** Only **ABORT** is unclean → **SMON** recovery."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
-    "or-43",
-    "or-46"
+    "or-38"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "SGA partagée (Shared Pool, Buffer Cache, Redo Buffer, Large/Java/Streams) ; PGA privée.",
-   "dar": "SGA / PGA.",
-   "en": "SGA shared; PGA private."
+   "fr": "SGA = mémoire partagée de l'instance ; PGA = mémoire privée de chaque processus serveur.",
+   "dar": "SGA mchtaraka ; PGA khassa.",
+   "en": "SGA shared; PGA private per server process."
   },
   {
-   "fr": "LGWR au COMMIT ; DBWn plus tard ; PMON processus ; SMON instance ; CKPT ; ARCn.",
-   "dar": "Processus.",
+   "fr": "SGA : Shared Pool (library + dictionary cache), Buffer Cache (lecture toujours via le buffer), Redo Log Buffer, Large Pool (optionnelle), Java Pool, Streams Pool.",
+   "dar": "Composants dyal SGA.",
+   "en": "SGA components."
+  },
+  {
+   "fr": "Dédié : PGA = stack + UGA. Partagé : UGA dans la SGA (Shared ou Large Pool), PGA = stack seulement.",
+   "dar": "Dédié / partagé.",
+   "en": "Dedicated / shared server."
+  },
+  {
+   "fr": "PMON nettoie, SMON restaure l'instance, DBWn écrit les blocs dirty (pas au COMMIT), LGWR écrit le redo (COMMIT, 1/3, avant DBWn, 3 s), CKPT met à jour contrôle + SCN, ARCn facultatif.",
+   "dar": "Processus d'arrière-plan.",
    "en": "Background processes."
   },
   {
-   "fr": "NOMOUNT → MOUNT → OPEN ; NORMAL/TRANSACTIONAL/IMMEDIATE propres, ABORT → SMON.",
-   "dar": "STARTUP / SHUTDOWN.",
+   "fr": "UPDATE : parse → buffer → undo → bloc dirty + redo → COMMIT (LGWR) → plus tard DBWn. SELECT : parse → lecture → résultat.",
+   "dar": "UPDATE vs SELECT.",
+   "en": "UPDATE vs SELECT flow."
+  },
+  {
+   "fr": "SHUTDOWN → NOMOUNT (SGA + processus) → MOUNT (control files) → OPEN (datafiles + redo). Arrêts NORMAL / TRANSACTIONAL / IMMEDIATE propres, ABORT → restauration.",
+   "dar": "Démarrage / arrêt.",
    "en": "Startup / shutdown."
   }
  ]

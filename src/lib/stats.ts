@@ -31,6 +31,54 @@ export function median(xs: number[]): number {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 }
 
+/** Population variance (divides by n) — the "variance" of descriptive statistics. */
+export function popVariance(xs: number[]): number {
+  return popSd(xs) ** 2;
+}
+
+/** Quantile with linear interpolation — same convention as pandas `Series.quantile` (position (n − 1)·p). */
+export function quantile(xs: number[], p: number): number {
+  const s = [...xs].sort((a, b) => a - b);
+  const pos = (s.length - 1) * p;
+  const lo = Math.floor(pos);
+  const hi = Math.ceil(pos);
+  return s[lo] + (s[hi] - s[lo]) * (pos - lo);
+}
+
+/** IQR method of the course: outliers are outside [Q1 − 1.5·IQR, Q3 + 1.5·IQR]. */
+export function iqrBounds(xs: number[]): { q1: number; q3: number; iqr: number; low: number; high: number; outliers: number } {
+  const q1 = quantile(xs, 0.25);
+  const q3 = quantile(xs, 0.75);
+  const iqr = q3 - q1;
+  const low = q1 - 1.5 * iqr;
+  const high = q3 + 1.5 * iqr;
+  return { q1, q3, iqr, low, high, outliers: xs.filter((x) => x < low || x > high).length };
+}
+
+/** Population covariance (divides by n). */
+export function covariance(xs: number[], ys: number[]): number {
+  const mx = mean(xs);
+  const my = mean(ys);
+  return xs.reduce((a, x, i) => a + (x - mx) * (ys[i] - my), 0) / xs.length;
+}
+
+/** Pearson linear correlation coefficient r. */
+export function correlation(xs: number[], ys: number[]): number {
+  return covariance(xs, ys) / (popSd(xs) * popSd(ys));
+}
+
+/** Least-squares line y = a·x + b, with the coefficient of determination R². */
+export function linReg(xs: number[], ys: number[]): { a: number; b: number; r2: number } {
+  const a = covariance(xs, ys) / popVariance(xs);
+  const b = mean(ys) - a * mean(xs);
+  return { a, b, r2: correlation(xs, ys) ** 2 };
+}
+
+/** Min-max normalisation of x for a column whose min and max are given. */
+export const minMax = (x: number, min: number, max: number) => (x - min) / (max - min);
+/** Z-score standardisation. */
+export const zScore = (x: number, mu: number, s: number) => (x - mu) / s;
+
 // ---------- Normal distribution ----------
 
 export function normalPdf(x: number, mu = 0, sigma = 1): number {
@@ -409,6 +457,14 @@ export const COMPUTE: Record<string, Fn> = {
   zPower: (m0, m1, s, n, a, tail) => zPower(m0 as number, m1 as number, s as number, n as number, a as number, tail as Tail),
   ciZ: (x, s, n, a) => ciZ(x as number, s as number, n as number, a as number),
   ciT: (x, s, n, a) => ciT(x as number, s as number, n as number, a as number),
+  popVariance: (xs) => popVariance(xs as number[]),
+  quantile: (xs, p) => quantile(xs as number[], p as number),
+  iqrBounds: (xs) => iqrBounds(xs as number[]),
+  covariance: (xs, ys) => covariance(xs as number[], ys as number[]),
+  correlation: (xs, ys) => correlation(xs as number[], ys as number[]),
+  linReg: (xs, ys) => linReg(xs as number[], ys as number[]),
+  minMax: (x, a, b) => minMax(x as number, a as number, b as number),
+  zScore: (x, m, s) => zScore(x as number, m as number, s as number),
   chmod: (s) => parseInt(s as string, 8),
   arith: (a) => a as number
 };

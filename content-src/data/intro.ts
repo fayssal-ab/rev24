@@ -1,5 +1,4 @@
-import { setCtx, L, h, p, tip, exam, table, anim, quiz, single, multi, order, ex, fc, ref } from '../lib';
-import type { Chapter } from '../../src/lib/schema';
+import { setCtx, single, multi, order, ex, fc, ref } from '../lib';
 
 setCtx('data', 'd-intro');
 
@@ -52,44 +51,7 @@ export const questions = [
     [['Le décideur reste responsable.', 'Mas2oul.', 'Humans decide.'], ['Il reste toujours un risque d\'erreur (α, β).', 'Risque.', 'Risk remains.'], ['Elle repose sur les données.', 'Data.', 'It needs data.']], ['decision'])
 ];
 
-export const chapter: Chapter = {
-  id: 'd-intro',
-  module: 'data',
-  order: 1,
-  title: L(['Chap 0 — Introduction à l\'analyse de données', 'Fasl 0 — Mo9addima', 'Ch. 0 — Introduction to data analysis']),
-  summary: L(['Définition, objectifs, 5 types d\'analyse, 5 étapes, outils, domaines et rôle dans la décision.', 'Ta3rif, ahdaf, 5 anwa3, 5 mara7il, outils.', 'Definition, goals, 5 types, 5 steps, tools, domains, decision.']),
-  estimatedMinutes: 25,
-  sections: [
-    h(['Définition et objectifs', 'Ta3rif w ahdaf', 'Definition and goals']),
-    p(['L\'**analyse de données** est l\'ensemble des méthodes qui transforment des données brutes en **informations utiles** : résumer, comprendre, expliquer et anticiper. Ses 4 objectifs : **décrire**, **relier** (liens entre variables), **prédire**, **décider**.', '**Analyse de données** = kat7awel data l **ma3loumat**. 4 ahdaf : **wsef, rbet, tnba2, qarrer**.', '**Data analysis** turns raw data into **useful information**. Four goals: **describe, relate, predict, decide**.']),
-    p(['**Exemple santé (diabète)** : on collecte glycémie, âge, IMC… on **décrit** (glycémie moyenne), on **relie** (IMC ↔ glycémie), on **prédit** le risque d\'un nouveau patient, on **décide** d\'un programme de prévention.', 'Mithal diabète.', '**Health example (diabetes)**: describe, relate, predict, decide.']),
-    quiz('di-01', 'di-09'),
-    h(['Les 5 types d\'analyse', '5 anwa3', 'The 5 types']),
-    table([['Type', 'Naw3', 'Type'], ['Question', 'So2al', 'Question'], ['Méthodes', 'Méthodes', 'Methods']], [
-      [['Descriptive', 'Descriptive', 'Descriptive'], ['Que s\'est-il passé ?', 'Chnou wqe3 ?', 'What happened?'], ['moyenne, variance, graphiques', 'moyenne, variance', 'mean, variance, charts']],
-      [['Exploratoire', 'Exploratoire', 'Exploratory'], ['Quelles structures ?', 'Chnou mkhbbi ?', 'What structures?'], ['ACP, AFC, clustering', 'ACP, AFC, clustering', 'PCA, CA, clustering']],
-      [['Confirmatoire', 'Confirmatoire', 'Confirmatory'], ['L\'hypothèse est-elle vraie ?', 'Hypothèse s7i7a ?', 'Is it true?'], ['tests statistiques', 'tests', 'tests']],
-      [['Prédictive', 'Prédictive', 'Predictive'], ['Que va-t-il se passer ?', 'Chnou ghaywqe3 ?', 'What will happen?'], ['régression, machine learning', 'régression, ML', 'regression, ML']],
-      [['Prescriptive', 'Prescriptive', 'Prescriptive'], ['Que faut-il faire ?', 'Chnou ndirou ?', 'What to do?'], ['simulation, optimisation', 'simulation, optimisation', 'simulation, optimisation']]
-    ]),
-    anim('AnalysisTypesCards'),
-    quiz('di-02', 'di-03', 'di-05'),
-    h(['Les 5 étapes', '5 mara7il', 'The 5 steps']),
-    anim('DataPipeline'),
-    exam(['Retiens l\'ordre : **collecte → nettoyage → exploration → modélisation → interprétation**.', 'Tartib.', 'Remember the order.']),
-    quiz('di-06', 'di-07'),
-    h(['Outils et domaines', 'Outils w domaines', 'Tools and domains']),
-    p(['- **Outils statistiques** : statistique descriptive, inférentielle, analyse multivariée.\n- **Outils informatiques** : **Python** (Pandas, NumPy, Matplotlib), **R**, **Excel**, **SPSS**, **Power BI**.\n- **Outils de visualisation** : graphiques, tableaux de bord.\n\nDomaines : **santé, finance, marketing, industrie, sciences sociales, IT**. Rôle : rendre la **décision** objective, fondée sur des faits et un risque d\'erreur maîtrisé.', 'Python, R, Excel, SPSS, Power BI ; sa7a, finance, marketing…', 'Statistical, software (Python, R, Excel, SPSS, Power BI) and visualisation tools; domains; decision role.']),
-    tip(['Dans ce module, on utilise Python : pandas (chap 1), Matplotlib/Seaborn (chap 4), et les tests statistiques (chap 5).', 'Python f had module.', 'This module uses Python.']),
-    quiz('di-08', 'di-12')
-  ],
-  keyPoints: [
-    L(['4 objectifs : décrire, relier, prédire, décider.', 'Wsef, rbet, tnba2, qarrer.', 'Describe, relate, predict, decide.']),
-    L(['5 types : descriptive (moyenne, variance, graphiques), exploratoire (ACP, AFC, clustering), confirmatoire (tests), prédictive (régression, ML), prescriptive (simulation, optimisation).', '5 anwa3.', '5 types with methods.']),
-    L(['5 étapes : collecte → nettoyage → exploration → modélisation → interprétation.', '5 mara7il.', '5 steps.']),
-    L(['Outils : Python (Pandas, NumPy, Matplotlib), R, Excel, SPSS, Power BI. Domaines : santé, finance, marketing, industrie, sciences sociales, IT.', 'Outils w domaines.', 'Tools and domains.'])
-  ]
-};
+export { chapter } from './course/intro';
 
 export const exercises = [
   ex('dx-i-1', 2, ['Classer des cas d\'usage', 'Tsnif', 'Classify use cases'],

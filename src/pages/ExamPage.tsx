@@ -60,7 +60,7 @@ export function ExamRunner({ pool, weights, module, onDone, size = EXAM_SIZE, mi
           </div>
         </div>
         <div className="card p-4">
-          <h2 className="mb-2 font-semibold">{t('r24.heatmap')}</h2>
+          <h2 className="mb-2 font-semibold">{t('exam.heatmap')}</h2>
           <ul className="space-y-2">
             {chapters.map((c) => {
               const v = result.perChapter[c];
@@ -167,7 +167,7 @@ export default function ExamPage() {
   if (started) return <ExamRunner key={started} pool={data.questions} weights={data.module.weights} module={id} titles={Object.fromEntries(data.chapters.map((c) => [c.id, c.title]))} />;
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={t('exam.title')} sub={<L v={data.module.title} />} />
+      <PageTitle title={t('exam.title')} sub={<L v={data.module.title} />} />
       <div className="card space-y-3 p-5">
         <p>{t('exam.rules')}</p>
         <button className="btn-primary w-full" onClick={() => setStarted(Date.now())} data-testid="exam-start">

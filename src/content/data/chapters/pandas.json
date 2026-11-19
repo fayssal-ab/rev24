@@ -1,38 +1,69 @@
 {
  "id": "pandas",
  "module": "data",
- "order": 2,
+ "order": 3,
  "title": {
-  "fr": "Chap 1 — pandas : lire et écrire des données (Feuille N°1)",
-  "dar": "Fasl 1 — pandas",
-  "en": "Ch. 1 — pandas: reading and writing data"
+  "fr": "Chap 1 — Manipulation de différents formats de données (pandas)",
+  "dar": "Fasl 1 — Khdma b formats dyal data (pandas)",
+  "en": "Ch. 1 — Working with different data formats (pandas)"
  },
  "summary": {
-  "fr": "Installer pandas, Series et DataFrame, les fonctions read_*, paramètres de read_csv/read_excel et export — avec le corrigé de la Feuille N°1.",
-  "dar": "pandas : read_*, paramètres, export.",
-  "en": "pandas: Series/DataFrame, read_* functions, parameters, export, Exercise sheet 1."
+  "fr": "Pourquoi pandas, installation, les fonctions read_… (CSV, Excel, JSON, SQL…), écrire avec Series et DataFrame, paramètres de read_excel, puis la correction complète de la Feuille d'exercices N°1.",
+  "dar": "3lach pandas, installation, les fonctions read_… (CSV, Excel, JSON, SQL…), Series w DataFrame, paramètres dyal read_excel, w correction kamla dyal Feuille N°1.",
+  "en": "Why pandas, installation, the read_… functions (CSV, Excel, JSON, SQL…), writing with Series and DataFrame, read_excel parameters, then the full solution of Exercise sheet No. 1."
  },
- "estimatedMinutes": 45,
+ "estimatedMinutes": 40,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Installer et importer",
-    "dar": "Installer w importer",
-    "en": "Install and import"
+    "fr": "1. Pourquoi utiliser pandas ?",
+    "dar": "1. 3lach pandas ?",
+    "en": "1. Why use pandas?"
    }
   },
   {
-   "type": "code",
-   "lang": "python",
-   "code": "pip install pandas\nimport pandas as pd"
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**pandas** est une bibliothèque Python pour **manipuler les données facilement**. Elle permet de **lire, modifier et sauvegarder des tableaux de données** (comme dans Excel). Elle est utilisée pour l'analyse de données, les statistiques, le machine learning, etc.",
+    "dar": "**pandas** hiya bibliothèque f Python bach **tkhdem b data b sahoula**. Katkhllik **t9ra, tbeddel w tsauvegardi tableaux dyal data** (b7al Excel). Katsta3mel f analyse de données, statistiques, machine learning…",
+    "en": "**pandas** is a Python library to **handle data easily**. It lets you **read, modify and save data tables** (like in Excel). It is used for data analysis, statistics, machine learning, etc."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Pense à pandas comme à **Excel, mais piloté par du code** : au lieu de cliquer, tu écris une ligne, et elle marche pareil sur 10 lignes ou sur 10 millions.",
+    "dar": "Fkker f pandas b7al **Excel walakin b l code** : f blast ma tclicki, katkteb str wa7ed, w kaykhdem b7al b7al 3la 10 stour wla 10 malayin.",
+    "en": "Think of pandas as **Excel driven by code**: instead of clicking, you write one line, and it works the same on 10 rows or 10 million."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Installation",
+    "dar": "2. Installation",
+    "en": "2. Installation"
+   }
   },
   {
    "type": "text",
    "body": {
-    "fr": "- **Series** : tableau à **une dimension** (valeurs + index).\n- **DataFrame** : tableau à **deux dimensions** (lignes × colonnes), chaque colonne est une Series.",
-    "dar": "Series 1D, DataFrame 2D.",
-    "en": "**Series** 1D, **DataFrame** 2D."
+    "fr": "Dans le **Terminal** :",
+    "dar": "F **Terminal** :",
+    "en": "In the **Terminal**:"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "pip install pandas openpyxl\n\n# puis dans le script / notebook :\nimport pandas as pd",
+   "caption": {
+    "fr": "`openpyxl` est le moteur qui permet à pandas de lire et écrire les fichiers .xlsx.",
+    "dar": "`openpyxl` howa l moteur li kaykhlli pandas y9ra w ykteb .xlsx.",
+    "en": "`openpyxl` is the engine pandas uses to read and write .xlsx files."
    }
   },
   {
@@ -44,75 +75,197 @@
   {
    "type": "heading",
    "body": {
-    "fr": "Les fonctions de lecture et d'écriture",
-    "dar": "read_* w to_*",
-    "en": "Reading and writing functions"
+    "fr": "3. Lire des données : la famille read_…",
+    "dar": "3. 9raya dyal data : 3a2ilat read_…",
+    "en": "3. Reading data: the read_… family"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le principe est toujours le même : **`pd.read_<format>(chemin)`** renvoie un **DataFrame**. Seul le mot après `read_` change selon le format. Voici les deux tableaux du cours :",
+    "dar": "L9a3ida dima hiya hiya : **`pd.read_<format>(chemin)`** kayrje3 **DataFrame**. Ghir l kelma li mor `read_` li katbeddel 3la 7sab l format. Hado jouj tableaux dyal dars :",
+    "en": "The rule is always the same: **`pd.read_<format>(path)`** returns a **DataFrame**. Only the word after `read_` changes with the format. Here are the two tables from the course:"
    }
   },
   {
    "type": "table",
    "headers": [
     {
-     "fr": "Lecture",
-     "dar": "9raya",
-     "en": "Read"
+     "fr": "Fonction",
+     "dar": "Fonction",
+     "en": "Function"
     },
     {
-     "fr": "Format",
-     "dar": "Format",
-     "en": "Format"
+     "fr": "Description",
+     "dar": "Chnou katdir",
+     "en": "Description"
     }
    ],
    "rows": [
     [
-     "read_csv · read_fwf · read_clipboard",
+     "read_csv",
      {
-      "fr": "texte délimité · largeur fixe · presse-papiers",
-      "dar": "CSV · fwf · clipboard",
-      "en": "delimited · fixed width · clipboard"
+      "fr": "Données délimitées (fichier, URL, objet fichier) ; **virgule** par défaut",
+      "dar": "Data mfrr9a b séparateur ; **virgule** par défaut",
+      "en": "Delimited data (file, URL, file object); **comma** by default"
      }
     ],
     [
-     "read_excel · read_json · read_html · read_xml",
+     "read_fwf",
      {
-      "fr": "Excel · JSON · tableaux HTML · XML",
-      "dar": "Excel · JSON · HTML · XML",
-      "en": "Excel · JSON · HTML · XML"
+      "fr": "Colonnes à **largeur fixe** (sans délimiteur)",
+      "dar": "Colonnes b **3ard tabit** (bla séparateur)",
+      "en": "**Fixed-width** columns (no delimiter)"
      }
     ],
     [
-     "read_hdf · read_feather · read_orc · read_parquet · read_pickle",
+     "read_clipboard",
      {
-      "fr": "formats binaires",
-      "dar": "binaires",
-      "en": "binary formats"
+      "fr": "Comme read_csv mais depuis le **presse-papiers** (tableaux copiés d'une page web)",
+      "dar": "B7al read_csv walakin mn **presse-papiers**",
+      "en": "Like read_csv but from the **clipboard**"
      }
     ],
     [
-     "read_sas · read_spss · read_stata",
+     "read_excel",
      {
-      "fr": "logiciels statistiques",
-      "dar": "logiciels stats",
-      "en": "stats software"
+      "fr": "Fichier **Excel XLS / XLSX**",
+      "dar": "Fichier **Excel**",
+      "en": "**Excel XLS / XLSX** file"
      }
     ],
     [
-     "read_sql · read_sql_table",
+     "read_hdf",
      {
-      "fr": "bases de données SQL",
-      "dar": "SQL",
-      "en": "SQL databases"
+      "fr": "Fichiers **HDF5** écrits par pandas",
+      "dar": "Fichiers **HDF5**",
+      "en": "**HDF5** files written by pandas"
      }
     ],
     [
-     "to_csv · to_excel · to_json",
+     "read_html",
      {
-      "fr": "écriture",
-      "dar": "ktaba",
-      "en": "writing"
+      "fr": "**Tous les tableaux** d'une page HTML",
+      "dar": "**Ga3 les tableaux** dyal page HTML",
+      "en": "**All tables** of an HTML page"
+     }
+    ],
+    [
+     "read_json",
+     {
+      "fr": "Chaîne, fichier ou URL au format **JSON**",
+      "dar": "**JSON**",
+      "en": "**JSON** string, file or URL"
      }
     ]
    ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Fonction (suite)",
+     "dar": "Fonction (tatimma)",
+     "en": "Function (cont.)"
+    },
+    {
+     "fr": "Description",
+     "dar": "Chnou katdir",
+     "en": "Description"
+    }
+   ],
+   "rows": [
+    [
+     "read_feather",
+     {
+      "fr": "Fichier binaire **Feather**",
+      "dar": "Binaire **Feather**",
+      "en": "Binary **Feather** file"
+     }
+    ],
+    [
+     "read_orc",
+     {
+      "fr": "Fichier binaire **Apache ORC**",
+      "dar": "Binaire **ORC**",
+      "en": "Binary **Apache ORC** file"
+     }
+    ],
+    [
+     "read_parquet",
+     {
+      "fr": "Fichier binaire **Apache Parquet**",
+      "dar": "Binaire **Parquet**",
+      "en": "Binary **Apache Parquet** file"
+     }
+    ],
+    [
+     "read_pickle",
+     {
+      "fr": "Objet stocké par pandas au format **pickle** de Python",
+      "dar": "**pickle** dyal Python",
+      "en": "Object stored in Python **pickle** format"
+     }
+    ],
+    [
+     "read_sas",
+     {
+      "fr": "Jeu de données **SAS**",
+      "dar": "Data **SAS**",
+      "en": "**SAS** dataset"
+     }
+    ],
+    [
+     "read_spss",
+     {
+      "fr": "Fichier de données **SPSS**",
+      "dar": "Fichier **SPSS**",
+      "en": "**SPSS** data file"
+     }
+    ],
+    [
+     "read_sql",
+     {
+      "fr": "Résultat d'une **requête SQL** (via SQLAlchemy)",
+      "dar": "Natija dyal **requête SQL**",
+      "en": "Result of a **SQL query** (via SQLAlchemy)"
+     }
+    ],
+    [
+     "read_sql_table",
+     {
+      "fr": "**Table SQL complète** (= SELECT * via read_sql)",
+      "dar": "**Table SQL kamla**",
+      "en": "**Whole SQL table**"
+     }
+    ],
+    [
+     "read_stata",
+     {
+      "fr": "Jeu de données **Stata**",
+      "dar": "Data **Stata**",
+      "en": "**Stata** dataset"
+     }
+    ],
+    [
+     "read_xml",
+     {
+      "fr": "Tableau de données depuis un fichier **XML**",
+      "dar": "Mn **XML**",
+      "en": "Table from an **XML** file"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Question classique : « Quelle fonction pour un fichier sans délimiteur ? » → **read_fwf**. « Pour tous les tableaux d'une page web ? » → **read_html**. « Pour le presse-papiers ? » → **read_clipboard**.",
+    "dar": "Sou2al classique : « fichier bla délimiteur ? » → **read_fwf**. « Tableaux dyal page web ? » → **read_html**. « Presse-papiers ? » → **read_clipboard**.",
+    "en": "Classic question: \"Function for a file without delimiter?\" → **read_fwf**. \"All tables of a web page?\" → **read_html**. \"Clipboard?\" → **read_clipboard**."
+   }
   },
   {
    "type": "miniQuiz",
@@ -123,9 +276,230 @@
   {
    "type": "heading",
    "body": {
-    "fr": "Paramètres essentiels",
-    "dar": "Paramètres",
-    "en": "Key parameters"
+    "fr": "4. Exemples : lire, modifier, sauvegarder",
+    "dar": "4. Amthila : 9ra, beddel, sauvegardi",
+    "en": "4. Examples: read, modify, save"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "De la lecture à la sauvegarde, ligne par ligne",
+    "dar": "Mn 9raya l sauvegarde, str b str",
+    "en": "From reading to saving, line by line"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Importer pandas",
+      "dar": "Importi pandas",
+      "en": "Import pandas"
+     },
+     "body": {
+      "fr": "On importe la bibliothèque sous son alias habituel `pd`.",
+      "dar": "Kanimportiw b smiya `pd`.",
+      "en": "Import the library with its usual alias `pd`."
+     },
+     "code": "import pandas as pd"
+    },
+    {
+     "title": {
+      "fr": "Lire le fichier Excel",
+      "dar": "9ra Excel",
+      "en": "Read the Excel file"
+     },
+     "body": {
+      "fr": "`read_excel` renvoie un DataFrame qu'on range dans `df`.",
+      "dar": "`read_excel` kayrje3 DataFrame, kan7ttouh f `df`.",
+      "en": "`read_excel` returns a DataFrame stored in `df`."
+     },
+     "code": "df = pd.read_excel(\"notes.xlsx\")\nprint(df.head())   # 5 premières lignes"
+    },
+    {
+     "title": {
+      "fr": "Regarder la structure",
+      "dar": "Chouf structure",
+      "en": "Inspect the structure"
+     },
+     "body": {
+      "fr": "Toujours vérifier ce qu'on a lu : dimensions, noms et types des colonnes.",
+      "dar": "Dima t2akked chnou 9riti : l 7ajm, smiyat w types dyal colonnes.",
+      "en": "Always check what you read: shape, column names and types."
+     },
+     "code": "print(df.shape)     # (lignes, colonnes)\nprint(df.columns)\ndf.info()",
+     "why": {
+      "fr": "Une colonne de nombres lue comme du texte (« 12,5 » avec une virgule) est le bug le plus fréquent : `info()` le montre tout de suite (type object).",
+      "dar": "Colonne d arqam t9rat texte (« 12,5 » b virgule) hiya akther bug : `info()` kayban fih direct (type object).",
+      "en": "A numeric column read as text (\"12,5\" with a comma) is the most frequent bug: `info()` shows it immediately (object type)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Modifier",
+      "dar": "Beddel",
+      "en": "Modify"
+     },
+     "body": {
+      "fr": "Exemple : ajouter une colonne calculée.",
+      "dar": "Mithal : zid colonne m7souba.",
+      "en": "Example: add a computed column."
+     },
+     "code": "df[\"moyenne\"] = (df[\"note1\"] + df[\"note2\"]) / 2"
+    },
+    {
+     "title": {
+      "fr": "Sauvegarder en Excel",
+      "dar": "Sauvegardi f Excel",
+      "en": "Save as Excel"
+     },
+     "body": {
+      "fr": "Sauvegarder les données modifiées dans un nouveau fichier Excel. `index=False` évite d'écrire la colonne 0, 1, 2… des numéros de ligne.",
+      "dar": "Sauvegardi data jdida f Excel. `index=False` bach ma yktebch colonne dyal numéros 0, 1, 2…",
+      "en": "Save the modified data to a new Excel file. `index=False` avoids writing the 0, 1, 2… row-number column."
+     },
+     "code": "df.to_excel(\"notes_modifiees.xlsx\", index=False)"
+    },
+    {
+     "title": {
+      "fr": "Pour JSON ou CSV",
+      "dar": "L JSON wla CSV",
+      "en": "For JSON or CSV"
+     },
+     "body": {
+      "fr": "**Même fonction, autre mot** : on remplace `excel` par `json` ou `csv`, et l'extension du fichier dans le chemin.",
+      "dar": "**Nefs fonction, kelma khra** : kanbeddlou `excel` b `json` wla `csv`, w l extension f chemin.",
+      "en": "**Same function, other word**: replace `excel` by `json` or `csv`, and the file extension in the path."
+     },
+     "code": "df = pd.read_csv(\"notes.csv\")\ndf = pd.read_json(\"notes.json\")\ndf.to_csv(\"notes.csv\", index=False)\ndf.to_json(\"notes.json\")"
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Écrire des données : Series et DataFrame",
+    "dar": "5. Kteb data : Series w DataFrame",
+    "en": "5. Writing data: Series and DataFrame"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "On peut créer des données directement avec les deux structures de pandas :",
+    "dar": "N9drou nsaybou data direct b jouj structures dyal pandas :",
+    "en": "We can create data directly with pandas' two structures:"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "import pandas as pd\n\n# Series : UNE colonne (valeurs + index)\ns = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"], name=\"note\")\nprint(s)\n# Amine      12\n# Sara       15\n# Yassine     9\n# Name: note, dtype: int64\n\n# DataFrame : un TABLEAU (plusieurs colonnes qui partagent le même index)\ndf = pd.DataFrame({\n    \"nom\":  [\"Amine\", \"Sara\", \"Yassine\"],\n    \"note\": [12, 15, 9],\n    \"ville\": [\"Rabat\", \"Salé\", \"Témara\"],\n})\nprint(df)\n#        nom  note   ville\n# 0    Amine    12   Rabat\n# 1     Sara    15    Salé\n# 2  Yassine     9  Témara"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Series",
+     "dar": "Series",
+     "en": "Series"
+    },
+    {
+     "fr": "DataFrame",
+     "dar": "DataFrame",
+     "en": "DataFrame"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Dimensions",
+      "dar": "Dimensions",
+      "en": "Dimensions"
+     },
+     {
+      "fr": "**1 dimension** (une colonne)",
+      "dar": "**1 bo3d** (colonne wa7da)",
+      "en": "**1 dimension** (one column)"
+     },
+     {
+      "fr": "**2 dimensions** (lignes × colonnes)",
+      "dar": "**2 ab3ad** (stour × colonnes)",
+      "en": "**2 dimensions** (rows × columns)"
+     }
+    ],
+    [
+     {
+      "fr": "Contenu",
+      "dar": "Chnou fiha",
+      "en": "Content"
+     },
+     {
+      "fr": "Valeurs + un index",
+      "dar": "Qiyam + index",
+      "en": "Values + an index"
+     },
+     {
+      "fr": "Plusieurs colonnes, chacune est une Series",
+      "dar": "Bzaf d colonnes, kol wa7da Series",
+      "en": "Several columns, each one is a Series"
+     }
+    ],
+    [
+     {
+      "fr": "Types",
+      "dar": "Types",
+      "en": "Types"
+     },
+     {
+      "fr": "Un seul type",
+      "dar": "Type wa7ed",
+      "en": "One type"
+     },
+     {
+      "fr": "Un type par colonne",
+      "dar": "Type l kol colonne",
+      "en": "One type per column"
+     }
+    ],
+    [
+     {
+      "fr": "Obtenir",
+      "dar": "Kifach tjibha",
+      "en": "Get it"
+     },
+     {
+      "fr": "`df[\"note\"]`",
+      "dar": "`df[\"note\"]`",
+      "en": "`df[\"note\"]`"
+     },
+     {
+      "fr": "`df[[\"nom\", \"note\"]]` ou `pd.read_csv(…)`",
+      "dar": "`df[[\"nom\", \"note\"]]` wla `pd.read_csv(…)`",
+      "en": "`df[[\"nom\", \"note\"]]` or `pd.read_csv(…)`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "**Question du cours : « Donner la différence entre Series et DataFrame. »** Réponse type : une **Series** est un tableau à **une dimension** (une seule colonne de valeurs avec un index) ; un **DataFrame** est un tableau à **deux dimensions** (lignes et colonnes), c'est-à-dire une collection de Series qui partagent le même index. Une colonne d'un DataFrame (`df[\"note\"]`) est une Series.",
+    "dar": "**Sou2al dyal dars : « 3tini l far9 bin Series w DataFrame. »** Jawab : **Series** = tableau b **bo3d wa7ed** (colonne wa7da m3a index) ; **DataFrame** = tableau b **jouj ab3ad** (stour w colonnes), ya3ni majmou3a d Series 3andhom nefs l index. Colonne mn DataFrame (`df[\"note\"]`) hiya Series.",
+    "en": "**Course question: \"Give the difference between Series and DataFrame.\"** Model answer: a **Series** is **one-dimensional** (a single column of values with an index); a **DataFrame** is **two-dimensional** (rows and columns), i.e. a collection of Series sharing the same index. A DataFrame column (`df[\"note\"]`) is a Series."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. Les principaux paramètres de read_excel()",
+    "dar": "6. Paramètres l mohimmin dyal read_excel()",
+    "en": "6. Main parameters of read_excel()"
    }
   },
   {
@@ -138,108 +512,133 @@
     },
     {
      "fr": "Rôle",
-     "dar": "Dor",
+     "dar": "Chnou kaydir",
      "en": "Role"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
     }
    ],
    "rows": [
     [
      "io",
      {
-      "fr": "chemin ou URL du fichier",
-      "dar": "chemin wla URL",
-      "en": "path or URL"
-     }
+      "fr": "Chemin du fichier, URL ou objet fichier",
+      "dar": "Chemin, URL wla fichier",
+      "en": "File path, URL or file object"
+     },
+     "\"data.xlsx\""
     ],
     [
      "sheet_name",
      {
-      "fr": "0 (1re feuille), \"nom\", None (toutes → dict)",
-      "dar": "0, nom, None",
-      "en": "0, \"name\", None (dict)"
-     }
+      "fr": "Feuille à lire : 0 (défaut, la 1re), un nom, ou None pour toutes",
+      "dar": "Ina feuille : 0 (lowla), smiya, wla None l kolhom",
+      "en": "Sheet: 0 (default, first), a name, or None for all"
+     },
+     "sheet_name=\"notes_h_s\""
     ],
     [
      "header",
      {
-      "fr": "ligne d'en-tête (None = pas d'en-tête)",
-      "dar": "en-tête",
-      "en": "header row (None = none)"
-     }
+      "fr": "Ligne utilisée comme en-tête (défaut 0)",
+      "dar": "Str dyal titres (défaut 0)",
+      "en": "Row used as header (default 0)"
+     },
+     "header=None"
     ],
     [
      "names",
      {
-      "fr": "noms à donner aux colonnes",
-      "dar": "smiyat",
-      "en": "column names"
-     }
+      "fr": "Noms de colonnes à utiliser",
+      "dar": "Smiyat dyal colonnes",
+      "en": "Column names to use"
+     },
+     "names=[\"nom\", \"note\"]"
     ],
     [
      "index_col",
      {
-      "fr": "colonne servant d'index",
-      "dar": "index",
-      "en": "index column"
-     }
+      "fr": "Colonne(s) utilisée(s) comme index",
+      "dar": "Colonne li tkoun index",
+      "en": "Column(s) used as index"
+     },
+     "index_col=0"
     ],
     [
      "usecols",
      {
-      "fr": "colonnes à lire",
-      "dar": "colonnes",
-      "en": "columns to read"
-     }
+      "fr": "Colonnes à lire",
+      "dar": "Colonnes li t9ra",
+      "en": "Columns to read"
+     },
+     "usecols=\"A:C\""
     ],
     [
      "skiprows",
      {
-      "fr": "lignes à sauter au début",
-      "dar": "sauter lignes",
-      "en": "rows to skip"
-     }
+      "fr": "Lignes à ignorer au début",
+      "dar": "Stour li tfout f lbdya",
+      "en": "Rows to skip at the start"
+     },
+     "skiprows=1"
     ],
     [
      "nrows",
      {
-      "fr": "nombre de lignes à lire",
-      "dar": "ch7al ster",
-      "en": "rows to read"
-     }
+      "fr": "Nombre de lignes à lire",
+      "dar": "3adad stour li t9ra",
+      "en": "Number of rows to read"
+     },
+     "nrows=100"
     ],
     [
-     "dtype · converters",
+     "dtype",
      {
-      "fr": "types / fonctions de conversion par colonne",
-      "dar": "types",
-      "en": "types / converters"
-     }
+      "fr": "Type imposé à certaines colonnes",
+      "dar": "Type mfrod 3la colonnes",
+      "en": "Type forced on columns"
+     },
+     "dtype={'col1': str}"
     ],
     [
      "engine",
      {
-      "fr": "moteur (openpyxl…)",
-      "dar": "moteur",
-      "en": "engine"
-     }
+      "fr": "Moteur de lecture",
+      "dar": "Moteur",
+      "en": "Reading engine"
+     },
+     "engine='openpyxl'"
     ],
     [
      "na_values",
      {
-      "fr": "valeurs à traiter comme manquantes",
-      "dar": "NaN",
-      "en": "values treated as NaN"
-     }
+      "fr": "Chaînes à considérer comme valeurs manquantes (NaN)",
+      "dar": "Kelmat li tkoun NaN",
+      "en": "Strings treated as missing (NaN)"
+     },
+     "na_values=[\"NA\", \"-\"]"
     ],
     [
-     "sep · decimal",
+     "converters",
      {
-      "fr": "séparateur de colonnes · séparateur décimal (read_csv)",
-      "dar": "sep · decimal",
-      "en": "separator · decimal mark"
-     }
+      "fr": "Fonctions pour convertir certaines colonnes",
+      "dar": "Fonctions bach tbeddel colonnes",
+      "en": "Functions to convert columns"
+     },
+     "converters={\"note\": float}"
     ]
    ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Pour **read_csv**, on retrouve les mêmes plus deux paramètres essentiels : **`sep`** (séparateur de champs, `,` par défaut) et **`decimal`** (séparateur décimal, `.` par défaut).",
+    "dar": "F **read_csv**, kayn nefs l paramètres + jouj mohimmin : **`sep`** (séparateur, `,` par défaut) w **`decimal`** (virgule dyal l a3dad, `.` par défaut).",
+    "en": "For **read_csv**, the same parameters apply plus two essential ones: **`sep`** (field separator, `,` by default) and **`decimal`** (decimal separator, `.` by default)."
+   }
   },
   {
    "type": "animation",
@@ -249,9 +648,9 @@
    "type": "callout",
    "kind": "trap",
    "body": {
-    "fr": "Fichier français (`;` et `12,5`) : il faut **les deux** `sep=\";\"` **et** `decimal=\",\"`, sinon les notes restent du texte.",
-    "dar": "sep w decimal bjouj.",
-    "en": "French files need **both** `sep=\";\"` **and** `decimal=\",\"`."
+    "fr": "`header=None` veut dire **« il n'y a pas de ligne d'en-tête »**, pas « supprime l'en-tête ». Et `skiprows=1` **saute** la 1re ligne. Les deux ne sont pas interchangeables.",
+    "dar": "`header=None` ma3nah **« ma kaynch str dyal titres »**, machi « 7iyed titres ». W `skiprows=1` **kayfout** str lowl. Machi b7al b7al.",
+    "en": "`header=None` means **\"there is no header row\"**, not \"drop the header\". And `skiprows=1` **skips** the first row. They are not interchangeable."
    }
   },
   {
@@ -266,32 +665,145 @@
   {
    "type": "heading",
    "body": {
-    "fr": "Feuille N°1 : corrigé de référence",
-    "dar": "Feuille 1 : tas7i7",
-    "en": "Exercise sheet 1: reference answers"
+    "fr": "7. Feuille d'exercices N°1 — correction complète",
+    "dar": "7. Feuille N°1 — correction kamla",
+    "en": "7. Exercise sheet No. 1 — full solution"
    }
   },
   {
-   "type": "code",
-   "lang": "python",
-   "code": "import pandas as pd\nurl = \"http://egallic.fr/Enseignement/Python/Exercices/donnees/\"\n\npd.read_csv(\"notes.csv\")                                   # fichier local\npd.read_csv(url + \"notes.csv\")                             # depuis une URL\npd.read_csv(url + \"notes_decim.csv\", sep=\";\", decimal=\",\") # ; et virgule décimale\npd.read_csv(url + \"notes_h.csv\", header=None)              # pas d'en-tête\npd.read_csv(url + \"notes_h_s.csv\", header=None, skiprows=1)  # commentaire + pas d'en-tête\npd.read_excel(url + \"notes.xlsx\", sheet_name=0)            # 1re feuille\npd.read_excel(url + \"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1)\ndf.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)"
-  },
-  {
-   "type": "callout",
-   "kind": "exam",
+   "type": "text",
    "body": {
-    "fr": "Le corrigé de la Feuille N°1 est à connaître par cœur : chaque fichier ↔ ses paramètres.",
-    "dar": "7fed tas7i7 dyal Feuille 1.",
-    "en": "Know sheet 1 answers by heart."
+    "fr": "**Exercice 1 — Importer et exporter des données avec pandas.** Objectif : manipuler différents formats (CSV, Excel) et les options d'importation / exportation. Les fichiers sont sur `http://egallic.fr/Enseignement/Python/Exercices/donnees/`.",
+    "dar": "**Exercice 1 — Importer w exporter data b pandas.** Lhadaf : tkhdem b formats mokhtalifa (CSV, Excel) w options dyal import / export. Les fichiers f `http://egallic.fr/Enseignement/Python/Exercices/donnees/`.",
+    "en": "**Exercise 1 — Import and export data with pandas.** Goal: handle different formats (CSV, Excel) and import / export options. Files are at `http://egallic.fr/Enseignement/Python/Exercices/donnees/`."
    }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Les 8 questions, une par une",
+    "dar": "8 questions, wa7da b wa7da",
+    "en": "The 8 questions, one by one"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — CSV téléchargé à la main",
+      "dar": "Q1 — CSV mtélécharger",
+      "en": "Q1 — CSV downloaded by hand"
+     },
+     "body": {
+      "fr": "On télécharge `notes.csv`, on le place dans le **répertoire courant** (le dossier du notebook) et on donne juste son nom.",
+      "dar": "Kantéléchargiw `notes.csv`, kan7ttouh f **répertoire courant** w kan3tiw ghir smito.",
+      "en": "Download `notes.csv`, put it in the **current directory** (the notebook's folder) and pass just its name."
+     },
+     "code": "import pandas as pd\nnotes = pd.read_csv(\"notes.csv\")"
+    },
+    {
+     "title": {
+      "fr": "Q2 — Même fichier, via l'URL",
+      "dar": "Q2 — B l URL",
+      "en": "Q2 — Same file, via the URL"
+     },
+     "body": {
+      "fr": "read_csv accepte directement une **URL** à la place d'un chemin.",
+      "dar": "read_csv kayqbel **URL** direct.",
+      "en": "read_csv accepts a **URL** instead of a path."
+     },
+     "code": "notes = pd.read_csv(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes.csv\")"
+    },
+    {
+     "title": {
+      "fr": "Q3 — Séparateur « ; » et décimale « , »",
+      "dar": "Q3 — « ; » w virgule",
+      "en": "Q3 — \";\" separator and \",\" decimal"
+     },
+     "body": {
+      "fr": "Format « français » : on précise **`sep=\";\"`** et **`decimal=\",\"`**, sinon tout arrive dans une seule colonne et les notes restent du texte.",
+      "dar": "Format « français » : **`sep=\";\"`** w **`decimal=\",\"`**, sinon kolchi kayji f colonne wa7da w notes kayb9aw texte.",
+      "en": "\"French\" format: set **`sep=\";\"`** and **`decimal=\",\"`**, otherwise everything lands in one column and marks stay as text."
+     },
+     "code": "notes_decim = pd.read_csv(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes_decim.csv\", sep=\";\", decimal=\",\")"
+    },
+    {
+     "title": {
+      "fr": "Q4 — Pas de noms de colonnes",
+      "dar": "Q4 — Bla smiyat colonnes",
+      "en": "Q4 — No column names"
+     },
+     "body": {
+      "fr": "**`header=None`** : la 1re ligne est une donnée, pas un en-tête. pandas nomme les colonnes 0, 1, 2… (on peut ajouter `names=[…]`).",
+      "dar": "**`header=None`** : str lowl data machi titres. pandas kaysmmi 0, 1, 2… (t9der tzid `names=[…]`).",
+      "en": "**`header=None`**: the first row is data, not a header. pandas names columns 0, 1, 2… (you may add `names=[…]`)."
+     },
+     "code": "notes_h = pd.read_csv(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes_h.csv\", header=None)"
+    },
+    {
+     "title": {
+      "fr": "Q5 — La 1re ligne n'est pas à importer",
+      "dar": "Q5 — Str lowl ma ndkhlouhch",
+      "en": "Q5 — Skip the first row"
+     },
+     "body": {
+      "fr": "**`skiprows=1`** saute la ligne parasite ; le fichier n'a pas non plus d'en-tête → `header=None`.",
+      "dar": "**`skiprows=1`** kayfout str ; w ma kaynch titres → `header=None`.",
+      "en": "**`skiprows=1`** skips the extra line; the file also has no header → `header=None`."
+     },
+     "code": "notes_h_s = pd.read_csv(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes_h_s.csv\", skiprows=1, header=None)"
+    },
+    {
+     "title": {
+      "fr": "Q6 — 1re feuille d'un Excel",
+      "dar": "Q6 — Feuille lowla f Excel",
+      "en": "Q6 — First sheet of an Excel file"
+     },
+     "body": {
+      "fr": "Par défaut `sheet_name=0`, donc c'est la 1re feuille.",
+      "dar": "Par défaut `sheet_name=0` = lowla.",
+      "en": "Default `sheet_name=0` = the first sheet."
+     },
+     "code": "notes_xl = pd.read_excel(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes.xlsx\")"
+    },
+    {
+     "title": {
+      "fr": "Q7 — 2e feuille « notes_h_s », 1re ligne = commentaire",
+      "dar": "Q7 — Feuille « notes_h_s », str lowl commentaire",
+      "en": "Q7 — Sheet \"notes_h_s\", first row is a comment"
+     },
+     "body": {
+      "fr": "On choisit la feuille par son **nom** et on saute le commentaire.",
+      "dar": "Kankhtarou feuille b **smiya** w kanfoutou commentaire.",
+      "en": "Select the sheet by **name** and skip the comment."
+     },
+     "code": "notes_xl2 = pd.read_excel(\"http://egallic.fr/Enseignement/Python/Exercices/donnees/notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1)"
+    },
+    {
+     "title": {
+      "fr": "Q8 — Export CSV",
+      "dar": "Q8 — Export CSV",
+      "en": "Q8 — CSV export"
+     },
+     "body": {
+      "fr": "Virgule comme séparateur de champs, point comme séparateur décimal, **sans numéros de ligne** → `index=False`.",
+      "dar": "Virgule séparateur, point décimal, **bla numéros** → `index=False`.",
+      "en": "Comma field separator, dot decimal, **no row numbers** → `index=False`."
+     },
+     "code": "notes_xl2.to_csv(\"notes_export.csv\", sep=\",\", decimal=\".\", index=False)",
+     "why": {
+      "fr": "`sep=\",\"` et `decimal=\".\"` sont déjà les valeurs par défaut : les écrire montre au correcteur que tu as compris la consigne.",
+      "dar": "`sep=\",\"` w `decimal=\".\"` déjà par défaut : ktbhom bach ybayen l correcteur bli fhemti.",
+      "en": "`sep=\",\"` and `decimal=\".\"` are already the defaults: writing them shows the grader you understood."
+     }
+    }
+   ]
   },
   {
    "type": "callout",
    "kind": "tip",
    "body": {
-    "fr": "`index=False` à l'export évite une colonne parasite 0, 1, 2… en tête du fichier.",
-    "dar": "`index=False`.",
-    "en": "`index=False` avoids a spurious index column."
+    "fr": "Si une feuille Excel a un nom avec des espaces (« notes h s » dans l'énoncé), recopie-le exactement, ou utilise son numéro : `sheet_name=1` pour la 2e feuille.",
+    "dar": "Ila smiyat feuille fiha espaces (« notes h s »), ktebha bdbt, wla st3mel numéro : `sheet_name=1` l tanya.",
+    "en": "If a sheet name has spaces (\"notes h s\" in the statement), copy it exactly, or use its number: `sheet_name=1` for the 2nd sheet."
    }
   },
   {
@@ -306,24 +818,29 @@
  ],
  "keyPoints": [
   {
-   "fr": "`pip install pandas` ; `import pandas as pd`. Series = 1D, DataFrame = 2D.",
-   "dar": "pip ; Series 1D ; DataFrame 2D.",
-   "en": "pip; Series 1D; DataFrame 2D."
+   "fr": "pandas = lire, modifier, sauvegarder des tableaux ; `pip install pandas` ; `import pandas as pd`.",
+   "dar": "pandas = 9ra, beddel, sauvegardi ; `pip install pandas`.",
+   "en": "pandas = read, modify, save tables; `pip install pandas`; `import pandas as pd`."
   },
   {
-   "fr": "Lecture : read_csv, fwf, clipboard, excel, hdf, html, json, feather, orc, parquet, pickle, sas, spss, sql, sql_table, stata, xml. Écriture : to_csv, to_excel, to_json.",
-   "dar": "read_* w to_*.",
-   "en": "read_* and to_*."
+   "fr": "`pd.read_<format>` (csv, excel, json, html, sql, parquet, fwf, clipboard…) ; écrire avec `df.to_<format>`.",
+   "dar": "`pd.read_<format>` ; `df.to_<format>`.",
+   "en": "`pd.read_<format>` (csv, excel, json, html, sql, parquet, fwf, clipboard…); write with `df.to_<format>`."
   },
   {
-   "fr": "read_excel : io, sheet_name (0 / \"nom\" / None), header, names, index_col, usecols, skiprows, nrows, dtype, engine, na_values, converters.",
-   "dar": "Paramètres.",
-   "en": "read_excel parameters."
+   "fr": "read_csv : `sep`, `decimal`, `header=None`, `names`, `skiprows`, `na_values`. read_excel : `sheet_name`, `usecols`, `nrows`, `index_col`, `dtype`.",
+   "dar": "Paramètres : sep, decimal, header, skiprows, sheet_name…",
+   "en": "read_csv: `sep`, `decimal`, `header=None`, `names`, `skiprows`, `na_values`. read_excel: `sheet_name`, `usecols`, `nrows`, `index_col`, `dtype`."
   },
   {
-   "fr": "notes_decim : sep=\";\", decimal=\",\" · notes_h : header=None · notes_h_s : header=None, skiprows=1 · export : index=False.",
-   "dar": "Feuille 1.",
-   "en": "Sheet 1 answers."
+   "fr": "Series = 1 dimension (une colonne + index) ; DataFrame = 2 dimensions (collection de Series).",
+   "dar": "Series = 1 bo3d ; DataFrame = 2 ab3ad.",
+   "en": "Series = 1-D (one column + index); DataFrame = 2-D (collection of Series)."
+  },
+  {
+   "fr": "Export sans numéros de ligne : `index=False`.",
+   "dar": "Bla numéros : `index=False`.",
+   "en": "Export without row numbers: `index=False`."
   }
  ]
 }

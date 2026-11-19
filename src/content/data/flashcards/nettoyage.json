@@ -1,0 +1,167 @@
+[
+ {
+  "id": "dn-fc1",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "3 causes de données manquantes",
+   "dar": "3 asbab dyal NaN",
+   "en": "3 causes of missing data"
+  },
+  "back": {
+   "fr": "Erreurs de saisie/mesure, non-réponses, problèmes techniques (capteurs, BD).",
+   "dar": "Ghalat, ma jawbouch, machakil techniques.",
+   "en": "Entry errors, non-response, technical problems."
+  }
+ },
+ {
+  "id": "dn-fc2",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Compter les NaN par colonne",
+   "dar": "7seb NaN",
+   "en": "Count NaN per column"
+  },
+  "back": {
+   "fr": "`df.isnull().sum()`",
+   "dar": "`df.isnull().sum()`",
+   "en": "`df.isnull().sum()`"
+  }
+ },
+ {
+  "id": "dn-fc3",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "dropna() vs dropna(axis=1)",
+   "dar": "dropna() vs axis=1",
+   "en": "dropna() vs dropna(axis=1)"
+  },
+  "back": {
+   "fr": "Lignes avec NaN (perte d'info) vs colonnes avec NaN (si > 40 % et non importantes).",
+   "dar": "Stour vs colonnes.",
+   "en": "Rows vs columns."
+  }
+ },
+ {
+  "id": "dn-fc4",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Imputation simple : laquelle pour quoi ?",
+   "dar": "Imputation : ina l ina ?",
+   "en": "Simple imputation: which for what?"
+  },
+  "back": {
+   "fr": "Moyenne → continue ; mode → catégorielle ; médiane si valeurs extrêmes ; valeur fixe possible.",
+   "dar": "Moyenne / mode / médiane.",
+   "en": "Mean → continuous; mode → categorical; median with extremes."
+  }
+ },
+ {
+  "id": "dn-fc5",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Défaut de l'imputation par la moyenne",
+   "dar": "3ib dyal moyenne",
+   "en": "Drawback of mean imputation"
+  },
+  "back": {
+   "fr": "Réduit la variance et biaise les corrélations.",
+   "dar": "Kat9ss variance.",
+   "en": "Reduces variance, biases correlations."
+  }
+ },
+ {
+  "id": "dn-fc6",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Imputation par régression",
+   "dar": "Imputation b régression",
+   "en": "Regression imputation"
+  },
+  "back": {
+   "fr": "Prédit la valeur à partir des autres variables ; suppose un modèle linéaire, sensible aux extrêmes.",
+   "dar": "Katnba2 ; linéaire.",
+   "en": "Predicts from other variables; linear, outlier-sensitive."
+  }
+ },
+ {
+  "id": "dn-fc7",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Imputation k-NN",
+   "dar": "k-NN",
+   "en": "k-NN imputation"
+  },
+  "back": {
+   "fr": "Moyenne (ou mode) des k voisins les plus proches ; plus précis mais coûteux.",
+   "dar": "k jiran ; ad9a9 walakin t9il.",
+   "en": "Mean of k nearest neighbours; accurate but costly."
+  }
+ },
+ {
+  "id": "dn-fc8",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Règle IQR",
+   "dar": "9a3idat IQR",
+   "en": "IQR rule"
+  },
+  "back": {
+   "fr": "Aberrante si x < Q1 − 1,5·IQR ou x > Q3 + 1,5·IQR, avec IQR = Q3 − Q1.",
+   "dar": "Bra [Q1 − 1,5 IQR ; Q3 + 1,5 IQR].",
+   "en": "Outside [Q1 − 1.5 IQR; Q3 + 1.5 IQR]."
+  }
+ },
+ {
+  "id": "dn-fc9",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Min-Max",
+   "dar": "Min-Max",
+   "en": "Min-Max"
+  },
+  "back": {
+   "fr": "$X_{norm} = \\frac{X - X_{min}}{X_{max} - X_{min}}$ → [0, 1].",
+   "dar": "[0, 1].",
+   "en": "→ [0, 1]."
+  }
+ },
+ {
+  "id": "dn-fc10",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Z-score",
+   "dar": "Z-score",
+   "en": "Z-score"
+  },
+  "back": {
+   "fr": "$X_z = \\frac{X - \\mu}{\\sigma}$ → moyenne 0, écart-type 1.",
+   "dar": "Moyenne 0, σ 1.",
+   "en": "Mean 0, SD 1."
+  }
+ },
+ {
+  "id": "dn-fc11",
+  "module": "data",
+  "chapter": "nettoyage",
+  "front": {
+   "fr": "Doublons",
+   "dar": "Doublons",
+   "en": "Duplicates"
+  },
+  "back": {
+   "fr": "Détecter : `df[df.duplicated()]` ; supprimer : `df.drop_duplicates()`.",
+   "dar": "duplicated / drop_duplicates.",
+   "en": "duplicated / drop_duplicates."
+  }
+ }
+]

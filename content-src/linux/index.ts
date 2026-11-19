@@ -14,7 +14,7 @@ export const module: Module = {
   id: 'linux',
   title: L(['Administration Unix / Linux RHEL 9', 'Administration Unix / Linux RHEL 9', 'Unix / Linux administration (RHEL 9)']),
   subtitle: L(['Intro, TP1 → TP5, utilisateurs et droits', 'Intro, TP1 → TP5, users w droits', 'Intro, TP1 → TP5, users and permissions']),
-  color: '#10b981',
+  color: '#2d6a3e',
   icon: 'terminal',
   theme: 'terminal',
   chapters: parts.map((p) => p.chapter.id),

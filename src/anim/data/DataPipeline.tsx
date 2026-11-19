@@ -3,8 +3,9 @@ import { useL } from '../../hooks/useT';
 import { L } from '../../components/Text';
 import { PIPE } from '../../i18n/animData';
 import { AnimCard, StepperControls, useStepper } from '../Stepper';
+import { Icon } from '../../components/Icon';
 
-const ICONS = ['📥', '🧹', '🔍', '🧮', '💡'];
+const ICONS = ['inbox', 'broom', 'search', 'sigma', 'bulb'];
 
 export default function DataPipeline() {
   const tl = useL();
@@ -17,7 +18,7 @@ export default function DataPipeline() {
         {PIPE.steps.map((st, k) => (
           <button key={k} onClick={() => s.setI(k)} className="relative z-10 flex flex-col items-center gap-1" aria-pressed={k === s.i}>
             <motion.span animate={{ scale: k === s.i ? 1.2 : 1 }} className={`grid h-11 w-11 place-items-center rounded-full border-2 text-lg ${k <= s.i ? 'border-accent bg-surface' : 'border-line bg-surface2'}`}>
-              {ICONS[k]}
+              <Icon name={ICONS[k]} size={19} className={k <= s.i ? 'text-accent' : 'text-muted'} />
             </motion.span>
             <span className={`text-[10px] font-semibold sm:text-xs ${k === s.i ? 'text-accent' : 'text-muted'}`}>{tl(st.n)}</span>
           </button>

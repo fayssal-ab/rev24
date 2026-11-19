@@ -1,0 +1,122 @@
+[
+ {
+  "id": "dr-fc1",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Formule de la moyenne",
+   "dar": "Formule dyal moyenne",
+   "en": "Mean formula"
+  },
+  "back": {
+   "fr": "$\\bar x = \\frac{1}{n}\\sum x_i$",
+   "dar": "$\\bar x = \\frac{1}{n}\\sum x_i$",
+   "en": "$\\bar x = \\frac{1}{n}\\sum x_i$"
+  }
+ },
+ {
+  "id": "dr-fc2",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Médiane : méthode",
+   "dar": "Médiane : kifach",
+   "en": "Median: how"
+  },
+  "back": {
+   "fr": "Trier, puis prendre la valeur du milieu (n impair) ou la moyenne des deux du milieu (n pair).",
+   "dar": "Rtteb, 3ad l west (wla moyenne dyal jouj).",
+   "en": "Sort, then take the middle value (odd n) or the mean of the two middle ones (even n)."
+  }
+ },
+ {
+  "id": "dr-fc3",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Variance (n) et variance corrigée",
+   "dar": "Variance (n) w corrigée",
+   "en": "Variance (n) and corrected"
+  },
+  "back": {
+   "fr": "$V = \\frac{1}{n}\\sum (x_i-\\bar x)^2$ ; $S^2 = \\frac{1}{n-1}\\sum (x_i-\\bar x)^2$ (pandas `.var()`).",
+   "dar": "V b n ; S² b n − 1 (pandas).",
+   "en": "$V$ divides by n; $S^2$ by n − 1 (pandas `.var()`)."
+  }
+ },
+ {
+  "id": "dr-fc4",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "IQR",
+   "dar": "IQR",
+   "en": "IQR"
+  },
+  "back": {
+   "fr": "IQR = Q3 − Q1 (les 50 % du milieu).",
+   "dar": "IQR = Q3 − Q1.",
+   "en": "IQR = Q3 − Q1 (middle 50 %)."
+  }
+ },
+ {
+  "id": "dr-fc5",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Covariance",
+   "dar": "Covariance",
+   "en": "Covariance"
+  },
+  "back": {
+   "fr": "$\\mathrm{cov}(x,y) = \\frac{1}{n}\\sum (x_i-\\bar x)(y_i-\\bar y)$",
+   "dar": "Moyenne dyal produits dyal l far9.",
+   "en": "Mean of products of deviations."
+  }
+ },
+ {
+  "id": "dr-fc6",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Coefficient de corrélation r",
+   "dar": "Coefficient r",
+   "en": "Correlation r"
+  },
+  "back": {
+   "fr": "$r = \\frac{\\mathrm{cov}(x,y)}{\\sigma_x\\sigma_y}$, entre −1 et 1.",
+   "dar": "r bin −1 w 1.",
+   "en": "Between −1 and 1."
+  }
+ },
+ {
+  "id": "dr-fc7",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "Droite des moindres carrés",
+   "dar": "Khatt dyal moindres carrés",
+   "en": "Least-squares line"
+  },
+  "back": {
+   "fr": "$\\hat y = ax+b$ avec $a = \\frac{\\mathrm{cov}(x,y)}{V(x)}$ et $b = \\bar y - a\\bar x$.",
+   "dar": "a = cov / V(x) ; b = ȳ − a x̄.",
+   "en": "a = cov / V(x); b = ȳ − a x̄."
+  }
+ },
+ {
+  "id": "dr-fc8",
+  "module": "data",
+  "chapter": "rappel",
+  "front": {
+   "fr": "R²",
+   "dar": "R²",
+   "en": "R²"
+  },
+  "back": {
+   "fr": "R² = r² : part de la variation de y expliquée par x.",
+   "dar": "Ch7al x kayfssr mn y.",
+   "en": "Share of y's variation explained by x."
+  }
+ }
+]

@@ -1,5 +1,4 @@
-import { setCtx, L, h, p, code, tip, trap, exam, table, anim, quiz, single, multi, num, ex, fc, ref } from '../lib';
-import type { Chapter } from '../../src/lib/schema';
+import { setCtx, single, multi, num, ex, fc, ref } from '../lib';
 
 setCtx('data', 'pandas');
 
@@ -59,58 +58,7 @@ function cmd2() {
     ['`None` = toutes les feuilles, dans un **dict** dont les clés sont les noms des feuilles.', 'Dict.', 'A **dict** of all sheets.'], [['C\'est sheet_name=0.', '0.', 'That is 0.'], ['Valeur permise.', 'Permise.', 'Allowed.'], ['Non.', 'La.', 'No.']], ['read_excel']);
 }
 
-export const chapter: Chapter = {
-  id: 'pandas',
-  module: 'data',
-  order: 2,
-  title: L(['Chap 1 — pandas : lire et écrire des données (Feuille N°1)', 'Fasl 1 — pandas', 'Ch. 1 — pandas: reading and writing data']),
-  summary: L(['Installer pandas, Series et DataFrame, les fonctions read_*, paramètres de read_csv/read_excel et export — avec le corrigé de la Feuille N°1.', 'pandas : read_*, paramètres, export.', 'pandas: Series/DataFrame, read_* functions, parameters, export, Exercise sheet 1.']),
-  estimatedMinutes: 45,
-  sections: [
-    h(['Installer et importer', 'Installer w importer', 'Install and import']),
-    code('pip install pandas\nimport pandas as pd', 'python'),
-    p(['- **Series** : tableau à **une dimension** (valeurs + index).\n- **DataFrame** : tableau à **deux dimensions** (lignes × colonnes), chaque colonne est une Series.', 'Series 1D, DataFrame 2D.', '**Series** 1D, **DataFrame** 2D.']),
-    quiz('dp-02'),
-    h(['Les fonctions de lecture et d\'écriture', 'read_* w to_*', 'Reading and writing functions']),
-    table([['Lecture', '9raya', 'Read'], ['Format', 'Format', 'Format']], [
-      ['read_csv · read_fwf · read_clipboard', ['texte délimité · largeur fixe · presse-papiers', 'CSV · fwf · clipboard', 'delimited · fixed width · clipboard']],
-      ['read_excel · read_json · read_html · read_xml', ['Excel · JSON · tableaux HTML · XML', 'Excel · JSON · HTML · XML', 'Excel · JSON · HTML · XML']],
-      ['read_hdf · read_feather · read_orc · read_parquet · read_pickle', ['formats binaires', 'binaires', 'binary formats']],
-      ['read_sas · read_spss · read_stata', ['logiciels statistiques', 'logiciels stats', 'stats software']],
-      ['read_sql · read_sql_table', ['bases de données SQL', 'SQL', 'SQL databases']],
-      ['to_csv · to_excel · to_json', ['écriture', 'ktaba', 'writing']]
-    ]),
-    quiz('dp-09'),
-    h(['Paramètres essentiels', 'Paramètres', 'Key parameters']),
-    table([['Paramètre', 'Paramètre', 'Parameter'], ['Rôle', 'Dor', 'Role']], [
-      ['io', ['chemin ou URL du fichier', 'chemin wla URL', 'path or URL']], ['sheet_name', ['0 (1re feuille), "nom", None (toutes → dict)', '0, nom, None', '0, "name", None (dict)']], ['header', ['ligne d\'en-tête (None = pas d\'en-tête)', 'en-tête', 'header row (None = none)']], ['names', ['noms à donner aux colonnes', 'smiyat', 'column names']], ['index_col', ['colonne servant d\'index', 'index', 'index column']], ['usecols', ['colonnes à lire', 'colonnes', 'columns to read']], ['skiprows', ['lignes à sauter au début', 'sauter lignes', 'rows to skip']], ['nrows', ['nombre de lignes à lire', 'ch7al ster', 'rows to read']], ['dtype · converters', ['types / fonctions de conversion par colonne', 'types', 'types / converters']], ['engine', ['moteur (openpyxl…)', 'moteur', 'engine']], ['na_values', ['valeurs à traiter comme manquantes', 'NaN', 'values treated as NaN']], ['sep · decimal', ['séparateur de colonnes · séparateur décimal (read_csv)', 'sep · decimal', 'separator · decimal mark']]
-    ]),
-    anim('PandasReadPlayground'),
-    trap(['Fichier français (`;` et `12,5`) : il faut **les deux** `sep=";"` **et** `decimal=","`, sinon les notes restent du texte.', 'sep w decimal bjouj.', 'French files need **both** `sep=";"` **and** `decimal=","`.']),
-    quiz('dp-03', 'dp-04', 'dp-05', 'dp-12'),
-    h(['Feuille N°1 : corrigé de référence', 'Feuille 1 : tas7i7', 'Exercise sheet 1: reference answers']),
-    code(`import pandas as pd
-url = "http://egallic.fr/Enseignement/Python/Exercices/donnees/"
-
-pd.read_csv("notes.csv")                                   # fichier local
-pd.read_csv(url + "notes.csv")                             # depuis une URL
-pd.read_csv(url + "notes_decim.csv", sep=";", decimal=",") # ; et virgule décimale
-pd.read_csv(url + "notes_h.csv", header=None)              # pas d'en-tête
-pd.read_csv(url + "notes_h_s.csv", header=None, skiprows=1)  # commentaire + pas d'en-tête
-pd.read_excel(url + "notes.xlsx", sheet_name=0)            # 1re feuille
-pd.read_excel(url + "notes.xlsx", sheet_name="notes_h_s", skiprows=1)
-df.to_csv("notes_export.csv", sep=",", decimal=".", index=False)`, 'python'),
-    exam(['Le corrigé de la Feuille N°1 est à connaître par cœur : chaque fichier ↔ ses paramètres.', '7fed tas7i7 dyal Feuille 1.', 'Know sheet 1 answers by heart.']),
-    tip(['`index=False` à l\'export évite une colonne parasite 0, 1, 2… en tête du fichier.', '`index=False`.', '`index=False` avoids a spurious index column.']),
-    quiz('dp-06', 'dp-07', 'dp-08', 'dp-17')
-  ],
-  keyPoints: [
-    L(['`pip install pandas` ; `import pandas as pd`. Series = 1D, DataFrame = 2D.', 'pip ; Series 1D ; DataFrame 2D.', 'pip; Series 1D; DataFrame 2D.']),
-    L(['Lecture : read_csv, fwf, clipboard, excel, hdf, html, json, feather, orc, parquet, pickle, sas, spss, sql, sql_table, stata, xml. Écriture : to_csv, to_excel, to_json.', 'read_* w to_*.', 'read_* and to_*.']),
-    L(['read_excel : io, sheet_name (0 / "nom" / None), header, names, index_col, usecols, skiprows, nrows, dtype, engine, na_values, converters.', 'Paramètres.', 'read_excel parameters.']),
-    L(['notes_decim : sep=";", decimal="," · notes_h : header=None · notes_h_s : header=None, skiprows=1 · export : index=False.', 'Feuille 1.', 'Sheet 1 answers.'])
-  ]
-};
+export { chapter } from './course/pandas';
 
 export const exercises = [
   ex('dx-p-1', 2, ['Feuille N°1 — lectures CSV', 'Feuille 1 — CSV', 'Sheet 1 — CSV reads'],

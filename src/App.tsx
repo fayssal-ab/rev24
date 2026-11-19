@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { Layout, Loading } from './components/Layout';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Layout, Loading, Narrow } from './components/Layout';
+import ModuleShell from './components/ModuleShell';
 import { useStore } from './store/store';
 import { useAllModules } from './hooks/useModule';
 import { MODULES } from './lib/content';
@@ -15,12 +16,10 @@ const SheetPage = lazy(() => import('./pages/SheetPage'));
 const ReferencePage = lazy(() => import('./pages/ReferencePage'));
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const ExamPage = lazy(() => import('./pages/ExamPage'));
-const Rev24Page = lazy(() => import('./pages/Rev24Page'));
 const TerminalPage = lazy(() => import('./pages/TerminalPage'));
 const StatsLabPage = lazy(() => import('./pages/StatsLabPage'));
-const ProgressPage = lazy(() => import('./pages/ProgressPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
-const OralPage = lazy(() => import('./pages/OralPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 /** Unlock badges whenever progress changes. */
@@ -37,7 +36,6 @@ function BadgeWatcher() {
       missions: st.missions,
       questionsById,
       exams: st.exams,
-      rev24Done: st.rev24Done,
       streak: st.streak.count,
       rootReset: !!st.missions['m-root-reset']
     });
@@ -53,20 +51,26 @@ export function App() {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/m/:module" element={<ModulePage />} />
-            <Route path="/m/:module/c/:chapter" element={<ChapterPage />} />
-            <Route path="/m/:module/qcm" element={<QcmPage />} />
-            <Route path="/m/:module/exercices" element={<ExercisesPage />} />
-            <Route path="/m/:module/fiche" element={<SheetPage />} />
-            <Route path="/m/:module/formulaire" element={<ReferencePage />} />
-            <Route path="/m/:module/flashcards" element={<FlashcardsPage />} />
-            <Route path="/m/:module/examen" element={<ExamPage />} />
-            <Route path="/24h" element={<Rev24Page />} />
+            <Route path="/m/:module" element={<ModuleShell />}>
+              <Route index element={<ModulePage />} />
+              <Route path="c/:chapter" element={<ChapterPage />} />
+              <Route path="qcm" element={<QcmPage />} />
+              <Route path="exercices" element={<ExercisesPage />} />
+              <Route path="fiche" element={<SheetPage />} />
+              <Route path="formulaire" element={<ReferencePage />} />
+              <Route path="flashcards" element={<FlashcardsPage />} />
+              <Route path="examen" element={<ExamPage />} />
+            </Route>
             <Route path="/terminal" element={<TerminalPage />} />
-            <Route path="/stats-lab" element={<StatsLabPage />} />
-            <Route path="/progression" element={<ProgressPage />} />
-            <Route path="/glossaire" element={<GlossaryPage />} />
-            <Route path="/oral/rm-rf" element={<OralPage />} />
+            <Route path="/stats-lab" element={<Narrow><StatsLabPage /></Narrow>} />
+            <Route path="/glossaire" element={<Narrow><GlossaryPage /></Narrow>} />
+            <Route path="/profil" element={<ProfilePage />} />
+            <Route path="/profil/oral" element={<ProfilePage tab="oral" />} />
+            <Route path="/profil/donnees" element={<ProfilePage tab="data" />} />
+            {/* old links */}
+            <Route path="/progression" element={<Navigate to="/profil" replace />} />
+            <Route path="/oral/rm-rf" element={<Navigate to="/profil/oral" replace />} />
+            <Route path="/24h" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

@@ -4,23 +4,22 @@ import * as intro from './intro';
 import * as pandas from './pandas';
 import * as visu from './visu';
 import * as tests from './tests';
+import * as rappel from './rappel';
+import * as nettoyage from './nettoyage';
 
-const parts = [intro, pandas, visu, tests];
+const parts = [intro, rappel, pandas, nettoyage, visu, tests];
 
 export const module: Module = {
   id: 'data',
   title: L(['Analyse de données', 'Analyse de données', 'Data analysis']),
-  subtitle: L(['Pr. A. Kadiri — pandas, visualisation, tests d\'hypothèses', 'Pr. A. Kadiri — pandas, visualisation, tests', 'Pr. A. Kadiri — pandas, visualisation, hypothesis tests']),
-  color: '#8b5cf6',
+  subtitle: L(['Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests d\'hypothèses', 'Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests', 'Pr. A. Kadiri — statistics, pandas, cleaning, visualisation, hypothesis tests']),
+  color: '#00844e',
   icon: 'chart',
   theme: 'violet',
   chapters: parts.map((p) => p.chapter.id),
-  upcoming: [
-    { id: 'chap2', title: L(['Chap 2 — (à venir)', 'Fasl 2 — (jay)', 'Ch. 2 — (coming)']) },
-    { id: 'chap3', title: L(['Chap 3 — (à venir)', 'Fasl 3 — (jay)', 'Ch. 3 — (coming)']) }
-  ],
+  upcoming: [{ id: 'chap3', order: 4.5, title: L(['Chap 3 — (pas encore sur le Drive)', 'Fasl 3 — (mazal ma kaynch f Drive)', 'Ch. 3 — (not on the Drive yet)']) }],
   annales: [],
-  weights: { tests: 5, pandas: 3, visu: 2, 'd-intro': 1 }
+  weights: { tests: 5, nettoyage: 3, pandas: 3, rappel: 3, visu: 2, 'd-intro': 1 }
 };
 
 export const chapters = parts.map((p) => p.chapter);

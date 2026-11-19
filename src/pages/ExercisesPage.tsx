@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useModuleContent } from '../hooks/useModule';
 import { Loading, PageTitle, useModuleParam } from '../components/Layout';
@@ -9,15 +9,19 @@ import { L, Code, Tex } from '../components/Text';
 import { Icon } from '../components/Icon';
 import type { Exercise } from '../lib/schema';
 
-function ExerciseCard({ e }: { e: Exercise }) {
+function ExerciseCard({ e, initialOpen = false }: { e: Exercise; initialOpen?: boolean }) {
   const { t } = useT();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
+  const ref = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    if (initialOpen) ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [initialOpen]);
   const [hints, setHints] = useState(0);
   const [sol, setSol] = useState(false);
   const status = useStore((s) => s.exercises[e.id]);
   const setEx = useStore((s) => s.setExercise);
   return (
-    <li className="card overflow-hidden" data-testid={`exercise-${e.id}`}>
+    <li ref={ref} className="card scroll-mt-32 overflow-hidden" data-testid={`exercise-${e.id}`}>
       <button className="flex w-full items-center gap-3 p-4 text-left" onClick={() => setOpen(!open)} aria-expanded={open}>
         <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl ${status === 'ok' ? 'bg-ok/15 text-ok' : status === 'ko' ? 'bg-bad/15 text-bad' : 'bg-surface2 text-muted'}`}>
           <Icon name={status === 'ok' ? 'check' : status === 'ko' ? 'reset' : 'dumbbell'} size={18} />
@@ -123,12 +127,14 @@ export default function ExercisesPage() {
   const { data } = useModuleContent(id);
   const { t } = useT();
   const tl = useL();
-  const [chapter, setChapter] = useState('all');
+  const [params] = useSearchParams();
+  const [chapter, setChapter] = useState(params.get('chapter') ?? 'all');
+  const openId = params.get('open');
   if (!data) return <Loading />;
   const list = data.exercises.filter((e) => chapter === 'all' || e.chapter === chapter);
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={t('ex.title')} sub={`${data.exercises.length} ${t('module.exercises')}`} />
+      <PageTitle eyebrow={tl(data.module.title)} title={t('ex.title')} sub={`${data.exercises.length} ${t('module.exercises')}`} />
       <select className="input" value={chapter} onChange={(e) => setChapter(e.target.value)} aria-label={t('qcm.filterChapter')}>
         <option value="all">{t('common.all')}</option>
         {data.chapters.map((c) => (
@@ -139,7 +145,7 @@ export default function ExercisesPage() {
       </select>
       <ul className="space-y-2">
         {list.map((e) => (
-          <ExerciseCard key={e.id} e={e} />
+          <ExerciseCard key={e.id} e={e} initialOpen={e.id === openId} />
         ))}
       </ul>
     </div>

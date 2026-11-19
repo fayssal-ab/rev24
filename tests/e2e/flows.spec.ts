@@ -9,12 +9,14 @@ test('1. changer la langue → tout le cours change', async ({ page }) => {
   await page.goto('/#/m/linux/c/users');
   const h1 = page.locator('h1');
   await expect(h1).toContainText('Utilisateurs, groupes et droits');
-  await expect(page.locator('nav[aria-label]').last()).toContainText('Cours');
-  await page.getByTestId('lang-dar').click();
+  await expect(page.getByTestId('module-contents')).toContainText('Sommaire');
+  // on a phone the language switch lives in the menu drawer
+  await page.getByTestId('menu-open').click();
+  await page.getByTestId('lang-dar').last().click();
   await expect(h1).toContainText('Users, groupes w droits');
   await expect(page.locator('main')).toContainText('Anwa3 comptes w groupes');
-  await expect(page.locator('nav[aria-label]').last()).toContainText('Dars');
-  await page.getByTestId('lang-en').click();
+  await expect(page.getByTestId('module-contents')).toContainText('Lfihris');
+  await page.getByTestId('lang-en').last().click();
   await expect(h1).toContainText('Users, groups and permissions');
   await expect(page.locator('main')).toContainText('Account types and groups');
   // the choice is remembered
@@ -86,21 +88,11 @@ test('3. mission terminal TP5 /opt/donnees validée', async ({ page }) => {
   await expect(page.getByTestId('mission-m-tp5-donnees')).toBeVisible();
 });
 
-test('4. démarrer le mode 24h et terminer un bloc', async ({ page }) => {
-  await page.goto('/#/24h');
-  await page.getByTestId('r24-start').click();
-  await expect(page.getByTestId('r24-diagnostic')).toBeVisible();
-  for (let i = 0; i < 14; i++) await page.getByTestId('diag-next').click();
-  await page.getByTestId('diag-finish').click();
-  await expect(page.getByTestId('r24-plan')).toBeVisible();
-  await expect(page.locator('li[data-kind="sleep"]')).toHaveCount(1);
-  await expect(page.locator('li[data-kind="study"]').first()).toBeVisible();
-  const current = page.getByTestId('r24-current');
-  await expect(current).toBeVisible();
-  await page.getByTestId('r24-done').click();
-  await expect(page.locator('li[data-kind] span.bg-ok').first()).toBeVisible();
-  // the plan survives a reload
+test('4. la progression d\'un chapitre est sauvegardée sur l\'appareil', async ({ page }) => {
+  await page.goto('/#/m/data/c/tests');
+  await page.getByTestId('mark-read').click();
   await page.reload();
-  await expect(page.getByTestId('r24-plan')).toBeVisible();
-  await expect(page.locator('li[data-kind] span.bg-ok').first()).toBeVisible();
+  await expect(page.getByTestId('mark-read')).toHaveAttribute('data-done', 'true');
+  await page.goto('/#/');
+  await expect(page.getByTestId('resume')).toBeVisible();
 });

@@ -1,0 +1,255 @@
+{
+ "id": "tp1",
+ "module": "oracle",
+ "order": 3.5,
+ "title": {
+  "fr": "TP1 — Architecture et instance : sessions et arrêt / démarrage (corrigé)",
+  "dar": "TP1 — Sessions w arrêt / démarrage (corrigé)",
+  "en": "Lab 1 — Architecture and instance: sessions and shutdown / startup (solved)"
+ },
+ "summary": {
+  "fr": "Correction complète du TP1 : afficher et interpréter v$session, ouvrir plusieurs sessions, repérer les sessions inactives, tuer une session, arrêter et démarrer l'instance, lire v$sgainfo et v$sgastat.",
+  "dar": "Correction kamla dyal TP1 : v$session, bzaf d sessions, sessions inactives, tuer session, arrêt w démarrage, v$sgainfo w v$sgastat.",
+  "en": "Full solution of Lab 1: read v$session, open several sessions, find idle sessions, kill a session, stop and start the instance, read v$sgainfo and v$sgastat."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 1 — Gestion des connexions et des sessions",
+    "dar": "Exercice 1 — Connexions w sessions",
+    "en": "Exercise 1 — Connections and sessions"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Q1 à Q3 : afficher les sessions",
+    "dar": "Q1 l Q3 : wrri sessions",
+    "en": "Q1 to Q3: listing sessions"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — Rôle des commandes de mise en forme",
+      "dar": "Q1 — Dor dyal commandes",
+      "en": "Q1 — Formatting commands"
+     },
+     "body": {
+      "fr": "`SET PAGESIZE 1000` : nombre de lignes par « page » avant de réafficher les en-têtes (évite des titres toutes les 14 lignes). `SET LINESIZE 2000` : largeur d'une ligne en caractères (évite que les colonnes passent à la ligne). `COLUMN MACHINE FORMAT A30` : affiche la colonne MACHINE sur **30 caractères**.",
+      "dar": "`PAGESIZE` = stour f page ; `LINESIZE` = 3ard dyal str ; `COLUMN … A30` = colonne b 30 7arf.",
+      "en": "`PAGESIZE` = rows per page; `LINESIZE` = line width; `COLUMN … A30` = 30-character column."
+     },
+     "code": "SQL> set pagesize 1000\nSQL> set linesize 2000\nSQL> column MACHINE format A30"
+    },
+    {
+     "title": {
+      "fr": "Q2 — Nombre de lignes",
+      "dar": "Q2 — Ch7al str",
+      "en": "Q2 — Number of rows"
+     },
+     "body": {
+      "fr": "Le nombre dépend de la machine (souvent une cinquantaine). La plupart des lignes ont **USERNAME vide** : ce sont les **processus d'arrière-plan** (PROGRAM = ORACLE.EXE (PMON), (DBW0), (LGWR)…) ; une seule ligne est **SYS**, ta propre session.",
+      "dar": "Kayt3ellek b machine (~50). Ktar mn nass **bla USERNAME** = **processus d'arrière-plan** ; wa7da **SYS** = nta.",
+      "en": "Depends on the machine (~50). Most rows have **no USERNAME**: **background processes**; one row is **SYS** (you)."
+     },
+     "code": "SQL> SELECT sid, serial#, username, status, osuser, machine, program, paddr FROM v$session;"
+    },
+    {
+     "title": {
+      "fr": "Q3 — Ce que la requête affiche",
+      "dar": "Q3 — Chnou kat3red",
+      "en": "Q3 — What it shows"
+     },
+     "body": {
+      "fr": "La liste de **toutes les sessions** de l'instance : **SID** (identifiant), **SERIAL#** (numéro de série, avec le SID il identifie une session de façon unique), **USERNAME**, **STATUS** (ACTIVE / INACTIVE), **OSUSER** (utilisateur Windows/Linux), **MACHINE**, **PROGRAM** (application qui a ouvert la session) et **PADDR** (adresse du **processus serveur** associé, dans v$process).",
+      "dar": "Ga3 **sessions** : SID, SERIAL#, USERNAME, STATUS, OSUSER, MACHINE, PROGRAM, **PADDR** (adresse dyal processus serveur).",
+      "en": "All **sessions**: SID, SERIAL#, USERNAME, STATUS, OSUSER, MACHINE, PROGRAM and **PADDR** (server process address)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Deux sessions sur une même connexion, puis plusieurs connexions",
+    "dar": "Jouj sessions f connexion wa7da, w bzaf d connexions",
+    "en": "Two sessions on one connection, then several connections"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "SET AUTOTRACE ON STATISTICS — constat",
+      "dar": "SET AUTOTRACE — chnou kayban",
+      "en": "SET AUTOTRACE — observation"
+     },
+     "body": {
+      "fr": "Après `SET AUTOTRACE ON STATISTICS`, une **deuxième session SYS** apparaît avec le **même PADDR** que la première : SQL*Plus a ouvert une session supplémentaire pour collecter les statistiques **sur la même connexion** (même processus serveur). **Une connexion peut porter plusieurs sessions.**",
+      "dar": "Kayban **session SYS tanya** b **nefs PADDR** : **connexion wa7da t9der tchd bzaf d sessions**.",
+      "en": "A **second SYS session** appears with the **same PADDR**: **one connection can carry several sessions**."
+     },
+     "code": "SQL> SET AUTOTRACE ON STATISTICS;"
+    },
+    {
+     "title": {
+      "fr": "Q4 — Session de C##ETUDIANT",
+      "dar": "Q4 — Session dyal C##ETUDIANT",
+      "en": "Q4 — C##ETUDIANT's session"
+     },
+     "body": {
+      "fr": "Après `CREATE USER C##ETUDIANT` (utilisateur **commun**, d'où le C##) et la connexion dans une autre fenêtre, une **nouvelle ligne** apparaît : USERNAME = C##ETUDIANT, nouveau **SID/SERIAL#**, PROGRAM = sqlplus.exe, STATUS = **INACTIVE** (la session attend entre deux requêtes).",
+      "dar": "**Str jdid** : C##ETUDIANT, **SID/SERIAL#** jdad, **INACTIVE**.",
+      "en": "A **new row**: C##ETUDIANT, new **SID/SERIAL#**, sqlplus.exe, **INACTIVE**."
+     },
+     "code": "SQL> CREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;\nSQL> GRANT CREATE SESSION TO C##ETUDIANT;\n-- nouvelle fenêtre :\n$ sqlplus C##ETUDIANT/etudiant123\nSQL> select sysdate from dual;"
+    },
+    {
+     "title": {
+      "fr": "Q5 — Même utilisateur, deuxième fenêtre",
+      "dar": "Q5 — Nefs user, fenêtre tanya",
+      "en": "Q5 — Same user, second window"
+     },
+     "body": {
+      "fr": "**Deux sessions** pour C##ETUDIANT, avec des **SID différents** et des **PADDR différents** : en serveur dédié, **chaque connexion = sa propre session + son propre processus serveur**.",
+      "dar": "**Jouj sessions** b **SID w PADDR mokhtalfin** : kol connexion = session + processus dyalha.",
+      "en": "**Two sessions** with **different SIDs and PADDRs**: each connection has its own session and server process."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q6 — Sessions inactives",
+      "dar": "Q6 — Sessions inactives",
+      "en": "Q6 — Idle sessions"
+     },
+     "body": {
+      "fr": "La **première** session d'ETUDIANT a le plus grand `seconds_in_wait`. **Intérêt pour le DBA** : repérer les sessions **oubliées** qui occupent des ressources (processus serveur, PGA, verrous) pour les **tuer** ou leur appliquer une limite (profil IDLE_TIME).",
+      "dar": "**Lowla** hiya li ktar wa9t. **DBA** : y9lleb 3la sessions **mnsiyin** li kayklou ressources bach y**9tlhom**.",
+      "en": "The **first** one waited longest. **DBA**: find **forgotten** sessions using resources and **kill** or limit them."
+     },
+     "code": "SQL> SELECT sid, serial#, username, status, seconds_in_wait FROM v$session\n     WHERE status = 'INACTIVE' AND seconds_in_wait > 60;"
+    },
+    {
+     "title": {
+      "fr": "Q7 — Après KILL SESSION",
+      "dar": "Q7 — Mn b3d KILL",
+      "en": "Q7 — After KILL SESSION"
+     },
+     "body": {
+      "fr": "Dans la fenêtre tuée, `select sysdate` renvoie **ORA-00028 : your session has been killed** — la session n'existe plus, il faut se **reconnecter**. (PMON nettoie ensuite ses ressources.)",
+      "dar": "**ORA-00028** : session t9tlat, khass **t3awed tconnecta**.",
+      "en": "**ORA-00028: your session has been killed** — reconnect needed."
+     },
+     "code": "SQL> ALTER SYSTEM KILL SESSION '81,2754';\n-- dans la fenêtre d'ETUDIANT :\nSQL> select sysdate from dual;\nORA-00028: your session has been killed"
+    },
+    {
+     "title": {
+      "fr": "Q8 — Conclusions",
+      "dar": "Q8 — Conclusions",
+      "en": "Q8 — Conclusions"
+     },
+     "body": {
+      "fr": "La **deuxième** session du même utilisateur **fonctionne toujours** : les sessions sont **indépendantes**, on tue une **session**, pas un utilisateur. Quand on **ferme une fenêtre**, sa session **disparaît** de v$session.",
+      "dar": "Session **tanya khddama** : sessions **mosta9illa**. Sedd fenêtre → session **katghber**.",
+      "en": "The **second** session still works: sessions are **independent**. Closing a window removes its session."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 2 — Gestion d'une instance Oracle",
+    "dar": "Exercice 2 — Gestion dyal instance",
+    "en": "Exercise 2 — Managing an instance"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Q9 — Arrêt puis démarrage",
+    "dar": "Q9 — Arrêt w démarrage",
+    "en": "Q9 — Shutdown then startup"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "SHUTDOWN : les 3 messages",
+      "dar": "SHUTDOWN : 3 messages",
+      "en": "SHUTDOWN: the 3 messages"
+     },
+     "body": {
+      "fr": "**Database closed.** → datafiles et redo logs fermés (fin de OPEN). **Database dismounted.** → fichiers de contrôle fermés (fin de MOUNT). **ORACLE instance shut down.** → SGA libérée et processus d'arrière-plan arrêtés (fin de NOMOUNT). C'est l'escalier de démarrage **descendu à l'envers**.",
+      "dar": "**Database closed** (datafiles) → **Database dismounted** (control files) → **instance shut down** (SGA + processus).",
+      "en": "**Database closed** → **Database dismounted** → **ORACLE instance shut down**: the startup ladder in reverse."
+     },
+     "code": "SQL> shutdown\nDatabase closed.\nDatabase dismounted.\nORACLE instance shut down."
+    },
+    {
+     "title": {
+      "fr": "STARTUP : ce qui s'affiche",
+      "dar": "STARTUP : chnou kayban",
+      "en": "STARTUP: what is displayed"
+     },
+     "body": {
+      "fr": "**ORACLE instance started** + les tailles de la SGA (**Total System Global Area, Fixed Size, Variable Size, Database Buffers, Redo Buffers**) = étape NOMOUNT ; **Database mounted.** = MOUNT ; **Database opened.** = OPEN.",
+      "dar": "**instance started** + tailles SGA = NOMOUNT ; **mounted** = MOUNT ; **opened** = OPEN.",
+      "en": "**instance started** + SGA sizes = NOMOUNT; **mounted** = MOUNT; **opened** = OPEN."
+     },
+     "code": "SQL> startup\nORACLE instance started.\nTotal System Global Area ... bytes\nFixed Size / Variable Size / Database Buffers / Redo Buffers\nDatabase mounted.\nDatabase opened."
+    },
+    {
+     "title": {
+      "fr": "Composants de la SGA",
+      "dar": "Composants dyal SGA",
+      "en": "SGA components"
+     },
+     "body": {
+      "fr": "`v$sgainfo` donne la **taille** de chaque composant (Buffer Cache, Shared Pool, Large Pool, Java Pool, Streams Pool, Redo Buffers…) ; `v$sgastat` donne l'**utilisation détaillée** (pool, nom, octets).",
+      "dar": "`v$sgainfo` = **tailles** ; `v$sgastat` = **isti3mal mfassal**.",
+      "en": "`v$sgainfo` = **sizes**; `v$sgastat` = **detailed usage**."
+     },
+     "code": "SQL> select * from v$sgainfo;\nSQL> select * from v$sgastat;"
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "`SHUTDOWN` sans option = **NORMAL** : si une autre fenêtre est encore connectée, la commande **attend**. C'est pour ça que le TP demande de **fermer toutes les fenêtres sauf SYS** avant.",
+    "dar": "`SHUTDOWN` bla option = **NORMAL** : kaytsenna ga3 sessions → **sedd ga3 fenêtres** 9bel.",
+    "en": "Plain `SHUTDOWN` = **NORMAL** and waits for other sessions → **close the other windows** first."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-43",
+    "or-46"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "v$session : SID + SERIAL# identifient une session ; USERNAME vide = processus d'arrière-plan ; PADDR = processus serveur.",
+   "dar": "v$session : SID, SERIAL#, PADDR.",
+   "en": "v$session: SID + SERIAL#, empty USERNAME = background, PADDR = server process."
+  },
+  {
+   "fr": "Une connexion peut porter plusieurs sessions (AUTOTRACE) ; chaque nouvelle connexion = nouvelle session et nouveau processus serveur (dédié).",
+   "dar": "Connexion / sessions.",
+   "en": "One connection, several sessions; each connection its own session."
+  },
+  {
+   "fr": "ALTER SYSTEM KILL SESSION 'sid,serial#' → ORA-00028 dans la session tuée ; les autres sessions continuent.",
+   "dar": "KILL → ORA-00028.",
+   "en": "KILL → ORA-00028; others continue."
+  },
+  {
+   "fr": "SHUTDOWN : closed → dismounted → instance shut down ; STARTUP : instance started (SGA) → mounted → opened.",
+   "dar": "Messages dyal SHUTDOWN / STARTUP.",
+   "en": "SHUTDOWN / STARTUP messages."
+  }
+ ]
+}

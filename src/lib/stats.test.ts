@@ -88,3 +88,24 @@ describe('compute registry', () => {
     expect(S.zPower(40, 40, 2, 25, 0.05, 'two')).toBeCloseTo(0.05, 6);
   });
 });
+
+describe('descriptive statistics and regression (Chap 0 / Chap 2)', () => {
+  it('quantiles follow the pandas convention', async () => {
+    const { quantile, iqrBounds } = await import('./stats');
+    const x = [25, 32, 45, 28, 35, 40, 40];
+    expect(quantile(x, 0.5)).toBe(35);
+    expect(quantile(x, 0.25)).toBe(30);
+    expect(quantile(x, 0.75)).toBe(40);
+    expect(iqrBounds([12, 14, 15, 15, 16, 18, 19, 20, 95]).outliers).toBe(1);
+  });
+  it('covariance, correlation and least squares', async () => {
+    const { covariance, correlation, linReg } = await import('./stats');
+    const x = [1, 2, 3, 4, 5];
+    const y = [2, 4, 5, 4, 5];
+    expect(covariance(x, y)).toBeCloseTo(1.2, 10);
+    expect(correlation(x, y)).toBeCloseTo(0.7746, 4);
+    const r = linReg(x, y);
+    expect(r.a).toBeCloseTo(0.6, 10);
+    expect(r.b).toBeCloseTo(2.2, 10);
+  });
+});

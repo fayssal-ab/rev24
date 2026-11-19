@@ -3,56 +3,212 @@
  "module": "ro",
  "order": 6,
  "title": {
-  "fr": "Plus court chemin : Dijkstra",
-  "dar": "Dijkstra",
-  "en": "Shortest path: Dijkstra"
+  "fr": "Chap 6 — Plus court chemin : algorithme de Dijkstra",
+  "dar": "Fasl 6 — A9sar tri9 : Dijkstra",
+  "en": "Ch. 6 — Shortest path: Dijkstra's algorithm"
  },
  "summary": {
-  "fr": "Algorithme de Dijkstra et tableau d'itérations.",
-  "dar": "Dijkstra.",
-  "en": "Dijkstra with iteration table."
+  "fr": "Principe, étapes, tableau d'itérations et lecture du chemin à rebours, sur la partie B du contrôle 2025 (B → E).",
+  "dar": "Dijkstra b tableau 3la Partie B dyal contrôle (B → E).",
+  "en": "Principle, steps, iteration table and path reconstruction on exam part B (B → E)."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 35,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Algorithme",
-    "dar": "Algorithme",
-    "en": "Algorithm"
+    "fr": "1. Le problème",
+    "dar": "1. L mochkil",
+    "en": "1. The problem"
    }
   },
   {
    "type": "text",
    "body": {
-    "fr": "Poids **≥ 0**. 1) d(source) = 0, autres = ∞. 2) Fixer le sommet non traité de plus petite distance u. 3) Relâcher ses voisins : **d(v) = min(d(v), d(u) + w(u,v))**, noter le prédécesseur. 4) Recommencer ; reconstruire le chemin à rebours.",
-    "dar": "d = 0 / ∞ ; fixe min ; relâche ; à rebours.",
-    "en": "Init, fix min, relax, backtrack."
+    "fr": "Graphe **pondéré à poids positifs** (temps, distances). On cherche la chaîne de **poids total minimal** d'un sommet de départ à tous les autres. Dijkstra **fixe** à chaque étape le sommet non fixé de plus petite distance provisoire : sa distance est alors **définitive**.",
+    "dar": "Graphe b wazn **mojab**. Bghina **a9sar tri9** mn sommet l kolchi. Dijkstra kay**fixi** kol merra sommet li 3ando **a9al distance**.",
+    "en": "Weighted graph with **non-negative** weights. Dijkstra **fixes** at each step the unfixed vertex with the smallest tentative distance — it is then **final**."
    }
   },
   {
-   "type": "code",
-   "lang": "text",
-   "code": "it | fixé |  A    B    C    D    E     F\n 0 |  B   |  ∞    0    9B   5B   ∞     ∞\n 1 |  D   |  8D   -    7D   -    17D   10D\n 2 |  C   |  8D   -    -    -    17D   10D\n 3 |  A   |  -    -    -    -    15A   10D\n 4 |  F   |  -    -    -    -    13F   -\n 5 |  E   |  B–D–F–E = 13",
-   "caption": {
-    "fr": "Tableau d'itérations (format examen)",
-    "dar": "Tableau",
-    "en": "Exam-format table"
+   "type": "steps",
+   "title": {
+    "fr": "Les étapes",
+    "dar": "Les étapes",
+    "en": "The steps"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Initialiser",
+      "dar": "Bda",
+      "en": "Initialise"
+     },
+     "body": {
+      "fr": "d(départ) = 0, d(autres) = ∞, aucun prédécesseur.",
+      "dar": "d(départ) = 0, l ba9i ∞.",
+      "en": "d(start) = 0, others ∞."
+     }
+    },
+    {
+     "title": {
+      "fr": "Fixer le minimum",
+      "dar": "Fixi l min",
+      "en": "Fix the minimum"
+     },
+     "body": {
+      "fr": "Parmi les sommets non fixés, prendre celui de plus petite distance ; il devient **fixé**.",
+      "dar": "Khod a9al distance → **fixé**.",
+      "en": "Take the smallest distance → **fixed**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Relâcher ses voisins",
+      "dar": "Beddel jiran",
+      "en": "Relax neighbours"
+     },
+     "body": {
+      "fr": "Pour chaque voisin v non fixé : si d(u) + poids(u, v) < d(v), alors d(v) ← d(u) + poids(u, v) et **prédécesseur(v) = u**. On note « distance ; prédécesseur ».",
+      "dar": "Ila d(u) + w < d(v) → beddel w **préd = u**.",
+      "en": "If d(u) + w < d(v), update and set **pred(v) = u**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Répéter puis remonter",
+      "dar": "3awed w rje3",
+      "en": "Repeat then backtrack"
+     },
+     "body": {
+      "fr": "Quand la cible est fixée, on lit le chemin **à l'envers** en suivant les prédécesseurs.",
+      "dar": "Rje3 b **les prédécesseurs**.",
+      "en": "Follow **predecessors** back from the target."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "algo": "dijkstra",
+    "start": "B",
+    "target": "E",
+    "pos": {
+     "A": [
+      50,
+      8
+     ],
+     "B": [
+      92,
+      50
+     ],
+     "C": [
+      70,
+      90
+     ],
+     "D": [
+      46,
+      56
+     ],
+     "E": [
+      8,
+      50
+     ],
+     "F": [
+      28,
+      90
+     ]
+    }
    }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Contrôle 2025, partie B : de B à E",
+    "dar": "Partie B : B → E",
+    "en": "Exam part B: B to E"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Départ B",
+      "dar": "Bda B",
+      "en": "Start B"
+     },
+     "body": {
+      "fr": "On fixe B (0). Voisins : C = 9 ; B, D = 5 ; B.",
+      "dar": "B = 0 → C 9, D 5.",
+      "en": "B = 0 → C 9, D 5."
+     }
+    },
+    {
+     "title": {
+      "fr": "Fixer D (5)",
+      "dar": "Fixi D (5)",
+      "en": "Fix D (5)"
+     },
+     "body": {
+      "fr": "Via D : A = 5 + 3 = 8 ; C = 5 + 2 = **7** < 9 (mise à jour) ; E = 5 + 12 = 17 ; F = 5 + 5 = 10.",
+      "dar": "A 8, C 7, E 17, F 10.",
+      "en": "A 8, C 7, E 17, F 10."
+     }
+    },
+    {
+     "title": {
+      "fr": "Fixer C (7) puis A (8)",
+      "dar": "C (7) w A (8)",
+      "en": "Fix C (7) then A (8)"
+     },
+     "body": {
+      "fr": "Via C : F = 7 + 3 = 10 (pas mieux). Via A : E = 8 + 7 = **15** < 17 ; F = 8 + 2 = 10 (égal).",
+      "dar": "E 15.",
+      "en": "E becomes 15."
+     }
+    },
+    {
+     "title": {
+      "fr": "Fixer F (10)",
+      "dar": "Fixi F (10)",
+      "en": "Fix F (10)"
+     },
+     "body": {
+      "fr": "Via F : E = 10 + 3 = **13** < 15 → prédécesseur de E = F.",
+      "dar": "E = **13** (préd F).",
+      "en": "E = **13** (pred F)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Fixer E (13) et remonter",
+      "dar": "E (13) w rje3",
+      "en": "Fix E (13) and backtrack"
+     },
+     "body": {
+      "fr": "E ← F ← D ← B : chemin **B – D – F – E**, temps minimal **13 minutes**.",
+      "dar": "**B–D–F–E = 13 min**.",
+      "en": "**B–D–F–E = 13 minutes**."
+     }
+    }
+   ]
   },
   {
    "type": "callout",
-   "kind": "tip",
+   "kind": "trap",
    "body": {
-    "fr": "Le tableau d'itérations est **obligatoire** au contrôle.",
-    "dar": "Tableau darouri.",
-    "en": "The table is mandatory."
+    "fr": "Ne jamais mettre à jour un sommet **déjà fixé**, et ne pas s'arrêter dès qu'on « voit » la cible (17 puis 15) : sa distance n'est définitive que **quand elle est fixée** (13).",
+    "dar": "Ma tbeddelch sommet **fixé**, w ma twa9efch 9bel ma tfixi l cible.",
+    "en": "Never update a **fixed** vertex; the target is final only **once fixed**."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
     "ro-50",
+    "ro-51",
+    "ro-52",
     "ro-53",
     "ro-54"
    ]
@@ -60,14 +216,19 @@
  ],
  "keyPoints": [
   {
-   "fr": "Dijkstra : poids ≥ 0, fixer le min, relâcher, prédécesseurs.",
+   "fr": "Dijkstra : poids ≥ 0 ; on fixe le sommet de plus petite distance, on relâche ses voisins, on note « distance ; prédécesseur ».",
    "dar": "Dijkstra.",
-   "en": "Dijkstra steps."
+   "en": "Dijkstra rules."
   },
   {
-   "fr": "Contrôle : B → E = 13 min.",
-   "dar": "13.",
-   "en": "Exam: 13 min."
+   "fr": "Le chemin se lit à rebours avec les prédécesseurs.",
+   "dar": "Rje3 b préd.",
+   "en": "Backtrack with predecessors."
+  },
+  {
+   "fr": "Contrôle 2025 : B → E = B–D–F–E, 13 minutes.",
+   "dar": "B → E = 13.",
+   "en": "Exam: B → E = 13."
   }
  ]
 }

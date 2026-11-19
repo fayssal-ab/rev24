@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { PageTitle } from '../components/Layout';
+import { Icon } from '../components/Icon';
+import { LivePrompter } from './oral/LivePrompter';
 import { useT } from '../hooks/useT';
 import { CHECKLIST, FACTS, LEXICON, QA, QUIZ, SLIDES, TECH, TRANSITIONS, WARMUP, type Slide } from '../content/oral/rmrf';
 import { listVoices, setPreferredVoice, speak as tts, stopSpeak } from '../lib/tts';
@@ -65,14 +66,14 @@ type Lang3 = 'fr' | 'dar' | 'en';
 const tr = (l: Lang3, fr: string, dar: string, en: string) => (l === 'dar' ? dar : l === 'en' ? en : fr);
 
 /* ───────── page ───────── */
-const TABS = ['slides', 'lexique', 'repet', 'jury', 'quiz', 'jourj'] as const;
+const TABS = ['live', 'slides', 'lexique', 'repet', 'jury', 'quiz', 'jourj'] as const;
 type Tab = (typeof TABS)[number];
-const TAB_LABEL: Record<Tab, string> = { slides: '🖼️ Slides', lexique: '🔤 Lexique', repet: '🎤 Répétition', jury: '❓ Jury', quiz: '✅ Quiz', jourj: '📅 Jour J' };
+const TAB_LABEL: Record<Tab, [string, string]> = { live: ['Live', 'mic'], slides: ['Slides', 'image'], lexique: ['Lexique', 'book'], repet: ['Répétition', 'reset'], jury: ['Jury', 'chat'], quiz: ['Quiz', 'quiz'], jourj: ['Jour J', 'flag'] };
 
 export default function OralPage() {
   const { lang } = useT();
   const l = lang as Lang3;
-  const [tab, setTab] = useState<Tab>('slides');
+  const [tab, setTab] = useState<Tab>('live');
   const [prudent, setPrudent] = useState(false);
   const [voice, setVoice] = useState<'en-US' | 'en-GB'>('en-US');
   const [prog, save] = useProg();
@@ -82,25 +83,32 @@ export default function OralPage() {
 
   return (
     <div className="pb-6">
-      <PageTitle back="/" title="Coach Oral — rm -rf /" sub={tr(l, 'Slides 9 → 12 (partie de Fayssal) · ~4 min', 'Slides 9 → 12 (part dyal Fayssal) · ~4 d9aye9', 'Slides 9 → 12 (Fayssal’s part) · ~4 min')} />
-      {!SR && <p className="mb-3 rounded-xl border border-amber-400/50 bg-amber-400/10 p-3 text-sm">{tr(l, 'Sur ce navigateur, utilise Chrome (Android ou ordinateur) pour la correction automatique.', 'F had navigateur, khdem b Chrome (Android wla PC) bach ykoun correction automatique.', 'Use Chrome (Android or desktop) for automatic speech correction.')}</p>}
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <div className="eyebrow mb-1">{tr(l, 'Présentation', 'Présentation', 'Presentation')}</div>
+          <h2 className="text-xl font-bold sm:text-2xl">Coach oral · rm -rf /</h2>
+          <p className="text-sm text-muted">{tr(l, 'Slides 9 → 12 · environ 4 minutes · en anglais', 'Slides 9 → 12 · ta9riban 4 d9aye9 · b l anglais', 'Slides 9 → 12 · about 4 minutes · in English')}</p>
+        </div>
+      </div>
+      {!SR && <p className="mb-3 flex items-start gap-2 rounded-xl border border-warn/40 bg-warn/10 p-3 text-sm"><Icon name="alert" size={16} className="mt-0.5 shrink-0 text-warn" />{tr(l, 'Sur ce navigateur, utilise Chrome (Android ou ordinateur) pour la correction automatique.', 'F had navigateur, khdem b Chrome (Android wla PC) bach ykoun correction automatique.', 'Use Chrome (Android or desktop) for automatic speech correction.')}</p>}
       <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
         <label className="chip cursor-pointer">
           <input type="checkbox" checked={prudent} onChange={(e) => setPrudent(e.target.checked)} /> {tr(l, 'Version prudente', 'Version prudente', 'Cautious version')}
         </label>
         <select value={voice} onChange={(e) => setVoice(e.target.value as 'en-US')} className="chip bg-surface">
-          <option value="en-US">🇺🇸 en-US</option>
-          <option value="en-GB">🇬🇧 en-GB</option>
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
         </select>
         <VoicePicker lang={voice} />
       </div>
-      <div className="sticky top-[52px] z-20 -mx-4 mb-4 flex gap-1 overflow-x-auto border-b border-line bg-bg/90 px-4 py-2 backdrop-blur">
+      <div className="sticky top-16 z-20 mb-4 flex gap-1 overflow-x-auto rounded-xl border border-line bg-surface/95 p-1 backdrop-blur">
         {TABS.map((t) => (
-          <button key={t} onClick={() => setTab(t)} className={`chip shrink-0 ${tab === t ? 'border-accent text-accent' : ''}`}>
-            {TAB_LABEL[t]}
+          <button key={t} onClick={() => setTab(t)} className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${tab === t ? 'bg-accent text-white shadow-sm dark:text-bg' : 'text-muted hover:bg-surface2 hover:text-fg'}`}>
+            <Icon name={TAB_LABEL[t][1]} size={15} /> {TAB_LABEL[t][0]}
           </button>
         ))}
       </div>
+      {tab === 'live' && <LivePrompter slides={slides} l={l} />}
       {tab === 'slides' && <SlidesTab slides={slides} l={l} prog={prog} save={save} />}
       {tab === 'lexique' && <LexiconTab l={l} />}
       {tab === 'repet' && <RehearsalTab slides={slides} l={l} prog={prog} save={save} />}
@@ -225,27 +233,27 @@ function SlidesTab({ slides, l, prog, save }: TabProps) {
       touch.current = null;
     }}>
       <div className="mb-2 flex items-center justify-between">
-        <button className="btn" onClick={() => go(-1)} disabled={i === 0}>◀</button>
+        <button className="btn-ghost" onClick={() => go(-1)} disabled={i === 0} aria-label="previous"><Icon name="left" size={16} /></button>
         <span className="font-semibold">Slide {s.n} / 12</span>
-        <button className="btn" onClick={() => go(1)} disabled={i === slides.length - 1}>▶</button>
+        <button className="btn-ghost" onClick={() => go(1)} disabled={i === slides.length - 1} aria-label="next"><Icon name="right" size={16} /></button>
       </div>
       <SlidePreview n={s.n} />
       <div className="my-3 flex items-center gap-2 text-sm">
         {[0.7, 1, 1.2].map((r) => (
           <button key={r} onClick={() => setRate(r)} className={`chip ${rate === r ? 'border-accent text-accent' : ''}`}>{r}×</button>
         ))}
-        <button className="chip" onClick={() => speak(s.sentences.map((x) => x.en).join(' '), rate)}>🔊 {tr(l, 'Toute la slide', 'Slide kamla', 'Whole slide')}</button>
+        <button className="chip" onClick={() => speak(s.sentences.map((x) => x.en).join(' '), rate)}><Icon name="volume" size={14} /> {tr(l, 'Toute la slide', 'Slide kamla', 'Whole slide')}</button>
       </div>
       {word && (
         <div className="card mb-3 p-3 text-sm">
           <div className="flex items-center gap-2">
             <b className="text-lg">{word}</b>
-            <button className="chip" onClick={() => speak(word, 0.8)}>🔊</button>
-            <button className="ml-auto text-muted" onClick={() => setWord(null)}>✕</button>
+            <button className="chip" onClick={() => speak(word, 0.8)} aria-label="listen"><Icon name="volume" size={14} /></button>
+            <button className="ml-auto text-muted" onClick={() => setWord(null)} aria-label="close"><Icon name="x" size={16} /></button>
           </div>
           {info ? (
             <div className="mt-1">
-              IPA <span className="font-mono">{info[1]}</span> · <b>{info[2]}</b> · ⚠️ {info[3]}
+              IPA <span className="font-mono">{info[1]}</span> · <b>{info[2]}</b> · <Icon name="alert" size={13} className="inline text-warn" /> {info[3]}
             </div>
           ) : (
             <div className="mt-1 text-muted">{tr(l, 'Écoute et répète.', 'Sma3 w 3awd.', 'Listen and repeat.')}</div>
@@ -259,12 +267,12 @@ function SlidesTab({ slides, l, prog, save }: TabProps) {
       </ol>
       {s.n === 9 && (
         <details className="card mt-4 p-3 text-sm">
-          <summary className="cursor-pointer font-semibold">📚 Sources & précisions</summary>
+          <summary className="flex cursor-pointer items-center gap-2 font-semibold"><Icon name="book" size={15} /> Sources & précisions</summary>
           <ul className="mt-2 list-disc space-y-1 pl-5">{FACTS.map((f) => <li key={f}>{f}</li>)}</ul>
         </details>
       )}
       <details className="card mt-3 p-3 text-sm">
-        <summary className="cursor-pointer font-semibold">🛠️ {tr(l, 'Explications techniques', 'Charh technique', 'Technical notes')}</summary>
+        <summary className="flex cursor-pointer items-center gap-2 font-semibold"><Icon name="tool" size={15} /> {tr(l, 'Explications techniques', 'Charh technique', 'Technical notes')}</summary>
         {TECH.map(([t, dar, fr, en]) => (
           <div key={t} className="mt-2">
             <code className="font-mono font-bold text-accent">{t}</code>
@@ -284,9 +292,9 @@ function SteamAnim() {
       <div>STEAMROOT=&quot;{empty ? '' : '/home/user/.steam'}&quot;</div>
       <div>
         rm -rf &quot;<span className={empty ? 'text-rose-400' : ''}>{empty ? '' : '/home/user/.steam'}</span>/&quot;*
-        {empty && <span className="text-rose-400">  →  rm -rf &quot;/&quot;*  💥</span>}
+        {empty && <span className="text-rose-400">  →  rm -rf &quot;/&quot;*</span>}
       </div>
-      <button className="mt-2 rounded bg-emerald-400/20 px-2 py-1" onClick={() => setEmpty((e) => !e)}>{empty ? '↺ reset' : '▶ vider la variable'}</button>
+      <button className="mt-2 rounded bg-emerald-400/20 px-2 py-1" onClick={() => setEmpty((e) => !e)}>{empty ? 'reset' : 'vider la variable'}</button>
     </div>
   );
 }
@@ -318,18 +326,18 @@ function SentenceRow({ x, l, rate, onWord, best, onScore }: { id: string; x: Sli
         <Words text={x.en} bad={res?.ok.length ? res.ok : undefined} onWord={onWord} hi={hi} />
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-1.5 text-sm">
-        <button className="chip" onClick={play} aria-label="listen">🔊</button>
-        {SR && <button className={`chip ${rec ? 'border-rose-400 text-rose-400' : ''}`} onClick={record}>{rec ? '⏹' : '🎙️'}</button>}
-        <button className="chip" onClick={() => setOpen((o) => !o)}>💬</button>
+        <button className="chip" onClick={play} aria-label="listen"><Icon name="volume" size={14} /></button>
+        {SR && <button className={`chip ${rec ? 'border-bad text-bad' : ''}`} onClick={record} aria-label="record"><Icon name={rec ? 'stop' : 'mic'} size={14} /></button>}
+        <button className="chip" onClick={() => setOpen((o) => !o)} aria-label="translation"><Icon name="chat" size={14} /></button>
         {res && res.ok.length > 0 && <span className={`chip ${res.score >= 80 ? 'text-ok' : 'text-amber-400'}`}>{res.score}/100</span>}
         {best !== undefined && <span className="text-xs text-muted">best {best}</span>}
       </div>
       {res?.text && <p className="mt-1 text-xs italic text-muted">« {res.text} »</p>}
       {open && (
         <div className="mt-2 space-y-1 border-l-2 border-accent pl-3 text-sm">
-          <p>🇲🇦 {x.dar}</p>
-          <p>🇫🇷 {x.fr}</p>
-          {x.idea && <p className="text-muted">💡 {tr(l, 'Idée', 'Lfikra', 'Idea')} : {x.idea}</p>}
+          <p><b className="text-xs text-muted">DAR</b> {x.dar}</p>
+          <p><b className="text-xs text-muted">FR</b> {x.fr}</p>
+          {x.idea && <p className="text-muted">{tr(l, 'Idée', 'Lfikra', 'Idea')} : {x.idea}</p>}
         </div>
       )}
     </li>
@@ -352,12 +360,12 @@ function LexiconTab({ l }: { l: Lang3 }) {
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-left text-muted">
-            <tr><th className="p-1">Mot</th><th className="p-1">IPA</th><th className="p-1">Kifach tgoulha</th><th className="p-1">⚠️</th></tr>
+            <tr><th className="p-1">Mot</th><th className="p-1">IPA</th><th className="p-1">Kifach tgoulha</th><th className="p-1">{tr(l, 'Erreur fréquente', 'Ghalat', 'Common mistake')}</th></tr>
           </thead>
           <tbody>
             {LEXICON.map(([w, ipa, k, err]) => (
               <tr key={w} className="border-t border-line">
-                <td className="p-1"><button className="font-semibold text-accent" onClick={() => speak(w, 0.8)}>🔊 {w}</button></td>
+                <td className="p-1"><button className="font-semibold text-accent" onClick={() => speak(w, 0.8)}><Icon name="volume" size={13} className="mr-1 inline" />{w}</button></td>
                 <td className="p-1 font-mono">{ipa}</td>
                 <td className="p-1 font-bold">{k}</td>
                 <td className="p-1 text-muted">{err}</td>
@@ -378,7 +386,7 @@ function LexiconTab({ l }: { l: Lang3 }) {
 }
 
 /* ───────── tab: rehearsal modes ───────── */
-const MODES = ['1 Karaoké', '2 Téléprompteur', '3 Script qui disparaît', '4 Mots-clés', '5 À l’aveugle', '6 Transitions', '7 Répétition générale'];
+const MODES = ['Karaoké', 'Téléprompteur', 'Script qui disparaît', 'Mots-clés', 'À l’aveugle', 'Transitions', 'Répétition générale'];
 
 function RehearsalTab({ slides, l, prog, save }: TabProps) {
   const [mode, setMode] = useState(0);
@@ -404,7 +412,7 @@ function RehearsalTab({ slides, l, prog, save }: TabProps) {
       {mode === 0 && <Karaoke text={text} l={l} />}
       {mode === 1 && <Teleprompter text={text} />}
       {mode === 2 && <Fading s={s} l={l} level={prog.level[s.n] ?? 1} setLevel={(v) => save((p) => ({ ...p, level: { ...p.level, [s.n]: v } }))} />}
-      {mode === 3 && <div className="card p-4 text-lg font-semibold">🔑 {s.cues}<p className="mt-2 text-sm font-normal text-muted">{s.keywords.join(' · ')}</p></div>}
+      {mode === 3 && <div className="card p-4 text-lg font-semibold"><Icon name="key" size={18} className="mr-2 inline text-accent" />{s.cues}<p className="mt-2 text-sm font-normal text-muted">{s.keywords.join(' · ')}</p></div>}
       {mode === 4 && <Blind slides={[s]} l={l} onTime={(ms) => save((p) => ({ ...p, times: { ...p.times, [s.n]: Math.min(ms, p.times[s.n] ?? Infinity) } }))} />}
       {mode === 5 && (
         <ol className="space-y-2">
@@ -412,7 +420,7 @@ function RehearsalTab({ slides, l, prog, save }: TabProps) {
             <li key={t} className="card flex items-center gap-2 p-3">
               <span className="text-xs text-muted">{['8→9', '9→10', '10→11', '11→12', 'fin'][k]}</span>
               <span className="flex-1 font-semibold">{t}</span>
-              <button className="chip" onClick={() => speak(t)}>🔊</button>
+              <button className="chip" onClick={() => speak(t)} aria-label="listen"><Icon name="volume" size={14} /></button>
             </li>
           ))}
           <li className="text-sm text-muted">→ $ questions --welcome</li>
@@ -420,7 +428,7 @@ function RehearsalTab({ slides, l, prog, save }: TabProps) {
       )}
       {mode === 6 && <Blind slides={slides} l={l} full />}
       {Object.keys(prog.times).length > 0 && (
-        <p className="mt-4 text-xs text-muted">⏱ best : {Object.entries(prog.times).map(([n, ms]) => `S${n} ${Math.round(ms / 1000)}s`).join(' · ')}</p>
+        <p className="mt-4 text-xs text-muted">Best : {Object.entries(prog.times).map(([n, ms]) => `S${n} ${Math.round(ms / 1000)}s`).join(' · ')}</p>
       )}
     </div>
   );
@@ -437,8 +445,8 @@ function Karaoke({ text, l }: { text: string; l: Lang3 }) {
   return (
     <div>
       <div className="mb-2 flex items-center gap-2 text-sm">
-        <button className="btn" onClick={() => speak(text, rate, (c) => setHi(starts.filter((x) => x <= c).length - 1), () => setHi(undefined))}>▶ {tr(l, 'Lire avec la voix', '9ra m3a sout', 'Read along')}</button>
-        <button className="chip" onClick={() => { stopSpeak(); setHi(undefined); }}>⏹</button>
+        <button className="btn-primary" onClick={() => speak(text, rate, (c) => setHi(starts.filter((x) => x <= c).length - 1), () => setHi(undefined))}><Icon name="play" size={15} /> {tr(l, 'Lire avec la voix', '9ra m3a sout', 'Read along')}</button>
+        <button className="chip" onClick={() => { stopSpeak(); setHi(undefined); }} aria-label="stop"><Icon name="stop" size={13} /></button>
         <input type="range" min={0.6} max={1.3} step={0.1} value={rate} onChange={(e) => setRate(+e.target.value)} /> {rate}×
       </div>
       <div className="card p-4 text-xl leading-relaxed">
@@ -472,13 +480,13 @@ function Teleprompter({ text }: { text: string }) {
   return (
     <div>
       <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
-        <button className="btn" onClick={() => setRun((r) => !r)}>{run ? '⏸' : '▶'}</button>
-        <button className="chip" onClick={() => { if (box.current) box.current.scrollTop = 0; }}>↺</button>
+        <button className="btn-primary" onClick={() => setRun((r) => !r)} aria-label="play"><Icon name={run ? 'pause' : 'play'} size={15} /></button>
+        <button className="chip" onClick={() => { if (box.current) box.current.scrollTop = 0; }} aria-label="restart"><Icon name="reset" size={13} /></button>
         <input type="range" min={90} max={170} value={speed} onChange={(e) => setSpeed(+e.target.value)} /> {speed} mots/min
         <label className="chip"><input type="checkbox" checked={mirror} onChange={(e) => setMirror(e.target.checked)} /> miroir</label>
-        <button className="chip" onClick={() => box.current?.requestFullscreen?.()}>⛶</button>
+        <button className="chip" onClick={() => box.current?.requestFullscreen?.()} aria-label="fullscreen"><Icon name="maximize" size={13} /></button>
       </div>
-      <div ref={box} className="h-[55vh] overflow-y-auto rounded-2xl bg-black px-6 py-[25vh] text-3xl font-semibold leading-snug text-white" style={mirror ? { transform: 'scaleX(-1)' } : undefined}>
+      <div ref={box} className="h-[55vh] overflow-y-auto rounded-2xl bg-[#0a1424] px-6 py-[25vh] text-3xl font-semibold leading-snug text-white" style={mirror ? { transform: 'scaleX(-1)' } : undefined}>
         {text}
       </div>
     </div>
@@ -493,7 +501,7 @@ function Fading({ s, l, level, setLevel }: { s: Slide; l: Lang3; level: number; 
         {[0, 1, 2, 3, 4].map((v) => (
           <button key={v} onClick={() => setLevel(v)} className={`chip ${level === v ? 'border-accent text-accent' : ''}`}>{v}</button>
         ))}
-        <button className="btn ml-auto" onClick={() => setLevel(Math.min(4, level + 1))}>+25 % ➜</button>
+        <button className="btn-ghost btn-sm ml-auto" onClick={() => setLevel(Math.min(4, level + 1))}>+25 % <Icon name="right" size={14} /></button>
       </div>
       <div className="card space-y-2 p-4 text-lg leading-relaxed">
         {s.sentences.map((x, k) => <p key={k}>{maskWords(x.en, level, s.keywords)}</p>)}
@@ -543,25 +551,25 @@ function Blind({ slides, l, full, onTime }: { slides: Slide[]; l: Lang3; full?: 
   return (
     <div>
       {start === null ? (
-        <button className="btn mb-3" onClick={begin}>▶ {full ? tr(l, 'Répétition générale (4 slides)', 'Répétition générale (4 slides)', 'Full run (4 slides)') : tr(l, 'Commencer à l’aveugle', 'Bda bla script', 'Start blind')}</button>
+        <button className="btn-primary mb-3" onClick={begin}><Icon name="play" size={15} /> {full ? tr(l, 'Répétition générale (4 slides)', 'Répétition générale (4 slides)', 'Full run (4 slides)') : tr(l, 'Commencer à l’aveugle', 'Bda bla script', 'Start blind')}</button>
       ) : (
         <div className="mb-3 flex items-center gap-3">
           <span className={`font-mono text-3xl font-bold ${el > (full ? 300000 : 60000) ? 'text-rose-400' : el > (full ? 240000 : 45000) ? 'text-amber-400' : 'text-ok'}`}>
             {Math.floor(el / 60000)}:{String(Math.floor(el / 1000) % 60).padStart(2, '0')}
           </span>
           <span className="text-sm text-muted">/ {target / 60000}:00</span>
-          <button className="btn ml-auto" onClick={next}>{k < slides.length - 1 ? 'Slide suivante ➜' : '⏹ Fin'}</button>
+          <button className="btn-primary ml-auto" onClick={next}>{k < slides.length - 1 ? <>Slide suivante <Icon name="right" size={15} /></> : <><Icon name="stop" size={15} /> Fin</>}</button>
         </div>
       )}
       {start !== null && <SlidePreview n={slides[k].n} />}
       {start !== null && said && <p className="mt-2 text-xs italic text-muted">{said.slice(-160)}</p>}
       {report && (
         <div className="card mt-3 space-y-1 p-4 text-sm">
-          <b>📊 Rapport</b>
+          <b className="flex items-center gap-2"><Icon name="chart" size={15} /> Rapport</b>
           {report.per.map((ms, j) => (
-            <div key={j} className={ms >= 45000 && ms <= 60000 ? 'text-ok' : 'text-amber-400'}>Slide {slides[j].n} : {Math.round(ms / 1000)} s {ms >= 45000 && ms <= 60000 ? '✓' : '(cible 45–60 s)'}</div>
+            <div key={j} className={ms >= 45000 && ms <= 60000 ? 'text-ok' : 'text-amber-400'}>Slide {slides[j].n} : {Math.round(ms / 1000)} s {ms >= 45000 && ms <= 60000 ? 'OK' : '(cible 45–60 s)'}</div>
           ))}
-          <div>Total : {Math.round(report.ms / 1000)} s {full && (report.ms > 300000 ? '⚠️ > 5 min' : '')}</div>
+          <div>Total : {Math.round(report.ms / 1000)} s {full && (report.ms > 300000 ? '— plus de 5 min' : '')}</div>
           {report.said ? (
             <>
               <div>Débit : {wpm(words(report.said).length, report.ms)} mots/min (cible 120–140)</div>
@@ -571,7 +579,7 @@ function Blind({ slides, l, full, onTime }: { slides: Slide[]; l: Lang3; full?: 
                 {(() => {
                   const sp = new Set(words(report.said));
                   const miss = slides.flatMap((s) => s.keywords).filter((w) => !sp.has(norm(w)));
-                  return miss.length ? miss.join(', ') : '✓ aucun';
+                  return miss.length ? miss.join(', ') : 'aucun';
                 })()}
               </div>
               <div>Score global : {scoreSpeech(all, report.said).score}/100</div>
@@ -605,28 +613,28 @@ function JuryTab({ l, prog, save }: { l: Lang3; prog: Prog; save: (f: (p: Prog) 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between text-sm">
-        <button className="btn" onClick={() => go(-1)}>◀</button>
-        <span>{k + 1} / {QA.length} · {prog.qa.length} {tr(l, 'répondues', 'jawbti', 'answered')} {prog.qa.length >= 15 && '🏅 Jury proof'}</span>
-        <button className="btn" onClick={() => go(1)}>▶</button>
+        <button className="btn-ghost" onClick={() => go(-1)} aria-label="previous"><Icon name="left" size={16} /></button>
+        <span>{k + 1} / {QA.length} · {prog.qa.length} {tr(l, 'répondues', 'jawbti', 'answered')} {prog.qa.length >= 15 && <span className="chip text-ok"><Icon name="award" size={13} /> Jury proof</span>}</span>
+        <button className="btn-ghost" onClick={() => go(1)} aria-label="next"><Icon name="right" size={16} /></button>
       </div>
       <div className="card p-4">
         <p className="text-lg font-semibold">{q}</p>
         <div className="mt-2 flex gap-2">
-          <button className="chip" onClick={() => speak(q)}>🔊 {tr(l, 'Question du jury', 'Sou2al dyal jury', 'Jury asks')}</button>
+          <button className="chip" onClick={() => speak(q)}><Icon name="volume" size={13} /> {tr(l, 'Question du jury', 'Sou2al dyal jury', 'Jury asks')}</button>
           {SR && (
             <button className={`chip ${rec ? 'border-rose-400 text-rose-400' : ''}`} onClick={() => {
               if (rec) return rec.stop();
               setRec(listen((t, fin) => { setAns(t); if (fin) setRec(null); }));
-            }}>{rec ? '⏹' : '🎙️ ' + tr(l, 'Répondre', 'Jaweb', 'Answer')}</button>
+            }}>{rec ? <Icon name="stop" size={13} /> : <><Icon name="mic" size={13} /> {tr(l, 'Répondre', 'Jaweb', 'Answer')}</>}</button>
           )}
-          <button className="chip" onClick={reveal}>👁️ {tr(l, 'Réponse modèle', 'Jawab namoudaji', 'Model answer')}</button>
+          <button className="chip" onClick={reveal}><Icon name="eye" size={13} /> {tr(l, 'Réponse modèle', 'Jawab namoudaji', 'Model answer')}</button>
         </div>
         {ans && <p className="mt-2 text-sm italic text-muted">« {ans} »</p>}
         {show && (
           <div className="mt-3 space-y-2 border-l-2 border-accent pl-3 text-sm">
-            <p><b>EN :</b> {model} <button onClick={() => speak(model)}>🔊</button></p>
-            <p>🇲🇦 {dar}</p>
-            {ans && <p>{kw.map((w) => <span key={w} className="mr-2">{sp.has(norm(w)) ? '✓' : '✗'} {w}</span>)}</p>}
+            <p><b>EN :</b> {model} <button onClick={() => speak(model)} aria-label="listen"><Icon name="volume" size={13} className="inline" /></button></p>
+            <p><b className="text-xs text-muted">DAR</b> {dar}</p>
+            {ans && <p>{kw.map((w) => <span key={w} className={`mr-2 inline-flex items-center gap-1 ${sp.has(norm(w)) ? 'text-ok' : 'text-bad'}`}><Icon name={sp.has(norm(w)) ? 'check' : 'x'} size={12} /> {w}</span>)}</p>}
           </div>
         )}
       </div>
@@ -643,7 +651,7 @@ function QuizTab() {
     return (
       <div className="card p-6 text-center">
         <p className="text-2xl font-bold">{score} / {QUIZ.length}</p>
-        <button className="btn mt-3" onClick={() => { setK(0); setScore(0); setPick(null); }}>↺</button>
+        <button className="btn-ghost mt-3" onClick={() => { setK(0); setScore(0); setPick(null); }}><Icon name="reset" size={15} /> Recommencer</button>
       </div>
     );
   const [q, opts, ok] = QUIZ[k];
@@ -657,13 +665,13 @@ function QuizTab() {
             key={o}
             disabled={pick !== null}
             onClick={() => { setPick(j); if (j === ok) setScore(score + 1); }}
-            className={`rounded-xl border p-3 text-left ${pick === null ? 'border-line hover:border-accent' : j === ok ? 'border-emerald-400 bg-emerald-400/10' : j === pick ? 'border-rose-400 bg-rose-400/10' : 'border-line opacity-60'}`}
+            className={`rounded-xl border p-3 text-left ${pick === null ? 'border-line hover:border-accent' : j === ok ? 'border-ok bg-ok/10' : j === pick ? 'border-bad bg-bad/10' : 'border-line opacity-60'}`}
           >
             {o}
           </button>
         ))}
       </div>
-      {pick !== null && <button className="btn mt-3" onClick={() => { setK(k + 1); setPick(null); }}>➜</button>}
+      {pick !== null && <button className="btn-primary mt-3" onClick={() => { setK(k + 1); setPick(null); }}>Suivant <Icon name="right" size={15} /></button>}
     </div>
   );
 }
@@ -676,7 +684,7 @@ function DayTab({ l }: { l: Lang3 }) {
   return (
     <div className="space-y-4">
       <div className="card p-4">
-        <h2 className="mb-2 font-bold">✅ Checklist</h2>
+        <h2 className="mb-2 flex items-center gap-2 font-bold"><Icon name="checkCircle" size={17} className="text-accent" /> Checklist</h2>
         {CHECKLIST.map((c, j) => (
           <label key={c} className="flex items-center gap-2 py-1 text-sm">
             <input type="checkbox" checked={!!done[j]} onChange={(e) => setDone((d) => Object.assign([...d], { [j]: e.target.checked }))} /> {c}
@@ -684,12 +692,12 @@ function DayTab({ l }: { l: Lang3 }) {
         ))}
       </div>
       <div className="card p-4">
-        <h2 className="mb-2 font-bold">🔥 {tr(l, 'Échauffement 5 min', 'Échauffement 5 d9aye9', '5-min warm-up')}</h2>
+        <h2 className="mb-2 flex items-center gap-2 font-bold"><Icon name="flame" size={17} className="text-accent" /> {tr(l, 'Échauffement 5 min', 'Échauffement 5 d9aye9', '5-min warm-up')}</h2>
         <div className="mb-2 flex flex-wrap gap-1.5">
-          {WARMUP.map((w) => <button key={w} className="chip" onClick={() => speak(w, 0.8)}>🔊 {w}</button>)}
+          {WARMUP.map((w) => <button key={w} className="chip" onClick={() => speak(w, 0.8)}><Icon name="volume" size={13} /> {w}</button>)}
         </div>
-        <p className="text-sm"><b>×3</b> {first} <button onClick={() => speak(first)}>🔊</button></p>
-        <p className="mt-1 text-sm"><b>×3</b> {last} <button onClick={() => speak(last)}>🔊</button></p>
+        <p className="text-sm"><b>×3</b> {first} <button onClick={() => speak(first)} aria-label="listen"><Icon name="volume" size={13} className="inline" /></button></p>
+        <p className="mt-1 text-sm"><b>×3</b> {last} <button onClick={() => speak(last)} aria-label="listen"><Icon name="volume" size={13} className="inline" /></button></p>
       </div>
     </div>
   );
@@ -731,12 +739,12 @@ function VoicePicker({ lang }: { lang: string }) {
       >
         {list.map((v, i) => (
           <option key={v.name} value={v.name}>
-            {i === 0 ? '⭐ ' : ''}
             {v.name}
+            {i === 0 ? ' (recommandée)' : ''}
           </option>
         ))}
       </select>
-      <button className="chip" onClick={() => speak('Linux does exactly what you tell it.', 1)}>▶ test</button>
+      <button className="chip" onClick={() => speak('Linux does exactly what you tell it.', 1)}><Icon name="play" size={13} /> test</button>
     </>
   );
 }

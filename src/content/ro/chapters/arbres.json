@@ -3,94 +3,379 @@
  "module": "ro",
  "order": 5,
  "title": {
-  "fr": "Arbres, Kruskal et Prim",
-  "dar": "Arbres, Kruskal, Prim",
-  "en": "Trees, Kruskal and Prim"
+  "fr": "Chap 5 — Arbres et forêts : Kruskal et Prim",
+  "dar": "Fasl 5 — Arbres w forêts : Kruskal w Prim",
+  "en": "Ch. 5 — Trees and forests: Kruskal and Prim"
  },
  "summary": {
-  "fr": "Arbres, arbres couvrants, Cayley, Kruskal, Prim.",
-  "dar": "Kruskal w Prim.",
-  "en": "Trees, spanning trees, Kruskal, Prim."
+  "fr": "Arbre, racine, arborescence, propriétés équivalentes, arbre couvrant, formule n^(n−2), arbre couvrant de poids minimum, algorithmes de Kruskal et de Prim avec les tableaux du cours, animés pas à pas.",
+  "dar": "Arbre, arbre couvrant, n^(n−2), Kruskal w Prim b tableaux.",
+  "en": "Trees, spanning trees, n^(n−2), minimum spanning tree, Kruskal and Prim with the course tables."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 50,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Arbres",
-    "dar": "Arbres",
-    "en": "Trees"
+    "fr": "1. Arbre, racine, arborescence",
+    "dar": "1. Arbre, racine, arborescence",
+    "en": "1. Tree, root, arborescence"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un **arbre** est un graphe **non orienté, connexe et sans cycle**. Dans un graphe orienté, une **racine** est un sommet r tel qu'il existe un chemin de r à tout autre sommet. Une **arborescence** est un graphe orienté avec une racine et **un seul chemin** de la racine à chaque sommet. (Un cycle orienté s'appelle un **circuit**.)",
+    "dar": "**Arbre** : **non orienté, connexe, bla cycle**. **Racine** : mnha chemin l kol sommet. **Arborescence** : orienté, racine, **chemin wa7ed** l kol sommet.",
+    "en": "A **tree** is **undirected, connected and acyclic**. A **root** reaches every vertex; an **arborescence** has a root and **one path** to each vertex."
    }
   },
   {
    "type": "text",
    "body": {
-    "fr": "**Arbre** : non orienté, connexe, sans cycle (n sommets → n−1 arêtes). **Arbre couvrant** : contient tous les sommets. Kn possède **n^(n−2)** arbres couvrants (Cayley). Applications : réseaux à moindre coût, routes, câblage.",
-    "dar": "Arbre, n−1, Cayley.",
-    "en": "Tree, n−1 edges, Cayley n^(n−2)."
+    "fr": "**Proposition** (G non orienté à n sommets) — ces phrases sont **équivalentes** :\n1. G est **connexe sans cycle** ;\n2. G est **connexe et a n − 1 arêtes** ;\n3. G est **sans cycle et a n − 1 arêtes**.\n\nApplications : réseaux de communication **à moindre coût**, plans d'urbanisme et routes, **câblage optimal**.",
+    "dar": "**Proposition** : connexe bla cycle ⇔ connexe + **n − 1** arêtes ⇔ bla cycle + **n − 1** arêtes. Applications : réseaux rkhas, trou9, câblage.",
+    "en": "**Proposition**: connected acyclic ⇔ connected with **n − 1** edges ⇔ acyclic with **n − 1** edges. Uses: cheapest networks, roads, cabling."
    }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un **arbre couvrant** d'un graphe G est un arbre (connexe, sans cycle) **contenant tous les sommets de G**. Dans un graphe **pondéré**, l'**arbre couvrant de poids minimum (ACPM)** est celui dont la **somme des poids est minimale**.",
+    "dar": "**Arbre couvrant** : arbre fih **ga3 sommets**. **ACPM** : majmou3 dyal wazn **sghir ma ymken**.",
+    "en": "A **spanning tree** contains **every vertex**; the **minimum spanning tree** has the **smallest total weight**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\text{nombre d'arbres couvrants de } K_n = n^{\\,n-2}",
+   "body": {
+    "fr": "Propriété du cours (formule de Cayley). Ex. K5 : 5³ = **125**.",
+    "dar": "K5 : 125.",
+    "en": "K5: 125."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-40",
+    "ro-41",
+    "ro-42"
+   ]
   },
   {
    "type": "heading",
    "body": {
-    "fr": "Kruskal",
-    "dar": "Kruskal",
-    "en": "Kruskal"
+    "fr": "2. Algorithme de Kruskal",
+    "dar": "2. Kruskal",
+    "en": "2. Kruskal's algorithm"
    }
   },
   {
-   "type": "text",
+   "type": "steps",
+   "title": {
+    "fr": "Les étapes du cours",
+    "dar": "Étapes dyal dars",
+    "en": "The course steps"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Trier",
+      "dar": "Rtteb",
+      "en": "Sort"
+     },
+     "body": {
+      "fr": "Trier toutes les arêtes par **poids croissant**.",
+      "dar": "Rtteb arêtes mn **sghir l kbir**.",
+      "en": "Sort edges by **increasing weight**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Partir de rien",
+      "dar": "Bda b walou",
+      "en": "Start empty"
+     },
+     "body": {
+      "fr": "Arbre T **vide**, poids 0.",
+      "dar": "T **khawi**, wazn 0.",
+      "en": "Empty tree T, weight 0."
+     }
+    },
+    {
+     "title": {
+      "fr": "Ajouter si pas de cycle",
+      "dar": "Zid ila bla cycle",
+      "en": "Add unless it makes a cycle"
+     },
+     "body": {
+      "fr": "Prendre l'arête suivante : si elle **ne crée pas de cycle** → ✓ on l'ajoute ; sinon → ✗ on l'élimine.",
+      "dar": "Ila **ma katdirch cycle** → ✓, sinon ✗.",
+      "en": "**No cycle** → ✓ add; otherwise ✗ skip."
+     }
+    },
+    {
+     "title": {
+      "fr": "S'arrêter",
+      "dar": "Wa9ef",
+      "en": "Stop"
+     },
+     "body": {
+      "fr": "Quand **tous les sommets** sont reliés, c'est-à-dire après **n − 1** arêtes acceptées.",
+      "dar": "Mli **n − 1** arêtes.",
+      "en": "After **n − 1** accepted edges."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "algo": "kruskal",
+    "pos": {
+     "A": [
+      50,
+      8
+     ],
+     "B": [
+      92,
+      50
+     ],
+     "C": [
+      70,
+      90
+     ],
+     "D": [
+      46,
+      56
+     ],
+     "E": [
+      8,
+      50
+     ],
+     "F": [
+      28,
+      90
+     ]
+    }
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
    "body": {
-    "fr": "1) Trier les arêtes par poids croissant. 2) Partir d'un arbre vide. 3) Ajouter chaque arête si elle **ne crée pas de cycle** (✓), sinon l'éliminer (✗). 4) S'arrêter à **n−1** arêtes. Tableau : « poids | arête | ✓ / ✗ ».",
-    "dar": "Tri → ✓/✗ → n−1.",
-    "en": "Sort → ✓/✗ → n−1 edges."
-   }
-  },
-  {
-   "type": "code",
-   "lang": "text",
-   "code": "poids | arête | décision\n  2   | A–F   | ✓\n  2   | C–D   | ✓\n  3   | A–D   | ✓\n  3   | C–F   | ✗ cycle\n  3   | E–F   | ✓\n  4   | A–C   | ✗ cycle\n  5   | B–D   | ✓   → coût 15",
-   "caption": {
-    "fr": "Contrôle 2025-2026",
-    "dar": "Contrôle",
-    "en": "Exam 2025-2026"
-   }
-  },
-  {
-   "type": "heading",
-   "body": {
-    "fr": "Prim",
-    "dar": "Prim",
-    "en": "Prim"
-   }
-  },
-  {
-   "type": "text",
-   "body": {
-    "fr": "Partir d'un sommet ; à chaque étape ajouter l'arête de **poids minimal reliant l'arbre à un sommet hors de l'arbre**. Tableau « Ensemble S | sommets (poids ; prédécesseur) », ∞ au départ. Exemple du cours : arbre {B,D},{B,C},{A,D},{E,F},{C,F}, poids 14.",
-    "dar": "Prim + tableau.",
-    "en": "Grow from one vertex; table \"S | (weight; pred)\"."
+    "fr": "Au contrôle, présente le **tableau « Poids | Arête | à choisir ✓ / à éliminer ✗ »** exactement comme dans le cours, puis la liste des arêtes de l'arbre et le **poids total** (somme des ✓).",
+    "dar": "F contrôle, dir **tableau « Wazn | Arête | ✓ / ✗ »** b7al dars, w l **wazn total**.",
+    "en": "In the test, draw the **\"Weight | Edge | ✓ / ✗\" table** exactly as in class, then the tree and its **total weight**."
    }
   },
   {
    "type": "miniQuiz",
    "questionIds": [
     "ro-43",
-    "ro-45",
+    "ro-45"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Algorithme de Prim",
+    "dar": "3. Prim",
+    "en": "3. Prim's algorithm"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Les étapes du cours",
+    "dar": "Étapes",
+    "en": "The course steps"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Sommet initial",
+      "dar": "Sommet dyal bdya",
+      "en": "Start vertex"
+     },
+     "body": {
+      "fr": "Choisir un sommet de départ (arbitraire) et l'ajouter à l'ACPM.",
+      "dar": "Khtar sommet w zido.",
+      "en": "Pick a start vertex."
+     }
+    },
+    {
+     "title": {
+      "fr": "Meilleure arête sortante",
+      "dar": "A7ssen arête khareja",
+      "en": "Cheapest leaving edge"
+     },
+     "body": {
+      "fr": "Sélectionner l'arête de **poids minimum** qui relie un sommet **dans** l'arbre à un sommet **hors** de l'arbre ; ajouter l'arête et ce sommet.",
+      "dar": "Arête **min** bin **dakhel** w **bra** dyal arbre.",
+      "en": "The **minimum** edge from **inside** the tree to **outside**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Répéter",
+      "dar": "3awed",
+      "en": "Repeat"
+     },
+     "body": {
+      "fr": "Jusqu'à ce que **tous les sommets** soient dans l'arbre.",
+      "dar": "Ta ga3 sommets.",
+      "en": "Until every vertex is in."
+     }
+    },
+    {
+     "title": {
+      "fr": "Le tableau",
+      "dar": "Tableau",
+      "en": "The table"
+     },
+     "body": {
+      "fr": "Colonnes = sommets ; chaque ligne = l'ensemble S déjà pris, et pour chaque sommet hors de S « **poids ; prédécesseur** » (∞ si pas encore relié). On prend le plus petit, on met à jour.",
+      "dar": "Kol str : S w « **wazn ; préd** » (∞ ila mazal).",
+      "en": "Each row: set S and \"**weight ; predecessor**\" (∞ if unreached)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-B:5 A-C:6 A-D:4 B-D:2 C-D:2 B-C:1 C-E:5 C-F:3 D-F:4 E-F:4",
+    "algo": "prim",
+    "start": "A"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**Exemple du cours** : depuis A, on obtient l'arbre {B,D}, {B,C}, {A,D}, {E,F}, {C,F} de poids 4 + 2 + 1 + 3 + 4 = **14**. L'exercice à 9 sommets (départ 1) donne un arbre de poids **37**.",
+    "dar": "Mn A : arbre b wazn **14**. Exercice 9 sommets : **37**.",
+    "en": "From A: tree of weight **14**. The 9-vertex exercise gives **37**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "1 2 3 4 5 6 7 8 9 | 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10",
+    "algo": "prim",
+    "start": "1"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Kruskal",
+     "dar": "Kruskal",
+     "en": "Kruskal"
+    },
+    {
+     "fr": "Prim",
+     "dar": "Prim",
+     "en": "Prim"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Point de départ",
+      "dar": "Bdya",
+      "en": "Start"
+     },
+     {
+      "fr": "Aucun : toutes les arêtes triées",
+      "dar": "Walou : arêtes mrttbin",
+      "en": "None: all edges sorted"
+     },
+     {
+      "fr": "Un sommet choisi",
+      "dar": "Sommet",
+      "en": "One vertex"
+     }
+    ],
+    [
+     {
+      "fr": "Pendant l'algo",
+      "dar": "F l west",
+      "en": "During"
+     },
+     {
+      "fr": "Une **forêt** qui se rejoint",
+      "dar": "**Forêt**",
+      "en": "A **forest** merging"
+     },
+     {
+      "fr": "**Un seul arbre** qui grandit",
+      "dar": "**Arbre wa7ed** kaykbar",
+      "en": "**One tree** growing"
+     }
+    ],
+    [
+     {
+      "fr": "Résultat",
+      "dar": "Natija",
+      "en": "Result"
+     },
+     {
+      "fr": "Même poids minimal",
+      "dar": "Nefs wazn",
+      "en": "Same minimal weight"
+     },
+     {
+      "fr": "Même poids minimal",
+      "dar": "Nefs wazn",
+      "en": "Same minimal weight"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ro-44",
     "ro-46"
    ]
   }
  ],
  "keyPoints": [
   {
-   "fr": "Arbre : connexe, sans cycle, n−1 arêtes ; Kn : n^(n−2) arbres couvrants.",
-   "dar": "n−1, Cayley.",
-   "en": "n−1 edges; Cayley."
+   "fr": "Arbre : non orienté, connexe, sans cycle ⇔ connexe à n − 1 arêtes ⇔ sans cycle à n − 1 arêtes.",
+   "dar": "Arbre, n − 1.",
+   "en": "Tree, n − 1 edges."
   },
   {
-   "fr": "Kruskal : tri + rejet des cycles ; Prim : croissance depuis un sommet.",
+   "fr": "Arbre couvrant : contient tous les sommets ; Kn en a n^(n−2).",
+   "dar": "n^(n−2).",
+   "en": "Kn has n^(n−2) spanning trees."
+  },
+  {
+   "fr": "Kruskal : trier, ajouter si pas de cycle, stop à n − 1 arêtes. Prim : depuis un sommet, arête min vers l'extérieur.",
    "dar": "Kruskal / Prim.",
    "en": "Kruskal / Prim."
+  },
+  {
+   "fr": "Contrôle 2025 : ACPM A–F, C–D, A–D, E–F, B–D, coût 15.",
+   "dar": "ACPM = 15.",
+   "en": "Exam MST cost 15."
   }
  ]
 }

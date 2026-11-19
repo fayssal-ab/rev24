@@ -41,7 +41,7 @@ export default function FlashcardsPage() {
   ];
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={t('fc.title')} sub={`${queue.length - newCount} ${t('fc.due')} · ${newCount} ${t('fc.new')}`} />
+      <PageTitle title={t('fc.title')} sub={`${queue.length - newCount} ${t('fc.due')} · ${newCount} ${t('fc.new')}`} />
       <select className="input" value={chapter} onChange={(e) => setChapter(e.target.value)} aria-label={t('qcm.filterChapter')}>
         <option value="all">{t('common.all')}</option>
         {data.chapters.map((c) => (

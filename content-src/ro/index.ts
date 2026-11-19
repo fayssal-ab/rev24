@@ -1,3 +1,4 @@
+import { COURSE } from './course';
 import { setCtx, L, h, p, code, tip, trap, exam, quiz, single, multi, num, ex, fc, ref, type T } from '../lib';
 import type { Module, Chapter, Question, Exercise, Flashcard, RefEntry } from '../../src/lib/schema';
 
@@ -228,7 +229,7 @@ export const module: Module = {
   id: 'ro',
   title: L(['Recherche Opérationnelle (graphes)', 'Recherche Opérationnelle', 'Operations Research (graphs)']),
   subtitle: L(['Graphes, matrices, Euler, arbres, Kruskal, Prim, Dijkstra', 'Graphes, Kruskal, Dijkstra', 'Graphs, trees, Kruskal, Prim, Dijkstra']),
-  color: '#f59e0b',
+  color: '#0f7c8c',
   icon: 'layers',
   theme: 'amber',
   chapters: ['defs', 'matrices', 'euler', 'particuliers', 'arbres', 'dijkstra', 'annale'],
@@ -245,7 +246,8 @@ export const module: Module = {
   weights: { defs: 4, matrices: 4, arbres: 3, dijkstra: 3, euler: 2, particuliers: 1, annale: 2 }
 };
 
-export const chapters = [c1, c2, c3, c4, c5, c6, c7];
+// chapter texts come from course.ts (rewritten from the Drive); ids, order, questions and exercises stay here
+export const chapters = [c1, c2, c3, c4, c5, c6, c7].map((c) => ({ ...c, ...COURSE[c.id] }));
 export const questions = Q;
 export const exercises = E;
 export const flashcards = F;

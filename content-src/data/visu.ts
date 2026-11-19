@@ -1,5 +1,4 @@
-import { setCtx, L, h, p, code, tip, trap, exam, table, anim, quiz, single, multi, order, ex, fc, ref } from '../lib';
-import type { Chapter } from '../../src/lib/schema';
+import { setCtx, single, multi, order, ex, fc, ref } from '../lib';
 
 setCtx('data', 'visu');
 
@@ -54,81 +53,7 @@ export const questions = [
     [['Les couleurs ne sont pas en cause.', 'Machi alwan.', 'Not colours.'], ['Le graphique peut rester simple.', 'Basit.', 'Can be simple.'], ['Sans rapport.', 'Walou.', 'Unrelated.']], ['regles'])
 ];
 
-export const chapter: Chapter = {
-  id: 'visu',
-  module: 'data',
-  order: 3,
-  title: L(['Chap 4 — Visualisation des données', 'Fasl 4 — Visualisation', 'Ch. 4 — Data visualisation']),
-  summary: L(['Pourquoi visualiser, écosystème Python, Matplotlib procédural vs orienté objet, principaux graphiques, règles d\'or, choisir le bon graphique, export, Seaborn et pandas.', 'Matplotlib, Seaborn, choix, règles.', 'Why visualise, ecosystem, Matplotlib styles, main charts, rules, choosing, export, Seaborn, pandas.']),
-  estimatedMinutes: 50,
-  sections: [
-    h(['Pourquoi visualiser ?', '3lach visualisation ?', 'Why visualise?']),
-    p(['Un graphique révèle en un coup d\'œil tendances, écarts, valeurs aberrantes et relations qu\'un tableau de chiffres cache. Écosystème Python : **Matplotlib** (fondamental), **pandas** (débutant, `df.plot`), **Seaborn** / Altair (intermédiaire, statistique), **Plotly** / Bokeh (avancé, interactif).', 'Graphique kaywerri tendances. Matplotlib, pandas, Seaborn, Plotly.', 'Charts reveal trends and outliers. Ecosystem: Matplotlib (core), pandas (beginner), Seaborn/Altair (intermediate), Plotly/Bokeh (advanced).']),
-    quiz('dv-01'),
-    h(['Deux styles Matplotlib', 'Jouj styles', 'Two Matplotlib styles']),
-    anim('MatplotlibStyles'),
-    quiz('dv-02', 'dv-03'),
-    h(['Les graphiques de base', 'Graphiques', 'Basic charts']),
-    code(`fig, axs = plt.subplots(2, 2, figsize=(10, 8))
-axs[0, 0].plot(x, y, marker="o")                         # courbe
-sc = axs[0, 1].scatter(x, y, c=z, s=40, alpha=0.6, cmap="viridis")
-fig.colorbar(sc, ax=axs[0, 1])                           # échelle de couleurs
-axs[1, 0].hist(data, bins=20, density=True)              # cumulative=True : cumulé
-axs[1, 1].pie(parts, autopct="%1.1f%%", explode=(0.1, 0, 0), startangle=90)
-fig.tight_layout()
-fig.savefig("tableau.png", dpi=300)                      # PNG, PDF, SVG, JPG`, 'python'),
-    code(`import numpy as np
-x = np.arange(3); w = 0.35
-ax.bar(x - w/2, ventes_2024, w, label="2024")            # barres groupées
-ax.bar(x + w/2, ventes_2025, w, label="2025")
-ax.set_xticks(x, ["A", "B", "C"]); ax.legend()`, 'python', ['Diagramme en barres groupé', 'Barres groupées', 'Grouped bar chart']),
-    quiz('dv-08', 'dv-09', 'dv-10', 'dv-11'),
-    h(['Règles d\'or et erreurs', 'Qawa3id w akhta2', 'Golden rules and mistakes']),
-    p(['**Règles d\'or** : simplicité, clarté (titre, axes, unités, légende), précision, couleurs adaptées et accessibles, **honnêteté** (pas d\'axe tronqué trompeur).\n\n**Erreurs fréquentes** : 3D inutile, couleurs non accessibles (rouge/vert), échelle logarithmique injustifiée, surcharge d\'informations, labels illisibles.', 'Qawa3id : basata, wodo7, di9a, alwan, amana. Akhta2 : 3D, alwan, log, bzaf, labels.', '**Rules**: simplicity, clarity, accuracy, colours, honesty. **Mistakes**: 3D, inaccessible colours, unjustified log, overload, unreadable labels.']),
-    trap(['Le camembert est à éviter pour **comparer** (et la 3D partout).', 'Camembert ma ynsa7ch l comparaison.', 'Avoid pies for **comparison**.']),
-    quiz('dv-07', 'dv-18'),
-    h(['Quel graphique pour quel objectif ?', 'Ach men graphique ?', 'Which chart for which goal?']),
-    table([['Objectif', 'Hadaf', 'Goal'], ['Recommandé', 'Mzyan', 'Recommended'], ['À éviter', 'Tjenneb', 'Avoid']], [
-      [['Comparaison', 'Mo9arana', 'Comparison'], ['barres, radar', 'barres, radar', 'bars, radar'], ['camembert, 3D', 'camembert, 3D', 'pie, 3D']],
-      [['Distribution', 'Distribution', 'Distribution'], ['histogramme, boîte, violon', 'histogramme, box, violon', 'histogram, box, violin'], ['—', '—', '—']],
-      [['Composition', 'Composition', 'Composition'], ['barres empilées, treemap', 'empilées, treemap', 'stacked bars, treemap'], ['—', '—', '—']],
-      [['Relation', '3ala9a', 'Relationship'], ['nuage de points, ligne, heatmap', 'scatter, ligne, heatmap', 'scatter, line, heatmap'], ['—', '—', '—']],
-      [['Évolution', 'Tatawwor', 'Change over time'], ['ligne, aire', 'ligne, aire', 'line, area'], ['—', '—', '—']],
-      [['Spatial', 'Makani', 'Spatial'], ['cartes', 'cartes', 'maps'], ['—', '—', '—']]
-    ]),
-    anim('ChartChooser'),
-    exam(['Le tableau objectif → graphique est une question de cours classique.', 'Tableau dyal choix kaytl3.', 'The goal → chart table is a classic question.']),
-    quiz('dv-04', 'dv-05', 'dv-06'),
-    h(['Workflow, export et réglages', 'Workflow w export', 'Workflow, export, settings']),
-    p(['Workflow : **exploration → analyse → présentation → validation → export**. Export : `savefig` en PNG, PDF, SVG, JPG (`dpi=300` pour l\'impression). Réglages globaux : `plt.rcParams["font.size"] = 12`.', 'Workflow ; savefig ; rcParams.', 'Workflow; savefig; rcParams.']),
-    quiz('dv-12', 'dv-17'),
-    h(['Seaborn et pandas', 'Seaborn w pandas', 'Seaborn and pandas']),
-    code(`import seaborn as sns
-tips = sns.load_dataset("tips"); iris = sns.load_dataset("iris"); fmri = sns.load_dataset("fmri")
-sns.histplot(data=tips, x="total_bill", kde=True)
-sns.kdeplot(data=tips, x="total_bill") ; sns.ecdfplot(data=tips, x="total_bill")
-sns.boxplot(data=tips, x="day", y="total_bill")
-sns.scatterplot(data=tips, x="total_bill", y="tip", hue="sex")
-sns.lineplot(data=fmri, x="timepoint", y="signal")
-sns.relplot(data=tips, x="total_bill", y="tip", col="time")
-corr = iris.drop(columns="species").corr()
-mask = np.triu(np.ones_like(corr, dtype=bool))
-sns.heatmap(corr, annot=True, cmap="coolwarm", mask=mask)
-
-df.plot() ; df.hist() ; df.plot.box() ; df.plot.area() ; df.plot.scatter(x="a", y="b")`, 'python'),
-    tip(['`hue` colore par catégorie, `col` crée un sous-graphique par catégorie (`relplot`).', 'hue ; col.', '`hue` colours; `col` facets.']),
-    quiz('dv-13', 'dv-14', 'dv-15')
-  ],
-  keyPoints: [
-    L(['Écosystème : Matplotlib (fondamental), pandas (débutant), Seaborn/Altair (intermédiaire), Plotly/Bokeh (avancé).', 'Écosystème.', 'Ecosystem.']),
-    L(['Orienté objet recommandé : fig, ax = plt.subplots() ; ax.set_title / set_xlabel ; subplots(2, 2) + tight_layout().', 'fig, ax ; ax.set_*.', 'OO style recommended.']),
-    L(['plot, scatter (c, s, alpha, cmap, colorbar), hist (bins, cumulative, density), bar groupé, pie (autopct, explode, startangle).', 'Graphiques.', 'Basic charts and parameters.']),
-    L(['Règles d\'or : simplicité, clarté, précision, couleurs, honnêteté. Erreurs : 3D, couleurs, log injustifié, surcharge, labels.', 'Qawa3id.', 'Golden rules and mistakes.']),
-    L(['Comparaison : barres (pas camembert/3D) ; distribution : histogramme/boîte/violon ; composition : empilé/treemap ; relation : scatter/heatmap ; évolution : ligne/aire ; spatial : cartes.', 'Choix.', 'Goal → chart.']),
-    L(['Workflow : exploration → analyse → présentation → validation → export ; savefig(dpi=300) ; rcParams.', 'Workflow.', 'Workflow & export.']),
-    L(['Seaborn : histplot(kde), kdeplot, ecdfplot, boxplot, scatterplot(hue), lineplot, relplot(col), heatmap(corr, annot, cmap coolwarm, mask triu) ; datasets tips, iris, fmri.', 'Seaborn.', 'Seaborn functions.'])
-  ]
-};
+export { chapter } from './course/visu';
 
 export const exercises = [
   ex('dx-v-1', 2, ['Du procédural à l\'orienté objet', 'Procédural → OO', 'Procedural to OO'],

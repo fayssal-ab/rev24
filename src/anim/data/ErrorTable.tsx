@@ -46,7 +46,7 @@ export default function ErrorTable() {
           </tbody>
         </table>
       </div>
-      <h4 className="mb-2 mt-4 text-sm font-semibold">⚖️ {tl(ERRT.trialTitle)}</h4>
+      <h4 className="mb-2 mt-4 text-sm font-semibold">{tl(ERRT.trialTitle)}</h4>
       <div className="mb-2 flex flex-wrap gap-1">
         {ERRT.trial.map((_, i) => (
           <button key={i} className={`chip ${i === k ? '!border-accent !bg-accent !text-bg' : ''}`} onClick={() => setK(i)}>

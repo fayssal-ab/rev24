@@ -1,5 +1,4 @@
-import { setCtx, L, h, p, tex, tip, trap, exam, table, anim, quiz, single, multi, num, order, ex, fc, ref } from '../lib';
-import type { Chapter } from '../../src/lib/schema';
+import { setCtx, single, multi, num, order, ex, fc, ref } from '../lib';
 
 setCtx('data', 'tests');
 
@@ -98,60 +97,7 @@ export const questions = [
     ['$1-\\beta = P(|Z_0|>1{,}96 \\mid \\mu=41)$ avec $d = \\frac{41-40}{0{,}4} = 2{,}5$ : $1-\\Phi(1{,}96-2{,}5)+\\Phi(-1{,}96-2{,}5) \\approx 0{,}705$.', '≈ 0,705.', '≈ 0.705.'], {}, ['tests', 'erreurs'], { fn: 'zPower', args: [40, 41, 2, 25, 0.05, 'two'] })
 ];
 
-export const chapter: Chapter = {
-  id: 'tests',
-  module: 'data',
-  order: 4,
-  title: L(['Chap 5 — Tests d\'hypothèses', 'Fasl 5 — Tests d\'hypothèses', 'Ch. 5 — Hypothesis tests']),
-  summary: L(['H0/H1, risques α et β, puissance, étapes d\'un test, tests sur une moyenne (Z0, T0), P-value et test du χ² d\'ajustement — avec les 4 exemples du cours.', 'H0/H1, α, β, Z0, T0, P-value, χ².', 'H0/H1, α and β, power, test steps, mean tests (Z0, T0), P-value and χ² fit test — with the 4 course examples.']),
-  estimatedMinutes: 90,
-  sections: [
-    h(['Hypothèses statistiques', 'Hypothèses', 'Statistical hypotheses']),
-    p(['Une **hypothèse paramétrique** porte sur un paramètre d\'une loi (µ = 40, p = 0,5…) ; une hypothèse **non paramétrique** porte sur la loi elle-même (« X suit une loi normale »).\n\n- **H0** (hypothèse nulle) : contient l\'égalité, le statu quo, la valeur de référence (norme, réglage machine, ancienne valeur, affirmation à vérifier).\n- **H1** (alternative) : **bilatérale** µ ≠ µ0, **unilatérale gauche** µ < µ0, **unilatérale droite** µ > µ0.', '**Paramétrique** = paramètre ; **non paramétrique** = loi. H0 = égalité ; H1 bilatéral / gauche / droite.', 'A **parametric** hypothesis concerns a parameter; **non-parametric** the law itself. H0 holds equality; H1 two-sided / left / right.']),
-    quiz('dt-01', 'dt-02'),
-    h(['Risques d\'erreur et puissance', 'Risques w puissance', 'Error risks and power']),
-    anim('ErrorTable'),
-    table([['Décision', 'Qarar', 'Decision'], ['H0 vraie', 'H0 s7i7a', 'H0 true'], ['H0 fausse', 'H0 ghalta', 'H0 false']], [
-      [['Ne pas rejeter H0', 'Ma nrfdouch', 'Keep H0'], ['OK (1 − α)', 'OK (1 − α)', 'OK (1 − α)'], ['Erreur de 2e espèce β', 'Ghalta 2 β', 'Type II β']],
-      [['Rejeter H0', 'Nrfdou', 'Reject H0'], ['Erreur de 1re espèce α', 'Ghalta 1 α', 'Type I α'], ['OK : puissance 1 − β', 'Puissance 1 − β', 'Power 1 − β']]
-    ]),
-    p(['**Rejeter H0** est une conclusion **forte** (le risque d\'erreur α est maîtrisé). **Ne pas rejeter H0** est une conclusion **faible** : on n\'a pas prouvé H0, on manque seulement de preuves contre elle.', 'Rejet = forte ; ma nrfdouch = d3ifa.', 'Rejecting is **strong**; not rejecting is **weak**.']),
-    quiz('dt-03', 'dt-04', 'dt-05'),
-    h(['Les 7 étapes d\'un test', '7 étapes', 'The 7 steps']),
-    p(['1. Formuler **H0 et H1**. 2. Fixer **α**. 3. Choisir la **statistique** et sa loi sous H0. 4. Déterminer la **région critique**. 5. **Calculer** la statistique. 6. **Décider**. 7. **Conclure** dans le contexte.', '1. H0/H1 2. α 3. statistique 4. région 5. calcul 6. qarar 7. conclusion.', '1. H0/H1 2. α 3. statistic 4. critical region 5. compute 6. decide 7. conclude.']),
-    quiz('dt-06'),
-    h(['Test sur une moyenne', 'Test 3la moyenne', 'Test on a mean']),
-    tex('Z_0 = \\frac{\\bar x - \\mu_0}{\\sigma/\\sqrt n} \\sim \\mathcal N(0,1) \\quad (\\sigma\\ \\text{connu})', ['σ connu', 'σ m3rouf', 'σ known']),
-    tex('T_0 = \\frac{\\bar x - \\mu_0}{S/\\sqrt n} \\sim t(n-1), \\qquad S = \\sqrt{\\frac{1}{n-1}\\sum_{i=1}^n (x_i-\\bar x)^2}', ['σ inconnu (Student, n − 1 ddl)', 'σ ma m3roufch', 'σ unknown (Student, n − 1 df)']),
-    table([['H1', 'H1', 'H1'], ['Région critique', 'Région critique', 'Critical region'], ['P-value', 'P-value', 'P-value']], [
-      ['µ ≠ µ0', '|Z0| > z(α/2)', '2(1 − Φ(|Z0|))'], ['µ < µ0', 'Z0 < −z(α)', 'Φ(Z0)'], ['µ > µ0', 'Z0 > z(α)', '1 − Φ(Z0)']
-    ]),
-    p(['Valeurs utiles : z = **1,282** (10 %), **1,645** (5 %), **1,96** (2,5 %), **2,054** (2 %), **2,326** (1 %), **2,576** (0,5 %). Avec σ inconnu, on remplace z par t(·; n − 1) (table de Student).', 'z : 1,282 / 1,645 / 1,96 / 2,054 / 2,326 / 2,576.', 'z: 1.282 / 1.645 / 1.96 / 2.054 / 2.326 / 2.576.']),
-    trap(['En **unilatéral**, le **signe** compte : pas de valeur absolue. Avec H1 : µ < µ0, une statistique positive (même grande) ne permet jamais de rejeter H0 (exemple de la glycémie).', 'F unilatéral, signe mohim.', 'In one-sided tests the **sign** matters: no absolute value.']),
-    anim('HypothesisTestVisualizer', { preset: 'fusee' }),
-    exam(['Les 4 exemples du cours (fusée, comprimés, glycémie, χ² normalité) tombent très souvent : refais-les dans le Labo stats.', '4 amthila dyal dars kaytl3ou bzaf.', 'The 4 course examples come up very often: redo them in the Stats lab.']),
-    quiz('dt-07', 'dt-08', 'dt-12', 'dt-16'),
-    h(['La P-value', 'P-value', 'The P-value']),
-    p(['La **P-value** est la probabilité, si H0 est vraie, d\'observer une statistique **au moins aussi extrême** que celle obtenue. Petite P-value = données peu compatibles avec H0. **On rejette H0 si α > PV.** Exemple fusée : PV = 2(1 − Φ(3,125)) ≈ 0,0018 < 0,05 → rejet.', 'PV = i7timal statistique extrême ta7t H0. **Rejet ila α > PV.**', 'The **P-value** is the probability under H0 of a statistic at least as extreme. **Reject H0 if α > PV.**']),
-    quiz('dt-09', 'dt-23'),
-    h(['Test d\'ajustement du χ²', 'Test du χ²', 'χ² goodness-of-fit test']),
-    p(['On teste si une variable suit une loi donnée (normale, uniforme…). Pour k classes d\'effectifs observés Oi : probabilités théoriques pi, effectifs théoriques **Ei = n·pi** (regrouper les classes si Ei < 5), puis :', 'Ei = n·pi, regrouper ila Ei < 5.', 'Test whether a variable follows a law. Expected counts **Ei = n·pi** (merge classes if Ei < 5):']),
-    tex('\\chi^2 = \\sum_{i=1}^{k} \\frac{(O_i - E_i)^2}{E_i} \\sim \\chi^2(\\nu), \\qquad \\nu = k - p - 1', ['p = nombre de paramètres estimés ; rejet si χ² > χ²(α ; ν)', 'p = paramètres ; rejet ila χ² > seuil', 'p = estimated parameters; reject if χ² > χ²(α; ν)']),
-    anim('ChiSquareBuilder'),
-    tip(['Seuils χ²(0,05) : **3,841** (ν = 1), **5,991** (ν = 2), **7,815** (ν = 3).', '3,841 / 5,991 / 7,815.', '3.841 / 5.991 / 7.815.']),
-    quiz('dt-26', 'dt-27', 'dt-29')
-  ],
-  keyPoints: [
-    L(['H0 = égalité ; H1 bilatérale / gauche / droite. Paramétrique (paramètre) vs non paramétrique (loi).', 'H0 = égalité.', 'H0 = equality; H1 two-sided / left / right.']),
-    L(['α = P(rejeter H0 | H0 vraie) (1re espèce) ; β = 2e espèce ; puissance 1 − β. Rejet = conclusion forte, non-rejet = faible.', 'α, β, 1 − β.', 'α type I, β type II, power 1 − β.']),
-    L(['7 étapes : hypothèses, α, statistique, région critique, calcul, décision, conclusion.', '7 étapes.', '7 steps.']),
-    L(['Z0 = (x̄ − µ0)/(σ/√n) si σ connu ; T0 = (x̄ − µ0)/(S/√n) ~ t(n − 1) sinon (S avec n − 1).', 'Z0 / T0.', 'Z0 if σ known; T0 ~ t(n−1) otherwise.']),
-    L(['Bilatéral |Z0| > z(α/2) ; gauche Z0 < −z(α) ; droite Z0 > z(α). z : 1,645 / 1,96 / 2,326 / 2,576.', 'Régions critiques.', 'Critical regions.']),
-    L(['P-value : bilatéral 2(1 − Φ(|Z0|)), gauche Φ(Z0), droite 1 − Φ(Z0) ; rejet si α > PV.', 'PV ; rejet ila α > PV.', 'P-value formulas; reject if α > PV.']),
-    L(['χ² = Σ(Oi − Ei)²/Ei, Ei = n·pi (regrouper si < 5), ν = k − p − 1 ; seuils 3,841 / 5,991 / 7,815.', 'χ² ; ν = k − p − 1.', 'χ², Ei = n·pi, ν = k − p − 1.']),
-    L(['Exemples : fusée Z0 = 3,125 → rejet (PV ≈ 0,0018) ; comprimés T0 ≈ 0,148 < 2,821 ; glycémie Z0 = 3,6, gauche → non-rejet ; χ² ≈ 13,74 > 3,841 → rejet.', 'Amthila dyal dars.', 'Course examples results.'])
-  ]
-};
+export { chapter } from './course/tests';
 
 export const exercises = [
   ex('dx-t-1', 2, ['Fusée : test bilatéral complet', 'Fusée : test kaml', 'Rocket: full two-sided test'],
@@ -276,5 +222,9 @@ export const reference = [
   ref('r-dt-5', 'PV = 2(1−Φ(|Z0|)) · Φ(Z0) · 1−Φ(Z0)', ['P-values ; rejet si α > PV', 'PV', 'P-values']),
   ref('r-dt-6', 'z : 1,282 · 1,645 · 1,96 · 2,054 · 2,326 · 2,576', ['10 %, 5 %, 2,5 %, 2 %, 1 %, 0,5 %', 'Seuils', 'Upper quantiles']),
   ref('r-dt-7', 'χ² = Σ(Oi − Ei)²/Ei ; Ei = n·pi ; ν = k − p − 1', ['Ajustement du χ²', 'χ²', 'χ² fit']),
-  ref('r-dt-8', 'χ²(0,05) : 3,841 · 5,991 · 7,815', ['ν = 1, 2, 3', 'ν = 1, 2, 3', 'ν = 1, 2, 3'])
+  ref('r-dt-8', 'χ²(0,05) : 3,841 · 5,991 · 7,815 · 9,488 · 11,070', ['ν = 1, 2, 3, 4, 5', 'ν = 1, 2, 3, 4, 5', 'ν = 1, 2, 3, 4, 5']),
+  ref('r-dt-9', 'α = P(rejeter H0 | H0 vraie) · β = P(accepter H0 | H0 fausse) · puissance = 1 − β', ['Erreurs de type I et II, puissance du test', 'Ghalat naw3 I w II, puissance', 'Type I and II errors, power']),
+  ref('r-dt-10', 'Z ~ N(0, 1) : Φ(z) = P(Z ≤ z), Φ(−z) = 1 − Φ(z), P(Z > zα) = α', ['Loi normale centrée réduite', 'Loi normale', 'Standard normal law']),
+  ref('r-dt-11', 't(α ; 9) : 1,833 (5 %) · 2,262 (2,5 %) · 2,821 (1 %) · 3,250 (0,5 %)', ['Loi de Student à ν = n − 1 ddl (exemple ν = 9)', 'Student ν = 9', 'Student law with ν = n − 1 df (ν = 9)']),
+  ref('r-dt-12', 'H0 : θ = θ0 ; H1 : θ ≠ θ0 (bilatéral), θ < θ0 (gauche), θ > θ0 (droite)', ['Formes des hypothèses', 'Hypothèses', 'Forms of the hypotheses'])
 ];

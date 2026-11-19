@@ -95,7 +95,7 @@ export function QuizRunner({ questions, mistakesMode = false, onFinish, compact 
           ))}
         </div>
       )}
-      <QuestionCard key={`${q.id}-${pos}`} q={q} onAnswer={handle} onNext={next} index={pos} total={queue.length} />
+      <QuestionCard key={`${q.id}-${pos}`} q={q} onAnswer={handle} onNext={next} index={pos} total={queue.length} autoFocus={!compact} />
     </div>
   );
 }

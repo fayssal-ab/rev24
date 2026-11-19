@@ -17,6 +17,8 @@ export default {
         line: 'rgb(var(--line) / <alpha-value>)',
         accent: 'rgb(var(--accent) / <alpha-value>)',
         accent2: 'rgb(var(--accent2) / <alpha-value>)',
+        brand: 'rgb(var(--brand) / <alpha-value>)',
+        navy: 'rgb(var(--navy) / <alpha-value>)',
         ok: 'rgb(var(--ok) / <alpha-value>)',
         bad: 'rgb(var(--bad) / <alpha-value>)',
         warn: 'rgb(var(--warn) / <alpha-value>)'

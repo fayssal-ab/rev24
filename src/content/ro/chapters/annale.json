@@ -3,66 +3,314 @@
  "module": "ro",
  "order": 7,
  "title": {
-  "fr": "Annales : contrôle continu 2025-2026",
-  "dar": "Annales 2025-2026",
-  "en": "Past exam 2025-2026"
+  "fr": "Annale — Contrôle continu RO 2025-2026 corrigé",
+  "dar": "Annale — Contrôle RO 2025-2026 m-corrigé",
+  "en": "Past paper — RO mid-term 2025-2026 solved"
  },
  "summary": {
-  "fr": "Contrôle du 28/11/2025 (1h30) corrigé.",
-  "dar": "Contrôle m-sa7e7.",
-  "en": "Corrected exam of 28/11/2025."
+  "fr": "Le contrôle du 28/11/2025 (1h30) : énoncé et correction détaillée des 3 exercices, avec les graphes animés.",
+  "dar": "Contrôle 28/11/2025 : énoncé w correction kamla.",
+  "en": "The 28/11/2025 test: statement and full solution of the 3 exercises."
  },
- "estimatedMinutes": 30,
+ "estimatedMinutes": 60,
  "sections": [
   {
    "type": "heading",
    "body": {
-    "fr": "Énoncé",
-    "dar": "Énoncé",
-    "en": "Statement"
+    "fr": "Exercice 1 (6 points) — le graphe A à G",
+    "dar": "Exercice 1 (6 points)",
+    "en": "Exercise 1 (6 points)"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G",
+    "algo": "degrees"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Correction",
+    "dar": "Correction",
+    "en": "Solution"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — Ordre et taille",
+      "dar": "Q1 — Ordre w taille",
+      "en": "Q1 — Order and size"
+     },
+     "body": {
+      "fr": "Ordre = **7** sommets ; taille = **10** arêtes.",
+      "dar": "**7** ; **10**.",
+      "en": "**7**; **10**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2 — Degré de E",
+      "dar": "Q2 — Degré dyal E",
+      "en": "Q2 — Degree of E"
+     },
+     "body": {
+      "fr": "E est relié à B et F → **d(E) = 2**.",
+      "dar": "E m3a B w F → **2**.",
+      "en": "E – B, E – F → **2**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3 — Sommets impairs",
+      "dar": "Q3 — Impairs",
+      "en": "Q3 — Odd vertices"
+     },
+     "body": {
+      "fr": "Degrés : A 3, B 3, C 4, D 3, E 2, F 3, G 2 → impairs **A, B, D, F** (4, nombre pair ✓ ; somme 20 = 2 × 10 ✓).",
+      "dar": "**A, B, D, F**.",
+      "en": "**A, B, D, F**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q4 — Chaîne de longueur 3 de F à B",
+      "dar": "Q4 — Chaîne F → B",
+      "en": "Q4 — Chain F to B"
+     },
+     "body": {
+      "fr": "**F – C – A – B** (3 arêtes).",
+      "dar": "**F–C–A–B**.",
+      "en": "**F–C–A–B**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q5 — Voisins de C",
+      "dar": "Q5 — Jiran C",
+      "en": "Q5 — Neighbours of C"
+     },
+     "body": {
+      "fr": "**A, B, D, F**.",
+      "dar": "**A, B, D, F**.",
+      "en": "**A, B, D, F**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q6 — Cycle hamiltonien",
+      "dar": "Q6 — Hamilton",
+      "en": "Q6 — Hamiltonian cycle"
+     },
+     "body": {
+      "fr": "Oui : **A – B – E – F – G – D – C – A** (chaque sommet une fois, retour en A).",
+      "dar": "Ah : **A–B–E–F–G–D–C–A**.",
+      "en": "Yes: **A–B–E–F–G–D–C–A**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q7 — Pour être complet",
+      "dar": "Q7 — Complet",
+      "en": "Q7 — To be complete"
+     },
+     "body": {
+      "fr": "K7 : 7 × 6 / 2 = 21 arêtes → ajouter **11**.",
+      "dar": "21 − 10 = **11**.",
+      "en": "21 − 10 = **11**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 2 (8 points) — le réseau de transport",
+    "dar": "Exercice 2 (8 points)",
+    "en": "Exercise 2 (8 points)"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Questions 1 à 4",
+    "dar": "Q1 l Q4",
+    "en": "Questions 1 to 4"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — Tracer le graphe",
+      "dar": "Q1 — Rsem",
+      "en": "Q1 — Draw"
+     },
+     "body": {
+      "fr": "Arêtes lues dans la matrice (triangle supérieur) : A–C, A–D, A–E, A–F, B–C, B–D, C–D, C–F, D–E, D–F, E–F.",
+      "dar": "11 arêtes.",
+      "en": "11 edges."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2 — Complet ? connexe ?",
+      "dar": "Q2",
+      "en": "Q2"
+     },
+     "body": {
+      "fr": "**Pas complet** : A et B ne sont pas reliés (il manque 15 − 11 = 4 arêtes). **Connexe** : D est relié à tous les autres sommets.",
+      "dar": "**Machi complet** (A–B) ; **connexe** (D m3a kolchi).",
+      "en": "**Not complete** (A–B missing); **connected** (D reaches all)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3 — Degrés",
+      "dar": "Q3 — Degrés",
+      "en": "Q3 — Degrees"
+     },
+     "body": {
+      "fr": "A 4, B 2, C 4, D 5, E 3, F 4 (somme 22 = 2 × 11 ✓).",
+      "dar": "A4 B2 C4 D5 E3 F4.",
+      "en": "A4 B2 C4 D5 E3 F4."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q4 — Chaque ligne une seule fois",
+      "dar": "Q4",
+      "en": "Q4"
+     },
+     "body": {
+      "fr": "2 sommets impairs (D, E) → **chaîne eulérienne** de D à E : **D–A–C–B–D–C–F–A–E–D–F–E**.",
+      "dar": "Chaîne eulérienne D → E.",
+      "en": "Eulerian chain D → E."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "algo": "kruskal",
+    "pos": {
+     "A": [
+      50,
+      8
+     ],
+     "B": [
+      92,
+      50
+     ],
+     "C": [
+      70,
+      90
+     ],
+     "D": [
+      46,
+      56
+     ],
+     "E": [
+      8,
+      50
+     ],
+     "F": [
+      28,
+      90
+     ]
+    },
+    "title": "Partie A — Kruskal (coût minimal 15)"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3",
+    "algo": "dijkstra",
+    "start": "B",
+    "target": "E",
+    "pos": {
+     "A": [
+      50,
+      8
+     ],
+     "B": [
+      92,
+      50
+     ],
+     "C": [
+      70,
+      90
+     ],
+     "D": [
+      46,
+      56
+     ],
+     "E": [
+      8,
+      50
+     ],
+     "F": [
+      28,
+      90
+     ]
+    },
+    "title": "Partie B — Dijkstra B → E (13 min)"
    }
   },
   {
    "type": "text",
    "body": {
-    "fr": "Exercice 1 : graphe A–G (7 questions). Exercice 2 : réseau de 6 stations — matrice, degrés, chaîne eulérienne, puis **Partie A** (Kruskal ou Prim) **ou Partie B** (Dijkstra). Exercice 3 : degrés 4,3,3,2,1 ; M^4 d'un graphe orienté.",
-    "dar": "3 exercices, Partie A wla B.",
-    "en": "3 exercises, Part A or Part B."
+    "fr": "**Partie A** : algorithme de **Kruskal** → arêtes A–F (2), C–D (2), A–D (3), E–F (3), B–D (5) ; C–F et A–C rejetées (cycle) → **coût 15 000 DH**. **Partie B** : **Dijkstra** depuis B → **B–D–F–E**, **13 minutes**.",
+    "dar": "**A** : Kruskal → **15**. **B** : Dijkstra → **B–D–F–E = 13 min**.",
+    "en": "**Part A**: Kruskal → **15**. **Part B**: Dijkstra → **B–D–F–E, 13 min**."
    }
   },
   {
-   "type": "code",
-   "lang": "text",
-   "code": "    A B C D E F\nA   0 0 1 1 1 1\nB   0 0 1 1 0 0\nC   1 1 0 1 0 1\nD   1 1 1 0 1 1\nE   1 0 0 1 0 1\nF   1 0 1 1 1 0",
-   "caption": {
-    "fr": "Matrice de l'exercice 2",
-    "dar": "Matrice",
-    "en": "Exercise 2 matrix"
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 3 (6 points)",
+    "dar": "Exercice 3 (6 points)",
+    "en": "Exercise 3 (6 points)"
    }
   },
   {
    "type": "text",
    "body": {
-    "fr": "Résultats : 11 arêtes, non complet (manque 4), connexe ; degrés A4 B2 C4 D5 E3 F4 ; chaîne eulérienne de D à E ; ACM coût **15** ; B → E **13 min**.",
-    "dar": "Natayij.",
-    "en": "Results: 11 edges, degrees, Euler chain D→E, MST 15, B→E 13."
+    "fr": "**1.** Degrés 4, 3, 3, 2, 1 : somme **13 impaire** → **impossible** (la somme des degrés vaut 2 × nombre d'arêtes). **2.** Graphe orienté A→B, A→C, B→A, B→C, C→A : voir le chapitre « Représentation matricielle » — M⁴ donne A→B : 1, B→A : 3, B→C : 3 chemins de longueur 4, et **8** circuits de longueur 4 (trace).",
+    "dar": "**1.** Somme 13 → **impossible**. **2.** M⁴ : 1, 3, 3 ; trace **8**.",
+    "en": "**1.** Sum 13 → **impossible**. **2.** M⁴: 1, 3, 3; trace **8**."
    }
   },
   {
    "type": "callout",
    "kind": "exam",
    "body": {
-    "fr": "Faites l'examen blanc chronométré (page Examen blanc → « Contrôle continu »).",
-    "dar": "Dir l'examen blanc.",
-    "en": "Take the timed mock exam."
+    "fr": "Barème : Ex. 1 = 6 pts, Ex. 2 = 8 pts (une seule partie A **ou** B à traiter), Ex. 3 = 6 pts. Durée 1h30, calculatrice autorisée, documents interdits.",
+    "dar": "Ex 1 = 6, Ex 2 = 8 (A **wla** B), Ex 3 = 6. 1h30.",
+    "en": "Ex. 1 = 6, Ex. 2 = 8 (part A **or** B), Ex. 3 = 6. 1h30."
    }
   }
  ],
  "keyPoints": [
   {
-   "fr": "Exercice 2 : MST 15, B → E 13, chaîne D…E.",
-   "dar": "15 ; 13.",
-   "en": "MST 15; 13 min."
+   "fr": "Ex. 1 : ordre 7, taille 10, d(E) = 2, impairs A B D F, hamiltonien A–B–E–F–G–D–C–A, 11 arêtes manquantes.",
+   "dar": "Ex. 1.",
+   "en": "Ex. 1 answers."
+  },
+  {
+   "fr": "Ex. 2 : non complet, connexe, chaîne eulérienne D → E ; ACPM 15 ; B → E = 13 (B–D–F–E).",
+   "dar": "Ex. 2.",
+   "en": "Ex. 2 answers."
+  },
+  {
+   "fr": "Ex. 3 : 4, 3, 3, 2, 1 impossible ; M⁴ → 1, 3, 3 et trace 8.",
+   "dar": "Ex. 3.",
+   "en": "Ex. 3 answers."
   }
  ]
 }

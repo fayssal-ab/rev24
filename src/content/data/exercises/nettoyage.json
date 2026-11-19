@@ -1,0 +1,340 @@
+[
+ {
+  "id": "dn-ex1",
+  "module": "data",
+  "chapter": "nettoyage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Diagnostic du jeu de données du cours",
+   "dar": "Diagnostic dyal data dyal dars",
+   "en": "Diagnosing the course dataset"
+  },
+  "statement": {
+   "fr": "Avec le DataFrame de la diapo 8 : (1) donne le nombre de NaN par colonne ; (2) combien de lignes restent après `dropna()` ? après `dropna(axis=1)`, combien de colonnes ? (3) Quelle stratégie proposes-tu ?",
+   "dar": "B DataFrame dyal diapo 8 : (1) NaN f kol colonne ; (2) ch7al str mn b3d `dropna()` ? colonnes mn b3d `dropna(axis=1)` ? (3) chnou tqtare7 ?",
+   "en": "With the slide-8 DataFrame: (1) NaN per column; (2) rows left after `dropna()`? columns after `dropna(axis=1)`? (3) What strategy do you suggest?"
+  },
+  "hints": [
+   {
+    "fr": "Parcours la table ligne par ligne.",
+    "dar": "Chouf str b str.",
+    "en": "Go row by row."
+   },
+   {
+    "fr": "Une seule ligne n'a aucun NaN.",
+    "dar": "Ghir str wa7ed kamel.",
+    "en": "Only one row is complete."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Compter les NaN",
+     "dar": "7seb NaN",
+     "en": "Count NaN"
+    },
+    "body": {
+     "fr": "user_id 0 · age 2 · income 4 · click_rate 2.",
+     "dar": "user_id 0 · age 2 · income 4 · click_rate 2.",
+     "en": "user_id 0 · age 2 · income 4 · click_rate 2."
+    },
+    "code": "df.isnull().sum()"
+   },
+   {
+    "title": {
+     "fr": "Supprimer ?",
+     "dar": "7iyed ?",
+     "en": "Delete?"
+    },
+    "body": {
+     "fr": "`dropna()` → **1 ligne** (la 0). `dropna(axis=1)` → **1 colonne** (user_id). Les deux détruisent presque tout.",
+     "dar": "1 str ; 1 colonne.",
+     "en": "**1 row**; **1 column**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Stratégie",
+     "dar": "Stratégie",
+     "en": "Strategy"
+    },
+    "body": {
+     "fr": "`drop_duplicates()` (ligne 8), puis imputer age et click_rate par la **moyenne** (ou médiane), income (44 % manquants) par la **médiane** ou k-NN, ou la supprimer si elle n'est pas utile à l'analyse.",
+     "dar": "Doublons, 3ad imputer.",
+     "en": "Drop duplicates, then impute."
+    },
+    "code": "df = df.drop_duplicates()\ndf['age'] = df['age'].fillna(df['age'].mean())\ndf['click_rate'] = df['click_rate'].fillna(df['click_rate'].mean())\ndf['income'] = df['income'].fillna(df['income'].median())"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "NaN : 0 / 2 / 4 / 2 ; dropna() → 1 ligne, dropna(axis=1) → 1 colonne ; donc dédoublonner puis imputer.",
+   "dar": "0/2/4/2 ; 1 str ; 1 colonne.",
+   "en": "NaN: 0/2/4/2; 1 row; 1 column; dedupe then impute."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que dropna() enlève seulement les NaN et garde le reste de la ligne.",
+    "dar": "dropna kay7iyed str kamel.",
+    "en": "dropna() removes whole rows."
+   },
+   {
+    "fr": "Imputer avant de supprimer les doublons.",
+    "dar": "Imputer 9bel doublons.",
+    "en": "Imputing before deduplicating."
+   }
+  ],
+  "data": "import pandas as pd\nimport numpy as np\n\ndata = {\n    'user_id':    [1, 2, 3, 4, 5, 6, 7, 8, 8],\n    'age':        [25, 32, np.nan, 45, 28, np.nan, 35, 40, 40],\n    'income':     [50000, np.nan, 75000, 80000, np.nan, 110000, 120000, np.nan, np.nan],\n    'click_rate': [0.15, 0.22, 0.18, np.nan, 0.25, 0.30, np.nan, 0.12, 0.12],\n}\ndf = pd.DataFrame(data)",
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       25,
+       32,
+       45,
+       28,
+       35,
+       40,
+       40
+      ]
+     ]
+    },
+    "expect": 35,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dn-ex2",
+  "module": "data",
+  "chapter": "nettoyage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Valeurs aberrantes par la méthode IQR",
+   "dar": "Aberrantes b IQR",
+   "en": "Outliers with the IQR method"
+  },
+  "statement": {
+   "fr": "Notes : 12 ; 14 ; 15 ; 15 ; 16 ; 18 ; 19 ; 20 ; 95. Calcule Q1, Q3, l'IQR, les bornes et indique les valeurs aberrantes. Écris le code pandas qui les retire.",
+   "dar": "Notes : 12…95. 7seb Q1, Q3, IQR, l 7doud w aberrantes. Kteb code pandas.",
+   "en": "Marks 12 … 95. Compute Q1, Q3, IQR, bounds and outliers. Write the pandas code that removes them."
+  },
+  "hints": [
+   {
+    "fr": "Positions (n − 1) × 0,25 et (n − 1) × 0,75.",
+    "dar": "Positions 2 w 6.",
+    "en": "Positions 2 and 6."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Quartiles",
+     "dar": "Quartiles",
+     "en": "Quartiles"
+    },
+    "body": {
+     "fr": "n = 9 : Q1 = valeur en position 2 = **15** ; Q3 = position 6 = **19**.",
+     "dar": "Q1 = 15 ; Q3 = 19.",
+     "en": "Q1 = **15**; Q3 = **19**."
+    }
+   },
+   {
+    "title": {
+     "fr": "IQR et bornes",
+     "dar": "IQR w 7doud",
+     "en": "IQR and bounds"
+    },
+    "body": {
+     "fr": "IQR = 4 ; [15 − 6 ; 19 + 6] = **[9 ; 25]**.",
+     "dar": "[9 ; 25].",
+     "en": "**[9 ; 25]**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "**95** est aberrante ; on la supprime (ou on la corrige si c'est une faute de saisie).",
+     "dar": "95 aberrante.",
+     "en": "**95** is an outlier."
+    },
+    "code": "Q1, Q3 = df['note'].quantile([0.25, 0.75])\nIQR = Q3 - Q1\ndf = df[df['note'].between(Q1 - 1.5*IQR, Q3 + 1.5*IQR)]"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Q1 = 15, Q3 = 19, IQR = 4, intervalle [9 ; 25] : 95 est la seule valeur aberrante.",
+   "dar": "95 aberrante.",
+   "en": "Q1 = 15, Q3 = 19, IQR = 4, [9 ; 25]: 95 is the only outlier."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier le facteur 1,5.",
+    "dar": "Nsit 1,5.",
+    "en": "Forgetting the 1.5 factor."
+   },
+   {
+    "fr": "Calculer les quartiles sans trier.",
+    "dar": "Bla tartib.",
+    "en": "Not sorting."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       12,
+       14,
+       15,
+       15,
+       16,
+       18,
+       19,
+       20,
+       95
+      ]
+     ],
+     "pick": "low"
+    },
+    "expect": 9,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       12,
+       14,
+       15,
+       15,
+       16,
+       18,
+       19,
+       20,
+       95
+      ]
+     ],
+     "pick": "high"
+    },
+    "expect": 25,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       12,
+       14,
+       15,
+       15,
+       16,
+       18,
+       19,
+       20,
+       95
+      ]
+     ],
+     "pick": "outliers"
+    },
+    "expect": 1,
+    "tolerance": 0
+   }
+  ]
+ },
+ {
+  "id": "dn-ex3",
+  "module": "data",
+  "chapter": "nettoyage",
+  "difficulty": 3,
+  "title": {
+   "fr": "Normaliser et standardiser une colonne",
+   "dar": "Normaliser w standardiser",
+   "en": "Normalise and standardise a column"
+  },
+  "statement": {
+   "fr": "La colonne age après imputation par la moyenne vaut : 25 ; 32 ; 35 ; 45 ; 28 ; 35 ; 35 ; 40 ; 40. (1) Donne la valeur Min-Max de 35 et de 32. (2) Pourquoi l'imputation a-t-elle placé deux fois 35 ? (3) Écris le code Z-score.",
+   "dar": "age mn b3d imputation : 25 ; 32 ; 35 ; 45 ; 28 ; 35 ; 35 ; 40 ; 40. (1) Min-Max dyal 35 w 32. (2) 3lach 35 jouj merrat ? (3) Code Z-score.",
+   "en": "Age after mean imputation: 25 ; 32 ; 35 ; 45 ; 28 ; 35 ; 35 ; 40 ; 40. (1) Min-Max of 35 and 32. (2) Why two extra 35s? (3) Write the Z-score code."
+  },
+  "hints": [
+   {
+    "fr": "min = 25, max = 45.",
+    "dar": "min = 25, max = 45.",
+    "en": "min = 25, max = 45."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Min-Max",
+     "dar": "Min-Max",
+     "en": "Min-Max"
+    },
+    "body": {
+     "fr": "max − min = 20. 35 → (35 − 25)/20 = **0,5** ; 32 → 7/20 = **0,35**.",
+     "dar": "35 → 0,5 ; 32 → 0,35.",
+     "en": "35 → **0.5**; 32 → **0.35**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Pourquoi 35",
+     "dar": "3lach 35",
+     "en": "Why 35"
+    },
+    "body": {
+     "fr": "Les lignes 2 et 5 étaient NaN et ont reçu la moyenne des 7 autres valeurs (245/7 = 35).",
+     "dar": "Kanou NaN w khdaw moyenne.",
+     "en": "They were NaN and received the mean."
+    }
+   },
+   {
+    "title": {
+     "fr": "Code Z-score",
+     "dar": "Code Z-score",
+     "en": "Z-score code"
+    },
+    "body": {
+     "fr": "Formule de la diapo 22.",
+     "dar": "Diapo 22.",
+     "en": "Slide 22 formula."
+    },
+    "code": "df['age_z'] = (df['age'] - df['age'].mean()) / df['age'].std()"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Min-Max(35) = 0,5 ; Min-Max(32) = 0,35 ; z = (age − moyenne) / écart-type.",
+   "dar": "0,5 ; 0,35.",
+   "en": "0.5; 0.35."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Diviser par max au lieu de max − min.",
+    "dar": "Q9sem 3la max.",
+    "en": "Dividing by max."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "minMax",
+     "args": [
+      32,
+      25,
+      45
+     ]
+    },
+    "expect": 0.35,
+    "tolerance": 0.001
+   }
+  ]
+ }
+]

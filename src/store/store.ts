@@ -3,7 +3,6 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Lang } from '../lib/schema';
 import { updateQStat, type QStat } from '../lib/quiz';
 import { review, newCard, type CardState, type Grade } from '../lib/sm2';
-import type { Rev24Plan } from '../lib/planner';
 
 export interface ExamRecord {
   module: string;
@@ -27,8 +26,12 @@ export interface State {
   missions: Record<string, boolean>;
   exams: ExamRecord[];
   badges: string[];
-  rev24: Rev24Plan | null;
-  rev24Done: number;
+  /** reading position per chapter ("module/chapter" -> last section reached, % read) — saved on this device */
+  chapterPos: Record<string, { section: number; pct: number; at: number }>;
+  /** last page studied, for the "resume" card */
+  lastVisit: { path: string; module: string; chapter?: string; at: number } | null;
+  /** steps already revealed in step-by-step explanations ("chapter/section" -> count) */
+  stepsSeen: Record<string, number>;
   lastBadge: string | null;
   lastModule: string;
   achievements: Record<string, boolean>;
@@ -43,8 +46,9 @@ export interface State {
   markRead: (chapterId: string) => void;
   completeMission: (id: string) => void;
   addExam: (e: ExamRecord) => void;
-  setRev24: (p: Rev24Plan | null) => void;
-  finishRev24: () => void;
+  setChapterPos: (key: string, section: number, pct: number) => void;
+  setLastVisit: (v: { path: string; module: string; chapter?: string }) => void;
+  setStepsSeen: (key: string, n: number) => void;
   unlock: (badge: string) => void;
   clearLastBadge: () => void;
   importData: (d: Partial<State>) => void;
@@ -62,7 +66,7 @@ function bumpStreak(s: { last: string; count: number }): { last: string; count: 
 
 const initial = {
   lang: 'fr' as Lang,
-  theme: 'dark' as const,
+  theme: 'light' as 'dark' | 'light',
   bilingual: false,
   xp: 0,
   streak: { last: '', count: 0 },
@@ -73,8 +77,9 @@ const initial = {
   missions: {},
   exams: [],
   badges: [],
-  rev24: null,
-  rev24Done: 0,
+  chapterPos: {} as Record<string, { section: number; pct: number; at: number }>,
+  lastVisit: null as { path: string; module: string; chapter?: string; at: number } | null,
+  stepsSeen: {} as Record<string, number>,
   lastBadge: null,
   lastModule: 'linux',
   achievements: {} as Record<string, boolean>
@@ -111,8 +116,14 @@ export const useStore = create<State>()(
       markRead: (chapterId) => set((s) => ({ read: { ...s.read, [chapterId]: true }, xp: s.read[chapterId] ? s.xp : s.xp + 30, streak: bumpStreak(s.streak) })),
       completeMission: (id) => set((s) => ({ missions: { ...s.missions, [id]: true }, xp: s.missions[id] ? s.xp : s.xp + 60 })),
       addExam: (e) => set((s) => ({ exams: [...s.exams, e], xp: s.xp + Math.round(e.note * 5) })),
-      setRev24: (rev24) => set({ rev24 }),
-      finishRev24: () => set((s) => ({ rev24Done: s.rev24Done + 1 })),
+      setChapterPos: (key, section, pct) =>
+        set((s) => {
+          const prev = s.chapterPos[key];
+          if (prev && prev.section === section && Math.abs(prev.pct - pct) < 2) return s;
+          return { chapterPos: { ...s.chapterPos, [key]: { section, pct: Math.max(pct, prev?.pct ?? 0), at: Date.now() } } };
+        }),
+      setLastVisit: (v) => set({ lastVisit: { ...v, at: Date.now() } }),
+      setStepsSeen: (key, n) => set((s) => (s.stepsSeen[key] >= n ? s : { stepsSeen: { ...s.stepsSeen, [key]: n } })),
       unlock: (badge) => {
         if (get().badges.includes(badge)) return;
         set((s) => ({ badges: [...s.badges, badge], lastBadge: badge }));
@@ -127,7 +138,14 @@ export const useStore = create<State>()(
     }),
     {
       name: 'rev24',
-      version: 1,
+      version: 2,
+      // v1 -> v2: the 24h mode was removed; keep every other piece of progress
+      migrate: (old) => {
+        const o = { ...(old as Record<string, unknown>) };
+        delete o.rev24;
+        delete o.rev24Done;
+        return o as unknown as State;
+      },
       storage: createJSONStorage(() => {
         try {
           localStorage.setItem('__t', '1');

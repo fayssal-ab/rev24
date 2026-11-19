@@ -1,4 +1,4 @@
-/** Oral coach — « rm -rf / — The Most Dangerous Line », Fayssal's part (slides 9 → 12). Script = source of truth, do not rephrase. */
+/** Oral coach — « rm -rf / — The Most Dangerous Line », Fayssal's part (slides 9 → 12). Script = source of truth (revised: natural, professional delivery). */
 
 export interface Sentence {
   en: string;
@@ -25,26 +25,26 @@ export const SLIDES: Slide[] = [
     keywords: ['Pixar', '1998', '90%', 'copy', 'home', 'Steam', '2015', 'variable', 'empty', 'GitLab', '2017', 'wrong', 'server', '300', 'GB', '6', 'hours'],
     cues: 'Pixar 1998 → 90 % → copie à la maison · Steam 2015 → variable vide · GitLab 2017 → mauvais serveur → 300 GB / 6 h',
     sentences: [
-      s('Okay, so you might think: "Who would actually type this command by mistake?"', 'Okay, ymken tgoulou : « chkoun ghadi yktb had commande b ghalat ? »', 'Bon, vous vous dites peut-être : « Qui taperait vraiment cette commande par erreur ? »', 'Qui ferait ça par erreur ?'),
-      s('Well… it happened.', 'Walakin… w9e3at.', 'Eh bien… c’est arrivé.', 'C’est arrivé'),
-      s('To big companies.', 'L charikat kbar.', 'À de grandes entreprises.', 'Même aux grandes entreprises'),
-      s('Pixar, 1998.', 'Pixar, 1998.', 'Pixar, 1998.'),
-      s('They were making Toy Story 2.', 'Kanou kaydiro Toy Story 2.', 'Ils réalisaient Toy Story 2.'),
-      s('Someone ran a delete command on the server, and the movie files just started disappearing.', 'Chi wa7ed lança commande dyal suppression 3la serveur, w les fichiers dyal l film bdaw kayt7ydo.', 'Quelqu’un a lancé une commande de suppression sur le serveur, et les fichiers du film ont commencé à disparaître.', 'Les fichiers disparaissent'),
-      s('Around 90% of the movie, gone.', 'Ta9riban 90% mn l film, mcha.', 'Environ 90 % du film, disparu.', 'Pixar a presque perdu le film'),
-      s('The only reason we have Toy Story 2 today?', 'L3alach baqi 3andna Toy Story 2 lyoum ?', 'La seule raison pour laquelle on a Toy Story 2 aujourd’hui ?'),
-      s('One person had a copy on her computer at home.', 'Wa7da kan 3andha copie f l PC dyalha f dar.', 'Une personne avait une copie sur son ordinateur chez elle.', 'Une copie à la maison', 'A copy outside the studio saved the movie.'),
-      s("That's it.", 'Ghir hadchi.', 'C’est tout.'),
-      s('Steam, 2015.', 'Steam, 2015.', 'Steam, 2015.'),
-      s('A small bug in an update.', 'Bug sghir f mise à jour.', 'Un petit bug dans une mise à jour.'),
-      s('One variable was empty, so the command basically said "delete everything".', 'Wa7d l variable kanet khawya, donc l commande f l2assas golat « ms7 kolchi ».', 'Une variable était vide, donc la commande disait en gros « supprime tout ».', 'Variable vide = tout supprimer'),
-      s('And for some people, it deleted all their files.', 'W 3and chi nas, ms7at ga3 les fichiers dyalhom.', 'Et chez certaines personnes, elle a supprimé tous leurs fichiers.'),
-      s('GitLab, 2017.', 'GitLab, 2017.', 'GitLab, 2017.'),
-      s('An engineer was working late at night and ran rm -rf on the wrong server.', 'Wa7d l ingénieur kan khdam m3ttel f lil w dar rm -rf 3la serveur ghalet.', 'Un ingénieur travaillait tard la nuit et a lancé rm -rf sur le mauvais serveur.', 'Mauvais serveur', 'An engineer ran rm -rf on the wrong server.'),
-      s('300 GB of data, deleted.', '300 GB dyal data, tms7at.', '300 Go de données, supprimées.'),
-      s('And they lost about 6 hours of user data for good.', 'W dey3o ta9riban 6 swaye3 dyal data dyal users b nihaya (for good = l dima).', 'Et ils ont perdu environ 6 heures de données utilisateurs définitivement.', '6 h perdues pour toujours'),
-      s("So yeah, it's not just a joke on the internet.", 'Iyeh, machi ghir blague f internet.', 'Donc oui, ce n’est pas juste une blague sur internet.'),
-      s('It really happens.', 'Kat w9e3 b s7.', 'Ça arrive vraiment.')
+      s('Now, you might be thinking: who would ever type this command by accident?', 'Daba ymken katgoulou : chkoun ghadi yktb had commande b ghalat ?', 'Vous vous dites peut-être : qui taperait cette commande par accident ?', 'Qui ferait ça par erreur ?'),
+      s('Well, it has happened, and not only to beginners.', 'Walakin w9e3at, w machi ghir l mobtadi2in.', 'Eh bien, c’est arrivé, et pas seulement à des débutants.', 'C’est arrivé'),
+      s('It has happened to some of the biggest companies in tech.', 'W9e3at l chi mn akbar charikat f tech.', 'C’est arrivé à certaines des plus grandes entreprises de la tech.', 'Même aux grandes entreprises'),
+      s("Let's start with Pixar, in 1998.", 'Nbdaw b Pixar, f 1998.', 'Commençons par Pixar, en 1998.'),
+      s('The team was in the middle of making Toy Story 2.', 'L équipe kanet f west l khedma 3la Toy Story 2.', 'L’équipe était en pleine production de Toy Story 2.'),
+      s('Someone ran a delete command on one of their servers, and the movie files started disappearing, one after another.', 'Chi wa7ed lança commande dyal suppression 3la wa7ed serveur, w les fichiers dyal l film bdaw kayt7ydo wa7ed mor wa7ed.', 'Quelqu’un a lancé une commande de suppression sur un serveur, et les fichiers du film ont commencé à disparaître, les uns après les autres.', 'Les fichiers disparaissent'),
+      s('Within minutes, about 90% of the film was gone.', 'F d9aye9, ta9riban 90% mn l film mcha.', 'En quelques minutes, environ 90 % du film avait disparu.', 'Pixar a presque perdu le film'),
+      s('So why do we still have Toy Story 2 today?', 'Iwa 3lach baqi 3andna Toy Story 2 lyoum ?', 'Alors pourquoi a-t-on encore Toy Story 2 aujourd’hui ?'),
+      s('Because one employee had a copy of the project on her computer at home.', '7it wa7da mn l employés kan 3andha copie dyal l projet f l PC dyalha f dar.', 'Parce qu’une employée avait une copie du projet sur son ordinateur, chez elle.', 'Une copie à la maison', 'Because a copy kept outside the studio saved the movie.'),
+      s('That one copy saved the whole film.', 'Dik l copie wa7da hiya li 3t9at l film kamel.', 'Cette seule copie a sauvé tout le film.'),
+      s('Next, Steam, in 2015.', 'Mn b3d, Steam, f 2015.', 'Ensuite, Steam, en 2015.'),
+      s('A small bug slipped into an update script.', 'Bug sghir dkhel f script dyal mise à jour.', 'Un petit bug s’est glissé dans un script de mise à jour.'),
+      s('One variable was empty, so the command ended up meaning: delete everything.', 'Wa7d l variable kanet khawya, donc l commande wellat kat3ni : ms7 kolchi.', 'Une variable était vide, donc la commande revenait à dire : supprime tout.', 'Variable vide = tout supprimer'),
+      s('For some users, it wiped every file they owned.', '3and chi users, ms7at ga3 les fichiers dyalhom.', 'Chez certains utilisateurs, elle a effacé tous leurs fichiers.'),
+      s('And finally, GitLab, in 2017.', 'W f lekher, GitLab, f 2017.', 'Et enfin, GitLab, en 2017.'),
+      s('An engineer was working late at night and ran rm -rf on the wrong server.', 'Wa7d l ingénieur kan khddam m3ttel f lil w dar rm -rf 3la serveur ghalet.', 'Un ingénieur travaillait tard la nuit et a lancé rm -rf sur le mauvais serveur.', 'Mauvais serveur'),
+      s('About 300 GB of data were deleted in seconds.', 'Ta9riban 300 GB dyal data tms7at f thawani.', 'Environ 300 Go de données ont été supprimés en quelques secondes.'),
+      s('And around 6 hours of user data were lost for good.', 'W ta9riban 6 swaye3 dyal data dyal users da3o l dima (for good = nihā2iyan).', 'Et environ 6 heures de données utilisateurs ont été perdues définitivement.', '6 h perdues pour toujours'),
+      s('So this is not just a joke on the internet.', 'Donc hadi machi ghir blague f internet.', 'Ce n’est donc pas juste une blague d’internet.'),
+      s('It really happens, to real teams.', 'Kat w9e3 b s7, l équipes 7a9i9iyin.', 'Ça arrive vraiment, à de vraies équipes.')
     ]
   },
   {
@@ -53,18 +53,18 @@ export const SLIDES: Slide[] = [
     keywords: ['No', 'such', 'file', 'directory', 'four', 'data', 'backup', 'stops', 'servers', 'down', 'money', 'trusting', 'hardest'],
     cues: '« No such file or directory » → 4 : data · downtime · money · trust (le plus dur)',
     sentences: [
-      s('So what happens after?', 'Chno kayw9e3 mn b3d ?', 'Alors, que se passe-t-il après ?', 'Transition'),
-      s('You open the terminal, you try to open your files, and Linux tells you: "No such file or directory."', 'Kat7el terminal, katjarreb t7el les fichiers dyalek, w Linux kaygoulik : « No such file or directory ».', 'Vous ouvrez le terminal, vous essayez d’ouvrir vos fichiers, et Linux vous dit : « Aucun fichier ou dossier de ce type. »', 'Le chemin n’existe plus'),
-      s("Everything's gone.", 'Kolchi mcha.', 'Tout a disparu.'),
-      s('And it hurts in four ways.', 'W kaydor f 4 dyal l7wayej.', 'Et ça fait mal de quatre façons.'),
-      s("First, you lose your data.", 'Lewla, katdi3 data dyalek.', 'Premièrement, vous perdez vos données.', 'Perte de données'),
-      s("If you don't have a backup, it's gone forever.", 'Ila ma 3andekch backup, mcha l dima.', 'Sans sauvegarde, c’est perdu pour toujours.'),
-      s('Second, everything stops.', 'Tanya, kolchi kaywe9ef.', 'Deuxièmement, tout s’arrête.', 'Downtime'),
-      s('The servers are down until someone rebuilds the system.', 'Les serveurs kaykounou wa9fin 7ta chi wa7d y3awd ybni système.', 'Les serveurs sont en panne jusqu’à ce que quelqu’un reconstruise le système.'),
+      s('So, what actually happens after a command like this?', 'Iwa, chno kayw9e3 b s7 mn b3d commande b7al hadi ?', 'Alors, que se passe-t-il concrètement après une telle commande ?', 'Transition'),
+      s('You open the terminal, you try to reach your files, and Linux simply answers: No such file or directory.', 'Kat7el terminal, katjarreb tousel l les fichiers dyalek, w Linux kayjawbek ghir : No such file or directory.', 'Vous ouvrez le terminal, vous essayez d’accéder à vos fichiers, et Linux répond simplement : No such file or directory.', 'Le chemin n’existe plus'),
+      s('Everything is gone.', 'Kolchi mcha.', 'Tout a disparu.'),
+      s('And the damage comes in four forms.', 'W d-dorr kayji f 4 dyal l achkal.', 'Et les dégâts prennent quatre formes.'),
+      s('First, data loss.', 'Lewla, data kat-di3.', 'Premièrement, la perte de données.', 'Perte de données'),
+      s('Without a backup, those files are gone forever.', 'Bla backup, dok les fichiers mchaw l dima.', 'Sans sauvegarde, ces fichiers sont perdus pour toujours.'),
+      s('Second, downtime: everything stops.', 'Tanya, downtime : kolchi kaywe9ef.', 'Deuxièmement, l’indisponibilité : tout s’arrête.', 'Downtime'),
+      s('The servers stay down until someone rebuilds the system.', 'Les serveurs kayb9aw wa9fin 7ta chi wa7d y3awd ybni système.', 'Les serveurs restent à l’arrêt jusqu’à ce que quelqu’un reconstruise le système.'),
       s('Third, it costs money.', 'Talta, kayklef flous.', 'Troisièmement, ça coûte de l’argent.', 'Coût financier'),
-      s('Lost work, time to fix things, customers leaving.', 'Khedma mchat, wa9t bach tsle7, w clients kaymchiw.', 'Travail perdu, temps de réparation, clients qui partent.'),
-      s('And fourth, people stop trusting you.', 'W rab3a, nas kay7ebsou ma ythi9ouch fik.', 'Et quatrièmement, les gens ne vous font plus confiance.', 'Perte de confiance'),
-      s("And honestly, that's the hardest one to fix.", 'W b sra7a, hadi hiya s3ib wa7da bach tsle7ha.', 'Et honnêtement, c’est la plus difficile à réparer.')
+      s('Lost work, hours spent on recovery, and sometimes customers who leave.', 'Khedma mchat, swaye3 f l récupération, w ba3d lmrat clients kaymchiw.', 'Du travail perdu, des heures de récupération, et parfois des clients qui partent.'),
+      s('And fourth, people stop trusting you.', 'W rab3a, nas kay7ebsou ma ythi9ouch fik.', 'Et quatrièmement, les gens arrêtent de vous faire confiance.', 'Perte de confiance'),
+      s('Honestly, that is the hardest one to rebuild.', 'B sra7a, hadi hiya s3ib wa7da t3awd tbniha.', 'Honnêtement, c’est la plus difficile à reconstruire.')
     ]
   },
   {
@@ -73,20 +73,19 @@ export const SLIDES: Slide[] = [
     keywords: ['six', 'habits', 'backups', '3', '2', '1', 'restore', 'pwd', 'ls', 'rm', '-i', 'root', 'sudo', 'trash'],
     cues: '6 habitudes : 3-2-1 backups · pwd && ls · rm -i · --preserve-root · sudo · trash-put',
     sentences: [
-      s("The good news is it's easy to protect yourself.", 'L khbar lmzyan : sahel t7mi rasek.', 'La bonne nouvelle, c’est qu’il est facile de se protéger.', 'Transition'),
-      s('Just six simple habits.', 'Ghir 6 d l3adat sahlin.', 'Juste six habitudes simples.'),
+      s('The good news is that protecting yourself is easy.', 'L khbar lmzyan howa anaho sahel t7mi rasek.', 'La bonne nouvelle, c’est qu’il est facile de se protéger.', 'Transition'),
+      s('It comes down to six simple habits.', 'Kolchi kayrje3 l 6 d l3adat sahlin.', 'Cela se résume à six habitudes simples.'),
       s('One: make backups.', 'Wa7d : dir backups.', 'Un : faites des sauvegardes.', 'Sauvegardes'),
-      s('Keep 3 copies, on 2 different types of storage, and 1 somewhere else.', 'Khelli 3 copies, 3la 2 anwa3 dyal stockage, w 1 f blasa okhra.', 'Gardez 3 copies, sur 2 types de support, et 1 ailleurs.', 'Règle 3-2-1'),
-      s('And check that you can actually restore them.', 'W t2akked bli t9der t3awd tjibhom (restore) b s7.', 'Et vérifiez que vous pouvez vraiment les restaurer.'),
+      s('Follow the 3-2-1 rule: 3 copies, on 2 different types of storage, with 1 kept off-site.', 'Tb3 l 9a3ida 3-2-1 : 3 copies, 3la 2 anwa3 dyal stockage, w 1 f blasa okhra.', 'Suivez la règle 3-2-1 : 3 copies, sur 2 types de support, dont 1 hors site.', 'Règle 3-2-1'),
+      s('And test that you can actually restore them.', 'W jarreb bli t9der t3awd tjibhom (restore) b s7.', 'Et testez que vous pouvez vraiment les restaurer.'),
       s('Two: look before you delete.', 'Jouj : chouf 9bel ma tms7.', 'Deux : regardez avant de supprimer.'),
-      s('Type pwd to see where you are, and ls to see what\'s there.', 'Ktb pwd bach t3ref fin nta, w ls bach tchouf chno kayn.', 'Tapez pwd pour voir où vous êtes, et ls pour voir ce qu’il y a.', 'pwd + ls'),
+      s('Type pwd to check where you are, and ls to see what is there.', 'Ktb pwd bach tchouf fin nta, w ls bach tchouf chno kayn.', 'Tapez pwd pour vérifier où vous êtes, et ls pour voir ce qu’il y a.', 'pwd + ls'),
       s('Three: use rm -i.', 'Tlata : khdem b rm -i.', 'Trois : utilisez rm -i.'),
-      s('Linux will ask you "are you sure?" before deleting each file.', 'Linux ghadi ysowlek « wach mt2akked ? » 9bel ma yms7 kol fichier.', 'Linux vous demandera « êtes-vous sûr ? » avant de supprimer chaque fichier.', 'Confirmation'),
-      s("Four: don't touch the root protection.", 'Reb3a : ma tmesch l protection dyal root.', 'Quatre : ne touchez pas à la protection de la racine.'),
-      s('Linux already refuses to delete / by default.', 'Linux deja kayrfod yms7 / par défaut.', 'Linux refuse déjà de supprimer / par défaut.', '--preserve-root'),
-      s('Just leave it like that.', 'Khelliha kima hiya.', 'Laissez-le comme ça.'),
-      s("Five: don't work as root all the time.", 'Khamsa : ma tkhdemch b root dima.', 'Cinq : ne travaillez pas en root tout le temps.', 'Least privilege'),
-      s('Use sudo only when you really need it.', 'Khdem b sudo ghir mli t7tajo b s7.', 'Utilisez sudo seulement quand vous en avez vraiment besoin.'),
+      s('Linux will ask you to confirm before it deletes each file.', 'Linux ghadi ytleb mnek t2akked 9bel ma yms7 kol fichier.', 'Linux vous demandera de confirmer avant de supprimer chaque fichier.', 'Confirmation'),
+      s('Four: keep the root protection on.', 'Reb3a : khelli l protection dyal root khddama.', 'Quatre : gardez la protection de la racine activée.'),
+      s('By default, Linux already refuses to delete /, so leave it that way.', 'Par défaut, Linux deja kayrfod yms7 /, khelliha hakka.', 'Par défaut, Linux refuse déjà de supprimer /, alors laissez-le ainsi.', '--preserve-root'),
+      s("Five: don't work as root all the time.", 'Khamsa : ma tkhdemch b root dima.', 'Cinq : ne travaillez pas en root en permanence.', 'Least privilege'),
+      s('Use sudo only when you really need it.', 'Khdem b sudo ghir mli t7tajo b s7.', 'Utilisez sudo seulement quand c’est vraiment nécessaire.'),
       s('Six: use a trash bin.', 'Stta : khdem b corbeille (trash).', 'Six : utilisez une corbeille.', 'trash-put'),
       s('That way, if you delete something by mistake, you can still get it back.', 'Hakka, ila ms7ti chi 7aja b ghalat, t9der trejje3ha.', 'Ainsi, si vous supprimez quelque chose par erreur, vous pouvez encore le récupérer.')
     ]
@@ -97,22 +96,22 @@ export const SLIDES: Slide[] = [
     keywords: ['one', 'thing', 'exactly', 'wrong', 'power', 'responsibility', 'root', 'backups', 'Pixar', 'habits', 'Check', 'confirm', 'Enter', 'think'],
     cues: 'Linux fait exactement ce que tu dis → pouvoir = responsabilité · backups · habitudes → think before Enter',
     sentences: [
-      s("So if you remember just one thing from today, it's this: Linux does exactly what you tell it, even when you're wrong.", 'Ila t9iyyedto ghir 7aja wa7da lyoum, hiya hadi : Linux kaydir bdbt dakchi li golti lih, 7ta ila kenti ghalet.', 'Si vous ne retenez qu’une chose aujourd’hui : Linux fait exactement ce que vous lui dites, même quand vous avez tort.', 'Linux obéit même à l’erreur'),
-      s('Three quick lessons.', 'Tlata d drous sghar.', 'Trois leçons rapides.'),
-      s('One: more power means more responsibility.', 'Wa7d : ktar d l pouvoir = ktar d l mas2ouliya.', 'Un : plus de pouvoir signifie plus de responsabilité.', 'Pouvoir = responsabilité'),
+      s('If you remember only one thing from this presentation, let it be this: Linux does exactly what you tell it, even when you are wrong.', 'Ila t9iyyedto ghir 7aja wa7da mn had l présentation, khelliha tkoun hadi : Linux kaydir bdbt dakchi li golti lih, 7ta ila kenti ghalet.', 'Si vous ne retenez qu’une chose de cette présentation, retenez ceci : Linux fait exactement ce que vous lui dites, même quand vous avez tort.', 'Linux obéit même à l’erreur'),
+      s('That leaves us with three lessons.', 'Hadchi kaykhllina b tlata d drous.', 'Cela nous laisse trois leçons.'),
+      s('One: more power means more responsibility.', 'Wa7d : ktar d l pouvoir = ktar d l mas2ouliya.', 'Un : plus de pouvoir, c’est plus de responsabilité.', 'Pouvoir = responsabilité'),
       s('With root access, one short command can wipe everything in seconds.', 'B accès root, commande sghira t9der tms7 kolchi f thawani.', 'Avec un accès root, une courte commande peut tout effacer en quelques secondes.'),
       s('Two: backups save you.', 'Jouj : backups kay3t9ouk.', 'Deux : les sauvegardes vous sauvent.', 'Backups = filet de sécurité'),
-      s('In every story we saw, the backup made the difference.', 'F ga3 l 9issas li chefna, backup hiya li far9at.', 'Dans chaque histoire vue, la sauvegarde a fait la différence.'),
-      s('Pixar is the best example.', 'Pixar a7ssen mithal.', 'Pixar est le meilleur exemple.'),
+      s('In every story we saw today, the backup made the difference.', 'F ga3 l 9issas li chefna lyoum, backup hiya li far9at.', 'Dans chaque histoire vue aujourd’hui, la sauvegarde a fait la différence.'),
+      s('Pixar is the perfect example.', 'Pixar howa a7ssen mithal.', 'Pixar en est l’exemple parfait.'),
       s('Three: good habits save you too.', 'Tlata : l3adat lmzyanin 7ta homa kay3t9ouk.', 'Trois : les bonnes habitudes vous sauvent aussi.', 'Bonnes habitudes'),
-      s('Check, confirm, and then press Enter.', 'T2akked, confirmi, w 3ad brek 3la Enter.', 'Vérifiez, confirmez, puis appuyez sur Entrée.'),
-      s("So next time you're about to press Enter… just think for one second.", 'Lmerra jaya mli tkoun ghadi tbrek 3la Enter… fekker ghir tanya wa7da.', 'Alors la prochaine fois que vous allez appuyer sur Entrée… réfléchissez juste une seconde.', 'Réfléchir avant Enter'),
-      s('Thank you!', 'Choukran !', 'Merci !')
+      s('Check, confirm, and only then press Enter.', 'T2akked, confirmi, w 3ad brek 3la Enter.', 'Vérifiez, confirmez, et seulement ensuite appuyez sur Entrée.'),
+      s('So next time your finger is on the Enter key, take one second to think.', 'Lmerra jaya mli ykoun sb3ek 3la Enter, khod tanya wa7da w fekker.', 'Alors la prochaine fois que votre doigt est sur la touche Entrée, prenez une seconde pour réfléchir.', 'Réfléchir avant Enter'),
+      s("Thank you. We're happy to take your questions.", 'Choukran. Mr7ba b les questions dyalkom.', 'Merci. Nous répondons volontiers à vos questions.')
     ]
   }
 ];
 
-export const TRANSITIONS = ['Okay, so you might think…', 'So what happens after?', 'The good news is…', 'So if you remember just one thing…', 'Thank you!'];
+export const TRANSITIONS = ['Now, you might be thinking…', 'So, what actually happens after a command like this?', 'The good news is that protecting yourself is easy.', 'If you remember only one thing from this presentation…', "Thank you. We're happy to take your questions."];
 
 /** Technical explanations: [title, dar, fr, en] */
 export const TECH: [string, string, string, string][] = [

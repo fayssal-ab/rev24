@@ -44,3 +44,23 @@ export const wpm = (wordCount: number, ms: number) => (ms > 0 ? Math.round(wordC
 
 export const FILLERS = ['euh', 'uh', 'um', 'erm', 'like'];
 export const countFillers = (s: string) => words(s).filter((w) => FILLERS.includes(w)).length;
+
+const close = (a: string, b: string) => a === b || (b.length > 3 && lev(a, b) <= Math.floor(b.length / 4));
+
+/**
+ * Live prompter alignment: how many words of `expected` have been read, given what the speech
+ * recogniser heard so far. Greedy walk with a small look-ahead so that a missed or misheard word
+ * does not block the prompter; a jump of more than 3 words needs two consecutive matching words.
+ */
+export function alignProgress(expected: string[], spoken: string[], window = 8): number {
+  let pos = 0;
+  for (let i = 0; i < spoken.length && pos < expected.length; i++) {
+    for (let j = pos; j < Math.min(expected.length, pos + window); j++) {
+      if (!close(spoken[i], expected[j])) continue;
+      if (j - pos > 3 && !(i + 1 < spoken.length && j + 1 < expected.length && close(spoken[i + 1], expected[j + 1]))) continue;
+      pos = j + 1;
+      break;
+    }
+  }
+  return pos;
+}

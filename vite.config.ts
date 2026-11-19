@@ -10,11 +10,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg'],
       manifest: {
-        name: 'Rev24 — Révision 4IIR',
-        short_name: 'Rev24',
-        description: 'Révision Linux RHEL 9 & Analyse de données',
-        theme_color: '#0b1020',
-        background_color: '#0b1020',
+        name: 'GROUP22 · EMSI — Study Hub 4IIR',
+        short_name: 'GROUP22',
+        description: 'Cours pas à pas, exercices corrigés et QCM — 4IIR G22, EMSI Rabat',
+        theme_color: '#0e2446',
+        background_color: '#0e2446',
         display: 'standalone',
         start_url: './',
         icons: [

@@ -1,5 +1,6 @@
-import { setCtx, L, h, p, code, tip, trap, exam, table, quiz, single, multi, cmd, order, ex, fc, ref } from '../lib';
-import type { Module, Chapter } from '../../src/lib/schema';
+import { c1, c2, c3 } from './course';
+import { setCtx, L, single, multi, cmd, order, ex, fc, ref } from '../lib';
+import type { Module } from '../../src/lib/schema';
 
 // ================= Chap 2 — Architecture =================
 setCtx('oracle', 'architecture');
@@ -36,41 +37,6 @@ const archFc = [
   fc('fc-or-7', ['Ouvrir une PDB ?', 'Fte7 PDB ?', 'Open a PDB?'], ['ALTER PLUGGABLE DATABASE ORCLPDB OPEN;', 'ALTER PLUGGABLE DATABASE … OPEN', 'ALTER PLUGGABLE DATABASE … OPEN;']),
   fc('fc-or-8', ['Installer HR ?', 'HR ?', 'Install HR?'], ['Dans ORCLPDB : @…\\hr_install.sql, puis ALTER USER hr ACCOUNT UNLOCK.', 'hr_install + unlock.', 'hr_install.sql then unlock.'])
 ];
-const c1: Chapter = {
-  id: 'architecture', module: 'oracle', order: 2,
-  title: L(['Chap 2 — Architecture globale (CDB/PDB)', 'Fasl 2 — Architecture', 'Ch. 2 — Overall architecture (CDB/PDB)']),
-  summary: L(['Instance et base, fichiers, connexion/session, multitenant CDB/PDB, utilisateurs communs et locaux, exercices 1 et 2.', 'Instance, base, CDB/PDB, C##.', 'Instance vs database, files, CDB/PDB, common/local users.']),
-  estimatedMinutes: 40,
-  sections: [
-    h(['Instance et base de données', 'Instance w base', 'Instance and database']),
-    p(['Serveur Oracle = **instance** (mémoire SGA + processus d\'arrière-plan) + **base de données** (fichiers). Base : **datafiles**, **control files**, **redo log files**. Fichiers associés : paramètres (pfile/spfile), mots de passe, **archives**. Client : processus utilisateur → **connexion** → **session** → processus serveur (+ PGA).', 'Instance + base ; fichiers ; session.', 'Server = **instance** (SGA + processes) + **database** (files). Client: user process → connection → session → server process.']),
-    h(['Multitenant (19c)', 'Multitenant', 'Multitenant (19c)']),
-    p(['**CDB** = **CDB$ROOT** + **PDB$SEED** + PDB (ex. **ORCLPDB**). Utilisateur **commun** : créé dans la racine avec le préfixe **C##**. Utilisateur **local** : créé dans une PDB.', 'CDB = ROOT + SEED + PDB ; C## / local.', 'CDB = ROOT + SEED + PDBs; common users need C##.']),
-    code(`sqlplus / as sysdba
-SHOW PDBS;
-ALTER PLUGGABLE DATABASE ORCLPDB OPEN;   -- si MOUNTED
-SHOW CON_NAME;                           -- CDB$ROOT
-CREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- ORA-65096 dans CDB$ROOT
-ALTER SESSION SET CONTAINER=ORCLPDB;
-CREATE USER ETUDIANT IDENTIFIED BY etudiant123;   -- User created.
-GRANT CREATE SESSION TO ETUDIANT;
-CONNECT etudiant/etudiant123@localhost:1521/ORCLPDB`, 'text', ['Exercice d\'application 1', 'Exercice 1', 'Exercise 1']),
-    trap(['ORA-65096 = utilisateur non C## dans CDB$ROOT.', 'ORA-65096 = bla C## f ROOT.', 'ORA-65096 = non-C## user in CDB$ROOT.']),
-    code(`sqlplus / as sysdba
-SHOW CON_NAME
-SHOW PDBS
-ALTER SESSION SET CONTAINER=ORCLPDB
-@C:\\oracle_samples\\db-sample-schemas\\human_resources\\hr_install.sql   -- mdp root, USERS, TEMP
-ALTER USER hr ACCOUNT UNLOCK;
-sqlplus hr/root@localhost:1521/ORCLPDB
-SELECT table_name FROM user_tables;`, 'text', ['Exercice d\'application 2 (schéma HR, chemin sans espaces ni accents)', 'Exercice 2 (HR)', 'Exercise 2 (HR schema)']),
-    quiz('or-04', 'or-07', 'or-14')
-  ],
-  keyPoints: [
-    L(['Serveur = instance (SGA + processus) + base (datafiles, control files, redo logs).', 'Instance + base.', 'Server = instance + database.']),
-    L(['CDB = CDB$ROOT + PDB$SEED + PDB ; commun = C## (racine), local = PDB ; ORA-65096.', 'CDB/PDB, C##.', 'CDB/PDB, C##, ORA-65096.'])
-  ]
-};
 
 // ================= Chap 3 — Instance =================
 setCtx('oracle', 'instance');
@@ -143,63 +109,6 @@ const instFc = [
   fc('fc-or-26', ['Tuer une session ?', 'Tue session ?', 'Kill a session?'], ["ALTER SYSTEM KILL SESSION 'sid,serial#'; → ORA-00028", 'KILL SESSION.', "ALTER SYSTEM KILL SESSION 'sid,serial#';"]),
   fc('fc-or-27', ['Vues à connaître ?', 'Vues ?', 'Key views?'], ['v$instance, v$database, v$session, v$process, v$sga, v$sgainfo, v$sgastat, v$bgprocess, v$pdbs, v$parameter, v$controlfile, v$logfile, v$log, dba_users, dba_data_files, dba_tablespaces, cdb_users', 'v$… / dba_…', 'v$ / dba_ views'])
 ];
-const c2: Chapter = {
-  id: 'instance', module: 'oracle', order: 3,
-  title: L(['Chap 3 — Instance : SGA, PGA, processus, démarrage/arrêt', 'Fasl 3 — Instance', 'Ch. 3 — Instance: SGA, PGA, processes, startup/shutdown']),
-  summary: L(['Mémoire SGA/PGA, processus d\'arrière-plan, exécution d\'une requête, STARTUP/SHUTDOWN et TP1 sessions.', 'SGA, processus, STARTUP, SHUTDOWN.', 'SGA/PGA, background processes, query flow, startup/shutdown, TP1.']),
-  estimatedMinutes: 60,
-  sections: [
-    h(['La mémoire', 'Mémoire', 'Memory']),
-    table([['Zone', 'Zone', 'Area'], ['Rôle', 'Dor', 'Role']], [
-      ['Shared Pool', ['Library cache (SQL, plans réutilisés) + dictionary cache', 'Library + dictionary', 'Library + dictionary cache']],
-      ['Database Buffer Cache', ['Copies des blocs ; toute lecture passe par lui', 'Blocs', 'Block copies']],
-      ['Redo Log Buffer', ['Modifications (redo), vidé par LGWR', 'Redo', 'Redo entries']],
-      ['Large Pool', ['UGA en serveur partagé, RMAN, E/S (optionnelle)', 'UGA, RMAN', 'UGA, RMAN, I/O']],
-      ['Java / Streams Pool', ['JVM / Oracle Streams', 'Java / Streams', 'Java / Streams']],
-      ['PGA', ['Privée par processus serveur : stack + UGA (dédié)', 'Khassa', 'Private: stack + UGA']]
-    ]),
-    p(['**Serveur dédié** : un processus serveur par utilisateur, PGA = stack + UGA. **Serveur partagé** : l\'UGA passe dans la SGA (Shared Pool ou Large Pool).', 'Dédié / partagé.', 'Dedicated vs shared server.']),
-    h(['Les processus d\'arrière-plan', 'Processus', 'Background processes']),
-    p(['**PMON** nettoie après un processus utilisateur échoué. **SMON** récupère l\'instance au démarrage après crash. **DBWn** écrit les blocs dirty (pas au COMMIT). **LGWR** écrit le redo : au COMMIT, toutes les 3 s, au tiers du buffer, avant DBWn. **CKPT** : checkpoints. **ARCn** (facultatif) : archives en ARCHIVELOG.', 'PMON, SMON, DBWn, LGWR, CKPT, ARCn.', 'PMON, SMON, DBWn, LGWR, CKPT, ARCn.']),
-    trap(['**LGWR ≠ DBWn** : au COMMIT c\'est LGWR qui écrit ; DBWn écrit plus tard.', 'LGWR f COMMIT ; DBWn mn b3d.', '**LGWR ≠ DBWn**: LGWR at COMMIT; DBWn later.']),
-    h(['Exécution d\'une requête', 'Requête', 'Query execution']),
-    code(`UPDATE customers SET city='Rabat' WHERE id_customer=123;
-COMMIT;
--- 1 analyse (Shared Pool)   2 bloc dans le Buffer Cache   3 image avant → undo
--- 4 bloc modifié (dirty)    5 entrée redo                 6 COMMIT : LGWR → redo logs
--- 7 plus tard : DBWn écrit le bloc (checkpoint)
--- SELECT : analyse + buffer + renvoi des lignes (pas d'undo, de redo, de LGWR)`, 'text'),
-    quiz('or-25', 'or-29', 'or-30'),
-    h(['Démarrage et arrêt', 'Démarrage w arrêt', 'Startup and shutdown']),
-    p(['**SHUTDOWN → NOMOUNT** (paramètres, SGA, processus) **→ MOUNT** (control files) **→ OPEN** (datafiles + redo). `STARTUP [NOMOUNT|MOUNT|OPEN|FORCE|RESTRICT]` ; `ALTER DATABASE MOUNT;` / `OPEN;`. FORCE = abort + startup.', 'NOMOUNT → MOUNT → OPEN.', 'NOMOUNT → MOUNT → OPEN.']),
-    table([['Mode', 'Mode', 'Mode'], ['Attend', 'Kaytsenna', 'Waits for'], ['Propre ?', 'Propre ?', 'Clean?']], [
-      ['NORMAL', ['déconnexion de tous', 'ga3 ykhrjou', 'all sessions'], ['oui', 'ah', 'yes']],
-      ['TRANSACTIONAL', ['fin des transactions', 'transactions', 'transactions'], ['oui', 'ah', 'yes']],
-      ['IMMEDIATE', ['rien (rollback)', 'walou (rollback)', 'nothing (rollback)'], ['oui', 'ah', 'yes']],
-      ['ABORT', ['rien', 'walou', 'nothing'], ['non → SMON', 'la → SMON', 'no → SMON']]
-    ]),
-    exam(['Le tableau des 4 modes de SHUTDOWN et l\'ordre NOMOUNT → MOUNT → OPEN tombent souvent.', 'SHUTDOWN w STARTUP kaytl3ou.', 'Shutdown modes and startup order are frequent.']),
-    quiz('or-31', 'or-37', 'or-38'),
-    h(['TP1 — Sessions', 'TP1 — Sessions', 'TP1 — Sessions']),
-    code(`SET PAGESIZE 1000
-SET LINESIZE 2000
-COLUMN MACHINE FORMAT A30
-SELECT sid, serial#, username, status, osuser, machine, program, paddr FROM v$session;
-CREATE USER C##ETUDIANT IDENTIFIED BY etudiant123;
-GRANT CREATE SESSION TO C##ETUDIANT;
-SELECT sid, serial#, username, status, seconds_in_wait FROM v$session
-  WHERE status='INACTIVE' AND seconds_in_wait > 60;
-ALTER SYSTEM KILL SESSION '45,2311';   -- l'autre reçoit ORA-00028
-SELECT * FROM v$sgainfo;  SELECT * FROM v$sgastat;`, 'text'),
-    tip(['Chaque connexion = une nouvelle session (SID/SERIAL# différents).', 'Kol connexion = session.', 'Each connection = a new session.']),
-    quiz('or-43', 'or-46')
-  ],
-  keyPoints: [
-    L(['SGA partagée (Shared Pool, Buffer Cache, Redo Buffer, Large/Java/Streams) ; PGA privée.', 'SGA / PGA.', 'SGA shared; PGA private.']),
-    L(['LGWR au COMMIT ; DBWn plus tard ; PMON processus ; SMON instance ; CKPT ; ARCn.', 'Processus.', 'Background processes.']),
-    L(['NOMOUNT → MOUNT → OPEN ; NORMAL/TRANSACTIONAL/IMMEDIATE propres, ABORT → SMON.', 'STARTUP / SHUTDOWN.', 'Startup / shutdown.'])
-  ]
-};
 
 setCtx('oracle', 'instance');
 const exs = [
@@ -238,11 +147,11 @@ exs.push(
 export const module: Module = {
   id: 'oracle',
   title: L(['Administration Oracle 1 (DBA1)', 'Administration Oracle 1', 'Oracle Administration 1 (DBA1)']),
-  subtitle: L(['Oracle 19c — architecture, instance, CDB/PDB', 'Oracle 19c — instance, CDB/PDB', 'Oracle 19c — architecture, instance, CDB/PDB']),
-  color: '#dc2626',
+  subtitle: L(['Oracle 19c — architecture, CDB/PDB, instance (SGA, PGA, processus), démarrage/arrêt, TP1', 'Oracle 19c — architecture, CDB/PDB, instance, démarrage/arrêt, TP1', 'Oracle 19c — architecture, CDB/PDB, instance (SGA, PGA, processes), startup/shutdown, lab 1']),
+  color: '#163460',
   icon: 'layers',
   theme: 'crimson',
-  chapters: ['architecture', 'instance'],
+  chapters: ['architecture', 'instance', 'tp1'],
   upcoming: [
     { id: 'o-install', order: 1, title: L(['Chap 1 — Introduction et installation', 'Fasl 1 — Installation', 'Ch. 1 — Introduction and installation']) },
     { id: 'o-params', order: 4, title: L(['Chap 4 — Paramètres et fichiers de paramètres', 'Fasl 4 — Paramètres', 'Ch. 4 — Parameters and parameter files']) },
@@ -252,10 +161,10 @@ export const module: Module = {
     { id: 'o-tbs', order: 8, title: L(['Chap 8 — Tablespaces', 'Fasl 8 — Tablespaces', 'Ch. 8 — Tablespaces']) }
   ],
   annales: [],
-  weights: { instance: 5, architecture: 3 }
+  weights: { instance: 5, architecture: 4, tp1: 3 }
 };
 
-export const chapters = [c1, c2];
+export const chapters = [c1, c2, c3];
 export const questions = [...qa, ...qi];
 export const exercises = exs;
 export const flashcards = [...archFc, ...instFc];

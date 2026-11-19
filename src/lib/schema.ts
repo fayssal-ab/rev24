@@ -23,7 +23,13 @@ export const SectionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('formula'), tex: z.string(), caption: L10nSchema.optional() }),
   z.object({ type: z.literal('table'), headers: z.array(L10nSchema), rows: z.array(z.array(z.union([L10nSchema, z.string()]))) }),
   z.object({ type: z.literal('animation'), component: z.string(), props: z.record(z.unknown()).optional() }),
-  z.object({ type: z.literal('callout'), kind: z.enum(['tip', 'trap', 'exam']), body: L10nSchema }),
+  z.object({ type: z.literal('callout'), kind: z.enum(['tip', 'trap', 'exam', 'def', 'example', 'darija', 'formula']), body: L10nSchema, tex: z.string().optional() }),
+  /** worked solution revealed one step at a time */
+  z.object({
+    type: z.literal('steps'),
+    title: L10nSchema.optional(),
+    items: z.array(z.object({ title: L10nSchema, body: L10nSchema, tex: z.string().optional(), code: z.string().optional(), why: L10nSchema.optional() })).min(1)
+  }),
   z.object({ type: z.literal('miniQuiz'), questionIds: z.array(z.string()).min(1) }),
   z.object({ type: z.literal('mission'), missionId: z.string() })
 ]);
@@ -45,7 +51,7 @@ export const ModuleSchema = z.object({
     .default([]),
   /** simulator used by this module's missions */
   console: z.enum(['bash', 'sqlplus']).optional(),
-  /** exam weight per chapter, used by the 24h planner and the mock exam */
+  /** exam weight per chapter, used by the mock exam */
   weights: z.record(z.number())
 });
 export type Module = z.infer<typeof ModuleSchema>;

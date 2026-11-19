@@ -11,7 +11,7 @@ export default function SheetPage() {
   if (!data) return <Loading />;
   return (
     <div className="space-y-4">
-      <PageTitle back={`/m/${id}`} title={<>{t('sheet.title')} — <L v={data.module.title} /></>} />
+      <PageTitle title={<>{t('sheet.title')} — <L v={data.module.title} /></>} />
       <button className="btn-primary no-print" onClick={() => window.print()}>
         <Icon name="print" size={16} /> {t('common.print')}
       </button>

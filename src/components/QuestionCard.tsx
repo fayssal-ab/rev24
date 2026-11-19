@@ -32,7 +32,7 @@ export function DifficultyDots({ d }: { d: 1 | 2 | 3 }) {
   );
 }
 
-export function QuestionCard({ q, onAnswer, onNext, examMode = false, initialResponse, onChange, index, total }: Props) {
+export function QuestionCard({ q, onAnswer, onNext, examMode = false, initialResponse, onChange, index, total, autoFocus = true }: Props & { autoFocus?: boolean }) {
   const { t } = useT();
   const reduce = useReducedMotion();
   const options = useMemo(() => (q.options ? shuffle(q.options) : []), [q]);
@@ -50,8 +50,11 @@ export function QuestionCard({ q, onAnswer, onNext, examMode = false, initialRes
     setOrder(options.map((o) => o.id));
     setText('');
     setResult(null);
-    if (q.kind === 'command' || q.kind === 'numeric') setTimeout(() => inputRef.current?.focus(), 50);
-    else rootRef.current?.focus({ preventScroll: true });
+    // inside a chapter (mini-quiz) we never steal the focus: it would scroll the page to the quiz
+    if (autoFocus) {
+      if (q.kind === 'command' || q.kind === 'numeric') setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 50);
+      else rootRef.current?.focus({ preventScroll: true });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q.id]);
 
@@ -232,7 +235,7 @@ export function QuestionCard({ q, onAnswer, onNext, examMode = false, initialRes
             </button>
           ) : (
             onNext && (
-              <button className="btn-primary" onClick={onNext} data-testid="next" autoFocus>
+              <button className="btn-primary" onClick={onNext} data-testid="next" autoFocus={autoFocus}>
                 {t('common.next')} <Icon name="right" size={16} />
               </button>
             )

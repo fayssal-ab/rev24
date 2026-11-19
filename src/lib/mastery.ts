@@ -55,7 +55,6 @@ export function weakSpots(c: ModuleContent, p: Progress) {
 export interface BadgeInput extends Progress {
   questionsById: Record<string, { tags: string[] }>;
   exams: { note: number }[];
-  rev24Done: number;
   streak: number;
   rootReset: boolean;
 }
@@ -66,7 +65,6 @@ export function earnedBadges(b: BadgeInput): string[] {
   if (right('chmod') + right('droits') >= 10) out.push('chmod');
   if (b.rootReset) out.push('root');
   if (right('tests') >= 10) out.push('h0');
-  if (b.rev24Done > 0) out.push('24h');
   if (Object.values(b.missions).filter(Boolean).length >= 5) out.push('terminal');
   if (b.exams.some((e) => e.note >= 16)) out.push('exam');
   if (b.streak >= 3) out.push('streak');

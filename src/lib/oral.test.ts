@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { countFillers, lev, maskWords, scoreSpeech, words, wpm } from './oral';
+import { alignProgress, countFillers, lev, maskWords, scoreSpeech, words, wpm } from './oral';
 import { SLIDES } from '../content/oral/rmrf';
 
 describe('oral coach', () => {
@@ -28,5 +28,14 @@ describe('oral coach', () => {
   it('script content is complete', () => {
     expect(SLIDES.map((s) => s.n)).toEqual([9, 10, 11, 12]);
     for (const s of SLIDES) for (const x of s.sentences) expect(x.dar && x.fr && x.en).toBeTruthy();
+  });
+  it('live prompter follows the speaker, tolerating misheard and skipped words', () => {
+    const exp = words('Now you might be thinking who would ever type this command by accident');
+    expect(alignProgress(exp, words('now you might'))).toBe(3);
+    expect(alignProgress(exp, words('now you mite be thinking'))).toBe(5);
+    // one stray word does not make the prompter jump ahead
+    expect(alignProgress(exp, words('now command'))).toBe(1);
+    // skipping a few words: two consecutive matches confirm the jump
+    expect(alignProgress(exp, words('now you who would ever'))).toBe(8);
   });
 });

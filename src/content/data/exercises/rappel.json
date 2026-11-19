@@ -1,0 +1,409 @@
+[
+ {
+  "id": "dr-ex1",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "title": {
+   "fr": "Résumé complet d'une série de notes",
+   "dar": "Résumé kamel dyal série",
+   "en": "Full summary of a set of marks"
+  },
+  "statement": {
+   "fr": "Les notes de 5 étudiants sont : **8 ; 12 ; 10 ; 15 ; 10**. Calcule la moyenne, la médiane, le mode, la variance (n), l'écart-type (n), puis la variance corrigée S² et S. Donne enfin Q1, Q3 et l'IQR (convention pandas).",
+   "dar": "Notes dyal 5 tlamid : **8 ; 12 ; 10 ; 15 ; 10**. 7seb moyenne, médiane, mode, variance (n), écart-type (n), 3ad S² w S. F lekher 3tini Q1, Q3 w IQR (b pandas).",
+   "en": "The marks of 5 students are **8 ; 12 ; 10 ; 15 ; 10**. Compute the mean, median, mode, variance (n), standard deviation (n), then S² and S. Finally give Q1, Q3 and the IQR (pandas convention)."
+  },
+  "hints": [
+   {
+    "fr": "Commence par trier la série.",
+    "dar": "Bda b tartib.",
+    "en": "Start by sorting."
+   },
+   {
+    "fr": "Écarts à la moyenne : −3, 1, −1, 4, −1.",
+    "dar": "L far9 : −3, 1, −1, 4, −1.",
+    "en": "Deviations: −3, 1, −1, 4, −1."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Moyenne",
+     "dar": "Moyenne",
+     "en": "Mean"
+    },
+    "body": {
+     "fr": "55 / 5 = **11**.",
+     "dar": "55 / 5 = **11**.",
+     "en": "55 / 5 = **11**."
+    },
+    "tex": "\\bar x = 11"
+   },
+   {
+    "title": {
+     "fr": "Médiane et mode",
+     "dar": "Médiane w mode",
+     "en": "Median and mode"
+    },
+    "body": {
+     "fr": "Série triée 8 ; 10 ; 10 ; 12 ; 15 → Me = **10** ; Mo = **10** (2 fois).",
+     "dar": "Me = 10 ; Mo = 10.",
+     "en": "Me = **10**; Mo = **10**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Variance et écart-type (n)",
+     "dar": "Variance w écart-type (n)",
+     "en": "Variance and SD (n)"
+    },
+    "body": {
+     "fr": "Carrés des écarts : 9, 1, 1, 16, 1 → 28. V = 28/5 = **5,6** ; σ = √5,6 ≈ **2,37**.",
+     "dar": "V = 5,6 ; σ ≈ 2,37.",
+     "en": "V = **5.6**; σ ≈ **2.37**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Version corrigée (n − 1)",
+     "dar": "B n − 1",
+     "en": "Corrected (n − 1)"
+    },
+    "body": {
+     "fr": "S² = 28/4 = **7** ; S = √7 ≈ **2,65** (ce que donne pandas `.var()` / `.std()`).",
+     "dar": "S² = 7 ; S ≈ 2,65.",
+     "en": "S² = **7**; S ≈ **2.65**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Quartiles",
+     "dar": "Quartiles",
+     "en": "Quartiles"
+    },
+    "body": {
+     "fr": "Positions (n − 1)p : Q1 → position 1 = **10** ; Q3 → position 3 = **12** ; IQR = **2**.",
+     "dar": "Q1 = 10, Q3 = 12, IQR = 2.",
+     "en": "Q1 = **10**, Q3 = **12**, IQR = **2**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "x̄ = 11 ; Me = 10 ; Mo = 10 ; V = 5,6 ; σ ≈ 2,37 ; S² = 7 ; S ≈ 2,65 ; Q1 = 10 ; Q3 = 12 ; IQR = 2.",
+   "dar": "x̄ = 11 ; Me = Mo = 10 ; V = 5,6 ; S² = 7 ; IQR = 2.",
+   "en": "x̄ = 11; Me = 10; Mo = 10; V = 5.6; σ ≈ 2.37; S² = 7; S ≈ 2.65; Q1 = 10; Q3 = 12; IQR = 2."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Calculer la médiane sans trier.",
+    "dar": "Médiane bla tartib.",
+    "en": "Median without sorting."
+   },
+   {
+    "fr": "Confondre diviseur n et n − 1.",
+    "dar": "Tkhllet n m3a n − 1.",
+    "en": "Mixing up n and n − 1."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       8,
+       12,
+       10,
+       15,
+       10
+      ]
+     ]
+    },
+    "expect": 11,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "popVariance",
+     "args": [
+      [
+       8,
+       12,
+       10,
+       15,
+       10
+      ]
+     ]
+    },
+    "expect": 5.6,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "variance",
+     "args": [
+      [
+       8,
+       12,
+       10,
+       15,
+       10
+      ]
+     ]
+    },
+    "expect": 7,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       8,
+       12,
+       10,
+       15,
+       10
+      ]
+     ],
+     "pick": "iqr"
+    },
+    "expect": 2,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dr-ex2",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 3,
+  "title": {
+   "fr": "Régression : heures de révision → note",
+   "dar": "Régression : sa3at → note",
+   "en": "Regression: revision hours → mark"
+  },
+  "statement": {
+   "fr": "x = heures de révision = 1 ; 2 ; 3 ; 4 ; 5 et y = note sur 10 = 2 ; 4 ; 5 ; 4 ; 5.\n1. Calcule x̄, ȳ, V(x), cov(x, y).\n2. Calcule r et interprète.\n3. Donne la droite des moindres carrés et la note prédite pour 6 h.\n4. Calcule R² et interprète.",
+   "dar": "x = sa3at = 1…5, y = note = 2 ; 4 ; 5 ; 4 ; 5.\n1. 7seb x̄, ȳ, V(x), cov.\n2. 7seb r w fsser.\n3. 3tini l khatt w note l 6 sa3at.\n4. 7seb R² w fsser.",
+   "en": "x = revision hours = 1 ; 2 ; 3 ; 4 ; 5 and y = mark /10 = 2 ; 4 ; 5 ; 4 ; 5.\n1. Compute x̄, ȳ, V(x), cov(x, y).\n2. Compute r and interpret.\n3. Give the least-squares line and the predicted mark for 6 h.\n4. Compute R² and interpret."
+  },
+  "hints": [
+   {
+    "fr": "Fais un tableau avec les colonnes x − x̄, y − ȳ, produit, (x − x̄)².",
+    "dar": "Dir tableau b colonnes x − x̄, y − ȳ, produit.",
+    "en": "Build a table x − x̄, y − ȳ, product, (x − x̄)²."
+   },
+   {
+    "fr": "a = cov / V(x), puis b = ȳ − a x̄.",
+    "dar": "a = cov / V(x).",
+    "en": "a = cov / V(x)."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Moyennes et variance de x",
+     "dar": "Moyennes w V(x)",
+     "en": "Means and V(x)"
+    },
+    "body": {
+     "fr": "x̄ = 3 ; ȳ = 4 ; (x − x̄)² : 4, 1, 0, 1, 4 → V(x) = 10/5 = **2**.",
+     "dar": "x̄ = 3 ; ȳ = 4 ; V(x) = 2.",
+     "en": "x̄ = 3; ȳ = 4; V(x) = **2**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Covariance",
+     "dar": "Covariance",
+     "en": "Covariance"
+    },
+    "body": {
+     "fr": "Produits : 4, 0, 0, 0, 2 → cov = 6/5 = **1,2**.",
+     "dar": "cov = 1,2.",
+     "en": "cov = **1.2**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Corrélation",
+     "dar": "Corrélation",
+     "en": "Correlation"
+    },
+    "body": {
+     "fr": "V(y) = 6/5 = 1,2 → r = 1,2 / (√2 × √1,2) ≈ **0,775** : liaison linéaire positive assez forte.",
+     "dar": "r ≈ 0,775 : 3ala9a mojaba 9wiya.",
+     "en": "r ≈ **0.775**: fairly strong positive linear link."
+    }
+   },
+   {
+    "title": {
+     "fr": "Droite et prédiction",
+     "dar": "Khatt w prédiction",
+     "en": "Line and prediction"
+    },
+    "body": {
+     "fr": "a = 1,2/2 = **0,6** ; b = 4 − 0,6 × 3 = **2,2** → ŷ = 0,6x + 2,2 ; pour x = 6 : **5,8**.",
+     "dar": "ŷ = 0,6x + 2,2 ; 6 h → 5,8.",
+     "en": "ŷ = 0.6x + 2.2; for x = 6: **5.8**."
+    }
+   },
+   {
+    "title": {
+     "fr": "R²",
+     "dar": "R²",
+     "en": "R²"
+    },
+    "body": {
+     "fr": "R² = r² ≈ **0,60** : 60 % de la variation des notes est expliquée par les heures de révision.",
+     "dar": "R² ≈ 0,60 : 60 %.",
+     "en": "R² ≈ **0.60**: 60 % of the variation explained."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "ŷ = 0,6 x + 2,2 ; r ≈ 0,775 ; R² ≈ 0,60 ; prédiction pour 6 h : 5,8/10.",
+   "dar": "ŷ = 0,6 x + 2,2 ; r ≈ 0,775 ; R² ≈ 0,60 ; 5,8.",
+   "en": "ŷ = 0.6 x + 2.2; r ≈ 0.775; R² ≈ 0.60; prediction for 6 h: 5.8/10."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Diviser cov par V(y) au lieu de V(x).",
+    "dar": "Q9sem 3la V(y).",
+    "en": "Dividing cov by V(y)."
+   },
+   {
+    "fr": "Écrire b = ȳ + a x̄.",
+    "dar": "Signe ghalat f b.",
+    "en": "Wrong sign in b."
+   },
+   {
+    "fr": "Conclure à une causalité à partir de r.",
+    "dar": "Sababiya mn r.",
+    "en": "Concluding causation from r."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "covariance",
+     "args": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       2,
+       4,
+       5,
+       4,
+       5
+      ]
+     ]
+    },
+    "expect": 1.2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "correlation",
+     "args": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       2,
+       4,
+       5,
+       4,
+       5
+      ]
+     ]
+    },
+    "expect": 0.7746,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "linReg",
+     "args": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       2,
+       4,
+       5,
+       4,
+       5
+      ]
+     ],
+     "pick": "a"
+    },
+    "expect": 0.6,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "linReg",
+     "args": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       2,
+       4,
+       5,
+       4,
+       5
+      ]
+     ],
+     "pick": "b"
+    },
+    "expect": 2.2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "linReg",
+     "args": [
+      [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      [
+       2,
+       4,
+       5,
+       4,
+       5
+      ]
+     ],
+     "pick": "r2"
+    },
+    "expect": 0.6,
+    "tolerance": 0.001
+   }
+  ]
+ }
+]

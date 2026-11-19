@@ -1,13 +1,13 @@
-# Rev24 — plateforme de révision 4IIR
+# GROUP22 · EMSI — study hub 4IIR
 
 Site de révision pour les contrôles de 4IIR (EMSI Rabat, 2026/2027) :
 
 - **Administration Unix / Linux RHEL 9** : Intro, TP1 → TP5, utilisateurs et droits ;
-- **Analyse de données** (Pr. A. Kadiri) : Chap 0, pandas, visualisation, tests d'hypothèses ;
+- **Analyse de données** (Pr. A. Kadiri) : Chap 0 + rappel (statistique descriptive, régression), Chap 1 pandas + Feuille N°1, Chap 2 nettoyage, Chap 4 visualisation, Chap 5 tests d'hypothèses (lois et tables) — reconstruit depuis les supports du Drive, expliqué pas à pas ;
 - **Recherche Opérationnelle** (graphes) : définitions, matrices, Euler/Hamilton, coloration, Kruskal/Prim, Dijkstra, annale du contrôle 2025-2026 (examen blanc chronométré). Les corrigés numériques sont calculés par `src/lib/graph/` (testé) ;
-- **Administration Oracle 1** (19c) : architecture CDB/PDB, instance (SGA, PGA, processus, STARTUP/SHUTDOWN, TP1 sessions) ; chapitres 1 et 4 à 8 affichés « bientôt disponibles ».
+- **Administration Oracle 1** (19c) : Chap 2 architecture (connexion, instance, CDB/PDB, exercices 1 et 2), Chap 3 instance (schéma interactif de l'instance, SGA, PGA, processus, UPDATE vs SELECT, STARTUP/SHUTDOWN), TP1 corrigé ; chapitres 1 et 4 à 8 « bientôt disponibles ».
 
-Il propose des cours animés, des QCM (5 types), des exercices corrigés pas à pas, des flashcards (SM-2) et un examen blanc. Il inclut aussi un **terminal RHEL 9 simulé** avec missions, un **labo de stats** et le **mode 24h**. Le tout est en **français, darija (alphabet latin) et anglais**, fonctionne hors-ligne (PWA) et n'a pas de backend.
+Il propose des cours animés, des QCM (5 types), des exercices corrigés pas à pas, des flashcards (SM-2) et un examen blanc. Il inclut aussi un **terminal RHEL 9 simulé** avec missions, un **labo de stats** et un **coach de présentation orale** (dans le profil, avec un téléprompteur qui suit la voix). La progression est enregistrée sur l'appareil (localStorage), y compris la position de lecture dans chaque chapitre. Le tout est en **français, darija (alphabet latin) et anglais**, fonctionne hors-ligne (PWA) et n'a pas de backend.
 
 ## Installation
 
@@ -25,8 +25,8 @@ Node 20+ recommandé.
 | `npm run dev` | Serveur de développement |
 | `npm run build` | `content:check` + `i18n:check` + TypeScript + build de production (`dist/`) |
 | `npm run preview` | Sert `dist/` sur http://localhost:4173 |
-| `npm run test` | Tests Vitest : stats (§8.2), moteur QCM, SM-2, planificateur 24h, TerminalSim, contenu |
-| `npm run test:e2e` | Playwright (4 parcours : langue, « Mes erreurs », mission TP5, mode 24h). Lancer `npm run build` avant, puis `npx playwright install chromium` la première fois |
+| `npm run test` | Tests Vitest : stats, graphes, moteur QCM, SM-2, coach oral, TerminalSim, contenu |
+| `npm run test:e2e` | Playwright (4 parcours : langue, « Mes erreurs », mission TP5, sauvegarde de la progression). Lancer `npm run build` avant, puis `npx playwright install chromium` la première fois |
 | `npm run lint` | ESLint |
 | `npm run content:build` | Régénère les JSON de `src/content/` depuis les sources compactes `content-src/` |
 | `npm run content:check` | Valide le contenu (schémas Zod, références croisées, volumes minimums, valeurs numériques recalculées par la bibliothèque de stats, solutions des missions rejouées dans le terminal simulé, couverture des 44 questions du TP5) |
@@ -46,7 +46,7 @@ src/
     flashcards/<ch>.json
     missions.json          missions du terminal (optionnel)
     reference.json         formulaire / aide-mémoire (optionnel)
-  lib/                     schémas Zod, stats, moteur QCM, SM-2, planificateur 24h
+  lib/                     schémas Zod, stats, moteur QCM, SM-2
   terminal/                simulateur bash RHEL 9 (VFS, comptes, systemd, rpm/dnf, GRUB…)
   anim/                    animations interactives (référencées par nom dans le contenu)
   i18n/                    textes de l'interface et des animations (fr / dar / en)
@@ -62,7 +62,7 @@ Il n'y a aucun code à modifier : l'application découvre automatiquement tout d
 
 1. **Copier un dossier de contenu**, par exemple `cp -r src/content/data src/content/ro`.
 2. **Remplir les JSON** :
-   - `module.json` : `id` (= nom du dossier), `title`, `subtitle`, `color`, `icon` (`chart`, `terminal`, `book`…), `theme` (`terminal` vert ou `violet`), la liste `chapters`, les `weights` de chaque chapitre (utilisés par l'examen blanc et le mode 24h) et éventuellement `upcoming` (chapitres « bientôt disponibles ») ;
+   - `module.json` : `id` (= nom du dossier), `title`, `subtitle`, `color`, `icon` (`chart`, `terminal`, `book`…), `theme` (`terminal` vert ou `violet`), la liste `chapters`, les `weights` de chaque chapitre (utilisés par l'examen blanc) et éventuellement `upcoming` (chapitres « bientôt disponibles ») ;
    - un fichier par chapitre dans `chapters/`, puis `questions/`, `exercises/`, `flashcards/` (et `reference.json`, `missions.json` si besoin).
 
    Chaque texte affiché est un objet `{ "fr": "…", "dar": "…", "en": "…" }`. Les commandes, le code et les formules ne se traduisent pas.
@@ -71,7 +71,7 @@ Il n'y a aucun code à modifier : l'application découvre automatiquement tout d
 3. **Lancer `npm run content:check`**, puis `npm run i18n:check` : les deux doivent passer sans erreur.
 
    Les volumes minimums vérifiés pour chaque module sont définis dans la constante `MIN` de `scripts/content-check.ts` : ajoute une entrée si tu veux en imposer pour le nouveau module.
-4. `npm run dev` : le module apparaît sur l'accueil, dans le mode 24h et dans la page Progression.
+4. `npm run dev` : le module apparaît sur l'accueil, dans la navbar et dans le profil.
 
 > Optionnel : on peut aussi écrire le contenu sous forme compacte dans `content-src/<id>/index.ts` (tuples `[fr, dar, en]`, aides `single`, `cmd`, `num`, `ex`, `fc`, `ms` de `content-src/lib.ts`). Il faut alors ajouter l'id dans `scripts/build-content.ts` et lancer `npm run content:build`.
 

@@ -6,16 +6,17 @@
   "en": "Oracle Administration 1 (DBA1)"
  },
  "subtitle": {
-  "fr": "Oracle 19c — architecture, instance, CDB/PDB",
-  "dar": "Oracle 19c — instance, CDB/PDB",
-  "en": "Oracle 19c — architecture, instance, CDB/PDB"
+  "fr": "Oracle 19c — architecture, CDB/PDB, instance (SGA, PGA, processus), démarrage/arrêt, TP1",
+  "dar": "Oracle 19c — architecture, CDB/PDB, instance, démarrage/arrêt, TP1",
+  "en": "Oracle 19c — architecture, CDB/PDB, instance (SGA, PGA, processes), startup/shutdown, lab 1"
  },
- "color": "#dc2626",
+ "color": "#163460",
  "icon": "layers",
  "theme": "crimson",
  "chapters": [
   "architecture",
-  "instance"
+  "instance",
+  "tp1"
  ],
  "upcoming": [
   {
@@ -76,6 +77,7 @@
  "annales": [],
  "weights": {
   "instance": 5,
-  "architecture": 3
+  "architecture": 4,
+  "tp1": 3
  }
 }

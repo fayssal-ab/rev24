@@ -260,6 +260,8 @@ export const UI = {
   'sup.read': { fr: 'Lire', dar: '9ra', en: 'Read' },
   'sup.download': { fr: 'Télécharger', dar: 'Téléchargi', en: 'Download' },
   'sup.newTab': { fr: 'Nouvel onglet', dar: 'Onglet jdid', en: 'New tab' },
+  'sup.pages': { fr: 'pages', dar: 'pages', en: 'pages' },
+  'sup.error': { fr: 'Impossible d\'afficher ce document. Utilise « Télécharger ».', dar: 'Ma t9derch tban had document. St3mel « Télécharger ».', en: 'This document cannot be displayed. Use “Download”.' },
   'sup.files': { fr: 'documents', dar: 'documents', en: 'files' },
   'sup.empty': { fr: 'Les documents de ce module arrivent bientôt.', dar: 'Documents dyal had module jayin 9rib.', en: 'Documents for this module are coming soon.' },
   'sup.kind.cours': { fr: 'Cours', dar: 'Dars', en: 'Lessons' },

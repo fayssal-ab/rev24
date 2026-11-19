@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { PageTitle } from '../components/Layout';
 import { Icon } from '../components/Icon';
+import { PdfViewer } from '../components/PdfViewer';
 import { useT, useL } from '../hooks/useT';
 import { MODULES, getModule } from '../lib/content';
 import { EXTRA_SUBJECTS, SUPPORTS, type Support, type SupportKind } from '../lib/supports';
@@ -50,10 +51,8 @@ export default function SupportsPage() {
   const { t } = useT();
   const tl = useL();
   const [open, setOpen] = useState<Support | null>(null);
-  // phones (Android Chrome, iOS) do not render PDFs inside an iframe: open them in the browser's own viewer
+  // rendered with pdf.js, so it works in every browser (Brave, phones…) without the browser's PDF plugin
   const openSupport = (s: Support) => {
-    const phone = window.matchMedia('(max-width: 768px)').matches || /Android|iPhone|iPad/i.test(navigator.userAgent);
-    if (phone) return void window.open(s.url, '_blank', 'noopener');
     setOpen(s);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -78,7 +77,7 @@ export default function SupportsPage() {
                 <Icon name="x" size={14} />
               </button>
             </div>
-            <iframe title={open.title} src={`${open.url}#view=FitH`} className="h-[78vh] w-full bg-white" />
+            <PdfViewer key={open.url} url={open.url} title={open.title} />
           </motion.section>
         )}
       </AnimatePresence>

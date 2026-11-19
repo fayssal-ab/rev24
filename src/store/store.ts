@@ -138,12 +138,22 @@ export const useStore = create<State>()(
     }),
     {
       name: 'rev24',
-      version: 2,
+      version: 3,
       // v1 -> v2: the 24h mode was removed; keep every other piece of progress
-      migrate: (old) => {
+      // v2 -> v3: the site is white by default — reset the old dark default once (the user can switch again)
+      migrate: (old, version) => {
         const o = { ...(old as Record<string, unknown>) };
         delete o.rev24;
         delete o.rev24Done;
+        if (version < 3) {
+          o.theme = 'light';
+          o.bilingual = false;
+          try {
+            localStorage.setItem('rev24-theme', 'light');
+          } catch {
+            /* private mode */
+          }
+        }
         return o as unknown as State;
       },
       storage: createJSONStorage(() => {

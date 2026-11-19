@@ -149,22 +149,6 @@ function ThemeButton() {
   );
 }
 
-function BilingualButton() {
-  const { t } = useT();
-  const { bilingual, setBilingual } = useStore();
-  return (
-    <button
-      onClick={() => setBilingual(!bilingual)}
-      aria-pressed={bilingual}
-      title={t('lang.bilingual.hint')}
-      aria-label={t('lang.bilingual')}
-      className={`grid h-9 w-9 place-items-center rounded-lg border transition ${bilingual ? 'border-accent bg-accent/10 text-accent' : 'border-line text-muted hover:text-fg'}`}
-    >
-      <Icon name="globe" size={17} />
-    </button>
-  );
-}
-
 export function TopBar() {
   const { t } = useT();
   const tl = useL();
@@ -224,7 +208,6 @@ export function TopBar() {
         <div className="ml-auto flex items-center gap-2">
           <div className="hidden items-center gap-2 md:flex">
             <LangSwitch />
-            <BilingualButton />
           </div>
           <ThemeButton />
           <Link to="/profil" className="hidden items-center gap-2 rounded-lg border border-line py-1 pl-1 pr-3 transition hover:border-accent/50 sm:flex" aria-label={t('nav.profile')}>
@@ -300,10 +283,6 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-semibold text-muted">{t('lang.label')}</span>
                 <LangSwitch compact />
-              </div>
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-semibold text-muted">{t('lang.bilingual')}</span>
-                <BilingualButton />
               </div>
               {authEnabled && user && (
                 <button className="btn-ghost w-full text-bad" onClick={() => void signOut()}>

@@ -1,6 +1,6 @@
 /**
  * Course materials (original PDFs from the Drive), served as static files.
- * Drop a file into  cours/<module>/  (module = data | ro | oracle | linux) and rebuild: it appears automatically.
+ * Drop a file into  cours/<module>/  (module = data | ro | oracle | linux | ml | virtualisation) and rebuild: it appears automatically.
  * File name convention:  "NN - Type - Title.pdf"   e.g. "02 - Cours - Chapitre 1 - pandas.pdf"
  *   NN    = order in the list
  *   Type  = Cours | TD | TP | Contrôle | Examen | Annexe   (guessed from the title if missing)
@@ -50,5 +50,11 @@ export const SUPPORTS: Support[] = Object.entries(files)
   .map(([p, u]) => parseSupport(p, u))
   .filter((x): x is Support => !!x)
   .sort((a, b) => a.module.localeCompare(b.module) || a.order - b.order || a.title.localeCompare(b.title));
+
+/** Library sections for subjects that have documents but no interactive module (yet). */
+export const EXTRA_SUBJECTS: { id: string; icon: string; color: string; title: { fr: string; dar: string; en: string } }[] = [
+  { id: 'ml', icon: 'sparkles', color: '#1f6f5c', title: { fr: 'Machine Learning et IA', dar: 'Machine Learning w IA', en: 'Machine learning and AI' } },
+  { id: 'virtualisation', icon: 'layers', color: '#3d5a80', title: { fr: 'Virtualisation et Cloud', dar: 'Virtualisation w Cloud', en: 'Virtualisation and cloud' } }
+];
 
 export const supportsOf = (module: string) => SUPPORTS.filter((s) => s.module === module);

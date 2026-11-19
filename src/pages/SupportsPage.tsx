@@ -5,7 +5,7 @@ import { PageTitle } from '../components/Layout';
 import { Icon } from '../components/Icon';
 import { useT, useL } from '../hooks/useT';
 import { MODULES, getModule } from '../lib/content';
-import { SUPPORTS, type Support, type SupportKind } from '../lib/supports';
+import { EXTRA_SUBJECTS, SUPPORTS, type Support, type SupportKind } from '../lib/supports';
 import type { UIKey } from '../i18n/ui';
 
 const KIND: Record<SupportKind, { key: UIKey; icon: string; cls: string }> = {
@@ -57,7 +57,8 @@ export default function SupportsPage() {
     setOpen(s);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const mods = module ? MODULES.filter((m) => m.id === module) : MODULES;
+  const subjects = [...MODULES.map((x) => ({ id: x.id, icon: x.icon, color: x.color, title: x.title })), ...EXTRA_SUBJECTS];
+  const mods = module ? subjects.filter((x) => x.id === module) : subjects;
   const all = SUPPORTS.filter((s) => !module || s.module === module);
   const m = module ? getModule(module) : undefined;
   return (

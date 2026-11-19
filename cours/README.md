@@ -2,7 +2,7 @@
 
 Les fichiers de ce dossier sont publiés tels quels sur le site (onglet « Supports du cours » de chaque module).
 
-- Un dossier par module : `data/`, `ro/`, `oracle/`, `linux/`.
+- Un dossier par module : `data/`, `ro/`, `oracle/`, `linux/`, `ml/`, `virtualisation/`.
 - Nom de fichier : `NN - Type - Titre.pdf`
   - `NN` : ordre d'affichage (01, 02, …)
   - `Type` : `Cours`, `TD`, `TP`, `Contrôle`, `Examen` ou `Annexe`

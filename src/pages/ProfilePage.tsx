@@ -10,6 +10,7 @@ import { chapterMastery, moduleMastery } from '../lib/mastery';
 import { Ring } from '../components/Ring';
 import { Icon } from '../components/Icon';
 import type { UIKey } from '../i18n/ui';
+import { authEnabled, changePassword, signOut, updateProfile, useAuth, useCanSeeOral } from '../auth/auth';
 
 const OralPage = lazy(() => import('./OralPage'));
 const BADGES = ['chmod', 'root', 'h0', 'terminal', 'exam', 'streak'];
@@ -21,11 +22,14 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
   const st = useStore();
   const level = Math.floor(st.xp / 500) + 1;
   const inLevel = st.xp % 500;
-  const tabs: { to: string; key: UIKey; icon: string; id: Tab }[] = [
+  const user = useAuth((a) => a.user);
+  const canSeeOral = useCanSeeOral();
+  const allTabs: { to: string; key: UIKey; icon: string; id: Tab }[] = [
     { to: '/profil', key: 'profile.tab.progress', icon: 'chart', id: 'progress' },
     { to: '/profil/oral', key: 'profile.tab.oral', icon: 'mic', id: 'oral' },
     { to: '/profil/donnees', key: 'profile.tab.data', icon: 'database', id: 'data' }
   ];
+  const tabs = allTabs.filter((x) => x.id !== 'oral' || canSeeOral);
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <section className="relative overflow-hidden rounded-2xl bg-navy p-6 text-white sm:p-8">
@@ -36,7 +40,8 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
           </span>
           <div className="min-w-0 flex-1">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-300">{t('app.student')}</div>
-            <h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{t('profile.title')}</h1>
+            <h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{user?.displayName || t('profile.title')}</h1>
+            {user && <p className="text-sm text-white/70">{user.email} · {user.groupe}</p>}
             <div className="mt-3 max-w-md">
               <div className="flex justify-between text-xs text-white/70">
                 <span>
@@ -67,7 +72,7 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
       </nav>
 
       {tab === 'progress' && <ProgressTab />}
-      {tab === 'oral' && (
+      {tab === 'oral' && canSeeOral && (
         <Suspense fallback={<Loading />}>
           <OralPage />
         </Suspense>
@@ -209,6 +214,7 @@ function DataTab() {
   };
   return (
     <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
+      {authEnabled && <AccountCard />}
       <section className="card p-5">
         <div className="flex items-center gap-2 font-semibold">
           <Icon name="database" size={18} className="text-accent" /> {t('profile.data.title')}
@@ -236,5 +242,63 @@ function DataTab() {
         {msg && <p className="text-sm text-muted">{msg}</p>}
       </section>
     </div>
+  );
+}
+
+function AccountCard() {
+  const { t } = useT();
+  const { user, syncing } = useAuth();
+  const [name, setName] = useState(user?.displayName ?? '');
+  const [current, setCurrent] = useState('');
+  const [next, setNext] = useState('');
+  const [msg, setMsg] = useState<{ ok: boolean; key: UIKey } | null>(null);
+  if (!user) return null;
+  const saveName = async () => setMsg((await updateProfile({ displayName: name.trim() })).ok ? { ok: true, key: 'auth.saved' } : { ok: false, key: 'auth.err.generic' });
+  const savePassword = async () => {
+    if (next.length < 8) return setMsg({ ok: false, key: 'auth.err.weak' });
+    const r = await changePassword(current, next);
+    setMsg(r.ok ? { ok: true, key: 'auth.passwordChanged' } : { ok: false, key: r.error === 'invalid_credentials' ? 'auth.err.credentials' : 'auth.err.generic' });
+    if (r.ok) {
+      setCurrent('');
+      setNext('');
+    }
+  };
+  return (
+    <section className="card space-y-4 p-5 md:col-span-2">
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="flex items-center gap-2 font-semibold">
+          <Icon name="user" size={18} className="text-accent" /> {t('auth.account')}
+        </span>
+        <span className={`chip ${syncing === 'error' ? '!text-bad' : '!text-ok'}`}>
+          <Icon name={syncing === 'error' ? 'alert' : 'checkCircle'} size={13} /> {t(syncing === 'saving' ? 'auth.sync.saving' : syncing === 'error' ? 'auth.sync.error' : 'auth.sync.saved')}
+        </span>
+        <button className="btn-ghost btn-sm ml-auto text-bad" onClick={() => void signOut()} data-testid="sign-out">
+          <Icon name="external" size={14} /> {t('auth.signout')}
+        </button>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold">{t('auth.name')}</label>
+          <div className="flex gap-2">
+            <input className="input" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+            <button className="btn-primary" onClick={() => void saveName()}>
+              {t('auth.save')}
+            </button>
+          </div>
+          <p className="text-xs text-muted">{user.email}</p>
+        </div>
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold">{t('auth.changePassword')}</label>
+          <input className="input" type="password" placeholder={t('auth.currentPassword')} value={current} onChange={(e) => setCurrent(e.target.value)} autoComplete="current-password" />
+          <div className="flex gap-2">
+            <input className="input" type="password" placeholder={t('auth.newPasswordLabel')} value={next} onChange={(e) => setNext(e.target.value)} autoComplete="new-password" />
+            <button className="btn-ghost" onClick={() => void savePassword()}>
+              {t('auth.save')}
+            </button>
+          </div>
+        </div>
+      </div>
+      {msg && <p className={`text-sm ${msg.ok ? 'text-ok' : 'text-bad'}`}>{t(msg.key)}</p>}
+    </section>
   );
 }

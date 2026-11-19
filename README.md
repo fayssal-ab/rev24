@@ -18,11 +18,32 @@ npm run dev          # http://localhost:5173
 
 Node 20+ recommandé.
 
+## Comptes (MySQL)
+
+Chaque étudiant crée son compte (e-mail + mot de passe) ; sa progression est enregistrée dans MySQL et synchronisée entre ses appareils. Sans configuration, le site fonctionne en **mode local** (progression dans le navigateur uniquement).
+
+- API : `netlify/functions/api.mts` (Netlify Function, servie sous `/api/*`) — mots de passe hachés avec bcrypt, session dans un cookie `httpOnly` signé (JWT), chaque utilisateur n'accède qu'à ses données.
+- Tables : `database/schema.sql` (créées automatiquement au premier appel de l'API).
+- Le coach de présentation orale n'est visible que pour les e-mails listés dans `ORAL_EMAILS` (côté serveur).
+
+Variables d'environnement (Netlify → Site configuration → Environment variables) :
+
+| Variable | Valeur |
+|---|---|
+| `VITE_AUTH` | `on` (comptes obligatoires) |
+| `DATABASE_URL` | `mysql://avnadmin:MOT_DE_PASSE@hôte:port/defaultdb` (Aiven → Service URI) |
+| `DB_CA_CERT` | contenu du « CA certificate » Aiven (texte PEM) |
+| `JWT_SECRET` | longue chaîne aléatoire (≥ 32 caractères) |
+| `ORAL_EMAILS` | facultatif, e-mails autorisés pour le coach oral (séparés par des virgules) |
+
+En local : copier `.env.example` en `.env.local`, lancer `npm run dev:api` puis `VITE_AUTH=on npm run dev`.
+
 ## Scripts
 
 | Commande | Rôle |
 |---|---|
 | `npm run dev` | Serveur de développement |
+| `npm run dev:api` | API locale (comptes) sur le port 8788, utilisée par `npm run dev` via le proxy `/api` |
 | `npm run build` | `content:check` + `i18n:check` + TypeScript + build de production (`dist/`) |
 | `npm run preview` | Sert `dist/` sur http://localhost:4173 |
 | `npm run test` | Tests Vitest : stats, graphes, moteur QCM, SM-2, coach oral, TerminalSim, contenu |

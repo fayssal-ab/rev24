@@ -9,6 +9,9 @@ import { getModule, MODULES } from '../lib/content';
 import type { Lang } from '../lib/schema';
 import { BadgeToast } from './BadgeToast';
 import type { UIKey } from '../i18n/ui';
+import { authEnabled, signOut, useAuth, useCanSeeOral } from '../auth/auth';
+
+const initials = (name: string) => name.split(/[\s.@_-]+/).filter(Boolean).slice(0, 2).map((w) => w[0]!.toUpperCase()).join('') || '?';
 
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'fr', label: 'FR' },
@@ -161,6 +164,7 @@ export function TopBar() {
   const tl = useL();
   const { pathname } = useLocation();
   const xp = useStore((s) => s.xp);
+  const user = useAuth((s) => s.user);
   const [drawer, setDrawer] = useState(false);
   useEffect(() => setDrawer(false), [pathname]);
   const inModule = pathname.startsWith('/m/');
@@ -212,10 +216,11 @@ export function TopBar() {
           </div>
           <ThemeButton />
           <Link to="/profil" className="hidden items-center gap-2 rounded-lg border border-line py-1 pl-1 pr-3 transition hover:border-accent/50 sm:flex" aria-label={t('nav.profile')}>
-            <span className="icon-tile h-7 w-7 bg-navy text-white">
-              <Icon name="user" size={15} />
+            <span className="icon-tile h-7 w-7 bg-navy text-[11px] font-bold text-white">{user ? initials(user.displayName || user.email) : <Icon name="user" size={15} />}</span>
+            <span className="leading-tight">
+              {user && <span className="block max-w-[9rem] truncate text-xs font-semibold">{user.displayName || user.email}</span>}
+              <span className={`block tabular-nums ${user ? 'text-[10px] text-muted' : 'text-xs font-semibold'}`}>{xp} XP</span>
             </span>
-            <span className="text-xs font-semibold tabular-nums">{xp} XP</span>
           </Link>
           <button className="grid h-9 w-9 place-items-center rounded-lg border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
             <Icon name="menu" size={18} />
@@ -230,6 +235,7 @@ export function TopBar() {
 function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useT();
   const tl = useL();
+  const user = useAuth((s) => s.user);
   return (
     <AnimatePresence>
       {open && (
@@ -281,6 +287,11 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                 <span className="text-xs font-semibold text-muted">{t('lang.bilingual')}</span>
                 <BilingualButton />
               </div>
+              {authEnabled && user && (
+                <button className="btn-ghost w-full text-bad" onClick={() => void signOut()}>
+                  <Icon name="external" size={16} /> {t('auth.signout')} · <span className="truncate font-normal">{user.email}</span>
+                </button>
+              )}
             </div>
           </motion.aside>
         </>
@@ -292,6 +303,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 function Footer() {
   const { t } = useT();
   const tl = useL();
+  const canSeeOral = useCanSeeOral();
   return (
     <footer className="mt-16 border-t border-line bg-surface">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-4">
@@ -334,14 +346,16 @@ function Footer() {
                 {t('nav.progress')}
               </Link>
             </li>
-            <li>
-              <Link to="/profil/oral" className="text-muted hover:text-accent">
-                {t('nav.oral')}
-              </Link>
-            </li>
+            {canSeeOral && (
+              <li>
+                <Link to="/profil/oral" className="text-muted hover:text-accent">
+                  {t('nav.oral')}
+                </Link>
+              </li>
+            )}
           </ul>
           <p className="mt-4 flex items-start gap-2 text-xs text-muted">
-            <Icon name="database" size={14} className="mt-0.5 shrink-0" /> {t('footer.local')}
+            <Icon name="database" size={14} className="mt-0.5 shrink-0" /> {t(authEnabled ? 'auth.aside.l1' : 'footer.local')}
           </p>
         </div>
       </div>

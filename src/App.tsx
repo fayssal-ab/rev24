@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect, useMemo } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Layout, Loading, Narrow } from './components/Layout';
 import ModuleShell from './components/ModuleShell';
+import { authEnabled, useAuth, useCanSeeOral } from './auth/auth';
+import type { ReactNode } from 'react';
 import { useStore } from './store/store';
 import { useAllModules } from './hooks/useModule';
 import { MODULES } from './lib/content';
@@ -21,6 +23,20 @@ const StatsLabPage = lazy(() => import('./pages/StatsLabPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const GlossaryPage = lazy(() => import('./pages/GlossaryPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const AuthPage = lazy(() => import('./pages/AuthPage'));
+
+/** With accounts enabled, nobody gets past this point without being signed in. */
+function AuthGate({ children }: { children: ReactNode }) {
+  const { ready, user } = useAuth();
+  if (!authEnabled) return <>{children}</>;
+  if (!ready) return <Loading />;
+  return user ? <>{children}</> : <AuthPage />;
+}
+
+/** The oral-presentation coach is private (see useCanSeeOral). */
+function OralRoute() {
+  return useCanSeeOral() ? <ProfilePage tab="oral" /> : <Navigate to="/profil" replace />;
+}
 
 /** Unlock badges whenever progress changes. */
 function BadgeWatcher() {
@@ -49,6 +65,7 @@ export function App() {
     <HashRouter>
       <Layout>
         <Suspense fallback={<Loading />}>
+          <AuthGate>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/m/:module" element={<ModuleShell />}>
@@ -65,14 +82,16 @@ export function App() {
             <Route path="/stats-lab" element={<Narrow><StatsLabPage /></Narrow>} />
             <Route path="/glossaire" element={<Narrow><GlossaryPage /></Narrow>} />
             <Route path="/profil" element={<ProfilePage />} />
-            <Route path="/profil/oral" element={<ProfilePage tab="oral" />} />
+            <Route path="/profil/oral" element={<OralRoute />} />
             <Route path="/profil/donnees" element={<ProfilePage tab="data" />} />
             {/* old links */}
             <Route path="/progression" element={<Navigate to="/profil" replace />} />
             <Route path="/oral/rm-rf" element={<Navigate to="/profil/oral" replace />} />
+            <Route path="/connexion" element={<Navigate to="/" replace />} />
             <Route path="/24h" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </AuthGate>
         </Suspense>
       </Layout>
       <BadgeWatcher />

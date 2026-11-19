@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# the API answers with no-store; never let a CDN cache it
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

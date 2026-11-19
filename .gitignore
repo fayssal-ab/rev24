@@ -4,3 +4,8 @@ dev-dist
 test-results
 playwright-report
 tsconfig.tsbuildinfo
+
+# secrets
+.env
+.env.local
+.env.*.local

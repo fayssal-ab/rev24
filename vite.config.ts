@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  // local development: /api is served by `npm run dev:api` (on Netlify it is the function)
+  server: { proxy: { '/api': 'http://localhost:8788' } },
   base: './',
   plugins: [
     react(),

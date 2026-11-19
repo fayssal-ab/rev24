@@ -26,12 +26,14 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 const SupportsPage = lazy(() => import('./pages/SupportsPage'));
 
-/** With accounts enabled, nobody gets past this point without being signed in. */
+/** Accounts are optional: everything is readable without one; signing in only syncs progress across devices. */
 function AuthGate({ children }: { children: ReactNode }) {
-  const { ready, user } = useAuth();
-  if (!authEnabled) return <>{children}</>;
-  if (!ready) return <Loading />;
-  return user ? <>{children}</> : <AuthPage />;
+  return <>{children}</>;
+}
+
+function LoginRoute() {
+  const user = useAuth((s) => s.user);
+  return !authEnabled || user ? <Navigate to="/profil" replace /> : <AuthPage />;
 }
 
 /** The oral-presentation coach is private (see useCanSeeOral). */
@@ -90,7 +92,7 @@ export function App() {
             {/* old links */}
             <Route path="/progression" element={<Navigate to="/profil" replace />} />
             <Route path="/oral/rm-rf" element={<Navigate to="/profil/oral" replace />} />
-            <Route path="/connexion" element={<Navigate to="/" replace />} />
+            <Route path="/connexion" element={<LoginRoute />} />
             <Route path="/24h" element={<Navigate to="/" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

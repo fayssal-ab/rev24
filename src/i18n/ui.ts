@@ -63,6 +63,7 @@ export const UI = {
   'auth.newPasswordLabel': { fr: 'Nouveau mot de passe', dar: 'Mot de passe jdid', en: 'New password' },
   'auth.changePassword': { fr: 'Changer le mot de passe', dar: 'Beddel mot de passe', en: 'Change password' },
   'auth.passwordChanged': { fr: 'Mot de passe modifié.', dar: 'Mot de passe tbeddel.', en: 'Password changed.' },
+  'auth.guest': { fr: 'Tu révises en invité : ta progression reste sur cet appareil. Connecte-toi pour la retrouver sur ton téléphone et ton PC.', dar: 'Nta katrajje3 b7al invité : taqaddum dyalek kayb9a f had l appareil. Dkhol bach tl9ah f telephone w PC.', en: 'You are revising as a guest: progress stays on this device. Sign in to get it on your phone and computer too.' },
   'auth.signin': { fr: 'Se connecter', dar: 'Dkhol', en: 'Sign in' },
   'auth.signout': { fr: 'Se déconnecter', dar: 'Khrej', en: 'Sign out' },
   'auth.account': { fr: 'Mon compte', dar: 'Compte dyali', en: 'My account' },

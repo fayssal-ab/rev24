@@ -210,7 +210,12 @@ export function TopBar() {
             <LangSwitch />
           </div>
           <ThemeButton />
-          <Link to="/profil" className="hidden items-center gap-2 rounded-lg border border-line py-1 pl-1 pr-3 transition hover:border-accent/50 sm:flex" aria-label={t('nav.profile')}>
+          {authEnabled && !user && (
+            <Link to="/connexion" className="btn-primary btn-sm hidden sm:inline-flex" data-testid="nav-login">
+              <Icon name="user" size={14} /> {t('auth.signin')}
+            </Link>
+          )}
+          <Link to="/profil" className={`items-center gap-2 rounded-lg border border-line py-1 pl-1 pr-3 transition hover:border-accent/50 ${authEnabled && !user ? 'hidden' : 'hidden sm:flex'}`} aria-label={t('nav.profile')}>
             <span className="icon-tile h-7 w-7 bg-navy text-[11px] font-bold text-white">{user ? initials(user.displayName || user.email) : <Icon name="user" size={15} />}</span>
             <span className="leading-tight">
               {user && <span className="block max-w-[9rem] truncate text-xs font-semibold">{user.displayName || user.email}</span>}
@@ -284,6 +289,11 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                 <span className="text-xs font-semibold text-muted">{t('lang.label')}</span>
                 <LangSwitch compact />
               </div>
+              {authEnabled && !user && (
+                <Link to="/connexion" className="btn-primary w-full">
+                  <Icon name="user" size={16} /> {t('auth.signin')}
+                </Link>
+              )}
               {authEnabled && user && (
                 <button className="btn-ghost w-full text-bad" onClick={() => void signOut()}>
                   <Icon name="external" size={16} /> {t('auth.signout')} · <span className="truncate font-normal">{user.email}</span>

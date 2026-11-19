@@ -90,7 +90,12 @@ h1, h2, h3, .font-display { font-family: 'Outfit', 'Lato', system-ui, sans-serif
 .token.variable, .token.parameter { color: #be185d; }
 .dark .token.variable, .dark .token.parameter { color: #f9a8d4; }
 
-.katex { font-size: 1.05em; }
+.katex { font-size: 1em; color: inherit; }
+.katex-display > .katex { font-size: 1.12em; }
+/* plain-text maths typeset like the professor's slides: italic variable + small subscript */
+.math-var { font-family: 'KaTeX_Math', 'Cambria Math', 'STIX Two Math', 'Times New Roman', serif; font-style: italic; white-space: nowrap; }
+.math-var { font-size: 1.06em; padding: 0 0.04em; }
+.math-var > sub { font-family: 'KaTeX_Main', 'Cambria', 'Times New Roman', serif; font-style: normal; font-size: 0.7em; vertical-align: -0.2em; line-height: 0; margin-left: 0.02em; }
 .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
 
 .term { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }

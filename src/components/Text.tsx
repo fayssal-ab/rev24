@@ -7,6 +7,35 @@ import type { L10n } from '../lib/schema';
 import { useStore } from '../store/store';
 import { useT } from '../hooks/useT';
 
+/**
+ * Typeset plain-text maths the way the professor writes it: H0 → H₀ (italic variable + subscript),
+ * z0,025 → z₀,₀₂₅, Oi / Ei → Oᵢ / Eᵢ, S1, K5, s0, x1, Q1… Only exact patterns are touched
+ * (a letter from a short list directly followed by its index), so ordinary words are left alone.
+ */
+const MATH_RE = /(?<![\p{L}\d_])(?:(z|t|χ²)(0,\d+(?:\s?;\s?(?:\d+|ν|n\s?[−-]\s?1))?)|([HZTKQSOEpsxyzc]|µ|μ|σ|θ|α|β)(\d{1,2})|([OEx])(i)|(x̄|ȳ|[αβσµμνθχλπ]))(?![\p{L}\d])/gu;
+/** exported for the unit test only */
+export const MATH_RE_FOR_TEST = MATH_RE;
+function mathify(s: string, key: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let i = 0;
+  for (const m of s.matchAll(MATH_RE)) {
+    const idx = m.index ?? 0;
+    if (idx > last) out.push(s.slice(last, idx));
+    const base = m[1] ?? m[3] ?? m[5] ?? m[7];
+    const sub = m[2] ?? m[4] ?? m[6];
+    out.push(
+      <span key={`${key}-m${i++}`} className="math-var">
+        {base}
+        {sub && <sub>{sub}</sub>}
+      </span>
+    );
+    last = idx + m[0].length;
+  }
+  if (last < s.length) out.push(s.slice(last));
+  return out.length ? out : [s];
+}
+
 /** Inline markdown: **bold**, *italic*, `code`, $tex$, [link](url). */
 function inline(s: string, key = 0): ReactNode[] {
   const out: ReactNode[] = [];
@@ -15,7 +44,7 @@ function inline(s: string, key = 0): ReactNode[] {
   let m: RegExpExecArray | null;
   let i = 0;
   while ((m = re.exec(s))) {
-    if (m.index > last) out.push(s.slice(last, m.index));
+    if (m.index > last) out.push(...mathify(s.slice(last, m.index), `${key}-t${i}`));
     const tok = m[0];
     const k = `${key}-${i++}`;
     if (tok.startsWith('**')) out.push(<strong key={k}>{inline(tok.slice(2, -2), i)}</strong>);
@@ -31,7 +60,7 @@ function inline(s: string, key = 0): ReactNode[] {
     } else out.push(<em key={k}>{tok.slice(1, -1)}</em>);
     last = m.index + tok.length;
   }
-  if (last < s.length) out.push(s.slice(last));
+  if (last < s.length) out.push(...mathify(s.slice(last), `${key}-e`));
   return out;
 }
 

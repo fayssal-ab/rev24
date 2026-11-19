@@ -103,6 +103,7 @@ function ProgressTab() {
   const correct = stats.reduce((a, s) => a + s.correct, 0);
   return (
     <div className="space-y-6">
+      {authEnabled && <AccountCard />}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {[
           { k: t('prog.answered'), v: answered, icon: 'quiz' },
@@ -214,7 +215,6 @@ function DataTab() {
   };
   return (
     <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
-      {authEnabled && <AccountCard />}
       <section className="card p-5">
         <div className="flex items-center gap-2 font-semibold">
           <Icon name="database" size={18} className="text-accent" /> {t('profile.data.title')}
@@ -252,7 +252,18 @@ function AccountCard() {
   const [current, setCurrent] = useState('');
   const [next, setNext] = useState('');
   const [msg, setMsg] = useState<{ ok: boolean; key: UIKey } | null>(null);
-  if (!user) return null;
+  if (!user)
+    return (
+      <section className="card flex flex-wrap items-center gap-4 p-5 md:col-span-2">
+        <span className="icon-tile h-11 w-11 rounded-xl bg-accent/10 text-accent">
+          <Icon name="user" size={20} />
+        </span>
+        <p className="min-w-0 flex-1 text-sm text-muted">{t('auth.guest')}</p>
+        <Link to="/connexion" className="btn-primary" data-testid="profile-login">
+          {t('auth.signin')}
+        </Link>
+      </section>
+    );
   const saveName = async () => setMsg((await updateProfile({ displayName: name.trim() })).ok ? { ok: true, key: 'auth.saved' } : { ok: false, key: 'auth.err.generic' });
   const savePassword = async () => {
     if (next.length < 8) return setMsg({ ok: false, key: 'auth.err.weak' });

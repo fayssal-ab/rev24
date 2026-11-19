@@ -161,7 +161,16 @@ function throttle(key: string) {
 type UserRow = RowDataPacket & { id: string; email: string; password_hash: string; display_name: string; groupe: string; created_at: Date };
 
 /** Private features, decided on the server so the allowed e-mails never ship in the public JavaScript. */
-const oralEmails = () => (process.env.ORAL_EMAILS ?? 'fayssal.abaibat@emsi-edu.ma').split(',').map((e) => e.trim().toLowerCase()).filter(Boolean);
+const DEFAULT_ORAL = 'fayssal.abaibat@emsi-edu.ma';
+/** Tolerant parsing: quotes, commas / semicolons / spaces as separators; empty → default. */
+const oralEmails = () => {
+  const list = (process.env.ORAL_EMAILS ?? '')
+    .replace(/["']/g, '')
+    .split(/[\s,;]+/)
+    .map((e) => e.trim().toLowerCase())
+    .filter((e) => e.includes('@'));
+  return list.length ? list : [DEFAULT_ORAL];
+};
 const publicUser = (u: UserRow) => ({
   id: u.id,
   email: u.email,
@@ -194,7 +203,9 @@ async function route(req: Request): Promise<Response> {
       DB_CA_CERT: !!process.env.DB_CA_CERT && /BEGIN CERTIFICATE/.test(process.env.DB_CA_CERT),
       DB_CA_CERT_blocks: (process.env.DB_CA_CERT?.match(/BEGIN CERTIFICATE/g) ?? []).length,
       DB_CA_CERT_newlines: (process.env.DB_CA_CERT?.match(/\n/g) ?? []).length,
-      JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32
+      JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32,
+      ORAL_EMAILS_count: oralEmails().length,
+      ORAL_EMAILS_set: process.env.ORAL_EMAILS !== undefined
     };
     try {
       await migrate();

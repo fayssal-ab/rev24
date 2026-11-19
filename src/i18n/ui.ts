@@ -253,6 +253,7 @@ export const UI = {
   'exam.heatmap': { fr: 'Carte de chaleur des chapitres', dar: 'Carte de chaleur dyal foussoul', en: 'Chapter heatmap' },
   'nav.modules': { fr: 'Modules', dar: 'Modules', en: 'Modules' },
   'nav.tools': { fr: 'Outils', dar: 'Outils', en: 'Tools' },
+  'nav.presentation': { fr: 'Présentation', dar: 'Présentation', en: 'Presentation' },
   'nav.glossary': { fr: 'Lexique', dar: 'Lexique', en: 'Glossary' },
   'nav.oral': { fr: 'Coach oral (présentation)', dar: 'Coach oral (présentation)', en: 'Presentation coach' },
   'tools.glossary.desc': { fr: 'ACP, CDB, SGA, Dijkstra… expliqués simplement.', dar: 'ACP, CDB, SGA, Dijkstra… mcharhin b sahl.', en: 'PCA, CDB, SGA, Dijkstra… explained simply.' },

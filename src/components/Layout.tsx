@@ -165,6 +165,7 @@ export function TopBar() {
   const { pathname } = useLocation();
   const xp = useStore((s) => s.xp);
   const user = useAuth((s) => s.user);
+  const canSeeOral = useCanSeeOral();
   const [drawer, setDrawer] = useState(false);
   useEffect(() => setDrawer(false), [pathname]);
   const inModule = pathname.startsWith('/m/');
@@ -204,9 +205,14 @@ export function TopBar() {
               </div>
             )}
           </Dropdown>
-          <NavLink to="/profil" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
+          <NavLink to="/profil" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
             <Icon name="chart" size={16} /> {t('nav.progress')}
           </NavLink>
+          {canSeeOral && (
+            <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
+              <Icon name="mic" size={16} /> {t('nav.presentation')}
+            </NavLink>
+          )}
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
@@ -236,6 +242,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   const { t } = useT();
   const tl = useL();
   const user = useAuth((s) => s.user);
+  const canSeeOral = useCanSeeOral();
   return (
     <AnimatePresence>
       {open && (
@@ -263,6 +270,11 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             <NavLink to="/profil" className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
               <Icon name="user" size={18} /> {t('nav.profile')}
             </NavLink>
+            {canSeeOral && (
+              <NavLink to="/profil/oral" className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>
+                <Icon name="mic" size={18} /> {t('nav.presentation')}
+              </NavLink>
+            )}
             <div className="eyebrow mb-1 mt-4 px-3">{t('nav.modules')}</div>
             {MODULES.map((m) => (
               <NavLink key={m.id} to={`/m/${m.id}`} className={({ isActive }) => `side-link ${isActive ? 'side-link-active' : ''}`}>

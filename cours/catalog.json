@@ -29,6 +29,61 @@
   "date": "2026-10-11",
   "size": 82985
  },
+ "dotnet/01 - Cours - Langage C Sharp et programmation orientée objet.pdf": {
+  "pages": 62,
+  "date": "2026-10-12",
+  "size": 2510782
+ },
+ "dotnet/02 - TP - TP2 - POO en C Sharp.pdf": {
+  "pages": 3,
+  "date": "2026-10-12",
+  "size": 219349
+ },
+ "dotnet/03 - Cours - ASP.NET MVC.pdf": {
+  "pages": 39,
+  "date": "2026-11-01",
+  "size": 813963
+ },
+ "dotnet/04 - TP - Atelier 1 - Découverte d'ASP.NET MVC.pdf": {
+  "pages": 3,
+  "date": "2026-10-26",
+  "size": 256897
+ },
+ "dotnet/05 - TP - Atelier 2 - Classes, Controllers et Views.pdf": {
+  "pages": 6,
+  "date": "2026-11-01",
+  "size": 552882
+ },
+ "ia/01 - Cours - Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
+  "pages": 40,
+  "date": "2026-10-07",
+  "size": 909559
+ },
+ "ia/02 - Cours - Chapitre 2 - Fondements de l'intelligence artificielle.pdf": {
+  "pages": 95,
+  "date": "2026-10-07",
+  "size": 2863821
+ },
+ "ia/03 - Cours - Chapitre 3 - RGPD.pdf": {
+  "pages": 39,
+  "date": "2026-10-19",
+  "size": 1114436
+ },
+ "ia/04 - Cours - Chapitre 4 - Éthique de l'IA.pdf": {
+  "pages": 44,
+  "date": "2026-10-20",
+  "size": 1002140
+ },
+ "ia/05 - TD - Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
+  "pages": 5,
+  "date": "2026-10-07",
+  "size": 293562
+ },
+ "ia/06 - Contrôle - Devoir de contrôle - RGPD et éthique de l'IA.pdf": {
+  "pages": 4,
+  "date": "2026-10-20",
+  "size": 391387
+ },
  "linux/01 - Cours - Chapitre 1 - Introduction et installation.pdf": {
   "pages": 80,
   "date": "2026-10-13",
@@ -54,60 +109,105 @@
   "date": "2026-10-27",
   "size": 805661
  },
- "ml/01 - Cours - IA Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
-  "pages": 40,
-  "date": "2026-10-07",
-  "size": 909559
+ "linux/06 - TP - TP4 - Gestion des paquetages.pdf": {
+  "pages": 2,
+  "date": "2026-11-03",
+  "size": 733016
  },
- "ml/02 - Cours - IA Chapitre 2 - Fondements de l'intelligence artificielle.pdf": {
-  "pages": 95,
-  "date": "2026-10-07",
-  "size": 2863821
+ "linux/07 - TP - TP5 - Gestion des utilisateurs et des groupes.pdf": {
+  "pages": 5,
+  "date": "2026-11-07",
+  "size": 986747
  },
- "ml/03 - Cours - IA Chapitre 3 - RGPD.pdf": {
-  "pages": 39,
-  "date": "2026-10-19",
-  "size": 1114436
- },
- "ml/04 - Cours - IA Chapitre 4 - Éthique de l'IA.pdf": {
-  "pages": 44,
-  "date": "2026-10-20",
-  "size": 1002140
- },
- "ml/05 - Cours - ML Chapitre 1 - Introduction au Machine Learning et régression linéaire.pdf": {
+ "ml/01 - Cours - Chapitre 1 - Introduction au Machine Learning et régression linéaire.pdf": {
   "pages": 106,
   "date": "2026-11-10",
   "size": 4244956
  },
- "ml/06 - TD - IA Chapitre 1 - Introduction à l'intelligence artificielle.pdf": {
-  "pages": 5,
-  "date": "2026-10-07",
-  "size": 293562
- },
- "ml/07 - TP - TP1 - Régression linéaire simple.pdf": {
+ "ml/02 - TP - TP1 - Régression linéaire simple.pdf": {
   "pages": 3,
   "date": "2026-11-09",
   "size": 86534
  },
- "ml/08 - TP - TP2 - Régression multiple et polynomiale.pdf": {
+ "ml/03 - TP - TP2 - Régression multiple et polynomiale.pdf": {
   "pages": 3,
   "date": "2026-11-09",
   "size": 99317
  },
- "ml/09 - TP - TP KNN (k plus proches voisins).pdf": {
+ "ml/04 - TP - TP KNN (k plus proches voisins).pdf": {
   "pages": 6,
   "date": "2025-12-07",
   "size": 314751
  },
- "ml/10 - Annexe - Rappel sur la dérivation.pdf": {
+ "ml/05 - Annexe - Rappel sur la dérivation.pdf": {
   "pages": 9,
   "date": "2026-03-13",
   "size": 4564843
  },
- "ml/11 - Annexe - Jeu de données employés (démo ML).pdf": {
+ "ml/06 - Annexe - Jeu de données employés (démo ML).pdf": {
   "pages": 2,
   "date": "2026-11-15",
   "size": 32694
+ },
+ "mobile/01 - TD - Exercices DartPad - Widgets et écrans Flutter.pdf": {
+  "pages": 8,
+  "date": "2026-10-17",
+  "size": 110203
+ },
+ "mobile/02 - TP - TP3 - Catalogue interactif.pdf": {
+  "pages": 3,
+  "date": "2026-11-06",
+  "size": 7404
+ },
+ "mobile/03 - Cours - Séance 4 - Valider un cours depuis sa fiche.pdf": {
+  "pages": 15,
+  "date": "2026-11-14",
+  "size": 206324
+ },
+ "mobile/04 - TP - TP4 - Validation des cours.pdf": {
+  "pages": 3,
+  "date": "2026-11-14",
+  "size": 7496
+ },
+ "mobile/05 - Contrôle - CC1 - Ma liste de films (projet individuel).pdf": {
+  "pages": 3,
+  "date": "2026-11-16",
+  "size": 64600
+ },
+ "nosql/01 - Cours - Introduction au NoSQL.pdf": {
+  "pages": 47,
+  "date": "2026-10-05",
+  "size": 3319503
+ },
+ "nosql/02 - Cours - Partie 1 - Les quatre familles de bases NoSQL.pdf": {
+  "pages": 64,
+  "date": "2026-10-05",
+  "size": 1725689
+ },
+ "nosql/03 - TP - TP1 - Introduction au NoSQL et MongoDB.pdf": {
+  "pages": 4,
+  "date": "2026-10-12",
+  "size": 206850
+ },
+ "nosql/04 - TP - TP2 - Base orientée graphe (Neo4j).pdf": {
+  "pages": 5,
+  "date": "2026-10-12",
+  "size": 197819
+ },
+ "nosql/05 - TP - TP3 - Bases orientées colonnes (HBase et Cassandra).pdf": {
+  "pages": 5,
+  "date": "2026-10-12",
+  "size": 218096
+ },
+ "nosql/06 - TP - TP4 - Base clé-valeur (Redis).pdf": {
+  "pages": 4,
+  "date": "2026-10-12",
+  "size": 190661
+ },
+ "nosql/07 - TP - Mini-projet.pdf": {
+  "pages": 3,
+  "date": "2026-11-02",
+  "size": 156451
  },
  "oracle/02 - Cours - Chapitre 2 - Architecture globale.pdf": {
   "pages": 17,

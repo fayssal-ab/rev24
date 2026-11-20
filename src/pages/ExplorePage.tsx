@@ -5,6 +5,7 @@ import { Breadcrumbs, EmptyState, KIND_LABEL, ResourceList } from '../components
 import { useT, useL } from '../hooks/useT';
 import { KINDS, SUBJECTS, norm, subjectById, type Resource, type ResourceKind } from '../lib/catalog';
 import { useResources } from '../lib/resources';
+import { SCHEDULE } from '../lib/supports';
 
 /**
  * Supports de cours — every document in one place, organised by module, then by type
@@ -86,7 +87,11 @@ export default function ExplorePage() {
         {results.length} {t('explore.results')}
       </p>
 
-      {results.length === 0 ? (
+      {results.length === 0 && module && !q && !kind ? (
+        <EmptyState icon="inbox" title={t('sup.empty')}>
+          {SCHEDULE[module] && <span className="font-mono text-xs">{SCHEDULE[module]}</span>}
+        </EmptyState>
+      ) : results.length === 0 ? (
         <EmptyState icon="search" title={t('explore.empty')}>
           <button className="font-semibold text-accent hover:underline" onClick={() => setParams({}, { replace: true })}>
             {t('explore.clear')}
@@ -109,6 +114,11 @@ export default function ExplorePage() {
                   <span className="text-sm text-muted">
                     · {list.length} {t('sup.files')}
                   </span>
+                  {SCHEDULE[s.id] && (
+                    <span className="flex items-center gap-1 font-mono text-[11px] text-muted">
+                      <Icon name="clock" size={12} /> {SCHEDULE[s.id]}
+                    </span>
+                  )}
                   {s.interactive && (
                     <Link to={`/m/${s.id}`} className="ml-auto text-sm font-semibold text-accent hover:underline">
                       {t('sup.openModule')} <Icon name="arrowRight" size={13} className="inline" />

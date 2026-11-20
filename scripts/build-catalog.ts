@@ -16,7 +16,20 @@ const DRIVE_DATES: Record<string, string> = {
   'linux/02 - Cours - Gestion des utilisateurs sous Linux.pdf': '2026-11-07',
   'ro/03 - TD - Théorie des graphes P1.pdf': '2026-11-15',
   'ro/04 - TD - Théorie des graphes P2.pdf': '2026-11-15',
-  'ml/11 - Annexe - Jeu de données employés (démo ML).pdf': '2026-11-15'
+  'ml/06 - Annexe - Jeu de données employés (démo ML).pdf': '2026-11-15',
+  'linux/06 - TP - TP4 - Gestion des paquetages.pdf': '2026-11-03',
+  'linux/07 - TP - TP5 - Gestion des utilisateurs et des groupes.pdf': '2026-11-07',
+  'dotnet/01 - Cours - Langage C Sharp et programmation orientée objet.pdf': '2026-10-12',
+  'dotnet/02 - TP - TP2 - POO en C Sharp.pdf': '2026-10-12',
+  'dotnet/05 - TP - Atelier 2 - Classes, Controllers et Views.pdf': '2026-11-01',
+  // NoSQL: .pptx / .docx of the Drive converted to PDF
+  'nosql/01 - Cours - Introduction au NoSQL.pdf': '2026-10-05',
+  'nosql/02 - Cours - Partie 1 - Les quatre familles de bases NoSQL.pdf': '2026-10-05',
+  'nosql/03 - TP - TP1 - Introduction au NoSQL et MongoDB.pdf': '2026-10-12',
+  'nosql/04 - TP - TP2 - Base orientée graphe (Neo4j).pdf': '2026-10-12',
+  'nosql/05 - TP - TP3 - Bases orientées colonnes (HBase et Cassandra).pdf': '2026-10-12',
+  'nosql/06 - TP - TP4 - Base clé-valeur (Redis).pdf': '2026-10-12',
+  'nosql/07 - TP - Mini-projet.pdf': '2026-11-02'
 };
 
 const root = 'cours';

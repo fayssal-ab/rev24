@@ -195,6 +195,82 @@ function SearchButton() {
   );
 }
 
+/** Account button: avatar that opens a small menu (name, e-mail, profile, admin, sign out). */
+function UserMenu() {
+  const { t } = useT();
+  const user = useAuth((s) => s.user);
+  const isAdmin = useIsAdmin();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
+  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent | TouchEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('touchstart', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('touchstart', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+  const name = user ? user.displayName || user.email : t('nav.profile');
+  const item = 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium text-fg transition-colors hover:bg-surface2';
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        className="grid h-10 w-10 place-items-center rounded-full bg-accent text-[13px] font-bold tracking-wide text-white ring-offset-2 ring-offset-bg transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent"
+        aria-label={t('auth.account')}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        title={name}
+        data-testid="user-menu"
+      >
+        {user ? initials(name) : <Icon name="user" size={18} />}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="menu"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.12 }}
+            className="fixed inset-x-4 top-[4.25rem] z-50 rounded-xl sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 border border-line bg-surface p-2 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)]"
+          >
+            {user && (
+              <div className="mb-1 flex items-center gap-3 border-b border-line px-3 pb-3 pt-2">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white">{initials(name)}</span>
+                <span className="min-w-0">
+                  <span className="block truncate font-semibold">{name}</span>
+                  <span className="block truncate text-xs text-muted">{user.email}</span>
+                </span>
+              </div>
+            )}
+            <Link to="/profil" role="menuitem" className={item}>
+              <Icon name="user" size={18} className="text-accent" /> {t('nav.profile')}
+            </Link>
+            {isAdmin && (
+              <Link to="/admin" role="menuitem" className={item}>
+                <Icon name="settings" size={18} className="text-accent" /> {t('nav.admin')}
+              </Link>
+            )}
+            {authEnabled && user && (
+              <button role="menuitem" className={`${item} w-full text-bad`} onClick={() => void signOut()} data-testid="user-signout">
+                <Icon name="external" size={18} /> {t('auth.signout')}
+              </button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 /** Private group site: signed-out visitors and accounts waiting for approval only see the sign-in / waiting page. */
 const useLocked = () => useAuth((s) => authEnabled && s.user?.status !== 'approved');
 
@@ -202,7 +278,6 @@ export function TopBar() {
   const { t } = useT();
   const tl = useL();
   const { pathname } = useLocation();
-  const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
   const locked = useLocked();
   const [drawer, setDrawer] = useState(false);
@@ -213,9 +288,9 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
-        <Link to="/" className="mr-4 flex items-center gap-2.5" aria-label={t('nav.home')}>
+        <Link to="/" className="mr-2 flex shrink-0 items-center gap-2.5 sm:mr-4" aria-label={t('nav.home')}>
           <BrandMark />
-          <Wordmark className="text-[1.35rem]" />
+          <Wordmark className="hidden text-[1.35rem] min-[360px]:inline" />
         </Link>
 
         {!locked && (
@@ -253,20 +328,13 @@ export function TopBar() {
           </nav>
         )}
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           {!locked && <SearchButton />}
           <span className={locked ? '' : 'hidden md:block'}>
             <LangSwitch />
           </span>
           <ThemeButton />
-          <Link
-            to="/profil"
-            className={`h-10 w-10 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white transition-opacity hover:opacity-90 ${locked ? 'hidden' : 'grid'}`}
-            aria-label={t('nav.profile')}
-            title={user ? user.displayName || user.email : t('nav.profile')}
-          >
-            {user ? initials(user.displayName || user.email) : <Icon name="user" size={18} />}
-          </Link>
+          {!locked && <UserMenu />}
           {!locked && (
             <button className="grid h-10 w-10 place-items-center rounded-full border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
               <Icon name="menu" size={20} />
@@ -285,6 +353,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
   const isAdmin = useIsAdmin();
+  const { pathname, search } = useLocation();
   const link = ({ isActive }: { isActive: boolean }) => `side-link ${isActive ? 'side-link-active' : ''}`;
   useEffect(() => {
     if (!open) return;
@@ -349,7 +418,11 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             )}
             <div className="eyebrow mb-1 mt-5 px-3">{t('nav.modules')}</div>
             {SUBJECTS.map((s) => (
-              <NavLink key={s.id} to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} className={link}>
+              <NavLink
+                key={s.id}
+                to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`}
+                className={({ isActive }) => link({ isActive: s.interactive ? isActive : pathname === '/supports' && new URLSearchParams(search).get('module') === s.id })}
+              >
                 <span className="h-2 w-2 rounded-sm" style={{ background: s.color }} />
                 {tl(s.title)}
               </NavLink>

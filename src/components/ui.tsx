@@ -29,7 +29,7 @@ const KIND_CLS: Record<ResourceKind, string> = {
 };
 
 /** Library call code of a subject, e.g. DATA, ORA — printed like a shelf mark. */
-const CALL: Record<string, string> = { data: 'DATA', linux: 'LNX', oracle: 'ORA', ro: 'RO', ml: 'ML', virtualisation: 'VIRT' };
+const CALL: Record<string, string> = { data: 'DATA', linux: 'LNX', oracle: 'ORA', ro: 'RO', ml: 'ML', ia: 'IA', virtualisation: 'VIRT', nosql: 'NOSQL', dotnet: 'NET', mobile: 'MOB', progav: 'PROG', compro: 'COM', english: 'ENG' };
 export const callCode = (subject: string) => CALL[subject] ?? subject.slice(0, 4).toUpperCase();
 
 export function ResourceTypeBadge({ kind }: { kind: ResourceKind }) {

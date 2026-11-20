@@ -13,6 +13,9 @@ export interface User {
   email: string;
   displayName: string;
   groupe: string;
+  role: 'admin' | 'user';
+  /** pending = waiting for the admin's approval; blocked = refused / suspended */
+  status: 'pending' | 'approved' | 'blocked';
   features: string[];
 }
 
@@ -20,9 +23,15 @@ interface AuthState {
   ready: boolean;
   user: User | null;
   syncing: 'idle' | 'saving' | 'saved' | 'error';
+  /** this session was closed because the account was opened somewhere else */
+  kicked: boolean;
 }
 
-export const useAuth = create<AuthState>(() => ({ ready: !authEnabled, user: null, syncing: 'idle' }));
+export const useAuth = create<AuthState>(() => ({ ready: !authEnabled, user: null, syncing: 'idle', kicked: false }));
+
+export const useIsAdmin = () => useAuth((s) => !!s.user && s.user.role === 'admin');
+/** Signed in and approved by the admin (always true without accounts). */
+export const useApproved = () => useAuth((s) => !authEnabled || s.user?.status === 'approved');
 
 /** The oral-presentation coach is private: only accounts the server flags with the "oral" feature (local dev: always). */
 export const useCanSeeOral = () => useAuth((s) => (authEnabled ? !!s.user?.features.includes('oral') : import.meta.env.DEV));
@@ -30,7 +39,7 @@ export const useCanSeeOral = () => useAuth((s) => (authEnabled ? !!s.user?.featu
 // ---------------------------------------------------------------- http
 export type AuthResult = { ok: true } | { ok: false; error: string };
 
-async function api<T>(method: string, path: string, body?: unknown): Promise<{ ok: true; data: T } | { ok: false; status: number; error: string }> {
+export async function api<T>(method: string, path: string, body?: unknown): Promise<{ ok: true; data: T } | { ok: false; status: number; error: string }> {
   try {
     const r = await fetch(`${API}${path}`, {
       method,
@@ -39,6 +48,7 @@ async function api<T>(method: string, path: string, body?: unknown): Promise<{ o
       body: body !== undefined ? JSON.stringify(body) : undefined
     });
     const j = await r.json().catch(() => ({}));
+    if (r.status === 401 && (j as { error?: string }).error === 'session_replaced') void kicked();
     return r.ok ? { ok: true, data: j as T } : { ok: false, status: r.status, error: (j as { error?: string }).error ?? 'server_error' };
   } catch {
     return { ok: false, status: 0, error: 'network' };
@@ -132,11 +142,37 @@ function stopSync() {
 
 async function onUser(user: User | null) {
   const prev = useAuth.getState().user;
-  useAuth.setState({ user, ready: true });
-  if (user && user.id !== prev?.id) await startSync(user);
-  if (!user) {
+  useAuth.setState({ user, ready: true, ...(user ? { kicked: false } : {}) });
+  // progress is synced only once the admin has approved the account
+  const approved = user?.status === 'approved';
+  const wasApproved = prev?.status === 'approved' && prev.id === user?.id;
+  if (user && approved && !wasApproved) await startSync(user);
+  if (!user || !approved) {
     stopSync();
     useAuth.setState({ syncing: 'idle' });
+  }
+}
+
+/** The account was opened in another session: this one is closed and the device cleared. */
+async function kicked() {
+  if (!useAuth.getState().user) return;
+  stopSync();
+  useStore.getState().resetAll();
+  ls.del(OWNER);
+  ls.del(LOCAL_AT);
+  await onUser(null);
+  useAuth.setState({ kicked: true });
+}
+
+/** Re-checks the session regularly: detects approval (waiting page), blocking, and a newer session elsewhere. */
+export async function refreshMe() {
+  if (!useAuth.getState().user) return;
+  const r = await api<{ user: User }>('GET', '/auth/me');
+  if (r.ok) await onUser(r.data.user);
+  else if (r.status === 401) {
+    if (r.error === 'session_replaced') return; // handled in api()
+    stopSync();
+    await onUser(null);
   }
 }
 
@@ -144,9 +180,11 @@ async function onUser(user: User | null) {
 export function initAuth() {
   if (!authEnabled) return;
   void api<{ user: User }>('GET', '/auth/me').then((r) => onUser(r.ok ? r.data.user : null));
+  setInterval(() => document.visibilityState === 'visible' && void refreshMe(), 30_000);
+  document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && void refreshMe());
   // save before the tab closes
   window.addEventListener('pagehide', () => {
-    if (!useAuth.getState().user || !timer) return;
+    if (useAuth.getState().user?.status !== 'approved' || !timer) return;
     const at = new Date(Number(ls.get(LOCAL_AT)) || Date.now()).toISOString();
     void fetch(`${API}/progress`, { method: 'PUT', credentials: 'include', keepalive: true, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ data: snapshot(), updatedAt: at }) });
   });
@@ -181,7 +219,7 @@ export async function updateProfile(p: { displayName?: string; groupe?: string }
 
 /** Save one last time, sign out and clear this device so the next student starts clean. */
 export async function signOut() {
-  if (useAuth.getState().user) await push();
+  if (useAuth.getState().user?.status === 'approved') await push();
   stopSync();
   await api('POST', '/auth/logout');
   useStore.getState().resetAll();

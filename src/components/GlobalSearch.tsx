@@ -7,7 +7,8 @@ import { FileIcon, ResourceTypeBadge, usePreview } from './ui';
 import { useT, useL } from '../hooks/useT';
 import { useAllModules } from '../hooks/useModule';
 import { MODULES } from '../lib/content';
-import { RESOURCES, SUBJECTS, norm, subjectById, type Resource } from '../lib/catalog';
+import { SUBJECTS, norm, subjectById, type Resource } from '../lib/catalog';
+import { useResources } from '../lib/resources';
 
 export const useSearch = create<{ open: boolean; setOpen: (o: boolean) => void }>((set) => ({ open: false, setOpen: (open) => set({ open }) }));
 
@@ -43,19 +44,20 @@ export function GlobalSearch() {
     }
   }, [open]);
 
+  const RESOURCES = useResources();
   const hits = useMemo<Hit[]>(() => {
     const n = norm(q.trim());
     if (!n) return [];
     const words = n.split(/\s+/);
     const match = (s: string) => words.every((w) => norm(s).includes(w));
     const out: Hit[] = [];
-    for (const s of SUBJECTS) if (match(`${s.title.fr} ${s.title.en} ${s.id}`)) out.push({ kind: 'subject', id: s.id, title: tl(s.title), sub: t('search.module'), to: s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}` });
+    for (const s of SUBJECTS) if (match(`${s.title.fr} ${s.title.en} ${s.id}`)) out.push({ kind: 'subject', id: s.id, title: tl(s.title), sub: t('search.module'), to: s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}` });
     for (const c of content ?? [])
       for (const ch of c.chapters)
         if (match(`${ch.title.fr} ${ch.title.en} ${ch.summary.fr}`)) out.push({ kind: 'chapter', id: `${c.module.id}/${ch.id}`, title: tl(ch.title), sub: tl(c.module.title), to: `/m/${c.module.id}/c/${ch.id}` });
     for (const r of RESOURCES) if (match(`${r.title} ${r.kind} ${subjectById(r.subject)?.title.fr ?? ''}`)) out.push({ kind: 'doc', id: r.id, r, sub: tl(subjectById(r.subject)?.title) });
     return out.slice(0, 40);
-  }, [q, content, tl, t]);
+  }, [q, content, tl, t, RESOURCES]);
 
   const go = (h: Hit) => {
     setOpen(false);

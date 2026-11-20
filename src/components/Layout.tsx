@@ -11,7 +11,7 @@ import { SUBJECTS } from '../lib/catalog';
 import type { Lang } from '../lib/schema';
 import { BadgeToast } from './BadgeToast';
 import type { UIKey } from '../i18n/ui';
-import { authEnabled, signOut, useAuth, useCanSeeOral } from '../auth/auth';
+import { authEnabled, signOut, useAuth, useCanSeeOral, useIsAdmin } from '../auth/auth';
 import { DocumentPreview } from './ui';
 import { GlobalSearch, useSearch } from './GlobalSearch';
 
@@ -32,9 +32,9 @@ const LANGS: { code: Lang; label: string }[] = [
 /** Study tools and reference material ("Ressources" menu). */
 export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
   {
-    to: '/explorer',
+    to: '/supports',
     icon: 'inbox',
-    key: 'nav.library',
+    key: 'nav.supports',
     desc: 'tools.library.desc'
   },
   {
@@ -195,8 +195,8 @@ function SearchButton() {
   );
 }
 
-/** Private group site: signed-out visitors only see the sign-in page. */
-const useLocked = () => useAuth((s) => authEnabled && !s.user);
+/** Private group site: signed-out visitors and accounts waiting for approval only see the sign-in / waiting page. */
+const useLocked = () => useAuth((s) => authEnabled && s.user?.status !== 'approved');
 
 export function TopBar() {
   const { t } = useT();
@@ -208,7 +208,8 @@ export function TopBar() {
   const [drawer, setDrawer] = useState(false);
   useEffect(() => setDrawer(false), [pathname]);
   const inModule = pathname.startsWith('/m/') && !pathname.endsWith('/formulaire');
-  const inTools = TOOLS.some((x) => pathname.startsWith(x.to)) || pathname === '/bibliotheque';
+  const inTools = TOOLS.some((x) => x.to !== '/supports' && pathname.startsWith(x.to));
+  const isAdmin = useIsAdmin();
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
@@ -223,17 +224,17 @@ export function TopBar() {
               <Icon name="home" size={18} />
               {t('nav.home')}
             </NavLink>
-            <NavLink to="/explorer" className={({ isActive }) => `nav-link ${isActive || pathname === '/bibliotheque' ? 'nav-link-active' : ''}`} data-testid="nav-explore">
-              <Icon name="search" size={18} />
-              {t('nav.explore')}
+            <NavLink to="/supports" className={({ isActive }) => `nav-link ${isActive || pathname.endsWith('/supports') ? 'nav-link-active' : ''}`} data-testid="nav-supports">
+              <Icon name="inbox" size={18} />
+              {t('nav.supports')}
             </NavLink>
             <Dropdown label={t('nav.modules')} icon="grid" active={inModule}>
               {SUBJECTS.map((s) => (
-                <MenuItem key={s.id} to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} icon={s.icon} title={tl(s.title)} color={s.color} />
+                <MenuItem key={s.id} to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} icon={s.icon} title={tl(s.title)} color={s.color} />
               ))}
             </Dropdown>
             <Dropdown label={t('nav.resources')} icon="tool" active={inTools}>
-              {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
+              {TOOLS.filter((x) => x.to !== '/supports').map((x) => (
                 <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} />
               ))}
             </Dropdown>
@@ -241,6 +242,12 @@ export function TopBar() {
               <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
                 <Icon name="mic" size={18} />
                 {t('nav.presentation')}
+              </NavLink>
+            )}
+            {isAdmin && (
+              <NavLink to="/admin" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-admin">
+                <Icon name="settings" size={18} />
+                {t('nav.admin')}
               </NavLink>
             )}
           </nav>
@@ -254,7 +261,7 @@ export function TopBar() {
           <ThemeButton />
           <Link
             to="/profil"
-            className={`h-10 w-10 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white transition-opacity hover:opacity-90 ${authEnabled && !user ? 'hidden' : 'grid'}`}
+            className={`h-10 w-10 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white transition-opacity hover:opacity-90 ${locked ? 'hidden' : 'grid'}`}
             aria-label={t('nav.profile')}
             title={user ? user.displayName || user.email : t('nav.profile')}
           >
@@ -277,6 +284,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
   const tl = useL();
   const user = useAuth((s) => s.user);
   const canSeeOral = useCanSeeOral();
+  const isAdmin = useIsAdmin();
   const link = ({ isActive }: { isActive: boolean }) => `side-link ${isActive ? 'side-link-active' : ''}`;
   useEffect(() => {
     if (!open) return;
@@ -323,9 +331,14 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             <NavLink to="/" end className={link}>
               <Icon name="home" size={19} /> {t('nav.home')}
             </NavLink>
-            <NavLink to="/explorer" className={link}>
-              <Icon name="inbox" size={19} /> {t('nav.explore')}
+            <NavLink to="/supports" className={link}>
+              <Icon name="inbox" size={19} /> {t('nav.supports')}
             </NavLink>
+            {isAdmin && (
+              <NavLink to="/admin" className={link}>
+                <Icon name="settings" size={19} /> {t('nav.admin')}
+              </NavLink>
+            )}
             <NavLink to="/profil" end className={link}>
               <Icon name="user" size={19} /> {t('nav.profile')}
             </NavLink>
@@ -336,13 +349,13 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             )}
             <div className="eyebrow mb-1 mt-5 px-3">{t('nav.modules')}</div>
             {SUBJECTS.map((s) => (
-              <NavLink key={s.id} to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className={link}>
+              <NavLink key={s.id} to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} className={link}>
                 <span className="h-2 w-2 rounded-sm" style={{ background: s.color }} />
                 {tl(s.title)}
               </NavLink>
             ))}
             <div className="eyebrow mb-1 mt-5 px-3">{t('nav.resources')}</div>
-            {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
+            {TOOLS.filter((x) => x.to !== '/supports').map((x) => (
               <NavLink key={x.to} to={x.to} className={link}>
                 <Icon name={x.icon} size={19} /> {t(x.key)}
               </NavLink>
@@ -390,7 +403,7 @@ function Footer() {
           <ul className="space-y-2 text-sm">
             {SUBJECTS.map((s) => (
               <li key={s.id}>
-                <Link to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className="text-muted hover:text-fg">
+                <Link to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} className="text-muted hover:text-fg">
                   {tl(s.title)}
                 </Link>
               </li>

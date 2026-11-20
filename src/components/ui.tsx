@@ -37,7 +37,7 @@ export function ResourceTypeBadge({ kind }: { kind: ResourceKind }) {
 }
 
 export function FileIcon({ ext }: { ext: string }) {
-  const label = ext === 'web' ? 'WEB' : ext.toUpperCase();
+  const label = ext === 'web' ? 'WEB' : ext === 'link' ? 'LIEN' : ext.toUpperCase();
   const color = ext === 'pdf' ? 'bg-[#b23434]' : ext === 'pptx' ? 'bg-[#c4622d]' : ext === 'docx' ? 'bg-[#2b579a]' : 'bg-accent';
   return (
     <span className="relative inline-flex h-10 w-8 shrink-0 flex-col justify-end rounded-[3px] border border-line bg-surface" aria-hidden>
@@ -149,9 +149,15 @@ export function ResourceRow({ r, showSubject = true }: { r: Resource; showSubjec
               <Icon name="eye" size={14} /> {t('sup.read')}
             </button>
           )}
-          <a className="btn-ghost btn-sm" href={r.url} download={r.file} aria-label={t('sup.download')} data-testid="resource-download">
-            <Icon name="download" size={14} />
-          </a>
+          {r.ext === 'link' ? (
+            <a className="btn-ghost btn-sm" href={r.url} target="_blank" rel="noreferrer" aria-label={t('sup.newTab')}>
+              <Icon name="external" size={14} />
+            </a>
+          ) : (
+            <a className="btn-ghost btn-sm" href={r.url} download={r.file} aria-label={t('sup.download')} data-testid="resource-download">
+              <Icon name="download" size={14} />
+            </a>
+          )}
         </span>
       )}
     </li>

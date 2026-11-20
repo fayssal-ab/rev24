@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useT } from '../hooks/useT';
 import { Icon } from '../components/Icon';
 import { BrandMark, Wordmark } from '../components/Layout';
-import { signIn, signUp } from '../auth/auth';
+import { signIn, signUp, useAuth } from '../auth/auth';
 import type { UIKey } from '../i18n/ui';
 
 type Mode = 'login' | 'signup';
@@ -41,6 +41,7 @@ export default function AuthPage() {
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<UIKey | null>(null);
+  const wasKicked = useAuth((s) => s.kicked);
   const current: Mode = mode;
 
   const go = (m: Mode) => {
@@ -103,6 +104,12 @@ export default function AuthPage() {
                   </button>
                 ))}
               </div>
+            )}
+
+            {wasKicked && (
+              <p className="mt-6 flex items-start gap-2 rounded-lg border border-warn/40 bg-warn/[0.07] p-3 text-sm" role="alert" data-testid="auth-kicked">
+                <Icon name="alert" size={16} className="mt-0.5 shrink-0 text-warn" /> {t('auth.kicked')}
+              </p>
             )}
 
             <form onSubmit={submit} className="mt-6 space-y-4" noValidate>

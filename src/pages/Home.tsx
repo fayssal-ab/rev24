@@ -8,7 +8,9 @@ import { moduleMastery } from '../lib/mastery';
 import { Icon } from '../components/Icon';
 import { TOOLS } from '../components/Layout';
 import { KIND_LABEL, ResourceList, SectionHeader, callCode } from '../components/ui';
-import { ACADEMIC_YEAR, FILIERE, KINDS, RESOURCES, SEMESTER, SUBJECTS, countByKind, recentResources, resourcesOf } from '../lib/catalog';
+import { ACADEMIC_YEAR, FILIERE, KINDS, SEMESTER, SUBJECTS, countByKind } from '../lib/catalog';
+import { useResources } from '../lib/resources';
+import { Announcements } from '../components/Announcements';
 
 /** Eight-pointed zellige star outline, used as a quiet ornament. */
 function Khatam({ className = '' }: { className?: string }) {
@@ -32,6 +34,11 @@ export default function Home() {
   const [q, setQ] = useState('');
   const content = useAllModules(MODULES.map((m) => m.id));
   const st = useStore();
+  const RESOURCES = useResources();
+  const resourcesOf = (id: string) => RESOURCES.filter((r) => r.subject === id);
+  const recent = RESOURCES.filter((r) => r.date)
+    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+    .slice(0, 6);
   const kindCount = countByKind(RESOURCES);
   const last = st.lastVisit;
   const lastContent = last && content?.find((c) => c.module.id === last.module);
@@ -39,11 +46,12 @@ export default function Home() {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    navigate(q.trim() ? `/explorer?q=${encodeURIComponent(q.trim())}` : '/explorer');
+    navigate(q.trim() ? `/supports?q=${encodeURIComponent(q.trim())}` : '/supports');
   };
 
   return (
     <div className="space-y-20">
+      <Announcements />
       {/* hero */}
       <section className="relative grid grid-cols-[minmax(0,1fr)] gap-12 pb-4 pt-2 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
         <Khatam className="pointer-events-none absolute -right-24 -top-16 hidden h-[34rem] w-[34rem] text-accent/[0.09] lg:block" />
@@ -89,7 +97,7 @@ export default function Home() {
 
           <div className="mt-8 flex flex-wrap gap-2">
             {(['cours', 'td', 'tp', 'controle'] as const).map((k) => (
-              <Link key={k} to={`/explorer?type=${k}`} className="rounded-full border border-line px-3.5 py-1.5 text-sm text-muted transition-colors hover:border-fg hover:text-fg">
+              <Link key={k} to={`/supports?type=${k}`} className="rounded-full border border-line px-3.5 py-1.5 text-sm text-muted transition-colors hover:border-fg hover:text-fg">
                 {t(KIND_LABEL[k])} <span className="ml-1 font-mono text-[11px] text-muted">{kindCount[k]}</span>
               </Link>
             ))}
@@ -109,7 +117,7 @@ export default function Home() {
             <ol>
               {SUBJECTS.map((s, i) => (
                 <li key={s.id}>
-                  <Link to={s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`} className="group flex h-10 items-end gap-3 pl-3 pr-5">
+                  <Link to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} className="group flex h-10 items-end gap-3 pl-3 pr-5">
                     <span className="w-8 pb-2 text-right font-mono text-[10px] text-muted">{String(i + 1).padStart(2, '0')}</span>
                     <span className="min-w-0 flex-1 truncate pb-1.5 pl-3 font-display text-[1.05rem] text-fg transition-colors group-hover:text-accent">{tl(s.title)}</span>
                     <span className="shrink-0 pb-2 font-mono text-[10px] text-muted">
@@ -145,12 +153,12 @@ export default function Home() {
           n={1}
           title={t('home.recent')}
           action={
-            <Link to="/explorer" className="shrink-0 text-sm font-semibold text-accent hover:underline">
+            <Link to="/supports" className="shrink-0 text-sm font-semibold text-accent hover:underline">
               {t('home.seeAll')} <span className="font-mono text-xs">({RESOURCES.length})</span>
             </Link>
           }
         />
-        <ResourceList items={recentResources(6)} />
+        <ResourceList items={recent} />
       </section>
 
       {/* modules */}
@@ -159,7 +167,7 @@ export default function Home() {
         <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {SUBJECTS.map((s) => {
             const c = content?.find((x) => x.module.id === s.id);
-            const to = s.interactive ? `/m/${s.id}` : `/explorer?module=${s.id}`;
+            const to = s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`;
             const mastery = c ? moduleMastery(c, st) : null;
             return (
               <Link key={s.id} to={to} className="group relative flex min-h-[11rem] flex-col bg-surface p-6 transition-colors hover:bg-bg" data-testid={`module-${s.id}`}>
@@ -200,7 +208,7 @@ export default function Home() {
         <SectionHeader n={3} title={t('home.byType')} />
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3 lg:grid-cols-6">
           {KINDS.map((k) => (
-            <Link key={k} to={`/explorer?type=${k}`} className="group bg-surface p-5 transition-colors hover:bg-fg hover:text-bg">
+            <Link key={k} to={`/supports?type=${k}`} className="group bg-surface p-5 transition-colors hover:bg-fg hover:text-bg">
               <div className="font-display text-5xl font-light tabular-nums tracking-tight">{kindCount[k]}</div>
               <div className="mt-3 flex items-center justify-between gap-2 text-sm text-muted group-hover:text-bg/80">
                 <span className="truncate">{t(KIND_LABEL[k])}</span> <Icon name="arrowRight" size={13} className="shrink-0" />
@@ -214,7 +222,7 @@ export default function Home() {
       <section>
         <SectionHeader n={4} title={t('home.tools')} />
         <ul className="grid gap-x-10 sm:grid-cols-2">
-          {TOOLS.filter((x) => x.to !== '/explorer').map((x) => (
+          {TOOLS.filter((x) => x.to !== '/supports').map((x) => (
             <li key={x.to} className="border-b border-line">
               <Link to={x.to} className="group flex items-start gap-4 py-5">
                 <Icon name={x.icon} size={18} className="mt-1 text-accent" />

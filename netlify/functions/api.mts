@@ -10,6 +10,13 @@
  *   POST /api/auth/password   { current, next }                  → change password
  *   GET  /api/progress                                           → { data, updatedAt } | { data: null }
  *   PUT  /api/progress        { data, updatedAt }
+ *   GET  /api/supports                                           → documents added / edited by the admin
+ *   GET  /api/announcements                                      → admin announcements
+ *   /api/admin/*                                                 → CRUD users, supports, announcements (admin only)
+ *
+ * Access rules:
+ *   - a new account starts "pending": it can sign in but sees only the waiting page until the admin approves it
+ *   - one session per account: signing in elsewhere invalidates the previous session (session_id in the JWT)
  *
  * Env (Netlify → Site configuration → Environment variables):
  *   DATABASE_URL  mysql://avnadmin:PASSWORD@host:port/defaultdb
@@ -17,8 +24,9 @@
  *   JWT_SECRET    long random string (≥ 32 characters)
  *   DB_SSL        (local dev only) "off" to connect without TLS
  *   ORAL_EMAILS   (optional) comma-separated e-mails allowed to see the oral-presentation coach
+ *   ADMIN_EMAILS  (optional) comma-separated admin e-mails (default: fayssal.abaibat@emsi-edu.ma)
  */
-import mysql, { type Pool, type RowDataPacket } from 'mysql2/promise';
+import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 import { randomUUID } from 'node:crypto';
@@ -91,6 +99,37 @@ function migrate(): Promise<void> {
       updated_at DATETIME(3) NOT NULL,
       CONSTRAINT fk_progress_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    // columns added after the first version: role, approval status, single active session
+    const [cols] = await p.query<RowDataPacket[]>(`SELECT COLUMN_NAME AS c FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'users'`);
+    const have = new Set(cols.map((r) => String(r.c).toLowerCase()));
+    if (!have.has('role')) await p.query(`ALTER TABLE users ADD COLUMN role VARCHAR(10) NOT NULL DEFAULT 'user'`);
+    if (!have.has('status')) {
+      await p.query(`ALTER TABLE users ADD COLUMN status VARCHAR(10) NOT NULL DEFAULT 'pending'`);
+      // accounts that existed before the approval system are already group members
+      await p.query(`UPDATE users SET status = 'approved'`);
+    }
+    if (!have.has('session_id')) await p.query(`ALTER TABLE users ADD COLUMN session_id CHAR(36) NULL`);
+    if (!have.has('last_seen')) await p.query(`ALTER TABLE users ADD COLUMN last_seen DATETIME(3) NULL`);
+    await p.query(`CREATE TABLE IF NOT EXISTS supports (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      ref VARCHAR(255) NULL,
+      subject VARCHAR(40) NOT NULL,
+      kind VARCHAR(20) NOT NULL DEFAULT 'cours',
+      title VARCHAR(255) NOT NULL DEFAULT '',
+      url VARCHAR(1000) NOT NULL DEFAULT '',
+      sort INT NOT NULL DEFAULT 500,
+      hidden TINYINT(1) NOT NULL DEFAULT 0,
+      created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      UNIQUE KEY uq_supports_ref (ref)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    await p.query(`CREATE TABLE IF NOT EXISTS announcements (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      title VARCHAR(200) NOT NULL,
+      body TEXT NOT NULL,
+      pinned TINYINT(1) NOT NULL DEFAULT 0,
+      created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    for (const e of adminEmails()) await p.query(`UPDATE users SET role = 'admin', status = 'approved' WHERE email = ?`, [e]);
   })().catch((e) => {
     migrated = null;
     throw e;
@@ -117,24 +156,36 @@ function secret() {
   return new TextEncoder().encode(s);
 }
 
+/** New session: stored on the user row, so any older session of the same account stops working. */
 async function issueCookie(userId: string, req: Request) {
-  const token = await new SignJWT({}).setProtectedHeader({ alg: 'HS256' }).setSubject(userId).setIssuedAt().setExpirationTime(`${SESSION_DAYS}d`).sign(secret());
+  const sid = randomUUID();
+  await db().query('UPDATE users SET session_id = ?, last_seen = CURRENT_TIMESTAMP(3) WHERE id = ?', [sid, userId]);
+  const token = await new SignJWT({ sid }).setProtectedHeader({ alg: 'HS256' }).setSubject(userId).setIssuedAt().setExpirationTime(`${SESSION_DAYS}d`).sign(secret());
   const secure = new URL(req.url).protocol === 'https:' ? '; Secure' : '';
   return `${COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${secure}`;
 }
 
 const clearCookie = `${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
 
-async function currentUserId(req: Request): Promise<string> {
+/** The signed-in user; 401 "session_replaced" when the account was opened in another session since. */
+async function currentUser(req: Request): Promise<UserRow> {
   const m = new RegExp(`(?:^|;\\s*)${COOKIE}=([^;]+)`).exec(req.headers.get('cookie') ?? '');
   if (!m) throw new HttpError(401, 'not_authenticated');
+  let sub: string, sid: unknown;
   try {
     const { payload } = await jwtVerify(m[1], secret(), { algorithms: ['HS256'] });
     if (!payload.sub) throw new Error();
-    return payload.sub;
+    sub = payload.sub;
+    sid = payload.sid;
   } catch {
     throw new HttpError(401, 'not_authenticated');
   }
+  const u = await findUser('id', sub);
+  if (!u) throw new HttpError(401, 'not_authenticated');
+  if (!u.session_id || u.session_id !== sid) throw new HttpError(401, 'session_replaced');
+  // last activity, at most once a minute
+  if (!u.last_seen || Date.now() - new Date(u.last_seen).getTime() > 60_000) await db().query('UPDATE users SET last_seen = CURRENT_TIMESTAMP(3) WHERE id = ?', [u.id]);
+  return u;
 }
 
 async function body(req: Request): Promise<Record<string, unknown>> {
@@ -158,34 +209,61 @@ function throttle(key: string) {
   attempts.set(key, a && a.until > now ? { n: a.n + 1, until: a.until } : { n: 1, until: now + 10 * 60_000 });
 }
 
-type UserRow = RowDataPacket & { id: string; email: string; password_hash: string; display_name: string; groupe: string; created_at: Date };
+type UserRow = RowDataPacket & {
+  id: string;
+  email: string;
+  password_hash: string;
+  display_name: string;
+  groupe: string;
+  role: string;
+  status: string;
+  session_id: string | null;
+  last_seen: Date | null;
+  created_at: Date;
+};
+type Role = 'admin' | 'user';
+type Status = 'pending' | 'approved' | 'blocked';
+const ROLES: Role[] = ['admin', 'user'];
+const STATUSES: Status[] = ['pending', 'approved', 'blocked'];
 
-/** Private features, decided on the server so the allowed e-mails never ship in the public JavaScript. */
-const DEFAULT_ORAL = 'fayssal.abaibat@emsi-edu.ma';
-/** Tolerant parsing: quotes, commas / semicolons / spaces as separators; empty → default. */
-const oralEmails = () => {
-  const list = (process.env.ORAL_EMAILS ?? '')
+const DEFAULT_ADMIN = 'fayssal.abaibat@emsi-edu.ma';
+const emailList = (raw: string | undefined, fallback: string) => {
+  const list = (raw ?? '')
     .replace(/["']/g, '')
     .split(/[\s,;]+/)
     .map((e) => e.trim().toLowerCase())
     .filter((e) => e.includes('@'));
-  return list.length ? list : [DEFAULT_ORAL];
+  return list.length ? list : [fallback];
 };
-const publicUser = (u: UserRow) => ({
-  id: u.id,
-  email: u.email,
-  displayName: u.display_name,
-  groupe: u.groupe,
-  createdAt: u.created_at,
-  features: oralEmails().includes(u.email.toLowerCase()) ? ['oral'] : []
-});
+const adminEmails = () => emailList(process.env.ADMIN_EMAILS, DEFAULT_ADMIN);
+const isAdmin = (u: UserRow) => u.role === 'admin' || adminEmails().includes(u.email.toLowerCase());
+
+/** Private features, decided on the server so the allowed e-mails never ship in the public JavaScript. */
+const DEFAULT_ORAL = 'fayssal.abaibat@emsi-edu.ma';
+/** Tolerant parsing: quotes, commas / semicolons / spaces as separators; empty → default. */
+const oralEmails = () => emailList(process.env.ORAL_EMAILS, DEFAULT_ORAL);
+const publicUser = (u: UserRow) => {
+  const admin = isAdmin(u);
+  return {
+    id: u.id,
+    email: u.email,
+    displayName: u.display_name,
+    groupe: u.groupe,
+    createdAt: u.created_at,
+    role: admin ? 'admin' : 'user',
+    status: admin ? 'approved' : u.status,
+    features: admin || oralEmails().includes(u.email.toLowerCase()) ? ['oral'] : []
+  };
+};
+/** Admin listing: same as publicUser + activity. */
+const adminUser = (u: UserRow) => ({ ...publicUser(u), online: !!u.session_id && !!u.last_seen && Date.now() - new Date(u.last_seen).getTime() < 5 * 60_000, lastSeen: u.last_seen });
 
 /** Hash compared against when the e-mail is unknown, so the response time does not reveal which e-mails exist. */
 let dummyHash: string | null = null;
 const dummy = () => (dummyHash ??= bcrypt.hashSync('not-a-real-password', 11));
 
 async function findUser(where: 'id' | 'email', value: string) {
-  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
+  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
   return rows[0];
 }
 
@@ -230,13 +308,14 @@ async function route(req: Request): Promise<Response> {
     const id = randomUUID();
     const hash = await bcrypt.hash(password, 11);
     try {
-      await db().query('INSERT INTO users (id, email, password_hash, display_name) VALUES (?, ?, ?, ?)', [id, email, hash, displayName]);
+      const adm = adminEmails().includes(email);
+      await db().query('INSERT INTO users (id, email, password_hash, display_name, role, status) VALUES (?, ?, ?, ?, ?, ?)', [id, email, hash, displayName, adm ? 'admin' : 'user', adm ? 'approved' : 'pending']);
     } catch (e) {
       if ((e as { code?: string }).code === 'ER_DUP_ENTRY') throw new HttpError(409, 'email_taken');
       throw e;
     }
-    const u = (await findUser('id', id))!;
-    return json(201, { user: publicUser(u) }, { 'set-cookie': await issueCookie(id, req) });
+    const cookie = await issueCookie(id, req);
+    return json(201, { user: publicUser((await findUser('id', id))!) }, { 'set-cookie': cookie });
   }
 
   if (method === 'POST' && path === '/auth/login') {
@@ -252,16 +331,28 @@ async function route(req: Request): Promise<Response> {
     return json(200, { user: publicUser(u) }, { 'set-cookie': await issueCookie(u.id, req) });
   }
 
-  if (method === 'POST' && path === '/auth/logout') return json(200, { ok: true }, { 'set-cookie': clearCookie });
+  if (method === 'POST' && path === '/auth/logout') {
+    // end the session on the server too (only if this cookie is still the active session)
+    try {
+      const u = await currentUser(req);
+      await db().query('UPDATE users SET session_id = NULL WHERE id = ?', [u.id]);
+    } catch {
+      /* already signed out or replaced */
+    }
+    return json(200, { ok: true }, { 'set-cookie': clearCookie });
+  }
 
   // ----- everything below needs a session
-  const userId = await currentUserId(req);
-
-  if (method === 'GET' && path === '/auth/me') {
-    const u = await findUser('id', userId);
-    if (!u) return json(401, { error: 'not_authenticated' }, { 'set-cookie': clearCookie });
-    return json(200, { user: publicUser(u) });
+  let me: UserRow;
+  try {
+    me = await currentUser(req);
+  } catch (e) {
+    if (e instanceof HttpError && e.status === 401) return json(401, { error: e.code }, { 'set-cookie': clearCookie });
+    throw e;
   }
+  const userId = me.id;
+
+  if (method === 'GET' && path === '/auth/me') return json(200, { user: publicUser(me) });
 
   if (method === 'PUT' && path === '/profile') {
     const b = await body(req);
@@ -283,6 +374,21 @@ async function route(req: Request): Promise<Response> {
     return json(200, { ok: true });
   }
 
+  // ----- everything below needs an approved account
+  if (publicUser(me).status !== 'approved') throw new HttpError(403, me.status === 'blocked' ? 'blocked' : 'pending');
+
+  if (method === 'GET' && path === '/supports') {
+    const [rows] = await db().query<RowDataPacket[]>('SELECT id, ref, subject, kind, title, url, sort, hidden, created_at FROM supports ORDER BY subject, sort, title');
+    return json(200, { supports: rows.map(supportOut) });
+  }
+
+  if (method === 'GET' && path === '/announcements') {
+    const [rows] = await db().query<RowDataPacket[]>('SELECT id, title, body, pinned, created_at FROM announcements ORDER BY pinned DESC, created_at DESC LIMIT 50');
+    return json(200, { announcements: rows.map(annOut) });
+  }
+
+  if (path.startsWith('/admin/')) return admin(req, method, path.slice('/admin'.length), me);
+
   if (method === 'GET' && path === '/progress') {
     const [rows] = await db().query<(RowDataPacket & { data: unknown; updated_at: Date })[]>('SELECT data, updated_at FROM progress WHERE user_id = ?', [userId]);
     const r = rows[0];
@@ -302,6 +408,177 @@ async function route(req: Request): Promise<Response> {
     const at = b.updatedAt && !Number.isNaN(Date.parse(b.updatedAt)) ? new Date(b.updatedAt) : new Date();
     await db().query('INSERT INTO progress (user_id, data, updated_at) VALUES (?, CAST(? AS JSON), ?) ON DUPLICATE KEY UPDATE data = VALUES(data), updated_at = VALUES(updated_at)', [userId, JSON.stringify(b.data), at]);
     return json(200, { ok: true, updatedAt: at.toISOString() });
+  }
+
+  throw new HttpError(404, 'not_found');
+}
+
+// ---------------------------------------------------------------- admin (CRUD)
+const supportOut = (r: RowDataPacket) => ({
+  id: r.id as string,
+  ref: (r.ref as string | null) ?? null,
+  subject: r.subject as string,
+  kind: r.kind as string,
+  title: r.title as string,
+  url: r.url as string,
+  sort: Number(r.sort),
+  hidden: !!r.hidden,
+  createdAt: r.created_at as Date
+});
+const annOut = (r: RowDataPacket) => ({ id: r.id as string, title: r.title as string, body: r.body as string, pinned: !!r.pinned, createdAt: r.created_at as Date });
+
+const KINDS = ['cours', 'td', 'tp', 'controle', 'annexe', 'resume'];
+const SUBJECT = /^[a-z0-9-]{1,40}$/;
+
+function supportFields(b: Record<string, unknown>) {
+  const subject = str(b.subject, 40).toLowerCase();
+  const kind = str(b.kind, 20).toLowerCase() || 'cours';
+  const title = str(b.title, 255);
+  const url = str(b.url, 1000);
+  const ref = b.ref == null ? null : str(b.ref, 255) || null;
+  const sort = Number.isFinite(Number(b.sort)) ? Math.round(Number(b.sort)) : 500;
+  const hidden = b.hidden ? 1 : 0;
+  if (!SUBJECT.test(subject)) throw new HttpError(400, 'invalid_subject');
+  if (!KINDS.includes(kind)) throw new HttpError(400, 'invalid_kind');
+  // a new document needs a title and a link; an override of a built-in file (ref) may leave them empty
+  if (!ref && (!title || !url)) throw new HttpError(400, 'missing_fields');
+  if (url && !/^(https?:\/\/|\/)/i.test(url)) throw new HttpError(400, 'invalid_url');
+  return { ref, subject, kind, title, url, sort, hidden };
+}
+
+async function admin(req: Request, method: string, path: string, me: UserRow): Promise<Response> {
+  if (!isAdmin(me)) throw new HttpError(403, 'forbidden');
+  const p = db();
+  const idOf = (prefix: string) => {
+    const m = new RegExp(`^/${prefix}/([0-9a-f-]{36})(/[a-z]+)?$`).exec(path);
+    return m ? { id: m[1], action: m[2] ?? '' } : null;
+  };
+
+  // ----- users
+  if (method === 'GET' && path === '/users') {
+    const [rows] = await p.query<UserRow[]>('SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at FROM users ORDER BY (status = \'pending\') DESC, created_at DESC');
+    return json(200, { users: rows.map(adminUser) });
+  }
+  if (method === 'POST' && path === '/users') {
+    const b = await body(req);
+    const email = str(b.email, 255).toLowerCase();
+    const password = typeof b.password === 'string' ? b.password : '';
+    if (!EMAIL.test(email)) throw new HttpError(400, 'invalid_email');
+    if (password.length < 8 || password.length > 200) throw new HttpError(400, 'weak_password');
+    const role = ROLES.includes(b.role as Role) ? (b.role as Role) : 'user';
+    const status = STATUSES.includes(b.status as Status) ? (b.status as Status) : 'approved';
+    const id = randomUUID();
+    try {
+      await p.query('INSERT INTO users (id, email, password_hash, display_name, groupe, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+        id,
+        email,
+        await bcrypt.hash(password, 11),
+        str(b.displayName, 120) || email.split('@')[0],
+        str(b.groupe, 40) || '4IIR G22',
+        role,
+        status
+      ]);
+    } catch (e) {
+      if ((e as { code?: string }).code === 'ER_DUP_ENTRY') throw new HttpError(409, 'email_taken');
+      throw e;
+    }
+    return json(201, { user: adminUser((await findUser('id', id))!) });
+  }
+  const u = idOf('users');
+  if (u) {
+    const target = await findUser('id', u.id);
+    if (!target) throw new HttpError(404, 'not_found');
+    const self = target.id === me.id;
+    if (method === 'PUT' && !u.action) {
+      const b = await body(req);
+      const role = ROLES.includes(b.role as Role) ? (b.role as Role) : target.role;
+      const status = STATUSES.includes(b.status as Status) ? (b.status as Status) : target.status;
+      if (self && (role !== 'admin' || status !== 'approved')) throw new HttpError(400, 'cannot_demote_self');
+      const email = b.email === undefined ? target.email : str(b.email, 255).toLowerCase();
+      if (!EMAIL.test(email)) throw new HttpError(400, 'invalid_email');
+      const password = typeof b.password === 'string' && b.password ? b.password : null;
+      if (password && (password.length < 8 || password.length > 200)) throw new HttpError(400, 'weak_password');
+      try {
+        await p.query('UPDATE users SET email = ?, display_name = ?, groupe = ?, role = ?, status = ? WHERE id = ?', [
+          email,
+          b.displayName === undefined ? target.display_name : str(b.displayName, 120) || target.display_name,
+          b.groupe === undefined ? target.groupe : str(b.groupe, 40) || target.groupe,
+          role,
+          status,
+          target.id
+        ]);
+      } catch (e) {
+        if ((e as { code?: string }).code === 'ER_DUP_ENTRY') throw new HttpError(409, 'email_taken');
+        throw e;
+      }
+      // new password or blocked account → close its session
+      if (password) await p.query('UPDATE users SET password_hash = ?, session_id = NULL WHERE id = ?', [await bcrypt.hash(password, 11), target.id]);
+      if (status === 'blocked') await p.query('UPDATE users SET session_id = NULL WHERE id = ?', [target.id]);
+      return json(200, { user: adminUser((await findUser('id', target.id))!) });
+    }
+    if (method === 'POST' && u.action === '/logout') {
+      if (self) throw new HttpError(400, 'cannot_logout_self');
+      await p.query('UPDATE users SET session_id = NULL WHERE id = ?', [target.id]);
+      return json(200, { ok: true });
+    }
+    if (method === 'DELETE' && !u.action) {
+      if (self) throw new HttpError(400, 'cannot_delete_self');
+      await p.query('DELETE FROM users WHERE id = ?', [target.id]);
+      return json(200, { ok: true });
+    }
+  }
+
+  // ----- supports (new documents, or overrides of the built-in files through `ref`)
+  if (method === 'POST' && path === '/supports') {
+    const f = supportFields(await body(req));
+    const id = randomUUID();
+    try {
+      await p.query('INSERT INTO supports (id, ref, subject, kind, title, url, sort, hidden) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [id, f.ref, f.subject, f.kind, f.title, f.url, f.sort, f.hidden]);
+    } catch (e) {
+      if ((e as { code?: string }).code === 'ER_DUP_ENTRY') throw new HttpError(409, 'exists');
+      throw e;
+    }
+    const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM supports WHERE id = ?', [id]);
+    return json(201, { support: supportOut(rows[0]) });
+  }
+  const s = idOf('supports');
+  if (s && method === 'PUT') {
+    const f = supportFields(await body(req));
+    const [r] = await p.query<ResultSetHeader>('UPDATE supports SET subject = ?, kind = ?, title = ?, url = ?, sort = ?, hidden = ? WHERE id = ?', [f.subject, f.kind, f.title, f.url, f.sort, f.hidden, s.id]);
+    if (!r.affectedRows) throw new HttpError(404, 'not_found');
+    const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM supports WHERE id = ?', [s.id]);
+    return json(200, { support: supportOut(rows[0]) });
+  }
+  if (s && method === 'DELETE') {
+    await p.query('DELETE FROM supports WHERE id = ?', [s.id]);
+    return json(200, { ok: true });
+  }
+
+  // ----- announcements
+  const annFields = (b: Record<string, unknown>) => {
+    const title = str(b.title, 200);
+    const text = typeof b.body === 'string' ? b.body.trim().slice(0, 5000) : '';
+    if (!title) throw new HttpError(400, 'missing_fields');
+    return { title, text, pinned: b.pinned ? 1 : 0 };
+  };
+  if (method === 'POST' && path === '/announcements') {
+    const f = annFields(await body(req));
+    const id = randomUUID();
+    await p.query('INSERT INTO announcements (id, title, body, pinned) VALUES (?, ?, ?, ?)', [id, f.title, f.text, f.pinned]);
+    const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM announcements WHERE id = ?', [id]);
+    return json(201, { announcement: annOut(rows[0]) });
+  }
+  const a = idOf('announcements');
+  if (a && method === 'PUT') {
+    const f = annFields(await body(req));
+    const [r] = await p.query<ResultSetHeader>('UPDATE announcements SET title = ?, body = ?, pinned = ? WHERE id = ?', [f.title, f.text, f.pinned, a.id]);
+    if (!r.affectedRows) throw new HttpError(404, 'not_found');
+    const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM announcements WHERE id = ?', [a.id]);
+    return json(200, { announcement: annOut(rows[0]) });
+  }
+  if (a && method === 'DELETE') {
+    await p.query('DELETE FROM announcements WHERE id = ?', [a.id]);
+    return json(200, { ok: true });
   }
 
   throw new HttpError(404, 'not_found');

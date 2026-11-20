@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, useMemo } from 'react';
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout, Loading, Narrow } from './components/Layout';
 import ModuleShell from './components/ModuleShell';
-import { authEnabled, useAuth, useCanSeeOral } from './auth/auth';
+import { authEnabled, useAuth, useCanSeeOral, useIsAdmin } from './auth/auth';
 import type { ReactNode } from 'react';
 import { useStore } from './store/store';
 import { useAllModules } from './hooks/useModule';
@@ -26,13 +26,27 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
 const SupportsPage = lazy(() => import('./pages/SupportsPage'));
 const ExplorePage = lazy(() => import('./pages/ExplorePage'));
+const PendingPage = lazy(() => import('./pages/PendingPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
 
 /** Private group site: when accounts are on, every page requires signing in. */
 function AuthGate({ children }: { children: ReactNode }) {
   const { ready, user } = useAuth();
   if (!authEnabled) return <>{children}</>;
   if (!ready) return <Loading />;
-  return user ? <>{children}</> : <AuthPage />;
+  if (!user) return <AuthPage />;
+  // new accounts wait for the admin's approval before seeing any content
+  return user.status === 'approved' ? <>{children}</> : <PendingPage />;
+}
+
+function AdminRoute() {
+  return useIsAdmin() ? <AdminPage /> : <Navigate to="/" replace />;
+}
+
+/** Old "Explorer" links keep their filters. */
+function ToSupports() {
+  const { search } = useLocation();
+  return <Navigate to={`/supports${search}`} replace />;
 }
 
 function LoginRoute() {
@@ -86,8 +100,10 @@ export function App() {
                 <Route path="examen" element={<ExamPage />} />
                 <Route path="supports" element={<SupportsPage />} />
               </Route>
-              <Route path="/explorer" element={<ExplorePage />} />
-              <Route path="/bibliotheque" element={<Navigate to="/explorer" replace />} />
+              <Route path="/supports" element={<ExplorePage />} />
+              <Route path="/explorer" element={<ToSupports />} />
+              <Route path="/bibliotheque" element={<ToSupports />} />
+              <Route path="/admin" element={<AdminRoute />} />
               <Route path="/terminal" element={<TerminalPage />} />
               <Route
                 path="/stats-lab"

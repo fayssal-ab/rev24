@@ -598,14 +598,14 @@ export default function AdminPage() {
         <h1 className="h1">Tableau de bord</h1>
         <p className="mt-2 text-[15px] text-muted">Valide les nouveaux comptes, gère les supports de cours et publie des annonces.</p>
       </div>
-      <div className="mb-6 flex gap-1 border-b border-line" role="tablist">
+      <div className="scroll-thin mb-6 flex gap-1 overflow-x-auto border-b border-line" role="tablist">
         {tabs.map((x) => (
           <button
             key={x.id}
             role="tab"
             aria-selected={tab === x.id}
             onClick={() => setTab(x.id)}
-            className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-semibold transition-colors ${tab === x.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-fg'}`}
+            className={`-mb-px flex shrink-0 items-center gap-2 border-b-2 px-3 py-2.5 sm:px-4 text-sm font-semibold transition-colors ${tab === x.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-fg'}`}
           >
             <Icon name={x.icon} size={16} /> {x.label}
             {x.id === 'users' && pending > 0 && <span className="rounded-full bg-warn px-1.5 text-[10px] font-bold text-white">{pending}</span>}

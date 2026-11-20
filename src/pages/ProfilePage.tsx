@@ -34,14 +34,19 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
     <div className="mx-auto max-w-6xl space-y-6">
       <section className="relative overflow-hidden rounded-2xl bg-navy p-6 text-white sm:p-8">
         <div className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
-        <div className="relative flex flex-wrap items-center gap-5">
-          <span className="icon-tile h-16 w-16 rounded-2xl bg-white/10 ring-1 ring-white/20">
-            <Icon name="user" size={30} />
+        {/* stacked on phones: avatar + name, then level, then stats — never squeezed into one row */}
+        <div className="relative flex flex-col gap-5 md:flex-row md:items-center">
+          <span className="icon-tile h-14 w-14 shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/20 sm:h-16 sm:w-16">
+            <Icon name="user" size={28} />
           </span>
-          <div className="min-w-0 flex-1">
+          <div className="w-full min-w-0 md:flex-1">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-300">{t('app.student')}</div>
-            <h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{user?.displayName || t('profile.title')}</h1>
-            {user && <p className="text-sm text-white/70">{user.email} · {user.groupe}</p>}
+            <h1 className="mt-1 break-words text-2xl font-extrabold sm:text-3xl">{user?.displayName || t('profile.title')}</h1>
+            {user && (
+              <p className="text-sm text-white/70">
+                <span className="break-all">{user.email}</span> · {user.groupe}
+              </p>
+            )}
             <div className="mt-3 max-w-md">
               <div className="flex justify-between text-xs text-white/70">
                 <span>
@@ -56,7 +61,7 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="grid w-full grid-cols-2 gap-3 md:flex md:w-auto">
             <Stat label="XP" value={st.xp} icon="bolt" />
             <Stat label={t('home.streak')} value={st.streak.count} icon="flame" />
           </div>

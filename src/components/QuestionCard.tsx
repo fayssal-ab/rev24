@@ -171,18 +171,18 @@ export function QuestionCard({ q, onAnswer, onNext, examMode = false, initialRes
               const o = q.options!.find((x) => x.id === id)!;
               const good = answered && (q.answer as string[])[i] === id;
               return (
-                <Reorder.Item key={id} value={id} dragListener={!answered} className={`flex items-center gap-2 rounded-xl border px-3 py-2 ${answered && !examMode ? (good ? 'border-ok bg-ok/10' : 'border-bad bg-bad/10') : 'border-line bg-surface2'}`}>
+                <Reorder.Item key={id} value={id} dragListener={!answered} className={`flex items-center gap-2 rounded-xl border px-2 py-2 sm:px-3 ${answered && !examMode ? (good ? 'border-ok bg-ok/10' : 'border-bad bg-bad/10') : 'border-line bg-surface2'}`}>
                   <Icon name="grip" size={16} className="shrink-0 cursor-grab text-muted" />
-                  <span className="w-5 font-mono text-xs text-muted">{i + 1}.</span>
+                  <span className="w-4 shrink-0 font-mono text-xs text-muted">{i + 1}.</span>
                   <span className="min-w-0 flex-1 text-sm [overflow-wrap:anywhere]">
                     <L v={o.text} />
                   </span>
                   {!answered && (
-                    <span className="flex">
-                      <button type="button" aria-label="↑" className="grid h-9 w-9 place-items-center rounded-lg hover:bg-line" disabled={i === 0} onClick={() => setOrder((a) => swap(a, i, i - 1))}>
+                    <span className="flex flex-col sm:flex-row">
+                      <button type="button" aria-label="↑" className="grid h-8 w-8 sm:h-9 sm:w-9 place-items-center rounded-lg hover:bg-line" disabled={i === 0} onClick={() => setOrder((a) => swap(a, i, i - 1))}>
                         <Icon name="up" size={16} />
                       </button>
-                      <button type="button" aria-label="↓" className="grid h-9 w-9 place-items-center rounded-lg hover:bg-line" disabled={i === order.length - 1} onClick={() => setOrder((a) => swap(a, i, i + 1))}>
+                      <button type="button" aria-label="↓" className="grid h-8 w-8 sm:h-9 sm:w-9 place-items-center rounded-lg hover:bg-line" disabled={i === order.length - 1} onClick={() => setOrder((a) => swap(a, i, i + 1))}>
                         <Icon name="down" size={16} />
                       </button>
                     </span>

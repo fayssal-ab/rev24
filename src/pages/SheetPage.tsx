@@ -17,7 +17,7 @@ export default function SheetPage() {
       </button>
       <div className="grid gap-3 md:grid-cols-2">
         {data.chapters.map((c) => (
-          <section key={c.id} className="card p-4">
+          <section key={c.id} className="card min-w-0 overflow-hidden p-4">
             <h2 className="mb-2 font-semibold text-accent">
               <L v={c.title} />
             </h2>

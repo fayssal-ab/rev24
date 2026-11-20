@@ -41,13 +41,13 @@ export default function OracleArchitecture() {
             <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">{tl(ORA_ARCH.instance)}</div>
             <div className="rounded-lg border border-emerald-600/40 bg-emerald-500/10 p-2">
               <div className="mb-1.5 text-[10px] font-bold uppercase text-emerald-800 dark:text-emerald-200">SGA</div>
-              <div className="grid grid-cols-3 gap-1.5">
+              <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                 {SGA.map((k) => (
                   <Box key={k} k={k} cls="border-amber-500/40 bg-amber-400/15" />
                 ))}
               </div>
             </div>
-            <div className="mt-2 grid grid-cols-3 gap-1.5 sm:grid-cols-6">
+            <div className="mt-2 grid grid-cols-2 gap-1.5 min-[380px]:grid-cols-3 sm:grid-cols-6">
               {PROCS.map((k) => (
                 <Box key={k} k={k} cls="border-sky-500/40 bg-sky-400/15 font-mono" />
               ))}
@@ -56,7 +56,7 @@ export default function OracleArchitecture() {
           {/* database */}
           <div className="rounded-xl border-2 border-blue-700/40 bg-blue-600/5 p-2.5">
             <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-blue-800 dark:text-blue-300">{tl(ORA_ARCH.database)}</div>
-            <div className="grid grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
               {FILES.map((k) => (
                 <Box key={k} k={k} cls="border-blue-500/40 bg-blue-500/15" />
               ))}

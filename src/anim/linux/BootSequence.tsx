@@ -12,9 +12,9 @@ export default function BootSequence() {
   const step = BOOT.steps[s.i];
   return (
     <AnimCard title={tl(BOOT.title)}>
-      <ol className="mb-4 grid grid-cols-5 gap-1" role="tablist">
+      <ol className="scroll-thin -mx-1 mb-4 flex gap-1 overflow-x-auto px-1 pb-1 sm:mx-0 sm:grid sm:grid-cols-5 sm:overflow-visible sm:px-0" role="tablist">
         {BOOT.steps.map((st, k) => (
-          <li key={k} className="relative">
+          <li key={k} className="relative w-[6.5rem] shrink-0 sm:w-auto">
             <button role="tab" aria-selected={k === s.i} onClick={() => s.setI(k)} className={`w-full rounded-xl border px-1 py-2 text-[11px] font-semibold leading-tight transition sm:text-xs ${k === s.i ? 'border-accent bg-accent text-bg' : k < s.i ? 'border-accent/50 bg-accent/10' : 'border-line bg-surface2 text-muted'}`}>
               {tl(st.name)}
             </button>

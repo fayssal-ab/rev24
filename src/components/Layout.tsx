@@ -63,7 +63,7 @@ export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
   }
 ];
 
-/** GROUP22 mark: an eight-pointed zellige star (khatam) in Majorelle blue, the group number set in mono. */
+/** GROUP22 mark: an eight-pointed zellige star (khatam) in EMSI green, the group number set in mono. */
 export function BrandMark({ small = false }: { small?: boolean }) {
   const sz = small ? 32 : 38;
   return (
@@ -80,7 +80,7 @@ export function BrandMark({ small = false }: { small?: boolean }) {
   );
 }
 
-/** Wordmark: "Group" in Bricolage Grotesque, "22" in mono Majorelle. */
+/** Wordmark: "Group" in Bricolage Grotesque, "22" in mono EMSI green. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
     <span className={`font-display font-bold tracking-tight ${className}`}>

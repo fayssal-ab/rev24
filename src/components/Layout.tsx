@@ -63,28 +63,27 @@ export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
   }
 ];
 
-/** GROUP22 mark: an eight-pointed zellige star (khatam) in EMSI green, the group number set in mono. */
+/** GROUP22 mark: the class photo in a ring, with a "22" badge. */
 export function BrandMark({ small = false }: { small?: boolean }) {
-  const sz = small ? 32 : 38;
+  const sz = small ? 34 : 42;
   return (
-    <svg width={sz} height={sz} viewBox="0 0 40 40" aria-hidden className="shrink-0">
-      <g fill="rgb(var(--accent))">
-        <rect x="7" y="7" width="26" height="26" rx="1.5" />
-        <rect x="7" y="7" width="26" height="26" rx="1.5" transform="rotate(45 20 20)" />
-      </g>
-      <circle cx="20" cy="20" r="10.2" fill="none" stroke="#fff" strokeWidth="0.8" opacity=".45" />
-      <text x="20" y="24.2" textAnchor="middle" fontFamily="Geist Mono, monospace" fontSize="11.5" fontWeight="600" fill="#fff" letterSpacing="-0.3">
+    <span className="relative shrink-0" style={{ width: sz, height: sz }} aria-hidden>
+      <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_200deg,rgb(var(--accent)),rgb(var(--navy)),rgb(var(--accent2)),rgb(var(--accent)))] p-[2px]">
+        <img src={`${import.meta.env.BASE_URL}group22.jpg`} alt="" width={sz} height={sz} className="h-full w-full rounded-full border-2 border-bg object-cover" />
+      </span>
+      <span className="absolute -bottom-1 -right-1.5 grid h-[18px] min-w-[18px] place-items-center rounded-full border-2 border-bg bg-accent px-0.5 font-mono text-[9px] font-bold leading-none text-white dark:text-bg">
         22
-      </text>
-    </svg>
+      </span>
+    </span>
   );
 }
 
-/** Wordmark: "Group" in Bricolage Grotesque, "22" in mono EMSI green. */
+/** Wordmark: GROUP in wide display caps, 22 in a solid green block. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`font-display font-bold tracking-tight ${className}`}>
-      Group<span className="ml-0.5 font-mono text-[0.8em] font-semibold not-italic text-accent">22</span>
+    <span className={`inline-flex items-center gap-1.5 font-display font-extrabold uppercase leading-none tracking-[0.08em] ${className}`}>
+      Group
+      <span className="rounded-md bg-fg px-1.5 py-1 font-mono text-[0.78em] font-bold tracking-normal text-bg">22</span>
     </span>
   );
 }
@@ -286,15 +285,15 @@ export function TopBar() {
   const inTools = TOOLS.some((x) => x.to !== '/supports' && pathname.startsWith(x.to));
   const isAdmin = useIsAdmin();
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:px-6">
-        <Link to="/" className="mr-2 flex shrink-0 items-center gap-2.5 sm:mr-4" aria-label={t('nav.home')}>
+    <header className="sticky top-0 z-40 border-b border-line/70 bg-bg/80 shadow-[0_1px_0_rgb(var(--accent)/0.15)] backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-2 px-4 sm:px-6">
+        <Link to="/" className="group mr-2 flex shrink-0 items-center gap-3 sm:mr-6" aria-label={t('nav.home')}>
           <BrandMark />
-          <Wordmark className="hidden text-[1.35rem] min-[360px]:inline" />
+          <Wordmark className="hidden text-[1.4rem] min-[360px]:inline-flex" />
         </Link>
 
         {!locked && (
-          <nav className="hidden items-center gap-1 lg:flex" aria-label={t('a11y.menu')}>
+          <nav className="hidden items-center gap-0.5 rounded-full border border-line/70 bg-surface/60 p-1 lg:flex" aria-label={t('a11y.menu')}>
             <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
               <Icon name="home" size={18} />
               {t('nav.home')}

@@ -52,6 +52,19 @@ export default function Home() {
   return (
     <div className="space-y-20">
       <Announcements />
+      {/* the class, on the cover */}
+      <section className="relative -mb-8 overflow-hidden rounded-3xl border border-line" aria-label="GROUP 22">
+        <img src={`${import.meta.env.BASE_URL}group22-banner.jpg`} alt="4IIR G22, EMSI Rabat" className="h-48 w-full object-cover object-[50%_35%] sm:h-64" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(var(--navy)/0.92)] via-[rgb(var(--navy)/0.55)] to-transparent" />
+        <div className="absolute inset-y-0 left-0 flex flex-col justify-center gap-2 px-6 sm:px-10">
+          <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/70">EMSI Rabat · 4IIR · {ACADEMIC_YEAR}</span>
+          <span className="flex items-center gap-3 font-display text-5xl font-extrabold uppercase leading-none tracking-[0.06em] text-white sm:text-7xl">
+            Group
+            <span className="rounded-xl bg-accent px-3 py-1.5 font-mono tracking-normal text-white">22</span>
+          </span>
+        </div>
+      </section>
+
       {/* hero */}
       <section className="relative grid grid-cols-[minmax(0,1fr)] gap-12 pb-4 pt-2 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-16">
         <Khatam className="pointer-events-none absolute -right-24 -top-16 hidden h-[34rem] w-[34rem] text-accent/[0.09] lg:block" />

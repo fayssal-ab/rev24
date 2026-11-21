@@ -63,8 +63,8 @@ h1, h2, h3, .font-display { font-family: 'Bricolage Grotesque', system-ui, sans-
   .card { @apply bg-surface border border-line rounded-lg; }
   .card-hover { @apply transition-colors duration-150 hover:border-fg/25 hover:bg-surface; }
   .eyebrow { @apply font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-muted; }
-  .nav-link { @apply inline-flex h-10 items-center gap-2 rounded-full px-4 text-[15px] font-medium text-muted transition-colors hover:bg-surface2 hover:text-fg; }
-  .nav-link-active { @apply bg-fg text-bg hover:bg-fg hover:text-bg; }
+  .nav-link { @apply inline-flex h-10 items-center gap-2 rounded-full px-4 text-base font-semibold text-muted transition-colors hover:bg-surface2 hover:text-fg; }
+  .nav-link-active { @apply bg-accent text-white shadow-sm hover:bg-accent hover:text-white dark:text-bg; }
   .side-link { @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium text-muted transition-colors hover:bg-surface2 hover:text-fg; }
   .side-link-active { @apply bg-surface2 font-semibold text-fg shadow-[inset_2px_0_0_rgb(var(--accent))] hover:bg-surface2; }
   .icon-tile { @apply grid shrink-0 place-items-center rounded-lg; }

@@ -3,6 +3,8 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-ini';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-java';
 import type { L10n } from '../lib/schema';
 import { useStore } from '../store/store';
 import { useT } from '../hooks/useT';
@@ -161,6 +163,13 @@ export function Tex({ tex, block = false }: { tex: string; block?: boolean }) {
   }, [tex, block, k]);
   if (html === null) return block ? <div className="my-2 font-mono text-sm text-muted">{tex}</div> : <span className="font-mono text-muted">{tex}</span>;
   return block ? <div className="my-2 overflow-x-auto" dangerouslySetInnerHTML={{ __html: html }} /> : <span dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+/** Guesses the language of a code snippet that has none (worked steps, exercise solutions). */
+export function guessLang(code: string, fallback: string): string {
+  if (/^\s*(<|\/\/ Dans .*\.xml)/.test(code)) return 'xml';
+  if (/\b(setContentView|findViewById|@Override|R\.(layout|id|string)|public class|protected void|super\.on)\b|@Override/.test(code)) return 'java';
+  return fallback;
 }
 
 export function Code({ code, lang = 'bash', className = '' }: { code: string; lang?: string; className?: string }) {

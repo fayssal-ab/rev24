@@ -10,7 +10,7 @@ export const L = (t: T): L10n => (typeof t === 'string' ? { fr: t, dar: t, en: t
 // ---------- sections ----------
 export const h = (t: T): Section => ({ type: 'heading', body: L(t) });
 export const p = (t: T): Section => ({ type: 'text', body: L(t) });
-export const code = (c: string, lang: 'bash' | 'python' | 'ini' | 'text' = 'bash', cap?: T): Section => ({ type: 'code', lang, code: c, ...(cap ? { caption: L(cap) } : {}) });
+export const code = (c: string, lang: 'bash' | 'python' | 'ini' | 'text' | 'java' | 'xml' = 'bash', cap?: T): Section => ({ type: 'code', lang, code: c, ...(cap ? { caption: L(cap) } : {}) });
 export const tex = (t: string, cap?: T): Section => ({ type: 'formula', tex: t, ...(cap ? { caption: L(cap) } : {}) });
 export const tip = (t: T): Section => ({ type: 'callout', kind: 'tip', body: L(t) });
 export const trap = (t: T): Section => ({ type: 'callout', kind: 'trap', body: L(t) });
@@ -27,7 +27,7 @@ export const steps = (title: T | null, items: StepT[]): Section => ({
   ...(title ? { title: L(title) } : {}),
   items: items.map((x) => ({ title: L(x.t), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}), ...(x.code ? { code: x.code } : {}), ...(x.why ? { why: L(x.why) } : {}) }))
 });
-export const table = (headers: T[], rows: T[][]): Section => ({ type: 'table', headers: headers.map(L), rows: rows.map((r) => r.map((c) => (typeof c === 'string' ? c : L(c)))) });
+export const table = (headers: T[], rows: T[][]): Section => ({ type: 'table', headers: headers.map(L), rows: rows.map((r) => r.map((c) => (typeof c === 'string' && !/`|\*\*/.test(c) ? c : L(c)))) });
 export const anim = (component: string, props?: Record<string, unknown>): Section => ({ type: 'animation', component, ...(props ? { props } : {}) });
 export const quiz = (...questionIds: string[]): Section => ({ type: 'miniQuiz', questionIds });
 export const mission = (missionId: string): Section => ({ type: 'mission', missionId });

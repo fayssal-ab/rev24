@@ -2,7 +2,7 @@
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 
-const modules = process.argv.slice(2).length ? process.argv.slice(2) : ['linux', 'data', 'ro', 'oracle'];
+const modules = process.argv.slice(2).length ? process.argv.slice(2) : ['linux', 'data', 'ro', 'oracle', 'mobile'];
 for (const id of modules) {
   const src = await import(`../content-src/${id}/index.ts`);
   const out = join(process.cwd(), 'src/content', id);

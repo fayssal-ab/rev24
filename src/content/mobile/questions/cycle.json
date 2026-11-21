@@ -1,0 +1,634 @@
+[
+ {
+  "id": "mob-10",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle méthode **initialise l'Activity et son interface** ?",
+   "dar": "Ach mn méthode kat initialisi Activity w interface ?",
+   "en": "Which method **initialises the Activity and its interface**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onCreate()",
+     "dar": "onCreate()",
+     "en": "onCreate()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onStart()",
+     "dar": "onStart()",
+     "en": "onStart()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onResume()",
+     "dar": "onResume()",
+     "en": "onResume()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**onCreate()** : appelée une fois par instance ; on y fait `setContentView`.",
+   "dar": "onCreate.",
+   "en": "**onCreate()**: once per instance."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "onStart = devient visible.",
+    "dar": "onStart = bayna.",
+    "en": "onStart = becomes visible."
+   },
+   "c": {
+    "fr": "onResume = premier plan.",
+    "dar": "onResume = l9eddam.",
+    "en": "onResume = foreground."
+   }
+  },
+  "tags": [
+   "methodes"
+  ]
+ },
+ {
+  "id": "mob-11",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Après quelle méthode l'Activity est-elle **au premier plan et interactive** ?",
+   "dar": "Mor ach mn méthode Activity katweli f l9eddam w interactive ?",
+   "en": "After which method is the Activity **in the foreground and interactive**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onResume()",
+     "dar": "onResume()",
+     "en": "onResume()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onStart()",
+     "dar": "onStart()",
+     "en": "onStart()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onRestart()",
+     "dar": "onRestart()",
+     "en": "onRestart()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "onStart = visible ; **onResume = premier plan + interactive**.",
+   "dar": "onResume.",
+   "en": "onResume = foreground + interactive."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Visible mais pas encore interactive.",
+    "dar": "Bayna walakin mazal.",
+    "en": "Visible but not yet interactive."
+   },
+   "c": {
+    "fr": "onRestart précède onStart.",
+    "dar": "9bel onStart.",
+    "en": "onRestart precedes onStart."
+   }
+  },
+  "tags": [
+   "methodes"
+  ]
+ },
+ {
+  "id": "mob-12",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que signifie **onStop()** ?",
+   "dar": "Chnou ma3na **onStop()** ?",
+   "en": "What does **onStop()** mean?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "L'Activity n'est plus visible",
+     "dar": "Activity ma bqatch bayna",
+     "en": "The Activity is no longer visible"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "L'Activity perd le premier plan mais reste visible",
+     "dar": "Fqdat l9eddam walakin bayna",
+     "en": "Lost foreground but still visible"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "L'instance est détruite",
+     "dar": "Instance tmse7at",
+     "en": "The instance is destroyed"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "onPause = perd le premier plan ; **onStop = plus visible** ; onDestroy = fin de l'instance.",
+   "dar": "onStop = ma bqatch bayna.",
+   "en": "onStop = no longer visible."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est onPause().",
+    "dar": "onPause.",
+    "en": "That's onPause()."
+   },
+   "c": {
+    "fr": "C'est onDestroy().",
+    "dar": "onDestroy.",
+    "en": "That's onDestroy()."
+   }
+  },
+  "tags": [
+   "methodes"
+  ]
+ },
+ {
+  "id": "mob-13",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 2,
+  "kind": "order",
+  "prompt": {
+   "fr": "Premier lancement puis appui sur **Accueil** : ordre des méthodes.",
+   "dar": "Awel lancement w men b3d **Accueil** : tartib.",
+   "en": "First launch then **Home**: order of methods."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onCreate()",
+     "dar": "onCreate()",
+     "en": "onCreate()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onStart()",
+     "dar": "onStart()",
+     "en": "onStart()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onResume()",
+     "dar": "onResume()",
+     "en": "onResume()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onPause()",
+     "dar": "onPause()",
+     "en": "onPause()"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "onStop()",
+     "dar": "onStop()",
+     "en": "onStop()"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Lancement : onCreate, onStart, onResume. Accueil : onPause, puis onStop. Pas de onDestroy.",
+   "dar": "Bla onDestroy.",
+   "en": "No onDestroy."
+  },
+  "tags": [
+   "scenario"
+  ]
+ },
+ {
+  "id": "mob-14",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "L'utilisateur revient sur l'application (sans destruction). Quelle séquence ?",
+   "dar": "User kayrje3 (bla destruction). Ach mn séquence ?",
+   "en": "The user returns (no destruction). Which sequence?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onRestart(), onStart(), onResume()",
+     "dar": "onRestart(), onStart(), onResume()",
+     "en": "onRestart(), onStart(), onResume()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onCreate(), onStart(), onResume()",
+     "dar": "onCreate(), onStart(), onResume()",
+     "en": "onCreate(), onStart(), onResume()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onResume() seulement",
+     "dar": "Ghir onResume()",
+     "en": "onResume() only"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Même instance** : onCreate() ne se répète pas ; onRestart() précède onStart().",
+   "dar": "Nefs instance, bla onCreate.",
+   "en": "Same instance: no onCreate()."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "onCreate ne se répète pas pour la même instance.",
+    "dar": "onCreate ma kat3awedch.",
+    "en": "onCreate is not repeated."
+   },
+   "c": {
+    "fr": "Elle était invisible : onStart est nécessaire.",
+    "dar": "Kanet ma bayna ch : onStart.",
+    "en": "It was invisible: onStart is needed."
+   }
+  },
+  "tags": [
+   "scenario"
+  ]
+ },
+ {
+  "id": "mob-15",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi ne pas sauvegarder des données importantes dans **onDestroy()** ?",
+   "dar": "3lach ma n7fdouch data f **onDestroy()** ?",
+   "en": "Why not save important data in **onDestroy()**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Parce que onDestroy() n'est pas garanti : le système peut tuer le processus sans l'appeler",
+     "dar": "onDestroy machi garanti",
+     "en": "onDestroy() is not guaranteed: the process may be killed without it"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Parce que onDestroy() est appelée avant onCreate()",
+     "dar": "Kat3ayet 9bel onCreate",
+     "en": "Because it runs before onCreate()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Parce qu'on n'a plus accès aux variables",
+     "dar": "Ma kaynach variables",
+     "en": "Because variables are gone"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "En arrière-plan, Android peut **tuer le processus** sans appeler onDestroy(). On sauvegarde dans **onPause()/onStop()**.",
+   "dar": "7fed f onPause/onStop.",
+   "en": "Save in onPause()/onStop()."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Faux : c'est la dernière méthode.",
+    "dar": "Ghalat.",
+    "en": "False: it is the last one."
+   },
+   "c": {
+    "fr": "Les variables existent encore si elle est appelée.",
+    "dar": "Kaynin.",
+    "en": "They still exist if called."
+   }
+  },
+  "tags": [
+   "scenario",
+   "destroy"
+  ]
+ },
+ {
+  "id": "mob-16",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "**Rotation** de l'écran (Activity au premier plan) : ordre des méthodes.",
+   "dar": "**Rotation** : tartib.",
+   "en": "Screen **rotation**: order of methods."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onPause()",
+     "dar": "onPause()",
+     "en": "onPause()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onStop()",
+     "dar": "onStop()",
+     "en": "onStop()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onDestroy()",
+     "dar": "onDestroy()",
+     "en": "onDestroy()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onCreate()",
+     "dar": "onCreate()",
+     "en": "onCreate()"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "onStart()",
+     "dar": "onStart()",
+     "en": "onStart()"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "onResume()",
+     "dar": "onResume()",
+     "en": "onResume()"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e",
+   "f"
+  ],
+  "explanation": {
+   "fr": "Changement de configuration : destruction puis **nouvelle instance**.",
+   "dar": "Tmse7 w tsayb.",
+   "en": "Destroyed, then a **new instance**."
+  },
+  "tags": [
+   "scenario",
+   "rotation"
+  ]
+ },
+ {
+  "id": "mob-17",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "L'Activity A ouvre l'Activity B. Laquelle de ces séquences est correcte ?",
+   "dar": "A kat7el B. Ach mn séquence s7i7a ?",
+   "en": "Activity A opens B. Which sequence is right?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop",
+     "dar": "A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop",
+     "en": "A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "A.onStop → A.onDestroy → B.onCreate → B.onStart → B.onResume",
+     "dar": "A.onStop → A.onDestroy → B…",
+     "en": "A.onStop → A.onDestroy → B…"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "B.onCreate → B.onStart → B.onResume → A.onPause → A.onStop",
+     "dar": "B… → A.onPause → A.onStop",
+     "en": "B… → A.onPause → A.onStop"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "A perd d'abord le premier plan (onPause), B s'affiche, **puis** A devient invisible (onStop). A n'est pas détruite.",
+   "dar": "A.onPause, B, A.onStop.",
+   "en": "A.onPause, B starts, then A.onStop."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "A n'est pas détruite.",
+    "dar": "A ma tmse7atch.",
+    "en": "A is not destroyed."
+   },
+   "c": {
+    "fr": "A.onPause vient en premier.",
+    "dar": "A.onPause lowel.",
+    "en": "A.onPause comes first."
+   }
+  },
+  "tags": [
+   "scenario"
+  ]
+ },
+ {
+  "id": "mob-18",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une fenêtre de permission s'affiche **par-dessus** l'Activity (qui reste visible derrière). Quelle méthode ?",
+   "dar": "Fenêtre permission fo9 Activity (ba9a bayna). Ach mn méthode ?",
+   "en": "A permission window appears **over** the Activity (still visible). Which method?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onPause() seulement",
+     "dar": "Ghir onPause()",
+     "en": "onPause() only"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onPause() puis onStop()",
+     "dar": "onPause() w onStop()",
+     "en": "onPause() then onStop()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onDestroy()",
+     "dar": "onDestroy()",
+     "en": "onDestroy()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Elle perd le premier plan mais **reste visible** → onPause() seulement ; onResume() à la fermeture.",
+   "dar": "Ghir onPause.",
+   "en": "Still visible → onPause() only."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "onStop = plus visible du tout.",
+    "dar": "onStop = ma bayna ch.",
+    "en": "onStop = not visible at all."
+   },
+   "c": {
+    "fr": "Rien n'est détruit.",
+    "dar": "Walou ma tmse7.",
+    "en": "Nothing is destroyed."
+   }
+  },
+  "tags": [
+   "scenario"
+  ]
+ },
+ {
+  "id": "mob-19",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles affirmations sont vraies ?",
+   "dar": "Chnou s7i7 ?",
+   "en": "Which statements are true?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onCreate() est appelée une seule fois par instance",
+     "dar": "onCreate mra wa7da l kol instance",
+     "en": "onCreate() runs once per instance"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Chaque méthode redéfinie doit appeler super.onXxx()",
+     "dar": "Khass super.onXxx()",
+     "en": "Each override must call super.onXxx()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onRestart() est appelée au premier lancement",
+     "dar": "onRestart f awel lancement",
+     "en": "onRestart() runs on first launch"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onDestroy() est toujours appelée",
+     "dar": "onDestroy dima",
+     "en": "onDestroy() is always called"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "onRestart() seulement après un onStop() ; onDestroy() n'est pas garanti.",
+   "dar": "onRestart mor onStop ; onDestroy machi garanti.",
+   "en": "onRestart only after onStop; onDestroy not guaranteed."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Seulement quand on revient après onStop().",
+    "dar": "Ghir mor onStop.",
+    "en": "Only when coming back after onStop()."
+   },
+   "d": {
+    "fr": "Pas garanti (processus tué).",
+    "dar": "Machi garanti.",
+    "en": "Not guaranteed."
+   }
+  },
+  "tags": [
+   "methodes"
+  ]
+ }
+]

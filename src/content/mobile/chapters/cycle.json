@@ -1,0 +1,519 @@
+{
+ "id": "cycle",
+ "module": "mobile",
+ "order": 2,
+ "title": {
+  "fr": "Le cycle de vie d'une Activity",
+  "dar": "Cycle de vie dyal Activity",
+  "en": "The Activity lifecycle"
+ },
+ "summary": {
+  "fr": "Le sens des méthodes onCreate, onStart, onResume, onPause, onStop, onRestart et onDestroy, le scénario du prof (Accueil puis retour), les autres scénarios classiques (rotation, deuxième écran, fenêtre par-dessus, processus tué) et pourquoi onDestroy() n'est pas garanti.",
+  "dar": "Ma3na dyal onCreate, onStart, onResume, onPause, onStop, onRestart w onDestroy, scénario dyal prof (Accueil w men b3d rjou3), scénarios okhrin (rotation, écran tani, fenêtre fo9ha, processus m9toul) w 3lach onDestroy() machi garanti.",
+  "en": "What onCreate, onStart, onResume, onPause, onStop, onRestart and onDestroy mean, the professor's scenario (Home then return), other classic scenarios (rotation, second screen, window on top, killed process) and why onDestroy() is not guaranteed."
+ },
+ "estimatedMinutes": 45,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Pourquoi un cycle de vie ?",
+    "dar": "1. 3lach kayn cycle de vie ?",
+    "en": "1. Why a lifecycle?"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Une **Activity** est **un écran** de l'application. Ce n'est pas toi qui décides quand elle s'affiche ou disparaît : c'est **Android**. Quand l'utilisateur ouvre l'application, appuie sur Accueil, reçoit un appel ou tourne le téléphone, Android **appelle automatiquement** certaines méthodes de ton Activity. Tu les **redéfinis** (`@Override`) pour réagir au bon moment.",
+    "dar": "**Activity** hiya **écran** wa7ed mn l'application. Machi nta li katgoul imta tban wla tghber : **Android** howa li kaydir hadchi. Mli user kay7el l'app, kaybrek 3la Accueil, kayjih appel wla kaydawwer téléphone, Android kay**3ayet automatiquement** l chi méthodes f Activity dyalek. Nta kat**3awed tktebhom** (`@Override`) bach tdir l 7aja f wa9tha.",
+    "en": "An **Activity** is **one screen** of the app. You do not decide when it appears or disappears: **Android** does. When the user opens the app, presses Home, gets a call or rotates the phone, Android **automatically calls** certain methods of your Activity. You **override** them (`@Override`) to react at the right moment."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Imagine un magasin. **onCreate** : on installe le magasin (une seule fois). **onStart** : on lève le rideau, on voit l'intérieur. **onResume** : on ouvre la porte, les clients peuvent entrer. **onPause** : on ferme la porte mais le rideau est levé. **onStop** : on baisse le rideau. **onDestroy** : on démonte le magasin.",
+    "dar": "Tkhayel 7anout. **onCreate** : kanwjjdou l 7anout (mra wa7da). **onStart** : kanhezzou l rideau, ychoufou dakhel. **onResume** : kan7ellou l bab, les clients ydakhlou. **onPause** : kansseddou l bab walakin rideau mazal mhzouz. **onStop** : kanhabtou l rideau. **onDestroy** : kanfekkou l 7anout.",
+    "en": "Picture a shop. **onCreate**: set up the shop (once). **onStart**: raise the shutter, people can see inside. **onResume**: open the door, customers can come in. **onPause**: close the door, shutter still up. **onStop**: lower the shutter. **onDestroy**: dismantle the shop."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Le sens des principales méthodes",
+    "dar": "2. Ma3na dyal les méthodes l2asasiyin",
+    "en": "2. What the main methods mean"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Méthode",
+     "dar": "Méthode",
+     "en": "Method"
+    },
+    {
+     "fr": "Sens (diapo du prof)",
+     "dar": "Ma3na (diapo dyal prof)",
+     "en": "Meaning (professor's slide)"
+    },
+    {
+     "fr": "Ce qu'on y met en général",
+     "dar": "Chnou kandirou fiha",
+     "en": "What usually goes there"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "`onCreate()`",
+      "dar": "`onCreate()`",
+      "en": "`onCreate()`"
+     },
+     {
+      "fr": "**Initialise l'Activity et son interface.** Appelée **une seule fois par instance**.",
+      "dar": "**Kat initialisi Activity w interface dyalha.** Kat3ayet **mra wa7da l kol instance**.",
+      "en": "**Initialises the Activity and its interface.** Called **once per instance**."
+     },
+     {
+      "fr": "`setContentView`, `findViewById`, écouteurs de clic",
+      "dar": "`setContentView`, `findViewById`, listeners dyal click",
+      "en": "`setContentView`, `findViewById`, click listeners"
+     }
+    ],
+    [
+     {
+      "fr": "`onStart()`",
+      "dar": "`onStart()`",
+      "en": "`onStart()`"
+     },
+     {
+      "fr": "**L'Activity devient visible.**",
+      "dar": "**Activity katweli bayna.**",
+      "en": "**The Activity becomes visible.**"
+     },
+     {
+      "fr": "Préparer ce qui doit être à jour quand l'écran se voit",
+      "dar": "Wjjed chi 7aja khassha tkoun à jour mli l écran yban",
+      "en": "Refresh what must be up to date when visible"
+     }
+    ],
+    [
+     {
+      "fr": "`onResume()`",
+      "dar": "`onResume()`",
+      "en": "`onResume()`"
+     },
+     {
+      "fr": "**Elle passe au premier plan et devient interactive.**",
+      "dar": "**Katdouz l l9eddam w t9der tkhdem biha.**",
+      "en": "**It comes to the foreground and becomes interactive.**"
+     },
+     {
+      "fr": "Démarrer la caméra, une animation, un capteur",
+      "dar": "Bda caméra, animation, capteur",
+      "en": "Start the camera, an animation, a sensor"
+     }
+    ],
+    [
+     {
+      "fr": "`onPause()`",
+      "dar": "`onPause()`",
+      "en": "`onPause()`"
+     },
+     {
+      "fr": "**Elle perd le premier plan.** (souvent encore partiellement visible)",
+      "dar": "**Katfqed l9eddam.** (ghaliban mazal bayna chwiya)",
+      "en": "**It loses the foreground.** (often still partly visible)"
+     },
+     {
+      "fr": "Mettre en pause ce qui a démarré dans onResume ; code **court**",
+      "dar": "Wa9ef dakchi li bda f onResume ; code **9sir**",
+      "en": "Pause what onResume started; keep it **short**"
+     }
+    ],
+    [
+     {
+      "fr": "`onStop()`",
+      "dar": "`onStop()`",
+      "en": "`onStop()`"
+     },
+     {
+      "fr": "**Elle n'est plus visible.**",
+      "dar": "**Ma bqatch bayna.**",
+      "en": "**It is no longer visible.**"
+     },
+     {
+      "fr": "Libérer les ressources, **sauvegarder** les données importantes",
+      "dar": "Libéri ressources, **7fed** data mohimma",
+      "en": "Release resources, **save** important data"
+     }
+    ],
+    [
+     {
+      "fr": "`onRestart()`",
+      "dar": "`onRestart()`",
+      "en": "`onRestart()`"
+     },
+     {
+      "fr": "Appelée **avant onStart()** quand l'Activity **revient après un onStop()** (même instance).",
+      "dar": "Kat3ayet **9bel onStart()** mli Activity **katrje3 mor onStop()** (nefs l instance).",
+      "en": "Called **before onStart()** when the Activity **comes back after onStop()** (same instance)."
+     },
+     {
+      "fr": "Rarement utilisée",
+      "dar": "Nadir",
+      "en": "Rarely used"
+     }
+    ],
+    [
+     {
+      "fr": "`onDestroy()`",
+      "dar": "`onDestroy()`",
+      "en": "`onDestroy()`"
+     },
+     {
+      "fr": "**Fin de cette instance, si le système appelle la méthode.**",
+      "dar": "**Nihayat had l instance, ila système 3ayet 3la méthode.**",
+      "en": "**End of this instance, if the system calls the method.**"
+     },
+     {
+      "fr": "Nettoyage final — **jamais** de sauvegarde critique ici",
+      "dar": "Tnqiya lkhra — **3mmrek** t7fed chi 7aja mohimma hna",
+      "en": "Final cleanup — **never** critical saving here"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "              onCreate()\n                  |\n              onStart()  <---------- onRestart()\n                  |                      ^\n              onResume()                 |\n                  |                      |\n        [ Activity au premier plan ]     |\n                  |                      |\n              onPause()                  |\n                  |                      |\n              onStop()  -----------------+   (l'utilisateur revient)\n                  |\n              onDestroy()   (pas garanti)",
+   "caption": {
+    "fr": "Le schéma à savoir reproduire",
+    "dar": "Schéma li khassek t3ref trsmo",
+    "en": "The diagram to know how to draw"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Les méthodes vont **par paires** : onCreate ↔ onDestroy (création / fin de l'instance), onStart ↔ onStop (visible / plus visible), onResume ↔ onPause (premier plan / perte du premier plan). Si on te demande « ce qui se passe quand… », raisonne avec ces paires.",
+    "dar": "Les méthodes jayin **paires** : onCreate ↔ onDestroy (bdaya / nihaya dyal instance), onStart ↔ onStop (bayna / ma bqatch bayna), onResume ↔ onPause (l9eddam / fqdat l9eddam). Ila sowlok « chnou kaywe9e3 mli… », fekker b had les paires.",
+    "en": "The methods come **in pairs**: onCreate ↔ onDestroy (instance created / ended), onStart ↔ onStop (visible / not visible), onResume ↔ onPause (foreground / lost foreground). For any \"what happens when…\" question, reason with these pairs."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-10",
+    "mob-11",
+    "mob-12"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Scénario du prof : Accueil, puis retour",
+    "dar": "3. Scénario dyal prof : Accueil, w men b3d rjou3",
+    "en": "3. The professor's scenario: Home, then return"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Les trois étapes (diapo 3)",
+    "dar": "Tlata d étapes (diapo 3)",
+    "en": "The three steps (slide 3)"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "1. Premier lancement",
+      "dar": "1. Awel lancement",
+      "en": "1. First launch"
+     },
+     "body": {
+      "fr": "**onCreate()**, **onStart()**, **onResume()**. L'Activity est créée, devient visible puis interactive.",
+      "dar": "**onCreate()**, **onStart()**, **onResume()**. Activity kattsayb, katban, w men b3d t9der tkhdem biha.",
+      "en": "**onCreate()**, **onStart()**, **onResume()**. The Activity is created, becomes visible, then interactive."
+     }
+    },
+    {
+     "title": {
+      "fr": "2. L'utilisateur appuie sur Accueil",
+      "dar": "2. User kaybrek 3la Accueil",
+      "en": "2. The user presses Home"
+     },
+     "body": {
+      "fr": "**onPause()**, puis **onStop()**. L'Activity perd le premier plan puis n'est plus visible. Elle **n'est pas détruite** : l'instance reste en mémoire.",
+      "dar": "**onPause()**, w men b3d **onStop()**. Activity katfqed l9eddam w men b3d ma bqatch bayna. **Ma tmse7atch** : instance ba9ya f mémoire.",
+      "en": "**onPause()**, then **onStop()**. The Activity loses the foreground, then is no longer visible. It is **not destroyed**: the instance stays in memory."
+     }
+    },
+    {
+     "title": {
+      "fr": "3. Il revient, sans destruction",
+      "dar": "3. Kayrje3, bla destruction",
+      "en": "3. They come back, no destruction"
+     },
+     "body": {
+      "fr": "**onRestart()**, **onStart()**, **onResume()**. On conserve ici **la même instance** : **onCreate() ne se répète pas**.",
+      "dar": "**onRestart()**, **onStart()**, **onResume()**. Hna kan7afdou 3la **nefs l instance** : **onCreate() ma kat3awedch**.",
+      "en": "**onRestart()**, **onStart()**, **onResume()**. The **same instance** is kept: **onCreate() is not repeated**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Ces séquences **supposent un passage complet en arrière-plan**. Et **onDestroy() n'est pas garanti** : si Android manque de mémoire, il peut **tuer le processus** d'une application en arrière-plan **sans appeler onDestroy()**. Donc on ne sauvegarde jamais des données importantes dans onDestroy() : on le fait dans **onPause()/onStop()**.",
+    "dar": "Had les séquences **kayftardou douz kamel l arrière-plan**. W **onDestroy() machi garanti** : ila Android na9so mémoire, y9der **y9tel processus** dyal app f arrière-plan **bla ma y3ayet l onDestroy()**. Donc 3mmrek t7fed data mohimma f onDestroy() : katdirha f **onPause()/onStop()**.",
+    "en": "These sequences **assume a full move to the background**. And **onDestroy() is not guaranteed**: if Android is short on memory it may **kill the process** of a background app **without calling onDestroy()**. So never save important data in onDestroy(): do it in **onPause()/onStop()**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "ActivityLifecycle"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-13",
+    "mob-14"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Les autres scénarios à connaître",
+    "dar": "4. Scénarios okhrin khassek t3refhom",
+    "en": "4. Other scenarios to know"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le prof a présenté le scénario Accueil / retour. Au contrôle, on peut aussi te demander les cas suivants : ils se déduisent tous des paires de méthodes.",
+    "dar": "L prof chre7 scénario Accueil / rjou3. F l contrôle, y9der ysowlek 7tta 3la had les cas : kamlin kaytfehmou b les paires dyal méthodes.",
+    "en": "The professor presented the Home / return scenario. In the test you may also be asked the following cases: they all follow from the method pairs."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Situation",
+     "dar": "L 7ala",
+     "en": "Situation"
+    },
+    {
+     "fr": "Méthodes appelées, dans l'ordre",
+     "dar": "Méthodes, b tartib",
+     "en": "Methods called, in order"
+    },
+    {
+     "fr": "Pourquoi",
+     "dar": "3lach",
+     "en": "Why"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Rotation** de l'écran",
+      "dar": "**Rotation** dyal l écran",
+      "en": "Screen **rotation**"
+     },
+     {
+      "fr": "`onPause` → `onStop` → `onDestroy` → `onCreate` → `onStart` → `onResume`",
+      "dar": "`onPause` → `onStop` → `onDestroy` → `onCreate` → `onStart` → `onResume`",
+      "en": "`onPause` → `onStop` → `onDestroy` → `onCreate` → `onStart` → `onResume`"
+     },
+     {
+      "fr": "Changement de configuration : par défaut l'instance est **détruite et recréée** (nouvelle instance) pour charger le bon layout.",
+      "dar": "Changement de configuration : par défaut instance kat**tmse7 w kat3awed tetsayb** (instance jdida) bach tchargi layout mzyan.",
+      "en": "Configuration change: by default the instance is **destroyed and recreated** (new instance) to load the right layout."
+     }
+    ],
+    [
+     {
+      "fr": "**finish()** ou Retour sur un écran secondaire",
+      "dar": "**finish()** wla Retour f écran tani",
+      "en": "**finish()** or Back on a secondary screen"
+     },
+     {
+      "fr": "`onPause` → `onStop` → `onDestroy`",
+      "dar": "`onPause` → `onStop` → `onDestroy`",
+      "en": "`onPause` → `onStop` → `onDestroy`"
+     },
+     {
+      "fr": "L'Activity est **terminée** : un nouvel affichage recommencera par onCreate().",
+      "dar": "Activity **salat** : ila t7elat 3awtani ghatbda b onCreate().",
+      "en": "The Activity is **finished**: showing it again starts with onCreate()."
+     }
+    ],
+    [
+     {
+      "fr": "Une fenêtre d'une autre activité **par-dessus** (ex. demande de permission)",
+      "dar": "Fenêtre dyal activité okhra **fo9ha** (b7al demande de permission)",
+      "en": "A window from another activity **on top** (e.g. permission request)"
+     },
+     {
+      "fr": "`onPause` seulement, puis `onResume` quand elle se ferme",
+      "dar": "Ghir `onPause`, w `onResume` mli katsedd",
+      "en": "`onPause` only, then `onResume` when it closes"
+     },
+     {
+      "fr": "L'Activity **reste visible** derrière : elle perd seulement le premier plan.",
+      "dar": "Activity **ba9a bayna** mn lour : ghir fqdat l9eddam.",
+      "en": "The Activity **stays visible** behind: it only loses the foreground."
+     }
+    ],
+    [
+     {
+      "fr": "A ouvre une deuxième Activity **B**",
+      "dar": "A kat7el Activity tanya **B**",
+      "en": "A opens a second Activity **B**"
+     },
+     {
+      "fr": "`A.onPause` → `B.onCreate` → `B.onStart` → `B.onResume` → `A.onStop`",
+      "dar": "`A.onPause` → `B.onCreate` → `B.onStart` → `B.onResume` → `A.onStop`",
+      "en": "`A.onPause` → `B.onCreate` → `B.onStart` → `B.onResume` → `A.onStop`"
+     },
+     {
+      "fr": "A perd d'abord le premier plan, B s'affiche, **puis** A n'est plus visible. A n'est pas détruite.",
+      "dar": "A katfqed l9eddam lowel, B katban, **w men b3d** A ma bqatch bayna. A ma tmse7atch.",
+      "en": "A loses the foreground first, B shows up, **then** A is no longer visible. A is not destroyed."
+     }
+    ],
+    [
+     {
+      "fr": "Retour de **B** vers **A**",
+      "dar": "Rjou3 mn **B** l **A**",
+      "en": "Back from **B** to **A**"
+     },
+     {
+      "fr": "`B.onPause` → `A.onRestart` → `A.onStart` → `A.onResume` → `B.onStop` → `B.onDestroy`",
+      "dar": "`B.onPause` → `A.onRestart` → `A.onStart` → `A.onResume` → `B.onStop` → `B.onDestroy`",
+      "en": "`B.onPause` → `A.onRestart` → `A.onStart` → `A.onResume` → `B.onStop` → `B.onDestroy`"
+     },
+     {
+      "fr": "B est terminée ; A revient **sans onCreate** (même instance).",
+      "dar": "B salat ; A katrje3 **bla onCreate** (nefs l instance).",
+      "en": "B is finished; A comes back **without onCreate** (same instance)."
+     }
+    ],
+    [
+     {
+      "fr": "Processus **tué** en arrière-plan, puis l'utilisateur revient",
+      "dar": "Processus **m9toul** f arrière-plan, w user kayrje3",
+      "en": "Process **killed** in the background, then the user returns"
+     },
+     {
+      "fr": "Aucune méthode à la mort, puis `onCreate` → `onStart` → `onResume`",
+      "dar": "Ta méthode f lmout, w men b3d `onCreate` → `onStart` → `onResume`",
+      "en": "No method at death, then `onCreate` → `onStart` → `onResume`"
+     },
+     {
+      "fr": "C'est **une nouvelle instance** : d'où l'importance de sauvegarder avant (onStop).",
+      "dar": "**Instance jdida** : 3lach mohim t7fed 9bel (onStop).",
+      "en": "It is **a new instance**: hence saving earlier (onStop) matters."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Pour **garder une valeur** (ex. un compteur) après une rotation, on la sauvegarde dans `onSaveInstanceState(Bundle)` et on la relit dans `onCreate(savedInstanceState)` — ou on la place dans un **ViewModel**. Sinon elle repart à zéro, car l'instance est nouvelle.",
+    "dar": "Bach **t7afed 3la valeur** (b7al compteur) mor rotation, kat7fedha f `onSaveInstanceState(Bundle)` w kat9raha f `onCreate(savedInstanceState)` — wla kat7etha f **ViewModel**. Sinon katrje3 l zéro, 7it instance jdida.",
+    "en": "To **keep a value** (e.g. a counter) across rotation, save it in `onSaveInstanceState(Bundle)` and read it back in `onCreate(savedInstanceState)` — or keep it in a **ViewModel**. Otherwise it resets, because the instance is new."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-15",
+    "mob-16",
+    "mob-17"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Observer le cycle de vie dans Logcat",
+    "dar": "5. Choufo cycle de vie f Logcat",
+    "en": "5. Watching the lifecycle in Logcat"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class MainActivity extends AppCompatActivity {\n    private static final String TAG = \"CYCLE\";\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n        Log.d(TAG, \"onCreate\");\n    }\n\n    @Override protected void onStart()   { super.onStart();   Log.d(TAG, \"onStart\"); }\n    @Override protected void onResume()  { super.onResume();  Log.d(TAG, \"onResume\"); }\n    @Override protected void onPause()   { super.onPause();   Log.d(TAG, \"onPause\"); }\n    @Override protected void onStop()    { super.onStop();    Log.d(TAG, \"onStop\"); }\n    @Override protected void onRestart() { super.onRestart(); Log.d(TAG, \"onRestart\"); }\n    @Override protected void onDestroy() { super.onDestroy(); Log.d(TAG, \"onDestroy\"); }\n}",
+   "caption": {
+    "fr": "Chaque méthode écrit son nom dans Logcat (filtre : tag:CYCLE)",
+    "dar": "Kol méthode katkteb smitha f Logcat (filtre : tag:CYCLE)",
+    "en": "Each method logs its name in Logcat (filter: tag:CYCLE)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Chaque méthode redéfinie doit appeler **`super.onXxx()`** (la version de la classe parente). Oublier `super.onCreate(savedInstanceState)` provoque une erreur à l'exécution (*SuperNotCalledException*).",
+    "dar": "Kol méthode li 3awedti ktebtha khassha t3ayet l **`super.onXxx()`** (version dyal classe parente). Ila nsiti `super.onCreate(savedInstanceState)` kat3tik erreur f l'exécution (*SuperNotCalledException*).",
+    "en": "Every overridden method must call **`super.onXxx()`** (the parent class version). Forgetting `super.onCreate(savedInstanceState)` causes a runtime error (*SuperNotCalledException*)."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "Lance l'application, appuie sur Accueil, reviens, puis tourne l'écran. Logcat affiche : `onCreate, onStart, onResume` / `onPause, onStop` / `onRestart, onStart, onResume` / `onPause, onStop, onDestroy, onCreate, onStart, onResume`. C'est exactement ce que le simulateur ci-dessus montre.",
+    "dar": "Lanci l'app, brek 3la Accueil, rje3, w men b3d dawwer l écran. Logcat kaybyen : `onCreate, onStart, onResume` / `onPause, onStop` / `onRestart, onStart, onResume` / `onPause, onStop, onDestroy, onCreate, onStart, onResume`. Hadchi bdbt li kaybyen simulateur lfo9.",
+    "en": "Launch the app, press Home, come back, then rotate. Logcat shows: `onCreate, onStart, onResume` / `onPause, onStop` / `onRestart, onStart, onResume` / `onPause, onStop, onDestroy, onCreate, onStart, onResume`. Exactly what the simulator above shows."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-18"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "onCreate initialise l'Activity et son interface ; onStart = visible ; onResume = premier plan, interactive.",
+   "dar": "onCreate = initialisation ; onStart = bayna ; onResume = l9eddam.",
+   "en": "onCreate initialises; onStart = visible; onResume = foreground, interactive."
+  },
+  {
+   "fr": "onPause = perd le premier plan ; onStop = plus visible ; onDestroy = fin de l'instance, si le système l'appelle.",
+   "dar": "onPause = fqdat l9eddam ; onStop = ma bqatch bayna ; onDestroy = nihaya (ila t3ayet).",
+   "en": "onPause = loses foreground; onStop = not visible; onDestroy = end of instance, if called."
+  },
+  {
+   "fr": "Lancement : onCreate, onStart, onResume. Accueil : onPause, onStop. Retour : onRestart, onStart, onResume — même instance, onCreate ne se répète pas.",
+   "dar": "Lancement / Accueil / rjou3 : bla onCreate f rjou3.",
+   "en": "Launch / Home / return: no onCreate on return."
+  },
+  {
+   "fr": "onDestroy() n'est pas garanti : sauvegarder dans onPause/onStop, jamais dans onDestroy.",
+   "dar": "onDestroy machi garanti : 7fed f onPause/onStop.",
+   "en": "onDestroy() is not guaranteed: save in onPause/onStop."
+  },
+  {
+   "fr": "Rotation = destruction + recréation (nouvelle instance). A ouvre B : A.onPause, B.onCreate/onStart/onResume, A.onStop.",
+   "dar": "Rotation = tmse7 + tsayb ; A → B : A.onPause … A.onStop.",
+   "en": "Rotation = destroy + recreate. A opens B: A.onPause, B.onCreate/onStart/onResume, A.onStop."
+  }
+ ]
+}

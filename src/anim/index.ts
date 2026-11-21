@@ -25,5 +25,8 @@ export const ANIMATIONS: Record<string, Anim> = {
   OracleArchitecture: lazy(() => import('./oracle/OracleArchitecture')),
   OracleStartup: lazy(() => import('./oracle/OracleStartup')),
   InstanceDiagram: lazy(() => import('./oracle/InstanceDiagram')),
-  GraphAlgo: lazy(() => import('./ro/GraphAlgo'))
+  GraphAlgo: lazy(() => import('./ro/GraphAlgo')),
+  ScreenFilesFlow: lazy(() => import('./mobile/ScreenFilesFlow')),
+  ActivityLifecycle: lazy(() => import('./mobile/ActivityLifecycle')),
+  AndroidUnits: lazy(() => import('./mobile/AndroidUnits'))
 };

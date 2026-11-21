@@ -1,0 +1,72 @@
+[
+ {
+  "id": "r-mob-1",
+  "chapter": "dimensions",
+  "syntax": "setContentView(R.layout.activity_main);",
+  "desc": {
+   "fr": "Charger l'interface dans onCreate()",
+   "dar": "Chargi l'interface",
+   "en": "Load the interface in onCreate()"
+  }
+ },
+ {
+  "id": "r-mob-2",
+  "chapter": "dimensions",
+  "syntax": "findViewById(R.id.x) · getString(R.string.x)",
+  "desc": {
+   "fr": "Lire une vue / un texte depuis Java",
+   "dar": "Vue / texte mn Java",
+   "en": "Read a view / string from Java"
+  }
+ },
+ {
+  "id": "r-mob-3",
+  "chapter": "dimensions",
+  "syntax": "@string/x · @+id/x · @layout/x",
+  "desc": {
+   "fr": "Références de ressources dans le XML",
+   "dar": "Références f XML",
+   "en": "Resource references in XML"
+  }
+ },
+ {
+  "id": "r-mob-4",
+  "chapter": "dimensions",
+  "syntax": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+  "desc": {
+   "fr": "Permission dans le manifeste",
+   "dar": "Permission f manifeste",
+   "en": "Permission in the manifest"
+  }
+ },
+ {
+  "id": "r-mob-5",
+  "chapter": "dimensions",
+  "syntax": "onCreate → onStart → onResume → onPause → onStop → onDestroy (+ onRestart)",
+  "desc": {
+   "fr": "Cycle de vie",
+   "dar": "Cycle de vie",
+   "en": "Lifecycle"
+  }
+ },
+ {
+  "id": "r-mob-6",
+  "chapter": "dimensions",
+  "syntax": "px = dp × dpi / 160",
+  "desc": {
+   "fr": "Conversion dp → px",
+   "dar": "Conversion dp → px",
+   "en": "dp → px"
+  }
+ },
+ {
+  "id": "r-mob-7",
+  "chapter": "dimensions",
+  "syntax": "wrap_content · match_parent · 0dp (ConstraintLayout)",
+  "desc": {
+   "fr": "Valeurs de dimension",
+   "dar": "Valeurs dyal dimension",
+   "en": "Dimension values"
+  }
+ }
+]

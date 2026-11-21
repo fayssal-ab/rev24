@@ -19,7 +19,7 @@ export type Compute = z.infer<typeof ComputeSchema>;
 export const SectionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('text'), body: L10nSchema }),
   z.object({ type: z.literal('heading'), body: L10nSchema }),
-  z.object({ type: z.literal('code'), lang: z.enum(['bash', 'python', 'ini', 'text']), code: z.string(), caption: L10nSchema.optional() }),
+  z.object({ type: z.literal('code'), lang: z.enum(['bash', 'python', 'ini', 'text', 'java', 'xml']), code: z.string(), caption: L10nSchema.optional() }),
   z.object({ type: z.literal('formula'), tex: z.string(), caption: L10nSchema.optional() }),
   z.object({ type: z.literal('table'), headers: z.array(L10nSchema), rows: z.array(z.array(z.union([L10nSchema, z.string()]))) }),
   z.object({ type: z.literal('animation'), component: z.string(), props: z.record(z.unknown()).optional() }),

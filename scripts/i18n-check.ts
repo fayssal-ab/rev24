@@ -5,6 +5,7 @@ import { UI } from '../src/i18n/ui';
 import * as AL from '../src/i18n/animLinux';
 import * as AD from '../src/i18n/animData';
 import * as AO from '../src/i18n/animOracle';
+import * as AM from '../src/i18n/animMobile';
 import { moduleDirs, readModuleFiles } from './load';
 
 const LANGS = ['fr', 'dar', 'en'] as const;
@@ -28,6 +29,7 @@ walk(UI, 'ui');
 walk(AL, 'animLinux');
 walk(AD, 'animData');
 walk(AO, 'animOracle');
+walk(AM, 'animMobile');
 for (const id of moduleDirs()) {
   const { module, files } = readModuleFiles(id);
   walk(module, `${id}/module.json`);

@@ -5,7 +5,7 @@ import { useModuleContent } from '../hooks/useModule';
 import { Loading, PageTitle, useModuleParam } from '../components/Layout';
 import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
-import { L, Code, Tex } from '../components/Text';
+import { L, Code, Tex, guessLang } from '../components/Text';
 import { Icon } from '../components/Icon';
 import type { Exercise } from '../lib/schema';
 
@@ -85,7 +85,7 @@ function ExerciseCard({ e, initialOpen = false }: { e: Exercise; initialOpen?: b
                           <L v={s.title} />
                         </div>
                         <L v={s.body} md />
-                        {s.code && <Code code={s.code} lang={e.module === 'data' ? 'python' : 'bash'} className="mt-2" />}
+                        {s.code && <Code code={s.code} lang={guessLang(s.code, e.module === 'data' ? 'python' : 'bash')} className="mt-2" />}
                         {s.tex && <Tex tex={s.tex} block />}
                       </motion.li>
                     ))}

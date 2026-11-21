@@ -1,0 +1,62 @@
+[
+ {
+  "id": "fc-mob-20",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "front": {
+   "fr": "dp ?",
+   "dar": "dp ?",
+   "en": "dp?"
+  },
+  "back": {
+   "fr": "Dimensions indépendantes de la densité ; px = dp × dpi / 160. Ex. 48dp.",
+   "dar": "px = dp × dpi / 160.",
+   "en": "Density-independent; px = dp × dpi / 160."
+  }
+ },
+ {
+  "id": "fc-mob-21",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "front": {
+   "fr": "sp ?",
+   "dar": "sp ?",
+   "en": "sp?"
+  },
+  "back": {
+   "fr": "Taille du texte ; tient compte de la densité et du réglage de police. Ex. 18sp.",
+   "dar": "Texte + réglage police.",
+   "en": "Text size; follows the font setting."
+  }
+ },
+ {
+  "id": "fc-mob-22",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "front": {
+   "fr": "wrap_content / match_parent ?",
+   "dar": "wrap_content / match_parent ?",
+   "en": "wrap_content / match_parent?"
+  },
+  "back": {
+   "fr": "Taille du contenu (+ padding) / dimension que le parent attribue.",
+   "dar": "Contenu / parent.",
+   "en": "Content size / what the parent gives."
+  }
+ },
+ {
+  "id": "fc-mob-23",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "front": {
+   "fr": "0dp en ConstraintLayout ?",
+   "dar": "0dp f ConstraintLayout ?",
+   "en": "0dp in ConstraintLayout?"
+  },
+  "back": {
+   "fr": "« match constraints » : la dimension dépend des contraintes.",
+   "dar": "match constraints.",
+   "en": "\"match constraints\"."
+  }
+ }
+]

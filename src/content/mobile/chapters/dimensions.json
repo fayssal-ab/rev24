@@ -1,0 +1,413 @@
+{
+ "id": "dimensions",
+ "module": "mobile",
+ "order": 3,
+ "title": {
+  "fr": "Les unités et les dimensions",
+  "dar": "Les unités w les dimensions",
+  "en": "Units and dimensions"
+ },
+ "summary": {
+  "fr": "Pourquoi le pixel brut ne convient pas, dp pour les dimensions et sp pour le texte (avec le calcul en pixels), wrap_content et match_parent, et 0dp (« match constraints ») dans un ConstraintLayout.",
+  "dar": "3lach pixel brut ma kaysla7ch, dp l dimensions w sp l texte (m3a 7sab b pixels), wrap_content w match_parent, w 0dp (« match constraints ») f ConstraintLayout.",
+  "en": "Why raw pixels do not work, dp for dimensions and sp for text (with the pixel calculation), wrap_content and match_parent, and 0dp (\"match constraints\") in a ConstraintLayout."
+ },
+ "estimatedMinutes": 35,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Le problème du pixel brut",
+    "dar": "1. Lmochkil dyal pixel brut",
+    "en": "1. The problem with raw pixels"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Les téléphones n'ont pas tous la même **densité** : le nombre de pixels par pouce (**dpi**) varie. Sur un écran très dense, les pixels sont minuscules. Donc **le pixel brut dépend de la densité : un même nombre de pixels n'a pas la même taille apparente partout**. Un bouton de 48 px est confortable sur un vieil écran et minuscule sur un écran récent.",
+    "dar": "Les téléphones ma 3andhomch kamlin nefs **densité** : 3adad dyal pixels f pouce (**dpi**) kaytbeddel. F écran dense bzaf, les pixels sghar bzaf. Donc **pixel brut kaytbe3 densité : nefs 3adad dyal pixels ma 3andoch nefs taille li katban f kol blasa**. Bouton dyal 48 px mzyan f écran 9dim w sghir bzaf f écran jdid.",
+    "en": "Phones do not all have the same **density**: the number of pixels per inch (**dpi**) varies. On a very dense screen pixels are tiny. So **raw pixels depend on density: the same number of pixels does not look the same size everywhere**. A 48 px button is fine on an old screen and tiny on a recent one."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**dp** (*density-independent pixel*) : unité **indépendante de la densité**. Par définition, **1 dp = 1 px sur un écran de 160 dpi** (densité de référence, *mdpi*). Android convertit pour chaque écran.",
+    "dar": "**dp** (*density-independent pixel*) : unité **ma katbe3ch densité**. Par définition, **1 dp = 1 px f écran dyal 160 dpi** (densité de référence, *mdpi*). Android kaydir conversion l kol écran.",
+    "en": "**dp** (*density-independent pixel*): a **density-independent** unit. By definition **1 dp = 1 px on a 160 dpi screen** (reference density, *mdpi*). Android converts for each screen."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "px = dp \\times \\frac{dpi}{160}",
+   "body": {
+    "fr": "Conversion dp → pixels réels. Le quotient dpi/160 est le **facteur de densité**.",
+    "dar": "Conversion dp → pixels 7a9i9iyin. dpi/160 howa **facteur de densité**.",
+    "en": "dp → actual pixels. dpi/160 is the **density factor**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Catégorie",
+     "dar": "Catégorie",
+     "en": "Bucket"
+    },
+    {
+     "fr": "dpi",
+     "dar": "dpi",
+     "en": "dpi"
+    },
+    {
+     "fr": "Facteur",
+     "dar": "Facteur",
+     "en": "Factor"
+    },
+    {
+     "fr": "48dp donne",
+     "dar": "48dp = ",
+     "en": "48dp gives"
+    }
+   ],
+   "rows": [
+    [
+     "mdpi",
+     "160",
+     "×1",
+     "48 px"
+    ],
+    [
+     "hdpi",
+     "240",
+     "×1,5",
+     "72 px"
+    ],
+    [
+     "xhdpi",
+     "320",
+     "×2",
+     "96 px"
+    ],
+    [
+     "xxhdpi",
+     "480",
+     "×3",
+     "144 px"
+    ],
+    [
+     "xxxhdpi",
+     "640",
+     "×4",
+     "192 px"
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Le nombre de pixels augmente avec la densité, mais les pixels sont plus petits : au final, **48dp a la même taille physique** sur tous ces écrans. C'est exactement le but.",
+    "dar": "3adad dyal pixels kayzid m3a densité, walakin les pixels kaysghaarou : f lekher, **48dp 3ando nefs taille** f ga3 had les écrans. Hadak howa lhadaf.",
+    "en": "The pixel count grows with density but pixels get smaller: in the end **48dp has the same physical size** on all these screens. That is the whole point."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. dp et sp : deux usages distincts",
+    "dar": "2. dp w sp : jouj isti3malat mkhtalfin",
+    "en": "2. dp and sp: two distinct uses"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Unité",
+     "dar": "Unité",
+     "en": "Unit"
+    },
+    {
+     "fr": "Mesure",
+     "dar": "Kat9is",
+     "en": "Measures"
+    },
+    {
+     "fr": "Tient compte de",
+     "dar": "Katbe3",
+     "en": "Accounts for"
+    },
+    {
+     "fr": "Exemple (diapo)",
+     "dar": "Mithal (diapo)",
+     "en": "Example (slide)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**dp**",
+      "dar": "**dp**",
+      "en": "**dp**"
+     },
+     {
+      "fr": "Les **dimensions de l'interface** (largeur, hauteur, marges, padding)",
+      "dar": "**Dimensions dyal l'interface** (l3ard, tol, marges, padding)",
+      "en": "**Interface dimensions** (width, height, margins, padding)"
+     },
+     {
+      "fr": "La **densité** de l'écran",
+      "dar": "**Densité** dyal l écran",
+      "en": "Screen **density**"
+     },
+     {
+      "fr": "Largeur d'un composant = **48dp**",
+      "dar": "L3ard dyal composant = **48dp**",
+      "en": "Component width = **48dp**"
+     }
+    ],
+    [
+     {
+      "fr": "**sp**",
+      "dar": "**sp**",
+      "en": "**sp**"
+     },
+     {
+      "fr": "La **taille du texte**",
+      "dar": "**Taille dyal texte**",
+      "en": "**Text size**"
+     },
+     {
+      "fr": "La densité **et** le **réglage de taille de police** de l'utilisateur",
+      "dar": "Densité **w** **réglage dyal taille de police** dyal user",
+      "en": "Density **and** the user's **font size setting**"
+     },
+     {
+      "fr": "Texte d'un bouton = **18sp**",
+      "dar": "Texte dyal bouton = **18sp**",
+      "en": "Button text = **18sp**"
+     }
+    ],
+    [
+     {
+      "fr": "**px**",
+      "dar": "**px**",
+      "en": "**px**"
+     },
+     {
+      "fr": "Des pixels physiques",
+      "dar": "Pixels physiques",
+      "en": "Physical pixels"
+     },
+     {
+      "fr": "Rien : **dépend de la densité**",
+      "dar": "Walou : **kaytbe3 densité**",
+      "en": "Nothing: **depends on density**"
+     },
+     {
+      "fr": "À éviter pour l'interface",
+      "dar": "Tjnnbo f l'interface",
+      "en": "Avoid for UI"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "AndroidUnits"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**dp pour les dimensions, sp pour le texte.** Mettre `android:textSize=\"18dp\"` ignore le réglage de police de l'utilisateur (problème d'accessibilité pour les malvoyants). À l'inverse, mettre des **sp** sur une largeur fait grossir le composant quand l'utilisateur agrandit la police.",
+    "dar": "**dp l dimensions, sp l texte.** Ila drti `android:textSize=\"18dp\"`, kat-ignori réglage dyal police dyal user (mochkil d accessibilité l li ma kaychoufch mzyan). W l3eks, ila drti **sp** f l3ard, composant kaykbar mli user kaykabbar police.",
+    "en": "**dp for dimensions, sp for text.** `android:textSize=\"18dp\"` ignores the user's font setting (an accessibility problem for visually impaired users). Conversely, **sp** on a width makes the component grow when the user enlarges the font."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "48dp n'est pas un hasard : c'est la **taille minimale recommandée d'une zone tactile** (bouton, icône cliquable) pour qu'un doigt la touche facilement.",
+    "dar": "48dp machi sodfa : hiya **a9all taille mnsou7 biha l zone tactile** (bouton, icône li katbrek 3liha) bach sbe3 ybrek 3liha bsohola.",
+    "en": "48dp is no accident: it is the **recommended minimum touch target size** (button, tappable icon) so a finger can hit it easily."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-20",
+    "mob-21",
+    "mob-22"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. wrap_content et match_parent",
+    "dar": "3. wrap_content w match_parent",
+    "en": "3. wrap_content and match_parent"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Valeur",
+     "dar": "Valeur",
+     "en": "Value"
+    },
+    {
+     "fr": "Sens (diapo du prof)",
+     "dar": "Ma3na (diapo dyal prof)",
+     "en": "Meaning (professor's slide)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "`wrap_content`",
+      "dar": "`wrap_content`",
+      "en": "`wrap_content`"
+     },
+     {
+      "fr": "La vue **adapte sa taille à son contenu**, avec ses **marges internes** (padding) et ses **contraintes de taille**.",
+      "dar": "View kat**3ti rasha taille 3la 7sab contenu dyalha**, m3a **marges internes** (padding) w **contraintes de taille** dyalha.",
+      "en": "The view **sizes itself to its content**, with its **inner margins** (padding) and **size constraints**."
+     }
+    ],
+    [
+     {
+      "fr": "`match_parent`",
+      "dar": "`match_parent`",
+      "en": "`match_parent`"
+     },
+     {
+      "fr": "La vue **occupe la dimension disponible** que son **parent** lui attribue.",
+      "dar": "View kat**3mmer dimension li mojouda** li 3taha **parent** dyalha.",
+      "en": "The view **fills the available dimension** its **parent** gives it."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<LinearLayout\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    android:orientation=\"vertical\"\n    android:padding=\"16dp\">\n\n    <Button\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:text=\"@string/valider\"\n        android:textSize=\"18sp\" />\n</LinearLayout>",
+   "caption": {
+    "fr": "Exemple de la diapo : le bouton prend la largeur disponible et ajuste sa hauteur",
+    "dar": "Mithal dyal diapo : bouton kayakhod l3ard kamel w kay3dl tol dyalo",
+    "en": "Slide example: the button takes the available width and adjusts its height"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "**largeur = match_parent** : le bouton s'étire d'un bord à l'autre du LinearLayout (moins le padding de 16dp). **hauteur = wrap_content** : il est juste assez haut pour son texte. Résultat : un bouton large, de hauteur normale.",
+    "dar": "**l3ard = match_parent** : bouton kaytmedd mn jenb l jenb dyal LinearLayout (na9es padding dyal 16dp). **tol = wrap_content** : tol dyalo 9ed texte dyalo bach. Natija : bouton 3rid, b tol 3adi.",
+    "en": "**width = match_parent**: the button stretches edge to edge in the LinearLayout (minus the 16dp padding). **height = wrap_content**: just tall enough for its text. Result: a wide button of normal height."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "`layout_width` et `layout_height` sont **obligatoires** pour chaque vue d'un LinearLayout : sans eux, erreur à l'exécution. Et `fill_parent` est **l'ancien nom** de `match_parent` (déprécié) : écris toujours `match_parent`.",
+    "dar": "`layout_width` w `layout_height` **wajibin** l kol view f LinearLayout : bla bihom, erreur f l'exécution. W `fill_parent` howa **smiya l9dima** dyal `match_parent` (dépréciée) : dima kteb `match_parent`.",
+    "en": "`layout_width` and `layout_height` are **mandatory** for every view of a LinearLayout: without them, runtime error. And `fill_parent` is the **old name** of `match_parent` (deprecated): always write `match_parent`."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-23",
+    "mob-24"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. ConstraintLayout : 0dp = « match constraints »",
+    "dar": "4. ConstraintLayout : 0dp = « match constraints »",
+    "en": "4. ConstraintLayout: 0dp = \"match constraints\""
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Dans un **ConstraintLayout**, chaque vue est placée par des **contraintes** (attachée au parent ou à d'autres vues). Une dimension à **0dp** ne veut pas dire « taille zéro » : elle signifie **« match constraints »** — **la dimension dépend des contraintes**. La vue s'étire entre ce à quoi elle est attachée.",
+    "dar": "F **ConstraintLayout**, kol view kat7et b **contraintes** (mrbouta b parent wla b views okhrin). Dimension b **0dp** ma ma3naha ch « taille zéro » : ma3naha **« match constraints »** — **dimension katbe3 les contraintes**. View kattmedd bin chnou mrbouta bih.",
+    "en": "In a **ConstraintLayout**, each view is placed by **constraints** (attached to the parent or to other views). A dimension of **0dp** does not mean \"size zero\": it means **\"match constraints\"** — **the dimension depends on the constraints**. The view stretches between what it is attached to."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<androidx.constraintlayout.widget.ConstraintLayout\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n\n    <EditText\n        android:id=\"@+id/nom\"\n        android:layout_width=\"0dp\"\n        android:layout_height=\"wrap_content\"\n        android:hint=\"@string/nom\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\" />\n</androidx.constraintlayout.widget.ConstraintLayout>",
+   "caption": {
+    "fr": "0dp + contraintes Start et End : le champ s'étire entre les deux bords du parent",
+    "dar": "0dp + contraintes Start w End : champ kayttmedd bin jouj jnab dyal parent",
+    "en": "0dp + Start and End constraints: the field stretches between both parent edges"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Dans un ConstraintLayout, on **n'utilise pas `match_parent`** pour les vues enfants : on met **0dp** avec les deux contraintes opposées (Start + End pour la largeur, Top + Bottom pour la hauteur). Et 0dp **sans** contraintes des deux côtés ne s'étire pas.",
+    "dar": "F ConstraintLayout, **ma kansta3mlouch `match_parent`** l views wlad : kandirou **0dp** m3a jouj contraintes m9ablin (Start + End l l3ard, Top + Bottom l tol). W 0dp **bla** contraintes mn jouj jnab ma kaytmeddch.",
+    "en": "In a ConstraintLayout, **do not use `match_parent`** for child views: use **0dp** with both opposite constraints (Start + End for width, Top + Bottom for height). And 0dp **without** constraints on both sides does not stretch."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Phrase de la diapo à restituer : « **Dans ConstraintLayout, 0dp signifie « match constraints » : la dimension dépend des contraintes.** » Questions possibles : différence dp / sp, calcul en px, effet de match_parent / wrap_content sur un bouton.",
+    "dar": "Jomla dyal diapo li khassek t3awedha : « **F ConstraintLayout, 0dp ma3naha « match constraints » : dimension katbe3 les contraintes.** » Les questions momkin : far9 dp / sp, 7sab b px, chnou kaydir match_parent / wrap_content l bouton.",
+    "en": "Slide sentence to reproduce: \"**In ConstraintLayout, 0dp means 'match constraints': the dimension depends on the constraints.**\" Possible questions: dp vs sp, px calculation, effect of match_parent / wrap_content on a button."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-25",
+    "mob-26",
+    "mob-27"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Le pixel brut dépend de la densité ; dp est indépendant de la densité : px = dp × dpi / 160 (1dp = 1px à 160 dpi).",
+   "dar": "px kaytbe3 densité ; px = dp × dpi / 160.",
+   "en": "Raw px depends on density; px = dp × dpi / 160 (1dp = 1px at 160 dpi)."
+  },
+  {
+   "fr": "dp pour les dimensions (48dp) ; sp pour le texte (18sp), car sp suit aussi le réglage de taille de police.",
+   "dar": "dp l dimensions, sp l texte.",
+   "en": "dp for dimensions (48dp); sp for text (18sp), since sp also follows the font size setting."
+  },
+  {
+   "fr": "wrap_content = taille du contenu (+ padding) ; match_parent = toute la dimension que le parent attribue.",
+   "dar": "wrap = contenu ; match = ga3 l blasa dyal parent.",
+   "en": "wrap_content = content size (+ padding); match_parent = all the space the parent gives."
+  },
+  {
+   "fr": "Exemple : largeur match_parent + hauteur wrap_content → bouton large, hauteur ajustée au texte.",
+   "dar": "match_parent + wrap_content → bouton 3rid.",
+   "en": "match_parent width + wrap_content height → wide button, height fits the text."
+  },
+  {
+   "fr": "ConstraintLayout : 0dp = « match constraints », la dimension dépend des contraintes ; pas de match_parent pour les enfants.",
+   "dar": "0dp = match constraints.",
+   "en": "ConstraintLayout: 0dp = \"match constraints\"; no match_parent for children."
+  }
+ ]
+}

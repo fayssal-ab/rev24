@@ -1,0 +1,130 @@
+[
+ {
+  "id": "mob-x-1",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "title": {
+   "fr": "Écrire le onCreate d'un écran",
+   "dar": "Kteb onCreate dyal écran",
+   "en": "Write a screen's onCreate"
+  },
+  "statement": {
+   "fr": "Le layout `activity_main.xml` contient un TextView d'id `titre`. strings.xml contient `<string name=\"bienvenue\">Bienvenue</string>`. Écris le onCreate() de MainActivity qui affiche l'écran puis met ce texte dans le TextView.",
+   "dar": "Layout fih TextView id `titre`, strings fih `bienvenue`. Kteb onCreate() li kaybyen l écran w kay7et texte f TextView.",
+   "en": "The layout has a TextView with id `titre`; strings.xml has `bienvenue`. Write MainActivity.onCreate() to show the screen and put that text in the TextView."
+  },
+  "hints": [
+   {
+    "fr": "Quel ordre entre setContentView et findViewById ?",
+    "dar": "Ach lowel : setContentView wla findViewById ?",
+    "en": "Which comes first?"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Solution",
+     "dar": "Solution",
+     "en": "Solution"
+    },
+    "body": {
+     "fr": "super.onCreate, puis charger l'interface, puis récupérer la vue, puis lui donner le texte de strings.xml.",
+     "dar": "super, setContentView, findViewById, setText.",
+     "en": "super, setContentView, findViewById, setText."
+    },
+    "code": "@Override\nprotected void onCreate(Bundle savedInstanceState) {\n    super.onCreate(savedInstanceState);\n    setContentView(R.layout.activity_main);\n    TextView titre = findViewById(R.id.titre);\n    titre.setText(R.string.bienvenue);\n}"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "super.onCreate → setContentView(R.layout.activity_main) → findViewById(R.id.titre) → setText(R.string.bienvenue).",
+   "dar": "super → setContentView → findViewById → setText.",
+   "en": "super → setContentView → findViewById → setText."
+  },
+  "commonMistakes": [
+   {
+    "fr": "findViewById avant setContentView (null).",
+    "dar": "findViewById 9bel setContentView.",
+    "en": "findViewById before setContentView (null)."
+   },
+   {
+    "fr": "Écrire R.layout.activity_main.xml.",
+    "dar": "R.layout b .xml.",
+    "en": "Writing R.layout.activity_main.xml."
+   },
+   {
+    "fr": "Oublier super.onCreate(...).",
+    "dar": "Nsit super.",
+    "en": "Forgetting super.onCreate(...)."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-2",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "title": {
+   "fr": "Compléter le manifeste",
+   "dar": "Kmmel manifeste",
+   "en": "Complete the manifest"
+  },
+  "statement": {
+   "fr": "L'application a deux écrans, MainActivity (écran de démarrage) et DetailActivity, et charge des données depuis Internet. Écris les éléments à mettre dans AndroidManifest.xml.",
+   "dar": "Jouj écrans (MainActivity lowel, DetailActivity) w Internet. Kteb chnou f manifeste.",
+   "en": "Two screens (MainActivity launcher, DetailActivity) and Internet access. Write the manifest entries."
+  },
+  "hints": [
+   {
+    "fr": "Le manifeste déclare les composants **et** les permissions.",
+    "dar": "Composants + permissions.",
+    "en": "Components and permissions."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Permission",
+     "dar": "Permission",
+     "en": "Permission"
+    },
+    "body": {
+     "fr": "Hors de `<application>`.",
+     "dar": "Barra `<application>`.",
+     "en": "Outside `<application>`."
+    },
+    "code": "<uses-permission android:name=\"android.permission.INTERNET\" />"
+   },
+   {
+    "title": {
+     "fr": "Activity",
+     "dar": "Activity",
+     "en": "Activities"
+    },
+    "body": {
+     "fr": "MainActivity avec MAIN + LAUNCHER ; DetailActivity simplement déclarée.",
+     "dar": "MainActivity b MAIN + LAUNCHER ; DetailActivity declarée.",
+     "en": "MainActivity with MAIN + LAUNCHER; DetailActivity declared."
+    },
+    "code": "<application android:label=\"@string/app_name\">\n    <activity android:name=\".MainActivity\" android:exported=\"true\">\n        <intent-filter>\n            <action android:name=\"android.intent.action.MAIN\" />\n            <category android:name=\"android.intent.category.LAUNCHER\" />\n        </intent-filter>\n    </activity>\n    <activity android:name=\".DetailActivity\" />\n</application>"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Une uses-permission INTERNET + deux balises activity (MainActivity avec l'intent-filter MAIN/LAUNCHER).",
+   "dar": "INTERNET + 2 activity.",
+   "en": "INTERNET permission + two activity tags."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier de déclarer DetailActivity (plantage à l'ouverture).",
+    "dar": "Nsit DetailActivity.",
+    "en": "Forgetting DetailActivity (crash)."
+   },
+   {
+    "fr": "Mettre la permission dans le layout.",
+    "dar": "Permission f layout.",
+    "en": "Putting the permission in the layout."
+   }
+  ]
+ }
+]

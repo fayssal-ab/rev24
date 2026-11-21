@@ -1,0 +1,38 @@
+{
+ "id": "mobile",
+ "title": {
+  "fr": "Développement mobile",
+  "dar": "Développement mobile",
+  "en": "Mobile development"
+ },
+ "subtitle": {
+  "fr": "Préparation au contrôle — Android natif (Java) : outils, fichiers d'un écran, cycle de vie d'une Activity, unités et dimensions",
+  "dar": "Préparation l contrôle — Android natif (Java) : outils, fichiers dyal écran, cycle de vie, unités w dimensions",
+  "en": "Test preparation — native Android (Java): tools, screen files, Activity lifecycle, units and dimensions"
+ },
+ "color": "#0f6f8f",
+ "icon": "phone",
+ "theme": "violet",
+ "chapters": [
+  "ecran",
+  "cycle",
+  "dimensions"
+ ],
+ "upcoming": [
+  {
+   "id": "mob-prep-suite",
+   "order": 4,
+   "title": {
+    "fr": "Suite de la préparation (diapos 5 à 10)",
+    "dar": "Tkmila dyal préparation (diapos 5 7tta 10)",
+    "en": "Rest of the preparation (slides 5 to 10)"
+   }
+  }
+ ],
+ "annales": [],
+ "weights": {
+  "cycle": 5,
+  "ecran": 4,
+  "dimensions": 4
+ }
+}

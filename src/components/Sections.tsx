@@ -2,7 +2,7 @@ import { Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { Section, Question, Mission } from '../lib/schema';
-import { L, Code, Tex } from './Text';
+import { L, Code, Tex, guessLang } from './Text';
 import { Icon } from './Icon';
 import { useT, useL } from '../hooks/useT';
 import { useStore } from '../store/store';
@@ -60,7 +60,7 @@ function StepByStep({ s, skey }: { s: Extract<Section, { type: 'steps' }>; skey?
                   <Tex tex={it.tex} block />
                 </div>
               )}
-              {it.code && <Code code={it.code} lang="python" className="mt-2" />}
+              {it.code && <Code code={it.code} lang={guessLang(it.code, 'python')} className="mt-2" />}
               {it.why && (
                 <div className="mt-2 flex gap-2 rounded-lg border border-accent/25 bg-accent/[0.05] p-2.5 text-sm">
                   <Icon name="bulb" size={15} className="mt-0.5 shrink-0 text-accent" />

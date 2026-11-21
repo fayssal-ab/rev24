@@ -1,0 +1,137 @@
+[
+ {
+  "id": "mob-x-5",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "title": {
+   "fr": "Convertir dp et sp en pixels",
+   "dar": "7seb dp w sp b pixels",
+   "en": "Convert dp and sp to pixels"
+  },
+  "statement": {
+   "fr": "a) Un bouton fait 48dp de large. Combien de pixels sur un écran hdpi (240 dpi) et xxhdpi (480 dpi) ? b) Un texte de 18sp, sur un écran xhdpi (320 dpi), quand l'utilisateur règle la police à ×1,3 ?",
+   "dar": "a) 48dp f 240 w 480 dpi. b) 18sp f 320 dpi, police ×1,3.",
+   "en": "a) 48dp at 240 and 480 dpi. b) 18sp at 320 dpi, font ×1.3."
+  },
+  "hints": [
+   {
+    "fr": "px = dp × dpi / 160.",
+    "dar": "px = dp × dpi / 160.",
+    "en": "px = dp × dpi / 160."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "a) dp",
+     "dar": "a) dp",
+     "en": "a) dp"
+    },
+    "body": {
+     "fr": "hdpi : 48 × 240/160 = 48 × 1,5 = **72 px**. xxhdpi : 48 × 3 = **144 px**. Même taille physique.",
+     "dar": "72 px w 144 px.",
+     "en": "72 px and 144 px."
+    },
+    "tex": "48 \\times \\tfrac{240}{160} = 72 \\qquad 48 \\times \\tfrac{480}{160} = 144"
+   },
+   {
+    "title": {
+     "fr": "b) sp",
+     "dar": "b) sp",
+     "en": "b) sp"
+    },
+    "body": {
+     "fr": "18 × 2 (densité) × 1,3 (police) = **46,8 ≈ 47 px** (calcul linéaire).",
+     "dar": "18 × 2 × 1,3 ≈ 47 px.",
+     "en": "18 × 2 × 1.3 ≈ 47 px."
+    },
+    "tex": "18 \\times \\tfrac{320}{160} \\times 1{,}3 = 46{,}8"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "a) 72 px et 144 px. b) ≈ 47 px.",
+   "dar": "72 / 144 / 47.",
+   "en": "72 / 144 / ≈47 px."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Diviser au lieu de multiplier.",
+    "dar": "9ssem f blast tdreb.",
+    "en": "Dividing instead of multiplying."
+   },
+   {
+    "fr": "Oublier le facteur de police pour sp.",
+    "dar": "Nsit facteur police.",
+    "en": "Forgetting the font factor."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-6",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 3,
+  "title": {
+   "fr": "Corriger un layout",
+   "dar": "Sse7 layout",
+   "en": "Fix a layout"
+  },
+  "statement": {
+   "fr": "Trouve et corrige les 3 erreurs de ce bouton placé dans un ConstraintLayout : `<Button android:layout_width=\"match_parent\" android:layout_height=\"wrap_content\" android:text=\"Valider\" android:textSize=\"20px\" app:layout_constraintTop_toTopOf=\"parent\" />`",
+   "dar": "L9a w sse7 3 erreurs f had bouton f ConstraintLayout.",
+   "en": "Find and fix the 3 mistakes in this button inside a ConstraintLayout."
+  },
+  "hints": [
+   {
+    "fr": "Regarde l'unité du texte, le texte en dur et la largeur dans un ConstraintLayout.",
+    "dar": "Unité, texte direct, l3ard.",
+    "en": "Unit, hard-coded text, width."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Erreurs",
+     "dar": "Erreurs",
+     "en": "Mistakes"
+    },
+    "body": {
+     "fr": "1) textSize en **px** → **sp**. 2) Texte en dur → **@string/valider**. 3) **match_parent** dans un ConstraintLayout → **0dp** + contraintes Start et End.",
+     "dar": "px → sp ; texte → @string ; match_parent → 0dp + contraintes.",
+     "en": "px → sp; hard-coded → @string; match_parent → 0dp + constraints."
+    }
+   },
+   {
+    "title": {
+     "fr": "Correction",
+     "dar": "Correction",
+     "en": "Fixed"
+    },
+    "body": {
+     "fr": "Version corrigée :",
+     "dar": "Version msse7a :",
+     "en": "Fixed version:"
+    },
+    "code": "<Button\n    android:layout_width=\"0dp\"\n    android:layout_height=\"wrap_content\"\n    android:text=\"@string/valider\"\n    android:textSize=\"18sp\"\n    app:layout_constraintStart_toStartOf=\"parent\"\n    app:layout_constraintEnd_toEndOf=\"parent\"\n    app:layout_constraintTop_toTopOf=\"parent\" />"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "sp pour le texte, @string pour le libellé, 0dp + Start/End pour la largeur.",
+   "dar": "sp, @string, 0dp.",
+   "en": "sp, @string, 0dp + Start/End."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre 0dp sans ajouter les contraintes Start et End.",
+    "dar": "0dp bla contraintes.",
+    "en": "0dp without Start/End."
+   },
+   {
+    "fr": "Remplacer px par dp pour le texte.",
+    "dar": "dp l texte.",
+    "en": "Using dp for text."
+   }
+  ]
+ }
+]

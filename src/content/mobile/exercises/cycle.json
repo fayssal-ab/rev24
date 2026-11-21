@@ -1,0 +1,168 @@
+[
+ {
+  "id": "mob-x-3",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "title": {
+   "fr": "Suivre un scénario complet",
+   "dar": "Tba3 scénario kamel",
+   "en": "Follow a full scenario"
+  },
+  "statement": {
+   "fr": "Donne toutes les méthodes appelées, dans l'ordre : (1) l'utilisateur lance l'application ; (2) il appuie sur Accueil ; (3) il revient ; (4) il tourne l'écran. Indique à chaque fois si c'est la même instance.",
+   "dar": "3ti ga3 méthodes : lancement, Accueil, rjou3, rotation. W wach nefs instance.",
+   "en": "List every method in order: launch, Home, return, rotate. Same instance each time?"
+  },
+  "hints": [
+   {
+    "fr": "Raisonne avec les paires onCreate/onDestroy, onStart/onStop, onResume/onPause.",
+    "dar": "Les paires.",
+    "en": "Use the method pairs."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "(1) Lancement",
+     "dar": "(1) Lancement",
+     "en": "(1) Launch"
+    },
+    "body": {
+     "fr": "onCreate, onStart, onResume — instance n°1.",
+     "dar": "Instance 1.",
+     "en": "Instance #1."
+    }
+   },
+   {
+    "title": {
+     "fr": "(2) Accueil",
+     "dar": "(2) Accueil",
+     "en": "(2) Home"
+    },
+    "body": {
+     "fr": "onPause, onStop — instance n°1 conservée.",
+     "dar": "Instance 1 ba9ya.",
+     "en": "Instance #1 kept."
+    }
+   },
+   {
+    "title": {
+     "fr": "(3) Retour",
+     "dar": "(3) Rjou3",
+     "en": "(3) Return"
+    },
+    "body": {
+     "fr": "onRestart, onStart, onResume — **même instance**, pas de onCreate.",
+     "dar": "Nefs instance.",
+     "en": "**Same instance**, no onCreate."
+    }
+   },
+   {
+    "title": {
+     "fr": "(4) Rotation",
+     "dar": "(4) Rotation",
+     "en": "(4) Rotation"
+    },
+    "body": {
+     "fr": "onPause, onStop, onDestroy, puis onCreate, onStart, onResume — **nouvelle instance** (n°2).",
+     "dar": "Instance jdida.",
+     "en": "**New instance** (#2)."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "onCreate, onStart, onResume / onPause, onStop / onRestart, onStart, onResume / onPause, onStop, onDestroy, onCreate, onStart, onResume.",
+   "dar": "Les 4 séquences.",
+   "en": "The four sequences."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre onCreate au retour (3).",
+    "dar": "onCreate f rjou3.",
+    "en": "onCreate on return."
+   },
+   {
+    "fr": "Oublier onRestart.",
+    "dar": "Nsit onRestart.",
+    "en": "Forgetting onRestart."
+   },
+   {
+    "fr": "Croire que la rotation garde la même instance.",
+    "dar": "Rotation = nefs instance (ghalat).",
+    "en": "Thinking rotation keeps the instance."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-4",
+  "module": "mobile",
+  "chapter": "cycle",
+  "difficulty": 3,
+  "title": {
+   "fr": "Deux écrans : aller-retour",
+   "dar": "Jouj écrans : mchi w rjou3",
+   "en": "Two screens: there and back"
+  },
+  "statement": {
+   "fr": "MainActivity (A) est au premier plan. L'utilisateur clique sur un contact, ce qui ouvre DetailActivity (B). Puis il appuie sur Retour. Donne les méthodes appelées sur A et B, dans l'ordre.",
+   "dar": "A f l9eddam, kat7el B, w men b3d Retour. Méthodes dyal A w B.",
+   "en": "A in front opens B, then Back. Methods on A and B, in order."
+  },
+  "hints": [
+   {
+    "fr": "Au départ de B, A perd d'abord le premier plan.",
+    "dar": "A.onPause lowel.",
+    "en": "A.onPause first."
+   },
+   {
+    "fr": "Au retour, B est terminée.",
+    "dar": "B katsali.",
+    "en": "On Back, B is finished."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Ouverture de B",
+     "dar": "7ellan B",
+     "en": "Opening B"
+    },
+    "body": {
+     "fr": "A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.",
+     "dar": "A.onPause → B… → A.onStop.",
+     "en": "A.onPause → B… → A.onStop."
+    }
+   },
+   {
+    "title": {
+     "fr": "Retour vers A",
+     "dar": "Rjou3 l A",
+     "en": "Back to A"
+    },
+    "body": {
+     "fr": "B.onPause → A.onRestart → A.onStart → A.onResume → B.onStop → B.onDestroy. A revient **sans onCreate**.",
+     "dar": "B.onPause → A.onRestart… → B.onDestroy.",
+     "en": "B.onPause → A.onRestart… → B.onDestroy."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Aller : A.onPause, B.onCreate, B.onStart, B.onResume, A.onStop. Retour : B.onPause, A.onRestart, A.onStart, A.onResume, B.onStop, B.onDestroy.",
+   "dar": "Mchi w rjou3.",
+   "en": "There and back."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Détruire A à l'ouverture de B.",
+    "dar": "Tmse7 A.",
+    "en": "Destroying A."
+   },
+   {
+    "fr": "Mettre A.onStop avant le démarrage de B.",
+    "dar": "A.onStop 9bel B.",
+    "en": "A.onStop before B starts."
+   }
+  ]
+ }
+]

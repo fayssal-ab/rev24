@@ -61,7 +61,6 @@ export const EXTRA_SUBJECTS: { id: string; icon: string; color: string; title: {
   { id: 'virtualisation', icon: 'layers', color: '#3d5a80', title: { fr: 'Virtualisation et Cloud', dar: 'Virtualisation w Cloud', en: 'Virtualisation and cloud' } },
   { id: 'nosql', icon: 'database', color: '#2f7d4f', title: { fr: 'NoSQL', dar: 'NoSQL', en: 'NoSQL' } },
   { id: 'dotnet', icon: 'code', color: '#5c3d99', title: { fr: '.NET (C# et ASP.NET MVC)', dar: '.NET (C# w ASP.NET MVC)', en: '.NET (C# and ASP.NET MVC)' } },
-  { id: 'mobile', icon: 'phone', color: '#0f6f8f', title: { fr: 'Développement mobile (Flutter)', dar: 'Développement mobile (Flutter)', en: 'Mobile development (Flutter)' } },
   { id: 'progav', icon: 'bolt', color: '#8a5a1c', title: { fr: 'Programmation avancée', dar: 'Programmation avancée', en: 'Advanced programming' } },
   { id: 'compro', icon: 'chat', color: '#a0483c', title: { fr: 'Communication professionnelle 3', dar: 'Communication professionnelle 3', en: 'Professional communication 3' } },
   { id: 'english', icon: 'globe', color: '#4a5d7a', title: { fr: 'Advanced English 1', dar: 'Advanced English 1', en: 'Advanced English 1' } }

@@ -1,0 +1,475 @@
+{
+ "id": "ecran",
+ "module": "mobile",
+ "order": 1,
+ "title": {
+  "fr": "Outils, fichiers et affichage d'un écran",
+  "dar": "Les outils, les fichiers w kifach kayban écran",
+  "en": "Tools, files and displaying a screen"
+ },
+ "summary": {
+  "fr": "Android Studio et le SDK Android, les trois fichiers d'un écran (layout, strings.xml, AndroidManifest.xml) et leur responsabilité, puis le lien entre le code Java et les ressources : setContentView, la classe R, @string.",
+  "dar": "Android Studio w SDK Android, tlata d fichiers dyal écran (layout, strings.xml, AndroidManifest.xml) w chkoun kaydir ach, w men b3d l3alaqa bin code Java w les ressources : setContentView, la classe R, @string.",
+  "en": "Android Studio and the Android SDK, the three files of a screen (layout, strings.xml, AndroidManifest.xml) and what each is responsible for, then the link between Java code and resources: setContentView, the R class, @string."
+ },
+ "estimatedMinutes": 35,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Android Studio et le SDK Android : qui fait quoi ?",
+    "dar": "1. Android Studio w SDK Android : chkoun kaydir ach ?",
+    "en": "1. Android Studio and the Android SDK: who does what?"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Pour développer une application Android **native** (en Java ou Kotlin, sans Flutter), on utilise deux choses différentes qu'il ne faut pas confondre : **l'outil où l'on écrit** et **les outils qui fabriquent l'application**.",
+    "dar": "Bach tdevelopper application Android **native** (b Java wla Kotlin, bla Flutter), kansta3mlou jouj 7wayej mkhtalfin w ma khassekch tkhallethom : **l'outil fin katkteb** w **les outils li kaysaybou l'application**.",
+    "en": "To build a **native** Android app (in Java or Kotlin, no Flutter) you use two different things that must not be confused: **the tool where you write** and **the tools that build the app**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Élément",
+     "dar": "L'élément",
+     "en": "Item"
+    },
+    {
+     "fr": "Définition",
+     "dar": "Ta3rif",
+     "en": "Definition"
+    },
+    {
+     "fr": "Ce qu'il contient",
+     "dar": "Chnou fih",
+     "en": "What it contains"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Android Studio**",
+      "dar": "**Android Studio**",
+      "en": "**Android Studio**"
+     },
+     {
+      "fr": "L'**environnement de développement (IDE)** officiel : c'est là qu'on **écrit le code**, qu'on **édite** les écrans et qu'on **débogue**.",
+      "dar": "**IDE** officiel : hna fin kat**kteb l code**, kat**modifi** les écrans w kat**débogui**.",
+      "en": "The official **IDE**: where you **write the code**, **edit** screens and **debug**."
+     },
+     {
+      "fr": "Éditeur de code, éditeur de layouts (Design / Code), **débogueur**, Logcat, gestionnaire d'émulateurs (AVD), lancement du build Gradle",
+      "dar": "Éditeur dyal code, éditeur dyal layouts (Design / Code), **débogueur**, Logcat, gestion dyal émulateurs (AVD), lancement dyal build Gradle",
+      "en": "Code editor, layout editor (Design / Code), **debugger**, Logcat, emulator manager (AVD), Gradle build"
+     }
+    ],
+    [
+     {
+      "fr": "**SDK Android**",
+      "dar": "**SDK Android**",
+      "en": "**Android SDK**"
+     },
+     {
+      "fr": "Le **Software Development Kit** : l'**ensemble des API et des outils** Android nécessaires pour **construire** l'application.",
+      "dar": "**Software Development Kit** : **majmou3a dyal API w outils** Android li khassin bach **tbni** l'application.",
+      "en": "The **Software Development Kit**: the **set of Android APIs and tools** needed to **build** the app."
+     },
+     {
+      "fr": "Les **API** (classes `android.*` : Activity, TextView, Button…), les **outils de compilation** (build-tools), **adb**, l'**émulateur** et les images système",
+      "dar": "Les **API** (classes `android.*` : Activity, TextView, Button…), **outils dyal compilation** (build-tools), **adb**, **émulateur** w images système",
+      "en": "The **APIs** (`android.*` classes: Activity, TextView, Button…), **build tools**, **adb**, the **emulator** and system images"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Android Studio = **l'atelier** (le bureau, l'écran, les outils pour écrire et chercher les erreurs). SDK = **les pièces et les machines** qui transforment ton code en application installable (APK). Sans SDK, Android Studio ne peut rien construire.",
+    "dar": "Android Studio = **l'atelier** (l'bureau, l'écran, outils bach tkteb w tqelleb 3la les erreurs). SDK = **les pièces w les machines** li kaydirou mn code dyalek application t9der tinstalliha (APK). Bla SDK, Android Studio ma y9der ybni walou.",
+    "en": "Android Studio = **the workshop** (desk, screen, tools to write and find errors). SDK = **the parts and machines** that turn your code into an installable app (APK). Without the SDK, Android Studio cannot build anything."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Ne réponds pas « Android Studio compile l'application » tout court. C'est le **SDK** (via Gradle) qui fournit les API et les outils de construction ; Android Studio est l'**éditeur et le débogueur** qui les utilise.",
+    "dar": "Ma tjawebch ghir « Android Studio kaycompili l'application ». **SDK** (b Gradle) howa li kay3ti les API w outils dyal construction ; Android Studio howa **l'éditeur w débogueur** li kaystakhdemhom.",
+    "en": "Do not just answer \"Android Studio compiles the app\". The **SDK** (through Gradle) provides the APIs and build tools; Android Studio is the **editor and debugger** that uses them."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-01",
+    "mob-02"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Trois fichiers, trois responsabilités",
+    "dar": "2. Tlata d fichiers, tlata d mas2ouliyat",
+    "en": "2. Three files, three responsibilities"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Un écran Android repose sur trois fichiers. Chacun a **une seule responsabilité** : c'est ce que le prof veut que tu saches dire.",
+    "dar": "Écran Android kay3tamed 3la tlata d fichiers. Kol wa7ed 3ando **mas2ouliya wa7da** : hadchi li bgha l prof t3ref tgoulo.",
+    "en": "An Android screen relies on three files. Each has **one responsibility**: that is what the professor wants you to be able to state."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Fichier",
+     "dar": "Fichier",
+     "en": "File"
+    },
+    {
+     "fr": "Responsabilité",
+     "dar": "Mas2ouliya",
+     "en": "Responsibility"
+    },
+    {
+     "fr": "Exemple de contenu",
+     "dar": "Mithal",
+     "en": "Example content"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "`res/layout/activity_main.xml`",
+      "dar": "`res/layout/activity_main.xml`",
+      "en": "`res/layout/activity_main.xml`"
+     },
+     {
+      "fr": "**Décrit les composants et leur disposition** (quels TextView, Button… et où ils sont placés).",
+      "dar": "**Kaywsef les composants w fin m7totin** (ach mn TextView, Button… w fin kaynin).",
+      "en": "**Describes the components and their layout** (which TextView, Button… and where they go)."
+     },
+     {
+      "fr": "Un `LinearLayout` qui contient un `TextView` et un `Button`",
+      "dar": "`LinearLayout` fih `TextView` w `Button`",
+      "en": "A `LinearLayout` holding a `TextView` and a `Button`"
+     }
+    ],
+    [
+     {
+      "fr": "`res/values/strings.xml`",
+      "dar": "`res/values/strings.xml`",
+      "en": "`res/values/strings.xml`"
+     },
+     {
+      "fr": "**Centralise les textes**, ce qui facilite leur **réutilisation** et leur **traduction**.",
+      "dar": "**Kayjme3 les textes f blasa wa7da**, bach ysahal **t3awed tsta3melhom** w **ttraduirihom**.",
+      "en": "**Centralises the texts**, which makes them easy to **reuse** and **translate**."
+     },
+     {
+      "fr": "`<string name=\"app_name\">Contacts</string>`",
+      "dar": "`<string name=\"app_name\">Contacts</string>`",
+      "en": "`<string name=\"app_name\">Contacts</string>`"
+     }
+    ],
+    [
+     {
+      "fr": "`AndroidManifest.xml`",
+      "dar": "`AndroidManifest.xml`",
+      "en": "`AndroidManifest.xml`"
+     },
+     {
+      "fr": "**Déclare les composants** de l'application, notamment les **Activity**, ainsi que les **permissions** nécessaires.",
+      "dar": "**Kaydeclari les composants** dyal l'application, khoussousan les **Activity**, w 7tta les **permissions** li khassa.",
+      "en": "**Declares the app's components**, especially the **Activities**, and the **permissions** it needs."
+     },
+     {
+      "fr": "`<activity android:name=\".MainActivity\">` et `<uses-permission android:name=\"android.permission.INTERNET\" />`",
+      "dar": "`<activity android:name=\".MainActivity\">` w `<uses-permission android:name=\"android.permission.INTERNET\" />`",
+      "en": "`<activity android:name=\".MainActivity\">` and `<uses-permission android:name=\"android.permission.INTERNET\" />`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**La phrase à retenir (diapo du prof)** : le **XML décrit l'interface**. L'**Activity porte le comportement**. Le **manifeste décrit les composants**.",
+    "dar": "**Jomla li khassek t7fed (diapo dyal prof)** : **XML kaywsef l'interface**. **Activity fiha comportement** (chnou kaywe9e3). **Manifeste kaywsef les composants**.",
+    "en": "**The sentence to remember (professor's slide)**: the **XML describes the interface**. The **Activity carries the behaviour**. The **manifest describes the components**."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\">\n\n    <!-- permission nécessaire pour accéder à Internet -->\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n\n    <application\n        android:label=\"@string/app_name\"\n        android:icon=\"@mipmap/ic_launcher\">\n\n        <!-- l'écran de démarrage : MAIN + LAUNCHER -->\n        <activity\n            android:name=\".MainActivity\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n\n        <!-- un deuxième écran : il doit aussi être déclaré -->\n        <activity android:name=\".DetailActivity\" />\n    </application>\n</manifest>",
+   "caption": {
+    "fr": "AndroidManifest.xml : deux Activity déclarées et une permission",
+    "dar": "AndroidManifest.xml : jouj Activity mdeclarin w permission",
+    "en": "AndroidManifest.xml: two declared Activities and one permission"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Si tu crées `DetailActivity.java` mais que tu **oublies de la déclarer** dans le manifeste, l'application **plante** au moment de l'ouvrir (*ActivityNotFoundException*). Créer la classe ne suffit pas.",
+    "dar": "Ila sayebti `DetailActivity.java` w **nsiti ma declarertihach** f manifeste, l'application kat**planti** mli t7elha (*ActivityNotFoundException*). Tsayeb classe bo7dha ma kafyach.",
+    "en": "If you create `DetailActivity.java` but **forget to declare it** in the manifest, the app **crashes** when opening it (*ActivityNotFoundException*). Creating the class is not enough."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Ne jamais écrire un texte **en dur** dans le layout (`android:text=\"Contacts\"`) : Android Studio affiche un avertissement. On écrit `android:text=\"@string/app_name\"` et le texte vit dans `strings.xml`. Pour traduire en anglais, on ajoute `res/values-en/strings.xml` avec les mêmes `name` : **le layout ne change pas**.",
+    "dar": "3mmrek ma tkteb texte **direct** f layout (`android:text=\"Contacts\"`) : Android Studio kay3tik avertissement. Katkteb `android:text=\"@string/app_name\"` w texte kayskon f `strings.xml`. Bach ttraduiri l anglais, katzid `res/values-en/strings.xml` b nefs les `name` : **layout ma kaytbeddelch**.",
+    "en": "Never **hard-code** text in the layout (`android:text=\"Contacts\"`): Android Studio warns you. Write `android:text=\"@string/app_name\"` and keep the text in `strings.xml`. To translate to English, add `res/values-en/strings.xml` with the same `name`s: **the layout does not change**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-03",
+    "mob-04",
+    "mob-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Le lien entre Java et les ressources",
+    "dar": "3. L3alaqa bin Java w les ressources",
+    "en": "3. The link between Java and resources"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "ScreenFilesFlow"
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "// Dans onCreate() de MainActivity\nsetContentView(R.layout.activity_main);\n\n// Dans strings.xml\n<string name=\"app_name\">Contacts</string>\n\n// Dans le fichier de mise en page\nandroid:text=\"@string/app_name\"",
+   "caption": {
+    "fr": "Les trois lignes de la diapo du prof",
+    "dar": "Tlata d sstour dyal diapo dyal prof",
+    "en": "The three lines of the professor's slide"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Lire ces lignes comme le prof",
+    "dar": "9ra had sstour b7al l prof",
+    "en": "Read these lines like the professor"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "setContentView charge l'interface",
+      "dar": "setContentView kaychargi l'interface",
+      "en": "setContentView loads the interface"
+     },
+     "body": {
+      "fr": "`setContentView(...)` **charge l'interface de l'Activity** : il lit le fichier XML et crée les vues (TextView, Button…) à l'écran. Sans cette ligne, l'Activity s'affiche **vide**.",
+      "dar": "`setContentView(...)` kay**chargi l'interface dyal Activity** : kay9ra fichier XML w kaysayb les vues (TextView, Button…) f l écran. Bla had ster, Activity katban **khawya**.",
+      "en": "`setContentView(...)` **loads the Activity's interface**: it reads the XML file and creates the views (TextView, Button…) on screen. Without it, the Activity shows **empty**."
+     }
+    },
+    {
+     "title": {
+      "fr": "R.layout.activity_main",
+      "dar": "R.layout.activity_main",
+      "en": "R.layout.activity_main"
+     },
+     "body": {
+      "fr": "`R` est une classe **générée automatiquement** par le build : elle donne un **identifiant entier** à chaque ressource. `R.layout.activity_main` **désigne la ressource XML `res/layout/activity_main.xml`, sans son extension**.",
+      "dar": "`R` classe kat**tsayb automatiquement** f build : kat3ti **identifiant (nombre)** l kol ressource. `R.layout.activity_main` kay**désigner ressource XML `res/layout/activity_main.xml`, bla extension dyalha**.",
+      "en": "`R` is a class **generated automatically** by the build: it gives each resource an **integer id**. `R.layout.activity_main` **designates the XML resource `res/layout/activity_main.xml`, without its extension**."
+     },
+     "why": {
+      "fr": "Écrire `R.layout.activity_main.xml` est une erreur de compilation.",
+      "dar": "Tkteb `R.layout.activity_main.xml` = erreur f compilation.",
+      "en": "Writing `R.layout.activity_main.xml` is a compile error."
+     }
+    },
+    {
+     "title": {
+      "fr": "@string/app_name",
+      "dar": "@string/app_name",
+      "en": "@string/app_name"
+     },
+     "body": {
+      "fr": "Dans un fichier XML, `@string/app_name` **réutilise le texte déclaré** dans `strings.xml` sous le nom `app_name`. À l'écran on lit **Contacts**.",
+      "dar": "F fichier XML, `@string/app_name` kay**3awed ysta3mel texte li mdeclari** f `strings.xml` b smiya `app_name`. F l écran kat9ra **Contacts**.",
+      "en": "In an XML file, `@string/app_name` **reuses the text declared** in `strings.xml` under the name `app_name`. The screen shows **Contacts**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Ressource",
+     "dar": "Ressource",
+     "en": "Resource"
+    },
+    {
+     "fr": "Depuis Java",
+     "dar": "Mn Java",
+     "en": "From Java"
+    },
+    {
+     "fr": "Depuis un XML",
+     "dar": "Mn XML",
+     "en": "From XML"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Un layout",
+      "dar": "Layout",
+      "en": "A layout"
+     },
+     {
+      "fr": "`R.layout.activity_main`",
+      "dar": "`R.layout.activity_main`",
+      "en": "`R.layout.activity_main`"
+     },
+     {
+      "fr": "`@layout/activity_main`",
+      "dar": "`@layout/activity_main`",
+      "en": "`@layout/activity_main`"
+     }
+    ],
+    [
+     {
+      "fr": "Un texte",
+      "dar": "Texte",
+      "en": "A string"
+     },
+     {
+      "fr": "`R.string.app_name` · `getString(R.string.app_name)`",
+      "dar": "`R.string.app_name` · `getString(R.string.app_name)`",
+      "en": "`R.string.app_name` · `getString(R.string.app_name)`"
+     },
+     {
+      "fr": "`@string/app_name`",
+      "dar": "`@string/app_name`",
+      "en": "`@string/app_name`"
+     }
+    ],
+    [
+     {
+      "fr": "Une vue (id)",
+      "dar": "View (id)",
+      "en": "A view (id)"
+     },
+     {
+      "fr": "`R.id.titre` · `findViewById(R.id.titre)`",
+      "dar": "`R.id.titre` · `findViewById(R.id.titre)`",
+      "en": "`R.id.titre` · `findViewById(R.id.titre)`"
+     },
+     {
+      "fr": "`@+id/titre` (le `+` **crée** l'id)",
+      "dar": "`@+id/titre` (`+` kay**sayb** l'id)",
+      "en": "`@+id/titre` (the `+` **creates** the id)"
+     }
+    ],
+    [
+     {
+      "fr": "Une couleur",
+      "dar": "Couleur",
+      "en": "A colour"
+     },
+     {
+      "fr": "`R.color.vert`",
+      "dar": "`R.color.vert`",
+      "en": "`R.color.vert`"
+     },
+     {
+      "fr": "`@color/vert`",
+      "dar": "`@color/vert`",
+      "en": "`@color/vert`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class MainActivity extends AppCompatActivity {\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);              // 1. charger l'interface\n\n        TextView titre = findViewById(R.id.titre);           // 2. récupérer une vue par son id\n        titre.setText(getString(R.string.app_name));         // 3. lui donner un texte de strings.xml\n    }\n}",
+   "caption": {
+    "fr": "MainActivity.java : l'Activity porte le comportement",
+    "dar": "MainActivity.java : Activity fiha comportement",
+    "en": "MainActivity.java: the Activity carries the behaviour"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "`findViewById(...)` **avant** `setContentView(...)` renvoie **null** (l'interface n'est pas encore chargée) → *NullPointerException* au `setText`. Toujours `setContentView` **d'abord**.",
+    "dar": "`findViewById(...)` **9bel** `setContentView(...)` kayrje3 **null** (interface mazal ma tchargat) → *NullPointerException* f `setText`. Dima `setContentView` **lowel**.",
+    "en": "`findViewById(...)` **before** `setContentView(...)` returns **null** (the interface is not loaded yet) → *NullPointerException* on `setText`. Always `setContentView` **first**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Question type : « Quel est le rôle de `setContentView(R.layout.activity_main)` ? » → **Il charge l'interface de l'Activity ; `R.layout.activity_main` désigne la ressource XML `activity_main.xml` sans son extension.** Et « Pourquoi `@string/app_name` ? » → **pour réutiliser le texte déclaré dans strings.xml (réutilisation + traduction).**",
+    "dar": "Sou2al : « Chnou kaydir `setContentView(R.layout.activity_main)` ? » → **Kaychargi l'interface dyal Activity ; `R.layout.activity_main` kaydesigner ressource XML `activity_main.xml` bla extension.** W « 3lach `@string/app_name` ? » → **bach n3awdou nsta3mlou texte li f strings.xml (réutilisation + traduction).**",
+    "en": "Typical question: \"What does `setContentView(R.layout.activity_main)` do?\" → **It loads the Activity's interface; `R.layout.activity_main` designates the XML resource `activity_main.xml` without its extension.** And \"Why `@string/app_name`?\" → **to reuse the text declared in strings.xml (reuse + translation).**"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-06",
+    "mob-07",
+    "mob-08"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Android Studio = IDE (éditeur, débogueur, émulateur). SDK Android = API + outils nécessaires pour construire l'application.",
+   "dar": "Android Studio = IDE (éditeur, débogueur). SDK = API + outils bach tbni l'app.",
+   "en": "Android Studio = IDE (editor, debugger, emulator). Android SDK = APIs + tools needed to build the app."
+  },
+  {
+   "fr": "activity_main.xml décrit les composants et leur disposition ; strings.xml centralise les textes (réutilisation, traduction) ; AndroidManifest.xml déclare les Activity et les permissions.",
+   "dar": "Layout = composants ; strings = textes ; manifeste = Activity + permissions.",
+   "en": "activity_main.xml = components and layout; strings.xml = texts (reuse, translation); manifest = Activities and permissions."
+  },
+  {
+   "fr": "Le XML décrit l'interface. L'Activity porte le comportement. Le manifeste décrit les composants.",
+   "dar": "XML = interface ; Activity = comportement ; manifeste = composants.",
+   "en": "XML = interface; Activity = behaviour; manifest = components."
+  },
+  {
+   "fr": "setContentView(R.layout.activity_main) charge l'interface ; R.layout.activity_main désigne le XML sans son extension.",
+   "dar": "setContentView kaychargi l'interface ; R.layout bla .xml.",
+   "en": "setContentView loads the interface; R.layout.activity_main = the XML without its extension."
+  },
+  {
+   "fr": "@string/app_name réutilise le texte déclaré dans strings.xml ; @+id/x crée un id, R.id.x le lit en Java.",
+   "dar": "@string = texte mn strings.xml ; @+id kaysayb id.",
+   "en": "@string/app_name reuses the declared text; @+id/x creates an id, R.id.x reads it in Java."
+  }
+ ]
+}

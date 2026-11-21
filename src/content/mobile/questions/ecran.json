@@ -1,0 +1,524 @@
+[
+ {
+  "id": "mob-01",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle d'**Android Studio** ?",
+   "dar": "Chnou dor dyal **Android Studio** ?",
+   "en": "What is **Android Studio** for?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "C'est l'IDE : éditeur de code, éditeur de layouts et débogueur",
+     "dar": "IDE : éditeur dyal code, layouts w débogueur",
+     "en": "The IDE: code editor, layout editor and debugger"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "C'est l'ensemble des API Android",
+     "dar": "Majmou3a dyal API Android",
+     "en": "The set of Android APIs"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "C'est le fichier qui déclare les Activity",
+     "dar": "Fichier li kaydeclari les Activity",
+     "en": "The file that declares Activities"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Android Studio** = l'environnement où l'on **écrit le code** et où l'on **débogue**. Les API et outils de construction viennent du **SDK**.",
+   "dar": "Android Studio = fin katkteb l code w katdébogui. API w outils = SDK.",
+   "en": "**Android Studio** = where you **write code** and **debug**. APIs and build tools come from the **SDK**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça, c'est le SDK Android.",
+    "dar": "Hadak SDK.",
+    "en": "That is the Android SDK."
+   },
+   "c": {
+    "fr": "Ça, c'est AndroidManifest.xml.",
+    "dar": "Hadak manifeste.",
+    "en": "That is AndroidManifest.xml."
+   }
+  },
+  "tags": [
+   "outils"
+  ]
+ },
+ {
+  "id": "mob-02",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Le **SDK Android** est…",
+   "dar": "**SDK Android** howa…",
+   "en": "The **Android SDK** is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "l'ensemble des API et des outils Android nécessaires pour construire l'application",
+     "dar": "API + outils bach tbni l'app",
+     "en": "the set of Android APIs and tools needed to build the app"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "un émulateur seulement",
+     "dar": "ghir émulateur",
+     "en": "only an emulator"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "un langage de programmation",
+     "dar": "langage",
+     "en": "a programming language"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "SDK = **Software Development Kit** : API (`android.*`), build-tools, adb, émulateur, images système.",
+   "dar": "SDK = API + build-tools + adb + émulateur.",
+   "en": "SDK = APIs (`android.*`), build tools, adb, emulator, system images."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "L'émulateur n'est qu'un des outils du SDK.",
+    "dar": "Émulateur jouz2 mn SDK.",
+    "en": "The emulator is only one SDK tool."
+   },
+   "c": {
+    "fr": "Le langage est Java (ou Kotlin).",
+    "dar": "Langage = Java/Kotlin.",
+    "en": "The language is Java (or Kotlin)."
+   }
+  },
+  "tags": [
+   "outils"
+  ]
+ },
+ {
+  "id": "mob-03",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel fichier **décrit les composants d'un écran et leur disposition** ?",
+   "dar": "Ach mn fichier kaywsef composants dyal écran w fin m7totin ?",
+   "en": "Which file **describes the components of a screen and their layout**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "res/layout/activity_main.xml",
+     "dar": "res/layout/activity_main.xml",
+     "en": "res/layout/activity_main.xml"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "res/values/strings.xml",
+     "dar": "res/values/strings.xml",
+     "en": "res/values/strings.xml"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "AndroidManifest.xml",
+     "dar": "AndroidManifest.xml",
+     "en": "AndroidManifest.xml"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le **layout** décrit l'interface : quels TextView, Button… et où.",
+   "dar": "Layout = interface.",
+   "en": "The **layout** describes the interface."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "strings.xml centralise les textes.",
+    "dar": "strings = textes.",
+    "en": "strings.xml holds texts."
+   },
+   "c": {
+    "fr": "Le manifeste déclare les composants et permissions.",
+    "dar": "Manifeste = composants.",
+    "en": "The manifest declares components."
+   }
+  },
+  "tags": [
+   "fichiers"
+  ]
+ },
+ {
+  "id": "mob-04",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Que **déclare** AndroidManifest.xml ?",
+   "dar": "Chnou kaydeclari AndroidManifest.xml ?",
+   "en": "What does AndroidManifest.xml **declare**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les Activity de l'application",
+     "dar": "Les Activity",
+     "en": "The Activities"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les permissions nécessaires (ex. INTERNET)",
+     "dar": "Permissions (INTERNET)",
+     "en": "Required permissions (e.g. INTERNET)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La disposition des boutons",
+     "dar": "Disposition dyal boutons",
+     "en": "Button positions"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Les traductions des textes",
+     "dar": "Traductions",
+     "en": "Text translations"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "Manifeste = **composants** (Activity…) + **permissions**. La disposition est dans le layout, les textes dans strings.xml.",
+   "dar": "Composants + permissions.",
+   "en": "Components (Activities…) + permissions."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "C'est le rôle du layout.",
+    "dar": "Layout.",
+    "en": "That's the layout."
+   },
+   "d": {
+    "fr": "C'est le rôle de strings.xml.",
+    "dar": "strings.xml.",
+    "en": "That's strings.xml."
+   }
+  },
+  "tags": [
+   "fichiers",
+   "manifeste"
+  ]
+ },
+ {
+  "id": "mob-05",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi mettre les textes dans **strings.xml** plutôt qu'en dur dans le layout ?",
+   "dar": "3lach textes f strings.xml machi direct f layout ?",
+   "en": "Why put texts in **strings.xml** instead of hard-coding them?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Pour les centraliser : réutilisation et traduction faciles",
+     "dar": "Bach yjtam3ou : réutilisation w traduction",
+     "en": "To centralise them: easy reuse and translation"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Parce que le layout ne peut pas contenir de texte",
+     "dar": "Layout ma y9derch ychd texte",
+     "en": "Because layouts cannot contain text"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour accélérer l'application",
+     "dar": "Bach l'app tsra3",
+     "en": "To speed up the app"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "strings.xml **centralise les textes**, ce qui facilite leur **réutilisation** et leur **traduction** (un `values-en/strings.xml` suffit).",
+   "dar": "Réutilisation + traduction.",
+   "en": "Reuse + translation."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il peut (texte en dur), mais c'est déconseillé.",
+    "dar": "Y9der walakin ma mzyanch.",
+    "en": "It can (hard-coded), but it is discouraged."
+   },
+   "c": {
+    "fr": "Aucun effet sur la vitesse.",
+    "dar": "Ma 3andha 3ala9a b sor3a.",
+    "en": "No effect on speed."
+   }
+  },
+  "tags": [
+   "fichiers",
+   "strings"
+  ]
+ },
+ {
+  "id": "mob-06",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait `setContentView(R.layout.activity_main)` ?",
+   "dar": "Chnou kaydir `setContentView(R.layout.activity_main)` ?",
+   "en": "What does `setContentView(R.layout.activity_main)` do?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Il charge l'interface de l'Activity à partir du layout",
+     "dar": "Kaychargi l'interface mn layout",
+     "en": "Loads the Activity's interface from the layout"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Il déclare l'Activity",
+     "dar": "Kaydeclari Activity",
+     "en": "Declares the Activity"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il crée le fichier activity_main.xml",
+     "dar": "Kaysayb fichier",
+     "en": "Creates activity_main.xml"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`setContentView` **charge l'interface de l'Activity**. `R.layout.activity_main` désigne la ressource XML.",
+   "dar": "Kaychargi l'interface.",
+   "en": "Loads the Activity's interface."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La déclaration se fait dans le manifeste.",
+    "dar": "Manifeste.",
+    "en": "Declaration is in the manifest."
+   },
+   "c": {
+    "fr": "Le fichier existe déjà dans res/layout.",
+    "dar": "Fichier deja kayn.",
+    "en": "The file already exists."
+   }
+  },
+  "tags": [
+   "java-res"
+  ]
+ },
+ {
+  "id": "mob-07",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`R.layout.activity_main` désigne…",
+   "dar": "`R.layout.activity_main` kaydesigner…",
+   "en": "`R.layout.activity_main` designates…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "la ressource res/layout/activity_main.xml, sans son extension",
+     "dar": "ressource activity_main.xml bla extension",
+     "en": "the res/layout/activity_main.xml resource, without its extension"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "une classe Java écrite par le développeur",
+     "dar": "classe Java li kteb dev",
+     "en": "a Java class written by the developer"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "une chaîne de caractères",
+     "dar": "texte",
+     "en": "a string"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`R` est **générée automatiquement** ; chaque ressource y a un identifiant. On écrit le nom **sans `.xml`**.",
+   "dar": "R automatique ; bla .xml.",
+   "en": "`R` is **auto-generated**; no `.xml`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "R est générée, on ne l'écrit pas.",
+    "dar": "R automatique.",
+    "en": "R is generated."
+   },
+   "c": {
+    "fr": "C'est R.string.x pour un texte.",
+    "dar": "R.string.",
+    "en": "That would be R.string.x."
+   }
+  },
+  "tags": [
+   "java-res"
+  ]
+ },
+ {
+  "id": "mob-08",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans un layout, `android:text=\"@string/app_name\"`…",
+   "dar": "F layout, `android:text=\"@string/app_name\"`…",
+   "en": "In a layout, `android:text=\"@string/app_name\"`…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "réutilise le texte déclaré dans strings.xml sous le nom app_name",
+     "dar": "kay3awed ysta3mel texte dyal strings.xml",
+     "en": "reuses the text declared in strings.xml as app_name"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "affiche littéralement « @string/app_name »",
+     "dar": "kayban « @string/app_name »",
+     "en": "literally shows \"@string/app_name\""
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "crée une nouvelle chaîne",
+     "dar": "kaysayb texte jdid",
+     "en": "creates a new string"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Avec `<string name=\"app_name\">Contacts</string>`, l'écran affiche **Contacts**.",
+   "dar": "Kayban Contacts.",
+   "en": "Shows **Contacts**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le préfixe @ indique une référence de ressource.",
+    "dar": "@ = référence.",
+    "en": "@ means a resource reference."
+   },
+   "c": {
+    "fr": "Il faut que la chaîne existe déjà.",
+    "dar": "Khass texte ykoun kayn.",
+    "en": "The string must already exist."
+   }
+  },
+  "tags": [
+   "java-res",
+   "strings"
+  ]
+ },
+ {
+  "id": "mob-09",
+  "module": "mobile",
+  "chapter": "ecran",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Écris la ligne (Java) qui charge l'interface `activity_main` dans onCreate().",
+   "dar": "Kteb ster li kaychargi `activity_main` f onCreate().",
+   "en": "Write the Java line that loads `activity_main` in onCreate()."
+  },
+  "answer": [
+   "setContentView(R.layout.activity_main);",
+   "setContentView(R.layout.activity_main)"
+  ],
+  "explanation": {
+   "fr": "Pas d'extension .xml, et R.layout (pas R.id).",
+   "dar": "Bla .xml, R.layout.",
+   "en": "No .xml, and R.layout (not R.id)."
+  },
+  "wrongExplanations": {
+   "setContentView(R.layout.activity_main.xml);": {
+    "fr": "Pas d'extension .xml dans R.",
+    "dar": "Bla .xml.",
+    "en": "No .xml in R."
+   },
+   "setContentView(activity_main);": {
+    "fr": "Il faut passer par R.layout.",
+    "dar": "Khass R.layout.",
+    "en": "Use R.layout."
+   }
+  },
+  "tags": [
+   "java-res"
+  ]
+ }
+]

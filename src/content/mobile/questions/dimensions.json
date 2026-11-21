@@ -1,0 +1,499 @@
+[
+ {
+  "id": "mob-20",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle unité pour la **taille d'un texte** ?",
+   "dar": "Ach mn unité l **taille dyal texte** ?",
+   "en": "Which unit for **text size**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "sp",
+     "dar": "sp",
+     "en": "sp"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "dp",
+     "dar": "dp",
+     "en": "dp"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "px",
+     "dar": "px",
+     "en": "px"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**sp** : tient compte de la densité **et** du réglage de taille de police de l'utilisateur. Ex. 18sp.",
+   "dar": "sp.",
+   "en": "**sp**: density **and** user font size."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "dp ignore le réglage de police.",
+    "dar": "dp ma kaytbe3ch police.",
+    "en": "dp ignores the font setting."
+   },
+   "c": {
+    "fr": "px dépend de la densité.",
+    "dar": "px kaytbe3 densité.",
+    "en": "px depends on density."
+   }
+  },
+  "tags": [
+   "unites"
+  ]
+ },
+ {
+  "id": "mob-21",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi éviter le **px** pour les dimensions de l'interface ?",
+   "dar": "3lach ntjnbou **px** ?",
+   "en": "Why avoid **px** for UI dimensions?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Un même nombre de pixels n'a pas la même taille apparente selon la densité",
+     "dar": "Nefs pixels ma 3andhomch nefs taille",
+     "en": "The same px count looks different depending on density"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Android n'accepte pas l'unité px",
+     "dar": "Android ma ykbelch px",
+     "en": "Android rejects px"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le px est réservé au texte",
+     "dar": "px l texte",
+     "en": "px is for text only"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le pixel brut **dépend de la densité** ; dp est indépendant.",
+   "dar": "px kaytbe3 densité.",
+   "en": "Raw px **depends on density**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il l'accepte, mais c'est déconseillé.",
+    "dar": "Kaykbelha walakin la.",
+    "en": "It accepts it, but it is discouraged."
+   },
+   "c": {
+    "fr": "Faux.",
+    "dar": "Ghalat.",
+    "en": "False."
+   }
+  },
+  "tags": [
+   "unites"
+  ]
+ },
+ {
+  "id": "mob-22",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Combien de pixels fait un composant de **48dp** sur un écran **xxhdpi (480 dpi)** ?",
+   "dar": "**48dp** f **480 dpi** = ch7al px ?",
+   "en": "How many pixels is **48dp** on **xxhdpi (480 dpi)**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "144 px",
+     "dar": "144 px",
+     "en": "144 px"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "48 px",
+     "dar": "48 px",
+     "en": "48 px"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "96 px",
+     "dar": "96 px",
+     "en": "96 px"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "72 px",
+     "dar": "72 px",
+     "en": "72 px"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "px = 48 × 480 / 160 = 48 × 3 = **144**.",
+   "dar": "48 × 3 = 144.",
+   "en": "48 × 3 = 144."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Seulement à 160 dpi (mdpi).",
+    "dar": "Ghir f 160 dpi.",
+    "en": "Only at 160 dpi."
+   },
+   "c": {
+    "fr": "C'est xhdpi (320 dpi, ×2).",
+    "dar": "xhdpi.",
+    "en": "That's xhdpi."
+   },
+   "d": {
+    "fr": "C'est hdpi (240 dpi, ×1,5).",
+    "dar": "hdpi.",
+    "en": "That's hdpi."
+   }
+  },
+  "tags": [
+   "unites",
+   "calcul"
+  ]
+ },
+ {
+  "id": "mob-23",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "`wrap_content` signifie…",
+   "dar": "`wrap_content` ma3naha…",
+   "en": "`wrap_content` means…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "la vue adapte sa taille à son contenu (avec padding)",
+     "dar": "taille 3la 7sab contenu",
+     "en": "the view sizes to its content (with padding)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "la vue prend toute la place du parent",
+     "dar": "ga3 l blasa dyal parent",
+     "en": "the view takes all the parent space"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la taille est 0",
+     "dar": "taille 0",
+     "en": "the size is 0"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "wrap_content = taille du **contenu** + marges internes + contraintes de taille.",
+   "dar": "Contenu.",
+   "en": "Content size."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est match_parent.",
+    "dar": "match_parent.",
+    "en": "That's match_parent."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "dimensions"
+  ]
+ },
+ {
+  "id": "mob-24",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans un LinearLayout : largeur `match_parent`, hauteur `wrap_content`. Le bouton…",
+   "dar": "LinearLayout : l3ard match_parent, tol wrap_content. Bouton…",
+   "en": "In a LinearLayout: width `match_parent`, height `wrap_content`. The button…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "prend la largeur disponible et ajuste sa hauteur",
+     "dar": "kayakhod l3ard w kay3dl tol",
+     "en": "takes the available width and adjusts its height"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "remplit tout l'écran",
+     "dar": "kay3mmer l écran",
+     "en": "fills the whole screen"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "est aussi petit que son texte dans les deux sens",
+     "dar": "sghir 3la 7sab texte",
+     "en": "is as small as its text both ways"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "C'est l'exemple de la diapo 4.",
+   "dar": "Mithal dyal diapo 4.",
+   "en": "Slide 4 example."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La hauteur est wrap_content.",
+    "dar": "Tol wrap_content.",
+    "en": "Height is wrap_content."
+   },
+   "c": {
+    "fr": "La largeur est match_parent.",
+    "dar": "L3ard match_parent.",
+    "en": "Width is match_parent."
+   }
+  },
+  "tags": [
+   "dimensions"
+  ]
+ },
+ {
+  "id": "mob-25",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans un **ConstraintLayout**, `android:layout_width=\"0dp\"` signifie…",
+   "dar": "F **ConstraintLayout**, `0dp` ma3naha…",
+   "en": "In a **ConstraintLayout**, `layout_width=\"0dp\"` means…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "« match constraints » : la largeur dépend des contraintes",
+     "dar": "match constraints",
+     "en": "\"match constraints\": width depends on constraints"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "la vue est invisible (largeur nulle)",
+     "dar": "view ma katbanch",
+     "en": "the view is invisible"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la même chose que wrap_content",
+     "dar": "b7al wrap_content",
+     "en": "same as wrap_content"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "0dp = **match constraints** : la vue s'étire entre ses contraintes (ex. Start et End au parent).",
+   "dar": "Katmedd bin contraintes.",
+   "en": "Stretches between its constraints."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Piège : 0dp ne veut pas dire taille zéro ici.",
+    "dar": "Fekh : machi zéro.",
+    "en": "Trap: not zero here."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "constraint"
+  ]
+ },
+ {
+  "id": "mob-26",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un EditText dans un ConstraintLayout doit occuper toute la largeur. Quelle écriture est recommandée ?",
+   "dar": "EditText khasso l3ard kamel f ConstraintLayout. Chnou mzyan ?",
+   "en": "An EditText in a ConstraintLayout must span the width. Recommended?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "layout_width=\"0dp\" + constraintStart_toStartOf et constraintEnd_toEndOf=\"parent\"",
+     "dar": "0dp + Start/End parent",
+     "en": "0dp + Start/End to parent"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "layout_width=\"match_parent\" sans contraintes",
+     "dar": "match_parent bla contraintes",
+     "en": "match_parent without constraints"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "layout_width=\"0dp\" sans contraintes",
+     "dar": "0dp bla contraintes",
+     "en": "0dp without constraints"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "0dp + les **deux** contraintes opposées. match_parent n'est pas recommandé pour les enfants d'un ConstraintLayout.",
+   "dar": "0dp + jouj contraintes.",
+   "en": "0dp + both opposite constraints."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Déconseillé dans ConstraintLayout.",
+    "dar": "Ma mzyanch.",
+    "en": "Discouraged in ConstraintLayout."
+   },
+   "c": {
+    "fr": "Sans contraintes, 0dp ne s'étire pas.",
+    "dar": "Bla contraintes ma kaytmeddch.",
+    "en": "Without constraints 0dp does not stretch."
+   }
+  },
+  "tags": [
+   "constraint"
+  ]
+ },
+ {
+  "id": "mob-27",
+  "module": "mobile",
+  "chapter": "dimensions",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles écritures sont **correctes** ?",
+   "dar": "Chnou s7i7 ?",
+   "en": "Which are **correct**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "android:textSize=\"18sp\"",
+     "dar": "android:textSize=\"18sp\"",
+     "en": "android:textSize=\"18sp\""
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "android:layout_width=\"48dp\"",
+     "dar": "android:layout_width=\"48dp\"",
+     "en": "android:layout_width=\"48dp\""
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "android:textSize=\"18dp\"",
+     "dar": "android:textSize=\"18dp\"",
+     "en": "android:textSize=\"18dp\""
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "android:layout_width=\"48px\"",
+     "dar": "android:layout_width=\"48px\"",
+     "en": "android:layout_width=\"48px\""
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "sp pour le texte, dp pour les dimensions.",
+   "dar": "sp texte, dp dimensions.",
+   "en": "sp for text, dp for dimensions."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "dp ignore la taille de police de l'utilisateur.",
+    "dar": "dp machi l texte.",
+    "en": "dp ignores the user font size."
+   },
+   "d": {
+    "fr": "px dépend de la densité.",
+    "dar": "px kaytbe3 densité.",
+    "en": "px depends on density."
+   }
+  },
+  "tags": [
+   "unites"
+  ]
+ }
+]

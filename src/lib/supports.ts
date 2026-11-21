@@ -46,8 +46,16 @@ export function parseSupport(path: string, url: string): Support | null {
   return { module, order, kind, title, url, ext: ext.toLowerCase(), file: `${base}.${ext}` };
 }
 
-export const SUPPORTS: Support[] = Object.entries(files)
-  .map(([p, u]) => parseSupport(p, u))
+/**
+ * Documents that stay on the professors' Drive (not downloadable as files here): opened in a new tab,
+ * readable by anyone enrolled in the Classroom course.
+ */
+const DRIVE_LINKS: Support[] = [
+  { module: 'mobile', order: 6, kind: 'controle', title: 'Contrôle 2025-2026 (26/11/2025)', url: 'https://drive.google.com/file/d/1y9ARCBkWTF4EpA47cvKs_rT_vqaqG6cc/view', ext: 'link', file: 'Contrôle_Mobile_2025.pdf' },
+  { module: 'mobile', order: 7, kind: 'controle', title: 'Rattrapage 2025-2026 (03/01/2026)', url: 'https://drive.google.com/file/d/1vLdYnTC1ZfAsWtIUwKUxTzyLSarPV0aE/view', ext: 'link', file: 'ContrôleRattrapage_Mobile_2025.pdf' }
+];
+
+export const SUPPORTS: Support[] = [...Object.entries(files).map(([p, u]) => parseSupport(p, u)), ...DRIVE_LINKS]
   .filter((x): x is Support => !!x)
   .sort((a, b) => a.module.localeCompare(b.module) || a.order - b.order || a.title.localeCompare(b.title));
 

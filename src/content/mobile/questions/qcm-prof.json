@@ -1,0 +1,2046 @@
+[
+ {
+  "id": "mob-q1",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle différence distingue Android Studio du SDK Android ?",
+   "dar": "Quelle différence distingue Android Studio du SDK Android ?",
+   "en": "Quelle différence distingue Android Studio du SDK Android ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Android Studio est un langage et le SDK un téléphone.",
+     "dar": "Android Studio est un langage et le SDK un téléphone.",
+     "en": "Android Studio est un langage et le SDK un téléphone."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Android Studio est un IDE ; le SDK fournit les API et outils Android.",
+     "dar": "Android Studio est un IDE ; le SDK fournit les API et outils Android.",
+     "en": "Android Studio est un IDE ; le SDK fournit les API et outils Android."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le SDK sert uniquement à écrire du XML.",
+     "dar": "Le SDK sert uniquement à écrire du XML.",
+     "en": "Le SDK sert uniquement à écrire du XML."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Android Studio remplace toutes les API Android.",
+     "dar": "Android Studio remplace toutes les API Android.",
+     "en": "Android Studio remplace toutes les API Android."
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Android Studio = IDE (éditeur, débogueur) ; SDK = API + outils pour construire l'application.",
+   "dar": "Android Studio = IDE (éditeur, débogueur) ; SDK = API + outils pour construire l'application.",
+   "en": "Android Studio = IDE (éditeur, débogueur) ; SDK = API + outils pour construire l'application."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ni l'un ni l'autre : le langage est Java/Kotlin.",
+    "dar": "Ni l'un ni l'autre : le langage est Java/Kotlin.",
+    "en": "Ni l'un ni l'autre : le langage est Java/Kotlin."
+   },
+   "c": {
+    "fr": "Le SDK contient bien plus : API, build-tools, émulateur.",
+    "dar": "Le SDK contient bien plus : API, build-tools, émulateur.",
+    "en": "Le SDK contient bien plus : API, build-tools, émulateur."
+   },
+   "d": {
+    "fr": "Android Studio utilise les API du SDK, il ne les remplace pas.",
+    "dar": "Android Studio utilise les API du SDK, il ne les remplace pas.",
+    "en": "Android Studio utilise les API du SDK, il ne les remplace pas."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "outils"
+  ]
+ },
+ {
+  "id": "mob-q2",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de activity_main.xml ?",
+   "dar": "Quel est le rôle de activity_main.xml ?",
+   "en": "Quel est le rôle de activity_main.xml ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Déclarer les permissions.",
+     "dar": "Déclarer les permissions.",
+     "en": "Déclarer les permissions."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Stocker les traductions.",
+     "dar": "Stocker les traductions.",
+     "en": "Stocker les traductions."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Décrire les vues et leur disposition dans une interface.",
+     "dar": "Décrire les vues et leur disposition dans une interface.",
+     "en": "Décrire les vues et leur disposition dans une interface."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Compter les contacts.",
+     "dar": "Compter les contacts.",
+     "en": "Compter les contacts."
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "Le layout décrit les composants et leur disposition.",
+   "dar": "Le layout décrit les composants et leur disposition.",
+   "en": "Le layout décrit les composants et leur disposition."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est le manifeste.",
+    "dar": "C'est le manifeste.",
+    "en": "C'est le manifeste."
+   },
+   "b": {
+    "fr": "C'est strings.xml (values-xx).",
+    "dar": "C'est strings.xml (values-xx).",
+    "en": "C'est strings.xml (values-xx)."
+   },
+   "d": {
+    "fr": "C'est getItemCount() d'un adaptateur.",
+    "dar": "C'est getItemCount() d'un adaptateur.",
+    "en": "C'est getItemCount() d'un adaptateur."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "fichiers"
+  ]
+ },
+ {
+  "id": "mob-q3",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de strings.xml ?",
+   "dar": "Quel est le rôle de strings.xml ?",
+   "en": "Quel est le rôle de strings.xml ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Centraliser les ressources textuelles réutilisables et traduisibles.",
+     "dar": "Centraliser les ressources textuelles réutilisables et traduisibles.",
+     "en": "Centraliser les ressources textuelles réutilisables et traduisibles."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Déclarer toutes les Activity.",
+     "dar": "Déclarer toutes les Activity.",
+     "en": "Déclarer toutes les Activity."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Définir le cycle de vie.",
+     "dar": "Définir le cycle de vie.",
+     "en": "Définir le cycle de vie."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Créer les ViewHolder.",
+     "dar": "Créer les ViewHolder.",
+     "en": "Créer les ViewHolder."
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "strings.xml centralise les textes : réutilisation et traduction.",
+   "dar": "strings.xml centralise les textes : réutilisation et traduction.",
+   "en": "strings.xml centralise les textes : réutilisation et traduction."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est le manifeste.",
+    "dar": "C'est le manifeste.",
+    "en": "C'est le manifeste."
+   },
+   "c": {
+    "fr": "Le cycle de vie est géré par Android et les callbacks de l'Activity.",
+    "dar": "Le cycle de vie est géré par Android et les callbacks de l'Activity.",
+    "en": "Le cycle de vie est géré par Android et les callbacks de l'Activity."
+   },
+   "d": {
+    "fr": "C'est onCreateViewHolder().",
+    "dar": "C'est onCreateViewHolder().",
+    "en": "C'est onCreateViewHolder()."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "fichiers"
+  ]
+ },
+ {
+  "id": "mob-q4",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle d'AndroidManifest.xml ?",
+   "dar": "Quel est le rôle d'AndroidManifest.xml ?",
+   "en": "Quel est le rôle d'AndroidManifest.xml ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Positionner les boutons.",
+     "dar": "Positionner les boutons.",
+     "en": "Positionner les boutons."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Remplir chaque ligne d'une liste.",
+     "dar": "Remplir chaque ligne d'une liste.",
+     "en": "Remplir chaque ligne d'une liste."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Définir exclusivement les tailles de police.",
+     "dar": "Définir exclusivement les tailles de police.",
+     "en": "Définir exclusivement les tailles de police."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Déclarer notamment les composants et les permissions de l'application.",
+     "dar": "Déclarer notamment les composants et les permissions de l'application.",
+     "en": "Déclarer notamment les composants et les permissions de l'application."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "Le manifeste déclare les composants (Activity…) et les permissions.",
+   "dar": "Le manifeste déclare les composants (Activity…) et les permissions.",
+   "en": "Le manifeste déclare les composants (Activity…) et les permissions."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est le layout.",
+    "dar": "C'est le layout.",
+    "en": "C'est le layout."
+   },
+   "b": {
+    "fr": "C'est onBindViewHolder().",
+    "dar": "C'est onBindViewHolder().",
+    "en": "C'est onBindViewHolder()."
+   },
+   "c": {
+    "fr": "Les tailles de police sont dans les layouts / styles.",
+    "dar": "Les tailles de police sont dans les layouts / styles.",
+    "en": "Les tailles de police sont dans les layouts / styles."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "fichiers"
+  ]
+ },
+ {
+  "id": "mob-q5",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une Activity au premier plan devient complètement invisible après un appui sur Accueil. Quels callbacks habituels sont appelés, dans cet ordre ?",
+   "dar": "Une Activity au premier plan devient complètement invisible après un appui sur Accueil. Quels callbacks habituels sont appelés, dans cet ordre ?",
+   "en": "Une Activity au premier plan devient complètement invisible après un appui sur Accueil. Quels callbacks habituels sont appelés, dans cet ordre ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onStop(), onPause()",
+     "dar": "onStop(), onPause()",
+     "en": "onStop(), onPause()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onPause(), onStop()",
+     "dar": "onPause(), onStop()",
+     "en": "onPause(), onStop()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onCreate(), onResume()",
+     "dar": "onCreate(), onResume()",
+     "en": "onCreate(), onResume()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onRestart(), onDestroy()",
+     "dar": "onRestart(), onDestroy()",
+     "en": "onRestart(), onDestroy()"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Elle perd d'abord le premier plan (onPause) puis n'est plus visible (onStop).",
+   "dar": "Elle perd d'abord le premier plan (onPause) puis n'est plus visible (onStop).",
+   "en": "Elle perd d'abord le premier plan (onPause) puis n'est plus visible (onStop)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ordre inversé.",
+    "dar": "Ordre inversé.",
+    "en": "Ordre inversé."
+   },
+   "c": {
+    "fr": "Ce sont des méthodes de lancement.",
+    "dar": "Ce sont des méthodes de lancement.",
+    "en": "Ce sont des méthodes de lancement."
+   },
+   "d": {
+    "fr": "onRestart sert au retour ; pas de destruction ici.",
+    "dar": "onRestart sert au retour ; pas de destruction ici.",
+    "en": "onRestart sert au retour ; pas de destruction ici."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "cycle"
+  ]
+ },
+ {
+  "id": "mob-q6",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "L'Activity précédente est arrêtée mais n'a pas été détruite. Quelle est la séquence habituelle au retour ?",
+   "dar": "L'Activity précédente est arrêtée mais n'a pas été détruite. Quelle est la séquence habituelle au retour ?",
+   "en": "L'Activity précédente est arrêtée mais n'a pas été détruite. Quelle est la séquence habituelle au retour ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onCreate(), onStart(), onResume()",
+     "dar": "onCreate(), onStart(), onResume()",
+     "en": "onCreate(), onStart(), onResume()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onPause(), onStart(), onResume()",
+     "dar": "onPause(), onStart(), onResume()",
+     "en": "onPause(), onStart(), onResume()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onRestart(), onStart(), onResume()",
+     "dar": "onRestart(), onStart(), onResume()",
+     "en": "onRestart(), onStart(), onResume()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onDestroy(), onRestart(), onResume()",
+     "dar": "onDestroy(), onRestart(), onResume()",
+     "en": "onDestroy(), onRestart(), onResume()"
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "Même instance : onRestart, onStart, onResume ; onCreate ne se répète pas.",
+   "dar": "Même instance : onRestart, onStart, onResume ; onCreate ne se répète pas.",
+   "en": "Même instance : onRestart, onStart, onResume ; onCreate ne se répète pas."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "onCreate seulement pour une nouvelle instance.",
+    "dar": "onCreate seulement pour une nouvelle instance.",
+    "en": "onCreate seulement pour une nouvelle instance."
+   },
+   "b": {
+    "fr": "onPause n'a rien à faire au retour.",
+    "dar": "onPause n'a rien à faire au retour.",
+    "en": "onPause n'a rien à faire au retour."
+   },
+   "d": {
+    "fr": "Pas de destruction ici.",
+    "dar": "Pas de destruction ici.",
+    "en": "Pas de destruction ici."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "cycle"
+  ]
+ },
+ {
+  "id": "mob-q7",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un bouton a une largeur de 48 et un texte de taille 18. Quel choix et quelle justification sont corrects ?",
+   "dar": "Un bouton a une largeur de 48 et un texte de taille 18. Quel choix et quelle justification sont corrects ?",
+   "en": "Un bouton a une largeur de 48 et un texte de taille 18. Quel choix et quelle justification sont corrects ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "48dp et 18sp : dp tient compte de la densité, sp respecte aussi le réglage de taille du texte.",
+     "dar": "48dp et 18sp : dp tient compte de la densité, sp respecte aussi le réglage de taille du texte.",
+     "en": "48dp et 18sp : dp tient compte de la densité, sp respecte aussi le réglage de taille du texte."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "48sp et 18dp : sp sert aux largeurs et dp aux textes.",
+     "dar": "48sp et 18dp : sp sert aux largeurs et dp aux textes.",
+     "en": "48sp et 18dp : sp sert aux largeurs et dp aux textes."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "48px et 18px : les pixels ont toujours la même taille apparente.",
+     "dar": "48px et 18px : les pixels ont toujours la même taille apparente.",
+     "en": "48px et 18px : les pixels ont toujours la même taille apparente."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "48dp et 18dp : le réglage de police doit être ignoré.",
+     "dar": "48dp et 18dp : le réglage de police doit être ignoré.",
+     "en": "48dp et 18dp : le réglage de police doit être ignoré."
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "dp pour les dimensions, sp pour le texte.",
+   "dar": "dp pour les dimensions, sp pour le texte.",
+   "en": "dp pour les dimensions, sp pour le texte."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Inversé.",
+    "dar": "Inversé.",
+    "en": "Inversé."
+   },
+   "c": {
+    "fr": "Faux : le px dépend de la densité.",
+    "dar": "Faux : le px dépend de la densité.",
+    "en": "Faux : le px dépend de la densité."
+   },
+   "d": {
+    "fr": "Ignorer le réglage de police nuit à l'accessibilité.",
+    "dar": "Ignorer le réglage de police nuit à l'accessibilité.",
+    "en": "Ignorer le réglage de police nuit à l'accessibilité."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "unites"
+  ]
+ },
+ {
+  "id": "mob-q8",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle distinction entre match_parent et wrap_content est correcte pour la largeur ?",
+   "dar": "Quelle distinction entre match_parent et wrap_content est correcte pour la largeur ?",
+   "en": "Quelle distinction entre match_parent et wrap_content est correcte pour la largeur ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les deux imposent une largeur de zéro.",
+     "dar": "Les deux imposent une largeur de zéro.",
+     "en": "Les deux imposent une largeur de zéro."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "wrap_content remplit toujours l'écran.",
+     "dar": "wrap_content remplit toujours l'écran.",
+     "en": "wrap_content remplit toujours l'écran."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "match_parent dépend uniquement du texte.",
+     "dar": "match_parent dépend uniquement du texte.",
+     "en": "match_parent dépend uniquement du texte."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "match_parent occupe l'espace disponible du parent ; wrap_content adapte la largeur au contenu et aux règles de mesure.",
+     "dar": "match_parent occupe l'espace disponible du parent ; wrap_content adapte la largeur au contenu et aux règles de mesure.",
+     "en": "match_parent occupe l'espace disponible du parent ; wrap_content adapte la largeur au contenu et aux règles de mesure."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "match_parent = espace du parent ; wrap_content = contenu.",
+   "dar": "match_parent = espace du parent ; wrap_content = contenu.",
+   "en": "match_parent = espace du parent ; wrap_content = contenu."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est 0dp en ConstraintLayout (match constraints), pas ces valeurs.",
+    "dar": "C'est 0dp en ConstraintLayout (match constraints), pas ces valeurs.",
+    "en": "C'est 0dp en ConstraintLayout (match constraints), pas ces valeurs."
+   },
+   "b": {
+    "fr": "C'est match_parent qui remplit.",
+    "dar": "C'est match_parent qui remplit.",
+    "en": "C'est match_parent qui remplit."
+   },
+   "c": {
+    "fr": "C'est wrap_content qui dépend du contenu.",
+    "dar": "C'est wrap_content qui dépend du contenu.",
+    "en": "C'est wrap_content qui dépend du contenu."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "dimensions"
+  ]
+ },
+ {
+  "id": "mob-q9",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans un LinearLayout, un bouton doit occuper toute la largeur disponible de son parent. Quelle valeur choisir ?",
+   "dar": "Dans un LinearLayout, un bouton doit occuper toute la largeur disponible de son parent. Quelle valeur choisir ?",
+   "en": "Dans un LinearLayout, un bouton doit occuper toute la largeur disponible de son parent. Quelle valeur choisir ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "wrap_content, car elle remplit toujours le parent.",
+     "dar": "wrap_content, car elle remplit toujours le parent.",
+     "en": "wrap_content, car elle remplit toujours le parent."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "match_parent, car la largeur suit l'espace disponible du parent.",
+     "dar": "match_parent, car la largeur suit l'espace disponible du parent.",
+     "en": "match_parent, car la largeur suit l'espace disponible du parent."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "18sp, car sp remplit le parent.",
+     "dar": "18sp, car sp remplit le parent.",
+     "en": "18sp, car sp remplit le parent."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "0dp sans autre réglage, car cela remplit tous les layouts.",
+     "dar": "0dp sans autre réglage, car cela remplit tous les layouts.",
+     "en": "0dp sans autre réglage, car cela remplit tous les layouts."
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "match_parent prend la largeur que donne le parent.",
+   "dar": "match_parent prend la largeur que donne le parent.",
+   "en": "match_parent prend la largeur que donne le parent."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "wrap_content suit le contenu.",
+    "dar": "wrap_content suit le contenu.",
+    "en": "wrap_content suit le contenu."
+   },
+   "c": {
+    "fr": "sp est une unité de texte.",
+    "dar": "sp est une unité de texte.",
+    "en": "sp est une unité de texte."
+   },
+   "d": {
+    "fr": "0dp ne remplit qu'avec des contraintes (ConstraintLayout) ou un layout_weight (LinearLayout).",
+    "dar": "0dp ne remplit qu'avec des contraintes (ConstraintLayout) ou un layout_weight (LinearLayout).",
+    "en": "0dp ne remplit qu'avec des contraintes (ConstraintLayout) ou un layout_weight (LinearLayout)."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "dimensions"
+  ]
+ },
+ {
+  "id": "mob-q10",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel choix convient pour empiler verticalement des champs ?",
+   "dar": "Quel choix convient pour empiler verticalement des champs ?",
+   "en": "Quel choix convient pour empiler verticalement des champs ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "FrameLayout sans autre réglage",
+     "dar": "FrameLayout sans autre réglage",
+     "en": "FrameLayout sans autre réglage"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ImageView",
+     "dar": "ImageView",
+     "en": "ImageView"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "LinearLayout avec orientation=\"vertical\"",
+     "dar": "LinearLayout avec orientation=\"vertical\"",
+     "en": "LinearLayout avec orientation=\"vertical\""
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Intent",
+     "dar": "Intent",
+     "en": "Intent"
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "LinearLayout vertical place les vues les unes sous les autres.",
+   "dar": "LinearLayout vertical place les vues les unes sous les autres.",
+   "en": "LinearLayout vertical place les vues les unes sous les autres."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "FrameLayout superpose les vues.",
+    "dar": "FrameLayout superpose les vues.",
+    "en": "FrameLayout superpose les vues."
+   },
+   "b": {
+    "fr": "ImageView affiche une image.",
+    "dar": "ImageView affiche une image.",
+    "en": "ImageView affiche une image."
+   },
+   "d": {
+    "fr": "Intent sert à la navigation.",
+    "dar": "Intent sert à la navigation.",
+    "en": "Intent sert à la navigation."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "layouts"
+  ]
+ },
+ {
+  "id": "mob-q11",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel layout convient simplement pour superposer un badge sur une image ?",
+   "dar": "Quel layout convient simplement pour superposer un badge sur une image ?",
+   "en": "Quel layout convient simplement pour superposer un badge sur une image ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "FrameLayout",
+     "dar": "FrameLayout",
+     "en": "FrameLayout"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "LinearLayout vertical",
+     "dar": "LinearLayout vertical",
+     "en": "LinearLayout vertical"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "TextView",
+     "dar": "TextView",
+     "en": "TextView"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "ArrayAdapter",
+     "dar": "ArrayAdapter",
+     "en": "ArrayAdapter"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "FrameLayout empile ses enfants les uns sur les autres.",
+   "dar": "FrameLayout empile ses enfants les uns sur les autres.",
+   "en": "FrameLayout empile ses enfants les uns sur les autres."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il les met les uns sous les autres.",
+    "dar": "Il les met les uns sous les autres.",
+    "en": "Il les met les uns sous les autres."
+   },
+   "c": {
+    "fr": "Une vue, pas un layout.",
+    "dar": "Une vue, pas un layout.",
+    "en": "Une vue, pas un layout."
+   },
+   "d": {
+    "fr": "Un adaptateur de liste.",
+    "dar": "Un adaptateur de liste.",
+    "en": "Un adaptateur de liste."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "layouts"
+  ]
+ },
+ {
+  "id": "mob-q12",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel layout positionne les vues au moyen de contraintes entre elles et avec leur parent ?",
+   "dar": "Quel layout positionne les vues au moyen de contraintes entre elles et avec leur parent ?",
+   "en": "Quel layout positionne les vues au moyen de contraintes entre elles et avec leur parent ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ImageView",
+     "dar": "ImageView",
+     "en": "ImageView"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "LinearLayout uniquement",
+     "dar": "LinearLayout uniquement",
+     "en": "LinearLayout uniquement"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ListView.Adapter",
+     "dar": "ListView.Adapter",
+     "en": "ListView.Adapter"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "ConstraintLayout",
+     "dar": "ConstraintLayout",
+     "en": "ConstraintLayout"
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "ConstraintLayout : contraintes Top/Bottom/Start/End.",
+   "dar": "ConstraintLayout : contraintes Top/Bottom/Start/End.",
+   "en": "ConstraintLayout : contraintes Top/Bottom/Start/End."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Une vue d'image.",
+    "dar": "Une vue d'image.",
+    "en": "Une vue d'image."
+   },
+   "b": {
+    "fr": "LinearLayout aligne en ligne/colonne.",
+    "dar": "LinearLayout aligne en ligne/colonne.",
+    "en": "LinearLayout aligne en ligne/colonne."
+   },
+   "c": {
+    "fr": "Pas un layout.",
+    "dar": "Pas un layout.",
+    "en": "Pas un layout."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "layouts"
+  ]
+ },
+ {
+  "id": "mob-q13",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans MainActivity, on exécute : startActivity(new Intent(this, DetailActivity.class)); Quelle Activity est demandée ?",
+   "dar": "Dans MainActivity, on exécute : startActivity(new Intent(this, DetailActivity.class)); Quelle Activity est demandée ?",
+   "en": "Dans MainActivity, on exécute : startActivity(new Intent(this, DetailActivity.class)); Quelle Activity est demandée ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "MainActivity",
+     "dar": "MainActivity",
+     "en": "MainActivity"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "DetailActivity",
+     "dar": "DetailActivity",
+     "en": "DetailActivity"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "AndroidManifest",
+     "dar": "AndroidManifest",
+     "en": "AndroidManifest"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Aucune : le code change seulement un texte.",
+     "dar": "Aucune : le code change seulement un texte.",
+     "en": "Aucune : le code change seulement un texte."
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Le 2e paramètre de l'Intent explicite est la classe cible : DetailActivity.",
+   "dar": "Le 2e paramètre de l'Intent explicite est la classe cible : DetailActivity.",
+   "en": "Le 2e paramètre de l'Intent explicite est la classe cible : DetailActivity."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est le contexte (l'appelant).",
+    "dar": "C'est le contexte (l'appelant).",
+    "en": "C'est le contexte (l'appelant)."
+   },
+   "c": {
+    "fr": "Un fichier, pas une Activity.",
+    "dar": "Un fichier, pas une Activity.",
+    "en": "Un fichier, pas une Activity."
+   },
+   "d": {
+    "fr": "Il démarre bien une Activity.",
+    "dar": "Il démarre bien une Activity.",
+    "en": "Il démarre bien une Activity."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-q14",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans MainActivity : startActivity(new Intent(this, DetailActivity.class)); Quel est le rôle de startActivity() ?",
+   "dar": "Dans MainActivity : startActivity(new Intent(this, DetailActivity.class)); Quel est le rôle de startActivity() ?",
+   "en": "Dans MainActivity : startActivity(new Intent(this, DetailActivity.class)); Quel est le rôle de startActivity() ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Créer la ressource strings.xml.",
+     "dar": "Créer la ressource strings.xml.",
+     "en": "Créer la ressource strings.xml."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Associer une donnée à une ligne.",
+     "dar": "Associer une donnée à une ligne.",
+     "en": "Associer une donnée à une ligne."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Demander à Android de démarrer l'Activity désignée par l'Intent.",
+     "dar": "Demander à Android de démarrer l'Activity désignée par l'Intent.",
+     "en": "Demander à Android de démarrer l'Activity désignée par l'Intent."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Détruire systématiquement MainActivity.",
+     "dar": "Détruire systématiquement MainActivity.",
+     "en": "Détruire systématiquement MainActivity."
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "startActivity confie l'Intent à Android qui démarre l'Activity cible.",
+   "dar": "startActivity confie l'Intent à Android qui démarre l'Activity cible.",
+   "en": "startActivity confie l'Intent à Android qui démarre l'Activity cible."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Les ressources sont écrites à la main.",
+    "dar": "Les ressources sont écrites à la main.",
+    "en": "Les ressources sont écrites à la main."
+   },
+   "b": {
+    "fr": "C'est onBindViewHolder.",
+    "dar": "C'est onBindViewHolder.",
+    "en": "C'est onBindViewHolder."
+   },
+   "d": {
+    "fr": "MainActivity passe en onPause/onStop, elle n'est pas détruite.",
+    "dar": "MainActivity passe en onPause/onStop, elle n'est pas détruite.",
+    "en": "MainActivity passe en onPause/onStop, elle n'est pas détruite."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-q15",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel adaptateur peut afficher une liste simple de noms dans une ListView ?",
+   "dar": "Quel adaptateur peut afficher une liste simple de noms dans une ListView ?",
+   "en": "Quel adaptateur peut afficher une liste simple de noms dans une ListView ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ArrayAdapter<String>",
+     "dar": "ArrayAdapter<String>",
+     "en": "ArrayAdapter<String>"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ConstraintLayout",
+     "dar": "ConstraintLayout",
+     "en": "ConstraintLayout"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Intent",
+     "dar": "Intent",
+     "en": "Intent"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "LinearLayoutManager",
+     "dar": "LinearLayoutManager",
+     "en": "LinearLayoutManager"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms).",
+   "dar": "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms).",
+   "en": "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Un layout.",
+    "dar": "Un layout.",
+    "en": "Un layout."
+   },
+   "c": {
+    "fr": "Un message de navigation.",
+    "dar": "Un message de navigation.",
+    "en": "Un message de navigation."
+   },
+   "d": {
+    "fr": "Le LayoutManager d'un RecyclerView.",
+    "dar": "Le LayoutManager d'un RecyclerView.",
+    "en": "Le LayoutManager d'un RecyclerView."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "listes"
+  ]
+ },
+ {
+  "id": "mob-q16",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel couple décrit l'adaptateur et la réutilisation dans RecyclerView ?",
+   "dar": "Quel couple décrit l'adaptateur et la réutilisation dans RecyclerView ?",
+   "en": "Quel couple décrit l'adaptateur et la réutilisation dans RecyclerView ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ArrayAdapter et création obligatoire de toutes les lignes.",
+     "dar": "ArrayAdapter et création obligatoire de toutes les lignes.",
+     "en": "ArrayAdapter et création obligatoire de toutes les lignes."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Intent et réutilisation des Activity.",
+     "dar": "Intent et réutilisation des Activity.",
+     "en": "Intent et réutilisation des Activity."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "LayoutManager et destruction de toutes les données.",
+     "dar": "LayoutManager et destruction de toutes les données.",
+     "en": "LayoutManager et destruction de toutes les données."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "RecyclerView.Adapter et réutilisation des vues de ligne au moyen de ViewHolder.",
+     "dar": "RecyclerView.Adapter et réutilisation des vues de ligne au moyen de ViewHolder.",
+     "en": "RecyclerView.Adapter et réutilisation des vues de ligne au moyen de ViewHolder."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "RecyclerView.Adapter + ViewHolder recyclés.",
+   "dar": "RecyclerView.Adapter + ViewHolder recyclés.",
+   "en": "RecyclerView.Adapter + ViewHolder recyclés."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "ArrayAdapter sert aux ListView ; et rien n'est tout créé.",
+    "dar": "ArrayAdapter sert aux ListView ; et rien n'est tout créé.",
+    "en": "ArrayAdapter sert aux ListView ; et rien n'est tout créé."
+   },
+   "b": {
+    "fr": "Sans rapport avec les listes.",
+    "dar": "Sans rapport avec les listes.",
+    "en": "Sans rapport avec les listes."
+   },
+   "c": {
+    "fr": "Le LayoutManager dispose les lignes, il ne détruit pas les données.",
+    "dar": "Le LayoutManager dispose les lignes, il ne détruit pas les données.",
+    "en": "Le LayoutManager dispose les lignes, il ne détruit pas les données."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-q17",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de onCreateViewHolder() ?",
+   "dar": "Quel est le rôle de onCreateViewHolder() ?",
+   "en": "Quel est le rôle de onCreateViewHolder() ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Compter les données.",
+     "dar": "Compter les données.",
+     "en": "Compter les données."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Créer une vue de ligne et le ViewHolder associé lorsque nécessaire.",
+     "dar": "Créer une vue de ligne et le ViewHolder associé lorsque nécessaire.",
+     "en": "Créer une vue de ligne et le ViewHolder associé lorsque nécessaire."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Lire les extras d'un Intent.",
+     "dar": "Lire les extras d'un Intent.",
+     "en": "Lire les extras d'un Intent."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Remplir uniquement le nom à chaque défilement.",
+     "dar": "Remplir uniquement le nom à chaque défilement.",
+     "en": "Remplir uniquement le nom à chaque défilement."
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Gonfle la ligne et crée le ViewHolder, seulement quand aucun n'est réutilisable.",
+   "dar": "Gonfle la ligne et crée le ViewHolder, seulement quand aucun n'est réutilisable.",
+   "en": "Gonfle la ligne et crée le ViewHolder, seulement quand aucun n'est réutilisable."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est getItemCount().",
+    "dar": "C'est getItemCount().",
+    "en": "C'est getItemCount()."
+   },
+   "c": {
+    "fr": "C'est getIntent().getXxxExtra().",
+    "dar": "C'est getIntent().getXxxExtra().",
+    "en": "C'est getIntent().getXxxExtra()."
+   },
+   "d": {
+    "fr": "Remplir = onBindViewHolder().",
+    "dar": "Remplir = onBindViewHolder().",
+    "en": "Remplir = onBindViewHolder()."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-q18",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de onBindViewHolder(holder, position) ?",
+   "dar": "Quel est le rôle de onBindViewHolder(holder, position) ?",
+   "en": "Quel est le rôle de onBindViewHolder(holder, position) ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Créer une nouvelle Activity.",
+     "dar": "Créer une nouvelle Activity.",
+     "en": "Créer une nouvelle Activity."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Déclarer la permission Internet.",
+     "dar": "Déclarer la permission Internet.",
+     "en": "Déclarer la permission Internet."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Associer la donnée de la position demandée aux vues du holder.",
+     "dar": "Associer la donnée de la position demandée aux vues du holder.",
+     "en": "Associer la donnée de la position demandée aux vues du holder."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Renvoyer le nombre total de données.",
+     "dar": "Renvoyer le nombre total de données.",
+     "en": "Renvoyer le nombre total de données."
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "Il remplit le holder avec liste.get(position).",
+   "dar": "Il remplit le holder avec liste.get(position).",
+   "en": "Il remplit le holder avec liste.get(position)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "C'est startActivity.",
+    "dar": "C'est startActivity.",
+    "en": "C'est startActivity."
+   },
+   "b": {
+    "fr": "C'est le manifeste.",
+    "dar": "C'est le manifeste.",
+    "en": "C'est le manifeste."
+   },
+   "d": {
+    "fr": "C'est getItemCount().",
+    "dar": "C'est getItemCount().",
+    "en": "C'est getItemCount()."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-q19",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle de getItemCount() ?",
+   "dar": "Quel est le rôle de getItemCount() ?",
+   "en": "Quel est le rôle de getItemCount() ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Renvoyer le nombre total d'éléments dans la source de données.",
+     "dar": "Renvoyer le nombre total d'éléments dans la source de données.",
+     "en": "Renvoyer le nombre total d'éléments dans la source de données."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Renvoyer uniquement le nombre de lignes visibles.",
+     "dar": "Renvoyer uniquement le nombre de lignes visibles.",
+     "en": "Renvoyer uniquement le nombre de lignes visibles."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Renvoyer le nombre de CREATE déjà affichés.",
+     "dar": "Renvoyer le nombre de CREATE déjà affichés.",
+     "en": "Renvoyer le nombre de CREATE déjà affichés."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Renvoyer la hauteur du téléphone.",
+     "dar": "Renvoyer la hauteur du téléphone.",
+     "en": "Renvoyer la hauteur du téléphone."
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "return liste.size() : le nombre total, visibles ou non.",
+   "dar": "return liste.size() : le nombre total, visibles ou non.",
+   "en": "return liste.size() : le nombre total, visibles ou non."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Piège : toutes les données comptent, pas seulement les visibles.",
+    "dar": "Piège : toutes les données comptent, pas seulement les visibles.",
+    "en": "Piège : toutes les données comptent, pas seulement les visibles."
+   },
+   "c": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-q20",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une application de contacts affiche une longue liste défilante. Quel composant et quelle justification conviennent ?",
+   "dar": "Une application de contacts affiche une longue liste défilante. Quel composant et quelle justification conviennent ?",
+   "en": "Une application de contacts affiche une longue liste défilante. Quel composant et quelle justification conviennent ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "TextView, car un texte unique crée les actions de chaque ligne.",
+     "dar": "TextView, car un texte unique crée les actions de chaque ligne.",
+     "en": "TextView, car un texte unique crée les actions de chaque ligne."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Intent, car il dispose les contacts.",
+     "dar": "Intent, car il dispose les contacts.",
+     "en": "Intent, car il dispose les contacts."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "FrameLayout, car il recycle automatiquement les contacts.",
+     "dar": "FrameLayout, car il recycle automatiquement les contacts.",
+     "en": "FrameLayout, car il recycle automatiquement les contacts."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "RecyclerView, car il affiche des lignes personnalisées et réutilise leurs vues.",
+     "dar": "RecyclerView, car il affiche des lignes personnalisées et réutilise leurs vues.",
+     "en": "RecyclerView, car il affiche des lignes personnalisées et réutilise leurs vues."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "Longue liste + lignes personnalisées → RecyclerView.",
+   "dar": "Longue liste + lignes personnalisées → RecyclerView.",
+   "en": "Longue liste + lignes personnalisées → RecyclerView."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Un seul texte ne fait pas une liste.",
+    "dar": "Un seul texte ne fait pas une liste.",
+    "en": "Un seul texte ne fait pas une liste."
+   },
+   "b": {
+    "fr": "Intent navigue, il ne dispose rien.",
+    "dar": "Intent navigue, il ne dispose rien.",
+    "en": "Intent navigue, il ne dispose rien."
+   },
+   "c": {
+    "fr": "FrameLayout ne recycle rien.",
+    "dar": "FrameLayout ne recycle rien.",
+    "en": "FrameLayout ne recycle rien."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-q21",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une ligne de contact contient un avatar, un nom et une action. Quelle association convient ?",
+   "dar": "Une ligne de contact contient un avatar, un nom et une action. Quelle association convient ?",
+   "en": "Une ligne de contact contient un avatar, un nom et une action. Quelle association convient ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "TextView / ImageView / SDK",
+     "dar": "TextView / ImageView / SDK",
+     "en": "TextView / ImageView / SDK"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ImageView / TextView / Button ou ImageButton",
+     "dar": "ImageView / TextView / Button ou ImageButton",
+     "en": "ImageView / TextView / Button ou ImageButton"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Intent / TextView / Manifest",
+     "dar": "Intent / TextView / Manifest",
+     "en": "Intent / TextView / Manifest"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "ViewHolder / Activity / SDK",
+     "dar": "ViewHolder / Activity / SDK",
+     "en": "ViewHolder / Activity / SDK"
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Avatar = ImageView, nom = TextView, action = Button / ImageButton.",
+   "dar": "Avatar = ImageView, nom = TextView, action = Button / ImageButton.",
+   "en": "Avatar = ImageView, nom = TextView, action = Button / ImageButton."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ordre faux et le SDK n'est pas une vue.",
+    "dar": "Ordre faux et le SDK n'est pas une vue.",
+    "en": "Ordre faux et le SDK n'est pas une vue."
+   },
+   "c": {
+    "fr": "Intent et Manifest ne sont pas des vues.",
+    "dar": "Intent et Manifest ne sont pas des vues.",
+    "en": "Intent et Manifest ne sont pas des vues."
+   },
+   "d": {
+    "fr": "Ce ne sont pas des vues.",
+    "dar": "Ce ne sont pas des vues.",
+    "en": "Ce ne sont pas des vues."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "listes"
+  ]
+ },
+ {
+  "id": "mob-q22",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Après un clic sur un contact, quel couple permet de préparer l'ouverture de sa fiche et de transmettre son nom ?",
+   "dar": "Après un clic sur un contact, quel couple permet de préparer l'ouverture de sa fiche et de transmettre son nom ?",
+   "en": "Après un clic sur un contact, quel couple permet de préparer l'ouverture de sa fiche et de transmettre son nom ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ViewHolder et getItemCount()",
+     "dar": "ViewHolder et getItemCount()",
+     "en": "ViewHolder et getItemCount()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "LinearLayout et setOrientation()",
+     "dar": "LinearLayout et setOrientation()",
+     "en": "LinearLayout et setOrientation()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Intent et putExtra()",
+     "dar": "Intent et putExtra()",
+     "en": "Intent et putExtra()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "TextView et onStop()",
+     "dar": "TextView et onStop()",
+     "en": "TextView et onStop()"
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "new Intent(…, FicheActivity.class) + putExtra(\"nom\", nom).",
+   "dar": "new Intent(…, FicheActivity.class) + putExtra(\"nom\", nom).",
+   "en": "new Intent(…, FicheActivity.class) + putExtra(\"nom\", nom)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ils servent à la liste.",
+    "dar": "Ils servent à la liste.",
+    "en": "Ils servent à la liste."
+   },
+   "b": {
+    "fr": "Ils servent à la disposition.",
+    "dar": "Ils servent à la disposition.",
+    "en": "Ils servent à la disposition."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-q23",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "ConstraintLayout du contrôle : titre (Top et Start → parent), bouton (Start et End → parent, Top → bas du titre), biais par défaut. Quelle disposition ?",
+   "dar": "ConstraintLayout du contrôle : titre (Top et Start → parent), bouton (Start et End → parent, Top → bas du titre), biais par défaut. Quelle disposition ?",
+   "en": "ConstraintLayout du contrôle : titre (Top et Start → parent), bouton (Start et End → parent, Top → bas du titre), biais par défaut. Quelle disposition ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Titre en haut à gauche ; bouton sous le titre et centré horizontalement.",
+     "dar": "Titre en haut à gauche ; bouton sous le titre et centré horizontalement.",
+     "en": "Titre en haut à gauche ; bouton sous le titre et centré horizontalement."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Titre en bas ; bouton au-dessus.",
+     "dar": "Titre en bas ; bouton au-dessus.",
+     "en": "Titre en bas ; bouton au-dessus."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Titre centré ; bouton obligatoirement étiré sur toute la largeur.",
+     "dar": "Titre centré ; bouton obligatoirement étiré sur toute la largeur.",
+     "en": "Titre centré ; bouton obligatoirement étiré sur toute la largeur."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Titre et bouton superposés au centre.",
+     "dar": "Titre et bouton superposés au centre.",
+     "en": "Titre et bouton superposés au centre."
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Titre : une seule contrainte horizontale (Start) → à gauche. Bouton : Start + End → centré, Top → sous le titre.",
+   "dar": "Titre : une seule contrainte horizontale (Start) → à gauche. Bouton : Start + End → centré, Top → sous le titre.",
+   "en": "Titre : une seule contrainte horizontale (Start) → à gauche. Bouton : Start + End → centré, Top → sous le titre."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Top → parent : le titre est en haut.",
+    "dar": "Top → parent : le titre est en haut.",
+    "en": "Top → parent : le titre est en haut."
+   },
+   "c": {
+    "fr": "Titre sans End : non centré ; bouton wrap_content : non étiré.",
+    "dar": "Titre sans End : non centré ; bouton wrap_content : non étiré.",
+    "en": "Titre sans End : non centré ; bouton wrap_content : non étiré."
+   },
+   "d": {
+    "fr": "Top_toBottomOf : le bouton est sous le titre.",
+    "dar": "Top_toBottomOf : le bouton est sous le titre.",
+    "en": "Top_toBottomOf : le bouton est sous le titre."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "constraint"
+  ]
+ },
+ {
+  "id": "mob-q24",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Même extrait : de quoi dépend la largeur du bouton avec wrap_content ?",
+   "dar": "Même extrait : de quoi dépend la largeur du bouton avec wrap_content ?",
+   "en": "Même extrait : de quoi dépend la largeur du bouton avec wrap_content ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Uniquement de la largeur de l'écran.",
+     "dar": "Uniquement de la largeur de l'écran.",
+     "en": "Uniquement de la largeur de l'écran."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Du nombre total de contacts.",
+     "dar": "Du nombre total de contacts.",
+     "en": "Du nombre total de contacts."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Uniquement de sa position verticale.",
+     "dar": "Uniquement de sa position verticale.",
+     "en": "Uniquement de sa position verticale."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Du contenu, notamment du texte et des marges internes, avec les règles de mesure et les contraintes de taille.",
+     "dar": "Du contenu, notamment du texte et des marges internes, avec les règles de mesure et les contraintes de taille.",
+     "en": "Du contenu, notamment du texte et des marges internes, avec les règles de mesure et les contraintes de taille."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "wrap_content = taille du contenu (texte + padding).",
+   "dar": "wrap_content = taille du contenu (texte + padding).",
+   "en": "wrap_content = taille du contenu (texte + padding)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Ce serait 0dp entre les bords.",
+    "dar": "Ce serait 0dp entre les bords.",
+    "en": "Ce serait 0dp entre les bords."
+   },
+   "b": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   },
+   "c": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "constraint"
+  ]
+ },
+ {
+  "id": "mob-q25",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Même extrait : quelle différence entre @+id/btnAjouter et @id/titre ?",
+   "dar": "Même extrait : quelle différence entre @+id/btnAjouter et @id/titre ?",
+   "en": "Même extrait : quelle différence entre @+id/btnAjouter et @id/titre ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les deux déclarent une permission.",
+     "dar": "Les deux déclarent une permission.",
+     "en": "Les deux déclarent une permission."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "@+id/btnAjouter déclare un identifiant ; @id/titre référence l'identifiant existant du titre.",
+     "dar": "@+id/btnAjouter déclare un identifiant ; @id/titre référence l'identifiant existant du titre.",
+     "en": "@+id/btnAjouter déclare un identifiant ; @id/titre référence l'identifiant existant du titre."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "@id/titre supprime la vue titre.",
+     "dar": "@id/titre supprime la vue titre.",
+     "en": "@id/titre supprime la vue titre."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le signe + ouvre une nouvelle Activity.",
+     "dar": "Le signe + ouvre une nouvelle Activity.",
+     "en": "Le signe + ouvre une nouvelle Activity."
+    }
+   }
+  ],
+  "answer": "b",
+  "explanation": {
+   "fr": "Le + crée l'id ; sans + on référence un id existant.",
+   "dar": "Le + crée l'id ; sans + on référence un id existant.",
+   "en": "Le + crée l'id ; sans + on référence un id existant."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Les permissions sont dans le manifeste.",
+    "dar": "Les permissions sont dans le manifeste.",
+    "en": "Les permissions sont dans le manifeste."
+   },
+   "c": {
+    "fr": "Il ne supprime rien.",
+    "dar": "Il ne supprime rien.",
+    "en": "Il ne supprime rien."
+   },
+   "d": {
+    "fr": "Le + n'a rien à voir avec les Activity.",
+    "dar": "Le + n'a rien à voir avec les Activity.",
+    "en": "Le + n'a rien à voir avec les Activity."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "constraint"
+  ]
+ },
+ {
+  "id": "mob-q26",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Trace (3 lignes visibles) : 3 × CREATE, BIND 0, 1, 2, puis défilement d'une ligne et BIND 3. Quelles méthodes produisent CREATE et BIND ?",
+   "dar": "Trace (3 lignes visibles) : 3 × CREATE, BIND 0, 1, 2, puis défilement d'une ligne et BIND 3. Quelles méthodes produisent CREATE et BIND ?",
+   "en": "Trace (3 lignes visibles) : 3 × CREATE, BIND 0, 1, 2, puis défilement d'une ligne et BIND 3. Quelles méthodes produisent CREATE et BIND ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onStart() et onStop()",
+     "dar": "onStart() et onStop()",
+     "en": "onStart() et onStop()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "getItemCount() et onCreate()",
+     "dar": "getItemCount() et onCreate()",
+     "en": "getItemCount() et onCreate()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onCreateViewHolder() et onBindViewHolder()",
+     "dar": "onCreateViewHolder() et onBindViewHolder()",
+     "en": "onCreateViewHolder() et onBindViewHolder()"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "onBindViewHolder() et onCreateViewHolder()",
+     "dar": "onBindViewHolder() et onCreateViewHolder()",
+     "en": "onBindViewHolder() et onCreateViewHolder()"
+    }
+   }
+  ],
+  "answer": "c",
+  "explanation": {
+   "fr": "CREATE = création des holders ; BIND = liaison à une position.",
+   "dar": "CREATE = création des holders ; BIND = liaison à une position.",
+   "en": "CREATE = création des holders ; BIND = liaison à une position."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Méthodes du cycle de vie de l'Activity.",
+    "dar": "Méthodes du cycle de vie de l'Activity.",
+    "en": "Méthodes du cycle de vie de l'Activity."
+   },
+   "b": {
+    "fr": "Ni l'une ni l'autre ne crée/lie de ligne.",
+    "dar": "Ni l'une ni l'autre ne crée/lie de ligne.",
+    "en": "Ni l'une ni l'autre ne crée/lie de ligne."
+   },
+   "d": {
+    "fr": "Inversé.",
+    "dar": "Inversé.",
+    "en": "Inversé."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "trace"
+  ]
+ },
+ {
+  "id": "mob-q27",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Même trace : combien de ViewHolder créés et combien de liaisons au total ?",
+   "dar": "Même trace : combien de ViewHolder créés et combien de liaisons au total ?",
+   "en": "Même trace : combien de ViewHolder créés et combien de liaisons au total ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "3 ViewHolder et 4 liaisons.",
+     "dar": "3 ViewHolder et 4 liaisons.",
+     "en": "3 ViewHolder et 4 liaisons."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "4 ViewHolder et 3 liaisons.",
+     "dar": "4 ViewHolder et 3 liaisons.",
+     "en": "4 ViewHolder et 3 liaisons."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "3 ViewHolder et 3 liaisons.",
+     "dar": "3 ViewHolder et 3 liaisons.",
+     "en": "3 ViewHolder et 3 liaisons."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "4 ViewHolder et 4 liaisons.",
+     "dar": "4 ViewHolder et 4 liaisons.",
+     "en": "4 ViewHolder et 4 liaisons."
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "3 CREATE et 4 BIND (positions 0 à 3).",
+   "dar": "3 CREATE et 4 BIND (positions 0 à 3).",
+   "en": "3 CREATE et 4 BIND (positions 0 à 3)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Inversé.",
+    "dar": "Inversé.",
+    "en": "Inversé."
+   },
+   "c": {
+    "fr": "Oublie le BIND après défilement.",
+    "dar": "Oublie le BIND après défilement.",
+    "en": "Oublie le BIND après défilement."
+   },
+   "d": {
+    "fr": "Pas de 4e CREATE : réutilisation.",
+    "dar": "Pas de 4e CREATE : réutilisation.",
+    "en": "Pas de 4e CREATE : réutilisation."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "trace"
+  ]
+ },
+ {
+  "id": "mob-q28",
+  "module": "mobile",
+  "chapter": "qcm-prof",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Même trace : pourquoi BIND position=3 apparaît sans quatrième CREATE ?",
+   "dar": "Même trace : pourquoi BIND position=3 apparaît sans quatrième CREATE ?",
+   "en": "Même trace : pourquoi BIND position=3 apparaît sans quatrième CREATE ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "La quatrième donnée n'est pas affichée.",
+     "dar": "La quatrième donnée n'est pas affichée.",
+     "en": "La quatrième donnée n'est pas affichée."
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "getItemCount vaut obligatoirement 3.",
+     "dar": "getItemCount vaut obligatoirement 3.",
+     "en": "getItemCount vaut obligatoirement 3."
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "RecyclerView transforme une Activity en ligne.",
+     "dar": "RecyclerView transforme une Activity en ligne.",
+     "en": "RecyclerView transforme une Activity en ligne."
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Un ViewHolder existant est réutilisé pour afficher la donnée de position 3.",
+     "dar": "Un ViewHolder existant est réutilisé pour afficher la donnée de position 3.",
+     "en": "Un ViewHolder existant est réutilisé pour afficher la donnée de position 3."
+    }
+   }
+  ],
+  "answer": "d",
+  "explanation": {
+   "fr": "La ligne sortie de l'écran rend son holder, réutilisé (recyclage).",
+   "dar": "La ligne sortie de l'écran rend son holder, réutilisé (recyclage).",
+   "en": "La ligne sortie de l'écran rend son holder, réutilisé (recyclage)."
+  },
+  "wrongExplanations": {
+   "a": {
+    "fr": "Elle est affichée (BIND position=3).",
+    "dar": "Elle est affichée (BIND position=3).",
+    "en": "Elle est affichée (BIND position=3)."
+   },
+   "b": {
+    "fr": "Il y a au moins 4 données puisque la position 3 existe.",
+    "dar": "Il y a au moins 4 données puisque la position 3 existe.",
+    "en": "Il y a au moins 4 données puisque la position 3 existe."
+   },
+   "c": {
+    "fr": "Sans rapport.",
+    "dar": "Sans rapport.",
+    "en": "Sans rapport."
+   }
+  },
+  "tags": [
+   "qcm-prof",
+   "trace"
+  ]
+ }
+]

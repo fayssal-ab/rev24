@@ -1,4 +1,4 @@
-import { c1, c2, c3, c4, c5, c6, c7, c8 } from './course';
+import { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 } from './course';
 import { setCtx, L, single, multi, cmd, order, ex, fc, ref } from '../lib';
 import type { Module } from '../../src/lib/schema';
 
@@ -280,6 +280,46 @@ const q8 = [
     [["EditText est une vue de saisie.", "View.", 'A view.'], ["Intent est un message de navigation.", "Message.", 'A message.']], ['annale', 'layouts'])
 ];
 
+setCtx('mobile', 'qcm-prof');
+const qProf = [
+  single('mob-q1', 1, "Quelle différence distingue Android Studio du SDK Android ?", ["Android Studio est un langage et le SDK un téléphone.", "Android Studio est un IDE ; le SDK fournit les API et outils Android.", "Le SDK sert uniquement à écrire du XML.", "Android Studio remplace toutes les API Android."], 1, "Android Studio = IDE (éditeur, débogueur) ; SDK = API + outils pour construire l'application.", ["Ni l'un ni l'autre : le langage est Java/Kotlin.", "Le SDK contient bien plus : API, build-tools, émulateur.", "Android Studio utilise les API du SDK, il ne les remplace pas."], ['qcm-prof', 'outils']),
+  single('mob-q2', 1, "Quel est le rôle de activity_main.xml ?", ["Déclarer les permissions.", "Stocker les traductions.", "Décrire les vues et leur disposition dans une interface.", "Compter les contacts."], 2, "Le layout décrit les composants et leur disposition.", ["C'est le manifeste.", "C'est strings.xml (values-xx).", "C'est getItemCount() d'un adaptateur."], ['qcm-prof', 'fichiers']),
+  single('mob-q3', 1, "Quel est le rôle de strings.xml ?", ["Centraliser les ressources textuelles réutilisables et traduisibles.", "Déclarer toutes les Activity.", "Définir le cycle de vie.", "Créer les ViewHolder."], 0, "strings.xml centralise les textes : réutilisation et traduction.", ["C'est le manifeste.", "Le cycle de vie est géré par Android et les callbacks de l'Activity.", "C'est onCreateViewHolder()."], ['qcm-prof', 'fichiers']),
+  single('mob-q4', 1, "Quel est le rôle d'AndroidManifest.xml ?", ["Positionner les boutons.", "Remplir chaque ligne d'une liste.", "Définir exclusivement les tailles de police.", "Déclarer notamment les composants et les permissions de l'application."], 3, "Le manifeste déclare les composants (Activity…) et les permissions.", ["C'est le layout.", "C'est onBindViewHolder().", "Les tailles de police sont dans les layouts / styles."], ['qcm-prof', 'fichiers']),
+  single('mob-q5', 1, "Une Activity au premier plan devient complètement invisible après un appui sur Accueil. Quels callbacks habituels sont appelés, dans cet ordre ?", ["onStop(), onPause()", "onPause(), onStop()", "onCreate(), onResume()", "onRestart(), onDestroy()"], 1, "Elle perd d'abord le premier plan (onPause) puis n'est plus visible (onStop).", ["Ordre inversé.", "Ce sont des méthodes de lancement.", "onRestart sert au retour ; pas de destruction ici."], ['qcm-prof', 'cycle']),
+  single('mob-q6', 2, "L'Activity précédente est arrêtée mais n'a pas été détruite. Quelle est la séquence habituelle au retour ?", ["onCreate(), onStart(), onResume()", "onPause(), onStart(), onResume()", "onRestart(), onStart(), onResume()", "onDestroy(), onRestart(), onResume()"], 2, "Même instance : onRestart, onStart, onResume ; onCreate ne se répète pas.", ["onCreate seulement pour une nouvelle instance.", "onPause n'a rien à faire au retour.", "Pas de destruction ici."], ['qcm-prof', 'cycle']),
+  single('mob-q7', 1, "Un bouton a une largeur de 48 et un texte de taille 18. Quel choix et quelle justification sont corrects ?", ["48dp et 18sp : dp tient compte de la densité, sp respecte aussi le réglage de taille du texte.", "48sp et 18dp : sp sert aux largeurs et dp aux textes.", "48px et 18px : les pixels ont toujours la même taille apparente.", "48dp et 18dp : le réglage de police doit être ignoré."], 0, "dp pour les dimensions, sp pour le texte.", ["Inversé.", "Faux : le px dépend de la densité.", "Ignorer le réglage de police nuit à l'accessibilité."], ['qcm-prof', 'unites']),
+  single('mob-q8', 1, "Quelle distinction entre match_parent et wrap_content est correcte pour la largeur ?", ["Les deux imposent une largeur de zéro.", "wrap_content remplit toujours l'écran.", "match_parent dépend uniquement du texte.", "match_parent occupe l'espace disponible du parent ; wrap_content adapte la largeur au contenu et aux règles de mesure."], 3, "match_parent = espace du parent ; wrap_content = contenu.", ["C'est 0dp en ConstraintLayout (match constraints), pas ces valeurs.", "C'est match_parent qui remplit.", "C'est wrap_content qui dépend du contenu."], ['qcm-prof', 'dimensions']),
+  single('mob-q9', 2, "Dans un LinearLayout, un bouton doit occuper toute la largeur disponible de son parent. Quelle valeur choisir ?", ["wrap_content, car elle remplit toujours le parent.", "match_parent, car la largeur suit l'espace disponible du parent.", "18sp, car sp remplit le parent.", "0dp sans autre réglage, car cela remplit tous les layouts."], 1, "match_parent prend la largeur que donne le parent.", ["wrap_content suit le contenu.", "sp est une unité de texte.", "0dp ne remplit qu'avec des contraintes (ConstraintLayout) ou un layout_weight (LinearLayout)."], ['qcm-prof', 'dimensions']),
+  single('mob-q10', 1, "Quel choix convient pour empiler verticalement des champs ?", ["FrameLayout sans autre réglage", "ImageView", "LinearLayout avec orientation=\"vertical\"", "Intent"], 2, "LinearLayout vertical place les vues les unes sous les autres.", ["FrameLayout superpose les vues.", "ImageView affiche une image.", "Intent sert à la navigation."], ['qcm-prof', 'layouts']),
+  single('mob-q11', 1, "Quel layout convient simplement pour superposer un badge sur une image ?", ["FrameLayout", "LinearLayout vertical", "TextView", "ArrayAdapter"], 0, "FrameLayout empile ses enfants les uns sur les autres.", ["Il les met les uns sous les autres.", "Une vue, pas un layout.", "Un adaptateur de liste."], ['qcm-prof', 'layouts']),
+  single('mob-q12', 1, "Quel layout positionne les vues au moyen de contraintes entre elles et avec leur parent ?", ["ImageView", "LinearLayout uniquement", "ListView.Adapter", "ConstraintLayout"], 3, "ConstraintLayout : contraintes Top/Bottom/Start/End.", ["Une vue d'image.", "LinearLayout aligne en ligne/colonne.", "Pas un layout."], ['qcm-prof', 'layouts']),
+  single('mob-q13', 1, "Dans MainActivity, on exécute : startActivity(new Intent(this, DetailActivity.class)); Quelle Activity est demandée ?", ["MainActivity", "DetailActivity", "AndroidManifest", "Aucune : le code change seulement un texte."], 1, "Le 2e paramètre de l'Intent explicite est la classe cible : DetailActivity.", ["C'est le contexte (l'appelant).", "Un fichier, pas une Activity.", "Il démarre bien une Activity."], ['qcm-prof', 'intent']),
+  single('mob-q14', 1, "Dans MainActivity : startActivity(new Intent(this, DetailActivity.class)); Quel est le rôle de startActivity() ?", ["Créer la ressource strings.xml.", "Associer une donnée à une ligne.", "Demander à Android de démarrer l'Activity désignée par l'Intent.", "Détruire systématiquement MainActivity."], 2, "startActivity confie l'Intent à Android qui démarre l'Activity cible.", ["Les ressources sont écrites à la main.", "C'est onBindViewHolder.", "MainActivity passe en onPause/onStop, elle n'est pas détruite."], ['qcm-prof', 'intent']),
+  single('mob-q15', 1, "Quel adaptateur peut afficher une liste simple de noms dans une ListView ?", ["ArrayAdapter<String>", "ConstraintLayout", "Intent", "LinearLayoutManager"], 0, "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms).", ["Un layout.", "Un message de navigation.", "Le LayoutManager d'un RecyclerView."], ['qcm-prof', 'listes']),
+  single('mob-q16', 2, "Quel couple décrit l'adaptateur et la réutilisation dans RecyclerView ?", ["ArrayAdapter et création obligatoire de toutes les lignes.", "Intent et réutilisation des Activity.", "LayoutManager et destruction de toutes les données.", "RecyclerView.Adapter et réutilisation des vues de ligne au moyen de ViewHolder."], 3, "RecyclerView.Adapter + ViewHolder recyclés.", ["ArrayAdapter sert aux ListView ; et rien n'est tout créé.", "Sans rapport avec les listes.", "Le LayoutManager dispose les lignes, il ne détruit pas les données."], ['qcm-prof', 'recycler']),
+  single('mob-q17', 1, "Quel est le rôle de onCreateViewHolder() ?", ["Compter les données.", "Créer une vue de ligne et le ViewHolder associé lorsque nécessaire.", "Lire les extras d'un Intent.", "Remplir uniquement le nom à chaque défilement."], 1, "Gonfle la ligne et crée le ViewHolder, seulement quand aucun n'est réutilisable.", ["C'est getItemCount().", "C'est getIntent().getXxxExtra().", "Remplir = onBindViewHolder()."], ['qcm-prof', 'recycler']),
+  single('mob-q18', 1, "Quel est le rôle de onBindViewHolder(holder, position) ?", ["Créer une nouvelle Activity.", "Déclarer la permission Internet.", "Associer la donnée de la position demandée aux vues du holder.", "Renvoyer le nombre total de données."], 2, "Il remplit le holder avec liste.get(position).", ["C'est startActivity.", "C'est le manifeste.", "C'est getItemCount()."], ['qcm-prof', 'recycler']),
+  single('mob-q19', 2, "Quel est le rôle de getItemCount() ?", ["Renvoyer le nombre total d'éléments dans la source de données.", "Renvoyer uniquement le nombre de lignes visibles.", "Renvoyer le nombre de CREATE déjà affichés.", "Renvoyer la hauteur du téléphone."], 0, "return liste.size() : le nombre total, visibles ou non.", ["Piège : toutes les données comptent, pas seulement les visibles.", "Sans rapport.", "Sans rapport."], ['qcm-prof', 'recycler']),
+  single('mob-q20', 1, "Une application de contacts affiche une longue liste défilante. Quel composant et quelle justification conviennent ?", ["TextView, car un texte unique crée les actions de chaque ligne.", "Intent, car il dispose les contacts.", "FrameLayout, car il recycle automatiquement les contacts.", "RecyclerView, car il affiche des lignes personnalisées et réutilise leurs vues."], 3, "Longue liste + lignes personnalisées → RecyclerView.", ["Un seul texte ne fait pas une liste.", "Intent navigue, il ne dispose rien.", "FrameLayout ne recycle rien."], ['qcm-prof', 'recycler']),
+  single('mob-q21', 1, "Une ligne de contact contient un avatar, un nom et une action. Quelle association convient ?", ["TextView / ImageView / SDK", "ImageView / TextView / Button ou ImageButton", "Intent / TextView / Manifest", "ViewHolder / Activity / SDK"], 1, "Avatar = ImageView, nom = TextView, action = Button / ImageButton.", ["Ordre faux et le SDK n'est pas une vue.", "Intent et Manifest ne sont pas des vues.", "Ce ne sont pas des vues."], ['qcm-prof', 'listes']),
+  single('mob-q22', 1, "Après un clic sur un contact, quel couple permet de préparer l'ouverture de sa fiche et de transmettre son nom ?", ["ViewHolder et getItemCount()", "LinearLayout et setOrientation()", "Intent et putExtra()", "TextView et onStop()"], 2, "new Intent(…, FicheActivity.class) + putExtra(\"nom\", nom).", ["Ils servent à la liste.", "Ils servent à la disposition.", "Sans rapport."], ['qcm-prof', 'intent']),
+  single('mob-q23', 2, "ConstraintLayout du contrôle : titre (Top et Start → parent), bouton (Start et End → parent, Top → bas du titre), biais par défaut. Quelle disposition ?", ["Titre en haut à gauche ; bouton sous le titre et centré horizontalement.", "Titre en bas ; bouton au-dessus.", "Titre centré ; bouton obligatoirement étiré sur toute la largeur.", "Titre et bouton superposés au centre."], 0, "Titre : une seule contrainte horizontale (Start) → à gauche. Bouton : Start + End → centré, Top → sous le titre.", ["Top → parent : le titre est en haut.", "Titre sans End : non centré ; bouton wrap_content : non étiré.", "Top_toBottomOf : le bouton est sous le titre."], ['qcm-prof', 'constraint']),
+  single('mob-q24', 1, "Même extrait : de quoi dépend la largeur du bouton avec wrap_content ?", ["Uniquement de la largeur de l'écran.", "Du nombre total de contacts.", "Uniquement de sa position verticale.", "Du contenu, notamment du texte et des marges internes, avec les règles de mesure et les contraintes de taille."], 3, "wrap_content = taille du contenu (texte + padding).", ["Ce serait 0dp entre les bords.", "Sans rapport.", "Sans rapport."], ['qcm-prof', 'constraint']),
+  single('mob-q25', 1, "Même extrait : quelle différence entre @+id/btnAjouter et @id/titre ?", ["Les deux déclarent une permission.", "@+id/btnAjouter déclare un identifiant ; @id/titre référence l'identifiant existant du titre.", "@id/titre supprime la vue titre.", "Le signe + ouvre une nouvelle Activity."], 1, "Le + crée l'id ; sans + on référence un id existant.", ["Les permissions sont dans le manifeste.", "Il ne supprime rien.", "Le + n'a rien à voir avec les Activity."], ['qcm-prof', 'constraint']),
+  single('mob-q26', 2, "Trace (3 lignes visibles) : 3 × CREATE, BIND 0, 1, 2, puis défilement d'une ligne et BIND 3. Quelles méthodes produisent CREATE et BIND ?", ["onStart() et onStop()", "getItemCount() et onCreate()", "onCreateViewHolder() et onBindViewHolder()", "onBindViewHolder() et onCreateViewHolder()"], 2, "CREATE = création des holders ; BIND = liaison à une position.", ["Méthodes du cycle de vie de l'Activity.", "Ni l'une ni l'autre ne crée/lie de ligne.", "Inversé."], ['qcm-prof', 'trace']),
+  single('mob-q27', 2, "Même trace : combien de ViewHolder créés et combien de liaisons au total ?", ["3 ViewHolder et 4 liaisons.", "4 ViewHolder et 3 liaisons.", "3 ViewHolder et 3 liaisons.", "4 ViewHolder et 4 liaisons."], 0, "3 CREATE et 4 BIND (positions 0 à 3).", ["Inversé.", "Oublie le BIND après défilement.", "Pas de 4e CREATE : réutilisation."], ['qcm-prof', 'trace']),
+  single('mob-q28', 2, "Même trace : pourquoi BIND position=3 apparaît sans quatrième CREATE ?", ["La quatrième donnée n'est pas affichée.", "getItemCount vaut obligatoirement 3.", "RecyclerView transforme une Activity en ligne.", "Un ViewHolder existant est réutilisé pour afficher la donnée de position 3."], 3, "La ligne sortie de l'écran rend son holder, réutilisé (recyclage).", ["Elle est affichée (BIND position=3).", "Il y a au moins 4 données puisque la position 3 existe.", "Sans rapport."], ['qcm-prof', 'trace']),
+];
+
+setCtx('mobile', 'rattrapage');
+const qRatt = [
+  single('mob-80', 2, "Où modifie-t-on le contenu de la classe R ?", ["Nulle part à la main : elle est générée à partir des ressources de res/", "Directement dans R.java", "Dans AndroidManifest.xml"], 0, "On modifie les ressources ; R est régénérée à la compilation.", ["R.java est générée : toute modification serait écrasée.", "Le manifeste ne définit pas les ressources."], ['rattrapage']),
+  single('mob-81', 2, "Différence entre @android:color/background_dark et @color/background_dark ?", ["La 1re vient du système Android, la 2e de res/values/colors.xml de l'app", "Aucune", "La 1re est en Java, la 2e en XML"], 0, "@android: = ressources du framework (android.R).", ["Ce sont deux ressources différentes.", "Les deux sont des références XML."], ['rattrapage']),
+  single('mob-82', 2, "Quelles méthodes sauvegardent puis restaurent l'état de l'UI quand l'OS détruit l'Activity ?", ["onSaveInstanceState() et onRestoreInstanceState()", "onPause() et onResume()", "onStop() et onRestart()"], 0, "Le Bundle sauvegardé est aussi passé à onCreate(savedInstanceState).", ["Elles ne gèrent pas de Bundle d'état.", "Elles ne gèrent pas de Bundle d'état."], ['rattrapage', 'cycle']),
+  single('mob-83', 2, "Effet de android:inputType=\"textEmailAddress\" ?", ["Clavier adapté à la saisie d'un email, sans validation du format", "Refuse toute adresse invalide", "Envoie un email"], 0, "La validation reste à faire dans le code.", ["Aucune validation automatique.", "Aucun envoi."], ['rattrapage'])
+];
+
 // ================= Exercices =================
 setCtx('mobile', 'ecran');
 const exs = [
@@ -425,6 +465,21 @@ exs.push(
     A('Partie II Q3'), [["Répondre AndroidManifest.xml pour minSdk (c'est dans Gradle).", "minSdk f Gradle.", 'minSdk is in Gradle.']])
 );
 
+setCtx('mobile', 'rattrapage');
+const R = (n: string) => ["Correction détaillée : chapitre « Annale : Rattrapage 2025 corrigé », " + n + ".", "Correction f chapitre Rattrapage, " + n + ".", "Solution in the Resit chapter, " + n + "."] as [string, string, string];
+exs.push(
+  ex('mob-r-1', 2, "Rattrapage 2025 — Partie I, Q1 à Q6 (6 pts)", "1. Fichiers de mipmap. 2. Composantes d'une application Android. 3. Exemple de configuration dans build.gradle. 4. Une application pour un réfrigérateur ? 5. Notifications de factures + authentification : quelle technologie ? 6. minSdk 21 au lieu de 24 : un avantage, un inconvénient.", ["Pense icônes, 4 composants, Gradle, Android hors téléphones."],
+    [{ t: 'Réponses', b: "1) icônes PNG/WebP + adaptatives XML. 2) Activity, Service, BroadcastReceiver, ContentProvider. 3) minSdk = 24 ou une dépendance. 4) Oui si l'appareil tourne sous Android. 5) Native : push, sécurité, biométrie. 6) + d'appareils / - API récentes et tests." }],
+    R('Q1 à Q6'), ["Q4 : répondre non sans parler des appareils sous Android."]),
+  ex('mob-r-2', 2, "Rattrapage 2025 — Partie I, Q7 à Q12 (6 pts)", "7. Plusieurs layouts pour une même Activity ? 8. Modifier la classe R ? 9. @android:color vs @color. 10. Équivalent Java de @drawable/my_icon. 11. Autre langage que Java. 12. Callbacks de sauvegarde/restauration de l'état UI.", ["layout-land, R générée, framework vs app."],
+    [{ t: 'Réponses', b: "7) Oui : layout-land/, layout-sw600dp/… 8) Jamais à la main, modifier res/. 9) système vs app. 10) R.drawable.my_icon. 11) Kotlin. 12) onSaveInstanceState / onRestoreInstanceState." }],
+    R('Q7 à Q12'), ["Q8 : proposer d'éditer R.java."]),
+  ex('mob-r-3', 3, "Rattrapage 2025 — Partie II : formulaire ConstraintLayout (8 pts)", "Layout (tools:context=\".Formulaire\") : txt1 (match_parent, Start/End/Top → parent), btn1 (Start/End/Bottom → parent), edt1 (200dp, Start → parent, Bottom → top de edt3), edt2 (200dp, Start → parent, Top → bas de edt3), edt3 (0dp, Start → fin de edt1, End → parent, Top → bas de txt1, Bottom → parent, textEmailAddress). a) Dessinez. b) Classe Java ? c) Effet de textEmailAddress ? d) Listener sur le bouton. e) Remplacer tous les @+id/ par @id/ ?", ["Lis edt3 d'abord : les autres champs se placent par rapport à lui."],
+    [{ t: 'a, b, c, e', b: "a) titre en haut, email centré verticalement à droite, nom au-dessus et prénom au-dessous à gauche, bouton centré en bas. b) Formulaire.java. c) clavier email, pas de validation. e) Non pour les android:id (déclaration), oui pour les références dans les contraintes." },
+     { t: 'd', b: "Listener :", code: 'Button valider = findViewById(R.id.btn1);\nvalider.setOnClickListener(v -> {\n    String nom = ((EditText) findViewById(R.id.edt1)).getText().toString();\n    Toast.makeText(this, "Bonjour " + nom, Toast.LENGTH_SHORT).show();\n});' }],
+    R('Partie II'), ["Placer nom, email, prénom simplement les uns sous les autres en oubliant edt3 à droite.", "Croire que textEmailAddress valide l'adresse."])
+);
+
 // ================= Flashcards =================
 setCtx('mobile', 'ecran');
 const fcs = [
@@ -493,9 +548,9 @@ export const module: Module = {
   color: '#0f6f8f',
   icon: 'phone',
   theme: 'violet',
-  chapters: ['ecran', 'cycle', 'dimensions', 'navigation', 'constraint', 'listes', 'traces', 'annale'],
+  chapters: ['ecran', 'cycle', 'dimensions', 'navigation', 'constraint', 'listes', 'traces', 'annale', 'rattrapage', 'qcm-prof'],
   upcoming: [
-    { id: 'mob-prep-suite', order: 9, title: L(["Suite de la préparation (diapos restantes)", "Tkmila dyal préparation (diapos li ba9in)", 'Rest of the preparation (remaining slides)']) }
+    { id: 'mob-prep-suite', order: 10, title: L(["Suite de la préparation (diapos restantes)", "Tkmila dyal préparation (diapos li ba9in)", 'Rest of the preparation (remaining slides)']) }
   ],
   annales: [
     {
@@ -504,13 +559,20 @@ export const module: Module = {
       minutes: 90,
       intro: L(["1h30. Partie I : questions générales (12 pts). Partie II : code (8 pts). La clarté et la simplicité des réponses et du code sont prises en compte.", "1h30. Partie I (12 pts), Partie II (8 pts).", '1h30. Part I (12 pts), Part II (8 pts).']),
       parts: [{ exerciseId: 'mob-a-1', points: 4 }, { exerciseId: 'mob-a-2', points: 4 }, { exerciseId: 'mob-a-3', points: 4 }, { exerciseId: 'mob-a-4', points: 1 }, { exerciseId: 'mob-a-5', points: 4 }, { exerciseId: 'mob-a-6', points: 3 }]
+    },
+    {
+      id: 'ratt-2025',
+      title: L(['Rattrapage 2025-2026 (03/01/2026)', 'Rattrapage 2025-2026', 'Resit 2025-2026']),
+      minutes: 90,
+      intro: L(["1h30. Partie I : 12 questions générales (12 pts). Partie II : interprétation d'un layout (8 pts).", "1h30. Partie I (12 pts), Partie II (8 pts).", '1h30. Part I (12 pts), Part II (8 pts).']),
+      parts: [{ exerciseId: 'mob-r-1', points: 6 }, { exerciseId: 'mob-r-2', points: 6 }, { exerciseId: 'mob-r-3', points: 8 }]
     }
   ],
-  weights: { cycle: 5, navigation: 5, listes: 5, traces: 4, annale: 4, constraint: 4, ecran: 4, dimensions: 4 }
+  weights: { cycle: 5, navigation: 5, listes: 5, traces: 4, annale: 4, rattrapage: 4, 'qcm-prof': 5, constraint: 4, ecran: 4, dimensions: 4 }
 };
 
-export const chapters = [c1, c2, c3, c4, c5, c6, c7, c8];
-export const questions = [...q1, ...q2, ...q3, ...q4, ...q5, ...q6, ...q7, ...q8];
+export const chapters = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10];
+export const questions = [...q1, ...q2, ...q3, ...q4, ...q5, ...q6, ...q7, ...q8, ...qRatt, ...qProf];
 export const exercises = exs;
 export const flashcards = fcs;
 export const reference = [

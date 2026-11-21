@@ -21,12 +21,14 @@
   "constraint",
   "listes",
   "traces",
-  "annale"
+  "annale",
+  "rattrapage",
+  "qcm-prof"
  ],
  "upcoming": [
   {
    "id": "mob-prep-suite",
-   "order": 9,
+   "order": 10,
    "title": {
     "fr": "Suite de la préparation (diapos restantes)",
     "dar": "Tkmila dyal préparation (diapos li ba9in)",
@@ -74,6 +76,34 @@
      "points": 3
     }
    ]
+  },
+  {
+   "id": "ratt-2025",
+   "title": {
+    "fr": "Rattrapage 2025-2026 (03/01/2026)",
+    "dar": "Rattrapage 2025-2026",
+    "en": "Resit 2025-2026"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "1h30. Partie I : 12 questions générales (12 pts). Partie II : interprétation d'un layout (8 pts).",
+    "dar": "1h30. Partie I (12 pts), Partie II (8 pts).",
+    "en": "1h30. Part I (12 pts), Part II (8 pts)."
+   },
+   "parts": [
+    {
+     "exerciseId": "mob-r-1",
+     "points": 6
+    },
+    {
+     "exerciseId": "mob-r-2",
+     "points": 6
+    },
+    {
+     "exerciseId": "mob-r-3",
+     "points": 8
+    }
+   ]
   }
  ],
  "weights": {
@@ -82,6 +112,8 @@
   "listes": 5,
   "traces": 4,
   "annale": 4,
+  "rattrapage": 4,
+  "qcm-prof": 5,
   "constraint": 4,
   "ecran": 4,
   "dimensions": 4

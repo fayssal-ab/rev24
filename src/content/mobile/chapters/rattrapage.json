@@ -1,0 +1,297 @@
+{
+ "id": "rattrapage",
+ "module": "mobile",
+ "order": 10,
+ "title": {
+  "fr": "Annale : Rattrapage 2025 corrigé",
+  "dar": "Annale : Rattrapage 2025 m-corrigi",
+  "en": "Past paper: 2025 resit, solved"
+ },
+ "summary": {
+  "fr": "Le rattrapage du 03/01/2026 (1h30, 20 pts) : mipmap, composants Android, build.gradle, minSdk 21/24, plusieurs layouts, classe R, @android:color, Kotlin, sauvegarde d'état, puis lecture d'un ConstraintLayout de formulaire.",
+  "dar": "Rattrapage 03/01/2026 (1h30, 20 pts) : mipmap, composants, build.gradle, minSdk, layouts, R, @android:color, Kotlin, sauvegarde d'état, w ConstraintLayout dyal formulaire.",
+  "en": "The 03/01/2026 resit (1h30, 20 pts): mipmap, components, build.gradle, minSdk, layouts, R, @android:color, Kotlin, state saving, then reading a form ConstraintLayout."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie I — Questions générales (12 pts, 1 pt chacune)",
+    "dar": "Partie I — Questions générales",
+    "en": "Part I — General questions"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Q1. Fichiers du dossier mipmap",
+      "dar": "Q1. Fichiers du dossier mipmap",
+      "en": "Q1. Fichiers du dossier mipmap"
+     },
+     "body": {
+      "fr": "Les **icônes de l'application** (icône du lanceur) : images **PNG / WebP** en plusieurs densités (`mipmap-mdpi` … `mipmap-xxxhdpi`) et icônes **adaptatives XML** (`mipmap-anydpi-v26`).",
+      "dar": "**Icônes dyal l'app** (launcher) : **PNG / WebP** b densités, w icônes **adaptatives XML**.",
+      "en": "The **app (launcher) icons**: **PNG / WebP** in several densities and **adaptive XML** icons."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2. Composantes d'une application Android",
+      "dar": "Q2. Composantes d'une application Android",
+      "en": "Q2. Composantes d'une application Android"
+     },
+     "body": {
+      "fr": "Les 4 composants : **Activity** (écran), **Service** (tâche en arrière-plan), **BroadcastReceiver** (réagit aux événements système), **ContentProvider** (partage de données). Ils communiquent par **Intent** et sont déclarés dans le **manifeste**.",
+      "dar": "**Activity, Service, BroadcastReceiver, ContentProvider**, b **Intent**, f **manifeste**.",
+      "en": "**Activity, Service, BroadcastReceiver, ContentProvider**, linked by **Intent**, declared in the **manifest**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3. Exemple de configuration dans build.gradle",
+      "dar": "Q3. Exemple de configuration dans build.gradle",
+      "en": "Q3. Exemple de configuration dans build.gradle"
+     },
+     "body": {
+      "fr": "Le **minSdk** (`minSdk = 24`), le targetSdk, l'applicationId, la version (`versionCode`, `versionName`) ou une **dépendance** : `implementation(\"androidx.recyclerview:recyclerview:…\")`.",
+      "dar": "**minSdk = 24**, applicationId, version, wla **dépendance** (`implementation(...)`).",
+      "en": "**minSdk = 24**, applicationId, version, or a **dependency** (`implementation(...)`)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q4. Une application pour un réfrigérateur ?",
+      "dar": "Q4. Une application pour un réfrigérateur ?",
+      "en": "Q4. Une application pour un réfrigérateur ?"
+     },
+     "body": {
+      "fr": "**Oui, si le réfrigérateur fonctionne sous Android** (réfrigérateurs connectés avec écran) : Android ne tourne pas que sur les téléphones (tablettes, TV, montres, voitures, objets). On cible alors son niveau d'API et son écran. **Non** s'il n'embarque pas Android.",
+      "dar": "**Ah, ila l frigo fih Android** (b écran) : Android machi ghir téléphones. **La** ila ma fihch Android.",
+      "en": "**Yes, if the fridge runs Android** (smart fridges): Android is not only for phones. **No** otherwise."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q5. Notifications de factures + authentification",
+      "dar": "Q5. Notifications de factures + authentification",
+      "en": "Q5. Notifications de factures + authentification"
+     },
+     "body": {
+      "fr": "**Native** : notifications push fiables (Firebase Cloud Messaging), stockage sécurisé, authentification biométrique, meilleure sécurité et performance. Une application web gère mal les notifications et la biométrie ; un framework multiplateforme (Flutter) reste acceptable si on justifie (iOS + Android avec un seul code).",
+      "dar": "**Native** : notifications push, sécurité, biométrie. Web ma kaygérich mzyan notifications. Flutter momkin ila bghiti iOS + Android.",
+      "en": "**Native**: reliable push, secure storage, biometrics. Web handles these poorly; Flutter is fine if justified."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q6. minSdk 21 au lieu de 24",
+      "dar": "Q6. minSdk 21 au lieu de 24",
+      "en": "Q6. minSdk 21 au lieu de 24"
+     },
+     "body": {
+      "fr": "**Avantage** : l'application s'installe sur **plus d'appareils** (Android 5.0 et plus). **Inconvénient** : certaines **API récentes** ne sont pas disponibles sans vérification de version, donc plus de code de compatibilité et plus de tests.",
+      "dar": "**Avantage** : **appareils ktar**. **Inconvénient** : **API jdad** ma kaynach, code w tests ktar.",
+      "en": "**Pro**: **more devices**. **Con**: fewer **recent APIs**, more compatibility code and tests."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q7. Plusieurs layouts pour la même Activity ?",
+      "dar": "Q7. Plusieurs layouts pour la même Activity ?",
+      "en": "Q7. Plusieurs layouts pour la même Activity ?"
+     },
+     "body": {
+      "fr": "**Oui** : on crée des **variantes du même layout** selon la configuration (`res/layout-land/activity_main.xml` pour le paysage, `res/layout-sw600dp/` pour les tablettes) et Android choisit le bon ; on peut aussi appeler `setContentView` avec un layout différent selon une condition.",
+      "dar": "**Ah** : `layout-land/`, `layout-sw600dp/` b nefs smiya, Android kaykhtar ; wla setContentView b layout akhor.",
+      "en": "**Yes**: variants (`layout-land/`, `layout-sw600dp/`), Android picks; or another setContentView."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q8. Modifier la classe R",
+      "dar": "Q8. Modifier la classe R",
+      "en": "Q8. Modifier la classe R"
+     },
+     "body": {
+      "fr": "**On ne la modifie jamais à la main** : elle est **générée automatiquement** à la compilation à partir du dossier `res/`. Pour changer son contenu, on **modifie les ressources** (ajouter un layout, une string, un `@+id`…).",
+      "dar": "**Ma katbeddelhach b yeddek** : kat**tsayb automatiquement** mn `res/`. Beddel **les ressources**.",
+      "en": "**Never by hand**: it is **generated** from `res/`. Change the **resources**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q9. @android:color/background_dark vs @color/background_dark",
+      "dar": "Q9. @android:color/background_dark vs @color/background_dark",
+      "en": "Q9. @android:color/background_dark vs @color/background_dark"
+     },
+     "body": {
+      "fr": "`@android:color/…` : ressource **fournie par le système Android** (`android.R.color`). `@color/…` : ressource **de ton application** (`res/values/colors.xml`, `R.color`).",
+      "dar": "`@android:` = **dyal système** ; `@color/` = **dyal l'app** (colors.xml).",
+      "en": "`@android:` = **system** resource; `@color/` = **your app's** resource."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q10. Équivalent Java de @drawable/my_icon",
+      "dar": "Q10. Équivalent Java de @drawable/my_icon",
+      "en": "Q10. Équivalent Java de @drawable/my_icon"
+     },
+     "body": {
+      "fr": "`R.drawable.my_icon` (par exemple `imageView.setImageResource(R.drawable.my_icon);`).",
+      "dar": "`R.drawable.my_icon`.",
+      "en": "`R.drawable.my_icon`."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q11. Autre langage que Java",
+      "dar": "Q11. Autre langage que Java",
+      "en": "Q11. Autre langage que Java"
+     },
+     "body": {
+      "fr": "**Kotlin** (langage recommandé par Google pour Android). C/C++ est aussi possible via le NDK.",
+      "dar": "**Kotlin**.",
+      "en": "**Kotlin**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q12. Sauvegarde / restauration de l'état",
+      "dar": "Q12. Sauvegarde / restauration de l'état",
+      "en": "Q12. Sauvegarde / restauration de l'état"
+     },
+     "body": {
+      "fr": "**`onSaveInstanceState(Bundle)`** sauvegarde l'état avant la destruction ; **`onRestoreInstanceState(Bundle)`** (ou le `savedInstanceState` reçu dans **`onCreate`**) le restaure. Les vues avec un id gardent ainsi le texte saisi et le défilement.",
+      "dar": "**`onSaveInstanceState`** w **`onRestoreInstanceState`** (wla `savedInstanceState` f onCreate).",
+      "en": "**`onSaveInstanceState`** and **`onRestoreInstanceState`** (or `savedInstanceState` in onCreate)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie II — Le formulaire d'inscription (8 pts)",
+    "dar": "Partie II — Formulaire",
+    "en": "Part II — The sign-up form"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "<androidx.constraintlayout.widget.ConstraintLayout ...\n    tools:context=\".Formulaire\">\n  <TextView  id=txt1  width=match_parent  \"Formulaire d'inscription\" 30sp\n             Start→parent  End→parent  Top→parent\n  <Button    id=btn1  wrap_content  \"Valider\"\n             Start→parent  End→parent  Bottom→parent\n  <EditText  id=edt1  width=200dp  hint \"Votre Nom\"\n             Start→parent  Bottom→top de edt3\n  <EditText  id=edt2  width=200dp  hint \"Votre Prénom\"\n             Start→parent  Top→bas de edt3\n  <EditText  id=edt3  width=0dp  hint \"Votre email\"  inputType=textEmailAddress\n             Start→fin de edt1  End→parent  Top→bas de txt1  Bottom→parent",
+   "caption": {
+    "fr": "Les contraintes du sujet, résumées",
+    "dar": "Contraintes dyal sujet",
+    "en": "The constraints, summarised"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "a. Dessin (2 pts)",
+      "dar": "a. Dessin (2 pts)",
+      "en": "a. Dessin (2 pts)"
+     },
+     "body": {
+      "fr": "**txt1** : en haut, toute la largeur. **btn1** : Start + End + Bottom → **centré en bas**. **edt3** (email) : Top → bas du titre et Bottom → parent, donc **centré verticalement** dans l'espace restant ; 0dp entre la fin de edt1 et le bord droit → il occupe **la partie droite**. **edt1** (nom) : à gauche, **juste au-dessus** de edt3. **edt2** (prénom) : à gauche, **juste en dessous** de edt3.",
+      "dar": "**txt1** lfo9 l3ard kaml. **btn1** f lwest lte7t. **edt3** f lwest vertical, f limn. **edt1** lisr fo9 edt3. **edt2** lisr ta7t edt3.",
+      "en": "**txt1** top, full width. **btn1** centred bottom. **edt3** vertically centred, right part. **edt1** left, above edt3. **edt2** left, below edt3."
+     }
+    },
+    {
+     "title": {
+      "fr": "b. Classe Java (1 pt)",
+      "dar": "b. Classe Java (1 pt)",
+      "en": "b. Classe Java (1 pt)"
+     },
+     "body": {
+      "fr": "**Formulaire.java** (`tools:context=\".Formulaire\"`).",
+      "dar": "**Formulaire.java**.",
+      "en": "**Formulaire.java**."
+     }
+    },
+    {
+     "title": {
+      "fr": "c. Effet de inputType=\"textEmailAddress\" (2 pts)",
+      "dar": "c. Effet de inputType=\"textEmailAddress\" (2 pts)",
+      "en": "c. Effet de inputType=\"textEmailAddress\" (2 pts)"
+     },
+     "body": {
+      "fr": "Android affiche un **clavier adapté à l'email** (touches **@** et **.** accessibles) et désactive les corrections inadaptées. Il **ne vérifie pas** que l'adresse est valide : il faut le contrôler dans le code (ex. `Patterns.EMAIL_ADDRESS`).",
+      "dar": "**Clavier dyal email** (@ w .). **Ma kayvérifich** l'adresse : khass tvérifiha f code.",
+      "en": "**Email keyboard** (@ and .). It does **not validate** the address."
+     }
+    },
+    {
+     "title": {
+      "fr": "e. Remplacer tous les @+id/ par @id/ ? (1 pt)",
+      "dar": "e. Remplacer tous les @+id/ par @id/ ? (1 pt)",
+      "en": "e. Remplacer tous les @+id/ par @id/ ? (1 pt)"
+     },
+     "body": {
+      "fr": "**Non, pas tous** : `@+id/` **déclare** (crée) l'identifiant ; chaque id doit être déclaré au moins une fois, normalement dans `android:id=\"@+id/…\"`. **Oui pour les références** dans les contraintes (`app:layout_constraintBottom_toTopOf=\"@id/edt3\"`), puisque edt3 est déclaré par son `android:id`.",
+      "dar": "**La, machi kamlin** : `@+id/` kay**sayb** l'id. **Ah f les références** dyal contraintes, 7it l'id mdeclari f `android:id`.",
+      "en": "**Not all**: `@+id/` **declares** the id. **Yes for references** in constraints, since the id is declared in `android:id`."
+     }
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "+----------------------------------------+\n| Formulaire d'inscription               |\n|                                        |\n| [Votre Nom      ]                      |\n|                  [Votre email        ] |\n| [Votre Prénom   ]                      |\n|                                        |\n|               [ VALIDER ]              |\n+----------------------------------------+",
+   "caption": {
+    "fr": "a. Le croquis attendu",
+    "dar": "a. Croquis",
+    "en": "a. Expected sketch"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class Formulaire extends AppCompatActivity {\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_formulaire);\n\n        EditText nom = findViewById(R.id.edt1);\n        Button valider = findViewById(R.id.btn1);\n        valider.setOnClickListener(v -> {\n            String n = nom.getText().toString();\n            Toast.makeText(this, \"Bonjour \" + n, Toast.LENGTH_SHORT).show();\n        });\n    }\n}",
+   "caption": {
+    "fr": "d. Attacher un listener au clic sur le Button (2 pts)",
+    "dar": "d. Listener dyal click",
+    "en": "d. Click listener"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-80",
+    "mob-81",
+    "mob-82",
+    "mob-83"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "mipmap = icônes de l'app ; 4 composants : Activity, Service, BroadcastReceiver, ContentProvider.",
+   "dar": "mipmap ; 4 composants.",
+   "en": "mipmap; 4 components."
+  },
+  {
+   "fr": "R est générée : on modifie les ressources ; @android: = système, @color = app ; @drawable/x ↔ R.drawable.x.",
+   "dar": "R automatique ; @android: / @color.",
+   "en": "R is generated; @android: vs @color."
+  },
+  {
+   "fr": "État UI : onSaveInstanceState / onRestoreInstanceState ; Kotlin remplace Java.",
+   "dar": "onSave / onRestore ; Kotlin.",
+   "en": "onSave / onRestore; Kotlin."
+  },
+  {
+   "fr": "textEmailAddress = clavier email, pas de validation ; @+id déclare, @id référence.",
+   "dar": "Clavier email ; @+id / @id.",
+   "en": "Email keyboard; @+id vs @id."
+  }
+ ]
+}

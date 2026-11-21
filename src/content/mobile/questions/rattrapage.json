@@ -1,0 +1,239 @@
+[
+ {
+  "id": "mob-80",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où modifie-t-on le contenu de la classe R ?",
+   "dar": "Où modifie-t-on le contenu de la classe R ?",
+   "en": "Où modifie-t-on le contenu de la classe R ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Nulle part à la main : elle est générée à partir des ressources de res/",
+     "dar": "Nulle part à la main : elle est générée à partir des ressources de res/",
+     "en": "Nulle part à la main : elle est générée à partir des ressources de res/"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Directement dans R.java",
+     "dar": "Directement dans R.java",
+     "en": "Directement dans R.java"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Dans AndroidManifest.xml",
+     "dar": "Dans AndroidManifest.xml",
+     "en": "Dans AndroidManifest.xml"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "On modifie les ressources ; R est régénérée à la compilation.",
+   "dar": "On modifie les ressources ; R est régénérée à la compilation.",
+   "en": "On modifie les ressources ; R est régénérée à la compilation."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "R.java est générée : toute modification serait écrasée.",
+    "dar": "R.java est générée : toute modification serait écrasée.",
+    "en": "R.java est générée : toute modification serait écrasée."
+   },
+   "c": {
+    "fr": "Le manifeste ne définit pas les ressources.",
+    "dar": "Le manifeste ne définit pas les ressources.",
+    "en": "Le manifeste ne définit pas les ressources."
+   }
+  },
+  "tags": [
+   "rattrapage"
+  ]
+ },
+ {
+  "id": "mob-81",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence entre @android:color/background_dark et @color/background_dark ?",
+   "dar": "Différence entre @android:color/background_dark et @color/background_dark ?",
+   "en": "Différence entre @android:color/background_dark et @color/background_dark ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "La 1re vient du système Android, la 2e de res/values/colors.xml de l'app",
+     "dar": "La 1re vient du système Android, la 2e de res/values/colors.xml de l'app",
+     "en": "La 1re vient du système Android, la 2e de res/values/colors.xml de l'app"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Aucune",
+     "en": "Aucune"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La 1re est en Java, la 2e en XML",
+     "dar": "La 1re est en Java, la 2e en XML",
+     "en": "La 1re est en Java, la 2e en XML"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "@android: = ressources du framework (android.R).",
+   "dar": "@android: = ressources du framework (android.R).",
+   "en": "@android: = ressources du framework (android.R)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce sont deux ressources différentes.",
+    "dar": "Ce sont deux ressources différentes.",
+    "en": "Ce sont deux ressources différentes."
+   },
+   "c": {
+    "fr": "Les deux sont des références XML.",
+    "dar": "Les deux sont des références XML.",
+    "en": "Les deux sont des références XML."
+   }
+  },
+  "tags": [
+   "rattrapage"
+  ]
+ },
+ {
+  "id": "mob-82",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelles méthodes sauvegardent puis restaurent l'état de l'UI quand l'OS détruit l'Activity ?",
+   "dar": "Quelles méthodes sauvegardent puis restaurent l'état de l'UI quand l'OS détruit l'Activity ?",
+   "en": "Quelles méthodes sauvegardent puis restaurent l'état de l'UI quand l'OS détruit l'Activity ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onSaveInstanceState() et onRestoreInstanceState()",
+     "dar": "onSaveInstanceState() et onRestoreInstanceState()",
+     "en": "onSaveInstanceState() et onRestoreInstanceState()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onPause() et onResume()",
+     "dar": "onPause() et onResume()",
+     "en": "onPause() et onResume()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onStop() et onRestart()",
+     "dar": "onStop() et onRestart()",
+     "en": "onStop() et onRestart()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le Bundle sauvegardé est aussi passé à onCreate(savedInstanceState).",
+   "dar": "Le Bundle sauvegardé est aussi passé à onCreate(savedInstanceState).",
+   "en": "Le Bundle sauvegardé est aussi passé à onCreate(savedInstanceState)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Elles ne gèrent pas de Bundle d'état.",
+    "dar": "Elles ne gèrent pas de Bundle d'état.",
+    "en": "Elles ne gèrent pas de Bundle d'état."
+   },
+   "c": {
+    "fr": "Elles ne gèrent pas de Bundle d'état.",
+    "dar": "Elles ne gèrent pas de Bundle d'état.",
+    "en": "Elles ne gèrent pas de Bundle d'état."
+   }
+  },
+  "tags": [
+   "rattrapage",
+   "cycle"
+  ]
+ },
+ {
+  "id": "mob-83",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Effet de android:inputType=\"textEmailAddress\" ?",
+   "dar": "Effet de android:inputType=\"textEmailAddress\" ?",
+   "en": "Effet de android:inputType=\"textEmailAddress\" ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Clavier adapté à la saisie d'un email, sans validation du format",
+     "dar": "Clavier adapté à la saisie d'un email, sans validation du format",
+     "en": "Clavier adapté à la saisie d'un email, sans validation du format"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Refuse toute adresse invalide",
+     "dar": "Refuse toute adresse invalide",
+     "en": "Refuse toute adresse invalide"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Envoie un email",
+     "dar": "Envoie un email",
+     "en": "Envoie un email"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "La validation reste à faire dans le code.",
+   "dar": "La validation reste à faire dans le code.",
+   "en": "La validation reste à faire dans le code."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Aucune validation automatique.",
+    "dar": "Aucune validation automatique.",
+    "en": "Aucune validation automatique."
+   },
+   "c": {
+    "fr": "Aucun envoi.",
+    "dar": "Aucun envoi.",
+    "en": "Aucun envoi."
+   }
+  },
+  "tags": [
+   "rattrapage"
+  ]
+ }
+]

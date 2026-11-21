@@ -1,0 +1,167 @@
+[
+ {
+  "id": "mob-r-1",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rattrapage 2025 — Partie I, Q1 à Q6 (6 pts)",
+   "dar": "Rattrapage 2025 — Partie I, Q1 à Q6 (6 pts)",
+   "en": "Rattrapage 2025 — Partie I, Q1 à Q6 (6 pts)"
+  },
+  "statement": {
+   "fr": "1. Fichiers de mipmap. 2. Composantes d'une application Android. 3. Exemple de configuration dans build.gradle. 4. Une application pour un réfrigérateur ? 5. Notifications de factures + authentification : quelle technologie ? 6. minSdk 21 au lieu de 24 : un avantage, un inconvénient.",
+   "dar": "1. Fichiers de mipmap. 2. Composantes d'une application Android. 3. Exemple de configuration dans build.gradle. 4. Une application pour un réfrigérateur ? 5. Notifications de factures + authentification : quelle technologie ? 6. minSdk 21 au lieu de 24 : un avantage, un inconvénient.",
+   "en": "1. Fichiers de mipmap. 2. Composantes d'une application Android. 3. Exemple de configuration dans build.gradle. 4. Une application pour un réfrigérateur ? 5. Notifications de factures + authentification : quelle technologie ? 6. minSdk 21 au lieu de 24 : un avantage, un inconvénient."
+  },
+  "hints": [
+   {
+    "fr": "Pense icônes, 4 composants, Gradle, Android hors téléphones.",
+    "dar": "Pense icônes, 4 composants, Gradle, Android hors téléphones.",
+    "en": "Pense icônes, 4 composants, Gradle, Android hors téléphones."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Réponses",
+     "en": "Réponses"
+    },
+    "body": {
+     "fr": "1) icônes PNG/WebP + adaptatives XML. 2) Activity, Service, BroadcastReceiver, ContentProvider. 3) minSdk = 24 ou une dépendance. 4) Oui si l'appareil tourne sous Android. 5) Native : push, sécurité, biométrie. 6) + d'appareils / - API récentes et tests.",
+     "dar": "1) icônes PNG/WebP + adaptatives XML. 2) Activity, Service, BroadcastReceiver, ContentProvider. 3) minSdk = 24 ou une dépendance. 4) Oui si l'appareil tourne sous Android. 5) Native : push, sécurité, biométrie. 6) + d'appareils / - API récentes et tests.",
+     "en": "1) icônes PNG/WebP + adaptatives XML. 2) Activity, Service, BroadcastReceiver, ContentProvider. 3) minSdk = 24 ou une dépendance. 4) Oui si l'appareil tourne sous Android. 5) Native : push, sécurité, biométrie. 6) + d'appareils / - API récentes et tests."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Correction détaillée : chapitre « Annale : Rattrapage 2025 corrigé », Q1 à Q6.",
+   "dar": "Correction f chapitre Rattrapage, Q1 à Q6.",
+   "en": "Solution in the Resit chapter, Q1 à Q6."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Q4 : répondre non sans parler des appareils sous Android.",
+    "dar": "Q4 : répondre non sans parler des appareils sous Android.",
+    "en": "Q4 : répondre non sans parler des appareils sous Android."
+   }
+  ]
+ },
+ {
+  "id": "mob-r-2",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rattrapage 2025 — Partie I, Q7 à Q12 (6 pts)",
+   "dar": "Rattrapage 2025 — Partie I, Q7 à Q12 (6 pts)",
+   "en": "Rattrapage 2025 — Partie I, Q7 à Q12 (6 pts)"
+  },
+  "statement": {
+   "fr": "7. Plusieurs layouts pour une même Activity ? 8. Modifier la classe R ? 9. @android:color vs @color. 10. Équivalent Java de @drawable/my_icon. 11. Autre langage que Java. 12. Callbacks de sauvegarde/restauration de l'état UI.",
+   "dar": "7. Plusieurs layouts pour une même Activity ? 8. Modifier la classe R ? 9. @android:color vs @color. 10. Équivalent Java de @drawable/my_icon. 11. Autre langage que Java. 12. Callbacks de sauvegarde/restauration de l'état UI.",
+   "en": "7. Plusieurs layouts pour une même Activity ? 8. Modifier la classe R ? 9. @android:color vs @color. 10. Équivalent Java de @drawable/my_icon. 11. Autre langage que Java. 12. Callbacks de sauvegarde/restauration de l'état UI."
+  },
+  "hints": [
+   {
+    "fr": "layout-land, R générée, framework vs app.",
+    "dar": "layout-land, R générée, framework vs app.",
+    "en": "layout-land, R générée, framework vs app."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Réponses",
+     "en": "Réponses"
+    },
+    "body": {
+     "fr": "7) Oui : layout-land/, layout-sw600dp/… 8) Jamais à la main, modifier res/. 9) système vs app. 10) R.drawable.my_icon. 11) Kotlin. 12) onSaveInstanceState / onRestoreInstanceState.",
+     "dar": "7) Oui : layout-land/, layout-sw600dp/… 8) Jamais à la main, modifier res/. 9) système vs app. 10) R.drawable.my_icon. 11) Kotlin. 12) onSaveInstanceState / onRestoreInstanceState.",
+     "en": "7) Oui : layout-land/, layout-sw600dp/… 8) Jamais à la main, modifier res/. 9) système vs app. 10) R.drawable.my_icon. 11) Kotlin. 12) onSaveInstanceState / onRestoreInstanceState."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Correction détaillée : chapitre « Annale : Rattrapage 2025 corrigé », Q7 à Q12.",
+   "dar": "Correction f chapitre Rattrapage, Q7 à Q12.",
+   "en": "Solution in the Resit chapter, Q7 à Q12."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Q8 : proposer d'éditer R.java.",
+    "dar": "Q8 : proposer d'éditer R.java.",
+    "en": "Q8 : proposer d'éditer R.java."
+   }
+  ]
+ },
+ {
+  "id": "mob-r-3",
+  "module": "mobile",
+  "chapter": "rattrapage",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rattrapage 2025 — Partie II : formulaire ConstraintLayout (8 pts)",
+   "dar": "Rattrapage 2025 — Partie II : formulaire ConstraintLayout (8 pts)",
+   "en": "Rattrapage 2025 — Partie II : formulaire ConstraintLayout (8 pts)"
+  },
+  "statement": {
+   "fr": "Layout (tools:context=\".Formulaire\") : txt1 (match_parent, Start/End/Top → parent), btn1 (Start/End/Bottom → parent), edt1 (200dp, Start → parent, Bottom → top de edt3), edt2 (200dp, Start → parent, Top → bas de edt3), edt3 (0dp, Start → fin de edt1, End → parent, Top → bas de txt1, Bottom → parent, textEmailAddress). a) Dessinez. b) Classe Java ? c) Effet de textEmailAddress ? d) Listener sur le bouton. e) Remplacer tous les @+id/ par @id/ ?",
+   "dar": "Layout (tools:context=\".Formulaire\") : txt1 (match_parent, Start/End/Top → parent), btn1 (Start/End/Bottom → parent), edt1 (200dp, Start → parent, Bottom → top de edt3), edt2 (200dp, Start → parent, Top → bas de edt3), edt3 (0dp, Start → fin de edt1, End → parent, Top → bas de txt1, Bottom → parent, textEmailAddress). a) Dessinez. b) Classe Java ? c) Effet de textEmailAddress ? d) Listener sur le bouton. e) Remplacer tous les @+id/ par @id/ ?",
+   "en": "Layout (tools:context=\".Formulaire\") : txt1 (match_parent, Start/End/Top → parent), btn1 (Start/End/Bottom → parent), edt1 (200dp, Start → parent, Bottom → top de edt3), edt2 (200dp, Start → parent, Top → bas de edt3), edt3 (0dp, Start → fin de edt1, End → parent, Top → bas de txt1, Bottom → parent, textEmailAddress). a) Dessinez. b) Classe Java ? c) Effet de textEmailAddress ? d) Listener sur le bouton. e) Remplacer tous les @+id/ par @id/ ?"
+  },
+  "hints": [
+   {
+    "fr": "Lis edt3 d'abord : les autres champs se placent par rapport à lui.",
+    "dar": "Lis edt3 d'abord : les autres champs se placent par rapport à lui.",
+    "en": "Lis edt3 d'abord : les autres champs se placent par rapport à lui."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "a, b, c, e",
+     "dar": "a, b, c, e",
+     "en": "a, b, c, e"
+    },
+    "body": {
+     "fr": "a) titre en haut, email centré verticalement à droite, nom au-dessus et prénom au-dessous à gauche, bouton centré en bas. b) Formulaire.java. c) clavier email, pas de validation. e) Non pour les android:id (déclaration), oui pour les références dans les contraintes.",
+     "dar": "a) titre en haut, email centré verticalement à droite, nom au-dessus et prénom au-dessous à gauche, bouton centré en bas. b) Formulaire.java. c) clavier email, pas de validation. e) Non pour les android:id (déclaration), oui pour les références dans les contraintes.",
+     "en": "a) titre en haut, email centré verticalement à droite, nom au-dessus et prénom au-dessous à gauche, bouton centré en bas. b) Formulaire.java. c) clavier email, pas de validation. e) Non pour les android:id (déclaration), oui pour les références dans les contraintes."
+    }
+   },
+   {
+    "title": {
+     "fr": "d",
+     "dar": "d",
+     "en": "d"
+    },
+    "body": {
+     "fr": "Listener :",
+     "dar": "Listener :",
+     "en": "Listener :"
+    },
+    "code": "Button valider = findViewById(R.id.btn1);\nvalider.setOnClickListener(v -> {\n    String nom = ((EditText) findViewById(R.id.edt1)).getText().toString();\n    Toast.makeText(this, \"Bonjour \" + nom, Toast.LENGTH_SHORT).show();\n});"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Correction détaillée : chapitre « Annale : Rattrapage 2025 corrigé », Partie II.",
+   "dar": "Correction f chapitre Rattrapage, Partie II.",
+   "en": "Solution in the Resit chapter, Partie II."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Placer nom, email, prénom simplement les uns sous les autres en oubliant edt3 à droite.",
+    "dar": "Placer nom, email, prénom simplement les uns sous les autres en oubliant edt3 à droite.",
+    "en": "Placer nom, email, prénom simplement les uns sous les autres en oubliant edt3 à droite."
+   },
+   {
+    "fr": "Croire que textEmailAddress valide l'adresse.",
+    "dar": "Croire que textEmailAddress valide l'adresse.",
+    "en": "Croire que textEmailAddress valide l'adresse."
+   }
+  ]
+ }
+]

@@ -1,0 +1,179 @@
+{
+ "id": "qcm-prof",
+ "module": "mobile",
+ "order": 9,
+ "title": {
+  "fr": "QCM du prof : préparation au contrôle (28 questions)",
+  "dar": "QCM dyal prof : préparation (28 sou2al)",
+  "en": "Professor's prep quiz (28 questions)"
+ },
+ "summary": {
+  "fr": "Le QCM « Préparation au contrôle — Android natif » de A. Berahal (Google Forms) : 28 questions, 1 point chacune, une seule bonne réponse. Chaque question est corrigée, avec la raison de chaque mauvaise réponse.",
+  "dar": "QCM « Préparation au contrôle — Android natif » dyal A. Berahal (Google Forms) : 28 sou2al, point l kol wa7ed, jawab wa7ed s7i7. Kol sou2al m-corrigi.",
+  "en": "A. Berahal's \"Préparation au contrôle — Android natif\" quiz (Google Forms): 28 questions, 1 point each, one correct answer, all solved."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Ce QCM annonce le contrôle : mêmes thèmes (fichiers, cycle de vie, unités, layouts, Intent, adaptateurs, ConstraintLayout) et **la même instrumentation** `CREATE` / `BIND` du RecyclerView (questions 26 à 28). Refais-le jusqu'à 28/28.",
+    "dar": "Had QCM kaybyen contrôle : nefs thèmes w nefs trace `CREATE` / `BIND` (Q26–28). 3awdo 7tta 28/28.",
+    "en": "This quiz previews the test, including the `CREATE` / `BIND` RecyclerView trace (Q26–28). Redo it until 28/28."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q1 à Q4 — Outils et fichiers",
+    "dar": "Q1 l Q4 — Outils w fichiers",
+    "en": "Q1–Q4 — Tools and files"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q1",
+    "mob-q2",
+    "mob-q3",
+    "mob-q4"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q5 à Q9 — Cycle de vie, unités, dimensions",
+    "dar": "Q5 l Q9 — Cycle de vie, unités",
+    "en": "Q5–Q9 — Lifecycle, units, sizes"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q5",
+    "mob-q6",
+    "mob-q7",
+    "mob-q8",
+    "mob-q9"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q10 à Q12 — Choisir un layout",
+    "dar": "Q10 l Q12 — Layouts",
+    "en": "Q10–Q12 — Choosing a layout"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "**LinearLayout vertical** : empiler. **FrameLayout** : superposer (badge sur une image : la dernière vue est dessinée par-dessus). **ConstraintLayout** : contraintes entre vues et avec le parent.",
+    "dar": "**LinearLayout vertical** : wa7ed ta7t lakhor. **FrameLayout** : fo9 b3diyathom (badge 3la image). **ConstraintLayout** : contraintes.",
+    "en": "**Vertical LinearLayout**: stack. **FrameLayout**: overlay (badge on an image). **ConstraintLayout**: constraints."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q10",
+    "mob-q11",
+    "mob-q12"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q13 à Q22 — Intent, listes, adaptateurs",
+    "dar": "Q13 l Q22 — Intent, listes, adaptateurs",
+    "en": "Q13–Q22 — Intent, lists, adapters"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q13",
+    "mob-q14",
+    "mob-q15",
+    "mob-q16",
+    "mob-q17",
+    "mob-q18",
+    "mob-q19",
+    "mob-q20",
+    "mob-q21",
+    "mob-q22"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q23 à Q25 — Lire le ConstraintLayout du contrôle",
+    "dar": "Q23 l Q25 — ConstraintLayout dyal contrôle",
+    "en": "Q23–Q25 — The test's ConstraintLayout"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<ConstraintLayout ...>\n  <TextView android:id=\"@+id/titre\" android:text=\"Mes contacts\"\n      android:layout_width=\"wrap_content\"\n      app:layout_constraintTop_toTopOf=\"parent\"\n      app:layout_constraintStart_toStartOf=\"parent\" />\n  <Button android:id=\"@+id/btnAjouter\" android:text=\"Ajouter\"\n      android:layout_width=\"wrap_content\"\n      app:layout_constraintStart_toStartOf=\"parent\"\n      app:layout_constraintEnd_toEndOf=\"parent\"\n      app:layout_constraintTop_toBottomOf=\"@id/titre\" />\n</ConstraintLayout>",
+   "caption": {
+    "fr": "Extrait du contrôle : titre en haut à gauche (une seule contrainte horizontale), bouton sous le titre et centré (Start + End)",
+    "dar": "Titre lfo9 lisr, bouton ta7to f lwest",
+    "en": "Title top-left, button below and centred"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q23",
+    "mob-q24",
+    "mob-q25"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Q26 à Q28 — Trace CREATE / BIND",
+    "dar": "Q26 l Q28 — Trace CREATE / BIND",
+    "en": "Q26–Q28 — CREATE / BIND trace"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "D/ContactsAdapter: CREATE              <- onCreateViewHolder\nD/ContactsAdapter: CREATE\nD/ContactsAdapter: CREATE              (3 lignes visibles = 3 ViewHolder)\nD/ContactsAdapter: BIND position=0     <- onBindViewHolder\nD/ContactsAdapter: BIND position=1\nD/ContactsAdapter: BIND position=2\n--- défilement d'une ligne ---\nD/ContactsAdapter: BIND position=3     (le holder de la ligne sortie est réutilisé : pas de CREATE)",
+   "caption": {
+    "fr": "Total : 3 CREATE, 4 BIND",
+    "dar": "Total : 3 CREATE, 4 BIND",
+    "en": "Total: 3 CREATE, 4 BIND"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-q26",
+    "mob-q27",
+    "mob-q28"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "CREATE = onCreateViewHolder (une fois par holder) ; BIND = onBindViewHolder (à chaque ligne affichée) ; getItemCount = taille totale des données.",
+   "dar": "CREATE / BIND / count.",
+   "en": "CREATE / BIND / count."
+  },
+  {
+   "fr": "Accueil : onPause, onStop ; retour : onRestart, onStart, onResume.",
+   "dar": "Accueil / rjou3.",
+   "en": "Home / return."
+  },
+  {
+   "fr": "@+id déclare un identifiant ; @id référence un identifiant existant.",
+   "dar": "@+id / @id.",
+   "en": "@+id declares; @id references."
+  }
+ ]
+}

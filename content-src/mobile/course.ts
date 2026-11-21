@@ -1166,3 +1166,144 @@ String nom = input.getText().toString();     // correct`, 'java', ["Q1 : récup�
     L(["Lire un EditText : input.getText().toString() ; build.gradle.kts (app) : applicationId, minSdk, targetSdk, version.", "getText().toString() ; build.gradle.kts.", 'getText().toString(); build.gradle.kts.'])
   ]
 };
+
+// ======================================================================
+// Chapitre 9 — QCM de préparation du prof (Google Forms, 28 questions)
+// ======================================================================
+const ids = (a: number, b: number) => Array.from({ length: b - a + 1 }, (_, i) => `mob-q${a + i}`);
+export const c9: Chapter = {
+  id: 'qcm-prof',
+  module: 'mobile',
+  order: 9,
+  title: L(["QCM du prof : préparation au contrôle (28 questions)", "QCM dyal prof : préparation (28 sou2al)", "Professor's prep quiz (28 questions)"]),
+  summary: L([
+    "Le QCM « Préparation au contrôle — Android natif » de A. Berahal (Google Forms) : 28 questions, 1 point chacune, une seule bonne réponse. Chaque question est corrigée, avec la raison de chaque mauvaise réponse.",
+    "QCM « Préparation au contrôle — Android natif » dyal A. Berahal (Google Forms) : 28 sou2al, point l kol wa7ed, jawab wa7ed s7i7. Kol sou2al m-corrigi.",
+    "A. Berahal's \"Préparation au contrôle — Android natif\" quiz (Google Forms): 28 questions, 1 point each, one correct answer, all solved."
+  ]),
+  estimatedMinutes: 30,
+  sections: [
+    exam(["Ce QCM annonce le contrôle : mêmes thèmes (fichiers, cycle de vie, unités, layouts, Intent, adaptateurs, ConstraintLayout) et **la même instrumentation** `CREATE` / `BIND` du RecyclerView (questions 26 à 28). Refais-le jusqu'à 28/28.", "Had QCM kaybyen contrôle : nefs thèmes w nefs trace `CREATE` / `BIND` (Q26–28). 3awdo 7tta 28/28.", 'This quiz previews the test, including the `CREATE` / `BIND` RecyclerView trace (Q26–28). Redo it until 28/28.']),
+    h(["Q1 à Q4 — Outils et fichiers", "Q1 l Q4 — Outils w fichiers", 'Q1–Q4 — Tools and files']),
+    quiz(...ids(1, 4)),
+    h(["Q5 à Q9 — Cycle de vie, unités, dimensions", "Q5 l Q9 — Cycle de vie, unités", 'Q5–Q9 — Lifecycle, units, sizes']),
+    quiz(...ids(5, 9)),
+    h(["Q10 à Q12 — Choisir un layout", "Q10 l Q12 — Layouts", 'Q10–Q12 — Choosing a layout']),
+    tip(["**LinearLayout vertical** : empiler. **FrameLayout** : superposer (badge sur une image : la dernière vue est dessinée par-dessus). **ConstraintLayout** : contraintes entre vues et avec le parent.", "**LinearLayout vertical** : wa7ed ta7t lakhor. **FrameLayout** : fo9 b3diyathom (badge 3la image). **ConstraintLayout** : contraintes.", '**Vertical LinearLayout**: stack. **FrameLayout**: overlay (badge on an image). **ConstraintLayout**: constraints.']),
+    quiz(...ids(10, 12)),
+    h(["Q13 à Q22 — Intent, listes, adaptateurs", "Q13 l Q22 — Intent, listes, adaptateurs", 'Q13–Q22 — Intent, lists, adapters']),
+    quiz(...ids(13, 22)),
+    h(["Q23 à Q25 — Lire le ConstraintLayout du contrôle", "Q23 l Q25 — ConstraintLayout dyal contrôle", "Q23–Q25 — The test's ConstraintLayout"]),
+    code(`<ConstraintLayout ...>
+  <TextView android:id="@+id/titre" android:text="Mes contacts"
+      android:layout_width="wrap_content"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+  <Button android:id="@+id/btnAjouter" android:text="Ajouter"
+      android:layout_width="wrap_content"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/titre" />
+</ConstraintLayout>`, 'xml', ["Extrait du contrôle : titre en haut à gauche (une seule contrainte horizontale), bouton sous le titre et centré (Start + End)", "Titre lfo9 lisr, bouton ta7to f lwest", 'Title top-left, button below and centred']),
+    quiz(...ids(23, 25)),
+    h(["Q26 à Q28 — Trace CREATE / BIND", "Q26 l Q28 — Trace CREATE / BIND", 'Q26–Q28 — CREATE / BIND trace']),
+    code(`D/ContactsAdapter: CREATE              <- onCreateViewHolder
+D/ContactsAdapter: CREATE
+D/ContactsAdapter: CREATE              (3 lignes visibles = 3 ViewHolder)
+D/ContactsAdapter: BIND position=0     <- onBindViewHolder
+D/ContactsAdapter: BIND position=1
+D/ContactsAdapter: BIND position=2
+--- défilement d'une ligne ---
+D/ContactsAdapter: BIND position=3     (le holder de la ligne sortie est réutilisé : pas de CREATE)`, 'text', ["Total : 3 CREATE, 4 BIND", "Total : 3 CREATE, 4 BIND", 'Total: 3 CREATE, 4 BIND']),
+    quiz(...ids(26, 28))
+  ],
+  keyPoints: [
+    L(["CREATE = onCreateViewHolder (une fois par holder) ; BIND = onBindViewHolder (à chaque ligne affichée) ; getItemCount = taille totale des données.", "CREATE / BIND / count.", 'CREATE / BIND / count.']),
+    L(["Accueil : onPause, onStop ; retour : onRestart, onStart, onResume.", "Accueil / rjou3.", 'Home / return.']),
+    L(["@+id déclare un identifiant ; @id référence un identifiant existant.", "@+id / @id.", '@+id declares; @id references.'])
+  ]
+};
+
+// ======================================================================
+// Chapitre 10 — Rattrapage 2025 corrigé (annale du prof, Drive)
+// ======================================================================
+const S = (q: string, fr: string, dar: string, en: string) => ({ t: [q, q, q] as [string, string, string], b: [fr, dar, en] as [string, string, string] });
+export const c10: Chapter = {
+  id: 'rattrapage',
+  module: 'mobile',
+  order: 10,
+  title: L(["Annale : Rattrapage 2025 corrigé", "Annale : Rattrapage 2025 m-corrigi", 'Past paper: 2025 resit, solved']),
+  summary: L([
+    "Le rattrapage du 03/01/2026 (1h30, 20 pts) : mipmap, composants Android, build.gradle, minSdk 21/24, plusieurs layouts, classe R, @android:color, Kotlin, sauvegarde d'état, puis lecture d'un ConstraintLayout de formulaire.",
+    "Rattrapage 03/01/2026 (1h30, 20 pts) : mipmap, composants, build.gradle, minSdk, layouts, R, @android:color, Kotlin, sauvegarde d'état, w ConstraintLayout dyal formulaire.",
+    "The 03/01/2026 resit (1h30, 20 pts): mipmap, components, build.gradle, minSdk, layouts, R, @android:color, Kotlin, state saving, then reading a form ConstraintLayout."
+  ]),
+  estimatedMinutes: 40,
+  sections: [
+    h(["Partie I — Questions générales (12 pts, 1 pt chacune)", "Partie I — Questions générales", 'Part I — General questions']),
+    steps(null, [
+      S("Q1. Fichiers du dossier mipmap", "Les **icônes de l'application** (icône du lanceur) : images **PNG / WebP** en plusieurs densités (`mipmap-mdpi` … `mipmap-xxxhdpi`) et icônes **adaptatives XML** (`mipmap-anydpi-v26`).", "**Icônes dyal l'app** (launcher) : **PNG / WebP** b densités, w icônes **adaptatives XML**.", "The **app (launcher) icons**: **PNG / WebP** in several densities and **adaptive XML** icons."),
+      S("Q2. Composantes d'une application Android", "Les 4 composants : **Activity** (écran), **Service** (tâche en arrière-plan), **BroadcastReceiver** (réagit aux événements système), **ContentProvider** (partage de données). Ils communiquent par **Intent** et sont déclarés dans le **manifeste**.", "**Activity, Service, BroadcastReceiver, ContentProvider**, b **Intent**, f **manifeste**.", "**Activity, Service, BroadcastReceiver, ContentProvider**, linked by **Intent**, declared in the **manifest**."),
+      S("Q3. Exemple de configuration dans build.gradle", "Le **minSdk** (`minSdk = 24`), le targetSdk, l'applicationId, la version (`versionCode`, `versionName`) ou une **dépendance** : `implementation(\"androidx.recyclerview:recyclerview:…\")`.", "**minSdk = 24**, applicationId, version, wla **dépendance** (`implementation(...)`).", "**minSdk = 24**, applicationId, version, or a **dependency** (`implementation(...)`)."),
+      S("Q4. Une application pour un réfrigérateur ?", "**Oui, si le réfrigérateur fonctionne sous Android** (réfrigérateurs connectés avec écran) : Android ne tourne pas que sur les téléphones (tablettes, TV, montres, voitures, objets). On cible alors son niveau d'API et son écran. **Non** s'il n'embarque pas Android.", "**Ah, ila l frigo fih Android** (b écran) : Android machi ghir téléphones. **La** ila ma fihch Android.", "**Yes, if the fridge runs Android** (smart fridges): Android is not only for phones. **No** otherwise."),
+      S("Q5. Notifications de factures + authentification", "**Native** : notifications push fiables (Firebase Cloud Messaging), stockage sécurisé, authentification biométrique, meilleure sécurité et performance. Une application web gère mal les notifications et la biométrie ; un framework multiplateforme (Flutter) reste acceptable si on justifie (iOS + Android avec un seul code).", "**Native** : notifications push, sécurité, biométrie. Web ma kaygérich mzyan notifications. Flutter momkin ila bghiti iOS + Android.", "**Native**: reliable push, secure storage, biometrics. Web handles these poorly; Flutter is fine if justified."),
+      S("Q6. minSdk 21 au lieu de 24", "**Avantage** : l'application s'installe sur **plus d'appareils** (Android 5.0 et plus). **Inconvénient** : certaines **API récentes** ne sont pas disponibles sans vérification de version, donc plus de code de compatibilité et plus de tests.", "**Avantage** : **appareils ktar**. **Inconvénient** : **API jdad** ma kaynach, code w tests ktar.", "**Pro**: **more devices**. **Con**: fewer **recent APIs**, more compatibility code and tests."),
+      S("Q7. Plusieurs layouts pour la même Activity ?", "**Oui** : on crée des **variantes du même layout** selon la configuration (`res/layout-land/activity_main.xml` pour le paysage, `res/layout-sw600dp/` pour les tablettes) et Android choisit le bon ; on peut aussi appeler `setContentView` avec un layout différent selon une condition.", "**Ah** : `layout-land/`, `layout-sw600dp/` b nefs smiya, Android kaykhtar ; wla setContentView b layout akhor.", "**Yes**: variants (`layout-land/`, `layout-sw600dp/`), Android picks; or another setContentView."),
+      S("Q8. Modifier la classe R", "**On ne la modifie jamais à la main** : elle est **générée automatiquement** à la compilation à partir du dossier `res/`. Pour changer son contenu, on **modifie les ressources** (ajouter un layout, une string, un `@+id`…).", "**Ma katbeddelhach b yeddek** : kat**tsayb automatiquement** mn `res/`. Beddel **les ressources**.", "**Never by hand**: it is **generated** from `res/`. Change the **resources**."),
+      S("Q9. @android:color/background_dark vs @color/background_dark", "`@android:color/…` : ressource **fournie par le système Android** (`android.R.color`). `@color/…` : ressource **de ton application** (`res/values/colors.xml`, `R.color`).", "`@android:` = **dyal système** ; `@color/` = **dyal l'app** (colors.xml).", "`@android:` = **system** resource; `@color/` = **your app's** resource."),
+      S("Q10. Équivalent Java de @drawable/my_icon", "`R.drawable.my_icon` (par exemple `imageView.setImageResource(R.drawable.my_icon);`).", "`R.drawable.my_icon`.", "`R.drawable.my_icon`."),
+      S("Q11. Autre langage que Java", "**Kotlin** (langage recommandé par Google pour Android). C/C++ est aussi possible via le NDK.", "**Kotlin**.", "**Kotlin**."),
+      S("Q12. Sauvegarde / restauration de l'état", "**`onSaveInstanceState(Bundle)`** sauvegarde l'état avant la destruction ; **`onRestoreInstanceState(Bundle)`** (ou le `savedInstanceState` reçu dans **`onCreate`**) le restaure. Les vues avec un id gardent ainsi le texte saisi et le défilement.", "**`onSaveInstanceState`** w **`onRestoreInstanceState`** (wla `savedInstanceState` f onCreate).", "**`onSaveInstanceState`** and **`onRestoreInstanceState`** (or `savedInstanceState` in onCreate).")
+    ]),
+
+    h(["Partie II — Le formulaire d'inscription (8 pts)", "Partie II — Formulaire", 'Part II — The sign-up form']),
+    code(`<androidx.constraintlayout.widget.ConstraintLayout ...
+    tools:context=".Formulaire">
+  <TextView  id=txt1  width=match_parent  "Formulaire d'inscription" 30sp
+             Start→parent  End→parent  Top→parent
+  <Button    id=btn1  wrap_content  "Valider"
+             Start→parent  End→parent  Bottom→parent
+  <EditText  id=edt1  width=200dp  hint "Votre Nom"
+             Start→parent  Bottom→top de edt3
+  <EditText  id=edt2  width=200dp  hint "Votre Prénom"
+             Start→parent  Top→bas de edt3
+  <EditText  id=edt3  width=0dp  hint "Votre email"  inputType=textEmailAddress
+             Start→fin de edt1  End→parent  Top→bas de txt1  Bottom→parent`, 'text', ["Les contraintes du sujet, résumées", "Contraintes dyal sujet", 'The constraints, summarised']),
+    steps(null, [
+      S("a. Dessin (2 pts)", "**txt1** : en haut, toute la largeur. **btn1** : Start + End + Bottom → **centré en bas**. **edt3** (email) : Top → bas du titre et Bottom → parent, donc **centré verticalement** dans l'espace restant ; 0dp entre la fin de edt1 et le bord droit → il occupe **la partie droite**. **edt1** (nom) : à gauche, **juste au-dessus** de edt3. **edt2** (prénom) : à gauche, **juste en dessous** de edt3.", "**txt1** lfo9 l3ard kaml. **btn1** f lwest lte7t. **edt3** f lwest vertical, f limn. **edt1** lisr fo9 edt3. **edt2** lisr ta7t edt3.", "**txt1** top, full width. **btn1** centred bottom. **edt3** vertically centred, right part. **edt1** left, above edt3. **edt2** left, below edt3."),
+      S("b. Classe Java (1 pt)", "**Formulaire.java** (`tools:context=\".Formulaire\"`).", "**Formulaire.java**.", "**Formulaire.java**."),
+      S("c. Effet de inputType=\"textEmailAddress\" (2 pts)", "Android affiche un **clavier adapté à l'email** (touches **@** et **.** accessibles) et désactive les corrections inadaptées. Il **ne vérifie pas** que l'adresse est valide : il faut le contrôler dans le code (ex. `Patterns.EMAIL_ADDRESS`).", "**Clavier dyal email** (@ w .). **Ma kayvérifich** l'adresse : khass tvérifiha f code.", "**Email keyboard** (@ and .). It does **not validate** the address."),
+      S("e. Remplacer tous les @+id/ par @id/ ? (1 pt)", "**Non, pas tous** : `@+id/` **déclare** (crée) l'identifiant ; chaque id doit être déclaré au moins une fois, normalement dans `android:id=\"@+id/…\"`. **Oui pour les références** dans les contraintes (`app:layout_constraintBottom_toTopOf=\"@id/edt3\"`), puisque edt3 est déclaré par son `android:id`.", "**La, machi kamlin** : `@+id/` kay**sayb** l'id. **Ah f les références** dyal contraintes, 7it l'id mdeclari f `android:id`.", "**Not all**: `@+id/` **declares** the id. **Yes for references** in constraints, since the id is declared in `android:id`.")
+    ]),
+    code(`+----------------------------------------+
+| Formulaire d'inscription               |
+|                                        |
+| [Votre Nom      ]                      |
+|                  [Votre email        ] |
+| [Votre Prénom   ]                      |
+|                                        |
+|               [ VALIDER ]              |
++----------------------------------------+`, 'text', ["a. Le croquis attendu", "a. Croquis", 'a. Expected sketch']),
+    code(`public class Formulaire extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_formulaire);
+
+        EditText nom = findViewById(R.id.edt1);
+        Button valider = findViewById(R.id.btn1);
+        valider.setOnClickListener(v -> {
+            String n = nom.getText().toString();
+            Toast.makeText(this, "Bonjour " + n, Toast.LENGTH_SHORT).show();
+        });
+    }
+}`, 'java', ["d. Attacher un listener au clic sur le Button (2 pts)", "d. Listener dyal click", 'd. Click listener']),
+    quiz('mob-80', 'mob-81', 'mob-82', 'mob-83')
+  ],
+  keyPoints: [
+    L(["mipmap = icônes de l'app ; 4 composants : Activity, Service, BroadcastReceiver, ContentProvider.", "mipmap ; 4 composants.", 'mipmap; 4 components.']),
+    L(["R est générée : on modifie les ressources ; @android: = système, @color = app ; @drawable/x ↔ R.drawable.x.", "R automatique ; @android: / @color.", 'R is generated; @android: vs @color.']),
+    L(["État UI : onSaveInstanceState / onRestoreInstanceState ; Kotlin remplace Java.", "onSave / onRestore ; Kotlin.", 'onSave / onRestore; Kotlin.']),
+    L(["textEmailAddress = clavier email, pas de validation ; @+id déclare, @id référence.", "Clavier email ; @+id / @id.", 'Email keyboard; @+id vs @id.'])
+  ]
+};

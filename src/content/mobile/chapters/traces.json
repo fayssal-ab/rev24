@@ -1,0 +1,263 @@
+{
+ "id": "traces",
+ "module": "mobile",
+ "order": 7,
+ "title": {
+  "fr": "Traces d'exécution et méthode de réponse",
+  "dar": "Traces d'exécution w méthode de réponse",
+  "en": "Execution traces and how to answer"
+ },
+ "summary": {
+  "fr": "Comment écrire la trace (sortie Logcat) d'un code Android pour un scénario donné, avec deux traces corrigées, et la méthode pour rédiger chaque type de réponse au contrôle.",
+  "dar": "Kifach tkteb trace (Logcat) dyal code Android l scénario, b jouj traces m-corrigin, w méthode bach tjaweb 3la kol type dyal sou2al.",
+  "en": "How to write the trace (Logcat output) of Android code for a scenario, with two solved traces, and how to write each kind of answer."
+ },
+ "estimatedMinutes": 25,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Méthode pour une trace d'exécution",
+    "dar": "1. Méthode dyal trace",
+    "en": "1. Method for an execution trace"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Lister les événements",
+      "dar": "Kteb les événements",
+      "en": "List the events"
+     },
+     "body": {
+      "fr": "Découpe le scénario : lancement, Accueil, retour, rotation, clic, finish…",
+      "dar": "9ssem scénario : lancement, Accueil, rjou3, rotation, click, finish…",
+      "en": "Split the scenario: launch, Home, return, rotation, click, finish…"
+     }
+    },
+    {
+     "title": {
+      "fr": "Méthodes appelées",
+      "dar": "Méthodes li kat3ayet",
+      "en": "Methods called"
+     },
+     "body": {
+      "fr": "Pour chaque événement, écris les méthodes du cycle de vie **dans l'ordre**, pour **chaque Activity** (A puis B…).",
+      "dar": "L kol événement, kteb méthodes **b tartib**, l **kol Activity**.",
+      "en": "For each event, write the lifecycle methods **in order**, for **each Activity**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Suivre les variables",
+      "dar": "Tba3 les variables",
+      "en": "Track variables"
+     },
+     "body": {
+      "fr": "Note la valeur des attributs. **Nouvelle instance** (rotation, processus tué) → les attributs **repartent de leur valeur initiale**.",
+      "dar": "Kteb valeur dyal attributs. **Instance jdida** → attributs **kayrj3ou l valeur lowla**.",
+      "en": "Track field values. **New instance** → fields **reset**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Écrire la sortie",
+      "dar": "Kteb sortie",
+      "en": "Write the output"
+     },
+     "body": {
+      "fr": "Une ligne par `Log.d`, numérotées, exactement comme Logcat les afficherait.",
+      "dar": "Ster l kol `Log.d`, mnumrouin.",
+      "en": "One numbered line per `Log.d`."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Trace corrigée : compteur et rotation",
+    "dar": "2. Trace : compteur w rotation",
+    "en": "2. Solved trace: counter and rotation"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class MainActivity extends AppCompatActivity {\n    private int compteur = 0;\n\n    @Override protected void onCreate(Bundle b) { super.onCreate(b); setContentView(R.layout.activity_main); Log.d(\"T\", \"onCreate \" + compteur); }\n    @Override protected void onResume() { super.onResume(); compteur++; Log.d(\"T\", \"onResume \" + compteur); }\n    @Override protected void onStop()   { super.onStop(); Log.d(\"T\", \"onStop \" + compteur); }\n}",
+   "caption": {
+    "fr": "Scénario : lancement, Accueil, retour, rotation",
+    "dar": "Scénario : lancement, Accueil, rjou3, rotation",
+    "en": "Scenario: launch, Home, return, rotate"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "1. onCreate 0      (lancement)\n2. onResume 1\n3. onStop 1        (Accueil)\n4. onResume 2      (retour : même instance, pas de onCreate)\n5. onStop 2        (rotation : destruction…)\n6. onCreate 0      (… nouvelle instance : compteur repart à 0)\n7. onResume 1",
+   "caption": {
+    "fr": "Trace attendue",
+    "dar": "Trace li khass",
+    "en": "Expected trace"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Les méthodes **non redéfinies** (onStart, onPause…) ne produisent **aucune ligne** : n'écris que les Log.d présents dans le code.",
+    "dar": "Méthodes **ma m3awdach** ma kat3ti **ta ster** : kteb ghir Log.d li f code.",
+    "en": "Methods **not overridden** print **nothing**: only write the Log.d calls in the code."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Trace corrigée : deux écrans",
+    "dar": "3. Trace : jouj écrans",
+    "en": "3. Solved trace: two screens"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "A et B ont chacune un `Log.d` dans onCreate, onPause, onStop, onDestroy et onResume. A est au premier plan ; l'utilisateur ouvre B, puis appuie sur Retour.",
+    "dar": "A w B fihom `Log.d` f onCreate, onPause, onStop, onDestroy w onResume. A f l9eddam ; user kay7el B, w men b3d Retour.",
+    "en": "A and B log in onCreate, onPause, onStop, onDestroy and onResume. A opens B, then Back."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "1. A.onPause\n2. B.onCreate\n3. B.onResume\n4. A.onStop\n5. B.onPause       (Retour)\n6. A.onResume\n7. B.onStop\n8. B.onDestroy",
+   "caption": {
+    "fr": "onStart/onRestart non tracés ici car pas de Log.d",
+    "dar": "onStart/onRestart ma kaybanouch 7it bla Log.d",
+    "en": "onStart/onRestart not logged"
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Méthode de réponse au contrôle",
+    "dar": "4. Méthode de réponse f contrôle",
+    "en": "4. How to answer in the test"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type de question",
+     "dar": "Type dyal sou2al",
+     "en": "Question type"
+    },
+    {
+     "fr": "Ce qu'il faut écrire",
+     "dar": "Chnou tkteb",
+     "en": "What to write"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Définition / rôle",
+      "dar": "Ta3rif / dor",
+      "en": "Definition / role"
+     },
+     {
+      "fr": "**Définition** en une phrase + **rôle** + **exemple** (une ligne de code). Reprends les phrases du prof.",
+      "dar": "**Ta3rif** f jomla + **dor** + **mithal** (ster code). 3awed jomal dyal prof.",
+      "en": "**Definition** + **role** + **example** (one code line). Reuse the professor's sentences."
+     }
+    ],
+    [
+     {
+      "fr": "Comparaison (dp/sp, ListView/RecyclerView…)",
+      "dar": "Mo9arana",
+      "en": "Comparison"
+     },
+     {
+      "fr": "Un **tableau** avec 3 ou 4 critères.",
+      "dar": "**Tableau** b 3 wla 4 critères.",
+      "en": "A **table** with 3–4 criteria."
+     }
+    ],
+    [
+     {
+      "fr": "Écrire du code",
+      "dar": "Kteb code",
+      "en": "Write code"
+     },
+     {
+      "fr": "Code **complet** de la méthode (onCreate…), dans l'ordre : setContentView → findViewById → logique. Mentionne le **manifeste** si un écran est ajouté.",
+      "dar": "Code **kamel** b tartib : setContentView → findViewById → logique. Dkr **manifeste** ila zedti écran.",
+      "en": "**Complete** method code in order; mention the **manifest** for a new screen."
+     }
+    ],
+    [
+     {
+      "fr": "Trace d'exécution",
+      "dar": "Trace",
+      "en": "Trace"
+     },
+     {
+      "fr": "Lignes **numérotées**, une par Log.d, avec l'événement entre parenthèses et la valeur des variables.",
+      "dar": "Sstour **mnumrouin**, wa7ed l kol Log.d, m3a événement w valeurs.",
+      "en": "**Numbered** lines, one per Log.d, with the event and variable values."
+     }
+    ],
+    [
+     {
+      "fr": "Lire un layout",
+      "dar": "9ra layout",
+      "en": "Read a layout"
+     },
+     {
+      "fr": "Vue par vue : contrainte horizontale, verticale, règle → **croquis**.",
+      "dar": "View b view : horizontale, verticale, règle → **croquis**.",
+      "en": "View by view: horizontal, vertical, rule → **sketch**."
+     }
+    ],
+    [
+     {
+      "fr": "Trouver l'erreur",
+      "dar": "L9a l erreur",
+      "en": "Find the bug"
+     },
+     {
+      "fr": "**Cause** (ce qui se passe) + **correction** (le code corrigé).",
+      "dar": "**Sabab** + **correction** (code msse7).",
+      "en": "**Cause** + **fix** (corrected code)."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-60",
+    "mob-61"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Trace : événements → méthodes dans l'ordre (par Activity) → variables → une ligne par Log.d.",
+   "dar": "Événements → méthodes → variables → sstour.",
+   "en": "Events → methods → variables → lines."
+  },
+  {
+   "fr": "Nouvelle instance (rotation) : les attributs repartent de zéro ; retour sans destruction : pas de onCreate.",
+   "dar": "Rotation = reset ; rjou3 = bla onCreate.",
+   "en": "Rotation resets fields; return has no onCreate."
+  },
+  {
+   "fr": "Réponse : définition + rôle + exemple ; comparaison en tableau ; code complet ; cause + correction.",
+   "dar": "Ta3rif + dor + mithal ; tableau ; code ; sabab + correction.",
+   "en": "Definition + role + example; table; full code; cause + fix."
+  }
+ ]
+}

@@ -6,9 +6,9 @@
   "en": "Mobile development"
  },
  "subtitle": {
-  "fr": "Préparation au contrôle — Android natif (Java) : outils, fichiers d'un écran, cycle de vie d'une Activity, unités et dimensions",
-  "dar": "Préparation l contrôle — Android natif (Java) : outils, fichiers dyal écran, cycle de vie, unités w dimensions",
-  "en": "Test preparation — native Android (Java): tools, screen files, Activity lifecycle, units and dimensions"
+  "fr": "Préparation au contrôle — Android natif (Java) : outils, fichiers d'un écran, cycle de vie, unités et dimensions, navigation et passage de données, ConstraintLayout, ListView et RecyclerView",
+  "dar": "Préparation l contrôle — Android natif (Java) : outils, fichiers dyal écran, cycle de vie, unités w dimensions, navigation w passage dyal data, ConstraintLayout, ListView w RecyclerView",
+  "en": "Test preparation — native Android (Java): tools, screen files, lifecycle, units and dimensions, navigation and data passing, ConstraintLayout, ListView and RecyclerView"
  },
  "color": "#0f6f8f",
  "icon": "phone",
@@ -16,22 +16,30 @@
  "chapters": [
   "ecran",
   "cycle",
-  "dimensions"
+  "dimensions",
+  "navigation",
+  "constraint",
+  "listes",
+  "traces"
  ],
  "upcoming": [
   {
    "id": "mob-prep-suite",
-   "order": 4,
+   "order": 8,
    "title": {
-    "fr": "Suite de la préparation (diapos 5 à 10)",
-    "dar": "Tkmila dyal préparation (diapos 5 7tta 10)",
-    "en": "Rest of the preparation (slides 5 to 10)"
+    "fr": "Suite de la préparation (diapos restantes)",
+    "dar": "Tkmila dyal préparation (diapos li ba9in)",
+    "en": "Rest of the preparation (remaining slides)"
    }
   }
  ],
  "annales": [],
  "weights": {
   "cycle": 5,
+  "navigation": 5,
+  "listes": 5,
+  "traces": 4,
+  "constraint": 4,
   "ecran": 4,
   "dimensions": 4
  }

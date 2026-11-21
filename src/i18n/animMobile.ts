@@ -170,3 +170,118 @@ export const UNITS = {
     }
   }
 };
+
+export const NAV_FLOW = {
+  title: { fr: 'Passage de données entre deux écrans', dar: 'Passage dyal data bin jouj écrans', en: 'Passing data between two screens' },
+  steps: [
+    {
+      who: 'MainActivity',
+      text: {
+        fr: 'L\'utilisateur clique sur un contact. MainActivity crée un **Intent explicite** : « je veux ouvrir **DetailActivity** ». Le premier paramètre est le contexte (l\'Activity actuelle), le second la **classe** de l\'écran cible.',
+        dar: 'User kayclicki 3la contact. MainActivity katsayb **Intent explicite** : « bghit n7el **DetailActivity** ». Paramètre lowel howa contexte (Activity li 7na fiha), tani howa **classe** dyal écran li bghina.',
+        en: 'The user taps a contact. MainActivity creates an **explicit Intent**: "I want to open **DetailActivity**". The first parameter is the context (current Activity), the second the target screen **class**.'
+      },
+      code: 'Intent intent = new Intent(MainActivity.this, DetailActivity.class);'
+    },
+    {
+      who: 'MainActivity',
+      text: {
+        fr: 'On **attache les données** à l\'Intent avec `putExtra(clé, valeur)`. Chaque donnée a une **clé** (un nom) : c\'est avec cette même clé que l\'écran B la relira.',
+        dar: 'Kan**zidou data** l Intent b `putExtra(clé, valeur)`. Kol data 3andha **clé** (smiya) : b nefs had clé écran B ghay9raha.',
+        en: 'Data is **attached to the Intent** with `putExtra(key, value)`. Each value has a **key** (a name): screen B reads it back with that same key.'
+      },
+      code: 'intent.putExtra("nom", "Sara");\nintent.putExtra("age", 21);'
+    },
+    {
+      who: 'Android',
+      text: {
+        fr: '`startActivity(intent)` confie l\'Intent à **Android**. Le système vérifie que DetailActivity est **déclarée dans le manifeste**, la crée, et appelle ses méthodes : A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.',
+        dar: '`startActivity(intent)` kay3ti Intent l **Android**. Système kayt2akked billa DetailActivity **mdeclariya f manifeste**, kaysaybha w kay3ayet l méthodes : A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.',
+        en: '`startActivity(intent)` hands the Intent to **Android**. The system checks DetailActivity is **declared in the manifest**, creates it and calls: A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.'
+      },
+      code: 'startActivity(intent);'
+    },
+    {
+      who: 'DetailActivity',
+      text: {
+        fr: 'Dans **onCreate()** de B, `getIntent()` renvoie l\'Intent reçu. On lit chaque donnée **avec la même clé** et la méthode du bon type. Pour un nombre, on donne une **valeur par défaut** (utilisée si la clé n\'existe pas).',
+        dar: 'F **onCreate()** dyal B, `getIntent()` kayrje3 Intent li wsel. Kan9raw kol data **b nefs clé** w b méthode dyal type mzyan. L nombre, kan3tiw **valeur par défaut** (ila clé ma kaynach).',
+        en: 'In B\'s **onCreate()**, `getIntent()` returns the received Intent. Each value is read **with the same key** and the right typed method. Numbers need a **default value** (used if the key is missing).'
+      },
+      code: 'String nom = getIntent().getStringExtra("nom");   // "Sara"\nint age = getIntent().getIntExtra("age", 0);      // 21'
+    },
+    {
+      who: 'DetailActivity',
+      text: {
+        fr: 'Pour **revenir**, B appelle `finish()` (ou l\'utilisateur appuie sur Retour) : B est détruite, A revient avec onRestart → onStart → onResume. Pour **renvoyer une donnée** à A, B appelle `setResult(RESULT_OK, data)` avant `finish()`.',
+        dar: 'Bach **nrj3ou**, B kat3ayet l `finish()` (wla user kaybrek 3la Retour) : B katmse7, A katrje3 b onRestart → onStart → onResume. Bach **nrj3ou data** l A, B kat3ayet `setResult(RESULT_OK, data)` 9bel `finish()`.',
+        en: 'To **go back**, B calls `finish()` (or the user presses Back): B is destroyed, A returns with onRestart → onStart → onResume. To **send data back** to A, B calls `setResult(RESULT_OK, data)` before `finish()`.'
+      },
+      code: 'Intent data = new Intent();\ndata.putExtra("favori", true);\nsetResult(RESULT_OK, data);\nfinish();'
+    }
+  ],
+  rule: {
+    fr: '**Intent** = le message. **putExtra** = on y met les données. **startActivity** = on l\'envoie. **getIntent().getXxxExtra** = on le lit, **avec la même clé**.',
+    dar: '**Intent** = message. **putExtra** = kan7ettou fih data. **startActivity** = kansiftouh. **getIntent().getXxxExtra** = kan9rawh, **b nefs clé**.',
+    en: '**Intent** = the message. **putExtra** = put data in it. **startActivity** = send it. **getIntent().getXxxExtra** = read it, **with the same key**.'
+  }
+};
+
+export const CONSTRAINT = {
+  title: { fr: 'Lire un ConstraintLayout', dar: 'Kifach t9ra ConstraintLayout', en: 'Reading a ConstraintLayout' },
+  pick: { fr: 'Clique sur une vue de l\'écran pour lire ses contraintes.', dar: 'Clicki 3la view f l écran bach t9ra contraintes dyalha.', en: 'Tap a view on the screen to read its constraints.' },
+  reading: { fr: 'Comment le lire', dar: 'Kifach t9rah', en: 'How to read it' },
+  bias: { fr: 'Biais horizontal du titre', dar: 'Biais horizontal dyal titre', en: 'Title horizontal bias' },
+  hConstraint: { fr: 'Contrainte horizontale du bouton', dar: 'Contrainte horizontale dyal bouton', en: 'Button horizontal constraint' },
+  on: { fr: 'présente', dar: 'kayna', en: 'present' },
+  off: { fr: 'supprimée', dar: 'm7ayda', en: 'removed' },
+  offNote: {
+    fr: 'Sans contrainte horizontale, le bouton n\'a plus de position en X : à l\'exécution il **saute à gauche** (x = 0). Android Studio signale « This view is not constrained horizontally ».',
+    dar: 'Bla contrainte horizontale, bouton ma bqatch 3ando position f X : f l\'exécution kay**tlou7 l lisr** (x = 0). Android Studio kaygoul « This view is not constrained horizontally ».',
+    en: 'Without a horizontal constraint the button has no X position: at runtime it **jumps to the left** (x = 0). Android Studio warns "This view is not constrained horizontally".'
+  },
+  views: {
+    titre: {
+      label: { fr: 'Titre', dar: 'Titre', en: 'Title' },
+      lines: [
+        { attr: 'layout_constraintTop_toTopOf="parent"', fr: 'Le **haut** du titre est attaché au **haut** du parent (+ marginTop 32dp).', dar: '**Lfo9** dyal titre mrbout b **lfo9** dyal parent (+ marginTop 32dp).', en: 'The title\'s **top** is attached to the parent\'s **top** (+ marginTop 32dp).' },
+        { attr: 'layout_constraintStart_toStartOf="parent"', fr: 'Son **début** (gauche) est attaché au **début** du parent.', dar: '**Bdaya** dyalo (lisr) mrbouta b **bdaya** dyal parent.', en: 'Its **start** (left) is attached to the parent\'s **start**.' },
+        { attr: 'layout_constraintEnd_toEndOf="parent"', fr: 'Sa **fin** (droite) est attachée à la **fin** du parent. Tiré des deux côtés → **centré** (biais 0,5).', dar: '**Nihaya** dyalo (limn) mrbouta b **nihaya** dyal parent. Mjboud mn jouj jnab → **f lwest** (biais 0,5).', en: 'Its **end** (right) is attached to the parent\'s **end**. Pulled from both sides → **centred** (bias 0.5).' }
+      ]
+    },
+    champ: {
+      label: { fr: 'Champ (EditText)', dar: 'Champ (EditText)', en: 'Field (EditText)' },
+      lines: [
+        { attr: 'layout_width="0dp"', fr: '**0dp = match constraints** : la largeur est donnée par les contraintes Start et End.', dar: '**0dp = match constraints** : l3ard kayjih mn contraintes Start w End.', en: '**0dp = match constraints**: the width comes from the Start and End constraints.' },
+        { attr: 'layout_constraintTop_toBottomOf="@id/titre"', fr: 'Son **haut** est attaché au **bas du titre** : il est placé **sous** le titre (+ marginTop 16dp).', dar: '**Lfo9** dyalo mrbout b **lte7t dyal titre** : kayji **ta7t** titre (+ marginTop 16dp).', en: 'Its **top** is attached to the **title\'s bottom**: it sits **below** the title (+ marginTop 16dp).' },
+        { attr: 'layout_constraintStart_toStartOf="parent"\nlayout_constraintEnd_toEndOf="parent"', fr: 'Attaché aux deux bords du parent (marges 16dp) : avec 0dp, il **s\'étire** d\'un bord à l\'autre.', dar: 'Mrbout b jouj jnab dyal parent (marges 16dp) : m3a 0dp, kay**tmedd** mn jenb l jenb.', en: 'Attached to both parent edges (16dp margins): with 0dp it **stretches** edge to edge.' }
+      ]
+    },
+    bouton: {
+      label: { fr: 'Bouton', dar: 'Bouton', en: 'Button' },
+      lines: [
+        { attr: 'layout_constraintTop_toBottomOf="@id/champ"', fr: 'Son **haut** est attaché au **bas du champ** : il est **sous** le champ.', dar: '**Lfo9** dyalo mrbout b **lte7t dyal champ** : kayji **ta7t** champ.', en: 'Its **top** is attached to the **field\'s bottom**: it sits **below** the field.' },
+        { attr: 'layout_constraintEnd_toEndOf="@id/champ"', fr: 'Sa **fin** est alignée sur la **fin du champ** : le bouton est **calé à droite**, sous le champ. Une seule contrainte horizontale → pas de centrage.', dar: '**Nihaya** dyalo m9ada m3a **nihaya dyal champ** : bouton **f limn**, ta7t champ. Contrainte horizontale wa7da → ma kaytcentrach.', en: 'Its **end** lines up with the **field\'s end**: the button is **right-aligned** under the field. One horizontal constraint → no centring.' }
+      ]
+    }
+  }
+};
+
+export const RECYCLER = {
+  title: { fr: 'Le recyclage dans un RecyclerView', dar: 'Recyclage f RecyclerView', en: 'Recycling in a RecyclerView' },
+  down: { fr: 'Défiler vers le bas', dar: 'Nzel l te7t', en: 'Scroll down' },
+  fast: { fr: 'Défiler de 20', dar: 'Nzel 20', en: 'Scroll by 20' },
+  up: { fr: 'Remonter', dar: 'Tla3 l fo9', en: 'Scroll up' },
+  reset: { fr: 'Recommencer', dar: '3awed', en: 'Restart' },
+  items: { fr: 'éléments dans la liste', dar: 'éléments f liste', en: 'items in the list' },
+  created: { fr: 'ViewHolder créés (onCreateViewHolder)', dar: 'ViewHolder tsaybou (onCreateViewHolder)', en: 'ViewHolders created (onCreateViewHolder)' },
+  bound: { fr: 'Remplissages (onBindViewHolder)', dar: 'Remplissages (onBindViewHolder)', en: 'Bindings (onBindViewHolder)' },
+  without: { fr: 'Vues qu\'il aurait fallu créer sans recyclage', dar: 'Vues li kan khass tsaybhom bla recyclage', en: 'Views needed without recycling' },
+  reused: { fr: 'recyclé', dar: 'recyclé', en: 'recycled' },
+  pos: { fr: 'position', dar: 'position', en: 'position' },
+  lesson: {
+    fr: 'Seules les lignes **visibles** ont une vue. Quand une ligne sort de l\'écran, son **ViewHolder est réutilisé** pour la ligne qui entre : `onCreateViewHolder` n\'est presque plus appelée, seule `onBindViewHolder` remplit la vue avec les données de la nouvelle **position**. 1000 contacts ≈ une dizaine de vues en mémoire.',
+    dar: 'Ghir les lignes **li bayna** 3andhom vue. Mli ligne katkhrej mn l écran, **ViewHolder dyalha kay3awed ytsta3mel** l ligne li dakhla : `onCreateViewHolder` ta9riban ma bqatch kat3ayet, ghir `onBindViewHolder` li kat3mmer vue b data dyal **position** jdida. 1000 contact ≈ chi 10 vues f mémoire.',
+    en: 'Only **visible** rows have a view. When a row leaves the screen its **ViewHolder is reused** for the row coming in: `onCreateViewHolder` is hardly called any more, only `onBindViewHolder` fills the view with the new **position**\'s data. 1000 contacts ≈ about ten views in memory.'
+  }
+};

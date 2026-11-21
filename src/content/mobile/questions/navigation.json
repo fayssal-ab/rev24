@@ -1,0 +1,582 @@
+[
+ {
+  "id": "mob-30",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pour ouvrir **DetailActivity** depuis MainActivity, on crée…",
+   "dar": "Bach t7el **DetailActivity** mn MainActivity, katsayb…",
+   "en": "To open **DetailActivity** from MainActivity you create…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "new Intent(MainActivity.this, DetailActivity.class)",
+     "dar": "new Intent(MainActivity.this, DetailActivity.class)",
+     "en": "new Intent(MainActivity.this, DetailActivity.class)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "new DetailActivity()",
+     "dar": "new DetailActivity()",
+     "en": "new DetailActivity()"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "new Intent(DetailActivity.class, MainActivity.this)",
+     "dar": "new Intent(DetailActivity.class, MainActivity.this)",
+     "en": "new Intent(DetailActivity.class, MainActivity.this)"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Intent explicite : (contexte actuel, classe cible), puis `startActivity(intent)`.",
+   "dar": "(contexte, classe cible) + startActivity.",
+   "en": "(current context, target class), then startActivity."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "On ne crée jamais une Activity avec new : c'est Android qui la crée.",
+    "dar": "Android howa li kaysayb Activity.",
+    "en": "Android creates Activities, never new."
+   },
+   "c": {
+    "fr": "Ordre inversé : d'abord le contexte.",
+    "dar": "Tartib m9loub.",
+    "en": "Wrong order: context first."
+   }
+  },
+  "tags": [
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-31",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle méthode **envoie** l'Intent pour ouvrir l'écran ?",
+   "dar": "Ach mn méthode kat**sifet** Intent ?",
+   "en": "Which method **sends** the Intent?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "startActivity(intent)",
+     "dar": "startActivity(intent)",
+     "en": "startActivity(intent)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "putExtra(intent)",
+     "dar": "putExtra(intent)",
+     "en": "putExtra(intent)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "setContentView(intent)",
+     "dar": "setContentView(intent)",
+     "en": "setContentView(intent)"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`startActivity` confie l'Intent à Android, qui crée l'écran cible.",
+   "dar": "startActivity.",
+   "en": "`startActivity` hands it to Android."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "putExtra ajoute une donnée.",
+    "dar": "putExtra = data.",
+    "en": "putExtra adds data."
+   },
+   "c": {
+    "fr": "setContentView charge un layout.",
+    "dar": "setContentView = layout.",
+    "en": "setContentView loads a layout."
+   }
+  },
+  "tags": [
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-32",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Ajoute à `intent` la donnée « nom » de valeur \"Sara\".",
+   "dar": "Zid l `intent` data « nom » = \"Sara\".",
+   "en": "Add the value \"Sara\" under the key \"nom\" to `intent`."
+  },
+  "answer": [
+   "intent.putExtra(\"nom\", \"Sara\");",
+   "intent.putExtra(\"nom\",\"Sara\");",
+   "intent.putExtra(\"nom\", \"Sara\")"
+  ],
+  "explanation": {
+   "fr": "putExtra(clé, valeur).",
+   "dar": "putExtra(clé, valeur).",
+   "en": "putExtra(key, value)."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "extras"
+  ]
+ },
+ {
+  "id": "mob-33",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans DetailActivity, comment lire la donnée String « nom » ?",
+   "dar": "F DetailActivity, kifach t9ra String « nom » ?",
+   "en": "In DetailActivity, how do you read the String \"nom\"?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "getIntent().getStringExtra(\"nom\")",
+     "dar": "getIntent().getStringExtra(\"nom\")",
+     "en": "getIntent().getStringExtra(\"nom\")"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "getStringExtra(intent, \"nom\")",
+     "dar": "getStringExtra(intent, \"nom\")",
+     "en": "getStringExtra(intent, \"nom\")"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "new Intent().getStringExtra(\"nom\")",
+     "dar": "new Intent().getStringExtra(\"nom\")",
+     "en": "new Intent().getStringExtra(\"nom\")"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`getIntent()` renvoie l'Intent **reçu** ; on lit avec la **même clé**.",
+   "dar": "getIntent() + nefs clé.",
+   "en": "`getIntent()` returns the **received** Intent."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Cette méthode n'existe pas.",
+    "dar": "Ma kaynach.",
+    "en": "No such method."
+   },
+   "c": {
+    "fr": "Un nouvel Intent est vide : renvoie null.",
+    "dar": "Intent jdid khawi : null.",
+    "en": "A new Intent is empty: null."
+   }
+  },
+  "tags": [
+   "extras"
+  ]
+ },
+ {
+  "id": "mob-34",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "A fait `putExtra(\"age\", 21)`. B lit `getIntent().getIntExtra(\"Age\", 0)`. Résultat ?",
+   "dar": "A : `putExtra(\"age\", 21)`. B : `getIntExtra(\"Age\", 0)`. Natija ?",
+   "en": "A: `putExtra(\"age\", 21)`. B: `getIntExtra(\"Age\", 0)`. Result?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "21",
+     "dar": "21",
+     "en": "21"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "null",
+     "dar": "null",
+     "en": "null"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Erreur de compilation",
+     "dar": "Erreur compilation",
+     "en": "Compile error"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Les clés sont **sensibles à la casse** : « Age » ≠ « age ». La clé n'existe pas → **valeur par défaut** 0.",
+   "dar": "Casse : Age ≠ age → 0.",
+   "en": "Case-sensitive keys → default 0."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il faudrait la même clé « age ».",
+    "dar": "Khass nefs clé.",
+    "en": "Needs the same key."
+   },
+   "c": {
+    "fr": "Un int ne peut pas être null : on obtient la valeur par défaut.",
+    "dar": "int ma ykounch null.",
+    "en": "An int cannot be null."
+   },
+   "d": {
+    "fr": "Ça compile : l'erreur est logique.",
+    "dar": "Kaycompili.",
+    "en": "It compiles."
+   }
+  },
+  "tags": [
+   "extras",
+   "pieges"
+  ]
+ },
+ {
+  "id": "mob-35",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que renvoie `getStringExtra(\"x\")` si la clé « x » n'a pas été envoyée ?",
+   "dar": "`getStringExtra(\"x\")` ila clé ma kaynach ?",
+   "en": "What does `getStringExtra(\"x\")` return when \"x\" was not sent?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "null",
+     "dar": "null",
+     "en": "null"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "\"\" (chaîne vide)",
+     "dar": "\"\" (khawya)",
+     "en": "\"\" (empty)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Une exception immédiate",
+     "dar": "Exception direct",
+     "en": "An immediate exception"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**null** — d'où le risque de NullPointerException si on l'utilise sans vérifier.",
+   "dar": "null → NullPointerException.",
+   "en": "**null** — hence NPE risk."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non, null.",
+    "dar": "La, null.",
+    "en": "No, null."
+   },
+   "c": {
+    "fr": "Pas tout de suite : seulement si on utilise null ensuite.",
+    "dar": "Ghir mn b3d.",
+    "en": "Only later, when used."
+   }
+  },
+  "tags": [
+   "extras",
+   "pieges"
+  ]
+ },
+ {
+  "id": "mob-36",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans B, comment **revenir** à A ?",
+   "dar": "F B, kifach **trje3** l A ?",
+   "en": "In B, how do you **go back** to A?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "finish()",
+     "dar": "finish()",
+     "en": "finish()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "startActivity(new Intent(this, MainActivity.class))",
+     "dar": "startActivity(new Intent(this, MainActivity.class))",
+     "en": "startActivity(new Intent(this, MainActivity.class))"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "onDestroy()",
+     "dar": "onDestroy()",
+     "en": "onDestroy()"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`finish()` termine B ; A revient avec onRestart → onStart → onResume (même instance).",
+   "dar": "finish() ; A bla onCreate.",
+   "en": "`finish()` ends B; A comes back."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Cela crée une **deuxième** copie de A au lieu de revenir.",
+    "dar": "Kaysayb A tanya.",
+    "en": "Creates a second A."
+   },
+   "c": {
+    "fr": "On n'appelle jamais onDestroy() soi-même.",
+    "dar": "Ma n3aytouch l onDestroy.",
+    "en": "Never call onDestroy() yourself."
+   }
+  },
+  "tags": [
+   "retour"
+  ]
+ },
+ {
+  "id": "mob-37",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "B renvoie « favori = true » à A : ordre des lignes dans B.",
+   "dar": "B katrj3 « favori = true » : tartib f B.",
+   "en": "B returns \"favori = true\" to A: order in B."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Intent data = new Intent();",
+     "dar": "Intent data = new Intent();",
+     "en": "Intent data = new Intent();"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "data.putExtra(\"favori\", true);",
+     "dar": "data.putExtra(\"favori\", true);",
+     "en": "data.putExtra(\"favori\", true);"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "setResult(RESULT_OK, data);",
+     "dar": "setResult(RESULT_OK, data);",
+     "en": "setResult(RESULT_OK, data);"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "finish();",
+     "dar": "finish();",
+     "en": "finish();"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "On prépare la réponse, on la confie avec setResult, **puis** on ferme. setResult après finish() serait trop tard.",
+   "dar": "setResult 9bel finish.",
+   "en": "setResult before finish."
+  },
+  "tags": [
+   "retour"
+  ]
+ },
+ {
+  "id": "mob-38",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Ouvrir le composeur téléphonique avec un numéro est un exemple…",
+   "dar": "T7el composeur b numéro = …",
+   "en": "Opening the dialer with a number is an example of…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "d'Intent implicite (ACTION_DIAL + Uri tel:)",
+     "dar": "Intent implicite",
+     "en": "an implicit Intent (ACTION_DIAL + tel: Uri)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "d'Intent explicite",
+     "dar": "Intent explicite",
+     "en": "an explicit Intent"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "de putExtra",
+     "dar": "putExtra",
+     "en": "putExtra"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Implicite : une **action**, Android choisit l'application. Explicite : une **classe** précise de ton app.",
+   "dar": "Implicite = action.",
+   "en": "Implicit = action; explicit = class."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "On ne connaît pas la classe de l'app Téléphone.",
+    "dar": "Ma kan3rfouch classe.",
+    "en": "We do not know the dialer class."
+   },
+   "c": {
+    "fr": "putExtra ajoute des données, ce n'est pas un type d'Intent.",
+    "dar": "Machi type.",
+    "en": "Not an Intent type."
+   }
+  },
+  "tags": [
+   "intent"
+  ]
+ },
+ {
+  "id": "mob-39",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "DetailActivity plante dès son ouverture. Causes possibles ?",
+   "dar": "DetailActivity katplanti. Asbab ?",
+   "en": "DetailActivity crashes on open. Possible causes?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Elle n'est pas déclarée dans le manifeste",
+     "dar": "Ma mdeclariyach f manifeste",
+     "en": "Not declared in the manifest"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "getStringExtra renvoie null (mauvaise clé) puis on appelle une méthode dessus",
+     "dar": "null (clé ghalta) + méthode",
+     "en": "getStringExtra returns null (wrong key) then a method is called on it"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "findViewById avant setContentView",
+     "dar": "findViewById 9bel setContentView",
+     "en": "findViewById before setContentView"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "On a utilisé putExtra deux fois",
+     "dar": "putExtra jouj mrat",
+     "en": "putExtra used twice"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Manifeste, null issu d'une mauvaise clé, vue null : les trois classiques.",
+   "dar": "3 classiques.",
+   "en": "The three classics."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Plusieurs putExtra sont normaux.",
+    "dar": "Bzaf d putExtra 3adi.",
+    "en": "Several putExtra are normal."
+   }
+  },
+  "tags": [
+   "pieges"
+  ]
+ }
+]

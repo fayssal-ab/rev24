@@ -1,0 +1,430 @@
+{
+ "id": "constraint",
+ "module": "mobile",
+ "order": 5,
+ "title": {
+  "fr": "Lire un ConstraintLayout",
+  "dar": "Kifach t9ra ConstraintLayout",
+  "en": "Reading a ConstraintLayout"
+ },
+ "summary": {
+  "fr": "La grammaire d'une contrainte (côté de la vue → côté de la cible), les règles (au moins une contrainte horizontale et une verticale), le centrage et le biais, les marges, 0dp, Start/End contre Left/Right, et la méthode pour lire un layout et dessiner l'écran.",
+  "dar": "Grammaire dyal contrainte (jenb dyal view → jenb dyal cible), les règles (contrainte horizontale w verticale 3la l a9al), centrage w biais, marges, 0dp, Start/End vs Left/Right, w méthode bach t9ra layout w trsem l écran.",
+  "en": "The grammar of a constraint (view side → target side), the rules (at least one horizontal and one vertical constraint), centring and bias, margins, 0dp, Start/End vs Left/Right, and a method to read a layout and sketch the screen."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. La grammaire d'une contrainte",
+    "dar": "1. Grammaire dyal contrainte",
+    "en": "1. The grammar of a constraint"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Dans un **ConstraintLayout**, on ne dit pas « mets ce bouton en ligne 2 » : on **attache les côtés** de chaque vue à un côté du **parent** ou d'une **autre vue**, comme avec des élastiques. Chaque attribut se lit toujours de la même façon :",
+    "dar": "F **ConstraintLayout**, ma kangoulouch « 7et bouton f ster 2 » : kan**rbtou jnab** dyal kol view b jenb dyal **parent** wla dyal **view okhra**, b7al b l'élastique. Kol attribut kayt9ra dima b nefs tari9a :",
+    "en": "In a **ConstraintLayout** you do not say \"put this button on row 2\": you **attach the sides** of each view to a side of the **parent** or of **another view**, like elastic bands. Every attribute reads the same way:"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "app:layout_constraintTop_toBottomOf=\"@id/titre\"\n                     ^^^   ^^^^^^        ^^^^^\n                     |     |             la cible\n                     |     son côté (Bottom)\n                     mon côté (Top)",
+   "caption": {
+    "fr": "« Mon **haut** est attaché au **bas** de **titre** » → cette vue est placée **sous** titre.",
+    "dar": "« **Lfo9** dyali mrbout b **lte7t** dyal **titre** » → had view kayna **ta7t** titre.",
+    "en": "\"My **top** is attached to the **bottom** of **titre**\" → this view sits **below** titre."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Attribut",
+     "dar": "Attribut",
+     "en": "Attribute"
+    },
+    {
+     "fr": "Se lit",
+     "dar": "Kayt9ra",
+     "en": "Reads as"
+    },
+    {
+     "fr": "Résultat",
+     "dar": "Natija",
+     "en": "Result"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "`Top_toTopOf=\"parent\"`",
+      "dar": "`Top_toTopOf=\"parent\"`",
+      "en": "`Top_toTopOf=\"parent\"`"
+     },
+     {
+      "fr": "Mon haut → haut du parent",
+      "dar": "Lfo9 dyali → lfo9 dyal parent",
+      "en": "My top → parent top"
+     },
+     {
+      "fr": "Collé **en haut** de l'écran",
+      "dar": "Lsse9 **lfo9**",
+      "en": "Stuck to the **top**"
+     }
+    ],
+    [
+     {
+      "fr": "`Top_toBottomOf=\"@id/a\"`",
+      "dar": "`Top_toBottomOf=\"@id/a\"`",
+      "en": "`Top_toBottomOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Mon haut → bas de a",
+      "dar": "Lfo9 dyali → lte7t dyal a",
+      "en": "My top → bottom of a"
+     },
+     {
+      "fr": "**Sous** a",
+      "dar": "**Ta7t** a",
+      "en": "**Below** a"
+     }
+    ],
+    [
+     {
+      "fr": "`Bottom_toTopOf=\"@id/a\"`",
+      "dar": "`Bottom_toTopOf=\"@id/a\"`",
+      "en": "`Bottom_toTopOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Mon bas → haut de a",
+      "dar": "Lte7t dyali → lfo9 dyal a",
+      "en": "My bottom → top of a"
+     },
+     {
+      "fr": "**Au-dessus** de a",
+      "dar": "**Fo9** a",
+      "en": "**Above** a"
+     }
+    ],
+    [
+     {
+      "fr": "`Start_toEndOf=\"@id/a\"`",
+      "dar": "`Start_toEndOf=\"@id/a\"`",
+      "en": "`Start_toEndOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Mon début → fin de a",
+      "dar": "Bdaya dyali → nihaya dyal a",
+      "en": "My start → end of a"
+     },
+     {
+      "fr": "**À droite** de a",
+      "dar": "**3la limn** dyal a",
+      "en": "**Right of** a"
+     }
+    ],
+    [
+     {
+      "fr": "`End_toStartOf=\"@id/a\"`",
+      "dar": "`End_toStartOf=\"@id/a\"`",
+      "en": "`End_toStartOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Ma fin → début de a",
+      "dar": "Nihaya dyali → bdaya dyal a",
+      "en": "My end → start of a"
+     },
+     {
+      "fr": "**À gauche** de a",
+      "dar": "**3la lisr** dyal a",
+      "en": "**Left of** a"
+     }
+    ],
+    [
+     {
+      "fr": "`Start_toStartOf=\"@id/a\"`",
+      "dar": "`Start_toStartOf=\"@id/a\"`",
+      "en": "`Start_toStartOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Mon début → début de a",
+      "dar": "Bdaya dyali → bdaya dyal a",
+      "en": "My start → start of a"
+     },
+     {
+      "fr": "**Aligné à gauche** sur a",
+      "dar": "**M9ad lisr** m3a a",
+      "en": "**Left-aligned** with a"
+     }
+    ],
+    [
+     {
+      "fr": "`Baseline_toBaselineOf=\"@id/a\"`",
+      "dar": "`Baseline_toBaselineOf=\"@id/a\"`",
+      "en": "`Baseline_toBaselineOf=\"@id/a\"`"
+     },
+     {
+      "fr": "Ma ligne de texte → celle de a",
+      "dar": "Ster dyal texte dyali → dyal a",
+      "en": "My text baseline → a's"
+     },
+     {
+      "fr": "Textes **sur la même ligne**",
+      "dar": "Textes **f nefs ster**",
+      "en": "Texts **on the same line**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Le préfixe est `app:` (pas `android:`) : `app:layout_constraintTop_toTopOf`. Et pour cibler une vue on écrit `@id/titre` ; `@+id/titre` sert à **créer** l'id dans la vue elle-même.",
+    "dar": "Préfixe howa `app:` (machi `android:`) : `app:layout_constraintTop_toTopOf`. Bach tcibli view katkteb `@id/titre` ; `@+id/titre` kaysta3mel bach **tsayb** l'id f view rasha.",
+    "en": "The prefix is `app:` (not `android:`): `app:layout_constraintTop_toTopOf`. To target a view write `@id/titre`; `@+id/titre` **creates** the id on the view itself."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-40",
+    "mob-41"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Les règles qui décident de la position",
+    "dar": "2. Les règles li kayhdedou position",
+    "en": "2. The rules that decide the position"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Cinq règles à appliquer dans l'ordre",
+    "dar": "5 règles b tartib",
+    "en": "Five rules, in order"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Règle 1 : une horizontale + une verticale",
+      "dar": "Règle 1 : horizontale + verticale",
+      "en": "Rule 1: one horizontal + one vertical"
+     },
+     "body": {
+      "fr": "Chaque vue a besoin d'**au moins une contrainte horizontale** (Start/End/Left/Right) **et une verticale** (Top/Bottom/Baseline). Sinon, à l'exécution, elle se place en **haut à gauche** (x = 0 ou y = 0), même si elle paraissait ailleurs dans l'éditeur.",
+      "dar": "Kol view khassha **contrainte horizontale** (Start/End/Left/Right) **w verticale** (Top/Bottom/Baseline) 3la l a9al. Sinon, f l'exécution, kattla7 **lfo9 3la lisr** (x = 0 wla y = 0), wakha kanet f blasa khra f l'éditeur.",
+      "en": "Each view needs **at least one horizontal** (Start/End/Left/Right) **and one vertical** constraint (Top/Bottom/Baseline). Otherwise at runtime it lands **top-left** (x = 0 or y = 0), even if it looked elsewhere in the editor."
+     }
+    },
+    {
+     "title": {
+      "fr": "Règle 2 : un seul côté → collée",
+      "dar": "Règle 2 : jenb wa7ed → lsse9a",
+      "en": "Rule 2: one side → stuck"
+     },
+     "body": {
+      "fr": "Avec **un seul** côté attaché dans un axe (ex. seulement `End_toEndOf=\"parent\"`), la vue est **collée** de ce côté (+ marge).",
+      "dar": "B jenb **wa7ed** f axe (b7al ghir `End_toEndOf=\"parent\"`), view kat**lsse9** f dak jenb (+ marge).",
+      "en": "With **one** side attached in an axis (e.g. only `End_toEndOf=\"parent\"`), the view is **stuck** to that side (+ margin)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Règle 3 : deux côtés opposés → centrée",
+      "dar": "Règle 3 : jouj jnab → f lwest",
+      "en": "Rule 3: two opposite sides → centred"
+     },
+     "body": {
+      "fr": "Avec `Start` **et** `End` attachés (ou `Top` **et** `Bottom`), la vue est tirée des deux côtés : elle est **centrée** entre les deux cibles. Le **biais** (`layout_constraintHorizontal_bias`, de 0 à 1, défaut **0,5**) déplace ce centrage : 0 = à gauche, 1 = à droite.",
+      "dar": "B `Start` **w** `End` mrboutin (wla `Top` **w** `Bottom`), view mjbouda mn jouj jnab : kat**koun f lwest**. **Biais** (`layout_constraintHorizontal_bias`, mn 0 l 1, par défaut **0,5**) kaybeddel l blasa : 0 = lisr, 1 = limn.",
+      "en": "With `Start` **and** `End` attached (or `Top` **and** `Bottom`), the view is pulled both ways: it is **centred** between the targets. The **bias** (`layout_constraintHorizontal_bias`, 0 to 1, default **0.5**) shifts it: 0 = left, 1 = right."
+     }
+    },
+    {
+     "title": {
+      "fr": "Règle 4 : 0dp → s'étire",
+      "dar": "Règle 4 : 0dp → kattmedd",
+      "en": "Rule 4: 0dp → stretches"
+     },
+     "body": {
+      "fr": "Si la dimension vaut **0dp** et que les deux côtés sont attachés, la vue **remplit l'espace** entre ses contraintes (*match constraints*) au lieu d'être centrée.",
+      "dar": "Ila dimension **0dp** w jouj jnab mrboutin, view kat**3mmer l blasa** bin contraintes (*match constraints*) f blast ma tcentra.",
+      "en": "If the dimension is **0dp** and both sides are attached, the view **fills the space** between its constraints (*match constraints*) instead of being centred."
+     }
+    },
+    {
+     "title": {
+      "fr": "Règle 5 : la marge suit la contrainte",
+      "dar": "Règle 5 : marge kattb3 contrainte",
+      "en": "Rule 5: the margin follows the constraint"
+     },
+     "body": {
+      "fr": "`android:layout_marginTop=\"16dp\"` n'a d'effet **que s'il existe une contrainte Top**. Une marge sur un côté non contraint est **ignorée**.",
+      "dar": "`android:layout_marginTop=\"16dp\"` ma kaykhdem **ghir ila kayna contrainte Top**. Marge f jenb bla contrainte kat**t-ignora**.",
+      "en": "`android:layout_marginTop=\"16dp\"` only works **if there is a Top constraint**. A margin on an unconstrained side is **ignored**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "ConstraintReader"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**Start/End** et **Left/Right** ne sont pas identiques : Start/End **s'inversent** dans les langues écrites de droite à gauche (arabe), Left/Right non. Android recommande **Start/End**. Et ne mélange pas `Start` et `Left` sur la même vue.",
+    "dar": "**Start/End** w **Left/Right** machi b7al b7al : Start/End kay**t9elbou** f les langues li katkteb mn limn l lisr (l3arbiya), Left/Right la. Android kaynsa7 b **Start/End**. W ma tkhallatch `Start` w `Left` f nefs view.",
+    "en": "**Start/End** and **Left/Right** are not the same: Start/End **flip** in right-to-left languages (Arabic), Left/Right do not. Android recommends **Start/End**. Do not mix `Start` and `Left` on the same view."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-42",
+    "mob-43",
+    "mob-44"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Méthode : lire un layout et dessiner l'écran",
+    "dar": "3. Méthode : 9ra layout w rsem l écran",
+    "en": "3. Method: read a layout and sketch the screen"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<androidx.constraintlayout.widget.ConstraintLayout\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\">\n\n    <ImageView\n        android:id=\"@+id/photo\"\n        android:layout_width=\"64dp\"\n        android:layout_height=\"64dp\"\n        android:layout_marginStart=\"16dp\"\n        android:layout_marginTop=\"16dp\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\" />\n\n    <TextView\n        android:id=\"@+id/nom\"\n        android:layout_width=\"0dp\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginStart=\"12dp\"\n        android:layout_marginEnd=\"16dp\"\n        android:text=\"@string/nom_contact\"\n        app:layout_constraintStart_toEndOf=\"@id/photo\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"@id/photo\" />\n\n    <TextView\n        android:id=\"@+id/telephone\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        app:layout_constraintStart_toStartOf=\"@id/nom\"\n        app:layout_constraintTop_toBottomOf=\"@id/nom\" />\n\n    <Button\n        android:id=\"@+id/appeler\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginBottom=\"24dp\"\n        android:text=\"@string/appeler\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintBottom_toBottomOf=\"parent\" />\n</androidx.constraintlayout.widget.ConstraintLayout>",
+   "caption": {
+    "fr": "Fiche d'un contact : à lire sans exécuter",
+    "dar": "Fiche dyal contact : 9raha bla ma tlanciha",
+    "en": "Contact card: read it without running it"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Lecture vue par vue",
+    "dar": "9raya view b view",
+    "en": "Reading view by view"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "photo",
+      "dar": "photo",
+      "en": "photo"
+     },
+     "body": {
+      "fr": "Start → parent, Top → parent, marges 16dp : **coin en haut à gauche**, carré de 64dp.",
+      "dar": "Start → parent, Top → parent, marges 16dp : **f rokn lfo9 lisr**, carré 64dp.",
+      "en": "Start → parent, Top → parent, 16dp margins: **top-left corner**, 64dp square."
+     }
+    },
+    {
+     "title": {
+      "fr": "nom",
+      "dar": "nom",
+      "en": "nom"
+     },
+     "body": {
+      "fr": "Start → **fin de photo** (+12dp) : **à droite de la photo**. End → parent et largeur **0dp** : s'étire **jusqu'au bord droit**. Top → haut de photo : **aligné sur le haut de la photo**.",
+      "dar": "Start → **nihaya dyal photo** (+12dp) : **3la limn dyal photo**. End → parent w l3ard **0dp** : kaytmedd **7tta l jenb limn**. Top → lfo9 dyal photo : **m9ad m3a lfo9 dyal photo**.",
+      "en": "Start → **end of photo** (+12dp): **right of the photo**. End → parent with **0dp** width: stretches **to the right edge**. Top → top of photo: **aligned with the photo's top**."
+     }
+    },
+    {
+     "title": {
+      "fr": "telephone",
+      "dar": "telephone",
+      "en": "telephone"
+     },
+     "body": {
+      "fr": "Start → début de nom : **aligné à gauche sur le nom**. Top → bas de nom : **juste sous le nom**.",
+      "dar": "Start → bdaya dyal nom : **m9ad lisr m3a nom**. Top → lte7t dyal nom : **ta7t nom direct**.",
+      "en": "Start → start of nom: **left-aligned with the name**. Top → bottom of nom: **right under the name**."
+     }
+    },
+    {
+     "title": {
+      "fr": "appeler",
+      "dar": "appeler",
+      "en": "appeler"
+     },
+     "body": {
+      "fr": "Start **et** End → parent : **centré horizontalement**. Seulement Bottom → parent (+24dp) : **collé en bas**. Résultat : un bouton centré en bas de l'écran.",
+      "dar": "Start **w** End → parent : **f lwest horizontalement**. Ghir Bottom → parent (+24dp) : **lsse9 lte7t**. Natija : bouton f lwest lte7t dyal l écran.",
+      "en": "Start **and** End → parent: **horizontally centred**. Only Bottom → parent (+24dp): **stuck to the bottom**. Result: a centred button at the bottom of the screen."
+     }
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "+--------------------------------------+\n| [photo]  Nom du contact ............ |\n| [64dp ]  06 12 34 56 78              |\n|                                      |\n|                                      |\n|              [ APPELER ]             |\n+--------------------------------------+",
+   "caption": {
+    "fr": "Le croquis attendu",
+    "dar": "Croquis li khass",
+    "en": "The expected sketch"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Méthode au contrôle : pour **chaque vue**, (1) repère sa contrainte **horizontale** et sa contrainte **verticale**, (2) traduis chaque attribut par « mon côté → côté de la cible », (3) applique les règles : un côté = collée, deux côtés = centrée (ou étirée si 0dp), (4) ajoute les marges, (5) dessine. Signale toute vue **sans contrainte horizontale ou verticale**.",
+    "dar": "Méthode f contrôle : l **kol view**, (1) l9a contrainte **horizontale** w **verticale** dyalha, (2) traduiri kol attribut b « jenb dyali → jenb dyal cible », (3) tbe9 les règles : jenb wa7ed = lsse9a, jouj jnab = f lwest (wla mtmedda ila 0dp), (4) zid marges, (5) rsem. Goul ila kayna chi view **bla contrainte horizontale wla verticale**.",
+    "en": "Test method: for **each view**, (1) find its **horizontal** and **vertical** constraints, (2) translate each attribute as \"my side → target's side\", (3) apply the rules: one side = stuck, two sides = centred (or stretched if 0dp), (4) add margins, (5) sketch. Flag any view **missing a horizontal or vertical constraint**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-45",
+    "mob-46",
+    "mob-47"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "layout_constraintX_toYOf=\"cible\" se lit « mon côté X est attaché au côté Y de la cible » (préfixe app:, cible @id/… ou parent).",
+   "dar": "« Jenb X dyali mrbout b jenb Y dyal cible ».",
+   "en": "\"My side X is attached to side Y of the target\"."
+  },
+  {
+   "fr": "Chaque vue : au moins une contrainte horizontale et une verticale, sinon elle saute en haut à gauche à l'exécution.",
+   "dar": "Horizontale + verticale, sinon (0,0).",
+   "en": "At least one horizontal and one vertical constraint, otherwise it jumps to the top-left."
+  },
+  {
+   "fr": "Un côté = collée ; deux côtés opposés = centrée (biais 0,5 par défaut) ; 0dp + deux côtés = étirée.",
+   "dar": "Jenb = lsse9a ; jouj = f lwest ; 0dp = mtmedda.",
+   "en": "One side = stuck; two sides = centred (bias 0.5); 0dp + two sides = stretched."
+  },
+  {
+   "fr": "Une marge ne s'applique que du côté où il y a une contrainte.",
+   "dar": "Marge ghir f jenb fih contrainte.",
+   "en": "A margin only applies on a constrained side."
+  },
+  {
+   "fr": "Start/End (s'inversent en arabe) sont recommandés plutôt que Left/Right.",
+   "dar": "Start/End mzyanin 3la Left/Right.",
+   "en": "Prefer Start/End (they flip in RTL) over Left/Right."
+  }
+ ]
+}

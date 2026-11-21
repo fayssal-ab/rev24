@@ -1,7 +1,7 @@
 [
  {
   "id": "r-mob-1",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "setContentView(R.layout.activity_main);",
   "desc": {
    "fr": "Charger l'interface dans onCreate()",
@@ -11,7 +11,7 @@
  },
  {
   "id": "r-mob-2",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "findViewById(R.id.x) · getString(R.string.x)",
   "desc": {
    "fr": "Lire une vue / un texte depuis Java",
@@ -21,7 +21,7 @@
  },
  {
   "id": "r-mob-3",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "@string/x · @+id/x · @layout/x",
   "desc": {
    "fr": "Références de ressources dans le XML",
@@ -31,7 +31,7 @@
  },
  {
   "id": "r-mob-4",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "<uses-permission android:name=\"android.permission.INTERNET\" />",
   "desc": {
    "fr": "Permission dans le manifeste",
@@ -41,7 +41,7 @@
  },
  {
   "id": "r-mob-5",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "onCreate → onStart → onResume → onPause → onStop → onDestroy (+ onRestart)",
   "desc": {
    "fr": "Cycle de vie",
@@ -51,7 +51,7 @@
  },
  {
   "id": "r-mob-6",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "px = dp × dpi / 160",
   "desc": {
    "fr": "Conversion dp → px",
@@ -61,12 +61,102 @@
  },
  {
   "id": "r-mob-7",
-  "chapter": "dimensions",
+  "chapter": "listes",
   "syntax": "wrap_content · match_parent · 0dp (ConstraintLayout)",
   "desc": {
    "fr": "Valeurs de dimension",
    "dar": "Valeurs dyal dimension",
    "en": "Dimension values"
+  }
+ },
+ {
+  "id": "r-mob-8",
+  "chapter": "listes",
+  "syntax": "new Intent(A.this, B.class) · putExtra(\"cle\", v) · startActivity(intent)",
+  "desc": {
+   "fr": "Ouvrir un écran avec des données",
+   "dar": "7ell écran b data",
+   "en": "Open a screen with data"
+  }
+ },
+ {
+  "id": "r-mob-9",
+  "chapter": "listes",
+  "syntax": "getIntent().getStringExtra(\"cle\") · getIntExtra(\"cle\", 0)",
+  "desc": {
+   "fr": "Lire les données dans B",
+   "dar": "9ra data f B",
+   "en": "Read data in B"
+  }
+ },
+ {
+  "id": "r-mob-10",
+  "chapter": "listes",
+  "syntax": "setResult(RESULT_OK, data); finish(); · registerForActivityResult(...)",
+  "desc": {
+   "fr": "Renvoyer un résultat",
+   "dar": "Rj3 résultat",
+   "en": "Return a result"
+  }
+ },
+ {
+  "id": "r-mob-11",
+  "chapter": "listes",
+  "syntax": "app:layout_constraint{Top|Bottom|Start|End}_to{Top|Bottom|Start|End}Of=\"@id/x|parent\"",
+  "desc": {
+   "fr": "Grammaire d'une contrainte",
+   "dar": "Grammaire dyal contrainte",
+   "en": "Constraint grammar"
+  }
+ },
+ {
+  "id": "r-mob-13",
+  "chapter": "listes",
+  "syntax": "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, liste); listView.setAdapter(a);",
+  "desc": {
+   "fr": "ListView simple",
+   "dar": "ListView simple",
+   "en": "Simple ListView"
+  }
+ },
+ {
+  "id": "r-mob-14",
+  "chapter": "listes",
+  "syntax": "onCreateViewHolder · onBindViewHolder · getItemCount",
+  "desc": {
+   "fr": "Les 3 méthodes de RecyclerView.Adapter",
+   "dar": "3 méthodes dyal adapter",
+   "en": "The 3 RecyclerView.Adapter methods"
+  }
+ },
+ {
+  "id": "r-mob-15",
+  "chapter": "listes",
+  "syntax": "recycler.setLayoutManager(new LinearLayoutManager(this)); recycler.setAdapter(adapter);",
+  "desc": {
+   "fr": "Brancher un RecyclerView",
+   "dar": "Rbet RecyclerView",
+   "en": "Wire a RecyclerView"
+  }
+ },
+ {
+  "id": "r-mob-16",
+  "chapter": "listes",
+  "syntax": "notifyItemInserted(i) · notifyItemRemoved(i) · notifyItemChanged(i) · notifyDataSetChanged()",
+  "desc": {
+   "fr": "Mettre à jour la liste",
+   "dar": "Mise à jour",
+   "en": "Update the list"
+  }
+ },
+ {
+  "id": "r-mob-12",
+  "chapter": "listes",
+  "syntax": "layout_constraintHorizontal_bias=\"0.5\" · layout_constraintBaseline_toBaselineOf",
+  "desc": {
+   "fr": "Biais et alignement de texte",
+   "dar": "Biais w alignement",
+   "en": "Bias and baseline"
   }
  }
 ]

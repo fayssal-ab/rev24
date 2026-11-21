@@ -1,0 +1,481 @@
+[
+ {
+  "id": "mob-40",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "`app:layout_constraintTop_toBottomOf=\"@id/titre\"` place la vue…",
+   "dar": "`Top_toBottomOf=\"@id/titre\"` kat7et view…",
+   "en": "`Top_toBottomOf=\"@id/titre\"` places the view…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "sous titre",
+     "dar": "ta7t titre",
+     "en": "below titre"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "au-dessus de titre",
+     "dar": "fo9 titre",
+     "en": "above titre"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "à droite de titre",
+     "dar": "limn dyal titre",
+     "en": "right of titre"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "« Mon haut → bas de titre » : la vue commence où titre finit, donc **dessous**.",
+   "dar": "Lfo9 dyali → lte7t dyal titre.",
+   "en": "My top → titre bottom: **below**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce serait Bottom_toTopOf.",
+    "dar": "Bottom_toTopOf.",
+    "en": "That is Bottom_toTopOf."
+   },
+   "c": {
+    "fr": "Ce serait Start_toEndOf.",
+    "dar": "Start_toEndOf.",
+    "en": "That is Start_toEndOf."
+   }
+  },
+  "tags": [
+   "grammaire"
+  ]
+ },
+ {
+  "id": "mob-41",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel attribut place la vue **à droite** de `photo` ?",
+   "dar": "Ach mn attribut kay7et view **3la limn** dyal `photo` ?",
+   "en": "Which attribute puts the view **right of** `photo`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "layout_constraintStart_toEndOf=\"@id/photo\"",
+     "dar": "Start_toEndOf",
+     "en": "Start_toEndOf"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "layout_constraintEnd_toStartOf=\"@id/photo\"",
+     "dar": "End_toStartOf",
+     "en": "End_toStartOf"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "layout_constraintStart_toStartOf=\"@id/photo\"",
+     "dar": "Start_toStartOf",
+     "en": "Start_toStartOf"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Mon **début** commence à la **fin** de photo → à sa droite.",
+   "dar": "Bdaya dyali f nihaya dyal photo.",
+   "en": "My start at photo end → right of it."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça la met à gauche de photo.",
+    "dar": "Lisr.",
+    "en": "Puts it left of photo."
+   },
+   "c": {
+    "fr": "Ça l'aligne à gauche sur photo.",
+    "dar": "M9ad lisr.",
+    "en": "Left-aligns with photo."
+   }
+  },
+  "tags": [
+   "grammaire"
+  ]
+ },
+ {
+  "id": "mob-42",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Un bouton a `Start_toStartOf=\"parent\"` et `End_toEndOf=\"parent\"`, largeur `wrap_content`. Où est-il ?",
+   "dar": "Bouton : Start w End → parent, wrap_content. Fin ?",
+   "en": "Button: Start and End → parent, wrap_content. Where?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Centré horizontalement",
+     "dar": "F lwest",
+     "en": "Horizontally centred"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Collé à gauche",
+     "dar": "Lisr",
+     "en": "Stuck left"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il remplit toute la largeur",
+     "dar": "Kay3mmer l3ard",
+     "en": "Fills the width"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Tiré des deux côtés → centré (biais 0,5). Pour remplir il faudrait **0dp**.",
+   "dar": "Jouj jnab → f lwest.",
+   "en": "Pulled both ways → centred."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il faudrait un seul côté.",
+    "dar": "Jenb wa7ed.",
+    "en": "Would need one side only."
+   },
+   "c": {
+    "fr": "Il faudrait 0dp.",
+    "dar": "0dp.",
+    "en": "Would need 0dp."
+   }
+  },
+  "tags": [
+   "regles"
+  ]
+ },
+ {
+  "id": "mob-43",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une vue n'a **que** `Top_toTopOf=\"parent\"`. À l'exécution…",
+   "dar": "View fiha **ghir** `Top_toTopOf=\"parent\"`. F l'exécution…",
+   "en": "A view has **only** `Top_toTopOf=\"parent\"`. At runtime…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "elle est en haut, collée à gauche (x = 0)",
+     "dar": "lfo9, lisr (x = 0)",
+     "en": "top, stuck left (x = 0)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "elle est centrée",
+     "dar": "f lwest",
+     "en": "centred"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "l'application refuse de compiler",
+     "dar": "ma kaycompilich",
+     "en": "the app fails to compile"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Pas de contrainte horizontale → x = 0. Android Studio avertit (« not constrained horizontally ») mais compile.",
+   "dar": "Bla horizontale → x = 0.",
+   "en": "No horizontal constraint → x = 0."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le centrage exige Start et End.",
+    "dar": "Centrage = Start + End.",
+    "en": "Centring needs Start and End."
+   },
+   "c": {
+    "fr": "C'est un avertissement, pas une erreur.",
+    "dar": "Avertissement.",
+    "en": "Only a warning."
+   }
+  },
+  "tags": [
+   "regles"
+  ]
+ },
+ {
+  "id": "mob-44",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`layout_constraintHorizontal_bias=\"0.2\"` sur une vue contrainte Start et End au parent…",
+   "dar": "`bias=\"0.2\"` m3a Start w End → parent…",
+   "en": "`Horizontal_bias=\"0.2\"` with Start and End to parent…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "la décale vers la gauche (20 % de l'espace libre à gauche)",
+     "dar": "katmilha l lisr",
+     "en": "shifts it left (20 % of free space on the left)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "la décale vers la droite",
+     "dar": "limn",
+     "en": "shifts it right"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "n'a aucun effet",
+     "dar": "walou",
+     "en": "has no effect"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "0 = tout à gauche, 0,5 = centre, 1 = tout à droite.",
+   "dar": "0 lisr, 0,5 west, 1 limn.",
+   "en": "0 left, 0.5 centre, 1 right."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est le cas pour un biais > 0,5.",
+    "dar": "> 0,5.",
+    "en": "That is bias > 0.5."
+   },
+   "c": {
+    "fr": "Il agit dès que les deux côtés sont contraints.",
+    "dar": "Kaykhdem m3a jouj jnab.",
+    "en": "Works with both sides constrained."
+   }
+  },
+  "tags": [
+   "regles"
+  ]
+ },
+ {
+  "id": "mob-45",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une vue a `layout_marginTop=\"24dp\"` mais **aucune contrainte Top** (seulement Bottom → parent). La marge…",
+   "dar": "marginTop=24dp walakin **bla Top** (ghir Bottom). Marge…",
+   "en": "A view has `marginTop=\"24dp\"` but **no Top constraint** (only Bottom). The margin…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "est ignorée",
+     "dar": "kat-ignora",
+     "en": "is ignored"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "la décale de 24dp vers le bas",
+     "dar": "katnzelha 24dp",
+     "en": "moves it down 24dp"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la décale de 24dp vers le haut",
+     "dar": "kat-tal3ha 24dp",
+     "en": "moves it up 24dp"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Une marge ne s'applique que du côté contraint. Ici il faudrait `marginBottom`.",
+   "dar": "Marge ghir f jenb mcontraint.",
+   "en": "Margins only apply on constrained sides."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "regles"
+  ]
+ },
+ {
+  "id": "mob-46",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi préférer `Start/End` à `Left/Right` ?",
+   "dar": "3lach Start/End 3la Left/Right ?",
+   "en": "Why prefer `Start/End` over `Left/Right`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Start/End s'inversent automatiquement dans les langues de droite à gauche (arabe)",
+     "dar": "Kayt9elbou f l3arbiya",
+     "en": "Start/End flip automatically in RTL languages (Arabic)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Left/Right n'existent pas dans ConstraintLayout",
+     "dar": "Left/Right ma kaynach",
+     "en": "Left/Right do not exist"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Start/End sont plus rapides",
+     "dar": "Asra3",
+     "en": "Start/End are faster"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Une interface en arabe se lit de droite à gauche : Start devient la droite.",
+   "dar": "Start = limn f l3arbiya.",
+   "en": "In Arabic, Start becomes the right."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ils existent, mais ne s'inversent pas.",
+    "dar": "Kaynin walakin ma kayt9elbouch.",
+    "en": "They exist but do not flip."
+   },
+   "c": {
+    "fr": "Aucune différence de vitesse.",
+    "dar": "Nefs sor3a.",
+    "en": "No speed difference."
+   }
+  },
+  "tags": [
+   "regles"
+  ]
+ },
+ {
+  "id": "mob-47",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Dans la fiche contact du cours, quelles affirmations sont vraies ?",
+   "dar": "F fiche contact, chnou s7i7 ?",
+   "en": "In the course contact card, which are true?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "« nom » est à droite de la photo et s'étire jusqu'au bord droit",
+     "dar": "nom limn photo w kaytmedd",
+     "en": "nom is right of photo and stretches to the right edge"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "« telephone » est sous « nom », aligné à gauche sur lui",
+     "dar": "telephone ta7t nom",
+     "en": "telephone is under nom, left-aligned with it"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "« appeler » est centré en bas de l'écran",
+     "dar": "appeler f lwest lte7t",
+     "en": "appeler is centred at the bottom"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "« photo » est centrée horizontalement",
+     "dar": "photo f lwest",
+     "en": "photo is horizontally centred"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "photo n'a que Start → parent : elle est **collée à gauche**.",
+   "dar": "photo ghir Start → lisr.",
+   "en": "photo only has Start → left."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Une seule contrainte horizontale (Start) : collée à gauche.",
+    "dar": "Jenb wa7ed : lisr.",
+    "en": "One horizontal constraint: left."
+   }
+  },
+  "tags": [
+   "lecture"
+  ]
+ }
+]

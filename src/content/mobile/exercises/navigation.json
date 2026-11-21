@@ -1,0 +1,148 @@
+[
+ {
+  "id": "mob-x-7",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 2,
+  "title": {
+   "fr": "Envoyer et lire un contact",
+   "dar": "Sifet w 9ra contact",
+   "en": "Send and read a contact"
+  },
+  "statement": {
+   "fr": "Au clic sur le bouton `bouton_detail` de MainActivity, ouvre DetailActivity en lui passant le nom « Youssef » et l'âge 23. Dans DetailActivity, affiche « Youssef, 23 ans » dans le TextView `texte_detail`.",
+   "dar": "F click 3la `bouton_detail`, 7el DetailActivity b smiya « Youssef » w 3mr 23. F DetailActivity, werri « Youssef, 23 ans » f `texte_detail`.",
+   "en": "On click of `bouton_detail`, open DetailActivity with name \"Youssef\" and age 23; display \"Youssef, 23 ans\" in `texte_detail`."
+  },
+  "hints": [
+   {
+    "fr": "Mêmes clés des deux côtés ; getIntExtra demande une valeur par défaut.",
+    "dar": "Nefs clés ; défaut l int.",
+    "en": "Same keys; default for int."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "MainActivity",
+     "dar": "MainActivity",
+     "en": "MainActivity"
+    },
+    "body": {
+     "fr": "Écouteur de clic, Intent explicite, deux putExtra, startActivity.",
+     "dar": "Listener, Intent, putExtra, startActivity.",
+     "en": "Listener, Intent, putExtra, startActivity."
+    },
+    "code": "Button bouton = findViewById(R.id.bouton_detail);\nbouton.setOnClickListener(v -> {\n    Intent intent = new Intent(MainActivity.this, DetailActivity.class);\n    intent.putExtra(\"nom\", \"Youssef\");\n    intent.putExtra(\"age\", 23);\n    startActivity(intent);\n});"
+   },
+   {
+    "title": {
+     "fr": "DetailActivity",
+     "dar": "DetailActivity",
+     "en": "DetailActivity"
+    },
+    "body": {
+     "fr": "Dans onCreate, après setContentView.",
+     "dar": "F onCreate, mor setContentView.",
+     "en": "In onCreate, after setContentView."
+    },
+    "code": "setContentView(R.layout.activity_detail);\nString nom = getIntent().getStringExtra(\"nom\");\nint age = getIntent().getIntExtra(\"age\", 0);\nTextView texte = findViewById(R.id.texte_detail);\ntexte.setText(nom + \", \" + age + \" ans\");"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "putExtra(\"nom\"/\"age\") + startActivity dans A ; getStringExtra(\"nom\") et getIntExtra(\"age\", 0) dans B ; DetailActivity déclarée dans le manifeste.",
+   "dar": "putExtra / getXxxExtra + manifeste.",
+   "en": "putExtra / getXxxExtra + manifest."
+  },
+  "commonMistakes": [
+   {
+    "fr": "`new Intent(this, …)` dans l'écouteur : `this` n'est pas l'Activity dans une classe anonyme.",
+    "dar": "this f classe anonyme.",
+    "en": "`this` in an anonymous class."
+   },
+   {
+    "fr": "Lire l'âge avec getStringExtra (null).",
+    "dar": "getStringExtra l int.",
+    "en": "Reading the age with getStringExtra."
+   },
+   {
+    "fr": "Oublier la déclaration dans le manifeste.",
+    "dar": "Nsit manifeste.",
+    "en": "Forgetting the manifest."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-8",
+  "module": "mobile",
+  "chapter": "navigation",
+  "difficulty": 3,
+  "title": {
+   "fr": "Renvoyer un résultat",
+   "dar": "Rj3 résultat",
+   "en": "Return a result"
+  },
+  "statement": {
+   "fr": "DetailActivity a un bouton « Ajouter aux favoris ». Au clic, elle doit renvoyer à MainActivity le booléen favori = true puis se fermer. MainActivity affiche alors un Toast « Ajouté aux favoris ». Écris le code des deux côtés.",
+   "dar": "B katrj3 favori = true w katsedd ; A katwerri Toast. Kteb jouj jnab.",
+   "en": "B returns favori = true and closes; A shows a Toast. Write both sides."
+  },
+  "hints": [
+   {
+    "fr": "Côté A : registerForActivityResult + launch. Côté B : setResult puis finish.",
+    "dar": "A : register + launch ; B : setResult + finish.",
+    "en": "A: register + launch; B: setResult + finish."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "A — lanceur",
+     "dar": "A — lanceur",
+     "en": "A — launcher"
+    },
+    "body": {
+     "fr": "Attribut de MainActivity, puis `lanceur.launch(intent)` au lieu de startActivity.",
+     "dar": "Attribut + launch.",
+     "en": "Field + launch."
+    },
+    "code": "private final ActivityResultLauncher<Intent> lanceur = registerForActivityResult(\n        new ActivityResultContracts.StartActivityForResult(),\n        result -> {\n            if (result.getResultCode() == RESULT_OK && result.getData() != null\n                    && result.getData().getBooleanExtra(\"favori\", false)) {\n                Toast.makeText(this, \"Ajouté aux favoris\", Toast.LENGTH_SHORT).show();\n            }\n        });\n\n// au clic :\nlanceur.launch(new Intent(MainActivity.this, DetailActivity.class));"
+   },
+   {
+    "title": {
+     "fr": "B — réponse",
+     "dar": "B — jawab",
+     "en": "B — reply"
+    },
+    "body": {
+     "fr": "setResult **avant** finish.",
+     "dar": "setResult 9bel finish.",
+     "en": "setResult **before** finish."
+    },
+    "code": "Button fav = findViewById(R.id.bouton_favori);\nfav.setOnClickListener(v -> {\n    Intent data = new Intent();\n    data.putExtra(\"favori\", true);\n    setResult(RESULT_OK, data);\n    finish();\n});"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "A : registerForActivityResult(StartActivityForResult) + launch ; B : putExtra + setResult(RESULT_OK, data) + finish().",
+   "dar": "register / setResult / finish.",
+   "en": "register / setResult / finish."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Appeler finish() avant setResult.",
+    "dar": "finish 9bel setResult.",
+    "en": "finish before setResult."
+   },
+   {
+    "fr": "Relancer A avec startActivity au lieu de finish().",
+    "dar": "startActivity l A.",
+    "en": "Restarting A with startActivity."
+   },
+   {
+    "fr": "Ne pas tester RESULT_OK.",
+    "dar": "Bla RESULT_OK.",
+    "en": "Not checking RESULT_OK."
+   }
+  ]
+ }
+]

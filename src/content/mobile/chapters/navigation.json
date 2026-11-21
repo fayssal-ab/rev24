@@ -1,0 +1,403 @@
+{
+ "id": "navigation",
+ "module": "mobile",
+ "order": 4,
+ "title": {
+  "fr": "Navigation entre écrans et passage de données",
+  "dar": "Navigation bin écrans w passage dyal data",
+  "en": "Navigating between screens and passing data"
+ },
+ "summary": {
+  "fr": "Ouvrir un deuxième écran avec un Intent explicite, lui envoyer des données (putExtra), les lire (getIntent, getStringExtra, getIntExtra), revenir (finish) et renvoyer un résultat (setResult, registerForActivityResult), avec les pièges classiques.",
+  "dar": "T7el écran tani b Intent explicite, tsifet lih data (putExtra), t9raha (getIntent, getStringExtra, getIntExtra), trje3 (finish) w trj3 résultat (setResult, registerForActivityResult), m3a les pièges.",
+  "en": "Opening a second screen with an explicit Intent, sending it data (putExtra), reading it (getIntent, getStringExtra, getIntExtra), going back (finish) and returning a result (setResult, registerForActivityResult), with the classic traps."
+ },
+ "estimatedMinutes": 45,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. L'Intent : le message entre deux écrans",
+    "dar": "1. Intent : message bin jouj écrans",
+    "en": "1. The Intent: the message between two screens"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un **Intent** est un **message** adressé à Android pour demander une action, par exemple **ouvrir une Activity**. Un Intent **explicite** nomme **la classe exacte** de l'écran à ouvrir (`DetailActivity.class`). Un Intent **implicite** décrit seulement une **action** (« appeler », « ouvrir une page web ») et Android choisit l'application capable de la faire.",
+    "dar": "**Intent** howa **message** kansiftouh l Android bach ndir chi action, b7al **n7ello Activity**. Intent **explicite** kaysemmi **classe bdbt** dyal écran li bghina (`DetailActivity.class`). Intent **implicite** kaywsef ghir **action** (« appeler », « 7ell page web ») w Android kaykhtar l'app li t9der dirha.",
+    "en": "An **Intent** is a **message** to Android asking for an action, e.g. **opening an Activity**. An **explicit** Intent names **the exact class** of the screen (`DetailActivity.class`). An **implicit** Intent only describes an **action** (\"call\", \"open a web page\") and Android picks an app that can do it."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Pense à une **enveloppe** : l'adresse = l'écran cible ; le contenu = les données (`putExtra`) ; la poste = Android (`startActivity`). L'écran B ouvre l'enveloppe avec `getIntent()`.",
+    "dar": "Fekker f **ghlaf d bra** : l'adresse = écran li bghina ; dakhel = data (`putExtra`) ; l poste = Android (`startActivity`). Écran B kay7el l ghlaf b `getIntent()`.",
+    "en": "Think of an **envelope**: the address = the target screen; the content = the data (`putExtra`); the post office = Android (`startActivity`). Screen B opens it with `getIntent()`."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "NavigationFlow"
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Ouvrir un écran et lui envoyer des données",
+    "dar": "2. 7ell écran w sifet lih data",
+    "en": "2. Opening a screen and sending it data"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class MainActivity extends AppCompatActivity {\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n\n        Button bouton = findViewById(R.id.bouton_detail);\n        bouton.setOnClickListener(v -> {\n            Intent intent = new Intent(MainActivity.this, DetailActivity.class); // 1. qui ouvrir\n            intent.putExtra(\"nom\", \"Sara\");                                        // 2. les données\n            intent.putExtra(\"age\", 21);\n            startActivity(intent);                                                 // 3. envoyer\n        });\n    }\n}",
+   "caption": {
+    "fr": "Écran A : au clic, ouvrir DetailActivity avec deux données",
+    "dar": "Écran A : f click, 7ell DetailActivity b jouj data",
+    "en": "Screen A: on click, open DetailActivity with two values"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Lire ce code ligne par ligne",
+    "dar": "9ra had code ster b ster",
+    "en": "Reading this code line by line"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "setOnClickListener",
+      "dar": "setOnClickListener",
+      "en": "setOnClickListener"
+     },
+     "body": {
+      "fr": "On récupère le bouton (`findViewById`) et on lui donne un **écouteur de clic**. Le code entre `{ }` s'exécute **à chaque clic**, pas au démarrage.",
+      "dar": "Kanjibou bouton (`findViewById`) w kan3tiwh **écouteur dyal click**. Code li bin `{ }` kaytexécuta **f kol click**, machi f démarrage.",
+      "en": "We get the button (`findViewById`) and give it a **click listener**. The code in `{ }` runs **on every click**, not at startup."
+     }
+    },
+    {
+     "title": {
+      "fr": "new Intent(MainActivity.this, DetailActivity.class)",
+      "dar": "new Intent(...)",
+      "en": "new Intent(...)"
+     },
+     "body": {
+      "fr": "Premier paramètre : le **contexte**, l'Activity actuelle (`MainActivity.this`, car `this` seul désignerait l'écouteur dans une classe anonyme). Second : la **classe** de l'écran cible.",
+      "dar": "Paramètre lowel : **contexte**, Activity li 7na fiha (`MainActivity.this`, 7it `this` bo7do y9der ydesigner l'écouteur f classe anonyme). Tani : **classe** dyal écran li bghina.",
+      "en": "First parameter: the **context**, the current Activity (`MainActivity.this`, since plain `this` would be the listener in an anonymous class). Second: the target screen **class**."
+     }
+    },
+    {
+     "title": {
+      "fr": "putExtra(clé, valeur)",
+      "dar": "putExtra(clé, valeur)",
+      "en": "putExtra(key, value)"
+     },
+     "body": {
+      "fr": "Chaque donnée est rangée sous une **clé** (String). Types acceptés : String, int, double, boolean, tableaux… et des objets **Serializable** ou **Parcelable**.",
+      "dar": "Kol data kat7et ta7t **clé** (String). Types : String, int, double, boolean, tableaux… w objets **Serializable** wla **Parcelable**.",
+      "en": "Each value is stored under a **key** (String). Types: String, int, double, boolean, arrays… and **Serializable** or **Parcelable** objects."
+     }
+    },
+    {
+     "title": {
+      "fr": "startActivity(intent)",
+      "dar": "startActivity(intent)",
+      "en": "startActivity(intent)"
+     },
+     "body": {
+      "fr": "Android ouvre DetailActivity **si elle est déclarée dans le manifeste**. A n'est pas détruite : A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.",
+      "dar": "Android kay7el DetailActivity **ila kanet mdeclariya f manifeste**. A ma katmse7ch : A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop.",
+      "en": "Android opens DetailActivity **if it is declared in the manifest**. A is not destroyed: A.onPause → B.onCreate → B.onStart → B.onResume → A.onStop."
+     }
+    }
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-30",
+    "mob-31",
+    "mob-32"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Lire les données dans l'écran B",
+    "dar": "3. 9ra data f écran B",
+    "en": "3. Reading the data in screen B"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class DetailActivity extends AppCompatActivity {\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_detail);\n\n        Intent intent = getIntent();                      // l'Intent qui a ouvert cet écran\n        String nom = intent.getStringExtra(\"nom\");        // même clé que putExtra\n        int age = intent.getIntExtra(\"age\", 0);           // 0 = valeur par défaut\n\n        TextView texte = findViewById(R.id.texte_detail);\n        texte.setText(nom + \" a \" + age + \" ans\");\n    }\n}",
+   "caption": {
+    "fr": "Écran B : lire les données reçues dans onCreate()",
+    "dar": "Écran B : 9ra data f onCreate()",
+    "en": "Screen B: read the received data in onCreate()"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type envoyé",
+     "dar": "Type li tsafet",
+     "en": "Type sent"
+    },
+    {
+     "fr": "Lecture dans B",
+     "dar": "9raya f B",
+     "en": "Reading in B"
+    },
+    {
+     "fr": "Si la clé n'existe pas",
+     "dar": "Ila clé ma kaynach",
+     "en": "If the key is missing"
+    }
+   ],
+   "rows": [
+    [
+     "String",
+     {
+      "fr": "`getStringExtra(\"cle\")`",
+      "dar": "`getStringExtra(\"cle\")`",
+      "en": "`getStringExtra(\"cle\")`"
+     },
+     {
+      "fr": "renvoie **null**",
+      "dar": "kayrje3 **null**",
+      "en": "returns **null**"
+     }
+    ],
+    [
+     "int",
+     {
+      "fr": "`getIntExtra(\"cle\", 0)`",
+      "dar": "`getIntExtra(\"cle\", 0)`",
+      "en": "`getIntExtra(\"cle\", 0)`"
+     },
+     {
+      "fr": "renvoie la **valeur par défaut** (0)",
+      "dar": "kayrje3 **valeur par défaut** (0)",
+      "en": "returns the **default value** (0)"
+     }
+    ],
+    [
+     "double",
+     {
+      "fr": "`getDoubleExtra(\"cle\", 0.0)`",
+      "dar": "`getDoubleExtra(\"cle\", 0.0)`",
+      "en": "`getDoubleExtra(\"cle\", 0.0)`"
+     },
+     {
+      "fr": "valeur par défaut",
+      "dar": "valeur par défaut",
+      "en": "default value"
+     }
+    ],
+    [
+     "boolean",
+     {
+      "fr": "`getBooleanExtra(\"cle\", false)`",
+      "dar": "`getBooleanExtra(\"cle\", false)`",
+      "en": "`getBooleanExtra(\"cle\", false)`"
+     },
+     {
+      "fr": "valeur par défaut",
+      "dar": "valeur par défaut",
+      "en": "default value"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "La clé doit être **exactement la même** des deux côtés (majuscules comprises). `putExtra(\"nom\", …)` puis `getStringExtra(\"Nom\")` → **null** → *NullPointerException* plus loin. Bonne pratique : déclarer la clé **une seule fois** en constante : `public static final String EXTRA_NOM = \"nom\";`.",
+    "dar": "Clé khassha tkoun **bdbt nefsha** f jouj jnab (7tta majuscules). `putExtra(\"nom\", …)` w men b3d `getStringExtra(\"Nom\")` → **null** → *NullPointerException* mn b3d. Bonne pratique : declari clé **mra wa7da** f constante : `public static final String EXTRA_NOM = \"nom\";`.",
+    "en": "The key must be **exactly the same** on both sides (case included). `putExtra(\"nom\", …)` then `getStringExtra(\"Nom\")` → **null** → *NullPointerException* later. Good practice: declare the key **once** as a constant: `public static final String EXTRA_NOM = \"nom\";`."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Lire un nombre avec le **mauvais type** ne marche pas : `putExtra(\"age\", 21)` (int) puis `getStringExtra(\"age\")` → **null**. Et `getIntExtra` **exige** une valeur par défaut (2e paramètre).",
+    "dar": "T9ra nombre b **type ghalat** ma kaykhdemch : `putExtra(\"age\", 21)` (int) w men b3d `getStringExtra(\"age\")` → **null**. W `getIntExtra` **khasso** valeur par défaut (paramètre tani).",
+    "en": "Reading a number with the **wrong type** fails: `putExtra(\"age\", 21)` (int) then `getStringExtra(\"age\")` → **null**. And `getIntExtra` **requires** a default value (2nd parameter)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-33",
+    "mob-34",
+    "mob-35"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Revenir et renvoyer un résultat",
+    "dar": "4. Rje3 w rj3 résultat",
+    "en": "4. Going back and returning a result"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Pour **revenir** à A, B appelle `finish()` (ou l'utilisateur appuie sur Retour) : B est détruite et A réapparaît **sans onCreate** (onRestart → onStart → onResume). **Ne relance pas A avec un nouvel Intent** : tu empilerais une deuxième copie de A.\n\nPour que B **renvoie une donnée** à A (ex. le contact choisi comme favori), A lance B avec un **lanceur de résultat** et B répond avec `setResult`.",
+    "dar": "Bach **trje3** l A, B kat3ayet `finish()` (wla user kaybrek 3la Retour) : B katmse7 w A katban **bla onCreate** (onRestart → onStart → onResume). **Ma t3awedch t7el A b Intent jdid** : ghatzid nskha tanya dyal A f l pile.\n\nBach B **trj3 data** l A (b7al contact favori), A kat7el B b **lanceur de résultat** w B katjaweb b `setResult`.",
+    "en": "To **go back** to A, B calls `finish()` (or the user presses Back): B is destroyed and A reappears **without onCreate** (onRestart → onStart → onResume). **Do not restart A with a new Intent**: you would stack a second copy of A.\n\nFor B to **return data** to A (e.g. the contact marked as favourite), A starts B with a **result launcher** and B answers with `setResult`."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "// ---- Dans A (MainActivity) : déclarer le lanceur comme attribut ----\nprivate final ActivityResultLauncher<Intent> lanceur = registerForActivityResult(\n        new ActivityResultContracts.StartActivityForResult(),\n        result -> {\n            if (result.getResultCode() == RESULT_OK && result.getData() != null) {\n                boolean favori = result.getData().getBooleanExtra(\"favori\", false);\n                // mettre à jour l'écran A\n            }\n        });\n\n// au clic : lancer B en attendant une réponse\nlanceur.launch(new Intent(MainActivity.this, DetailActivity.class));\n\n// ---- Dans B (DetailActivity) : répondre puis fermer ----\nIntent data = new Intent();\ndata.putExtra(\"favori\", true);\nsetResult(RESULT_OK, data);\nfinish();",
+   "caption": {
+    "fr": "Renvoyer un résultat de B vers A",
+    "dar": "Rj3 résultat mn B l A",
+    "en": "Returning a result from B to A"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Tu verras encore `startActivityForResult(intent, code)` + `onActivityResult(...)` dans d'anciens cours : c'est l'**ancienne méthode, dépréciée**. Le principe est le même (setResult + finish côté B) ; la version actuelle est `registerForActivityResult`.",
+    "dar": "Ghatchouf mazal `startActivityForResult(intent, code)` + `onActivityResult(...)` f cours 9dam : hadi **tari9a 9dima, dépréciée**. Nefs lfekra (setResult + finish f B) ; version jdida hiya `registerForActivityResult`.",
+    "en": "You will still see `startActivityForResult(intent, code)` + `onActivityResult(...)` in older material: the **old, deprecated** way. Same idea (setResult + finish in B); today's version is `registerForActivityResult`."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Intent implicite : demander une action",
+    "dar": "5. Intent implicite : tleb action",
+    "en": "5. Implicit Intent: asking for an action"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "// ouvrir le composeur avec un numéro (aucune permission nécessaire)\nIntent appel = new Intent(Intent.ACTION_DIAL, Uri.parse(\"tel:0612345678\"));\nstartActivity(appel);\n\n// ouvrir une page web\nIntent web = new Intent(Intent.ACTION_VIEW, Uri.parse(\"https://www.emsi.ma\"));\nstartActivity(web);",
+   "caption": {
+    "fr": "Pas de classe cible : Android choisit l'application",
+    "dar": "Bla classe : Android kaykhtar l'app",
+    "en": "No target class: Android picks the app"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Intent explicite",
+     "dar": "Intent explicite",
+     "en": "Explicit Intent"
+    },
+    {
+     "fr": "Intent implicite",
+     "dar": "Intent implicite",
+     "en": "Implicit Intent"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Cible",
+      "dar": "Cible",
+      "en": "Target"
+     },
+     {
+      "fr": "Une **classe** précise (`DetailActivity.class`)",
+      "dar": "**Classe** m7eddda",
+      "en": "A precise **class**"
+     },
+     {
+      "fr": "Une **action** (`ACTION_DIAL`, `ACTION_VIEW`) + une donnée (Uri)",
+      "dar": "**Action** + Uri",
+      "en": "An **action** + data (Uri)"
+     }
+    ],
+    [
+     {
+      "fr": "Usage",
+      "dar": "Isti3mal",
+      "en": "Use"
+     },
+     {
+      "fr": "Naviguer **dans ton application**",
+      "dar": "Navigation **dakhel l'app dyalek**",
+      "en": "Navigate **within your app**"
+     },
+     {
+      "fr": "Utiliser **une autre application** (téléphone, navigateur, carte…)",
+      "dar": "Tsta3mel **app okhra**",
+      "en": "Use **another app** (phone, browser, map…)"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Question type : « Écrire le code qui ouvre DetailActivity en lui passant le nom d'un contact, puis le code qui le lit. » → **A** : `new Intent(MainActivity.this, DetailActivity.class)`, `putExtra(\"nom\", nom)`, `startActivity(intent)`. **B**, dans onCreate : `getIntent().getStringExtra(\"nom\")`. Sans oublier : **DetailActivity déclarée dans le manifeste**.",
+    "dar": "Sou2al : « Kteb code li kay7el DetailActivity w kaysifet smiyat contact, w code li kay9raha. » → **A** : `new Intent(MainActivity.this, DetailActivity.class)`, `putExtra(\"nom\", nom)`, `startActivity(intent)`. **B**, f onCreate : `getIntent().getStringExtra(\"nom\")`. W ma tnsach : **DetailActivity mdeclariya f manifeste**.",
+    "en": "Typical question: \"Write the code that opens DetailActivity passing a contact name, then the code that reads it.\" → **A**: `new Intent(MainActivity.this, DetailActivity.class)`, `putExtra(\"nom\", nom)`, `startActivity(intent)`. **B**, in onCreate: `getIntent().getStringExtra(\"nom\")`. And: **DetailActivity declared in the manifest**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-36",
+    "mob-37",
+    "mob-38"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Intent explicite : new Intent(ContexteActuel.this, Cible.class) puis startActivity(intent). La cible doit être déclarée dans le manifeste.",
+   "dar": "new Intent(A.this, B.class) + startActivity ; B f manifeste.",
+   "en": "Explicit Intent: new Intent(Current.this, Target.class) then startActivity; target declared in the manifest."
+  },
+  {
+   "fr": "putExtra(clé, valeur) dans A ; getIntent().getStringExtra(clé) / getIntExtra(clé, défaut) dans onCreate de B — même clé, même type.",
+   "dar": "putExtra / getXxxExtra b nefs clé w type.",
+   "en": "putExtra in A; getIntent().getXxxExtra in B's onCreate — same key, same type."
+  },
+  {
+   "fr": "Clé absente : getStringExtra renvoie null, getIntExtra renvoie la valeur par défaut.",
+   "dar": "Clé ma kaynach : null / défaut.",
+   "en": "Missing key: null for String, default for int."
+  },
+  {
+   "fr": "Revenir : finish() (A revient sans onCreate). Renvoyer une donnée : setResult(RESULT_OK, data) + finish() dans B, registerForActivityResult dans A.",
+   "dar": "finish() ; setResult + registerForActivityResult.",
+   "en": "Back: finish(). Result: setResult + finish in B, registerForActivityResult in A."
+  },
+  {
+   "fr": "Intent implicite = une action (ACTION_DIAL, ACTION_VIEW) + Uri ; Android choisit l'application.",
+   "dar": "Implicite = action + Uri.",
+   "en": "Implicit Intent = action + Uri; Android picks the app."
+  }
+ ]
+}

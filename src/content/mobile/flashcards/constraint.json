@@ -1,0 +1,77 @@
+[
+ {
+  "id": "fc-mob-40",
+  "module": "mobile",
+  "chapter": "constraint",
+  "front": {
+   "fr": "Lire X_toYOf ?",
+   "dar": "T9ra X_toYOf ?",
+   "en": "Read X_toYOf?"
+  },
+  "back": {
+   "fr": "« Mon côté X est attaché au côté Y de la cible. »",
+   "dar": "Jenb X dyali → jenb Y dyal cible.",
+   "en": "\"My side X → target side Y.\""
+  }
+ },
+ {
+  "id": "fc-mob-41",
+  "module": "mobile",
+  "chapter": "constraint",
+  "front": {
+   "fr": "Contraintes minimales ?",
+   "dar": "A9all contraintes ?",
+   "en": "Minimum constraints?"
+  },
+  "back": {
+   "fr": "Une horizontale + une verticale ; sinon la vue saute en (0, 0).",
+   "dar": "Horizontale + verticale.",
+   "en": "One horizontal + one vertical."
+  }
+ },
+ {
+  "id": "fc-mob-42",
+  "module": "mobile",
+  "chapter": "constraint",
+  "front": {
+   "fr": "Un côté / deux côtés / 0dp ?",
+   "dar": "Jenb / jouj / 0dp ?",
+   "en": "One side / two / 0dp?"
+  },
+  "back": {
+   "fr": "Collée / centrée (biais 0,5) / étirée.",
+   "dar": "Lsse9a / west / mtmedda.",
+   "en": "Stuck / centred / stretched."
+  }
+ },
+ {
+  "id": "fc-mob-43",
+  "module": "mobile",
+  "chapter": "constraint",
+  "front": {
+   "fr": "Marge sans contrainte ?",
+   "dar": "Marge bla contrainte ?",
+   "en": "Margin without constraint?"
+  },
+  "back": {
+   "fr": "Ignorée : elle n'agit que du côté contraint.",
+   "dar": "Kat-ignora.",
+   "en": "Ignored."
+  }
+ },
+ {
+  "id": "fc-mob-44",
+  "module": "mobile",
+  "chapter": "constraint",
+  "front": {
+   "fr": "Start/End ou Left/Right ?",
+   "dar": "Start/End wla Left/Right ?",
+   "en": "Start/End or Left/Right?"
+  },
+  "back": {
+   "fr": "Start/End : s'inversent en arabe (RTL).",
+   "dar": "Start/End.",
+   "en": "Start/End: flip in RTL."
+  }
+ }
+]

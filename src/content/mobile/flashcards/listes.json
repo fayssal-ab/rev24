@@ -1,0 +1,92 @@
+[
+ {
+  "id": "fc-mob-50",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "Adaptateur ?",
+   "dar": "Adaptateur ?",
+   "en": "Adapter?"
+  },
+  "back": {
+   "fr": "Pont données ↔ liste : nombre, création et remplissage des lignes.",
+   "dar": "L9ent ra data ↔ liste.",
+   "en": "Data ↔ list bridge."
+  }
+ },
+ {
+  "id": "fc-mob-51",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "ListView en 2 lignes ?",
+   "dar": "ListView f 2 sstour ?",
+   "en": "ListView in 2 lines?"
+  },
+  "back": {
+   "fr": "new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, liste) puis setAdapter.",
+   "dar": "ArrayAdapter + setAdapter.",
+   "en": "ArrayAdapter + setAdapter."
+  }
+ },
+ {
+  "id": "fc-mob-52",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "Les 3 méthodes de RecyclerView.Adapter ?",
+   "dar": "3 méthodes ?",
+   "en": "The 3 adapter methods?"
+  },
+  "back": {
+   "fr": "onCreateViewHolder (créer/gonfler une ligne), onBindViewHolder (la remplir pour une position), getItemCount (nombre).",
+   "dar": "Create / Bind / Count.",
+   "en": "Create / Bind / Count."
+  }
+ },
+ {
+  "id": "fc-mob-53",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "ViewHolder ?",
+   "dar": "ViewHolder ?",
+   "en": "ViewHolder?"
+  },
+  "back": {
+   "fr": "Garde les vues d'une ligne (findViewById une seule fois) ; c'est lui qui est recyclé.",
+   "dar": "Kay7fed vues dyal ligne.",
+   "en": "Holds a row's views; it is recycled."
+  }
+ },
+ {
+  "id": "fc-mob-54",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "RecyclerView vide ?",
+   "dar": "RecyclerView khawi ?",
+   "en": "Empty RecyclerView?"
+  },
+  "back": {
+   "fr": "setLayoutManager oublié, getItemCount = 0, ou données vides.",
+   "dar": "LayoutManager / 0 / khawya.",
+   "en": "No LayoutManager / 0 / empty data."
+  }
+ },
+ {
+  "id": "fc-mob-55",
+  "module": "mobile",
+  "chapter": "listes",
+  "front": {
+   "fr": "Mettre à jour ?",
+   "dar": "Mise à jour ?",
+   "en": "Update?"
+  },
+  "back": {
+   "fr": "Modifier la liste puis notifyItemInserted/Removed/Changed (ou notifyDataSetChanged).",
+   "dar": "Beddel + notify.",
+   "en": "Change then notify."
+  }
+ }
+]

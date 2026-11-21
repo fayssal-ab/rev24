@@ -28,5 +28,8 @@ export const ANIMATIONS: Record<string, Anim> = {
   GraphAlgo: lazy(() => import('./ro/GraphAlgo')),
   ScreenFilesFlow: lazy(() => import('./mobile/ScreenFilesFlow')),
   ActivityLifecycle: lazy(() => import('./mobile/ActivityLifecycle')),
-  AndroidUnits: lazy(() => import('./mobile/AndroidUnits'))
+  AndroidUnits: lazy(() => import('./mobile/AndroidUnits')),
+  NavigationFlow: lazy(() => import('./mobile/NavigationFlow')),
+  ConstraintReader: lazy(() => import('./mobile/ConstraintReader')),
+  RecyclerSim: lazy(() => import('./mobile/RecyclerSim'))
 };

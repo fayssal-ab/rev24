@@ -1,0 +1,583 @@
+{
+ "id": "listes",
+ "module": "mobile",
+ "order": 6,
+ "title": {
+  "fr": "Listes : ListView, RecyclerView et adaptateurs",
+  "dar": "Les listes : ListView, RecyclerView w adaptateurs",
+  "en": "Lists: ListView, RecyclerView and adapters"
+ },
+ "summary": {
+  "fr": "Le rôle de l'adaptateur entre les données et la liste, ListView avec ArrayAdapter (et le clic sur un élément), puis RecyclerView : layout d'une ligne, ViewHolder, les trois méthodes de l'adaptateur, LayoutManager, recyclage des vues, clic et mise à jour (notify…). Comparaison ListView / RecyclerView.",
+  "dar": "Dor dyal adaptateur bin data w liste, ListView b ArrayAdapter (w click 3la élément), w men b3d RecyclerView : layout dyal ligne, ViewHolder, tlata d méthodes dyal adaptateur, LayoutManager, recyclage, click w mise à jour (notify…). Mo9arana ListView / RecyclerView.",
+  "en": "The adapter's role between data and list, ListView with ArrayAdapter (and item clicks), then RecyclerView: row layout, ViewHolder, the adapter's three methods, LayoutManager, view recycling, clicks and updates (notify…). ListView vs RecyclerView."
+ },
+ "estimatedMinutes": 55,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Le problème : afficher une liste de données",
+    "dar": "1. Lmochkil : nwerriw liste dyal data",
+    "en": "1. The problem: showing a list of data"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Une application de contacts peut avoir 3 contacts ou 1000. Impossible d'écrire 1000 TextView dans le XML : la liste est **dynamique**. On utilise donc une **vue de liste** (ListView ou RecyclerView) et un **adaptateur** qui fabrique une ligne par donnée.",
+    "dar": "App dyal contacts t9der ykoun fiha 3 contacts wla 1000. Ma ymkench tkteb 1000 TextView f XML : liste **dynamique**. Donc kansta3mlou **vue de liste** (ListView wla RecyclerView) w **adaptateur** li kaysayb ligne l kol data.",
+    "en": "A contacts app may hold 3 contacts or 1000. You cannot write 1000 TextViews in XML: the list is **dynamic**. So we use a **list view** (ListView or RecyclerView) and an **adapter** that builds one row per data item."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Un **adaptateur** (*Adapter*) est le **pont entre les données et la liste** : il sait **combien** d'éléments il y a, il **crée la vue** d'une ligne (à partir d'un layout de ligne) et il la **remplit** avec les données de la position demandée.",
+    "dar": "**Adaptateur** (*Adapter*) howa **l9ent ra bin data w liste** : kay3ref **ch7al** mn élément kayn, kay**sayb vue** dyal ligne (mn layout dyal ligne) w kay**3mmerha** b data dyal position li tlebna.",
+    "en": "An **adapter** is the **bridge between the data and the list**: it knows **how many** items there are, **creates the view** of a row (from a row layout) and **fills** it with the data at the requested position."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "text",
+   "code": "  Données                 Adaptateur                      Vue de liste\n  ArrayList<Contact>  -->  combien ? crée ? remplit ?  -->  ListView / RecyclerView\n  [Sara, Youssef, ...]     (une ligne = item_contact.xml)   (affiche les lignes)",
+   "caption": {
+    "fr": "Les trois acteurs",
+    "dar": "Tlata d les acteurs",
+    "en": "The three actors"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "La liste est une **vitrine**, les données sont le **stock** dans l'entrepôt, et l'adaptateur est le **vendeur** qui va chercher chaque article et le pose dans la vitrine au bon endroit.",
+    "dar": "Liste hiya **vitrine**, data hiya **sel3a** f l makhzen, w adaptateur howa **l bya3** li kayjib kol sel3a w kay7ettha f vitrine f blastha.",
+    "en": "The list is a **shop window**, the data is the **stock** in the warehouse, and the adapter is the **assistant** who fetches each item and places it in the window."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. ListView avec ArrayAdapter",
+    "dar": "2. ListView b ArrayAdapter",
+    "en": "2. ListView with ArrayAdapter"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<ListView\n    android:id=\"@+id/liste\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\" />",
+   "caption": {
+    "fr": "activity_main.xml",
+    "dar": "activity_main.xml",
+    "en": "activity_main.xml"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class MainActivity extends AppCompatActivity {\n    private final ArrayList<String> noms = new ArrayList<>();\n    private ArrayAdapter<String> adapter;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n\n        noms.add(\"Sara\");\n        noms.add(\"Youssef\");\n        noms.add(\"Imane\");\n\n        ListView liste = findViewById(R.id.liste);\n        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms);\n        liste.setAdapter(adapter);\n\n        // clic sur un élément : ouvrir le détail\n        liste.setOnItemClickListener((parent, view, position, id) -> {\n            Intent intent = new Intent(MainActivity.this, DetailActivity.class);\n            intent.putExtra(\"nom\", noms.get(position));\n            startActivity(intent);\n        });\n    }\n\n    private void ajouter(String nom) {\n        noms.add(nom);\n        adapter.notifyDataSetChanged();   // prévenir la liste que les données ont changé\n    }\n}",
+   "caption": {
+    "fr": "MainActivity.java : une ListView de noms",
+    "dar": "MainActivity.java : ListView dyal smiyat",
+    "en": "MainActivity.java: a ListView of names"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Lire ce code",
+    "dar": "9ra had code",
+    "en": "Reading this code"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "new ArrayAdapter<>(this, layout, noms)",
+      "dar": "new ArrayAdapter<>(...)",
+      "en": "new ArrayAdapter<>(...)"
+     },
+     "body": {
+      "fr": "Trois paramètres : le **contexte**, le **layout d'une ligne** et la **liste de données**. `android.R.layout.simple_list_item_1` est un layout **fourni par Android** (préfixe `android.R`) qui contient un seul TextView ; ArrayAdapter y écrit le `toString()` de chaque élément.",
+      "dar": "Tlata d paramètres : **contexte**, **layout dyal ligne** w **liste dyal data**. `android.R.layout.simple_list_item_1` layout **3tah Android** (préfixe `android.R`) fih TextView wa7ed ; ArrayAdapter kaykteb fih `toString()` dyal kol élément.",
+      "en": "Three parameters: the **context**, the **row layout** and the **data list**. `android.R.layout.simple_list_item_1` is a layout **provided by Android** (`android.R` prefix) holding one TextView; ArrayAdapter writes each item's `toString()` into it."
+     }
+    },
+    {
+     "title": {
+      "fr": "setAdapter(adapter)",
+      "dar": "setAdapter(adapter)",
+      "en": "setAdapter(adapter)"
+     },
+     "body": {
+      "fr": "On **branche** l'adaptateur sur la ListView. Sans cette ligne, la liste reste vide.",
+      "dar": "Kan**rbtou** adaptateur m3a ListView. Bla had ster, liste katb9a khawya.",
+      "en": "**Plugs** the adapter into the ListView. Without it the list stays empty."
+     }
+    },
+    {
+     "title": {
+      "fr": "setOnItemClickListener",
+      "dar": "setOnItemClickListener",
+      "en": "setOnItemClickListener"
+     },
+     "body": {
+      "fr": "Appelé au clic sur une ligne. Le paramètre **position** est l'indice de l'élément cliqué dans la liste de données : `noms.get(position)`.",
+      "dar": "Kat3ayet f click 3la ligne. Paramètre **position** howa l'indice dyal élément li tclicka f liste : `noms.get(position)`.",
+      "en": "Called when a row is tapped. **position** is the index of the tapped item in the data list: `noms.get(position)`."
+     }
+    },
+    {
+     "title": {
+      "fr": "notifyDataSetChanged()",
+      "dar": "notifyDataSetChanged()",
+      "en": "notifyDataSetChanged()"
+     },
+     "body": {
+      "fr": "Modifier l'ArrayList **ne met pas l'écran à jour tout seul** : il faut prévenir l'adaptateur pour qu'il redessine la liste.",
+      "dar": "Tbeddel ArrayList **ma kaybeddelch l écran bo7do** : khass t9oul l adaptateur bach y3awed yrsem liste.",
+      "en": "Changing the ArrayList **does not refresh the screen by itself**: tell the adapter so it redraws the list."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Une ListView **personnalisée** (photo + nom + téléphone par ligne) demande un adaptateur à soi qui redéfinit `getView(position, convertView, parent)`. Il faut **réutiliser `convertView`** quand il n'est pas null, sinon on recrée une vue à chaque défilement : c'est lent. RecyclerView **impose** ce recyclage, c'est pourquoi on la préfère aujourd'hui.",
+    "dar": "ListView **personnalisée** (photo + smiya + téléphone f kol ligne) khassha adaptateur dyalek li kay3awed ykteb `getView(position, convertView, parent)`. Khass **t3awed tsta3mel `convertView`** ila ma kanch null, sinon katsayb vue jdida f kol défilement : bti2. RecyclerView kat**frred** had recyclage, 3lach kanfeddlouha lyoum.",
+    "en": "A **custom** ListView (photo + name + phone per row) needs your own adapter overriding `getView(position, convertView, parent)`. You must **reuse `convertView`** when it is not null, otherwise a view is rebuilt on every scroll: slow. RecyclerView **enforces** this recycling, which is why it is preferred today."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-50",
+    "mob-51",
+    "mob-52"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. RecyclerView : les quatre pièces",
+    "dar": "3. RecyclerView : rb3a d les pièces",
+    "en": "3. RecyclerView: the four pieces"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Pièce",
+     "dar": "Pièce",
+     "en": "Piece"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    },
+    {
+     "fr": "Fichier",
+     "dar": "Fichier",
+     "en": "File"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Layout d'une ligne**",
+      "dar": "**Layout dyal ligne**",
+      "en": "**Row layout**"
+     },
+     {
+      "fr": "À quoi ressemble **une** ligne",
+      "dar": "Kifach katban ligne **wa7da**",
+      "en": "What **one** row looks like"
+     },
+     {
+      "fr": "`res/layout/item_contact.xml`",
+      "dar": "`res/layout/item_contact.xml`",
+      "en": "`res/layout/item_contact.xml`"
+     }
+    ],
+    [
+     {
+      "fr": "**Modèle**",
+      "dar": "**Modèle**",
+      "en": "**Model**"
+     },
+     {
+      "fr": "Une donnée (un contact)",
+      "dar": "Data wa7da (contact)",
+      "en": "One data item (a contact)"
+     },
+     {
+      "fr": "`Contact.java`",
+      "dar": "`Contact.java`",
+      "en": "`Contact.java`"
+     }
+    ],
+    [
+     {
+      "fr": "**Adaptateur + ViewHolder**",
+      "dar": "**Adaptateur + ViewHolder**",
+      "en": "**Adapter + ViewHolder**"
+     },
+     {
+      "fr": "Crée les lignes et les remplit ; le ViewHolder **garde les vues** d'une ligne (pas de findViewById à chaque fois)",
+      "dar": "Kaysayb lignes w kay3mmerhom ; ViewHolder kay**7fed les vues** dyal ligne (bla findViewById kol mra)",
+      "en": "Creates and fills rows; the ViewHolder **keeps a row's views** (no findViewById each time)"
+     },
+     {
+      "fr": "`ContactAdapter.java`",
+      "dar": "`ContactAdapter.java`",
+      "en": "`ContactAdapter.java`"
+     }
+    ],
+    [
+     {
+      "fr": "**RecyclerView + LayoutManager**",
+      "dar": "**RecyclerView + LayoutManager**",
+      "en": "**RecyclerView + LayoutManager**"
+     },
+     {
+      "fr": "Affiche les lignes ; le LayoutManager décide **comment** les disposer (liste verticale, horizontale, grille)",
+      "dar": "Kaywerri lignes ; LayoutManager kay9rer **kifach** y7ethom (verticale, horizontale, grille)",
+      "en": "Shows the rows; the LayoutManager decides **how** (vertical, horizontal, grid)"
+     },
+     {
+      "fr": "`activity_main.xml` + `MainActivity.java`",
+      "dar": "`activity_main.xml` + `MainActivity.java`",
+      "en": "`activity_main.xml` + `MainActivity.java`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "xml",
+   "code": "<!-- res/layout/item_contact.xml : UNE ligne -->\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"wrap_content\"\n    android:orientation=\"vertical\"\n    android:padding=\"12dp\">\n\n    <TextView\n        android:id=\"@+id/item_nom\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:textSize=\"18sp\" />\n\n    <TextView\n        android:id=\"@+id/item_tel\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:textSize=\"14sp\" />\n</LinearLayout>",
+   "caption": {
+    "fr": "Hauteur wrap_content : sinon chaque ligne prendrait tout l'écran",
+    "dar": "Tol wrap_content : sinon kol ligne takhod l écran kaml",
+    "en": "Height wrap_content: otherwise each row fills the screen"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class Contact {\n    private final String nom;\n    private final String telephone;\n\n    public Contact(String nom, String telephone) {\n        this.nom = nom;\n        this.telephone = telephone;\n    }\n    public String getNom() { return nom; }\n    public String getTelephone() { return telephone; }\n}",
+   "caption": {
+    "fr": "Contact.java : le modèle",
+    "dar": "Contact.java : modèle",
+    "en": "Contact.java: the model"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {\n\n    private final List<Contact> contacts;\n\n    public ContactAdapter(List<Contact> contacts) {\n        this.contacts = contacts;\n    }\n\n    // 1. garde les vues d'UNE ligne\n    static class ContactViewHolder extends RecyclerView.ViewHolder {\n        final TextView nom, tel;\n        ContactViewHolder(View itemView) {\n            super(itemView);\n            nom = itemView.findViewById(R.id.item_nom);\n            tel = itemView.findViewById(R.id.item_tel);\n        }\n    }\n\n    // 2. créer une ligne (appelée seulement quand il n'y a pas de ligne à recycler)\n    @Override\n    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {\n        View v = LayoutInflater.from(parent.getContext())\n                .inflate(R.layout.item_contact, parent, false);\n        return new ContactViewHolder(v);\n    }\n\n    // 3. remplir une ligne avec les données de la position\n    @Override\n    public void onBindViewHolder(ContactViewHolder holder, int position) {\n        Contact c = contacts.get(position);\n        holder.nom.setText(c.getNom());\n        holder.tel.setText(c.getTelephone());\n        holder.itemView.setOnClickListener(v -> {\n            Intent intent = new Intent(v.getContext(), DetailActivity.class);\n            intent.putExtra(\"nom\", c.getNom());\n            v.getContext().startActivity(intent);\n        });\n    }\n\n    // 4. combien de lignes\n    @Override\n    public int getItemCount() {\n        return contacts.size();\n    }\n}",
+   "caption": {
+    "fr": "ContactAdapter.java : l'adaptateur et son ViewHolder",
+    "dar": "ContactAdapter.java : adaptateur w ViewHolder",
+    "en": "ContactAdapter.java: the adapter and its ViewHolder"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "// activity_main.xml\n<androidx.recyclerview.widget.RecyclerView\n    android:id=\"@+id/recycler\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\" />\n\n// MainActivity.onCreate()\nList<Contact> contacts = new ArrayList<>();\ncontacts.add(new Contact(\"Sara\", \"0612345678\"));\ncontacts.add(new Contact(\"Youssef\", \"0698765432\"));\n\nRecyclerView recycler = findViewById(R.id.recycler);\nrecycler.setLayoutManager(new LinearLayoutManager(this));   // obligatoire\nrecycler.setAdapter(new ContactAdapter(contacts));",
+   "caption": {
+    "fr": "Brancher le RecyclerView dans l'Activity",
+    "dar": "Rbet RecyclerView f Activity",
+    "en": "Wiring the RecyclerView in the Activity"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Méthode",
+     "dar": "Méthode",
+     "en": "Method"
+    },
+    {
+     "fr": "Quand Android l'appelle",
+     "dar": "Imta Android kay3ayet 3liha",
+     "en": "When Android calls it"
+    },
+    {
+     "fr": "Ce qu'elle fait",
+     "dar": "Chnou kadir",
+     "en": "What it does"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "`getItemCount()`",
+      "dar": "`getItemCount()`",
+      "en": "`getItemCount()`"
+     },
+     {
+      "fr": "Pour savoir combien de lignes afficher",
+      "dar": "Bach y3ref ch7al mn ligne",
+      "en": "To know how many rows"
+     },
+     {
+      "fr": "Renvoie `contacts.size()`",
+      "dar": "Katrj3 `contacts.size()`",
+      "en": "Returns `contacts.size()`"
+     }
+    ],
+    [
+     {
+      "fr": "`onCreateViewHolder()`",
+      "dar": "`onCreateViewHolder()`",
+      "en": "`onCreateViewHolder()`"
+     },
+     {
+      "fr": "Quand il faut une **nouvelle** ligne (aucune à recycler) — quelques fois seulement",
+      "dar": "Mli khass ligne **jdida** (ma kayn ma y-recyclé) — chi mrat bach",
+      "en": "When a **new** row is needed (none to recycle) — only a few times"
+     },
+     {
+      "fr": "**Gonfle** (`inflate`) item_contact.xml et crée le ViewHolder",
+      "dar": "Kat**inflati** item_contact.xml w katsayb ViewHolder",
+      "en": "**Inflates** item_contact.xml and creates the ViewHolder"
+     }
+    ],
+    [
+     {
+      "fr": "`onBindViewHolder()`",
+      "dar": "`onBindViewHolder()`",
+      "en": "`onBindViewHolder()`"
+     },
+     {
+      "fr": "À **chaque** ligne qui devient visible (y compris une ligne recyclée)",
+      "dar": "F **kol** ligne li katban (7tta li m-recycliya)",
+      "en": "For **every** row that becomes visible (recycled ones too)"
+     },
+     {
+      "fr": "**Remplit** les vues du holder avec `contacts.get(position)`",
+      "dar": "Kat**3mmer** vues dyal holder b `contacts.get(position)`",
+      "en": "**Fills** the holder views with `contacts.get(position)`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "RecyclerSim"
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Les trois oublis qui donnent un **écran vide** : (1) pas de `setLayoutManager(...)` (Logcat : *No layout manager attached; skipping layout*) ; (2) `getItemCount()` qui renvoie **0** (méthode générée par Android Studio non modifiée) ; (3) liste de données vide. Et `inflate(R.layout.item_contact, parent, **true**)` fait planter : le 3e paramètre doit être **false**, c'est le RecyclerView qui ajoute la ligne.",
+    "dar": "Tlata d l7wayej li ila nsitihom l écran kayb9a **khawi** : (1) ma kaynch `setLayoutManager(...)` (Logcat : *No layout manager attached; skipping layout*) ; (2) `getItemCount()` katrj3 **0** (méthode li sayeb Android Studio w ma beddeltihach) ; (3) liste dyal data khawya. W `inflate(R.layout.item_contact, parent, **true**)` katplanti : paramètre talet khasso **false**, RecyclerView howa li kayzid ligne.",
+    "en": "The three omissions that give an **empty screen**: (1) no `setLayoutManager(...)` (Logcat: *No layout manager attached; skipping layout*); (2) `getItemCount()` returning **0** (the Android Studio stub left unchanged); (3) empty data list. And `inflate(R.layout.item_contact, parent, **true**)` crashes: the 3rd parameter must be **false**, the RecyclerView adds the row itself."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-53",
+    "mob-54",
+    "mob-55"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Mettre à jour la liste",
+    "dar": "4. Mise à jour dyal liste",
+    "en": "4. Updating the list"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "// ajouter à la fin\ncontacts.add(new Contact(\"Omar\", \"0611223344\"));\nadapter.notifyItemInserted(contacts.size() - 1);\n\n// supprimer la ligne 2\ncontacts.remove(2);\nadapter.notifyItemRemoved(2);\n\n// modifier la ligne 0\nadapter.notifyItemChanged(0);\n\n// tout a changé (plus lourd, sans animation)\nadapter.notifyDataSetChanged();",
+   "caption": {
+    "fr": "Toujours : modifier la liste, PUIS notifier l'adaptateur",
+    "dar": "Dima : beddel liste, W MEN B3D 9oul l adaptateur",
+    "en": "Always: change the list, THEN notify the adapter"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Garde l'adaptateur dans un **attribut** de l'Activity (`private ContactAdapter adapter;`) pour pouvoir le notifier plus tard. Les méthodes précises (`notifyItemInserted/Removed/Changed`) animent seulement la ligne concernée ; `notifyDataSetChanged()` redessine tout.",
+    "dar": "7fed adaptateur f **attribut** dyal Activity (`private ContactAdapter adapter;`) bach t9der t-notifyih mn b3d. Les méthodes précises (`notifyItemInserted/Removed/Changed`) kat-animi ghir ligne l m3niya ; `notifyDataSetChanged()` kay3awed yrsem kolchi.",
+    "en": "Keep the adapter in an Activity **field** (`private ContactAdapter adapter;`) so you can notify it later. The precise methods (`notifyItemInserted/Removed/Changed`) animate only that row; `notifyDataSetChanged()` redraws everything."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. ListView ou RecyclerView ?",
+    "dar": "5. ListView wla RecyclerView ?",
+    "en": "5. ListView or RecyclerView?"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "ListView",
+     "dar": "ListView",
+     "en": "ListView"
+    },
+    {
+     "fr": "RecyclerView",
+     "dar": "RecyclerView",
+     "en": "RecyclerView"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Recyclage des vues",
+      "dar": "Recyclage",
+      "en": "View recycling"
+     },
+     {
+      "fr": "Possible mais **à la main** (`convertView`)",
+      "dar": "Momkin walakin **b yeddek** (`convertView`)",
+      "en": "Possible but **manual** (`convertView`)"
+     },
+     {
+      "fr": "**Imposé** par le ViewHolder",
+      "dar": "**Mfrouḍ** b ViewHolder",
+      "en": "**Enforced** by the ViewHolder"
+     }
+    ],
+    [
+     {
+      "fr": "Disposition",
+      "dar": "Disposition",
+      "en": "Layout"
+     },
+     {
+      "fr": "Liste **verticale** uniquement",
+      "dar": "Ghir **verticale**",
+      "en": "**Vertical** only"
+     },
+     {
+      "fr": "**LayoutManager** : `LinearLayoutManager` (vertical ou horizontal), `GridLayoutManager` (grille)",
+      "dar": "**LayoutManager** : verticale, horizontale, grille",
+      "en": "**LayoutManager**: vertical, horizontal, grid"
+     }
+    ],
+    [
+     {
+      "fr": "Clic sur un élément",
+      "dar": "Click",
+      "en": "Item click"
+     },
+     {
+      "fr": "`setOnItemClickListener` intégré",
+      "dar": "`setOnItemClickListener` mojoud",
+      "en": "Built-in `setOnItemClickListener`"
+     },
+     {
+      "fr": "À coder soi-même (ex. dans `onBindViewHolder`)",
+      "dar": "Khassek tktebha (f `onBindViewHolder`)",
+      "en": "Write it yourself (e.g. in `onBindViewHolder`)"
+     }
+    ],
+    [
+     {
+      "fr": "Mise à jour",
+      "dar": "Mise à jour",
+      "en": "Updates"
+     },
+     {
+      "fr": "`notifyDataSetChanged()`",
+      "dar": "`notifyDataSetChanged()`",
+      "en": "`notifyDataSetChanged()`"
+     },
+     {
+      "fr": "`notifyItemInserted/Removed/Changed` + animations",
+      "dar": "notifyItem… + animations",
+      "en": "notifyItem… + animations"
+     }
+    ],
+    [
+     {
+      "fr": "Mise en place",
+      "dar": "Mise en place",
+      "en": "Setup"
+     },
+     {
+      "fr": "Rapide (ArrayAdapter en 2 lignes)",
+      "dar": "Sari3 (ArrayAdapter f 2 sstour)",
+      "en": "Quick (ArrayAdapter in 2 lines)"
+     },
+     {
+      "fr": "Plus de code (modèle, layout de ligne, adaptateur, ViewHolder)",
+      "dar": "Code ktar",
+      "en": "More code"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Questions classiques : « Rôle d'un adaptateur ? » → **pont entre les données et la liste : nombre d'éléments, création et remplissage des lignes**. « Les 3 méthodes d'un RecyclerView.Adapter ? » → **onCreateViewHolder (créer/gonfler une ligne), onBindViewHolder (la remplir pour une position), getItemCount (nombre)**. « Pourquoi RecyclerView ? » → **recyclage imposé des ViewHolder : seules les lignes visibles existent en mémoire**, plus LayoutManager flexible.",
+    "dar": "Les questions classiques : « Dor dyal adaptateur ? » → **l9ent ra bin data w liste : 3adad, création w remplissage dyal lignes**. « 3 méthodes dyal RecyclerView.Adapter ? » → **onCreateViewHolder (tsayb/tinflati ligne), onBindViewHolder (t3mmerha l position), getItemCount (3adad)**. « 3lach RecyclerView ? » → **recyclage mfroud dyal ViewHolder : ghir lignes li bayna kaynin f mémoire**, w LayoutManager flexible.",
+    "en": "Classic questions: \"Adapter's role?\" → **bridge between data and list: item count, creating and filling rows**. \"The 3 methods of a RecyclerView.Adapter?\" → **onCreateViewHolder (create/inflate a row), onBindViewHolder (fill it for a position), getItemCount (count)**. \"Why RecyclerView?\" → **enforced ViewHolder recycling: only visible rows live in memory**, plus a flexible LayoutManager."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-56",
+    "mob-57",
+    "mob-58"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Adaptateur = pont données ↔ liste : combien d'éléments, créer une ligne, la remplir pour une position.",
+   "dar": "Adaptateur = l9ent ra data ↔ liste.",
+   "en": "Adapter = data ↔ list bridge: count, create, fill."
+  },
+  {
+   "fr": "ListView : new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, liste) + setAdapter ; clic : setOnItemClickListener(position).",
+   "dar": "ArrayAdapter + setAdapter + setOnItemClickListener.",
+   "en": "ArrayAdapter + setAdapter + setOnItemClickListener."
+  },
+  {
+   "fr": "RecyclerView : layout de ligne + modèle + Adapter/ViewHolder (onCreateViewHolder, onBindViewHolder, getItemCount) + setLayoutManager + setAdapter.",
+   "dar": "4 pièces + 3 méthodes.",
+   "en": "4 pieces + 3 methods."
+  },
+  {
+   "fr": "Recyclage : seules les lignes visibles ont un ViewHolder ; en défilant, onBindViewHolder remplit les holders réutilisés.",
+   "dar": "Ghir lignes bayna ; onBind kay3awed y3mmer.",
+   "en": "Only visible rows have holders; onBind refills them."
+  },
+  {
+   "fr": "Écran vide : pas de LayoutManager, getItemCount = 0 ou données vides. Après modification : notifyItemInserted/Removed/Changed ou notifyDataSetChanged.",
+   "dar": "LayoutManager, getItemCount, notify.",
+   "en": "Empty: no LayoutManager / count 0. Then notify…."
+  }
+ ]
+}

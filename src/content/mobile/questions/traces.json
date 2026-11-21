@@ -1,0 +1,121 @@
+[
+ {
+  "id": "mob-60",
+  "module": "mobile",
+  "chapter": "traces",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "`compteur` (attribut, 0 au départ) est incrémenté dans onResume. Après lancement puis rotation, que vaut compteur ?",
+   "dar": "compteur++ f onResume. Mor lancement w rotation ?",
+   "en": "Counter incremented in onResume. After launch then rotation?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "1",
+     "dar": "1",
+     "en": "1"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "2",
+     "dar": "2",
+     "en": "2"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "La rotation crée une **nouvelle instance** : compteur repart à 0 puis onResume → 1.",
+   "dar": "Instance jdida → 0 → 1.",
+   "en": "New instance → 0 → 1."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce serait vrai sans destruction (retour depuis Accueil).",
+    "dar": "Bla destruction.",
+    "en": "Only without destruction."
+   },
+   "c": {
+    "fr": "onResume est appelée après la recréation.",
+    "dar": "onResume kat3ayet.",
+    "en": "onResume runs after recreation."
+   }
+  },
+  "tags": [
+   "trace"
+  ]
+ },
+ {
+  "id": "mob-61",
+  "module": "mobile",
+  "chapter": "traces",
+  "difficulty": 3,
+  "kind": "order",
+  "prompt": {
+   "fr": "A (au premier plan) ouvre B. Trace des Log.d placés dans onPause, onCreate, onResume, onStop.",
+   "dar": "A kat7el B : trace.",
+   "en": "A opens B: trace."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "A.onPause",
+     "dar": "A.onPause",
+     "en": "A.onPause"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "B.onCreate",
+     "dar": "B.onCreate",
+     "en": "B.onCreate"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "B.onResume",
+     "dar": "B.onResume",
+     "en": "B.onResume"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "A.onStop",
+     "dar": "A.onStop",
+     "en": "A.onStop"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "A perd le premier plan, B se crée et devient interactive, puis A n'est plus visible.",
+   "dar": "A.onPause → B → A.onStop.",
+   "en": "A.onPause → B → A.onStop."
+  },
+  "tags": [
+   "trace"
+  ]
+ }
+]

@@ -1,0 +1,575 @@
+[
+ {
+  "id": "mob-50",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel est le rôle d'un **adaptateur** ?",
+   "dar": "Chnou dor dyal **adaptateur** ?",
+   "en": "What is an **adapter**'s role?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Faire le pont entre les données et la liste : nombre d'éléments, création et remplissage des lignes",
+     "dar": "L9ent ra bin data w liste",
+     "en": "Bridge data and list: count, create and fill rows"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Stocker les données dans une base",
+     "dar": "Y7fed data f base",
+     "en": "Store data in a database"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Déclarer la liste dans le manifeste",
+     "dar": "Declari liste f manifeste",
+     "en": "Declare the list in the manifest"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "L'adaptateur sait **combien** il y a d'éléments, **crée** la vue d'une ligne et la **remplit** pour une position.",
+   "dar": "3adad, création, remplissage.",
+   "en": "Count, create, fill."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il lit des données déjà en mémoire.",
+    "dar": "Data deja kayna.",
+    "en": "It reads data already in memory."
+   },
+   "c": {
+    "fr": "Les listes ne se déclarent pas dans le manifeste.",
+    "dar": "Machi f manifeste.",
+    "en": "Lists are not declared in the manifest."
+   }
+  },
+  "tags": [
+   "adaptateur"
+  ]
+ },
+ {
+  "id": "mob-51",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans `new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, noms)`, le 2e paramètre est…",
+   "dar": "Paramètre tani f ArrayAdapter ?",
+   "en": "In `new ArrayAdapter<>(…)`, the 2nd parameter is…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "le layout d'une ligne, fourni par Android",
+     "dar": "layout dyal ligne mn Android",
+     "en": "the row layout, provided by Android"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "l'id de la ListView",
+     "dar": "id dyal ListView",
+     "en": "the ListView id"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "le nombre de lignes",
+     "dar": "3adad lignes",
+     "en": "the row count"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`android.R.layout.simple_list_item_1` : un layout système avec un TextView ; on y affiche `toString()` de chaque élément.",
+   "dar": "Layout système b TextView.",
+   "en": "A system layout with one TextView."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "L'id sert à findViewById.",
+    "dar": "Id l findViewById.",
+    "en": "The id is for findViewById."
+   },
+   "c": {
+    "fr": "Le nombre vient de la taille de la liste.",
+    "dar": "Mn taille dyal liste.",
+    "en": "Count comes from the list size."
+   }
+  },
+  "tags": [
+   "listview"
+  ]
+ },
+ {
+  "id": "mob-52",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "On ajoute un nom à l'ArrayList, mais la ListView n'affiche rien de nouveau. Il manque…",
+   "dar": "Zedt smiya walakin ListView ma tbeddlatch. Na9es…",
+   "en": "A name is added but the ListView does not change. Missing…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "adapter.notifyDataSetChanged()",
+     "dar": "adapter.notifyDataSetChanged()",
+     "en": "adapter.notifyDataSetChanged()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "liste.setOnItemClickListener(...)",
+     "dar": "setOnItemClickListener",
+     "en": "setOnItemClickListener"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "un nouveau setContentView",
+     "dar": "setContentView jdid",
+     "en": "a new setContentView"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Modifier la liste ne met pas l'écran à jour : il faut **notifier** l'adaptateur.",
+   "dar": "Khass notify.",
+   "en": "You must **notify** the adapter."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça gère les clics.",
+    "dar": "Clics.",
+    "en": "That handles clicks."
+   },
+   "c": {
+    "fr": "Recharger le layout est inutile.",
+    "dar": "Ma kaynfa3ch.",
+    "en": "Reloading the layout is useless."
+   }
+  },
+  "tags": [
+   "listview",
+   "maj"
+  ]
+ },
+ {
+  "id": "mob-53",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 1,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles sont les **3 méthodes à redéfinir** dans un `RecyclerView.Adapter` ?",
+   "dar": "Ach homa **3 méthodes** dyal `RecyclerView.Adapter` ?",
+   "en": "Which are the **3 methods to override** in a `RecyclerView.Adapter`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onCreateViewHolder",
+     "dar": "onCreateViewHolder",
+     "en": "onCreateViewHolder"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onBindViewHolder",
+     "dar": "onBindViewHolder",
+     "en": "onBindViewHolder"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "getItemCount",
+     "dar": "getItemCount",
+     "en": "getItemCount"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "getView",
+     "dar": "getView",
+     "en": "getView"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "onCreate",
+     "dar": "onCreate",
+     "en": "onCreate"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "**onCreateViewHolder** crée une ligne, **onBindViewHolder** la remplit, **getItemCount** donne le nombre.",
+   "dar": "Create / Bind / Count.",
+   "en": "Create / Bind / Count."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "getView est la méthode des adaptateurs de **ListView**.",
+    "dar": "getView = ListView.",
+    "en": "getView is for **ListView** adapters."
+   },
+   "e": {
+    "fr": "onCreate appartient à l'Activity.",
+    "dar": "onCreate = Activity.",
+    "en": "onCreate belongs to the Activity."
+   }
+  },
+  "tags": [
+   "recycler",
+   "methodes"
+  ]
+ },
+ {
+  "id": "mob-54",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Laquelle des 3 méthodes est appelée **à chaque fois** qu'une ligne devient visible, même recyclée ?",
+   "dar": "Ach mn méthode kat3ayet **f kol mra** ligne katban, 7tta m-recycliya ?",
+   "en": "Which method runs **every time** a row becomes visible, even recycled?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "onBindViewHolder(holder, position)",
+     "dar": "onBindViewHolder",
+     "en": "onBindViewHolder"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "onCreateViewHolder(parent, viewType)",
+     "dar": "onCreateViewHolder",
+     "en": "onCreateViewHolder"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "getItemCount()",
+     "dar": "getItemCount",
+     "en": "getItemCount"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "onCreateViewHolder n'est appelée que s'il n'y a **aucune ligne à recycler** ; onBindViewHolder remplit **chaque** ligne affichée.",
+   "dar": "onBind f kol ligne.",
+   "en": "onBind fills every shown row."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Seulement quelques fois (pas de ligne à recycler).",
+    "dar": "Chi mrat bach.",
+    "en": "Only a few times."
+   },
+   "c": {
+    "fr": "Elle donne juste le nombre d'éléments.",
+    "dar": "Ghir 3adad.",
+    "en": "Just the count."
+   }
+  },
+  "tags": [
+   "recycler",
+   "methodes"
+  ]
+ },
+ {
+  "id": "mob-55",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "kind": "order",
+  "prompt": {
+   "fr": "Mettre en place un RecyclerView dans onCreate : ordre.",
+   "dar": "Tartib dyal RecyclerView f onCreate.",
+   "en": "Setting up a RecyclerView in onCreate: order."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "setContentView(R.layout.activity_main);",
+     "dar": "setContentView(R.layout.activity_main);",
+     "en": "setContentView(R.layout.activity_main);"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "List<Contact> contacts = … (remplir la liste)",
+     "dar": "List<Contact> contacts = … (remplir la liste)",
+     "en": "List<Contact> contacts = … (remplir la liste)"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "RecyclerView recycler = findViewById(R.id.recycler);",
+     "dar": "RecyclerView recycler = findViewById(R.id.recycler);",
+     "en": "RecyclerView recycler = findViewById(R.id.recycler);"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "recycler.setLayoutManager(new LinearLayoutManager(this));",
+     "dar": "recycler.setLayoutManager(new LinearLayoutManager(this));",
+     "en": "recycler.setLayoutManager(new LinearLayoutManager(this));"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "recycler.setAdapter(new ContactAdapter(contacts));",
+     "dar": "recycler.setAdapter(new ContactAdapter(contacts));",
+     "en": "recycler.setAdapter(new ContactAdapter(contacts));"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Charger l'interface, préparer les données, récupérer le RecyclerView, LayoutManager, puis adaptateur.",
+   "dar": "Interface → data → recycler → LayoutManager → adapter.",
+   "en": "UI → data → recycler → LayoutManager → adapter."
+  },
+  "tags": [
+   "recycler"
+  ]
+ },
+ {
+  "id": "mob-56",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 3,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Le RecyclerView reste **vide**. Causes possibles ?",
+   "dar": "RecyclerView **khawi**. Asbab ?",
+   "en": "The RecyclerView stays **empty**. Possible causes?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Pas de setLayoutManager",
+     "dar": "Bla setLayoutManager",
+     "en": "No setLayoutManager"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "getItemCount() renvoie 0",
+     "dar": "getItemCount() = 0",
+     "en": "getItemCount() returns 0"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La liste de données est vide",
+     "dar": "Liste khawya",
+     "en": "The data list is empty"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le ViewHolder est une classe static",
+     "dar": "ViewHolder static",
+     "en": "The ViewHolder is static"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Les trois oublis classiques. Un ViewHolder `static` est normal (et recommandé).",
+   "dar": "3 classiques.",
+   "en": "The three classics."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "static est correct.",
+    "dar": "static mzyan.",
+    "en": "static is fine."
+   }
+  },
+  "tags": [
+   "recycler",
+   "pieges"
+  ]
+ },
+ {
+  "id": "mob-57",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans onCreateViewHolder, `inflate(R.layout.item_contact, parent, false)` : pourquoi **false** ?",
+   "dar": "3lach **false** f inflate ?",
+   "en": "Why **false** in inflate?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "C'est le RecyclerView qui ajoute la ligne lui-même ; true la rattacherait deux fois et ferait planter",
+     "dar": "RecyclerView howa li kayzid ligne",
+     "en": "The RecyclerView attaches the row itself; true would attach it twice and crash"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Pour cacher la ligne",
+     "dar": "Bach tkhabbi ligne",
+     "en": "To hide the row"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour ne pas créer de ViewHolder",
+     "dar": "Bla ViewHolder",
+     "en": "To avoid a ViewHolder"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`attachToRoot = false` : on gonfle la vue avec les paramètres du parent, sans l'y ajouter.",
+   "dar": "attachToRoot = false.",
+   "en": "`attachToRoot = false`."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "recycler",
+   "pieges"
+  ]
+ },
+ {
+  "id": "mob-58",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel avantage principal a RecyclerView sur ListView ?",
+   "dar": "Chnou ahsan f RecyclerView 3la ListView ?",
+   "en": "Main advantage of RecyclerView over ListView?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Recyclage imposé (ViewHolder) et disposition libre via le LayoutManager",
+     "dar": "Recyclage mfroud + LayoutManager",
+     "en": "Enforced recycling and flexible LayoutManager"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Moins de code à écrire",
+     "dar": "Code 9lil",
+     "en": "Less code"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Un setOnItemClickListener intégré",
+     "dar": "setOnItemClickListener mojoud",
+     "en": "Built-in item click listener"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Seules les lignes visibles ont une vue ; liste, grille ou horizontale selon le LayoutManager.",
+   "dar": "Ghir lignes bayna.",
+   "en": "Only visible rows have views."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Au contraire : plus de code.",
+    "dar": "L3eks.",
+    "en": "The opposite."
+   },
+   "c": {
+    "fr": "C'est ListView qui l'a ; RecyclerView non.",
+    "dar": "ListView 3andha.",
+    "en": "ListView has it, not RecyclerView."
+   }
+  },
+  "tags": [
+   "comparaison"
+  ]
+ }
+]

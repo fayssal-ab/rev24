@@ -168,7 +168,7 @@ export function Tex({ tex, block = false }: { tex: string; block?: boolean }) {
 /** Guesses the language of a code snippet that has none (worked steps, exercise solutions). */
 export function guessLang(code: string, fallback: string): string {
   if (/^\s*(<|\/\/ Dans .*\.xml)/.test(code)) return 'xml';
-  if (/\b(setContentView|findViewById|@Override|R\.(layout|id|string)|public class|protected void|super\.on)\b|@Override/.test(code)) return 'java';
+  if (/\b(setContentView|findViewById|@Override|R\.(layout|id|string)|public class|protected void|super\.on|getIntent|putExtra|startActivity|setResult|new Intent)\b|@Override/.test(code)) return 'java';
   return fallback;
 }
 

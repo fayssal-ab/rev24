@@ -1,0 +1,159 @@
+[
+ {
+  "id": "mob-x-9",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 3,
+  "title": {
+   "fr": "Lire un layout et le dessiner",
+   "dar": "9ra layout w rsmo",
+   "en": "Read and sketch a layout"
+  },
+  "statement": {
+   "fr": "Décris et dessine l'écran : TextView `titre` (Top → parent, Start → parent, End → parent, marginTop 24dp) ; EditText `email` (largeur 0dp, Top → bas de titre, Start → parent, End → parent, marges 16dp) ; EditText `mdp` (largeur 0dp, Top → bas de email, Start → début de email, End → fin de email) ; Button `connexion` (Top → bas de mdp, End → fin de mdp) ; TextView `oubli` (Top → bas de mdp, Start → début de mdp).",
+   "dar": "Wsef w rsem l écran dyal login.",
+   "en": "Describe and sketch this login screen."
+  },
+  "hints": [
+   {
+    "fr": "Pour chaque vue : horizontale, verticale, puis la règle (collée, centrée, étirée).",
+    "dar": "L kol view : horizontale, verticale, règle.",
+    "en": "Per view: horizontal, vertical, rule."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "titre",
+     "dar": "titre",
+     "en": "titre"
+    },
+    "body": {
+     "fr": "Start et End → parent : **centré** ; en haut à 24dp.",
+     "dar": "F lwest, lfo9.",
+     "en": "Centred, at the top."
+    }
+   },
+   {
+    "title": {
+     "fr": "email",
+     "dar": "email",
+     "en": "email"
+    },
+    "body": {
+     "fr": "0dp entre les deux bords (16dp) : **pleine largeur**, sous le titre.",
+     "dar": "L3ard kamel ta7t titre.",
+     "en": "Full width under the title."
+    }
+   },
+   {
+    "title": {
+     "fr": "mdp",
+     "dar": "mdp",
+     "en": "mdp"
+    },
+    "body": {
+     "fr": "0dp entre le début et la fin de email : **même largeur que email**, juste dessous.",
+     "dar": "Nefs l3ard dyal email, ta7to.",
+     "en": "Same width as email, below it."
+    }
+   },
+   {
+    "title": {
+     "fr": "connexion et oubli",
+     "dar": "connexion w oubli",
+     "en": "connexion and oubli"
+    },
+    "body": {
+     "fr": "Tous deux sous mdp : `connexion` **calé à droite** (End → fin de mdp), `oubli` **calé à gauche** (Start → début de mdp), sur la même ligne.",
+     "dar": "Jouj ta7t mdp : connexion limn, oubli lisr.",
+     "en": "Both under mdp: connexion right, oubli left."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Titre centré en haut ; deux champs pleine largeur l'un sous l'autre ; dessous, « mot de passe oublié » à gauche et le bouton connexion à droite.",
+   "dar": "Titre, 2 champs, oubli lisr w bouton limn.",
+   "en": "Centred title, two full-width fields, then forgot-link left and button right."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Centrer `connexion` (il n'a qu'une contrainte horizontale).",
+    "dar": "Centrer connexion.",
+    "en": "Centring connexion."
+   },
+   {
+    "fr": "Donner à mdp la largeur de l'écran au lieu de celle de email (ici c'est pareil grâce aux contraintes, mais il faut le justifier).",
+    "dar": "Mdp = email.",
+    "en": "mdp follows email."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-10",
+  "module": "mobile",
+  "chapter": "constraint",
+  "difficulty": 3,
+  "title": {
+   "fr": "Corriger les contraintes",
+   "dar": "Sse7 contraintes",
+   "en": "Fix the constraints"
+  },
+  "statement": {
+   "fr": "Dans l'éditeur le bouton `valider` apparaît en bas à droite, mais sur le téléphone il est en haut à gauche. Son XML : `layout_marginEnd=\"16dp\"`, `layout_marginBottom=\"16dp\"`, aucune contrainte. Explique et corrige.",
+   "dar": "F éditeur bouton lte7t limn, f téléphone lfo9 lisr. Bla contraintes. Fesser w sse7.",
+   "en": "Bottom-right in the editor, top-left on the phone; no constraints. Explain and fix."
+  },
+  "hints": [
+   {
+    "fr": "Règle 1 et règle 5.",
+    "dar": "Règle 1 w 5.",
+    "en": "Rules 1 and 5."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Explication",
+     "dar": "Charh",
+     "en": "Explanation"
+    },
+    "body": {
+     "fr": "Sans contrainte horizontale ni verticale, la vue est placée en (0, 0) à l'exécution ; la position de l'éditeur n'est qu'un aperçu. Les marges sont ignorées car aucun côté n'est contraint.",
+     "dar": "Bla contraintes → (0, 0) ; marges ignorées.",
+     "en": "No constraints → (0, 0); margins ignored."
+    }
+   },
+   {
+    "title": {
+     "fr": "Correction",
+     "dar": "Correction",
+     "en": "Fix"
+    },
+    "body": {
+     "fr": "Attacher la fin et le bas au parent : les marges deviennent actives.",
+     "dar": "Rbet End w Bottom b parent.",
+     "en": "Attach End and Bottom to the parent."
+    },
+    "code": "<Button\n    android:id=\"@+id/valider\"\n    android:layout_width=\"wrap_content\"\n    android:layout_height=\"wrap_content\"\n    android:layout_marginEnd=\"16dp\"\n    android:layout_marginBottom=\"16dp\"\n    android:text=\"@string/valider\"\n    app:layout_constraintEnd_toEndOf=\"parent\"\n    app:layout_constraintBottom_toBottomOf=\"parent\" />"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Ajouter End_toEndOf=\"parent\" et Bottom_toBottomOf=\"parent\".",
+   "dar": "End + Bottom → parent.",
+   "en": "Add End and Bottom → parent."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Ajouter seulement des marges plus grandes.",
+    "dar": "Ghir marges.",
+    "en": "Only adding bigger margins."
+   },
+   {
+    "fr": "Ajouter Start ET End : le bouton serait centré, pas à droite.",
+    "dar": "Start w End = f lwest.",
+    "en": "Start AND End would centre it."
+   }
+  ]
+ }
+]

@@ -1,0 +1,156 @@
+[
+ {
+  "id": "mob-x-11",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 3,
+  "title": {
+   "fr": "Écrire les 3 méthodes d'un RecyclerView.Adapter",
+   "dar": "Kteb 3 méthodes dyal RecyclerView.Adapter",
+   "en": "Write a RecyclerView.Adapter's 3 methods"
+  },
+  "statement": {
+   "fr": "On a `List<Produit> produits` (getNom(), getPrix()) et le layout `item_produit.xml` avec deux TextView `item_nom` et `item_prix`. Le ViewHolder `ProduitViewHolder` est déjà écrit (champs `nom` et `prix`). Écris onCreateViewHolder, onBindViewHolder et getItemCount.",
+   "dar": "Kteb 3 méthodes l produits.",
+   "en": "Write the 3 methods for products."
+  },
+  "hints": [
+   {
+    "fr": "Create = inflate + new ViewHolder ; Bind = get(position) + setText ; Count = size().",
+    "dar": "Create / Bind / Count.",
+    "en": "Create / Bind / Count."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "onCreateViewHolder",
+     "dar": "onCreateViewHolder",
+     "en": "onCreateViewHolder"
+    },
+    "body": {
+     "fr": "Gonfler la ligne (attachToRoot = false) et l'envelopper dans un ViewHolder.",
+     "dar": "Inflate + ViewHolder.",
+     "en": "Inflate + ViewHolder."
+    },
+    "code": "@Override\npublic ProduitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {\n    View v = LayoutInflater.from(parent.getContext())\n            .inflate(R.layout.item_produit, parent, false);\n    return new ProduitViewHolder(v);\n}"
+   },
+   {
+    "title": {
+     "fr": "onBindViewHolder",
+     "dar": "onBindViewHolder",
+     "en": "onBindViewHolder"
+    },
+    "body": {
+     "fr": "Lire l'élément de la position et remplir les vues du holder. Le prix est un nombre : le convertir en texte.",
+     "dar": "get(position) + setText ; prix → texte.",
+     "en": "get(position) + setText; convert price to text."
+    },
+    "code": "@Override\npublic void onBindViewHolder(ProduitViewHolder holder, int position) {\n    Produit p = produits.get(position);\n    holder.nom.setText(p.getNom());\n    holder.prix.setText(p.getPrix() + \" DH\");\n}"
+   },
+   {
+    "title": {
+     "fr": "getItemCount",
+     "dar": "getItemCount",
+     "en": "getItemCount"
+    },
+    "body": {
+     "fr": "Le nombre de lignes = taille de la liste.",
+     "dar": "Taille dyal liste.",
+     "en": "List size."
+    },
+    "code": "@Override\npublic int getItemCount() {\n    return produits.size();\n}"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "inflate(…, parent, false) + new ProduitViewHolder ; produits.get(position) + setText ; return produits.size().",
+   "dar": "Create / Bind / Count.",
+   "en": "Create / Bind / Count."
+  },
+  "commonMistakes": [
+   {
+    "fr": "`setText(p.getPrix())` avec un int : Android le prend pour un id de ressource → plantage (Resources$NotFoundException).",
+    "dar": "setText(int) = id ressource.",
+    "en": "setText(int) is treated as a resource id."
+   },
+   {
+    "fr": "Laisser `return 0;` dans getItemCount.",
+    "dar": "return 0.",
+    "en": "Leaving return 0."
+   },
+   {
+    "fr": "inflate avec true.",
+    "dar": "inflate true.",
+    "en": "inflate with true."
+   }
+  ]
+ },
+ {
+  "id": "mob-x-12",
+  "module": "mobile",
+  "chapter": "listes",
+  "difficulty": 2,
+  "title": {
+   "fr": "Passer d'une ListView à un écran de détail",
+   "dar": "Mn ListView l détail",
+   "en": "From a ListView to a detail screen"
+  },
+  "statement": {
+   "fr": "Une ListView affiche `ArrayList<String> villes` avec un ArrayAdapter. Au clic sur une ville, ouvre `VilleActivity` en lui passant le nom de la ville, puis affiche-le dans VilleActivity.",
+   "dar": "Click 3la ville → VilleActivity b smiya.",
+   "en": "Tap a city → open VilleActivity with its name."
+  },
+  "hints": [
+   {
+    "fr": "position → villes.get(position) → putExtra.",
+    "dar": "position → get → putExtra.",
+    "en": "position → get → putExtra."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "MainActivity",
+     "dar": "MainActivity",
+     "en": "MainActivity"
+    },
+    "body": {
+     "fr": "Adaptateur + écouteur de clic.",
+     "dar": "Adaptateur + listener.",
+     "en": "Adapter + listener."
+    },
+    "code": "ListView liste = findViewById(R.id.liste);\nliste.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, villes));\nliste.setOnItemClickListener((parent, view, position, id) -> {\n    Intent intent = new Intent(MainActivity.this, VilleActivity.class);\n    intent.putExtra(\"ville\", villes.get(position));\n    startActivity(intent);\n});"
+   },
+   {
+    "title": {
+     "fr": "VilleActivity",
+     "dar": "VilleActivity",
+     "en": "VilleActivity"
+    },
+    "body": {
+     "fr": "Dans onCreate, après setContentView.",
+     "dar": "F onCreate.",
+     "en": "In onCreate."
+    },
+    "code": "String ville = getIntent().getStringExtra(\"ville\");\nTextView titre = findViewById(R.id.titre_ville);\ntitre.setText(ville);"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "setOnItemClickListener → villes.get(position) → putExtra(\"ville\") → startActivity ; getStringExtra(\"ville\") dans VilleActivity (déclarée dans le manifeste).",
+   "dar": "Click → putExtra → getStringExtra.",
+   "en": "Click → putExtra → getStringExtra."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser `id` au lieu de `position` pour lire la liste.",
+    "dar": "id f blast position.",
+    "en": "Using id instead of position."
+   },
+   {
+    "fr": "Oublier VilleActivity dans le manifeste.",
+    "dar": "Nsit manifeste.",
+    "en": "Forgetting the manifest."
+   }
+  ]
+ }
+]

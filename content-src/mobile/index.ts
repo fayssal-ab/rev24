@@ -1,4 +1,4 @@
-import { c1, c2, c3, c4, c5, c6, c7 } from './course';
+import { c1, c2, c3, c4, c5, c6, c7, c8 } from './course';
 import { setCtx, L, single, multi, cmd, order, ex, fc, ref } from '../lib';
 import type { Module } from '../../src/lib/schema';
 
@@ -256,6 +256,30 @@ const q7 = [
     ["A perd le premier plan, B se crée et devient interactive, puis A n'est plus visible.", "A.onPause → B → A.onStop.", 'A.onPause → B → A.onStop.'], ['trace'])
 ];
 
+setCtx('mobile', 'annale');
+const q8 = [
+  single('mob-70', 2, ["Que se passe-t-il si on change le **nom du package** (applicationId) d'une application publiée ?", "Ila beddelti **package** dyal app publiée ?", 'What if you change a published app\'s **package name**?'],
+    [["Android et le Play Store la considèrent comme une autre application", "App okhra", 'It is treated as a different app'], ["Rien, c'est un simple nom", "Walou", 'Nothing'], ["L'application est traduite", "Traduction", 'The app is translated']], 0,
+    ["Le package (applicationId) est l'identifiant **unique** de l'application.", "Identifiant unique.", 'The unique identifier.'],
+    [NO, NO], ['annale', 'projet']),
+  single('mob-71', 1, ["Où se trouve le code Java d'une Activity dans le projet ?", "Fin kayn code Java ?", 'Where is an Activity\'s Java code?'],
+    [["app/src/main/java/<package>/", "java/<package>/", 'app/src/main/java/<package>/'], ["res/layout/", "res/layout/", 'res/layout/'], ["res/values/", "res/values/", 'res/values/']], 0,
+    ["`res/layout` = interfaces XML, `res/values` = textes, couleurs ; le code est dans `java/`.", "Code f java/.", 'Code lives in java/.'],
+    [["Ce sont les interfaces XML.", "Interfaces.", 'XML layouts.'], ["Ce sont les valeurs (strings…).", "Valeurs.", 'Values.']], ['annale', 'projet']),
+  single('mob-72', 2, ["`EditText input = …; String nom = input;` provoque…", "`String nom = input;` = ?", '`String nom = input;` causes…'],
+    [["une erreur de compilation : il faut input.getText().toString()", "erreur compilation → getText().toString()", 'a compile error: use input.getText().toString()'], ["une chaîne vide", "texte khawi", 'an empty string'], ["le texte saisi", "texte li tkteb", 'the typed text']], 0,
+    ["Un EditText n'est pas un String.", "EditText machi String.", 'An EditText is not a String.'],
+    [["Ça ne compile même pas.", "Ma kaycompilich.", 'It does not compile.'], NO], ['annale', 'code']),
+  single('mob-73', 2, ["Dans quel fichier trouve-t-on `defaultConfig { applicationId … minSdk = 24 … }` ?", "Fin kayn `defaultConfig { … minSdk … }` ?", 'Which file holds `defaultConfig { … minSdk … }`?'],
+    [["build.gradle.kts du module app", "app/build.gradle.kts", 'the app module build.gradle.kts'], ["AndroidManifest.xml", "Manifeste", 'AndroidManifest.xml'], ["strings.xml", "strings.xml", 'strings.xml']], 0,
+    ["Configuration Gradle de l'application : identifiant, minSdk, targetSdk, versionCode, versionName.", "Gradle.", 'Gradle config.'],
+    [["Le manifeste déclare les composants.", "Composants.", 'Components.'], ["strings.xml contient des textes.", "Textes.", 'Texts.']], ['annale', 'projet']),
+  multi('mob-74', 2, ["Lesquels sont des **layouts** Android ?", "Chnou homa **layouts** ?", 'Which are Android **layouts**?'],
+    [['LinearLayout', 'LinearLayout', 'LinearLayout'], ['ConstraintLayout', 'ConstraintLayout', 'ConstraintLayout'], ['FrameLayout', 'FrameLayout', 'FrameLayout'], ['EditText', 'EditText', 'EditText'], ['Intent', 'Intent', 'Intent']], [0, 1, 2],
+    ["Layouts : LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout, TableLayout, GridLayout.", "Layouts.", 'Layouts.'],
+    [["EditText est une vue de saisie.", "View.", 'A view.'], ["Intent est un message de navigation.", "Message.", 'A message.']], ['annale', 'layouts'])
+];
+
 // ================= Exercices =================
 setCtx('mobile', 'ecran');
 const exs = [
@@ -366,6 +390,41 @@ exs.push(
     [["Utiliser `id` au lieu de `position` pour lire la liste.", "id f blast position.", 'Using id instead of position.'], ["Oublier VilleActivity dans le manifeste.", "Nsit manifeste.", 'Forgetting the manifest.']])
 );
 
+setCtx('mobile', 'annale');
+const A = (n: string) => ["Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », " + n + ".", "Chouf correction f chapitre Annale, " + n + ".", "See the detailed solution in the Past paper chapter, " + n + "."] as [string, string, string];
+exs.push(
+  ex('mob-a-1', 2, ["Contrôle 2025 — Partie I, Q1 à Q3 (4 pts)", "Contrôle 2025 — Q1 l Q3", '2025 test — Part I, Q1–Q3'],
+    ["1. Pourquoi le nom du package est-il essentiel ? 2. Définissez SDK / API. 3. a) Où sont les XML des interfaces ? b) Où est le code source ? c) Rôle d'AndroidManifest.xml ? d) À quoi sert l'intent-filter MAIN + LAUNCHER ?", "Q1 package, Q2 SDK/API, Q3 structure.", 'Q1 package, Q2 SDK/API, Q3 structure.'],
+    [["Identifiant unique ; outils vs classes ; res/layout, java/.", "Identifiant ; outils ; dossiers.", 'Unique id; tools; folders.']],
+    [{ t: ['Réponses', 'Jawab', 'Answers'], b: ["1) Identifiant **unique** (applicationId) sur l'appareil et le Play Store ; le changer = autre app ; espace de noms des classes. 2) SDK = outils et bibliothèques pour construire l'app ; API = classes/méthodes fournies par Android, niveau d'API = version. 3) a) res/layout/ b) app/src/main/java/<package>/ c) déclare composants (Activity) et permissions d) Activity de démarrage, icône dans le lanceur.", "1) Unique. 2) Outils / classes. 3) res/layout, java/, manifeste, point d'entrée.", '1) Unique id. 2) Tools / classes. 3) res/layout, java/, manifest, entry point.'] }],
+    A('Q1 à Q3'), [["Confondre SDK (outils) et Android Studio (IDE).", "SDK ≠ Android Studio.", 'SDK ≠ Android Studio.']]),
+  ex('mob-a-2', 2, ["Contrôle 2025 — Partie I, Q4 à Q8 (4 pts)", "Contrôle 2025 — Q4 l Q8", '2025 test — Part I, Q4–Q8'],
+    ["4. Rôles de onCreate, onStart, onResume. 5. Séquence lors d'une rotation. 6. sp / dp. 7. match_parent / wrap_content. 8. Fonction de setContentView(R.layout.activity_main).", "Cycle, rotation, unités, setContentView.", 'Lifecycle, rotation, units, setContentView.'],
+    [["Paires de méthodes ; rotation = destruction + recréation.", "Paires ; rotation.", 'Pairs; rotation.']],
+    [{ t: ['Réponses', 'Jawab', 'Answers'], b: ["4) création + interface / visible / premier plan interactif. 5) onPause, onStop, onDestroy, onCreate, onStart, onResume. 6) dp dimensions, sp texte + réglage police. 7) toute la place du parent / taille du contenu. 8) charge l'interface activity_main.xml dans l'Activity.", "4) création / bayna / l9eddam. 5) 6 méthodes. 6) dp/sp. 7) parent/contenu. 8) chargi l'interface.", '4) create / visible / foreground. 5) six methods. 6) dp/sp. 7) parent/content. 8) loads the UI.'] }],
+    A('Q4 à Q8'), [["Oublier onDestroy dans la rotation.", "Nsit onDestroy.", 'Forgetting onDestroy.']]),
+  ex('mob-a-3', 2, ["Contrôle 2025 — Partie I, Q9 à Q12 (4 pts)", "Contrôle 2025 — Q9 l Q12", '2025 test — Part I, Q9–Q12'],
+    ["9. Quatre layouts. 10. Séparation logique / présentation. 11. Pourquoi strings.xml. 12. Tablettes fournies à un restaurant : quel minSdk ? Justifiez.", "Layouts, séparation, strings, minSdk.", 'Layouts, separation, strings, minSdk.'],
+    [["Matériel fourni → pas de vieux appareils.", "Tablettes dyalna.", 'We supply the hardware.']],
+    [{ t: ['Réponses', 'Jawab', 'Answers'], b: ["9) LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout. 10) XML dans res/ = présentation, classes Java = logique, reliées par R. 11) centralisation, réutilisation, traduction, pas de texte en dur. 12) minSdk élevé (celui des tablettes) : matériel maîtrisé, API récentes, sécurité.", "9) 4 layouts. 10) XML / Java / R. 11) strings. 12) minSdk 3ali.", '9) layouts. 10) XML / Java / R. 11) strings. 12) high minSdk.'] }],
+    A('Q9 à Q12'), [["Répondre « le plus bas possible » sans tenir compte du matériel fourni.", "« Hbet » bla tbrir.", '"Lowest" without justification.']]),
+  ex('mob-a-4', 2, ["Contrôle 2025 — Partie II, Q1 (1 pt)", "Contrôle 2025 — II Q1", '2025 test — II Q1'],
+    ["`EditText input = findViewById(R.id.editName); String nom = input;` Expliquez pourquoi c'est incorrect.", "3lach ghalat ?", 'Why is it wrong?'],
+    [["Quel est le type de input ?", "Type dyal input ?", 'What type is input?']],
+    [{ t: ['Réponse', 'Jawab', 'Answer'], b: ["input est un EditText (vue), pas un String → erreur de compilation. Correction :", "EditText machi String :", 'EditText is not a String:'], code: 'String nom = input.getText().toString();' }],
+    A('Partie II Q1'), [["Écrire input.toString() (renvoie la description de l'objet, pas le texte saisi).", "input.toString() ghalat.", 'input.toString() is wrong.']]),
+  ex('mob-a-5', 3, ["Contrôle 2025 — Partie II, Q2 : le formulaire (4 pts)", "Contrôle 2025 — II Q2", '2025 test — II Q2'],
+    ["a) Quels composants pour le formulaire ? b) Que fait getText().toString() ? c) Que fait : `btnOk.setOnClickListener(v -> { Intent i = new Intent(this, Activity2.class); startActivity(i); });`", "Composants, getText, Intent.", 'Components, getText, Intent.'],
+    [["Libellés, champs, bouton.", "TextView, EditText, Button.", 'TextView, EditText, Button.']],
+    [{ t: ['Réponses', 'Jawab', 'Answers'], b: ["a) Layout + TextView (libellés) + EditText (saisie, inputType) + Button OK (+ RadioButton, CheckBox, Spinner selon les champs). b) récupère le contenu saisi (Editable) et le convertit en String. c) au clic sur OK, crée un Intent explicite vers Activity2 et l'ouvre (Activity2 déclarée dans le manifeste, aucune donnée transmise).", "a) composants. b) contenu → String. c) click → Activity2.", 'a) views. b) content → String. c) click → Activity2.'] }],
+    A('Partie II Q2'), [["Dire que le code « ferme » l'Activity : il ouvre Activity2.", "Machi sedd.", 'It opens, not closes.']]),
+  ex('mob-a-6', 2, ["Contrôle 2025 — Partie II, Q3 : les fichiers (3 pts)", "Contrôle 2025 — II Q3", '2025 test — II Q3'],
+    ["Dans quels fichiers trouve-t-on : a) un `<Button … app:layout_constraintBottom_toBottomOf=\"parent\" …/>` ; b) `<resources><string name=\"app_name\">…</string></resources>` ; c) `defaultConfig { applicationId … minSdk = 24 targetSdk = 36 … }` ?", "3 fichiers.", 'Three files.'],
+    [["Layout, values, Gradle.", "Layout, values, Gradle.", 'Layout, values, Gradle.']],
+    [{ t: ['Réponses', 'Jawab', 'Answers'], b: ["a) fichier de layout res/layout/activity_main.xml (ConstraintLayout). b) res/values/strings.xml. c) app/build.gradle.kts (configuration Gradle du module app).", "a) layout. b) strings.xml. c) build.gradle.kts.", 'a) layout. b) strings.xml. c) build.gradle.kts.'] }],
+    A('Partie II Q3'), [["Répondre AndroidManifest.xml pour minSdk (c'est dans Gradle).", "minSdk f Gradle.", 'minSdk is in Gradle.']])
+);
+
 // ================= Flashcards =================
 setCtx('mobile', 'ecran');
 const fcs = [
@@ -434,16 +493,24 @@ export const module: Module = {
   color: '#0f6f8f',
   icon: 'phone',
   theme: 'violet',
-  chapters: ['ecran', 'cycle', 'dimensions', 'navigation', 'constraint', 'listes', 'traces'],
+  chapters: ['ecran', 'cycle', 'dimensions', 'navigation', 'constraint', 'listes', 'traces', 'annale'],
   upcoming: [
-    { id: 'mob-prep-suite', order: 8, title: L(["Suite de la préparation (diapos restantes)", "Tkmila dyal préparation (diapos li ba9in)", 'Rest of the preparation (remaining slides)']) }
+    { id: 'mob-prep-suite', order: 9, title: L(["Suite de la préparation (diapos restantes)", "Tkmila dyal préparation (diapos li ba9in)", 'Rest of the preparation (remaining slides)']) }
   ],
-  annales: [],
-  weights: { cycle: 5, navigation: 5, listes: 5, traces: 4, constraint: 4, ecran: 4, dimensions: 4 }
+  annales: [
+    {
+      id: 'cc-2025',
+      title: L(['Contrôle 2025-2026 (26/11/2025)', 'Contrôle 2025-2026', 'Test 2025-2026']),
+      minutes: 90,
+      intro: L(["1h30. Partie I : questions générales (12 pts). Partie II : code (8 pts). La clarté et la simplicité des réponses et du code sont prises en compte.", "1h30. Partie I (12 pts), Partie II (8 pts).", '1h30. Part I (12 pts), Part II (8 pts).']),
+      parts: [{ exerciseId: 'mob-a-1', points: 4 }, { exerciseId: 'mob-a-2', points: 4 }, { exerciseId: 'mob-a-3', points: 4 }, { exerciseId: 'mob-a-4', points: 1 }, { exerciseId: 'mob-a-5', points: 4 }, { exerciseId: 'mob-a-6', points: 3 }]
+    }
+  ],
+  weights: { cycle: 5, navigation: 5, listes: 5, traces: 4, annale: 4, constraint: 4, ecran: 4, dimensions: 4 }
 };
 
-export const chapters = [c1, c2, c3, c4, c5, c6, c7];
-export const questions = [...q1, ...q2, ...q3, ...q4, ...q5, ...q6, ...q7];
+export const chapters = [c1, c2, c3, c4, c5, c6, c7, c8];
+export const questions = [...q1, ...q2, ...q3, ...q4, ...q5, ...q6, ...q7, ...q8];
 export const exercises = exs;
 export const flashcards = fcs;
 export const reference = [

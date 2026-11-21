@@ -1,0 +1,297 @@
+[
+ {
+  "id": "mob-a-1",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2025 — Partie I, Q1 à Q3 (4 pts)",
+   "dar": "Contrôle 2025 — Q1 l Q3",
+   "en": "2025 test — Part I, Q1–Q3"
+  },
+  "statement": {
+   "fr": "1. Pourquoi le nom du package est-il essentiel ? 2. Définissez SDK / API. 3. a) Où sont les XML des interfaces ? b) Où est le code source ? c) Rôle d'AndroidManifest.xml ? d) À quoi sert l'intent-filter MAIN + LAUNCHER ?",
+   "dar": "Q1 package, Q2 SDK/API, Q3 structure.",
+   "en": "Q1 package, Q2 SDK/API, Q3 structure."
+  },
+  "hints": [
+   {
+    "fr": "Identifiant unique ; outils vs classes ; res/layout, java/.",
+    "dar": "Identifiant ; outils ; dossiers.",
+    "en": "Unique id; tools; folders."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Identifiant **unique** (applicationId) sur l'appareil et le Play Store ; le changer = autre app ; espace de noms des classes. 2) SDK = outils et bibliothèques pour construire l'app ; API = classes/méthodes fournies par Android, niveau d'API = version. 3) a) res/layout/ b) app/src/main/java/<package>/ c) déclare composants (Activity) et permissions d) Activity de démarrage, icône dans le lanceur.",
+     "dar": "1) Unique. 2) Outils / classes. 3) res/layout, java/, manifeste, point d'entrée.",
+     "en": "1) Unique id. 2) Tools / classes. 3) res/layout, java/, manifest, entry point."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Q1 à Q3.",
+   "dar": "Chouf correction f chapitre Annale, Q1 à Q3.",
+   "en": "See the detailed solution in the Past paper chapter, Q1 à Q3."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre SDK (outils) et Android Studio (IDE).",
+    "dar": "SDK ≠ Android Studio.",
+    "en": "SDK ≠ Android Studio."
+   }
+  ]
+ },
+ {
+  "id": "mob-a-2",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2025 — Partie I, Q4 à Q8 (4 pts)",
+   "dar": "Contrôle 2025 — Q4 l Q8",
+   "en": "2025 test — Part I, Q4–Q8"
+  },
+  "statement": {
+   "fr": "4. Rôles de onCreate, onStart, onResume. 5. Séquence lors d'une rotation. 6. sp / dp. 7. match_parent / wrap_content. 8. Fonction de setContentView(R.layout.activity_main).",
+   "dar": "Cycle, rotation, unités, setContentView.",
+   "en": "Lifecycle, rotation, units, setContentView."
+  },
+  "hints": [
+   {
+    "fr": "Paires de méthodes ; rotation = destruction + recréation.",
+    "dar": "Paires ; rotation.",
+    "en": "Pairs; rotation."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "4) création + interface / visible / premier plan interactif. 5) onPause, onStop, onDestroy, onCreate, onStart, onResume. 6) dp dimensions, sp texte + réglage police. 7) toute la place du parent / taille du contenu. 8) charge l'interface activity_main.xml dans l'Activity.",
+     "dar": "4) création / bayna / l9eddam. 5) 6 méthodes. 6) dp/sp. 7) parent/contenu. 8) chargi l'interface.",
+     "en": "4) create / visible / foreground. 5) six methods. 6) dp/sp. 7) parent/content. 8) loads the UI."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Q4 à Q8.",
+   "dar": "Chouf correction f chapitre Annale, Q4 à Q8.",
+   "en": "See the detailed solution in the Past paper chapter, Q4 à Q8."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier onDestroy dans la rotation.",
+    "dar": "Nsit onDestroy.",
+    "en": "Forgetting onDestroy."
+   }
+  ]
+ },
+ {
+  "id": "mob-a-3",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2025 — Partie I, Q9 à Q12 (4 pts)",
+   "dar": "Contrôle 2025 — Q9 l Q12",
+   "en": "2025 test — Part I, Q9–Q12"
+  },
+  "statement": {
+   "fr": "9. Quatre layouts. 10. Séparation logique / présentation. 11. Pourquoi strings.xml. 12. Tablettes fournies à un restaurant : quel minSdk ? Justifiez.",
+   "dar": "Layouts, séparation, strings, minSdk.",
+   "en": "Layouts, separation, strings, minSdk."
+  },
+  "hints": [
+   {
+    "fr": "Matériel fourni → pas de vieux appareils.",
+    "dar": "Tablettes dyalna.",
+    "en": "We supply the hardware."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "9) LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout. 10) XML dans res/ = présentation, classes Java = logique, reliées par R. 11) centralisation, réutilisation, traduction, pas de texte en dur. 12) minSdk élevé (celui des tablettes) : matériel maîtrisé, API récentes, sécurité.",
+     "dar": "9) 4 layouts. 10) XML / Java / R. 11) strings. 12) minSdk 3ali.",
+     "en": "9) layouts. 10) XML / Java / R. 11) strings. 12) high minSdk."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Q9 à Q12.",
+   "dar": "Chouf correction f chapitre Annale, Q9 à Q12.",
+   "en": "See the detailed solution in the Past paper chapter, Q9 à Q12."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Répondre « le plus bas possible » sans tenir compte du matériel fourni.",
+    "dar": "« Hbet » bla tbrir.",
+    "en": "\"Lowest\" without justification."
+   }
+  ]
+ },
+ {
+  "id": "mob-a-4",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2025 — Partie II, Q1 (1 pt)",
+   "dar": "Contrôle 2025 — II Q1",
+   "en": "2025 test — II Q1"
+  },
+  "statement": {
+   "fr": "`EditText input = findViewById(R.id.editName); String nom = input;` Expliquez pourquoi c'est incorrect.",
+   "dar": "3lach ghalat ?",
+   "en": "Why is it wrong?"
+  },
+  "hints": [
+   {
+    "fr": "Quel est le type de input ?",
+    "dar": "Type dyal input ?",
+    "en": "What type is input?"
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponse",
+     "dar": "Jawab",
+     "en": "Answer"
+    },
+    "body": {
+     "fr": "input est un EditText (vue), pas un String → erreur de compilation. Correction :",
+     "dar": "EditText machi String :",
+     "en": "EditText is not a String:"
+    },
+    "code": "String nom = input.getText().toString();"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Partie II Q1.",
+   "dar": "Chouf correction f chapitre Annale, Partie II Q1.",
+   "en": "See the detailed solution in the Past paper chapter, Partie II Q1."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire input.toString() (renvoie la description de l'objet, pas le texte saisi).",
+    "dar": "input.toString() ghalat.",
+    "en": "input.toString() is wrong."
+   }
+  ]
+ },
+ {
+  "id": "mob-a-5",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle 2025 — Partie II, Q2 : le formulaire (4 pts)",
+   "dar": "Contrôle 2025 — II Q2",
+   "en": "2025 test — II Q2"
+  },
+  "statement": {
+   "fr": "a) Quels composants pour le formulaire ? b) Que fait getText().toString() ? c) Que fait : `btnOk.setOnClickListener(v -> { Intent i = new Intent(this, Activity2.class); startActivity(i); });`",
+   "dar": "Composants, getText, Intent.",
+   "en": "Components, getText, Intent."
+  },
+  "hints": [
+   {
+    "fr": "Libellés, champs, bouton.",
+    "dar": "TextView, EditText, Button.",
+    "en": "TextView, EditText, Button."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "a) Layout + TextView (libellés) + EditText (saisie, inputType) + Button OK (+ RadioButton, CheckBox, Spinner selon les champs). b) récupère le contenu saisi (Editable) et le convertit en String. c) au clic sur OK, crée un Intent explicite vers Activity2 et l'ouvre (Activity2 déclarée dans le manifeste, aucune donnée transmise).",
+     "dar": "a) composants. b) contenu → String. c) click → Activity2.",
+     "en": "a) views. b) content → String. c) click → Activity2."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Partie II Q2.",
+   "dar": "Chouf correction f chapitre Annale, Partie II Q2.",
+   "en": "See the detailed solution in the Past paper chapter, Partie II Q2."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que le code « ferme » l'Activity : il ouvre Activity2.",
+    "dar": "Machi sedd.",
+    "en": "It opens, not closes."
+   }
+  ]
+ },
+ {
+  "id": "mob-a-6",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2025 — Partie II, Q3 : les fichiers (3 pts)",
+   "dar": "Contrôle 2025 — II Q3",
+   "en": "2025 test — II Q3"
+  },
+  "statement": {
+   "fr": "Dans quels fichiers trouve-t-on : a) un `<Button … app:layout_constraintBottom_toBottomOf=\"parent\" …/>` ; b) `<resources><string name=\"app_name\">…</string></resources>` ; c) `defaultConfig { applicationId … minSdk = 24 targetSdk = 36 … }` ?",
+   "dar": "3 fichiers.",
+   "en": "Three files."
+  },
+  "hints": [
+   {
+    "fr": "Layout, values, Gradle.",
+    "dar": "Layout, values, Gradle.",
+    "en": "Layout, values, Gradle."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawab",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "a) fichier de layout res/layout/activity_main.xml (ConstraintLayout). b) res/values/strings.xml. c) app/build.gradle.kts (configuration Gradle du module app).",
+     "dar": "a) layout. b) strings.xml. c) build.gradle.kts.",
+     "en": "a) layout. b) strings.xml. c) build.gradle.kts."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la correction détaillée dans le chapitre « Annale : Contrôle 2025 corrigé », Partie II Q3.",
+   "dar": "Chouf correction f chapitre Annale, Partie II Q3.",
+   "en": "See the detailed solution in the Past paper chapter, Partie II Q3."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Répondre AndroidManifest.xml pour minSdk (c'est dans Gradle).",
+    "dar": "minSdk f Gradle.",
+    "en": "minSdk is in Gradle."
+   }
+  ]
+ }
+]

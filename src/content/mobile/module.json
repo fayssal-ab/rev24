@@ -20,12 +20,13 @@
   "navigation",
   "constraint",
   "listes",
-  "traces"
+  "traces",
+  "annale"
  ],
  "upcoming": [
   {
    "id": "mob-prep-suite",
-   "order": 8,
+   "order": 9,
    "title": {
     "fr": "Suite de la préparation (diapos restantes)",
     "dar": "Tkmila dyal préparation (diapos li ba9in)",
@@ -33,12 +34,54 @@
    }
   }
  ],
- "annales": [],
+ "annales": [
+  {
+   "id": "cc-2025",
+   "title": {
+    "fr": "Contrôle 2025-2026 (26/11/2025)",
+    "dar": "Contrôle 2025-2026",
+    "en": "Test 2025-2026"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "1h30. Partie I : questions générales (12 pts). Partie II : code (8 pts). La clarté et la simplicité des réponses et du code sont prises en compte.",
+    "dar": "1h30. Partie I (12 pts), Partie II (8 pts).",
+    "en": "1h30. Part I (12 pts), Part II (8 pts)."
+   },
+   "parts": [
+    {
+     "exerciseId": "mob-a-1",
+     "points": 4
+    },
+    {
+     "exerciseId": "mob-a-2",
+     "points": 4
+    },
+    {
+     "exerciseId": "mob-a-3",
+     "points": 4
+    },
+    {
+     "exerciseId": "mob-a-4",
+     "points": 1
+    },
+    {
+     "exerciseId": "mob-a-5",
+     "points": 4
+    },
+    {
+     "exerciseId": "mob-a-6",
+     "points": 3
+    }
+   ]
+  }
+ ],
  "weights": {
   "cycle": 5,
   "navigation": 5,
   "listes": 5,
   "traces": 4,
+  "annale": 4,
   "constraint": 4,
   "ecran": 4,
   "dimensions": 4

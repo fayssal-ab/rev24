@@ -1,0 +1,322 @@
+[
+ {
+  "id": "mob-70",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que se passe-t-il si on change le **nom du package** (applicationId) d'une application publiée ?",
+   "dar": "Ila beddelti **package** dyal app publiée ?",
+   "en": "What if you change a published app's **package name**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Android et le Play Store la considèrent comme une autre application",
+     "dar": "App okhra",
+     "en": "It is treated as a different app"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Rien, c'est un simple nom",
+     "dar": "Walou",
+     "en": "Nothing"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "L'application est traduite",
+     "dar": "Traduction",
+     "en": "The app is translated"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le package (applicationId) est l'identifiant **unique** de l'application.",
+   "dar": "Identifiant unique.",
+   "en": "The unique identifier."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "annale",
+   "projet"
+  ]
+ },
+ {
+  "id": "mob-71",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où se trouve le code Java d'une Activity dans le projet ?",
+   "dar": "Fin kayn code Java ?",
+   "en": "Where is an Activity's Java code?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "app/src/main/java/<package>/",
+     "dar": "java/<package>/",
+     "en": "app/src/main/java/<package>/"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "res/layout/",
+     "dar": "res/layout/",
+     "en": "res/layout/"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "res/values/",
+     "dar": "res/values/",
+     "en": "res/values/"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`res/layout` = interfaces XML, `res/values` = textes, couleurs ; le code est dans `java/`.",
+   "dar": "Code f java/.",
+   "en": "Code lives in java/."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce sont les interfaces XML.",
+    "dar": "Interfaces.",
+    "en": "XML layouts."
+   },
+   "c": {
+    "fr": "Ce sont les valeurs (strings…).",
+    "dar": "Valeurs.",
+    "en": "Values."
+   }
+  },
+  "tags": [
+   "annale",
+   "projet"
+  ]
+ },
+ {
+  "id": "mob-72",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`EditText input = …; String nom = input;` provoque…",
+   "dar": "`String nom = input;` = ?",
+   "en": "`String nom = input;` causes…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "une erreur de compilation : il faut input.getText().toString()",
+     "dar": "erreur compilation → getText().toString()",
+     "en": "a compile error: use input.getText().toString()"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "une chaîne vide",
+     "dar": "texte khawi",
+     "en": "an empty string"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "le texte saisi",
+     "dar": "texte li tkteb",
+     "en": "the typed text"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Un EditText n'est pas un String.",
+   "dar": "EditText machi String.",
+   "en": "An EditText is not a String."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça ne compile même pas.",
+    "dar": "Ma kaycompilich.",
+    "en": "It does not compile."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "annale",
+   "code"
+  ]
+ },
+ {
+  "id": "mob-73",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans quel fichier trouve-t-on `defaultConfig { applicationId … minSdk = 24 … }` ?",
+   "dar": "Fin kayn `defaultConfig { … minSdk … }` ?",
+   "en": "Which file holds `defaultConfig { … minSdk … }`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "build.gradle.kts du module app",
+     "dar": "app/build.gradle.kts",
+     "en": "the app module build.gradle.kts"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "AndroidManifest.xml",
+     "dar": "Manifeste",
+     "en": "AndroidManifest.xml"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "strings.xml",
+     "dar": "strings.xml",
+     "en": "strings.xml"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Configuration Gradle de l'application : identifiant, minSdk, targetSdk, versionCode, versionName.",
+   "dar": "Gradle.",
+   "en": "Gradle config."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le manifeste déclare les composants.",
+    "dar": "Composants.",
+    "en": "Components."
+   },
+   "c": {
+    "fr": "strings.xml contient des textes.",
+    "dar": "Textes.",
+    "en": "Texts."
+   }
+  },
+  "tags": [
+   "annale",
+   "projet"
+  ]
+ },
+ {
+  "id": "mob-74",
+  "module": "mobile",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Lesquels sont des **layouts** Android ?",
+   "dar": "Chnou homa **layouts** ?",
+   "en": "Which are Android **layouts**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "LinearLayout",
+     "dar": "LinearLayout",
+     "en": "LinearLayout"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ConstraintLayout",
+     "dar": "ConstraintLayout",
+     "en": "ConstraintLayout"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "FrameLayout",
+     "dar": "FrameLayout",
+     "en": "FrameLayout"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "EditText",
+     "dar": "EditText",
+     "en": "EditText"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Intent",
+     "dar": "Intent",
+     "en": "Intent"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Layouts : LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout, TableLayout, GridLayout.",
+   "dar": "Layouts.",
+   "en": "Layouts."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "EditText est une vue de saisie.",
+    "dar": "View.",
+    "en": "A view."
+   },
+   "e": {
+    "fr": "Intent est un message de navigation.",
+    "dar": "Message.",
+    "en": "A message."
+   }
+  },
+  "tags": [
+   "annale",
+   "layouts"
+  ]
+ }
+]

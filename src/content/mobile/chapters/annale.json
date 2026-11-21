@@ -1,0 +1,420 @@
+{
+ "id": "annale",
+ "module": "mobile",
+ "order": 8,
+ "title": {
+  "fr": "Annale : Contrôle 2025 corrigé",
+  "dar": "Annale : Contrôle 2025 m-corrigi",
+  "en": "Past paper: 2025 test, solved"
+ },
+ "summary": {
+  "fr": "Le contrôle de Développement Mobile du 26/11/2025 (1h30, 20 pts) partagé par le prof, question par question avec la réponse attendue, et les notions qu'il ajoute : nom du package, minSdk, structure du projet, layouts, getText().toString(), build.gradle.",
+  "dar": "Contrôle dyal Dev Mobile 26/11/2025 (1h30, 20 pts) li 3ta l prof, sou2al b sou2al m3a jawab, w notions jdad : package, minSdk, structure dyal projet, layouts, getText().toString(), build.gradle.",
+  "en": "The 26/11/2025 Mobile Development test (1h30, 20 pts) shared by the professor, question by question with the expected answer, plus the notions it adds: package name, minSdk, project structure, layouts, getText().toString(), build.gradle."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Structure : **Partie I** questions de cours (12 pts), **Partie II** code (8 pts). « La clarté et la simplicité des réponses et du code seront prises en considération » : réponds court, précis, avec le bon vocabulaire. Tu peux le passer en conditions réelles dans **Examen blanc**.",
+    "dar": "**Partie I** cours (12 pts), **Partie II** code (8 pts). Jaweb 9sir w wade7. T9der dwzou b wa9t f **Examen blanc**.",
+    "en": "**Part I** theory (12 pts), **Part II** code (8 pts). Answer short and precise. Take it timed in **Mock exam**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie I — Q1 à Q3 : le projet Android",
+    "dar": "Partie I — Q1 l Q3 : projet Android",
+    "en": "Part I — Q1–Q3: the Android project"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Q1. Pourquoi le nom du package est essentiel ? (1 pt)",
+      "dar": "Q1. 3lach package mohim ?",
+      "en": "Q1. Why is the package name essential?"
+     },
+     "body": {
+      "fr": "C'est l'**identifiant unique** de l'application (`applicationId`, ex. `com.example.controleandroid`) sur l'appareil et sur le Play Store : deux applications ne peuvent pas avoir le même. Le changer revient à publier **une autre application**. Il sert aussi d'**espace de noms** pour les classes Java et la classe R.",
+      "dar": "Howa **identifiant unique** dyal l'app (`applicationId`) f téléphone w f Play Store : jouj apps ma ymkench ykoun 3andhom nefs package. Ila beddelto = **app okhra**. W howa **namespace** dyal classes Java w R.",
+      "en": "It is the app's **unique identifier** (`applicationId`) on the device and the Play Store: no two apps share it; changing it means **a different app**. It is also the **namespace** for Java classes and R."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2. SDK / API (1 pt)",
+      "dar": "Q2. SDK / API",
+      "en": "Q2. SDK / API"
+     },
+     "body": {
+      "fr": "**SDK** : ensemble des **outils et bibliothèques** nécessaires pour développer et construire une application Android (compilateur, build-tools, adb, émulateur, API). **API** : ensemble de **classes et méthodes** fournies par Android pour utiliser ses fonctionnalités (interface, caméra, capteurs…). Chaque version d'Android a un **niveau d'API** (ex. API 24 = Android 7.0).",
+      "dar": "**SDK** : **outils w bibliothèques** bach tdevelopper w tbni app Android. **API** : **classes w méthodes** li 3tana Android bach nsta3mlou fonctionnalités dyalo. Kol version 3andha **niveau d'API** (API 24 = Android 7.0).",
+      "en": "**SDK**: the **tools and libraries** to build an Android app. **API**: the **classes and methods** Android provides to use its features. Each version has an **API level** (API 24 = Android 7.0)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3. Structure du projet (2 pts)",
+      "dar": "Q3. Structure dyal projet",
+      "en": "Q3. Project structure"
+     },
+     "body": {
+      "fr": "a) Interfaces XML : **`res/layout/`**. b) Code source : **`app/src/main/java/<package>/`** (dossier *java*, même en Kotlin). c) **AndroidManifest.xml** : déclare les composants (Activity…), les permissions, le nom, l'icône. d) Cet `intent-filter` (action **MAIN** + catégorie **LAUNCHER**) fait de l'Activity le **point d'entrée** : elle s'ouvre au lancement et son icône apparaît dans le **lanceur** du téléphone.",
+      "dar": "a) **`res/layout/`**. b) **`app/src/main/java/<package>/`**. c) Manifeste : composants, permissions, smiya, icône. d) **MAIN + LAUNCHER** = Activity hiya **point d'entrée** : kat7el f lancement w l'icône dyalha katban f **launcher**.",
+      "en": "a) **`res/layout/`**. b) **`app/src/main/java/<package>/`**. c) Manifest: components, permissions, name, icon. d) **MAIN + LAUNCHER** makes the Activity the **entry point**, shown in the **launcher**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie I — Q4 à Q8 : cycle de vie, unités, setContentView",
+    "dar": "Partie I — Q4 l Q8",
+    "en": "Part I — Q4–Q8"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Q4. onCreate / onStart / onResume (1,5 pt)",
+      "dar": "Q4.",
+      "en": "Q4."
+     },
+     "body": {
+      "fr": "**onCreate()** : création de l'Activity, appelée une fois par instance ; on y charge l'interface (setContentView) et on initialise les vues. **onStart()** : l'Activity devient **visible**. **onResume()** : elle passe **au premier plan** et devient **interactive**.",
+      "dar": "**onCreate()** : création, mra wa7da, setContentView. **onStart()** : **bayna**. **onResume()** : **l9eddam w interactive**.",
+      "en": "**onCreate()**: creation, once per instance, setContentView. **onStart()**: **visible**. **onResume()**: **foreground, interactive**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q5. Rotation (0,5 pt)",
+      "dar": "Q5. Rotation",
+      "en": "Q5. Rotation"
+     },
+     "body": {
+      "fr": "**onPause → onStop → onDestroy → onCreate → onStart → onResume** : l'Activity est détruite puis recréée (nouvelle instance).",
+      "dar": "**onPause → onStop → onDestroy → onCreate → onStart → onResume**.",
+      "en": "**onPause → onStop → onDestroy → onCreate → onStart → onResume**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q6. sp / dp (0,5 pt)",
+      "dar": "Q6.",
+      "en": "Q6."
+     },
+     "body": {
+      "fr": "**dp** : dimensions indépendantes de la densité (tailles, marges). **sp** : taille du **texte**, tient compte en plus du **réglage de police** de l'utilisateur.",
+      "dar": "**dp** : dimensions. **sp** : texte + réglage police.",
+      "en": "**dp**: dimensions. **sp**: text + font setting."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q7. match_parent / wrap_content (0,5 pt)",
+      "dar": "Q7.",
+      "en": "Q7."
+     },
+     "body": {
+      "fr": "**match_parent** : la vue prend toute la dimension que lui donne son parent. **wrap_content** : elle prend juste la taille de son contenu (+ padding).",
+      "dar": "**match_parent** : ga3 l blasa dyal parent. **wrap_content** : 9ed contenu.",
+      "en": "**match_parent**: all the parent space. **wrap_content**: content size."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q8. setContentView(R.layout.activity_main) (1 pt)",
+      "dar": "Q8.",
+      "en": "Q8."
+     },
+     "body": {
+      "fr": "Elle **charge l'interface** décrite dans `res/layout/activity_main.xml` et l'affiche comme contenu de l'Activity ; `R.layout.activity_main` est l'identifiant de cette ressource (sans .xml). Placée dans onCreate, avant tout findViewById.",
+      "dar": "Kat**chargi l'interface** dyal `activity_main.xml` ; f onCreate 9bel findViewById.",
+      "en": "**Loads the interface** from `activity_main.xml`; in onCreate before findViewById."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie I — Q9 à Q12 : layouts, séparation, strings, minSdk",
+    "dar": "Partie I — Q9 l Q12",
+    "en": "Part I — Q9–Q12"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Layout",
+     "dar": "Layout",
+     "en": "Layout"
+    },
+    {
+     "fr": "Principe",
+     "dar": "Principe",
+     "en": "Principle"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**LinearLayout**",
+      "dar": "**LinearLayout**",
+      "en": "**LinearLayout**"
+     },
+     {
+      "fr": "Vues **les unes après les autres**, en ligne ou en colonne (`orientation`)",
+      "dar": "Views **wa7da mor lokhra**, horizontal wla vertical",
+      "en": "Views **one after another**, row or column"
+     }
+    ],
+    [
+     {
+      "fr": "**ConstraintLayout**",
+      "dar": "**ConstraintLayout**",
+      "en": "**ConstraintLayout**"
+     },
+     {
+      "fr": "Vues placées par **contraintes** (layout par défaut d'Android Studio)",
+      "dar": "Views b **contraintes** (par défaut)",
+      "en": "Views placed by **constraints** (default)"
+     }
+    ],
+    [
+     {
+      "fr": "**RelativeLayout**",
+      "dar": "**RelativeLayout**",
+      "en": "**RelativeLayout**"
+     },
+     {
+      "fr": "Vues placées **par rapport** au parent ou aux autres (`layout_below`, `alignParentEnd`…)",
+      "dar": "Views **b 3ala9a** m3a parent wla lokhrin",
+      "en": "Views placed **relative** to parent or siblings"
+     }
+    ],
+    [
+     {
+      "fr": "**FrameLayout**",
+      "dar": "**FrameLayout**",
+      "en": "**FrameLayout**"
+     },
+     {
+      "fr": "Vues **empilées** les unes sur les autres (une seule vue en général)",
+      "dar": "Views **fo9 b3diyathom**",
+      "en": "Views **stacked** on each other"
+     }
+    ],
+    [
+     {
+      "fr": "**TableLayout / GridLayout**",
+      "dar": "**TableLayout / GridLayout**",
+      "en": "**TableLayout / GridLayout**"
+     },
+     {
+      "fr": "Vues en **lignes et colonnes**",
+      "dar": "**Sstour w colonnes**",
+      "en": "**Rows and columns**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Q9. Quatre layouts (1,5 pt)",
+      "dar": "Q9.",
+      "en": "Q9."
+     },
+     "body": {
+      "fr": "LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout (ou TableLayout / GridLayout), avec une demi-phrase chacun (tableau ci-dessus).",
+      "dar": "4 mn tableau.",
+      "en": "Four from the table."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q10. Logique métier / présentation (1 pt)",
+      "dar": "Q10.",
+      "en": "Q10."
+     },
+     "body": {
+      "fr": "La **présentation** est décrite en **XML** dans `res/` (layouts, strings, couleurs). La **logique** est dans les classes **Java/Kotlin** (`java/`, les Activity). Les deux sont reliées par la classe **R** : `setContentView(R.layout.…)`, `findViewById(R.id.…)`.",
+      "dar": "**Présentation** = XML f `res/` ; **logique** = Java f Activity ; mrboutin b **R**.",
+      "en": "**Presentation** = XML in `res/`; **logic** = Java classes; linked by **R**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q11. Pourquoi strings.xml (1 pt)",
+      "dar": "Q11.",
+      "en": "Q11."
+     },
+     "body": {
+      "fr": "Textes **centralisés** : modification en un seul endroit, **réutilisation**, **traduction** facile (`values-en/strings.xml`), pas de texte en dur dans le code ou le layout.",
+      "dar": "Centralisés, réutilisation, traduction, bla texte en dur.",
+      "en": "Centralised, reusable, translatable, no hard-coded text."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q12. MinSDK pour des tablettes de restaurant (0,5 pt)",
+      "dar": "Q12. MinSDK",
+      "en": "Q12. MinSDK"
+     },
+     "body": {
+      "fr": "Un **minSdk élevé/récent** (celui des tablettes fournies) : la solution est **clé en main**, le restaurant n'utilise que **nos tablettes**, donc pas besoin de compatibilité avec de vieux appareils ; on profite des **API récentes**, de la sécurité et on teste moins de versions.",
+      "dar": "**minSdk 3ali** : tablettes dyalna bo7dhom, ma khassnach compatibilité m3a téléphones 9dam ; API jdad w sécurité.",
+      "en": "A **high/recent minSdk**: we supply the tablets, so no old-device compatibility is needed; recent APIs and security."
+     },
+     "why": {
+      "fr": "Pour une application publiée sur le Play Store, on choisirait au contraire un minSdk bas pour toucher plus d'utilisateurs.",
+      "dar": "L Play Store, minSdk hbet bach twsel l bzaf.",
+      "en": "For a public Play Store app you would pick a lower minSdk."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie II — Code (8 pts)",
+    "dar": "Partie II — Code",
+    "en": "Part II — Code"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "java",
+   "code": "EditText input = findViewById(R.id.editName);\nString nom = input;                          // ERREUR : un EditText n'est pas un String\nString nom = input.getText().toString();     // correct",
+   "caption": {
+    "fr": "Q1 : récupérer le texte d'un EditText",
+    "dar": "Q1 : texte dyal EditText",
+    "en": "Q1: reading an EditText"
+   }
+  },
+  {
+   "type": "steps",
+   "items": [
+    {
+     "title": {
+      "fr": "Q1. Pourquoi `String nom = input;` est incorrect (1 pt)",
+      "dar": "Q1.",
+      "en": "Q1."
+     },
+     "body": {
+      "fr": "`input` est un **objet EditText** (une vue), pas une chaîne : types incompatibles → **erreur de compilation**. Il faut lire son contenu : `input.getText().toString()`.",
+      "dar": "`input` howa **EditText** machi String → **erreur de compilation**. Khass `getText().toString()`.",
+      "en": "`input` is an **EditText**, not a String → **compile error**. Use `getText().toString()`."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2a. Composants du formulaire (2 pts)",
+      "dar": "Q2a.",
+      "en": "Q2a."
+     },
+     "body": {
+      "fr": "Un **layout** conteneur ; des **TextView** pour les libellés ; des **EditText** pour la saisie (avec `inputType` adapté : texte, email, nombre…) ; un **Button** « OK » (`btnOk`). Selon le formulaire : RadioButton/RadioGroup (choix unique), CheckBox (choix multiples), Spinner (liste).",
+      "dar": "Layout, **TextView** (libellés), **EditText** (saisie), **Button** OK ; w ila kayn : RadioButton, CheckBox, Spinner.",
+      "en": "A layout, **TextView** labels, **EditText** inputs, an OK **Button**; plus RadioButton, CheckBox, Spinner if present."
+     },
+     "why": {
+      "fr": "L'image du formulaire n'apparaît pas dans la version texte du sujet : adapte la liste aux champs dessinés.",
+      "dar": "Tswira ma kaynach f texte : 3la 7sab champs li f sujet.",
+      "en": "The form image is not in the text version: adapt to its fields."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2b. getText().toString() (1 pt)",
+      "dar": "Q2b.",
+      "en": "Q2b."
+     },
+     "body": {
+      "fr": "`getText()` renvoie le contenu saisi dans l'EditText (un objet **Editable**) ; `toString()` le convertit en **String** pour pouvoir l'utiliser (l'afficher, le tester, l'envoyer avec putExtra).",
+      "dar": "`getText()` = contenu (Editable) ; `toString()` = String.",
+      "en": "`getText()` = typed content (Editable); `toString()` → String."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2c. Le code du bouton OK (1 pt)",
+      "dar": "Q2c.",
+      "en": "Q2c."
+     },
+     "body": {
+      "fr": "Au **clic** sur `btnOk`, on crée un **Intent explicite** vers **Activity2** et `startActivity(i)` **ouvre ce deuxième écran**. Aucune donnée n'est transmise (pas de putExtra) ; Activity2 doit être déclarée dans le manifeste. Dans une lambda, `this` désigne bien l'Activity.",
+      "dar": "F **click** 3la `btnOk`, **Intent explicite** l **Activity2** w `startActivity` kay**7elha**. Bla data ; Activity2 f manifeste.",
+      "en": "On **click**, an **explicit Intent** to **Activity2** and `startActivity` **opens it**; no data; Activity2 in the manifest."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3. Dans quels fichiers ? (3 pts)",
+      "dar": "Q3. F ach mn fichiers ?",
+      "en": "Q3. Which files?"
+     },
+     "body": {
+      "fr": "a) Le `<Button …>` : un **fichier de layout** `res/layout/activity_main.xml` (les attributs `app:layout_constraint…` montrent un **ConstraintLayout**). b) `<resources><string …>` : **`res/values/strings.xml`**. c) `defaultConfig { applicationId … minSdk … }` : le **`build.gradle.kts` du module app** (configuration Gradle : identifiant, minSdk 24 = Android 7.0, targetSdk 36, version).",
+      "dar": "a) **layout** `res/layout/…xml`. b) **`res/values/strings.xml`**. c) **`app/build.gradle.kts`** (Gradle).",
+      "en": "a) a **layout** file. b) **`res/values/strings.xml`**. c) the app module's **`build.gradle.kts`**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Dans le bouton de la Q3a, `match_parent` à l'intérieur d'un ConstraintLayout est déconseillé (on mettrait `0dp` + Start/End) et il n'a qu'une contrainte verticale (Bottom) : collé en bas. Bon réflexe à signaler si on te demande de commenter ce code.",
+    "dar": "F bouton Q3a, `match_parent` f ConstraintLayout ma mzyanch (0dp + Start/End) ; w ghir Bottom : lsse9 lte7t.",
+    "en": "In Q3a, `match_parent` inside a ConstraintLayout is discouraged (use 0dp + Start/End); only a Bottom constraint: stuck to the bottom."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "mob-70",
+    "mob-71",
+    "mob-72",
+    "mob-73"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Package (applicationId) = identifiant unique de l'app ; SDK = outils + bibliothèques ; API = classes fournies, niveau d'API = version.",
+   "dar": "Package unique ; SDK ; API.",
+   "en": "Package = unique id; SDK; API level."
+  },
+  {
+   "fr": "res/layout = interfaces ; java/ = code ; manifeste = composants + permissions ; MAIN + LAUNCHER = écran de démarrage.",
+   "dar": "res/layout, java/, manifeste, MAIN/LAUNCHER.",
+   "en": "res/layout, java/, manifest, MAIN/LAUNCHER."
+  },
+  {
+   "fr": "Layouts : LinearLayout, ConstraintLayout, RelativeLayout, FrameLayout (TableLayout, GridLayout).",
+   "dar": "4 layouts.",
+   "en": "Four layouts."
+  },
+  {
+   "fr": "Lire un EditText : input.getText().toString() ; build.gradle.kts (app) : applicationId, minSdk, targetSdk, version.",
+   "dar": "getText().toString() ; build.gradle.kts.",
+   "en": "getText().toString(); build.gradle.kts."
+  }
+ ]
+}

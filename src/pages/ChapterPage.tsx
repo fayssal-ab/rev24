@@ -232,7 +232,7 @@ export default function ChapterPage() {
       {/* desktop table of contents */}
       {headings.length > 1 && (
         <aside className="hidden xl:block">
-          <div className="sticky top-24">
+          <div className="sticky top-28">
             <div className="eyebrow mb-3">{t('chapter.onThisPage')}</div>
             <ol className="space-y-0.5 border-l border-line">
               {headings.map(({ s, i }) => (

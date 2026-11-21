@@ -11,7 +11,10 @@ export default {
         display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
         serif: ['"Instrument Serif"', 'Georgia', 'serif'],
         mono: ['"Geist Mono"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        hand: ['Caveat', 'cursive']
+        hand: ['Caveat', 'cursive'],
+        street: ['Anton', 'Impact', 'sans-serif'],
+        sign: ['Bungee', 'Impact', 'sans-serif'],
+        tag: ['"Permanent Marker"', 'cursive']
       },
       colors: {
         bg: 'rgb(var(--bg) / <alpha-value>)',

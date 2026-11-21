@@ -386,7 +386,13 @@ export const UI = {
   'home.hero.titleA': { fr: 'Nos cours, TD et contrôles,', dar: 'Les cours, TD w contrôles dyalna,', en: 'Our courses, tutorials and tests,' },
   'home.hero.titleB': { fr: 'au même endroit.', dar: 'f blasa wa7da.', en: 'all in one place.' },
   'home.hint': { fr: 'essaie : ACP, khi-deux, simplexe…', dar: 'jerreb : ACP, khi-deux, simplexe…', en: 'try: PCA, chi-square, simplex…' },
-  'home.notebook': { fr: 'Sommaire du semestre', dar: 'Fihris dyal semestre', en: 'This semester' }
+  'home.notebook': { fr: 'Sommaire du semestre', dar: 'Fihris dyal semestre', en: 'This semester' },
+  'cc.title': { fr: 'Contrôles', dar: 'Contrôles', en: 'Tests' },
+  'cc.tag': { fr: 'ce week-end', dar: 'had l weekend', en: 'this weekend' },
+  'cc.sub': { fr: 'Annales corrigées, examen blanc et fiche : tout ce qu\'il faut, module par module.', dar: 'Annales m-corrigin, examen blanc w fiche : kolchi li khassek, module b module.', en: 'Solved past papers, mock exam and cheat sheet, module by module.' },
+  'cc.noPaper': { fr: 'Pas encore d\'annale : entraîne-toi avec l\'examen blanc.', dar: 'Mazal ma kayna annale : tdrreb b examen blanc.', en: 'No past paper yet: practise with the mock exam.' },
+  'cc.qcm': { fr: 'QCM', dar: 'QCM', en: 'Quiz' },
+  'home.go': { fr: 'Ouvrir', dar: 'Fte7', en: 'Open' }
 } as const;
 
 export type UIKey = keyof typeof UI;

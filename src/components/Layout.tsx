@@ -78,18 +78,18 @@ export function BrandMark({ small = false }: { small?: boolean }) {
   );
 }
 
-/** Wordmark: GROUP in wide display caps, 22 in a solid green block. */
+/** Wordmark: GROUP in street-sign caps, 22 on a tilted sticker. */
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 font-display font-extrabold uppercase leading-none tracking-[0.08em] ${className}`}>
+    <span className={`inline-flex items-center gap-2 font-sign uppercase leading-none ${className}`}>
       Group
-      <span className="rounded-md bg-fg px-1.5 py-1 font-mono text-[0.78em] font-bold tracking-normal text-bg">22</span>
+      <span className="sticker inline-block rounded-[4px] bg-accent px-1.5 py-1 text-[0.82em] text-white">22</span>
     </span>
   );
 }
 
 /** Small accessible dropdown. Closes on outside click, Escape and navigation. */
-function Dropdown({ label, icon, children, active }: { label: string; icon: string; children: ReactNode; active?: boolean }) {
+function Dropdown({ label, children, active }: { label: string; children: ReactNode; active?: boolean }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { pathname, search } = useLocation();
@@ -108,7 +108,6 @@ function Dropdown({ label, icon, children, active }: { label: string; icon: stri
   return (
     <div className="relative" ref={ref}>
       <button className={`nav-link ${active ? 'nav-link-active' : ''} ${open ? 'text-fg' : ''}`} aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen(!open)}>
-        <Icon name={icon} size={18} />
         {label}
         <Icon name="down" size={14} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
@@ -239,7 +238,7 @@ function UserMenu() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.12 }}
-            className="fixed inset-x-4 top-[4.25rem] z-50 rounded-xl sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 border border-line bg-surface p-2 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)]"
+            className="fixed inset-x-4 top-[4.75rem] z-50 rounded-xl sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-72 border border-line bg-surface p-2 shadow-[0_12px_32px_-12px_rgba(20,36,58,0.25)]"
           >
             {user && (
               <div className="mb-1 flex items-center gap-3 border-b border-line px-3 pb-3 pt-2">
@@ -285,42 +284,38 @@ export function TopBar() {
   const inTools = TOOLS.some((x) => x.to !== '/supports' && pathname.startsWith(x.to));
   const isAdmin = useIsAdmin();
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-bg/80 shadow-[0_1px_0_rgb(var(--accent)/0.15)] backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-2 px-4 sm:px-6">
-        <Link to="/" className="group mr-2 flex shrink-0 items-center gap-3 sm:mr-6" aria-label={t('nav.home')}>
+    <header className="streetbar sticky top-0 z-40">
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center gap-2 px-4 sm:px-6 lg:h-[84px]">
+        <Link to="/" className="group mr-1 flex shrink-0 items-center gap-2 sm:mr-6 sm:gap-3" aria-label={t('nav.home')}>
           <BrandMark />
-          <Wordmark className="hidden text-[1.4rem] min-[360px]:inline-flex" />
+          <Wordmark className="hidden text-[1.05rem] min-[360px]:inline-flex sm:text-[1.35rem] lg:text-[1.6rem]" />
         </Link>
 
         {!locked && (
-          <nav className="hidden items-center gap-0.5 rounded-full border border-line/70 bg-surface/60 p-1 lg:flex" aria-label={t('a11y.menu')}>
+          <nav className="hidden items-center gap-1 lg:flex" aria-label={t('a11y.menu')}>
             <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>
-              <Icon name="home" size={18} />
               {t('nav.home')}
             </NavLink>
             <NavLink to="/supports" className={({ isActive }) => `nav-link ${isActive || pathname.endsWith('/supports') ? 'nav-link-active' : ''}`} data-testid="nav-supports">
-              <Icon name="inbox" size={18} />
               {t('nav.supports')}
             </NavLink>
-            <Dropdown label={t('nav.modules')} icon="grid" active={inModule}>
+            <Dropdown label={t('nav.modules')} active={inModule}>
               {SUBJECTS.map((s) => (
                 <MenuItem key={s.id} to={s.interactive ? `/m/${s.id}` : `/supports?module=${s.id}`} icon={s.icon} title={tl(s.title)} color={s.color} />
               ))}
             </Dropdown>
-            <Dropdown label={t('nav.resources')} icon="tool" active={inTools}>
+            <Dropdown label={t('nav.resources')} active={inTools}>
               {TOOLS.filter((x) => x.to !== '/supports').map((x) => (
                 <MenuItem key={x.to} to={x.to} icon={x.icon} title={t(x.key)} />
               ))}
             </Dropdown>
             {canSeeOral && (
               <NavLink to="/profil/oral" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-oral">
-                <Icon name="mic" size={18} />
                 {t('nav.presentation')}
               </NavLink>
             )}
             {isAdmin && (
               <NavLink to="/admin" className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`} data-testid="nav-admin">
-                <Icon name="settings" size={18} />
                 {t('nav.admin')}
               </NavLink>
             )}

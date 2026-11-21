@@ -23,7 +23,7 @@ export default function ReferencePage() {
   return (
     <div className="space-y-4">
       <PageTitle title={t('ref.title')} />
-      <div className="sticky top-16 z-10 -mx-4 bg-bg/90 px-4 py-2 backdrop-blur">
+      <div className="sticky top-[72px] lg:top-[88px] z-10 -mx-4 bg-bg/90 px-4 py-2 backdrop-blur">
         <label className="relative block">
           <Icon name="search" size={18} className="absolute left-3 top-3 text-muted" />
           <input className="input !pl-10" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('common.search')} aria-label={t('common.search')} autoFocus />

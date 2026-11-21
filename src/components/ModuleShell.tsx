@@ -129,12 +129,12 @@ export default function ModuleShell() {
   const tabs = [{ to: `/m/${id}`, icon: 'compass', key: 'module.overview' as UIKey, end: true }, ...PRACTICE.map((x) => ({ to: `/m/${id}/${x.to}`, icon: x.icon, key: x.key, end: false }))];
   return (
     <div className="lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-8">
-      <aside className="scroll-thin sticky top-24 hidden max-h-[calc(100dvh-7rem)] overflow-y-auto pb-6 pr-1 lg:block" aria-label={tl(data.module.title)}>
+      <aside className="scroll-thin sticky top-28 hidden max-h-[calc(100dvh-7rem)] overflow-y-auto pb-6 pr-1 lg:block" aria-label={tl(data.module.title)}>
         <SidebarBody id={id} data={data} />
       </aside>
 
       {/* mobile: sticky module bar */}
-      <div className="sticky top-16 z-30 -mx-4 mb-4 border-b border-line bg-bg/95 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6 lg:hidden">
+      <div className="sticky top-[72px] z-30 -mx-4 mb-4 border-b border-line bg-bg/95 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6 lg:hidden">
         <div className="flex items-center gap-2">
           <button className="btn-ghost btn-sm shrink-0" onClick={() => setSheet(true)} data-testid="module-contents">
             <Icon name="sidebar" size={15} /> {t('module.contents')}

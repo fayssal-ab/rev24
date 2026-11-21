@@ -101,7 +101,7 @@ export default function OralPage() {
         </select>
         <VoicePicker lang={voice} />
       </div>
-      <div className="sticky top-16 z-20 mb-4 flex gap-1 overflow-x-auto rounded-xl border border-line bg-surface/95 p-1 backdrop-blur">
+      <div className="sticky top-[72px] lg:top-[88px] z-20 mb-4 flex gap-1 overflow-x-auto rounded-xl border border-line bg-surface/95 p-1 backdrop-blur">
         {TABS.map((t) => (
           <button key={t} onClick={() => setTab(t)} className={`flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${tab === t ? 'bg-accent text-white shadow-sm dark:text-bg' : 'text-muted hover:bg-surface2 hover:text-fg'}`}>
             <Icon name={TAB_LABEL[t][1]} size={15} /> {TAB_LABEL[t][0]}

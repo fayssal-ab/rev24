@@ -63,8 +63,12 @@ h1, h2, h3, .font-display { font-family: 'Bricolage Grotesque', system-ui, sans-
   .card { @apply bg-surface border border-line rounded-lg; }
   .card-hover { @apply transition-colors duration-150 hover:border-fg/25 hover:bg-surface; }
   .eyebrow { @apply font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-muted; }
-  .nav-link { @apply inline-flex h-10 items-center gap-2 rounded-full px-4 text-base font-semibold text-muted transition-colors hover:bg-surface2 hover:text-fg; }
-  .nav-link-active { @apply bg-accent text-white shadow-sm hover:bg-accent hover:text-white dark:text-bg; }
+  /* navbar links: condensed poster caps; the active one is a green sticker with a hard shadow */
+  .nav-link { @apply relative inline-flex h-11 items-center gap-2 px-4 font-street text-[1.3rem] uppercase tracking-[0.06em] text-muted transition-[color,transform] duration-150 hover:text-fg; }
+  .nav-link::after { content: ''; position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.3rem; height: 3px; background: rgb(var(--accent2)); transform: scaleX(0) skewX(-20deg); transform-origin: left; transition: transform .18s ease; }
+  .nav-link:hover::after { transform: scaleX(1) skewX(-20deg); }
+  .nav-link-active { @apply -rotate-2 bg-accent text-white hover:text-white; box-shadow: 4px 4px 0 rgb(var(--accent2)); }
+  .nav-link-active::after { display: none; }
   .side-link { @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium text-muted transition-colors hover:bg-surface2 hover:text-fg; }
   .side-link-active { @apply bg-surface2 font-semibold text-fg shadow-[inset_2px_0_0_rgb(var(--accent))] hover:bg-surface2; }
   .icon-tile { @apply grid shrink-0 place-items-center rounded-lg; }
@@ -132,6 +136,21 @@ h1, h2, h3, .font-display { font-family: 'Bricolage Grotesque', system-ui, sans-
 .float-slow { animation: float 8s ease-in-out infinite; animation-delay: -2s; }
 .scroll-thin::-webkit-scrollbar { width: 6px; }
 .scroll-thin::-webkit-scrollbar-thumb { background: rgb(var(--line)); border-radius: 6px; }
+
+/* ---- street header: night-navy slab, its own colour tokens so every child (menus, buttons) follows ---- */
+.streetbar {
+  --bg: 11 36 64; --surface: 16 46 80; --surface2: 24 60 100; --fg: 255 255 255; --muted: 176 196 214; --line: 46 82 120;
+  background-color: #0B2440;
+  background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1.2px);
+  background-size: 6px 6px;
+  color: rgb(var(--fg));
+  border-bottom: 4px solid rgb(var(--accent));
+}
+.dark .streetbar { --bg: 5 14 24; --surface: 12 28 44; --surface2: 20 42 64; background-color: #050E18; }
+.sticker { transform: rotate(-6deg); box-shadow: 3px 3px 0 rgb(var(--accent2)); }
+
+/* temporary "contrôles" board: caution-tape edge */
+.tape { background: repeating-linear-gradient(-45deg, rgb(var(--accent2)) 0 14px, #0B2440 14px 28px); }
 
 /* hide the injected "Powered by Netlify" badge */
 #nl-badge-frame, iframe[id^='nl-badge'], [id*='netlify-badge'] { display: none !important; }

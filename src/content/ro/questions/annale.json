@@ -1,0 +1,109 @@
+[
+ {
+  "id": "ro-60",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle 2022 : nombre de chaînes de longueur 3 de A à F ?",
+   "dar": "2022 : chaînes toul 3 A → F ?",
+   "en": "2022: length-3 chains from A to F?"
+  },
+  "answer": 3,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gPaths",
+   "args": [
+    "A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E",
+    3,
+    "A",
+    "F"
+   ]
+  },
+  "explanation": {
+   "fr": "(M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.",
+   "dar": "3.",
+   "en": "**3**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "matrices",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-61",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle 2022 : coût minimal du réseau des 5 villes ?",
+   "dar": "2022 : coût ACM 5 mdon ?",
+   "en": "2022: minimum cost for the 5 cities?"
+  },
+  "answer": 21,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gMst",
+   "args": [
+    "1 2 3 4 5 | 1-2:3 1-3:5 1-4:11 1-5:9 2-3:3 2-5:8 3-4:9 3-5:10 4-5:7"
+   ]
+  },
+  "explanation": {
+   "fr": "Kruskal : 1–2, 2–3, 4–5, 2–5 → **21**.",
+   "dar": "21.",
+   "en": "**21**."
+  },
+  "wrongExplanations": {
+   "26": {
+    "fr": "Tu as gardé 1–3 qui crée un cycle.",
+    "dar": "1–3 cycle.",
+    "en": "1–3 makes a cycle."
+   }
+  },
+  "tags": [
+   "kruskal",
+   "annale"
+  ]
+ },
+ {
+  "id": "ro-62",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 3,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Contrôle 2022 : durée minimale M → T (minutes) ?",
+   "dar": "2022 : M → T ch7al d d9i9a ?",
+   "en": "2022: minimal M → T time?"
+  },
+  "answer": 23,
+  "tolerance": 0,
+  "compute": {
+   "fn": "gDist",
+   "args": [
+    "M B C D E F T | M>B:5 M>D:8 D>M:8 B>E:15 B>C:6 C>B:6 C>E:17 E>C:17 E>T:11 D>C:1 C>F:8 F>C:8 D>F:14 F>D:14 F>T:6 T>F:6",
+    "M",
+    "T"
+   ]
+  },
+  "explanation": {
+   "fr": "M–D–C–F–T = 8 + 1 + 8 + 6 = **23** → départ 7h52.",
+   "dar": "23 → 7h52.",
+   "en": "**23** → leave 7:52."
+  },
+  "wrongExplanations": {
+   "26": {
+    "fr": "M–B–C–F–T (5 + 6 + 8 + 6) : D → C ne coûte que 1.",
+    "dar": "D → C = 1.",
+    "en": "D → C costs 1."
+   }
+  },
+  "tags": [
+   "dijkstra",
+   "annale"
+  ]
+ }
+]

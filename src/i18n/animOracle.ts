@@ -104,3 +104,34 @@ export const RO_ANIM = {
   end: t('Résultat final', 'Natija', 'Final result'),
   degreeHint: t('Le nombre au-dessus de chaque sommet est son **degré** (nombre d\'arêtes qui le touchent). La somme des degrés = **2 × nombre d\'arêtes**.', 'Raqm fou9 kol sommet howa **degré** dyalo. Majmou3 degrés = **2 × 3adad arêtes**.', 'The number above each vertex is its **degree**. Sum of degrees = **2 × number of edges**.')
 };
+
+export const RO_GAME = {
+  title: t('Graph Arena — joue l\'algorithme', 'Graph Arena — l3eb l\'algorithme', 'Graph Arena — play the algorithm'),
+  modes: {
+    kruskal: t('Kruskal', 'Kruskal', 'Kruskal'),
+    prim: t('Prim', 'Prim', 'Prim'),
+    dijkstra: t('Dijkstra', 'Dijkstra', 'Dijkstra')
+  },
+  goal: {
+    kruskal: t('Clique les arêtes dans l\'ordre de **Kruskal** : la plus petite qui ne crée **pas de cycle**.', 'Cliqui 3la arêtes b tartib **Kruskal** : sghira li ma katdirch **cycle**.', 'Click edges in **Kruskal** order: the smallest one that does **not** close a cycle.'),
+    prim: t('Fais grandir l\'arbre depuis **A** (**Prim**) : clique l\'arête minimale qui sort de l\'arbre.', 'Kbbr l\'arbre mn **A** (**Prim**) : cliqui arête sghira li kharja mn l\'arbre.', 'Grow the tree from **A** (**Prim**): click the cheapest edge leaving the tree.'),
+    dijkstra: t('**Dijkstra** depuis **A** : clique le sommet non fixé de **plus petite distance** ; les voisins se mettent à jour.', '**Dijkstra** mn **A** : cliqui sommet machi fixé li 3ndo **a9al distance**.', '**Dijkstra** from **A**: click the unfixed vertex with the **smallest distance**; neighbours update.')
+  },
+  level: t('Niveau', 'Niveau', 'Level'),
+  score: t('Score', 'Score', 'Score'),
+  best: t('Record', 'Record', 'Best'),
+  combo: t('Combo', 'Combo', 'Combo'),
+  weight: t('Poids de l\'arbre', 'Wazn dyal l\'arbre', 'Tree weight'),
+  errCycle: t('Cycle ! Cette arête relie deux sommets déjà connectés.', 'Cycle ! Had l\'arête katrbet jouj sommets deja mrbouttin.', 'Cycle! This edge joins two already-connected vertices.'),
+  errMin: t('Pas la plus petite : il existe une arête valide de poids', 'Machi sghira : kayna arête valide b wazn', 'Not the smallest: there is a valid edge of weight'),
+  errOut: t('Prim : l\'arête doit toucher l\'arbre (un bout dedans, un bout dehors).', 'Prim : arête khassha tmess l\'arbre (tarf dakhel, tarf barra).', 'Prim: the edge must leave the tree (one end inside, one outside).'),
+  errFixed: t('Ce sommet est déjà fixé.', 'Had sommet deja fixé.', 'This vertex is already fixed.'),
+  errDist: t('Pas le minimum : un sommet non fixé a une distance de', 'Machi a9al : kayn sommet b distance', 'Not the minimum: an unfixed vertex has distance'),
+  levelDone: t('Niveau réussi !', 'Niveau tsala !', 'Level cleared!'),
+  next: t('Niveau suivant', 'Niveau jay', 'Next level'),
+  over: t('Game over', 'Game over', 'Game over'),
+  retry: t('Rejouer', '3awed', 'Play again'),
+  newRecord: t('Nouveau record !', 'Record jdid !', 'New record!'),
+  timeBonus: t('Bonus temps', 'Bonus wa9t', 'Time bonus'),
+  hint: t('Indice', 'Indice', 'Hint')
+};

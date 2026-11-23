@@ -3,17 +3,32 @@
  "module": "ro",
  "order": 7,
  "title": {
-  "fr": "Annale — Contrôle continu RO 2025-2026 corrigé",
-  "dar": "Annale — Contrôle RO 2025-2026 m-corrigé",
-  "en": "Past paper — RO mid-term 2025-2026 solved"
+  "fr": "Annales — Contrôles RO 2025-2026 et 2022 corrigés",
+  "dar": "Annales — Contrôles RO 2025 w 2022 m-corrigyin",
+  "en": "Past papers — RO tests 2025-2026 and 2022 solved"
  },
  "summary": {
-  "fr": "Le contrôle du 28/11/2025 (1h30) : énoncé et correction détaillée des 3 exercices, avec les graphes animés.",
-  "dar": "Contrôle 28/11/2025 : énoncé w correction kamla.",
-  "en": "The 28/11/2025 test: statement and full solution of the 3 exercises."
+  "fr": "Deux vrais contrôles : 28/11/2025 (1h30) et 16/12/2022 (Pr. Benouahmane), énoncés et corrections détaillées avec graphes animés, plus le jeu Graph Arena pour s'entraîner.",
+  "dar": "Jouj contrôles d sa7 : 28/11/2025 w 16/12/2022, b correction kamla w graphes animés, w l-game Graph Arena.",
+  "en": "Two real tests: 28/11/2025 (1h30) and 16/12/2022, full solutions with animated graphs, plus the Graph Arena game."
  },
- "estimatedMinutes": 60,
+ "estimatedMinutes": 90,
  "sections": [
+  {
+   "type": "animation",
+   "component": "GraphArena",
+   "props": {
+    "mode": "kruskal"
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Contrôle 2025-2026 (28/11/2025)",
+    "dar": "Contrôle 2025-2026 (28/11/2025)",
+    "en": "Test 2025-2026 (28/11/2025)"
+   }
+  },
   {
    "type": "heading",
    "body": {
@@ -294,6 +309,631 @@
     "dar": "Ex 1 = 6, Ex 2 = 8 (A **wla** B), Ex 3 = 6. 1h30.",
     "en": "Ex. 1 = 6, Ex. 2 = 8 (part A **or** B), Ex. 3 = 6. 1h30."
    }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Contrôle du 16 décembre 2022 (Pr. Benouahmane)",
+    "dar": "Contrôle 16/12/2022 (Pr. Benouahmane)",
+    "en": "Test of 16 December 2022 (Pr. Benouahmane)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Trois exercices : **graphe non orienté** (complet, connexe, Euler, matrice, M³), **arbre couvrant minimal** de 5 villes, **plus court chemin** pour partir le plus tard possible.",
+    "dar": "Tlata d exercices : **graphe** (complet, connexe, Euler, matrice, M³), **ACM** dyal 5 mdon, **a9sar tri9** bach tkhrej m3etel.",
+    "en": "Three exercises: **undirected graph** (complete, connected, Euler, matrix, M³), **minimum spanning tree** of 5 cities, **shortest path** to leave as late as possible."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 1 — G = (S, V), S = {A, …, F}",
+    "dar": "Exercice 1 — G = (S, V)",
+    "en": "Exercise 1 — G = (S, V)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 sommets, 8 arêtes**.",
+    "dar": "V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 sommets, 8 arêtes**.",
+    "en": "V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 vertices, 8 edges**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E",
+    "algo": "degrees",
+    "pos": {
+     "A": [
+      10,
+      50
+     ],
+     "B": [
+      40,
+      10
+     ],
+     "C": [
+      80,
+      10
+     ],
+     "D": [
+      40,
+      90
+     ],
+     "E": [
+      80,
+      90
+     ],
+     "F": [
+      10,
+      92
+     ]
+    },
+    "title": "Contrôle 2022 — Exercice 1 (degrés)"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Correction exercice 1",
+    "dar": "Correction exercice 1",
+    "en": "Exercise 1 solution"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — Représentation",
+      "dar": "Q1 — Rsem",
+      "en": "Q1 — Drawing"
+     },
+     "body": {
+      "fr": "Placer les 6 sommets puis tracer les 8 arêtes (voir le graphe animé). Degrés : **A 3, B 4, C 2, D 4, E 2, F 1** (somme 16 = 2 × 8 ✓).",
+      "dar": "Rsem 6 sommets w 8 arêtes. Degrés : **A 3, B 4, C 2, D 4, E 2, F 1** (16 = 2 × 8 ✓).",
+      "en": "Draw 6 vertices and 8 edges. Degrees: **A 3, B 4, C 2, D 4, E 2, F 1** (16 = 2 × 8 ✓)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2 — Complet ?",
+      "dar": "Q2 — Complet ?",
+      "en": "Q2 — Complete?"
+     },
+     "body": {
+      "fr": "**Non** : K6 a 6 × 5 / 2 = 15 arêtes, G n'en a que 8 (il en manque 7). Exemple : A et C ne sont pas adjacents.",
+      "dar": "**La** : K6 fih 15 arête, G fih 8 ghir (na9sin 7). Mithal : A w C machi jiran.",
+      "en": "**No**: K6 has 15 edges, G only 8 (7 missing). E.g. A and C are not adjacent."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q3 — Connexe ?",
+      "dar": "Q3 — Connexe ?",
+      "en": "Q3 — Connected?"
+     },
+     "body": {
+      "fr": "**Oui** : depuis A on atteint tous les sommets — A–B, A–B–C, A–D, A–B–E, A–F. Il existe donc une chaîne entre toute paire de sommets (on passe par A).",
+      "dar": "**Ah** : mn A nwslo l kolchi — A–B, A–B–C, A–D, A–B–E, A–F. Donc kayna chaîne bin ay jouj sommets.",
+      "en": "**Yes**: from A we reach every vertex — A–B, A–B–C, A–D, A–B–E, A–F, so any two vertices are joined through A."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q4 — Pas de cycle eulérien",
+      "dar": "Q4 — Bla cycle eulérien",
+      "en": "Q4 — No Eulerian cycle"
+     },
+     "body": {
+      "fr": "Théorème d'Euler : cycle eulérien ⇔ connexe **et tous les degrés pairs**. Or d(A) = 3 et d(F) = 1 sont **impairs** → **pas de cycle eulérien**. (Bonus : 2 sommets impairs → chaîne eulérienne de F à A : F–A–B–C–D–E–B–D–A.)",
+      "dar": "Euler : cycle ⇔ connexe **w kol degré pair**. Walakin d(A) = 3 w d(F) = 1 **impairs** → **ma kaynch**. (Bonus : chaîne F–A–B–C–D–E–B–D–A.)",
+      "en": "Euler: cycle ⇔ connected **and all degrees even**. d(A) = 3, d(F) = 1 are **odd** → **no Eulerian cycle**. (Bonus: Euler chain F–A–B–C–D–E–B–D–A.)"
+     }
+    },
+    {
+     "title": {
+      "fr": "Q5 — Matrice d'adjacence",
+      "dar": "Q5 — Matrice",
+      "en": "Q5 — Adjacency matrix"
+     },
+     "body": {
+      "fr": "Ordre A, B, C, D, E, F ; mij = 1 si arête, 0 sinon. Symétrique, diagonale nulle (voir le tableau ci-dessous).",
+      "dar": "Tartib A…F ; 1 ila kayna arête, 0 ila la. Symétrique, diagonale 0.",
+      "en": "Order A…F; 1 if edge, else 0. Symmetric, zero diagonal (table below)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q6 — Chaînes de longueur 3 de A à F",
+      "dar": "Q6 — Chaînes toul 3 A → F",
+      "en": "Q6 — Length-3 chains A to F"
+     },
+     "body": {
+      "fr": "(M³)AF = **3** (ligne A, colonne F) → il y a **3 chaînes**. F n'a qu'un voisin (A), donc la chaîne finit par …–A–F ; elle est de la forme A–x–A–F avec x voisin de A : **A–B–A–F, A–D–A–F, A–F–A–F**.",
+      "dar": "(M³)AF = **3** → **3 chaînes**. F 3ndo ghir jar wa7ed (A), donc A–x–A–F : **A–B–A–F, A–D–A–F, A–F–A–F**.",
+      "en": "(M³)AF = **3** → **3 chains**. F only touches A, so A–x–A–F: **A–B–A–F, A–D–A–F, A–F–A–F**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "M",
+     "dar": "M",
+     "en": "M"
+    },
+    {
+     "fr": "A",
+     "dar": "A",
+     "en": "A"
+    },
+    {
+     "fr": "B",
+     "dar": "B",
+     "en": "B"
+    },
+    {
+     "fr": "C",
+     "dar": "C",
+     "en": "C"
+    },
+    {
+     "fr": "D",
+     "dar": "D",
+     "en": "D"
+    },
+    {
+     "fr": "E",
+     "dar": "E",
+     "en": "E"
+    },
+    {
+     "fr": "F",
+     "dar": "F",
+     "en": "F"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**A**",
+      "dar": "**A**",
+      "en": "**A**"
+     },
+     "0",
+     "1",
+     "0",
+     "1",
+     "0",
+     "1"
+    ],
+    [
+     {
+      "fr": "**B**",
+      "dar": "**B**",
+      "en": "**B**"
+     },
+     "1",
+     "0",
+     "1",
+     "1",
+     "1",
+     "0"
+    ],
+    [
+     {
+      "fr": "**C**",
+      "dar": "**C**",
+      "en": "**C**"
+     },
+     "0",
+     "1",
+     "0",
+     "1",
+     "0",
+     "0"
+    ],
+    [
+     {
+      "fr": "**D**",
+      "dar": "**D**",
+      "en": "**D**"
+     },
+     "1",
+     "1",
+     "1",
+     "0",
+     "1",
+     "0"
+    ],
+    [
+     {
+      "fr": "**E**",
+      "dar": "**E**",
+      "en": "**E**"
+     },
+     "0",
+     "1",
+     "0",
+     "1",
+     "0",
+     "0"
+    ],
+    [
+     {
+      "fr": "**F**",
+      "dar": "**F**",
+      "en": "**F**"
+     },
+     "1",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0"
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Une **chaîne** peut repasser par un sommet ou une arête : A–F–A–F compte ! Le coefficient de M³ compte **toutes** les chaînes de longueur 3, pas seulement les élémentaires.",
+    "dar": "**Chaîne** t9der t3awed tdouz 3la sommet : A–F–A–F kat7seb ! M³ kat7seb **kolchi**.",
+    "en": "A **chain** may revisit vertices/edges: A–F–A–F counts! M³ counts **all** length-3 chains."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 2 — Réseau de routes de coût minimum (5 villes)",
+    "dar": "Exercice 2 — ACM dyal 5 mdon",
+    "en": "Exercise 2 — Minimum-cost road network (5 cities)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Connecter **toutes** les villes au moindre coût = **arbre couvrant de poids minimal** → **Kruskal**. c2,4 = +∞ : pas de route possible entre 2 et 4. 5 villes → **4 routes**.",
+    "dar": "Nrbtou **kol** mdon b a9al taman = **ACM** → **Kruskal**. c2,4 = +∞ : bla route. 5 mdon → **4 routes**.",
+    "en": "Connect **all** cities at minimum cost = **minimum spanning tree** → **Kruskal**. c2,4 = +∞: no road. 5 cities → **4 roads**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "1 2 3 4 5 | 1-2:3 1-3:5 1-4:11 1-5:9 2-3:3 2-5:8 3-4:9 3-5:10 4-5:7",
+    "algo": "kruskal",
+    "title": "Contrôle 2022 — Kruskal (coût 21)"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Poids",
+     "dar": "Poids",
+     "en": "Poids"
+    },
+    {
+     "fr": "Route",
+     "dar": "Route",
+     "en": "Route"
+    },
+    {
+     "fr": "Décision",
+     "dar": "Décision",
+     "en": "Décision"
+    }
+   ],
+   "rows": [
+    [
+     "3",
+     "1–2",
+     "✓"
+    ],
+    [
+     "3",
+     "2–3",
+     "✓"
+    ],
+    [
+     "5",
+     "1–3",
+     {
+      "fr": "✗ cycle 1–2–3",
+      "dar": "✗ cycle 1–2–3",
+      "en": "✗ cycle 1–2–3"
+     }
+    ],
+    [
+     "7",
+     "4–5",
+     "✓"
+    ],
+    [
+     "8",
+     "2–5",
+     {
+      "fr": "✓ → 4 routes, stop",
+      "dar": "✓ → 4 routes, safi",
+      "en": "✓ → 4 roads, stop"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Réseau : **{1,2}, {2,3}, {4,5}, {2,5}** ; coût minimal **3 + 3 + 7 + 8 = 21**.",
+    "dar": "Réseau : **{1,2}, {2,3}, {4,5}, {2,5}** ; coût **21**.",
+    "en": "Network: **{1,2}, {2,3}, {4,5}, {2,5}**; minimum cost **21**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 3 — Partir le plus tard possible (arriver à 8h15)",
+    "dar": "Exercice 3 — Khrej m3etel (wsel 8h15)",
+    "en": "Exercise 3 — Leave as late as possible (arrive 8:15)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Partir **le plus tard** possible en arrivant à 8h15 = mettre **le moins de temps** possible = **plus court chemin** de M à T. Temps ≥ 0 → **Dijkstra**. Attention : c'est un graphe **orienté** (M→B existe, B→M non ; D→C existe, C→D non).",
+    "dar": "Tkhrej **m3etel** w twsel 8h15 = **a9al wa9t** = **a9sar tri9** mn M l T. Wa9t ≥ 0 → **Dijkstra**. Rd lbal : graphe **orienté** (M→B ah, B→M la).",
+    "en": "Leave **as late** as possible = spend the **least time** = **shortest path** M → T. Times ≥ 0 → **Dijkstra**. Careful: the graph is **directed**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "GraphAlgo",
+   "props": {
+    "graph": "M B C D E F T | M>B:5 M>D:8 D>M:8 B>E:15 B>C:6 C>B:6 C>E:17 E>C:17 E>T:11 D>C:1 C>F:8 F>C:8 D>F:14 F>D:14 F>T:6 T>F:6",
+    "algo": "dijkstra",
+    "start": "M",
+    "target": "T",
+    "pos": {
+     "M": [
+      2,
+      50
+     ],
+     "B": [
+      26,
+      10
+     ],
+     "C": [
+      48,
+      50
+     ],
+     "D": [
+      26,
+      90
+     ],
+     "E": [
+      72,
+      10
+     ],
+     "F": [
+      72,
+      90
+     ],
+     "T": [
+      98,
+      50
+     ]
+    },
+    "title": "Contrôle 2022 — Dijkstra M → T (23 min)"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Fixé",
+     "dar": "Fixé",
+     "en": "Fixé"
+    },
+    {
+     "fr": "M",
+     "dar": "M",
+     "en": "M"
+    },
+    {
+     "fr": "B",
+     "dar": "B",
+     "en": "B"
+    },
+    {
+     "fr": "C",
+     "dar": "C",
+     "en": "C"
+    },
+    {
+     "fr": "D",
+     "dar": "D",
+     "en": "D"
+    },
+    {
+     "fr": "E",
+     "dar": "E",
+     "en": "E"
+    },
+    {
+     "fr": "F",
+     "dar": "F",
+     "en": "F"
+    },
+    {
+     "fr": "T",
+     "dar": "T",
+     "en": "T"
+    }
+   ],
+   "rows": [
+    [
+     "—",
+     {
+      "fr": "**0**",
+      "dar": "**0**",
+      "en": "**0**"
+     },
+     "∞",
+     "∞",
+     "∞",
+     "∞",
+     "∞",
+     "∞"
+    ],
+    [
+     "M (0)",
+     "",
+     "5;M",
+     "∞",
+     "8;M",
+     "∞",
+     "∞",
+     "∞"
+    ],
+    [
+     "B (5)",
+     "",
+     "",
+     "11;B",
+     "8;M",
+     "20;B",
+     "∞",
+     "∞"
+    ],
+    [
+     "D (8)",
+     "",
+     "",
+     {
+      "fr": "**9;D**",
+      "dar": "**9;D**",
+      "en": "**9;D**"
+     },
+     "",
+     "20;B",
+     "22;D",
+     "∞"
+    ],
+    [
+     "C (9)",
+     "",
+     "",
+     "",
+     "",
+     "20;B",
+     {
+      "fr": "**17;C**",
+      "dar": "**17;C**",
+      "en": "**17;C**"
+     },
+     "∞"
+    ],
+    [
+     "F (17)",
+     "",
+     "",
+     "",
+     "",
+     "20;B",
+     "",
+     "23;F"
+    ],
+    [
+     "E (20)",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     {
+      "fr": "23;F (31 > 23)",
+      "dar": "23;F (31 > 23)",
+      "en": "23;F (31 > 23)"
+     }
+    ],
+    [
+     "T (23)",
+     "",
+     "",
+     "",
+     "",
+     "",
+     "",
+     {
+      "fr": "**23;F**",
+      "dar": "**23;F**",
+      "en": "**23;F**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Lecture du résultat",
+    "dar": "Natija",
+    "en": "Reading the result"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Q1 — Chemin",
+      "dar": "Q1 — Tri9",
+      "en": "Q1 — Path"
+     },
+     "body": {
+      "fr": "À rebours : T ← F ← C ← D ← M → **M – D – C – F – T** = 8 + 1 + 8 + 6 = **23 minutes**.",
+      "dar": "Rje3 : T ← F ← C ← D ← M → **M–D–C–F–T** = **23 min**.",
+      "en": "Backtrack: T ← F ← C ← D ← M → **M–D–C–F–T** = **23 minutes**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Q2 — Heure de départ",
+      "dar": "Q2 — Wa9t lkhrouj",
+      "en": "Q2 — Departure time"
+     },
+     "body": {
+      "fr": "8h15 − 23 min = **7h52**.",
+      "dar": "8h15 − 23 min = **7h52**.",
+      "en": "8:15 − 23 min = **7:52**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Le piège : M–B (5) semble meilleur au départ, mais B → C coûte 6 (C à 11) alors que D → C ne coûte que **1** (C à 9). Ne jamais choisir « à l'œil » : suivre le tableau.",
+    "dar": "Lfekh : M–B (5) yban a7san, walakin D → C ghir **1** (C = 9 machi 11). Tbe3 tableau, machi l3in.",
+    "en": "Trap: M–B (5) looks better, but D → C costs only **1** (C = 9, not 11). Follow the table, not your eye."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Rédaction attendue : « Graphe orienté à poids positifs, on cherche le plus court chemin depuis une source → **Dijkstra**. » puis le tableau, le chemin et l'heure.",
+    "dar": "Ktb : « Graphe orienté, poids ≥ 0, a9sar tri9 mn source → **Dijkstra**. » mn ba3d tableau, tri9 w sa3a.",
+    "en": "Expected wording: \"Directed graph, non-negative weights, single-source shortest path → **Dijkstra**\", then the table, the path and the time."
+   }
   }
  ],
  "keyPoints": [
@@ -311,6 +951,16 @@
    "fr": "Ex. 3 : 4, 3, 3, 2, 1 impossible ; M⁴ → 1, 3, 3 et trace 8.",
    "dar": "Ex. 3.",
    "en": "Ex. 3 answers."
+  },
+  {
+   "fr": "2022 : G non complet (manque 7), connexe, pas de cycle eulérien (A et F impairs), (M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.",
+   "dar": "2022 Ex. 1.",
+   "en": "2022 Ex. 1 answers."
+  },
+  {
+   "fr": "2022 : Kruskal 5 villes → {1,2}, {2,3}, {4,5}, {2,5}, coût 21 ; Dijkstra M → T = M–D–C–F–T, 23 min, départ 7h52.",
+   "dar": "2022 : 21 ; 23 min ; 7h52.",
+   "en": "2022: MST 21; M → T 23 min; leave 7:52."
   }
  ]
 }

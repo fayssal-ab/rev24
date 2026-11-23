@@ -167,6 +167,13 @@
    }
   },
   {
+   "type": "animation",
+   "component": "GraphArena",
+   "props": {
+    "mode": "kruskal"
+   }
+  },
+  {
    "type": "callout",
    "kind": "exam",
    "body": {

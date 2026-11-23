@@ -125,6 +125,13 @@
    }
   },
   {
+   "type": "animation",
+   "component": "GraphArena",
+   "props": {
+    "mode": "dijkstra"
+   }
+  },
+  {
    "type": "steps",
    "title": {
     "fr": "Contrôle 2025, partie B : de B à E",

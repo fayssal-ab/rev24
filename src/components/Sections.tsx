@@ -24,8 +24,12 @@ const CALLOUT: Record<string, { icon: string; cls: string; head: string; key: UI
 /** Table cells: `$…$` is typeset with KaTeX, plain numbers stay readable, other strings are code-like. */
 const TEX_CELL = /^\$[^$]+\$$/;
 const NUM_CELL = /^[\d\s,.∞%()+=−–-]+$/;
-function cellClass(c: unknown): string {
-  if (typeof c !== 'string') return '';
+const MARK_CELL = /^\s*([✓✗])/;
+/** Same look in every module (the data-analysis tables): first column = key (accent), code cells in mono colour, ✓ / ✗ in green / red. */
+function cellClass(c: unknown, col = 1): string {
+  if (typeof c !== 'string') return col === 0 ? 'font-semibold text-accent2' : '';
+  const m = MARK_CELL.exec(c);
+  if (m) return `font-mono font-bold text-[13.5px] lg:text-[15px] ${m[1] === '✓' ? 'text-ok' : 'text-bad'}`;
   if (TEX_CELL.test(c)) return 'whitespace-nowrap text-[15px] text-fg lg:text-[17px]';
   if (NUM_CELL.test(c)) return 'font-mono tabular-nums text-[13.5px] text-fg lg:text-[15px]';
   return 'font-mono text-[13px] text-accent2 lg:text-[14.5px]';
@@ -255,9 +259,9 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
             </thead>
             <tbody>
               {s.rows.map((r, i) => (
-                <tr key={i} className="border-t border-line align-middle even:bg-surface2/30">
+                <tr key={i} className="border-t border-line align-middle transition-colors even:bg-surface2/30 hover:bg-accent/5">
                   {r.map((c, j) => (
-                    <td key={j} className={`px-3 py-2.5 ${cellClass(c)}`}>
+                    <td key={j} className={`px-3 py-2.5 ${cellClass(c, j)}`}>
                       {typeof c !== 'string' ? <L v={c} /> : TEX_CELL.test(c) ? <Tex tex={c.slice(1, -1)} /> : c}
                     </td>
                   ))}

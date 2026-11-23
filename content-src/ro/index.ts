@@ -5,6 +5,9 @@ import type { Module, Chapter, Question, Exercise, Flashcard, RefEntry } from '.
 const CC = 'A B C D E F | A-C:4 A-D:3 A-E:7 A-F:2 B-C:9 B-D:5 C-D:2 C-F:3 D-E:12 D-F:5 E-F:3';
 const EX1 = 'A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G';
 const DIR3 = '1 2 3 | 1>2 1>3 2>1 2>3 3>1';
+const C22 = 'A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E';
+const VILLES = '1 2 3 4 5 | 1-2:3 1-3:5 1-4:11 1-5:9 2-3:3 2-5:8 3-4:9 3-5:10 4-5:7';
+const TRAJET = 'M B C D E F T | M>B:5 M>D:8 D>M:8 B>E:15 B>C:6 C>B:6 C>E:17 E>C:17 E>T:11 D>C:1 C>F:8 F>C:8 D>F:14 F>D:14 F>T:6 T>F:6';
 const PRIM9 = '1 2 3 4 5 6 7 8 9 | 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10';
 
 const chap = (id: string, order: number, title: T, summary: T, sections: Chapter['sections'], keyPoints: T[]): Chapter => ({
@@ -216,6 +219,35 @@ E.push(
     ['(M^4)11 = 4 ; trace(M^4) = 8.', '4 ; 8.', '4; 8.'], [['Calculer 4 × M au lieu de M^4.', '4M.', 'Computing 4M.']],
     { checks: [{ compute: { fn: 'gPaths', args: [DIR3, 4, '1', '1'] }, expect: 4, tolerance: 0 }, { compute: { fn: 'gTracePow', args: [DIR3, 4] }, expect: 8, tolerance: 0 }] })
 );
+E.push(
+  ex('ro-x-6', 2, ['Contrôle 2022 — Exercice 1 : graphe A–F', 'Contrôle 2022 — Exercice 1', 'Test 2022 — Exercise 1: graph A–F'],
+    ['G = (S, V), S = {A, B, C, D, E, F}, V = {{A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E}}. 1) Représenter G. 2) Complet ? 3) Connexe ? 4) Justifier l\'absence de cycle eulérien. 5) Matrice d\'adjacence M (ordre alphabétique). 6) Sachant (M³)AF = 3, donner toutes les chaînes de longueur 3 de A à F.', 'G = (S, V) b 6 sommets w 8 arêtes : complet ? connexe ? Euler ? matrice ? chaînes toul 3 mn A l F ?', 'G with 6 vertices and 8 edges: complete? connected? Euler? matrix? all length-3 chains from A to F?'],
+    [['Commence par les degrés.', 'Bda b degrés.', 'Start with the degrees.'], ['F n\'a qu\'un seul voisin.', 'F 3ndo jar wa7ed.', 'F has a single neighbour.']],
+    [{ t: ['Q1–Q4', 'Q1–Q4', 'Q1–Q4'], b: ['Degrés A3 B4 C2 D4 E2 F1. Non complet (8 < 15). Connexe (tout est relié à A). A et F impairs → pas de cycle eulérien.', 'A3 B4 C2 D4 E2 F1 ; machi complet ; connexe ; A w F impairs.', 'A3 B4 C2 D4 E2 F1; not complete; connected; A and F odd.'] }, { t: ['Q5–Q6', 'Q5–Q6', 'Q5–Q6'], b: ['M = [[0,1,0,1,0,1],[1,0,1,1,1,0],[0,1,0,1,0,0],[1,1,1,0,1,0],[0,1,0,1,0,0],[1,0,0,0,0,0]]. (M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.', 'M ; 3 chaînes.', 'M; 3 chains.'] }],
+    ['Non complet, connexe, pas de cycle eulérien ; chaînes A–B–A–F, A–D–A–F, A–F–A–F.', 'Jawab.', 'See answers.'], [['Oublier A–F–A–F (une chaîne peut repasser par une arête).', 'Nsit A–F–A–F.', 'Forgetting A–F–A–F.'], ['Dire « connexe » sans montrer de chaînes.', 'Connexe bla tbrir.', 'Claiming connected without chains.']],
+    { checks: [{ compute: { fn: 'gPaths', args: [C22, 3, 'A', 'F'] }, expect: 3, tolerance: 0 }, { compute: { fn: 'gMissing', args: [C22] }, expect: 7, tolerance: 0 }, { compute: { fn: 'gOddCount', args: [C22] }, expect: 2, tolerance: 0 }] }),
+  ex('ro-x-7', 3, ['Contrôle 2022 — Exercice 2 : routes de coût minimum', 'Contrôle 2022 — Exercice 2', 'Test 2022 — Exercise 2: minimum-cost roads'],
+    ['5 villes ; coûts c12 = 3, c13 = 5, c14 = 11, c15 = 9, c23 = 3, c24 = +∞, c25 = 8, c34 = 9, c35 = 10, c45 = 7. Trouver le réseau de routes de coût minimum reliant toutes les villes.', '5 mdon, matrice C : l9a réseau b a9al taman.', '5 cities, cost matrix C: find the cheapest network connecting them all.'],
+    [['C\'est un arbre couvrant minimal : 4 routes.', 'ACM : 4 routes.', 'An MST: 4 roads.'], ['+∞ = route impossible.', '+∞ = bla route.', '+∞ = no road.']],
+    [{ t: ['Kruskal', 'Kruskal', 'Kruskal'], b: ['1–2 (3) ✓ · 2–3 (3) ✓ · 1–3 (5) ✗ cycle · 4–5 (7) ✓ · 2–5 (8) ✓ → 4 routes.', 'Tableau Kruskal.', 'Kruskal table.'] }, { t: ['Coût', 'Coût', 'Cost'], b: ['3 + 3 + 7 + 8 = **21**.', '**21**.', '**21**.'] }],
+    ['Réseau {1,2}, {2,3}, {4,5}, {2,5} ; coût **21**.', '21.', 'Cost **21**.'], [['Prendre 1–3 (5) qui ferme le cycle 1–2–3.', '1–3 cycle.', 'Taking 1–3 (cycle).'], ['Utiliser la route 2–4 (+∞).', '2–4 ma kaynach.', 'Using road 2–4.']],
+    { checks: [{ compute: { fn: 'gMst', args: [VILLES] }, expect: 21, tolerance: 0 }] }),
+  ex('ro-x-8', 3, ['Contrôle 2022 — Exercice 3 : partir le plus tard', 'Contrôle 2022 — Exercice 3', 'Test 2022 — Exercise 3: leave as late as possible'],
+    ['Réseau orienté (minutes) : M→B 5, M⇄D 8, B→E 15, B⇄C 6, C⇄E 17, E→T 11, D→C 1, C⇄F 8, D⇄F 14, F⇄T 6. Arriver en T à 8h15 en partant le plus tard possible de M : chemin (algorithme justifié, tableau) et heure de départ.', 'Réseau orienté : a9sar tri9 mn M l T, w sa3a dyal lkhrouj (wsel 8h15).', 'Directed network: shortest M → T path and departure time (arrive 8:15).'],
+    [['Partir le plus tard = trajet le plus court.', 'M3etel = a9sar tri9.', 'Latest departure = shortest trip.'], ['Poids positifs → Dijkstra.', 'Poids ≥ 0 → Dijkstra.', 'Non-negative → Dijkstra.']],
+    [{ t: ['Dijkstra depuis M', 'Dijkstra mn M', 'Dijkstra from M'], b: ['Fixe M(0) : B 5, D 8. Fixe B(5) : C 11, E 20. Fixe D(8) : C 9 (via D), F 22. Fixe C(9) : F 17. Fixe F(17) : T 23. Fixe E(20) : T reste 23. Fixe T(23).', 'Tableau.', 'Table.'] }, { t: ['Résultat', 'Natija', 'Result'], b: ['**M–D–C–F–T = 23 min** → départ **7h52**.', '**23 min** → **7h52**.', '**23 min** → leave **7:52**.'] }],
+    ['M–D–C–F–T, 23 minutes, départ à **7h52**.', '7h52.', 'Leave at **7:52**.'], [['Partir par B parce que 5 < 8.', 'B 7it 5 < 8.', 'Going via B because 5 < 8.'], ['Emprunter C→D (sens interdit).', 'C→D mamnou3.', 'Using C→D (not allowed).']],
+    { checks: [{ compute: { fn: 'gDist', args: [TRAJET, 'M', 'T'] }, expect: 23, tolerance: 0 }] })
+);
+Q.push(
+  num('ro-60', 2, ['Contrôle 2022 : nombre de chaînes de longueur 3 de A à F ?', '2022 : chaînes toul 3 A → F ?', '2022: length-3 chains from A to F?'], 3, 0, ['(M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.', '3.', '**3**.'], {}, ['matrices', 'annale'], { fn: 'gPaths', args: [C22, 3, 'A', 'F'] }),
+  num('ro-61', 3, ['Contrôle 2022 : coût minimal du réseau des 5 villes ?', '2022 : coût ACM 5 mdon ?', '2022: minimum cost for the 5 cities?'], 21, 0, ['Kruskal : 1–2, 2–3, 4–5, 2–5 → **21**.', '21.', '**21**.'], { '26': ['Tu as gardé 1–3 qui crée un cycle.', '1–3 cycle.', '1–3 makes a cycle.'] }, ['kruskal', 'annale'], { fn: 'gMst', args: [VILLES] }),
+  num('ro-62', 3, ['Contrôle 2022 : durée minimale M → T (minutes) ?', '2022 : M → T ch7al d d9i9a ?', '2022: minimal M → T time?'], 23, 0, ['M–D–C–F–T = 8 + 1 + 8 + 6 = **23** → départ 7h52.', '23 → 7h52.', '**23** → leave 7:52.'], { '26': ['M–B–C–F–T (5 + 6 + 8 + 6) : D → C ne coûte que 1.', 'D → C = 1.', 'D → C costs 1.'] }, ['dijkstra', 'annale'], { fn: 'gDist', args: [TRAJET, 'M', 'T'] })
+);
+F.push(
+  fc('fc-ro-23', ['Contrôle 2022 : pourquoi pas de cycle eulérien ?', '2022 : 3lach bla cycle eulérien ?', '2022: why no Eulerian cycle?'], ['d(A) = 3 et d(F) = 1 impairs.', 'A w F impairs.', 'A and F have odd degree.']),
+  fc('fc-ro-24', ['Contrôle 2022 : départ le plus tard ?', '2022 : imta ykhrej ?', '2022: latest departure?'], ['M–D–C–F–T = 23 min → 7h52.', '7h52.', '7:52.'])
+);
 F.push(fc('fc-ro-22', ['Contrôle : degrés 4,3,3,2,1 ?', 'Degrés 4,3,3,2,1 ?', 'Degrees 4,3,3,2,1?'], ['Impossible : somme 13 impaire.', 'Impossible.', 'Impossible: odd sum.']));
 const c7 = chap('annale', 7, ['Annales : contrôle continu 2025-2026', 'Annales 2025-2026', 'Past exam 2025-2026'], ['Contrôle du 28/11/2025 (1h30) corrigé.', 'Contrôle m-sa7e7.', 'Corrected exam of 28/11/2025.'], [
   h(['Énoncé', 'Énoncé', 'Statement']),
@@ -241,6 +273,13 @@ export const module: Module = {
       minutes: 90,
       intro: L(['1h30, calculatrice autorisée. Exercice 2 : traiter la Partie A **ou** la Partie B.', '1h30. Partie A wla B.', '1h30, calculator allowed. Exercise 2: Part A **or** Part B.']),
       parts: [{ exerciseId: 'ro-x-4', points: 6 }, { exerciseId: 'ro-x-1', points: 8, group: 'A' }, { exerciseId: 'ro-x-3', points: 8, group: 'B' }, { exerciseId: 'ro-x-5', points: 6 }]
+    },
+    {
+      id: 'cc-2022',
+      title: L(['Contrôle du 16/12/2022 (Pr. Benouahmane)', 'Contrôle 16/12/2022', 'Test of 16/12/2022']),
+      minutes: 90,
+      intro: L(['3 exercices : graphe et matrice (M³), arbre couvrant minimal (5 villes), Dijkstra sur un graphe orienté. Rapporter les tableaux.', '3 exercices : graphe w M³, ACM, Dijkstra orienté. Ktb tableaux.', '3 exercises: graph and M³, MST (5 cities), Dijkstra on a directed graph. Show the tables.']),
+      parts: [{ exerciseId: 'ro-x-6', points: 8 }, { exerciseId: 'ro-x-7', points: 6 }, { exerciseId: 'ro-x-8', points: 6 }]
     }
   ],
   weights: { defs: 4, matrices: 4, arbres: 3, dijkstra: 3, euler: 2, particuliers: 1, annale: 2 }

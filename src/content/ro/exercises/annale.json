@@ -168,5 +168,279 @@
     "tolerance": 0
    }
   ]
+ },
+ {
+  "id": "ro-x-6",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Contrôle 2022 — Exercice 1 : graphe A–F",
+   "dar": "Contrôle 2022 — Exercice 1",
+   "en": "Test 2022 — Exercise 1: graph A–F"
+  },
+  "statement": {
+   "fr": "G = (S, V), S = {A, B, C, D, E, F}, V = {{A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E}}. 1) Représenter G. 2) Complet ? 3) Connexe ? 4) Justifier l'absence de cycle eulérien. 5) Matrice d'adjacence M (ordre alphabétique). 6) Sachant (M³)AF = 3, donner toutes les chaînes de longueur 3 de A à F.",
+   "dar": "G = (S, V) b 6 sommets w 8 arêtes : complet ? connexe ? Euler ? matrice ? chaînes toul 3 mn A l F ?",
+   "en": "G with 6 vertices and 8 edges: complete? connected? Euler? matrix? all length-3 chains from A to F?"
+  },
+  "hints": [
+   {
+    "fr": "Commence par les degrés.",
+    "dar": "Bda b degrés.",
+    "en": "Start with the degrees."
+   },
+   {
+    "fr": "F n'a qu'un seul voisin.",
+    "dar": "F 3ndo jar wa7ed.",
+    "en": "F has a single neighbour."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Q1–Q4",
+     "dar": "Q1–Q4",
+     "en": "Q1–Q4"
+    },
+    "body": {
+     "fr": "Degrés A3 B4 C2 D4 E2 F1. Non complet (8 < 15). Connexe (tout est relié à A). A et F impairs → pas de cycle eulérien.",
+     "dar": "A3 B4 C2 D4 E2 F1 ; machi complet ; connexe ; A w F impairs.",
+     "en": "A3 B4 C2 D4 E2 F1; not complete; connected; A and F odd."
+    }
+   },
+   {
+    "title": {
+     "fr": "Q5–Q6",
+     "dar": "Q5–Q6",
+     "en": "Q5–Q6"
+    },
+    "body": {
+     "fr": "M = [[0,1,0,1,0,1],[1,0,1,1,1,0],[0,1,0,1,0,0],[1,1,1,0,1,0],[0,1,0,1,0,0],[1,0,0,0,0,0]]. (M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.",
+     "dar": "M ; 3 chaînes.",
+     "en": "M; 3 chains."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Non complet, connexe, pas de cycle eulérien ; chaînes A–B–A–F, A–D–A–F, A–F–A–F.",
+   "dar": "Jawab.",
+   "en": "See answers."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier A–F–A–F (une chaîne peut repasser par une arête).",
+    "dar": "Nsit A–F–A–F.",
+    "en": "Forgetting A–F–A–F."
+   },
+   {
+    "fr": "Dire « connexe » sans montrer de chaînes.",
+    "dar": "Connexe bla tbrir.",
+    "en": "Claiming connected without chains."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gPaths",
+     "args": [
+      "A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E",
+      3,
+      "A",
+      "F"
+     ]
+    },
+    "expect": 3,
+    "tolerance": 0
+   },
+   {
+    "compute": {
+     "fn": "gMissing",
+     "args": [
+      "A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E"
+     ]
+    },
+    "expect": 7,
+    "tolerance": 0
+   },
+   {
+    "compute": {
+     "fn": "gOddCount",
+     "args": [
+      "A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E"
+     ]
+    },
+    "expect": 2,
+    "tolerance": 0
+   }
+  ]
+ },
+ {
+  "id": "ro-x-7",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle 2022 — Exercice 2 : routes de coût minimum",
+   "dar": "Contrôle 2022 — Exercice 2",
+   "en": "Test 2022 — Exercise 2: minimum-cost roads"
+  },
+  "statement": {
+   "fr": "5 villes ; coûts c12 = 3, c13 = 5, c14 = 11, c15 = 9, c23 = 3, c24 = +∞, c25 = 8, c34 = 9, c35 = 10, c45 = 7. Trouver le réseau de routes de coût minimum reliant toutes les villes.",
+   "dar": "5 mdon, matrice C : l9a réseau b a9al taman.",
+   "en": "5 cities, cost matrix C: find the cheapest network connecting them all."
+  },
+  "hints": [
+   {
+    "fr": "C'est un arbre couvrant minimal : 4 routes.",
+    "dar": "ACM : 4 routes.",
+    "en": "An MST: 4 roads."
+   },
+   {
+    "fr": "+∞ = route impossible.",
+    "dar": "+∞ = bla route.",
+    "en": "+∞ = no road."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Kruskal",
+     "dar": "Kruskal",
+     "en": "Kruskal"
+    },
+    "body": {
+     "fr": "1–2 (3) ✓ · 2–3 (3) ✓ · 1–3 (5) ✗ cycle · 4–5 (7) ✓ · 2–5 (8) ✓ → 4 routes.",
+     "dar": "Tableau Kruskal.",
+     "en": "Kruskal table."
+    }
+   },
+   {
+    "title": {
+     "fr": "Coût",
+     "dar": "Coût",
+     "en": "Cost"
+    },
+    "body": {
+     "fr": "3 + 3 + 7 + 8 = **21**.",
+     "dar": "**21**.",
+     "en": "**21**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Réseau {1,2}, {2,3}, {4,5}, {2,5} ; coût **21**.",
+   "dar": "21.",
+   "en": "Cost **21**."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Prendre 1–3 (5) qui ferme le cycle 1–2–3.",
+    "dar": "1–3 cycle.",
+    "en": "Taking 1–3 (cycle)."
+   },
+   {
+    "fr": "Utiliser la route 2–4 (+∞).",
+    "dar": "2–4 ma kaynach.",
+    "en": "Using road 2–4."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gMst",
+     "args": [
+      "1 2 3 4 5 | 1-2:3 1-3:5 1-4:11 1-5:9 2-3:3 2-5:8 3-4:9 3-5:10 4-5:7"
+     ]
+    },
+    "expect": 21,
+    "tolerance": 0
+   }
+  ]
+ },
+ {
+  "id": "ro-x-8",
+  "module": "ro",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Contrôle 2022 — Exercice 3 : partir le plus tard",
+   "dar": "Contrôle 2022 — Exercice 3",
+   "en": "Test 2022 — Exercise 3: leave as late as possible"
+  },
+  "statement": {
+   "fr": "Réseau orienté (minutes) : M→B 5, M⇄D 8, B→E 15, B⇄C 6, C⇄E 17, E→T 11, D→C 1, C⇄F 8, D⇄F 14, F⇄T 6. Arriver en T à 8h15 en partant le plus tard possible de M : chemin (algorithme justifié, tableau) et heure de départ.",
+   "dar": "Réseau orienté : a9sar tri9 mn M l T, w sa3a dyal lkhrouj (wsel 8h15).",
+   "en": "Directed network: shortest M → T path and departure time (arrive 8:15)."
+  },
+  "hints": [
+   {
+    "fr": "Partir le plus tard = trajet le plus court.",
+    "dar": "M3etel = a9sar tri9.",
+    "en": "Latest departure = shortest trip."
+   },
+   {
+    "fr": "Poids positifs → Dijkstra.",
+    "dar": "Poids ≥ 0 → Dijkstra.",
+    "en": "Non-negative → Dijkstra."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Dijkstra depuis M",
+     "dar": "Dijkstra mn M",
+     "en": "Dijkstra from M"
+    },
+    "body": {
+     "fr": "Fixe M(0) : B 5, D 8. Fixe B(5) : C 11, E 20. Fixe D(8) : C 9 (via D), F 22. Fixe C(9) : F 17. Fixe F(17) : T 23. Fixe E(20) : T reste 23. Fixe T(23).",
+     "dar": "Tableau.",
+     "en": "Table."
+    }
+   },
+   {
+    "title": {
+     "fr": "Résultat",
+     "dar": "Natija",
+     "en": "Result"
+    },
+    "body": {
+     "fr": "**M–D–C–F–T = 23 min** → départ **7h52**.",
+     "dar": "**23 min** → **7h52**.",
+     "en": "**23 min** → leave **7:52**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "M–D–C–F–T, 23 minutes, départ à **7h52**.",
+   "dar": "7h52.",
+   "en": "Leave at **7:52**."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Partir par B parce que 5 < 8.",
+    "dar": "B 7it 5 < 8.",
+    "en": "Going via B because 5 < 8."
+   },
+   {
+    "fr": "Emprunter C→D (sens interdit).",
+    "dar": "C→D mamnou3.",
+    "en": "Using C→D (not allowed)."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "gDist",
+     "args": [
+      "M B C D E F T | M>B:5 M>D:8 D>M:8 B>E:15 B>C:6 C>B:6 C>E:17 E>C:17 E>T:11 D>C:1 C>F:8 F>C:8 D>F:14 F>D:14 F>T:6 T>F:6",
+      "M",
+      "T"
+     ]
+    },
+    "expect": 23,
+    "tolerance": 0
+   }
+  ]
  }
 ]

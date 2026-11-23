@@ -8,6 +8,12 @@ const EX1 = 'A B C D E F G | A-B A-C A-D B-C B-E C-D C-F D-G E-F F-G';
 const PRIMC = 'A B C D E F | A-B:5 A-C:6 A-D:4 B-D:2 C-D:2 B-C:1 C-E:5 C-F:3 D-F:4 E-F:4';
 const PRIM9 = '1 2 3 4 5 6 7 8 9 | 1-2:4 1-3:5 4-5:3 5-8:6 5-6:4 6-7:2 8-9:7 3-9:6 2-3:8 2-4:9 3-4:10 4-6:8 6-9:9 7-8:11 7-9:10';
 const COURS7 = '1 2 3 4 5 6 7 | 1-3 1-4 7-1 3-4 5-3 3-6 3-7 7-4 3-3';
+// contrôle du 16/12/2022 (Pr. Benouahmane)
+const C22 = 'A B C D E F | A-B A-D A-F B-C B-D B-E C-D D-E';
+const VILLES = '1 2 3 4 5 | 1-2:3 1-3:5 1-4:11 1-5:9 2-3:3 2-5:8 3-4:9 3-5:10 4-5:7';
+const TRAJET = 'M B C D E F T | M>B:5 M>D:8 D>M:8 B>E:15 B>C:6 C>B:6 C>E:17 E>C:17 E>T:11 D>C:1 C>F:8 F>C:8 D>F:14 F>D:14 F>T:6 T>F:6';
+const POS_TRAJET: Record<string, [number, number]> = { M: [2, 50], B: [26, 10], C: [48, 50], D: [26, 90], E: [72, 10], F: [72, 90], T: [98, 50] };
+const POS_C22: Record<string, [number, number]> = { A: [10, 50], B: [40, 10], C: [80, 10], D: [40, 90], E: [80, 90], F: [10, 92] };
 const POS_CC: Record<string, [number, number]> = { A: [50, 8], B: [92, 50], C: [70, 90], D: [46, 56], E: [8, 50], F: [28, 90] };
 
 type Course = Pick<Chapter, 'title' | 'summary' | 'estimatedMinutes' | 'sections' | 'keyPoints'>;
@@ -201,6 +207,7 @@ export const COURSE: Record<string, Course> = {
         { t: ['S\'arrêter', 'Wa9ef', 'Stop'], b: ['Quand **tous les sommets** sont reliés, c\'est-à-dire après **n − 1** arêtes acceptées.', 'Mli **n − 1** arêtes.', 'After **n − 1** accepted edges.'] }
       ]),
       anim('GraphAlgo', { graph: CC, algo: 'kruskal', pos: POS_CC }),
+      anim('GraphArena', { mode: 'kruskal' }),
       exam(['Au contrôle, présente le **tableau « Poids | Arête | à choisir ✓ / à éliminer ✗ »** exactement comme dans le cours, puis la liste des arêtes de l\'arbre et le **poids total** (somme des ✓).', 'F contrôle, dir **tableau « Wazn | Arête | ✓ / ✗ »** b7al dars, w l **wazn total**.', 'In the test, draw the **"Weight | Edge | ✓ / ✗" table** exactly as in class, then the tree and its **total weight**.']),
       quiz('ro-43', 'ro-45'),
 
@@ -243,6 +250,7 @@ export const COURSE: Record<string, Course> = {
         { t: ['Répéter puis remonter', '3awed w rje3', 'Repeat then backtrack'], b: ['Quand la cible est fixée, on lit le chemin **à l\'envers** en suivant les prédécesseurs.', 'Rje3 b **les prédécesseurs**.', 'Follow **predecessors** back from the target.'] }
       ]),
       anim('GraphAlgo', { graph: CC, algo: 'dijkstra', start: 'B', target: 'E', pos: POS_CC }),
+      anim('GraphArena', { mode: 'dijkstra' }),
       steps(['Contrôle 2025, partie B : de B à E', 'Partie B : B → E', 'Exam part B: B to E'], [
         { t: ['Départ B', 'Bda B', 'Start B'], b: ['On fixe B (0). Voisins : C = 9 ; B, D = 5 ; B.', 'B = 0 → C 9, D 5.', 'B = 0 → C 9, D 5.'] },
         { t: ['Fixer D (5)', 'Fixi D (5)', 'Fix D (5)'], b: ['Via D : A = 5 + 3 = 8 ; C = 5 + 2 = **7** < 9 (mise à jour) ; E = 5 + 12 = 17 ; F = 5 + 5 = 10.', 'A 8, C 7, E 17, F 10.', 'A 8, C 7, E 17, F 10.'] },
@@ -261,10 +269,12 @@ export const COURSE: Record<string, Course> = {
   },
 
   annale: {
-    title: k('Annale — Contrôle continu RO 2025-2026 corrigé', 'Annale — Contrôle RO 2025-2026 m-corrigé', 'Past paper — RO mid-term 2025-2026 solved'),
-    summary: k('Le contrôle du 28/11/2025 (1h30) : énoncé et correction détaillée des 3 exercices, avec les graphes animés.', 'Contrôle 28/11/2025 : énoncé w correction kamla.', 'The 28/11/2025 test: statement and full solution of the 3 exercises.'),
-    estimatedMinutes: 60,
+    title: k('Annales — Contrôles RO 2025-2026 et 2022 corrigés', 'Annales — Contrôles RO 2025 w 2022 m-corrigyin', 'Past papers — RO tests 2025-2026 and 2022 solved'),
+    summary: k('Deux vrais contrôles : 28/11/2025 (1h30) et 16/12/2022 (Pr. Benouahmane), énoncés et corrections détaillées avec graphes animés, plus le jeu Graph Arena pour s\'entraîner.', 'Jouj contrôles d sa7 : 28/11/2025 w 16/12/2022, b correction kamla w graphes animés, w l-game Graph Arena.', 'Two real tests: 28/11/2025 (1h30) and 16/12/2022, full solutions with animated graphs, plus the Graph Arena game.'),
+    estimatedMinutes: 90,
     sections: [
+      anim('GraphArena', { mode: 'kruskal' }),
+      h(['Contrôle 2025-2026 (28/11/2025)', 'Contrôle 2025-2026 (28/11/2025)', 'Test 2025-2026 (28/11/2025)']),
       h(['Exercice 1 (6 points) — le graphe A à G', 'Exercice 1 (6 points)', 'Exercise 1 (6 points)']),
       anim('GraphAlgo', { graph: EX1, algo: 'degrees' }),
       steps(['Correction', 'Correction', 'Solution'], [
@@ -288,12 +298,53 @@ export const COURSE: Record<string, Course> = {
       p(['**Partie A** : algorithme de **Kruskal** → arêtes A–F (2), C–D (2), A–D (3), E–F (3), B–D (5) ; C–F et A–C rejetées (cycle) → **coût 15 000 DH**. **Partie B** : **Dijkstra** depuis B → **B–D–F–E**, **13 minutes**.', '**A** : Kruskal → **15**. **B** : Dijkstra → **B–D–F–E = 13 min**.', '**Part A**: Kruskal → **15**. **Part B**: Dijkstra → **B–D–F–E, 13 min**.']),
       h(['Exercice 3 (6 points)', 'Exercice 3 (6 points)', 'Exercise 3 (6 points)']),
       p(['**1.** Degrés 4, 3, 3, 2, 1 : somme **13 impaire** → **impossible** (la somme des degrés vaut 2 × nombre d\'arêtes). **2.** Graphe orienté A→B, A→C, B→A, B→C, C→A : voir le chapitre « Représentation matricielle » — M⁴ donne A→B : 1, B→A : 3, B→C : 3 chemins de longueur 4, et **8** circuits de longueur 4 (trace).', '**1.** Somme 13 → **impossible**. **2.** M⁴ : 1, 3, 3 ; trace **8**.', '**1.** Sum 13 → **impossible**. **2.** M⁴: 1, 3, 3; trace **8**.']),
-      exam(['Barème : Ex. 1 = 6 pts, Ex. 2 = 8 pts (une seule partie A **ou** B à traiter), Ex. 3 = 6 pts. Durée 1h30, calculatrice autorisée, documents interdits.', 'Ex 1 = 6, Ex 2 = 8 (A **wla** B), Ex 3 = 6. 1h30.', 'Ex. 1 = 6, Ex. 2 = 8 (part A **or** B), Ex. 3 = 6. 1h30.'])
+      exam(['Barème : Ex. 1 = 6 pts, Ex. 2 = 8 pts (une seule partie A **ou** B à traiter), Ex. 3 = 6 pts. Durée 1h30, calculatrice autorisée, documents interdits.', 'Ex 1 = 6, Ex 2 = 8 (A **wla** B), Ex 3 = 6. 1h30.', 'Ex. 1 = 6, Ex. 2 = 8 (part A **or** B), Ex. 3 = 6. 1h30.']),
+      h(['Contrôle du 16 décembre 2022 (Pr. Benouahmane)', 'Contrôle 16/12/2022 (Pr. Benouahmane)', 'Test of 16 December 2022 (Pr. Benouahmane)']),
+      p(['Trois exercices : **graphe non orienté** (complet, connexe, Euler, matrice, M³), **arbre couvrant minimal** de 5 villes, **plus court chemin** pour partir le plus tard possible.', 'Tlata d exercices : **graphe** (complet, connexe, Euler, matrice, M³), **ACM** dyal 5 mdon, **a9sar tri9** bach tkhrej m3etel.', 'Three exercises: **undirected graph** (complete, connected, Euler, matrix, M³), **minimum spanning tree** of 5 cities, **shortest path** to leave as late as possible.']),
+      h(['Exercice 1 — G = (S, V), S = {A, …, F}', 'Exercice 1 — G = (S, V)', 'Exercise 1 — G = (S, V)']),
+      example(['V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 sommets, 8 arêtes**.', 'V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 sommets, 8 arêtes**.', 'V = {A,B}, {A,D}, {A,F}, {B,C}, {B,D}, {B,E}, {C,D}, {D,E} → **6 vertices, 8 edges**.']),
+      anim('GraphAlgo', { graph: C22, algo: 'degrees', pos: POS_C22, title: 'Contrôle 2022 — Exercice 1 (degrés)' }),
+      steps(['Correction exercice 1', 'Correction exercice 1', 'Exercise 1 solution'], [
+        { t: ['Q1 — Représentation', 'Q1 — Rsem', 'Q1 — Drawing'], b: ['Placer les 6 sommets puis tracer les 8 arêtes (voir le graphe animé). Degrés : **A 3, B 4, C 2, D 4, E 2, F 1** (somme 16 = 2 × 8 ✓).', 'Rsem 6 sommets w 8 arêtes. Degrés : **A 3, B 4, C 2, D 4, E 2, F 1** (16 = 2 × 8 ✓).', 'Draw 6 vertices and 8 edges. Degrees: **A 3, B 4, C 2, D 4, E 2, F 1** (16 = 2 × 8 ✓).'] },
+        { t: ['Q2 — Complet ?', 'Q2 — Complet ?', 'Q2 — Complete?'], b: ['**Non** : K6 a 6 × 5 / 2 = 15 arêtes, G n\'en a que 8 (il en manque 7). Exemple : A et C ne sont pas adjacents.', '**La** : K6 fih 15 arête, G fih 8 ghir (na9sin 7). Mithal : A w C machi jiran.', '**No**: K6 has 15 edges, G only 8 (7 missing). E.g. A and C are not adjacent.'] },
+        { t: ['Q3 — Connexe ?', 'Q3 — Connexe ?', 'Q3 — Connected?'], b: ['**Oui** : depuis A on atteint tous les sommets — A–B, A–B–C, A–D, A–B–E, A–F. Il existe donc une chaîne entre toute paire de sommets (on passe par A).', '**Ah** : mn A nwslo l kolchi — A–B, A–B–C, A–D, A–B–E, A–F. Donc kayna chaîne bin ay jouj sommets.', '**Yes**: from A we reach every vertex — A–B, A–B–C, A–D, A–B–E, A–F, so any two vertices are joined through A.'] },
+        { t: ['Q4 — Pas de cycle eulérien', 'Q4 — Bla cycle eulérien', 'Q4 — No Eulerian cycle'], b: ['Théorème d\'Euler : cycle eulérien ⇔ connexe **et tous les degrés pairs**. Or d(A) = 3 et d(F) = 1 sont **impairs** → **pas de cycle eulérien**. (Bonus : 2 sommets impairs → chaîne eulérienne de F à A : F–A–B–C–D–E–B–D–A.)', 'Euler : cycle ⇔ connexe **w kol degré pair**. Walakin d(A) = 3 w d(F) = 1 **impairs** → **ma kaynch**. (Bonus : chaîne F–A–B–C–D–E–B–D–A.)', 'Euler: cycle ⇔ connected **and all degrees even**. d(A) = 3, d(F) = 1 are **odd** → **no Eulerian cycle**. (Bonus: Euler chain F–A–B–C–D–E–B–D–A.)'] },
+        { t: ['Q5 — Matrice d\'adjacence', 'Q5 — Matrice', 'Q5 — Adjacency matrix'], b: ['Ordre A, B, C, D, E, F ; mij = 1 si arête, 0 sinon. Symétrique, diagonale nulle (voir le tableau ci-dessous).', 'Tartib A…F ; 1 ila kayna arête, 0 ila la. Symétrique, diagonale 0.', 'Order A…F; 1 if edge, else 0. Symmetric, zero diagonal (table below).'] },
+        { t: ['Q6 — Chaînes de longueur 3 de A à F', 'Q6 — Chaînes toul 3 A → F', 'Q6 — Length-3 chains A to F'], b: ['(M³)AF = **3** (ligne A, colonne F) → il y a **3 chaînes**. F n\'a qu\'un voisin (A), donc la chaîne finit par …–A–F ; elle est de la forme A–x–A–F avec x voisin de A : **A–B–A–F, A–D–A–F, A–F–A–F**.', '(M³)AF = **3** → **3 chaînes**. F 3ndo ghir jar wa7ed (A), donc A–x–A–F : **A–B–A–F, A–D–A–F, A–F–A–F**.', '(M³)AF = **3** → **3 chains**. F only touches A, so A–x–A–F: **A–B–A–F, A–D–A–F, A–F–A–F**.'] }
+      ]),
+      table(['M', 'A', 'B', 'C', 'D', 'E', 'F'], [['**A**', '0', '1', '0', '1', '0', '1'], ['**B**', '1', '0', '1', '1', '1', '0'], ['**C**', '0', '1', '0', '1', '0', '0'], ['**D**', '1', '1', '1', '0', '1', '0'], ['**E**', '0', '1', '0', '1', '0', '0'], ['**F**', '1', '0', '0', '0', '0', '0']]),
+      trap(['Une **chaîne** peut repasser par un sommet ou une arête : A–F–A–F compte ! Le coefficient de M³ compte **toutes** les chaînes de longueur 3, pas seulement les élémentaires.', '**Chaîne** t9der t3awed tdouz 3la sommet : A–F–A–F kat7seb ! M³ kat7seb **kolchi**.', 'A **chain** may revisit vertices/edges: A–F–A–F counts! M³ counts **all** length-3 chains.']),
+      h(['Exercice 2 — Réseau de routes de coût minimum (5 villes)', 'Exercice 2 — ACM dyal 5 mdon', 'Exercise 2 — Minimum-cost road network (5 cities)']),
+      p(['Connecter **toutes** les villes au moindre coût = **arbre couvrant de poids minimal** → **Kruskal**. c2,4 = +∞ : pas de route possible entre 2 et 4. 5 villes → **4 routes**.', 'Nrbtou **kol** mdon b a9al taman = **ACM** → **Kruskal**. c2,4 = +∞ : bla route. 5 mdon → **4 routes**.', 'Connect **all** cities at minimum cost = **minimum spanning tree** → **Kruskal**. c2,4 = +∞: no road. 5 cities → **4 roads**.']),
+      anim('GraphAlgo', { graph: VILLES, algo: 'kruskal', title: 'Contrôle 2022 — Kruskal (coût 21)' }),
+      table(['Poids', 'Route', 'Décision'], [['3', '1–2', '✓'], ['3', '2–3', '✓'], ['5', '1–3', ['✗ cycle 1–2–3', '✗ cycle 1–2–3', '✗ cycle 1–2–3']], ['7', '4–5', '✓'], ['8', '2–5', ['✓ → 4 routes, stop', '✓ → 4 routes, safi', '✓ → 4 roads, stop']]]),
+      exam(['Réseau : **{1,2}, {2,3}, {4,5}, {2,5}** ; coût minimal **3 + 3 + 7 + 8 = 21**.', 'Réseau : **{1,2}, {2,3}, {4,5}, {2,5}** ; coût **21**.', 'Network: **{1,2}, {2,3}, {4,5}, {2,5}**; minimum cost **21**.']),
+      h(['Exercice 3 — Partir le plus tard possible (arriver à 8h15)', 'Exercice 3 — Khrej m3etel (wsel 8h15)', 'Exercise 3 — Leave as late as possible (arrive 8:15)']),
+      plain(['Partir **le plus tard** possible en arrivant à 8h15 = mettre **le moins de temps** possible = **plus court chemin** de M à T. Temps ≥ 0 → **Dijkstra**. Attention : c\'est un graphe **orienté** (M→B existe, B→M non ; D→C existe, C→D non).', 'Tkhrej **m3etel** w twsel 8h15 = **a9al wa9t** = **a9sar tri9** mn M l T. Wa9t ≥ 0 → **Dijkstra**. Rd lbal : graphe **orienté** (M→B ah, B→M la).', 'Leave **as late** as possible = spend the **least time** = **shortest path** M → T. Times ≥ 0 → **Dijkstra**. Careful: the graph is **directed**.']),
+      anim('GraphAlgo', { graph: TRAJET, algo: 'dijkstra', start: 'M', target: 'T', pos: POS_TRAJET, title: 'Contrôle 2022 — Dijkstra M → T (23 min)' }),
+      table(['Fixé', 'M', 'B', 'C', 'D', 'E', 'F', 'T'], [
+        ['—', '**0**', '∞', '∞', '∞', '∞', '∞', '∞'],
+        ['M (0)', '', '5;M', '∞', '8;M', '∞', '∞', '∞'],
+        ['B (5)', '', '', '11;B', '8;M', '20;B', '∞', '∞'],
+        ['D (8)', '', '', '**9;D**', '', '20;B', '22;D', '∞'],
+        ['C (9)', '', '', '', '', '20;B', '**17;C**', '∞'],
+        ['F (17)', '', '', '', '', '20;B', '', '23;F'],
+        ['E (20)', '', '', '', '', '', '', ['23;F (31 > 23)', '23;F (31 > 23)', '23;F (31 > 23)']],
+        ['T (23)', '', '', '', '', '', '', '**23;F**']
+      ]),
+      steps(['Lecture du résultat', 'Natija', 'Reading the result'], [
+        { t: ['Q1 — Chemin', 'Q1 — Tri9', 'Q1 — Path'], b: ['À rebours : T ← F ← C ← D ← M → **M – D – C – F – T** = 8 + 1 + 8 + 6 = **23 minutes**.', 'Rje3 : T ← F ← C ← D ← M → **M–D–C–F–T** = **23 min**.', 'Backtrack: T ← F ← C ← D ← M → **M–D–C–F–T** = **23 minutes**.'] },
+        { t: ['Q2 — Heure de départ', 'Q2 — Wa9t lkhrouj', 'Q2 — Departure time'], b: ['8h15 − 23 min = **7h52**.', '8h15 − 23 min = **7h52**.', '8:15 − 23 min = **7:52**.'] }
+      ]),
+      trap(['Le piège : M–B (5) semble meilleur au départ, mais B → C coûte 6 (C à 11) alors que D → C ne coûte que **1** (C à 9). Ne jamais choisir « à l\'œil » : suivre le tableau.', 'Lfekh : M–B (5) yban a7san, walakin D → C ghir **1** (C = 9 machi 11). Tbe3 tableau, machi l3in.', 'Trap: M–B (5) looks better, but D → C costs only **1** (C = 9, not 11). Follow the table, not your eye.']),
+      exam(['Rédaction attendue : « Graphe orienté à poids positifs, on cherche le plus court chemin depuis une source → **Dijkstra**. » puis le tableau, le chemin et l\'heure.', 'Ktb : « Graphe orienté, poids ≥ 0, a9sar tri9 mn source → **Dijkstra**. » mn ba3d tableau, tri9 w sa3a.', 'Expected wording: "Directed graph, non-negative weights, single-source shortest path → **Dijkstra**", then the table, the path and the time.'])
     ],
     keyPoints: [
       k('Ex. 1 : ordre 7, taille 10, d(E) = 2, impairs A B D F, hamiltonien A–B–E–F–G–D–C–A, 11 arêtes manquantes.', 'Ex. 1.', 'Ex. 1 answers.'),
       k('Ex. 2 : non complet, connexe, chaîne eulérienne D → E ; ACPM 15 ; B → E = 13 (B–D–F–E).', 'Ex. 2.', 'Ex. 2 answers.'),
-      k('Ex. 3 : 4, 3, 3, 2, 1 impossible ; M⁴ → 1, 3, 3 et trace 8.', 'Ex. 3.', 'Ex. 3 answers.')
+      k('Ex. 3 : 4, 3, 3, 2, 1 impossible ; M⁴ → 1, 3, 3 et trace 8.', 'Ex. 3.', 'Ex. 3 answers.'),
+      k('2022 : G non complet (manque 7), connexe, pas de cycle eulérien (A et F impairs), (M³)AF = 3 : A–B–A–F, A–D–A–F, A–F–A–F.', '2022 Ex. 1.', '2022 Ex. 1 answers.'),
+      k('2022 : Kruskal 5 villes → {1,2}, {2,3}, {4,5}, {2,5}, coût 21 ; Dijkstra M → T = M–D–C–F–T, 23 min, départ 7h52.', '2022 : 21 ; 23 min ; 7h52.', '2022: MST 21; M → T 23 min; leave 7:52.')
     ]
   }
 };

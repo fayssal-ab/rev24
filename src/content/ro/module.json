@@ -57,6 +57,34 @@
      "points": 6
     }
    ]
+  },
+  {
+   "id": "cc-2022",
+   "title": {
+    "fr": "Contrôle du 16/12/2022 (Pr. Benouahmane)",
+    "dar": "Contrôle 16/12/2022",
+    "en": "Test of 16/12/2022"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "3 exercices : graphe et matrice (M³), arbre couvrant minimal (5 villes), Dijkstra sur un graphe orienté. Rapporter les tableaux.",
+    "dar": "3 exercices : graphe w M³, ACM, Dijkstra orienté. Ktb tableaux.",
+    "en": "3 exercises: graph and M³, MST (5 cities), Dijkstra on a directed graph. Show the tables."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-x-6",
+     "points": 8
+    },
+    {
+     "exerciseId": "ro-x-7",
+     "points": 6
+    },
+    {
+     "exerciseId": "ro-x-8",
+     "points": 6
+    }
+   ]
   }
  ],
  "weights": {

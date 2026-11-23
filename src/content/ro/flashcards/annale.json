@@ -1,5 +1,35 @@
 [
  {
+  "id": "fc-ro-23",
+  "module": "ro",
+  "chapter": "annale",
+  "front": {
+   "fr": "Contrôle 2022 : pourquoi pas de cycle eulérien ?",
+   "dar": "2022 : 3lach bla cycle eulérien ?",
+   "en": "2022: why no Eulerian cycle?"
+  },
+  "back": {
+   "fr": "d(A) = 3 et d(F) = 1 impairs.",
+   "dar": "A w F impairs.",
+   "en": "A and F have odd degree."
+  }
+ },
+ {
+  "id": "fc-ro-24",
+  "module": "ro",
+  "chapter": "annale",
+  "front": {
+   "fr": "Contrôle 2022 : départ le plus tard ?",
+   "dar": "2022 : imta ykhrej ?",
+   "en": "2022: latest departure?"
+  },
+  "back": {
+   "fr": "M–D–C–F–T = 23 min → 7h52.",
+   "dar": "7h52.",
+   "en": "7:52."
+  }
+ },
+ {
   "id": "fc-ro-22",
   "module": "ro",
   "chapter": "annale",

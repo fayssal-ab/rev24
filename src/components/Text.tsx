@@ -66,13 +66,52 @@ function inline(s: string, key = 0): ReactNode[] {
   return out;
 }
 
-/** Block markdown: paragraphs, - lists, 1. lists. */
+/** Splits on blank lines, but keeps a ``` fenced block in one piece. */
+function splitBlocks(text: string): string[] {
+  const out: string[] = [];
+  for (const part of text.split(/(```[\s\S]*?```)/)) {
+    if (part.startsWith('```')) out.push(part);
+    else out.push(...part.split(/\n{2,}/).map((x) => x.trim()).filter(Boolean));
+  }
+  return out;
+}
+
+const cells = (row: string) => row.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+
+/** Block markdown: paragraphs, - lists, 1. lists, | tables |, ``` code ```. */
 export function Md({ text, className = '' }: { text: string; className?: string }) {
-  const blocks = useMemo(() => text.split(/\n{2,}/), [text]);
+  const blocks = useMemo(() => splitBlocks(text), [text]);
   return (
     <div className={`prose-rev ${className}`}>
       {blocks.map((b, i) => {
+        if (b.startsWith('```'))
+          return (
+            <pre key={i} className="scroll-thin my-3 overflow-x-auto rounded-lg border border-line bg-surface2/70 px-3 py-2 font-mono text-[12.5px] leading-relaxed lg:text-[14px]">
+              {b.replace(/^```\w*\n?/, '').replace(/\n?```$/, '')}
+            </pre>
+          );
         const lines = b.split('\n');
+        if (lines.length >= 2 && lines.every((l) => l.trim().startsWith('|'))) {
+          const rows = lines.filter((l) => !/^\s*\|?[\s:|-]+\|?\s*$/.test(l)).map(cells);
+          const [head, ...body] = rows;
+          return (
+            <div key={i} className="my-3 overflow-x-auto">
+              <table className="min-w-[280px] border-collapse text-center text-sm lg:text-[15px]">
+                <tbody>
+                  {[head, ...body].map((r, ri) => (
+                    <tr key={ri} className={ri === 0 ? 'bg-surface2 font-semibold' : 'border-t border-line'}>
+                      {r.map((c, ci) => (
+                        <td key={ci} className={`border border-line px-3 py-1.5 ${ci === 0 ? 'text-left font-semibold' : 'tabular-nums'}`}>
+                          {inline(c, ci)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
         if (lines.every((l) => /^\s*[-•]\s/.test(l)))
           return (
             <ul key={i}>

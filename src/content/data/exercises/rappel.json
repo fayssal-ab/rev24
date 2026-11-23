@@ -405,5 +405,686 @@
     "tolerance": 0.001
    }
   ]
+ },
+ {
+  "id": "dr-ex3",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Résumé statistique d'une série et valeur aberrante",
+   "dar": "Rédigé — Résumé statistique w valeur aberrante",
+   "en": "Written — Summary statistics and an outlier"
+  },
+  "statement": {
+   "fr": "Notes de 6 étudiants : **9 ; 11 ; 11 ; 13 ; 14 ; 20**.\n\n**1)** Calculer la moyenne, la médiane et le mode.\n**2)** Calculer la variance V (diviseur n), l'écart-type σ, puis S² et S (diviseur n − 1).\n**3)** Calculer Q1, Q3 et l'IQR (convention pandas), puis dire si une note est aberrante.",
+   "dar": "Notes dyal 6 : **9 ; 11 ; 11 ; 13 ; 14 ; 20**.\n\n**1)** Moyenne, médiane, mode.\n**2)** V (n), σ, S² w S (n − 1).\n**3)** Q1, Q3, IQR (pandas) w wach kayna aberrante.",
+   "en": "Marks of 6 students: **9; 11; 11; 13; 14; 20**.\n\n**1)** Mean, median, mode.\n**2)** V (n), σ, S² and S (n − 1).\n**3)** Q1, Q3, IQR (pandas convention), and say whether a mark is an outlier."
+  },
+  "hints": [
+   {
+    "fr": "n est pair : la médiane est la moyenne des deux valeurs du milieu.",
+    "dar": "n pair : médiane = moyenne dyal jouj f l west.",
+    "en": "n even: median = mean of the two middle values."
+   },
+   {
+    "fr": "Position du quantile p : (n − 1) × p.",
+    "dar": "Position : (n − 1) × p.",
+    "en": "Position: (n − 1) × p."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Position",
+     "dar": "1) Position",
+     "en": "1) Location"
+    },
+    "body": {
+     "fr": "Σx = 78 → x̄ = 78/6 = **13**. Série triée : Me = (11 + 13)/2 = **12**. Mo = **11** (2 fois).",
+     "dar": "x̄ = **13** ; Me = **12** ; Mo = **11**.",
+     "en": "x̄ = **13**; Me = **12**; Mo = **11**."
+    }
+   },
+   {
+    "title": {
+     "fr": "2) Dispersion",
+     "dar": "2) Dispersion",
+     "en": "2) Spread"
+    },
+    "body": {
+     "fr": "Écarts : −4, −2, −2, 0, 1, 7 → carrés 16, 4, 4, 0, 1, 49 → somme **74**.",
+     "dar": "Σ(x − x̄)² = **74**.",
+     "en": "Σ(x − x̄)² = **74**."
+    },
+    "tex": "V = \\frac{74}{6} \\approx 12{,}33 \\quad \\sigma \\approx 3{,}51 \\qquad S^2 = \\frac{74}{5} = 14{,}8 \\quad S \\approx 3{,}85"
+   },
+   {
+    "title": {
+     "fr": "3) Quartiles",
+     "dar": "3) Quartiles",
+     "en": "3) Quartiles"
+    },
+    "body": {
+     "fr": "Q1 : position 5 × 0,25 = 1,25 → 11 + 0,25 × (11 − 11) = **11**. Q3 : position 3,75 → 13 + 0,75 × (14 − 13) = **13,75**. IQR = **2,75**.",
+     "dar": "Q1 = **11** ; Q3 = **13,75** ; IQR = **2,75**.",
+     "en": "Q1 = **11**; Q3 = **13.75**; IQR = **2.75**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Bornes et conclusion",
+     "dar": "L 7doud w conclusion",
+     "en": "Bounds and conclusion"
+    },
+    "body": {
+     "fr": "11 − 1,5 × 2,75 = **6,875** ; 13,75 + 1,5 × 2,75 = **17,875**. 20 > 17,875 → **20 est aberrante**. Elle tire la moyenne (13) au-dessus de la médiane (12).",
+     "dar": "[6,875 ; 17,875] → **20 aberrante**.",
+     "en": "[6.875; 17.875] → **20 is an outlier**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "x̄ = 13 ; Me = 12 ; Mo = 11 ; V ≈ 12,33 ; σ ≈ 3,51 ; S² = 14,8 ; S ≈ 3,85 ; Q1 = 11 ; Q3 = 13,75 ; IQR = 2,75 ; 20 est aberrante.",
+   "dar": "20 aberrante.",
+   "en": "20 is an outlier."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Prendre 11 ou 13 comme médiane (n pair).",
+    "dar": "Médiane ghalta.",
+    "en": "Wrong median for even n."
+   },
+   {
+    "fr": "Oublier le facteur 1,5.",
+    "dar": "Bla 1,5.",
+    "en": "Forgetting 1.5."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       9,
+       11,
+       11,
+       13,
+       14,
+       20
+      ]
+     ]
+    },
+    "expect": 13,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "median",
+     "args": [
+      [
+       9,
+       11,
+       11,
+       13,
+       14,
+       20
+      ]
+     ]
+    },
+    "expect": 12,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "popVariance",
+     "args": [
+      [
+       9,
+       11,
+       11,
+       13,
+       14,
+       20
+      ]
+     ]
+    },
+    "expect": 12.333,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "variance",
+     "args": [
+      [
+       9,
+       11,
+       11,
+       13,
+       14,
+       20
+      ]
+     ]
+    },
+    "expect": 14.8,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       9,
+       11,
+       11,
+       13,
+       14,
+       20
+      ]
+     ],
+     "pick": "high"
+    },
+    "expect": 17.875,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dr-ex4",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Série donnée par un tableau d'effectifs",
+   "dar": "Rédigé — Série b tableau d'effectifs",
+   "en": "Written — Series given as a frequency table"
+  },
+  "statement": {
+   "fr": "Notes d'un groupe de 20 étudiants :\n\n| Note xi | 8 | 10 | 12 | 14 |\n|---|---|---|---|---|\n| Effectif ni | 2 | 5 | 8 | 5 |\n\nCalculer la moyenne, la variance (diviseur n) et l'écart-type. Donner le mode.",
+   "dar": "Notes dyal 20 talib : xi = 8, 10, 12, 14 ; ni = 2, 5, 8, 5. 7seb moyenne, variance (n), écart-type w mode.",
+   "en": "Marks of 20 students: xi = 8, 10, 12, 14; ni = 2, 5, 8, 5. Compute mean, variance (n), SD and mode."
+  },
+  "hints": [
+   {
+    "fr": "Moyenne pondérée : Σ ni·xi / n.",
+    "dar": "Σ ni·xi / n.",
+    "en": "Σ ni·xi / n."
+   },
+   {
+    "fr": "Formule de König : V = Σ ni·xi² / n − x̄².",
+    "dar": "König : Σ ni·xi²/n − x̄².",
+    "en": "König: Σ ni·xi²/n − x̄²."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Effectif total",
+     "dar": "Total",
+     "en": "Total"
+    },
+    "body": {
+     "fr": "n = 2 + 5 + 8 + 5 = **20**.",
+     "dar": "n = **20**.",
+     "en": "n = **20**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Moyenne",
+     "dar": "Moyenne",
+     "en": "Mean"
+    },
+    "body": {
+     "fr": "Σ ni·xi = 16 + 50 + 96 + 70 = 232.",
+     "dar": "Σ ni·xi = 232.",
+     "en": "Σ ni·xi = 232."
+    },
+    "tex": "\\bar x = \\frac{232}{20} = 11{,}6"
+   },
+   {
+    "title": {
+     "fr": "Variance (König)",
+     "dar": "Variance (König)",
+     "en": "Variance (König)"
+    },
+    "body": {
+     "fr": "Σ ni·xi² = 2×64 + 5×100 + 8×144 + 5×196 = 128 + 500 + 1152 + 980 = 2760.",
+     "dar": "Σ ni·xi² = 2760.",
+     "en": "Σ ni·xi² = 2760."
+    },
+    "tex": "V = \\frac{2760}{20} - 11{,}6^2 = 138 - 134{,}56 = 3{,}44 \\qquad \\sigma = \\sqrt{3{,}44} \\approx 1{,}855"
+   },
+   {
+    "title": {
+     "fr": "Mode",
+     "dar": "Mode",
+     "en": "Mode"
+    },
+    "body": {
+     "fr": "Plus grand effectif (8) → Mo = **12**.",
+     "dar": "Mo = **12**.",
+     "en": "Mo = **12**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "x̄ = 11,6 ; V = 3,44 ; σ ≈ 1,855 ; Mo = 12.",
+   "dar": "x̄ = 11,6 ; V = 3,44 ; σ ≈ 1,855.",
+   "en": "x̄ = 11.6; V = 3.44; σ ≈ 1.855; Mo = 12."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Faire la moyenne des 4 notes sans les effectifs (11).",
+    "dar": "Bla effectifs.",
+    "en": "Ignoring the frequencies."
+   },
+   {
+    "fr": "Oublier de soustraire x̄² dans König.",
+    "dar": "Bla − x̄².",
+    "en": "Forgetting − x̄²."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       8,
+       8,
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       14,
+       14,
+       14,
+       14,
+       14
+      ]
+     ]
+    },
+    "expect": 11.6,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "popVariance",
+     "args": [
+      [
+       8,
+       8,
+       10,
+       10,
+       10,
+       10,
+       10,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       12,
+       14,
+       14,
+       14,
+       14,
+       14
+      ]
+     ]
+    },
+    "expect": 3.44,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dr-ex5",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Covariance, corrélation et droite des moindres carrés",
+   "dar": "Rédigé — Covariance, corrélation w droite",
+   "en": "Written — Covariance, correlation and least-squares line"
+  },
+  "statement": {
+   "fr": "Budget publicitaire x (k DH) et ventes y (k DH) sur 5 mois :\n\n| x | 2 | 4 | 6 | 8 | 10 |\n|---|---|---|---|---|---|\n| y | 5 | 9 | 10 | 14 | 17 |\n\n**1)** Calculer x̄, ȳ, V(x), cov(x, y) et r.\n**2)** Donner la droite y = ax + b et l'interpréter.\n**3)** Prévoir les ventes pour x = 12.",
+   "dar": "Publicité x w ventes y : x = 2, 4, 6, 8, 10 ; y = 5, 9, 10, 14, 17.\n\n**1)** x̄, ȳ, V(x), cov, r.\n**2)** Droite y = ax + b.\n**3)** Prévision l x = 12.",
+   "en": "Ad budget x and sales y: x = 2, 4, 6, 8, 10; y = 5, 9, 10, 14, 17.\n\n**1)** x̄, ȳ, V(x), cov, r.\n**2)** Line y = ax + b.\n**3)** Forecast for x = 12."
+  },
+  "hints": [
+   {
+    "fr": "Fais un tableau avec les colonnes x − x̄, y − ȳ, produit et carrés.",
+    "dar": "Tableau d far9.",
+    "en": "Build a deviations table."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Moyennes",
+     "dar": "Moyennes",
+     "en": "Means"
+    },
+    "body": {
+     "fr": "x̄ = 30/5 = **6** ; ȳ = 55/5 = **11**.",
+     "dar": "x̄ = 6 ; ȳ = 11.",
+     "en": "x̄ = 6; ȳ = 11."
+    }
+   },
+   {
+    "title": {
+     "fr": "Écarts",
+     "dar": "L far9",
+     "en": "Deviations"
+    },
+    "body": {
+     "fr": "x − x̄ : −4, −2, 0, 2, 4. y − ȳ : −6, −2, −1, 3, 6. Produits : 24, 4, 0, 6, 24 → **58**. Carrés de x − x̄ : 16, 4, 0, 4, 16 → **40**. Carrés de y − ȳ : 36, 4, 1, 9, 36 → **86**.",
+     "dar": "Σ produits = 58 ; Σ(x − x̄)² = 40 ; Σ(y − ȳ)² = 86.",
+     "en": "Σ products = 58; Σ(x − x̄)² = 40; Σ(y − ȳ)² = 86."
+    }
+   },
+   {
+    "title": {
+     "fr": "1) cov, V, r",
+     "dar": "1) cov, V, r",
+     "en": "1) cov, V, r"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "tex": "\\text{cov} = \\frac{58}{5} = 11{,}6 \\quad V(x) = \\frac{40}{5} = 8 \\quad r = \\frac{58}{\\sqrt{40 \\times 86}} \\approx 0{,}989"
+   },
+   {
+    "title": {
+     "fr": "2) Droite",
+     "dar": "2) Droite",
+     "en": "2) Line"
+    },
+    "body": {
+     "fr": "a = cov / V(x) = 11,6 / 8 = **1,45** ; b = ȳ − a·x̄ = 11 − 1,45 × 6 = **2,3**. Chaque k DH de publicité en plus est associé à **1,45 k DH** de ventes en plus ; r ≈ 0,99 : liaison linéaire très forte (corrélation, pas forcément causalité).",
+     "dar": "a = **1,45** ; b = **2,3**. r ≈ 0,99 : 3ala9a 9wiya bzaf.",
+     "en": "a = **1.45**; b = **2.3**. r ≈ 0.99: very strong linear link."
+    },
+    "tex": "\\hat y = 1{,}45\\,x + 2{,}3"
+   },
+   {
+    "title": {
+     "fr": "3) Prévision",
+     "dar": "3) Prévision",
+     "en": "3) Forecast"
+    },
+    "body": {
+     "fr": "ŷ(12) = 1,45 × 12 + 2,3 = **19,7 k DH**.",
+     "dar": "ŷ(12) = **19,7**.",
+     "en": "ŷ(12) = **19.7**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "cov = 11,6 ; V(x) = 8 ; r ≈ 0,989 ; ŷ = 1,45x + 2,3 ; ŷ(12) = 19,7.",
+   "dar": "ŷ = 1,45x + 2,3 ; ŷ(12) = 19,7.",
+   "en": "ŷ = 1.45x + 2.3; ŷ(12) = 19.7."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Diviser cov par V(y) au lieu de V(x).",
+    "dar": "V(y) f blast V(x).",
+    "en": "Dividing by V(y)."
+   },
+   {
+    "fr": "Conclure à une causalité à partir de r.",
+    "dar": "r = sababiya.",
+    "en": "Inferring causation from r."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "covariance",
+     "args": [
+      [
+       2,
+       4,
+       6,
+       8,
+       10
+      ],
+      [
+       5,
+       9,
+       10,
+       14,
+       17
+      ]
+     ]
+    },
+    "expect": 11.6,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "correlation",
+     "args": [
+      [
+       2,
+       4,
+       6,
+       8,
+       10
+      ],
+      [
+       5,
+       9,
+       10,
+       14,
+       17
+      ]
+     ]
+    },
+    "expect": 0.9889,
+    "tolerance": 0.0005
+   },
+   {
+    "compute": {
+     "fn": "linReg",
+     "args": [
+      [
+       2,
+       4,
+       6,
+       8,
+       10
+      ],
+      [
+       5,
+       9,
+       10,
+       14,
+       17
+      ]
+     ],
+     "pick": "a"
+    },
+    "expect": 1.45,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "linReg",
+     "args": [
+      [
+       2,
+       4,
+       6,
+       8,
+       10
+      ],
+      [
+       5,
+       9,
+       10,
+       14,
+       17
+      ]
+     ],
+     "pick": "b"
+    },
+    "expect": 2.3,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dr-ex6",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Moyenne ou médiane face à une valeur extrême ?",
+   "dar": "Rédigé — Moyenne wla médiane m3a valeur kbira ?",
+   "en": "Written — Mean or median with an extreme value?"
+  },
+  "statement": {
+   "fr": "Série A : 10 ; 11 ; 12 ; 13 ; 14. Série B : la même, mais 14 est remplacé par **60** (erreur de saisie).\n\n**1)** Calculer moyenne et médiane de A et de B.\n**2)** Quel indicateur choisir pour résumer B ? Justifier.\n**3)** Vérifier avec la méthode IQR que 60 est aberrante.",
+   "dar": "A : 10 ; 11 ; 12 ; 13 ; 14. B : nefs l7aja b **60** f blast 14.\n\n**1)** Moyenne w médiane dyal A w B.\n**2)** Achmen indicateur l B ? 3lach.\n**3)** T2akked b IQR bli 60 aberrante.",
+   "en": "A: 10; 11; 12; 13; 14. B: same with **60** instead of 14.\n\n**1)** Mean and median of A and B.\n**2)** Which summary for B? Why?\n**3)** Check with IQR that 60 is an outlier."
+  },
+  "hints": [
+   {
+    "fr": "La médiane ne regarde que l'ordre, pas la taille des valeurs.",
+    "dar": "Médiane kat3tamed 3la tartib.",
+    "en": "The median only uses the order."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Série A",
+     "dar": "1) Série A",
+     "en": "1) Series A"
+    },
+    "body": {
+     "fr": "x̄ = 60/5 = **12** ; Me = **12**.",
+     "dar": "x̄ = Me = **12**.",
+     "en": "x̄ = Me = **12**."
+    }
+   },
+   {
+    "title": {
+     "fr": "1) Série B",
+     "dar": "1) Série B",
+     "en": "1) Series B"
+    },
+    "body": {
+     "fr": "x̄ = 106/5 = **21,2** ; Me = **12** (inchangée).",
+     "dar": "x̄ = **21,2** ; Me = **12**.",
+     "en": "x̄ = **21.2**; Me = **12**."
+    }
+   },
+   {
+    "title": {
+     "fr": "2) Choix",
+     "dar": "2) Khtiyar",
+     "en": "2) Choice"
+    },
+    "body": {
+     "fr": "La **médiane** : une seule valeur extrême a fait passer la moyenne de 12 à 21,2 alors que 4 notes sur 5 sont ≤ 13. La médiane est **robuste** aux valeurs aberrantes.",
+     "dar": "**Médiane** : robuste.",
+     "en": "The **median**: robust to outliers."
+    }
+   },
+   {
+    "title": {
+     "fr": "3) IQR",
+     "dar": "3) IQR",
+     "en": "3) IQR"
+    },
+    "body": {
+     "fr": "Q1 = 11 ; Q3 = 13 ; IQR = 2 ; bornes [11 − 3 ; 13 + 3] = **[8 ; 16]**. 60 > 16 → **aberrante**.",
+     "dar": "[8 ; 16] → 60 aberrante.",
+     "en": "[8; 16] → 60 is an outlier."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "A : x̄ = Me = 12. B : x̄ = 21,2, Me = 12. Choisir la médiane ; 60 ∉ [8 ; 16] → aberrante.",
+   "dar": "Médiane ; 60 aberrante.",
+   "en": "Median; 60 is an outlier."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que la moyenne est « fausse » : elle est juste, mais pas représentative.",
+    "dar": "Moyenne machi ghalta, machi représentative.",
+    "en": "The mean is correct, just not representative."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       10,
+       11,
+       12,
+       13,
+       60
+      ]
+     ]
+    },
+    "expect": 21.2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "median",
+     "args": [
+      [
+       10,
+       11,
+       12,
+       13,
+       60
+      ]
+     ]
+    },
+    "expect": 12,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "iqrBounds",
+     "args": [
+      [
+       10,
+       11,
+       12,
+       13,
+       60
+      ]
+     ],
+     "pick": "high"
+    },
+    "expect": 16,
+    "tolerance": 0.001
+   }
+  ]
  }
 ]

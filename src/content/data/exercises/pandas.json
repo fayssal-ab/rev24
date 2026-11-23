@@ -281,5 +281,357 @@
     "en": "Double brackets give a DataFrame."
    }
   ]
+ },
+ {
+  "id": "dx-p-6",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Un fichier avec tous les pièges",
+   "dar": "Rédigé — Fichier fih ga3 lfkhakh",
+   "en": "Written — A file with every trap"
+  },
+  "statement": {
+   "fr": "Le fichier `ventes.csv` (contenu ci-dessous) contient une ligne de commentaire, pas d'en-tête, le séparateur `;`, la virgule décimale et « - » pour une valeur manquante.\n\n**1)** Écris **une seule** instruction `read_csv` qui le lit correctement, avec les colonnes `ville`, `ca`, `clients`.\n**2)** Affiche les types des colonnes et le nombre de valeurs manquantes par colonne.\n**3)** Justifie chaque paramètre utilisé.",
+   "dar": "Fichier `ventes.csv` fih commentaire, bla en-tête, `;`, virgule décimale w « - » l valeur na9sa.\n\n**1)** Kteb instruction `read_csv` **wa7da** t9rah mzyan b colonnes `ville`, `ca`, `clients`.\n**2)** Affichi types w 3adad NaN f kol colonne.\n**3)** Bayen 3lach kol paramètre.",
+   "en": "File `ventes.csv` has a comment line, no header, `;` separator, decimal comma and \"-\" for a missing value.\n\n**1)** Write **one** `read_csv` call that reads it correctly, with columns `ville`, `ca`, `clients`.\n**2)** Print the column types and the number of missing values per column.\n**3)** Justify each parameter."
+  },
+  "hints": [
+   {
+    "fr": "Lis le fichier ligne par ligne : qu'est-ce que la 1re ligne ? y a-t-il des noms de colonnes ?",
+    "dar": "9ra fichier str b str.",
+    "en": "Read the file line by line."
+   },
+   {
+    "fr": "Il faut 6 paramètres en plus du nom du fichier.",
+    "dar": "6 paramètres.",
+    "en": "Six parameters besides the file name."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) La lecture",
+     "dar": "1) L 9raya",
+     "en": "1) The read"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "import pandas as pd\n\ndf = pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", skiprows=1,\n                 header=None, names=[\"ville\", \"ca\", \"clients\"], na_values=[\"-\"])\nprint(df)\n#     ville       ca  clients\n# 0   Rabat  1250.50     12.0\n# 1    Salé   980.25      NaN\n# 2  Témara  1100.00      9.0"
+   },
+   {
+    "title": {
+     "fr": "2) Types et valeurs manquantes",
+     "dar": "2) Types w NaN",
+     "en": "2) Types and missing values"
+    },
+    "body": {
+     "fr": "`ca` est bien en `float64` grâce à `decimal=\",\"` ; `clients` passe en `float64` car NaN est un flottant.",
+     "dar": "`ca` `float64` b `decimal=\",\"` ; `clients` `float64` 7it NaN float.",
+     "en": "`ca` is `float64` thanks to `decimal=\",\"`; `clients` becomes `float64` because NaN is a float."
+    },
+    "code": "print(df.dtypes)\n# ville       object\n# ca         float64\n# clients    float64\n\nprint(df.isna().sum())\n# ville      0\n# ca         0\n# clients    1"
+   },
+   {
+    "title": {
+     "fr": "3) Justification",
+     "dar": "3) Tabrir",
+     "en": "3) Justification"
+    },
+    "body": {
+     "fr": "`skiprows=1` : saute « Export du 01/11/2026 ». `header=None` : la 1re ligne restante est une donnée. `names` : donne les noms. `sep=\";\"` : séparateur des champs. `decimal=\",\"` : 1250,5 lu comme nombre. `na_values=[\"-\"]` : « - » devient NaN.",
+     "dar": "`skiprows=1` : fout commentaire. `header=None` : bla en-tête. `names` : smiyat. `sep=\";\"`. `decimal=\",\"`. `na_values=[\"-\"]` : « - » → NaN.",
+     "en": "`skiprows=1` skips the comment; `header=None` no header; `names` names; `sep=\";\"`; `decimal=\",\"`; `na_values=[\"-\"]` \"-\" → NaN."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", skiprows=1, header=None, names=[\"ville\", \"ca\", \"clients\"], na_values=[\"-\"])` : 3 lignes, `ca` en float64, 1 NaN dans `clients`.",
+   "dar": "read_csv b 6 paramètres.",
+   "en": "read_csv with 6 parameters."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier `header=None` : Rabat devient l'en-tête et on perd une ligne.",
+    "dar": "Bla `header=None`.",
+    "en": "Forgetting `header=None`."
+   },
+   {
+    "fr": "Oublier `decimal=\",\"` : `ca` reste du texte.",
+    "dar": "Bla `decimal`.",
+    "en": "Forgetting `decimal`."
+   },
+   {
+    "fr": "Mettre `skiprows=1` sans `header=None`.",
+    "dar": "skiprows bou7do.",
+    "en": "skiprows alone."
+   }
+  ],
+  "data": "ventes.csv :\nExport du 01/11/2026\nRabat;1250,5;12\nSalé;980,25;-\nTémara;1100;9"
+ },
+ {
+  "id": "dx-p-7",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Créer, calculer, filtrer, exporter",
+   "dar": "Rédigé — Sayeb, 7seb, filtri, exporti",
+   "en": "Written — Create, compute, filter, export"
+  },
+  "statement": {
+   "fr": "**1)** Crée un DataFrame avec les colonnes `nom` (Amine, Sara, Yassine), `cc` (12,5 ; 15 ; 8) et `exam` (14 ; 16,5 ; 10).\n**2)** Ajoute une colonne `moyenne` = 40 % du CC + 60 % de l'examen.\n**3)** Garde les étudiants dont la moyenne est ≥ 12.\n**4)** Exporte-les dans `admis.csv` au format français (`;` et virgule décimale), sans numéros de ligne. Donne le contenu du fichier.",
+   "dar": "**1)** Sayeb DataFrame b `nom`, `cc`, `exam`.\n**2)** Zid `moyenne` = 40 % CC + 60 % exam.\n**3)** Khalli li moyenne ≥ 12.\n**4)** Exporti f `admis.csv` b format français bla numéros. 3ti contenu.",
+   "en": "**1)** Create a DataFrame with `nom`, `cc`, `exam`.\n**2)** Add `moyenne` = 40 % CC + 60 % exam.\n**3)** Keep students with moyenne ≥ 12.\n**4)** Export to `admis.csv` in French format, without row numbers. Give the file content."
+  },
+  "hints": [
+   {
+    "fr": "Un DataFrame se crée à partir d'un dictionnaire {colonne: liste}.",
+    "dar": "Dictionnaire {colonne: liste}.",
+    "en": "Dictionary {column: list}."
+   },
+   {
+    "fr": "Filtrer : `df[condition]`.",
+    "dar": "`df[condition]`.",
+    "en": "`df[condition]`."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) et 2) Créer et calculer",
+     "dar": "1) w 2) Sayeb w 7seb",
+     "en": "1) and 2) Create and compute"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"nom\":  [\"Amine\", \"Sara\", \"Yassine\"],\n    \"cc\":   [12.5, 15, 8],\n    \"exam\": [14, 16.5, 10],\n})\ndf[\"moyenne\"] = df[\"cc\"] * 0.4 + df[\"exam\"] * 0.6"
+   },
+   {
+    "title": {
+     "fr": "3) Filtrer",
+     "dar": "3) Filtri",
+     "en": "3) Filter"
+    },
+    "body": {
+     "fr": "Yassine : 8 × 0,4 + 10 × 0,6 = 9,2 → éliminé.",
+     "dar": "Yassine : 9,2 → la.",
+     "en": "Yassine: 9.2 → out."
+    },
+    "code": "admis = df[df[\"moyenne\"] >= 12]\nprint(admis)\n#      nom    cc  exam  moyenne\n# 0  Amine  12.5  14.0     13.4\n# 1   Sara  15.0  16.5     15.9"
+   },
+   {
+    "title": {
+     "fr": "4) Exporter",
+     "dar": "4) Exporti",
+     "en": "4) Export"
+    },
+    "body": {
+     "fr": "Contenu de `admis.csv` :",
+     "dar": "Contenu dyal `admis.csv` :",
+     "en": "Content of `admis.csv`:"
+    },
+    "code": "admis.to_csv(\"admis.csv\", sep=\";\", decimal=\",\", index=False)\n\n# nom;cc;exam;moyenne\n# Amine;12,5;14,0;13,4\n# Sara;15,0;16,5;15,9"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Amine (13,4) et Sara (15,9) sont admis ; fichier écrit avec `sep=\";\", decimal=\",\", index=False`.",
+   "dar": "Amine w Sara.",
+   "en": "Amine and Sara pass."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier `index=False` : une colonne 0, 1 apparaît dans le fichier.",
+    "dar": "Bla index=False.",
+    "en": "Forgetting index=False."
+   },
+   {
+    "fr": "Écrire `df[\"moyenne\" >= 12]` (crochet mal placé).",
+    "dar": "Crochet ghalat.",
+    "en": "Misplaced bracket."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-8",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Manipuler une Series",
+   "dar": "Rédigé — Series",
+   "en": "Written — Working with a Series"
+  },
+  "statement": {
+   "fr": "**1)** Crée une Series `s` des notes 12, 15, 9, 16 indexée par Amine, Sara, Yassine, Hiba, nommée `note`.\n**2)** Affiche la note de Sara et la moyenne.\n**3)** Affiche les notes ≥ 12.\n**4)** Transforme `s` en DataFrame et explique en deux phrases la différence entre les deux objets.",
+   "dar": "**1)** Sayeb Series `s`.\n**2)** Note dyal Sara w moyenne.\n**3)** Notes ≥ 12.\n**4)** Beddelha l DataFrame w chre7 l far9.",
+   "en": "**1)** Create Series `s`.\n**2)** Sara's mark and the mean.\n**3)** Marks ≥ 12.\n**4)** Turn it into a DataFrame and explain the difference."
+  },
+  "hints": [
+   {
+    "fr": "L'index donne l'accès par nom : `s[\"Sara\"]`.",
+    "dar": "`s[\"Sara\"]`.",
+    "en": "`s[\"Sara\"]`."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) et 2)",
+     "dar": "1) w 2)",
+     "en": "1) and 2)"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "s = pd.Series([12, 15, 9, 16], index=[\"Amine\", \"Sara\", \"Yassine\", \"Hiba\"], name=\"note\")\nprint(s[\"Sara\"])   # 15\nprint(s.mean())    # 13.0"
+   },
+   {
+    "title": {
+     "fr": "3) Filtrer",
+     "dar": "3) Filtri",
+     "en": "3) Filter"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "print(s[s >= 12])\n# Amine    12\n# Sara     15\n# Hiba     16\n# Name: note, dtype: int64"
+   },
+   {
+    "title": {
+     "fr": "4) Vers un DataFrame",
+     "dar": "4) L DataFrame",
+     "en": "4) To a DataFrame"
+    },
+    "body": {
+     "fr": "Une **Series** a une dimension (valeurs + index). Le **DataFrame** a deux dimensions : ici une seule colonne `note`, mais on pourrait en ajouter d'autres partageant le même index.",
+     "dar": "**Series** = bo3d wa7ed. **DataFrame** = jouj ab3ad : hna colonne wa7da `note`, w t9der tzid.",
+     "en": "A **Series** is 1-D; a **DataFrame** is 2-D: here one column `note`, more could be added on the same index."
+    },
+    "code": "print(s.to_frame())\n#          note\n# Amine      12\n# Sara       15\n# Yassine     9\n# Hiba       16"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`s[\"Sara\"]` = 15 ; moyenne 13,0 ; notes ≥ 12 : Amine, Sara, Hiba ; `s.to_frame()` donne un DataFrame d'une colonne.",
+   "dar": "15 ; 13 ; 3 notes ; to_frame.",
+   "en": "15; 13.0; three marks; to_frame."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire `s[1]` en pensant à Sara : utiliser l'étiquette `s[\"Sara\"]`.",
+    "dar": "s[1].",
+    "en": "Using s[1]."
+   }
+  ]
+ },
+ {
+  "id": "dx-p-9",
+  "module": "data",
+  "chapter": "pandas",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Lire, nettoyer et sauvegarder un Excel",
+   "dar": "Rédigé — Excel : 9ra, n9i, sauvegardi",
+   "en": "Written — Read, clean and save an Excel file"
+  },
+  "statement": {
+   "fr": "Le classeur `notes.xlsx` a une feuille `notes_h_s` qui commence par une ligne de commentaire et n'a pas d'en-tête (colonnes : nom, note1, note2). Les absences sont notées « abs ».\n\n**1)** Lis cette feuille avec les bons noms de colonnes.\n**2)** Vérifie la lecture.\n**3)** Remplace les notes manquantes par la moyenne de leur colonne.\n**4)** Sauvegarde le résultat dans `notes_propres.xlsx` sans index.",
+   "dar": "Feuille `notes_h_s` : commentaire, bla en-tête, « abs » = ghayeb.\n\n**1)** 9raha b smiyat.\n**2)** T2akked.\n**3)** 3awed NaN b moyenne.\n**4)** Sauvegardi bla index.",
+   "en": "Sheet `notes_h_s`: comment line, no header, \"abs\" for absences.\n\n**1)** Read it with names.\n**2)** Check.\n**3)** Fill missing marks with the column mean.\n**4)** Save without index."
+  },
+  "hints": [
+   {
+    "fr": "Les paramètres de `read_excel` sont les mêmes que ceux de `read_csv` (sauf sep / decimal).",
+    "dar": "Nefs paramètres.",
+    "en": "Same parameters."
+   },
+   {
+    "fr": "`fillna` sur chaque colonne de notes.",
+    "dar": "`fillna`.",
+    "en": "`fillna`."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Lire",
+     "dar": "1) 9ra",
+     "en": "1) Read"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "df = pd.read_excel(\"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1, header=None,\n                   names=[\"nom\", \"note1\", \"note2\"], na_values=[\"abs\"])"
+   },
+   {
+    "title": {
+     "fr": "2) Vérifier",
+     "dar": "2) T2akked",
+     "en": "2) Check"
+    },
+    "body": {
+     "fr": "Les notes doivent être en `float64` et les « abs » comptés en NaN.",
+     "dar": "Notes `float64` w « abs » = NaN.",
+     "en": "Marks must be `float64` and \"abs\" counted as NaN."
+    },
+    "code": "print(df.shape)\nprint(df.dtypes)\nprint(df.isna().sum())"
+   },
+   {
+    "title": {
+     "fr": "3) Imputer",
+     "dar": "3) Imputer",
+     "en": "3) Impute"
+    },
+    "body": {
+     "fr": "Imputation par la moyenne (Chap 2) : simple, garde toutes les lignes, mais réduit un peu la variance.",
+     "dar": "Imputation b moyenne (Fasl 2).",
+     "en": "Mean imputation (Ch. 2)."
+    },
+    "code": "for c in [\"note1\", \"note2\"]:\n    df[c] = df[c].fillna(df[c].mean())"
+   },
+   {
+    "title": {
+     "fr": "4) Sauvegarder",
+     "dar": "4) Sauvegardi",
+     "en": "4) Save"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "df.to_excel(\"notes_propres.xlsx\", index=False)"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "`read_excel(..., sheet_name=\"notes_h_s\", skiprows=1, header=None, names=[...], na_values=[\"abs\"])`, `fillna(moyenne)`, `to_excel(..., index=False)`.",
+   "dar": "read_excel → fillna → to_excel.",
+   "en": "read_excel → fillna → to_excel."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier `na_values=[\"abs\"]` : la colonne reste du texte et `mean()` plante.",
+    "dar": "Bla na_values.",
+    "en": "Forgetting na_values."
+   },
+   {
+    "fr": "Utiliser `read_csv` sur un .xlsx.",
+    "dar": "read_csv.",
+    "en": "read_csv on xlsx."
+   }
+  ]
  }
 ]

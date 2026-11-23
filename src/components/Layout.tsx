@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
+import { Flag } from './Flag';
 import { Icon } from './Icon';
 import { getModule } from '../lib/content';
 import { SUBJECTS } from '../lib/catalog';
@@ -23,10 +24,10 @@ const initials = (name: string) =>
     .map((w) => w[0]!.toUpperCase())
     .join('') || '?';
 
-const LANGS: { code: Lang; label: string }[] = [
-  { code: 'fr', label: 'FR' },
-  { code: 'dar', label: 'DAR' },
-  { code: 'en', label: 'EN' }
+const LANGS: { code: Lang; label: string; name: string }[] = [
+  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'dar', label: 'DAR', name: 'Darija' },
+  { code: 'en', label: 'EN', name: 'English' }
 ];
 
 /** Study tools and reference material ("Ressources" menu). */
@@ -140,23 +141,88 @@ function MenuItem({ to, icon, title, color }: { to: string; icon: string; title:
   );
 }
 
-function LangSwitch() {
+/** Language picker. `menu`: compact dropdown for the navbar; `list`: three flag buttons (menu drawer). */
+function LangSwitch({ variant = 'list' }: { variant?: 'menu' | 'list' }) {
   const { t } = useT();
   const { lang, setLang } = useStore();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+  const cur = LANGS.find((l) => l.code === lang) ?? LANGS[0];
+
+  if (variant === 'list')
+    return (
+      <div role="radiogroup" aria-label={t('lang.label')} className="flex gap-1 rounded-full border border-line p-0.5">
+        {LANGS.map((l) => (
+          <button
+            key={l.code}
+            role="radio"
+            aria-checked={lang === l.code}
+            onClick={() => setLang(l.code)}
+            data-testid={`lang-${l.code}`}
+            title={l.name}
+            className={`flex min-h-[34px] items-center gap-1.5 rounded-full px-2.5 font-mono text-[11px] font-semibold tracking-wide transition-colors ${lang === l.code ? 'bg-fg text-bg' : 'text-muted hover:text-fg'}`}
+          >
+            <Flag lang={l.code} size={18} /> {l.label}
+          </button>
+        ))}
+      </div>
+    );
+
   return (
-    <div role="radiogroup" aria-label={t('lang.label')} className="flex rounded-full border border-line p-0.5">
-      {LANGS.map((l) => (
-        <button
-          key={l.code}
-          role="radio"
-          aria-checked={lang === l.code}
-          onClick={() => setLang(l.code)}
-          data-testid={`lang-${l.code}`}
-          className={`min-h-[34px] rounded-full px-2.5 font-mono text-[11px] font-semibold tracking-wide transition-colors ${lang === l.code ? 'bg-fg text-bg' : 'text-muted hover:text-fg'}`}
-        >
-          {l.label}
-        </button>
-      ))}
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`${t('lang.label')} : ${cur.name}`}
+        data-testid="lang-menu"
+        className="flex min-h-[40px] items-center gap-2 rounded-full border border-line px-3 font-mono text-[11px] font-semibold tracking-wide transition-colors hover:border-fg/40"
+      >
+        <Flag lang={cur.code} size={20} />
+        {cur.label}
+        <Icon name="down" size={13} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="menu"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.12 }}
+            className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-line bg-surface p-1.5 text-fg shadow-[0_12px_32px_-12px_rgba(20,36,58,0.3)]"
+          >
+            {LANGS.map((l) => (
+              <button
+                key={l.code}
+                role="menuitemradio"
+                aria-checked={lang === l.code}
+                onClick={() => {
+                  setLang(l.code);
+                  setOpen(false);
+                }}
+                data-testid={`lang-${l.code}`}
+                className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition ${lang === l.code ? 'bg-accent/10 font-semibold text-accent' : 'hover:bg-surface2'}`}
+              >
+                <Flag lang={l.code} size={24} />
+                <span className="flex-1">{l.name}</span>
+                {lang === l.code && <Icon name="check" size={15} />}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -325,7 +391,7 @@ export function TopBar() {
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           {!locked && <SearchButton />}
           <span className={locked ? '' : 'hidden md:block'}>
-            <LangSwitch />
+            <LangSwitch variant="menu" />
           </span>
           <ThemeButton />
           {!locked && <UserMenu />}

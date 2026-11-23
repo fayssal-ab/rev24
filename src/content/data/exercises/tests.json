@@ -1189,5 +1189,999 @@
     "tolerance": 0.001
    }
   ]
+ },
+ {
+  "id": "dx-t-11",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Bouteilles de lait (bilatéral, σ connu, deux risques)",
+   "dar": "Rédigé — Bouteilles d l7lib (bilatéral, σ m3rouf, jouj risques)",
+   "en": "Written — Milk bottles (two-sided, σ known, two levels)"
+  },
+  "statement": {
+   "fr": "Une machine remplit des bouteilles de **1000 ml** ; σ = 10 ml est connu. Sur un échantillon de **n = 16** bouteilles, on mesure **x̄ = 995 ml**.\n\n**a)** Au risque α = 5 %, la machine est-elle déréglée ?\n**b)** Même question au risque α = 1 %.\n**c)** Calculer la P-value et retrouver les deux décisions.\n\nOn donne : z0,025 = 1,96 ; z0,005 = 2,576 ; Φ(2) = 0,9772.",
+   "dar": "Machine kat3emmer bouteilles **1000 ml** ; σ = 10 m3rouf. F **n = 16**, **x̄ = 995 ml**.\n\n**a)** B α = 5 %, wach machine mkhassra ?\n**b)** Nefs sou2al b α = 1 %.\n**c)** 7seb P-value w l9a jouj qararat.\n\nKan3tiwk : z0,025 = 1,96 ; z0,005 = 2,576 ; Φ(2) = 0,9772.",
+   "en": "A machine fills **1000 ml** bottles; σ = 10 ml is known. On **n = 16** bottles, **x̄ = 995 ml**.\n\n**a)** At α = 5 %, is the machine out of adjustment?\n**b)** Same at α = 1 %.\n**c)** Compute the P-value and recover both decisions.\n\nGiven: z0.025 = 1.96; z0.005 = 2.576; Φ(2) = 0.9772."
+  },
+  "hints": [
+   {
+    "fr": "« Déréglée » = différente de 1000 dans un sens ou l'autre.",
+    "dar": "« Mkhassra » = mkhtalfa 3la 1000 f ay jiha.",
+    "en": "\"Out of adjustment\" = different from 1000 either way."
+   },
+   {
+    "fr": "σ/√n = 10/4.",
+    "dar": "σ/√n = 10/4.",
+    "en": "σ/√n = 10/4."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Données",
+     "dar": "Data",
+     "en": "Data"
+    },
+    "body": {
+     "fr": "µ0 = 1000 ; σ = 10 (connu) ; n = 16 ; x̄ = 995.",
+     "dar": "µ0 = 1000 ; σ = 10 (m3rouf) ; n = 16 ; x̄ = 995.",
+     "en": "µ0 = 1000; σ = 10 (known); n = 16; x̄ = 995."
+    }
+   },
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 1000 contre H1 : µ ≠ 1000 → test **bilatéral**.",
+     "dar": "H0 : µ = 1000 contre H1 : µ ≠ 1000 → **bilatéral**.",
+     "en": "H0: µ = 1000 vs H1: µ ≠ 1000 → **two-sided**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique et loi",
+     "dar": "Statistique w loi",
+     "en": "Statistic and law"
+    },
+    "body": {
+     "fr": "σ connu → Z0 = (x̄ − µ0)/(σ/√n) ; sous H0, Z0 ~ N(0, 1).",
+     "dar": "σ m3rouf → Z0 ; sous H0, Z0 ~ N(0, 1).",
+     "en": "σ known → Z0; under H0, Z0 ~ N(0, 1)."
+    }
+   },
+   {
+    "title": {
+     "fr": "Calcul",
+     "dar": "7sab",
+     "en": "Computation"
+    },
+    "body": {
+     "fr": "σ/√n = 10/4 = 2,5.",
+     "dar": "σ/√n = 2,5.",
+     "en": "σ/√n = 2.5."
+    },
+    "tex": "Z_0 = \\frac{995 - 1000}{2{,}5} = -2"
+   },
+   {
+    "title": {
+     "fr": "a) α = 5 %",
+     "dar": "a) α = 5 %",
+     "en": "a) α = 5 %"
+    },
+    "body": {
+     "fr": "Région critique |Z0| > 1,96. |Z0| = 2 > 1,96 → **on rejette H0** : au risque 5 %, la machine est déréglée.",
+     "dar": "|Z0| = 2 > 1,96 → **nrfdou H0** : b 5 %, machine mkhassra.",
+     "en": "|Z0| = 2 > 1.96 → **reject H0**: at 5 % the machine is out of adjustment."
+    }
+   },
+   {
+    "title": {
+     "fr": "b) α = 1 %",
+     "dar": "b) α = 1 %",
+     "en": "b) α = 1 %"
+    },
+    "body": {
+     "fr": "Région critique |Z0| > 2,576. |Z0| = 2 ≤ 2,576 → **on ne rejette pas H0** : au risque 1 %, on ne peut pas conclure qu'elle est déréglée.",
+     "dar": "2 ≤ 2,576 → **ma nrfdouch H0** : b 1 %, ma n9drouch ngoulou mkhassra.",
+     "en": "2 ≤ 2.576 → **do not reject H0** at 1 %."
+    }
+   },
+   {
+    "title": {
+     "fr": "c) P-value",
+     "dar": "c) P-value",
+     "en": "c) P-value"
+    },
+    "body": {
+     "fr": "Bilatéral : PV = 2(1 − Φ(|z0|)). 0,05 > 0,0455 → rejet à 5 % ; 0,01 < 0,0455 → non-rejet à 1 %. Mêmes décisions.",
+     "dar": "PV = 2(1 − Φ(2)) = 0,0455. 0,05 > PV → rfed ; 0,01 < PV → la.",
+     "en": "PV = 2(1 − Φ(2)) = 0.0455. 0.05 > PV → reject; 0.01 < PV → keep."
+    },
+    "tex": "PV = 2\\,(1 - 0{,}9772) = 0{,}0456 \\approx 0{,}0455"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Z0 = −2. Au risque 5 % on rejette H0 (machine déréglée) ; au risque 1 % on ne la rejette pas. PV ≈ 0,0455, comprise entre 0,01 et 0,05.",
+   "dar": "Z0 = −2 : rfed b 5 %, la b 1 %. PV ≈ 0,0455.",
+   "en": "Z0 = −2: reject at 5 %, keep at 1 %. PV ≈ 0.0455."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Lire z0,05 = 1,645 au lieu de z0,025 = 1,96 (le test est bilatéral).",
+    "dar": "1,645 f blast 1,96.",
+    "en": "Reading 1.645 instead of 1.96."
+   },
+   {
+    "fr": "Croire que la décision ne dépend pas de α.",
+    "dar": "Tdenn bli qarar ma kayt3allaqch b α.",
+    "en": "Thinking the decision does not depend on α."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zStat",
+     "args": [
+      995,
+      1000,
+      10,
+      16
+     ]
+    },
+    "expect": -2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      -2,
+      "two"
+     ]
+    },
+    "expect": 0.0455,
+    "tolerance": 0.0002
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.005
+     ]
+    },
+    "expect": 2.576,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-12",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Durée de vie des batteries (Student, unilatéral droit)",
+   "dar": "Rédigé — Batteries (Student, droite)",
+   "en": "Written — Battery life (Student, right-tailed)"
+  },
+  "statement": {
+   "fr": "Un fabricant affirme que ses nouvelles batteries durent **plus de 500 h** en moyenne. Sur **n = 25** batteries, on obtient **x̄ = 510 h** et **S = 20 h** (σ inconnu). Au risque 5 %, les données confirment-elles l'affirmation ? On donne t0,05;24 = 1,711.",
+   "dar": "Fabricant kaygoul bli batteries jdad kaydoumou **ktar mn 500 h**. F **n = 25**, **x̄ = 510 h**, **S = 20 h** (σ ma m3roufch). B 5 %, wach data kat2akked ? t0,05;24 = 1,711.",
+   "en": "A maker claims new batteries last **more than 500 h** on average. On **n = 25**: **x̄ = 510 h**, **S = 20 h** (σ unknown). At 5 %, do the data support the claim? t0.05;24 = 1.711."
+  },
+  "hints": [
+   {
+    "fr": "« Plus de » → H1 : µ > 500.",
+    "dar": "« Ktar mn » → H1 : µ > 500.",
+    "en": "\"More than\" → H1: µ > 500."
+   },
+   {
+    "fr": "σ inconnu → Student à n − 1 = 24 ddl.",
+    "dar": "Student b 24 ddl.",
+    "en": "Student with 24 df."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Données",
+     "dar": "Data",
+     "en": "Data"
+    },
+    "body": {
+     "fr": "µ0 = 500 ; n = 25 ; x̄ = 510 ; S = 20 ; σ **inconnu** ; α = 0,05.",
+     "dar": "µ0 = 500 ; n = 25 ; x̄ = 510 ; S = 20 ; σ **ma m3roufch**.",
+     "en": "µ0 = 500; n = 25; x̄ = 510; S = 20; σ **unknown**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 500 contre **H1 : µ > 500** → **unilatéral à droite**.",
+     "dar": "H0 : µ = 500 contre **H1 : µ > 500** → **droite**.",
+     "en": "H0: µ = 500 vs **H1: µ > 500** → **right-tailed**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique et loi",
+     "dar": "Statistique w loi",
+     "en": "Statistic and law"
+    },
+    "body": {
+     "fr": "T0 = (x̄ − µ0)/(S/√n) ; sous H0, T0 ~ t(24).",
+     "dar": "T0 ; sous H0, T0 ~ t(24).",
+     "en": "T0; under H0, T0 ~ t(24)."
+    }
+   },
+   {
+    "title": {
+     "fr": "Calcul",
+     "dar": "7sab",
+     "en": "Computation"
+    },
+    "body": {
+     "fr": "S/√n = 20/5 = 4.",
+     "dar": "S/√n = 4.",
+     "en": "S/√n = 4."
+    },
+    "tex": "T_0 = \\frac{510 - 500}{4} = 2{,}5"
+   },
+   {
+    "title": {
+     "fr": "Valeur critique",
+     "dar": "Valeur critique",
+     "en": "Critical value"
+    },
+    "body": {
+     "fr": "Droite, α = 0,05, ν = 24 → t0,05;24 = 1,711. Région critique : T0 > 1,711.",
+     "dar": "T0 > 1,711.",
+     "en": "T0 > 1.711."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "T0 = 2,5 > 1,711 → **on rejette H0** (conclusion forte). P-value ≈ 0,0098 < 0,05.",
+     "dar": "2,5 > 1,711 → **nrfdou H0**. PV ≈ 0,0098.",
+     "en": "2.5 > 1.711 → **reject H0**. PV ≈ 0.0098."
+    }
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "Au risque 5 %, la durée de vie moyenne **dépasse 500 h** : l'affirmation du fabricant est confirmée.",
+     "dar": "B 5 %, l moyenne **fayta 500 h** : fabricant 3ndo l7a9.",
+     "en": "At 5 %, the mean life **exceeds 500 h**: the claim is supported."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "T0 = 2,5 > 1,711 → rejet de H0 : au risque 5 %, la durée moyenne dépasse 500 h (PV ≈ 0,01).",
+   "dar": "T0 = 2,5 → rfed H0 : ktar mn 500 h.",
+   "en": "T0 = 2.5 → reject H0: mean > 500 h."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser la loi normale (σ inconnu → Student).",
+    "dar": "Normale f blast Student.",
+    "en": "Normal instead of Student."
+   },
+   {
+    "fr": "Lire t0,025 (test unilatéral : on lit α, pas α/2).",
+    "dar": "t0,025 f blast t0,05.",
+    "en": "Reading t0.025 instead of t0.05."
+   },
+   {
+    "fr": "ν = 25 au lieu de 24.",
+    "dar": "ν = 25.",
+    "en": "ν = 25."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "tStat",
+     "args": [
+      510,
+      500,
+      20,
+      25
+     ]
+    },
+    "expect": 2.5,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.05,
+      24
+     ]
+    },
+    "expect": 1.711,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      2.5,
+      24,
+      "right"
+     ]
+    },
+    "expect": 0.0098,
+    "tolerance": 0.0003
+   }
+  ]
+ },
+ {
+  "id": "dx-t-13",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Temps de trajet, données brutes (Student bilatéral)",
+   "dar": "Rédigé — Wa9t trajet, data khama (Student)",
+   "en": "Written — Commute time, raw data (two-sided Student)"
+  },
+  "statement": {
+   "fr": "Une application annonce un temps de trajet moyen de **12 min**. Six trajets mesurés : **12 ; 15 ; 11 ; 14 ; 13 ; 16** min. Au risque 5 %, l'annonce est-elle compatible avec les mesures ? On donne t0,025;5 = 2,571.",
+   "dar": "Application kat3lan 3la wa9t moyen **12 min**. 6 trajets : **12 ; 15 ; 11 ; 14 ; 13 ; 16**. B 5 %, wach i3lan compatible ? t0,025;5 = 2,571.",
+   "en": "An app announces a mean commute of **12 min**. Six trips: **12; 15; 11; 14; 13; 16** min. At 5 %, is the claim compatible? t0.025;5 = 2.571."
+  },
+  "hints": [
+   {
+    "fr": "Calcule d'abord x̄ puis S avec n − 1.",
+    "dar": "7seb x̄ w S b n − 1.",
+    "en": "Compute x̄ then S with n − 1."
+   },
+   {
+    "fr": "ν = 6 − 1 = 5.",
+    "dar": "ν = 5.",
+    "en": "ν = 5."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Données",
+     "dar": "Data",
+     "en": "Data"
+    },
+    "body": {
+     "fr": "µ0 = 12 ; n = 6 ; σ **inconnu** → Student ; α = 0,05.",
+     "dar": "µ0 = 12 ; n = 6 ; σ **ma m3roufch**.",
+     "en": "µ0 = 12; n = 6; σ **unknown**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 12 contre H1 : µ ≠ 12 → **bilatéral**.",
+     "dar": "H0 : µ = 12 contre H1 : µ ≠ 12.",
+     "en": "H0: µ = 12 vs H1: µ ≠ 12."
+    }
+   },
+   {
+    "title": {
+     "fr": "Moyenne et S",
+     "dar": "Moyenne w S",
+     "en": "Mean and S"
+    },
+    "body": {
+     "fr": "Σxi = 81 → x̄ = **13,5**. Écarts : −1,5 ; 1,5 ; −2,5 ; 0,5 ; −0,5 ; 2,5 → carrés 2,25 ; 2,25 ; 6,25 ; 0,25 ; 0,25 ; 6,25 → somme **17,5**.",
+     "dar": "x̄ = **13,5** ; Σ(xi − x̄)² = **17,5**.",
+     "en": "x̄ = **13.5**; Σ(xi − x̄)² = **17.5**."
+    },
+    "tex": "S = \\sqrt{\\frac{17{,}5}{5}} = \\sqrt{3{,}5} \\approx 1{,}871"
+   },
+   {
+    "title": {
+     "fr": "Statistique et loi",
+     "dar": "Statistique w loi",
+     "en": "Statistic and law"
+    },
+    "body": {
+     "fr": "Sous H0, T0 ~ t(5). S/√n = 1,871/√6 ≈ 0,764.",
+     "dar": "Sous H0, T0 ~ t(5).",
+     "en": "Under H0, T0 ~ t(5)."
+    },
+    "tex": "T_0 = \\frac{13{,}5 - 12}{1{,}871/\\sqrt6} \\approx 1{,}964"
+   },
+   {
+    "title": {
+     "fr": "Valeur critique",
+     "dar": "Valeur critique",
+     "en": "Critical value"
+    },
+    "body": {
+     "fr": "α/2 = 0,025, ν = 5 → 2,571. Région critique : |T0| > 2,571.",
+     "dar": "|T0| > 2,571.",
+     "en": "|T0| > 2.571."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "|T0| = 1,964 ≤ 2,571 → **on ne rejette pas H0** (PV ≈ 0,107 > 0,05).",
+     "dar": "1,964 ≤ 2,571 → **ma nrfdouch**.",
+     "en": "1.964 ≤ 2.571 → **do not reject**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "Au risque 5 %, les mesures sont **compatibles** avec un temps moyen de 12 min (conclusion faible : 6 mesures, c'est peu).",
+     "dar": "B 5 %, mesures **compatibles** m3a 12 min.",
+     "en": "At 5 %, the data are **compatible** with 12 min."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "x̄ = 13,5 ; S ≈ 1,871 ; T0 ≈ 1,964 ≤ 2,571 → on ne rejette pas H0 : annonce compatible au risque 5 %.",
+   "dar": "T0 ≈ 1,964 → ma nrfdouch.",
+   "en": "T0 ≈ 1.964 → keep H0."
+  },
+  "commonMistakes": [
+   {
+    "fr": "S calculé avec n = 6 (≈ 1,708) au lieu de n − 1.",
+    "dar": "S b n.",
+    "en": "S with n."
+   },
+   {
+    "fr": "ν = 6.",
+    "dar": "ν = 6.",
+    "en": "ν = 6."
+   }
+  ],
+  "data": "12  15  11  14  13  16",
+  "checks": [
+   {
+    "compute": {
+     "fn": "mean",
+     "args": [
+      [
+       12,
+       15,
+       11,
+       14,
+       13,
+       16
+      ]
+     ]
+    },
+    "expect": 13.5,
+    "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "sampleSd",
+     "args": [
+      [
+       12,
+       15,
+       11,
+       14,
+       13,
+       16
+      ]
+     ]
+    },
+    "expect": 1.871,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tStatData",
+     "args": [
+      [
+       12,
+       15,
+       11,
+       14,
+       13,
+       16
+      ],
+      12
+     ]
+    },
+    "expect": 1.964,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.025,
+      5
+     ]
+    },
+    "expect": 2.571,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      1.964,
+      5,
+      "two"
+     ]
+    },
+    "expect": 0.1067,
+    "tolerance": 0.002
+   }
+  ]
+ },
+ {
+  "id": "dx-t-14",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Consommation d'une voiture (unilatéral gauche)",
+   "dar": "Rédigé — Istihlak tomobil (gauche)",
+   "en": "Written — Car fuel use (left-tailed)"
+  },
+  "statement": {
+   "fr": "Un constructeur veut montrer qu'un nouveau moteur consomme **moins de 8 L/100 km**. On connaît σ = 0,6. Sur **n = 36** trajets, **x̄ = 7,8**. Test au risque 5 % et P-value. On donne z0,05 = 1,645 ; Φ(2) = 0,9772.",
+   "dar": "Constructeur bgha ybayen bli moteur jdid kayakol **9ell mn 8 L**. σ = 0,6. **n = 36**, **x̄ = 7,8**. Test b 5 % w P-value.",
+   "en": "A maker wants to show a new engine uses **less than 8 L/100 km**. σ = 0.6. **n = 36**, **x̄ = 7.8**. Test at 5 % and P-value."
+  },
+  "hints": [
+   {
+    "fr": "« Moins de » → H1 : µ < 8.",
+    "dar": "H1 : µ < 8.",
+    "en": "H1: µ < 8."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Données",
+     "dar": "Data",
+     "en": "Data"
+    },
+    "body": {
+     "fr": "µ0 = 8 ; σ = 0,6 (connu) ; n = 36 ; x̄ = 7,8 ; α = 0,05.",
+     "dar": "µ0 = 8 ; σ = 0,6 ; n = 36 ; x̄ = 7,8.",
+     "en": "µ0 = 8; σ = 0.6; n = 36; x̄ = 7.8."
+    }
+   },
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : µ = 8 contre **H1 : µ < 8** → **unilatéral à gauche**.",
+     "dar": "H1 : µ < 8 → **gauche**.",
+     "en": "H1: µ < 8 → **left-tailed**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Statistique et loi",
+     "dar": "Statistique w loi",
+     "en": "Statistic and law"
+    },
+    "body": {
+     "fr": "Sous H0, Z0 ~ N(0, 1). σ/√n = 0,6/6 = 0,1.",
+     "dar": "Z0 ~ N(0, 1). σ/√n = 0,1.",
+     "en": "Z0 ~ N(0, 1). σ/√n = 0.1."
+    },
+    "tex": "Z_0 = \\frac{7{,}8 - 8}{0{,}1} = -2"
+   },
+   {
+    "title": {
+     "fr": "Valeur critique",
+     "dar": "Valeur critique",
+     "en": "Critical value"
+    },
+    "body": {
+     "fr": "Gauche : on rejette si **Z0 < −1,645**.",
+     "dar": "Rfed ila **Z0 < −1,645**.",
+     "en": "Reject if **Z0 < −1.645**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "Z0 = −2 < −1,645 → **on rejette H0**. PV = Φ(−2) = 1 − 0,9772 = 0,0228 < 0,05.",
+     "dar": "−2 < −1,645 → **nrfdou H0**. PV = 0,0228.",
+     "en": "−2 < −1.645 → **reject H0**. PV = 0.0228."
+    }
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "Au risque 5 %, le nouveau moteur consomme **en moyenne moins de 8 L/100 km**.",
+     "dar": "B 5 %, moteur jdid kayakol **9ell mn 8 L**.",
+     "en": "At 5 %, the new engine uses **less than 8 L/100 km** on average."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Z0 = −2 < −1,645 → rejet de H0 : consommation moyenne inférieure à 8 L/100 km (PV ≈ 0,023).",
+   "dar": "Rfed H0, PV ≈ 0,023.",
+   "en": "Reject H0, PV ≈ 0.023."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser 1,96 (bilatéral).",
+    "dar": "1,96.",
+    "en": "Using 1.96."
+   },
+   {
+    "fr": "PV = 2 × 0,0228 (le ×2 est pour le bilatéral).",
+    "dar": "Bla ×2.",
+    "en": "Doubling the PV."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zStat",
+     "args": [
+      7.8,
+      8,
+      0.6,
+      36
+     ]
+    },
+    "expect": -2,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      -2,
+      "left"
+     ]
+    },
+    "expect": 0.0228,
+    "tolerance": 0.0002
+   }
+  ]
+ },
+ {
+  "id": "dx-t-15",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 2,
+  "title": {
+   "fr": "Rédigé — Les pannes sont-elles uniformes sur la semaine ? (χ²)",
+   "dar": "Rédigé — Pannes mtsawyin f simana ? (χ²)",
+   "en": "Written — Are breakdowns uniform over the week? (χ²)"
+  },
+  "statement": {
+   "fr": "Sur 100 pannes, la répartition du lundi au vendredi est : **22 ; 18 ; 15 ; 20 ; 25**. Au risque 5 %, peut-on admettre que les pannes sont **réparties uniformément** sur les 5 jours ? On donne χ²0,05;4 = 9,488.",
+   "dar": "100 panne, mn tnin l jem3a : **22 ; 18 ; 15 ; 20 ; 25**. B 5 %, wach mtsawyin 3la 5 iyam ? χ²0,05;4 = 9,488.",
+   "en": "100 breakdowns, Monday to Friday: **22; 18; 15; 20; 25**. At 5 %, are they **uniform** over the 5 days? χ²0.05;4 = 9.488."
+  },
+  "hints": [
+   {
+    "fr": "Uniforme → pi = 1/5, aucun paramètre estimé (p = 0).",
+    "dar": "pi = 1/5, p = 0.",
+    "en": "pi = 1/5, p = 0."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : les pannes suivent une loi uniforme (pi = 1/5) contre H1 : elles ne la suivent pas.",
+     "dar": "H0 : uniforme (pi = 1/5) contre H1 : la.",
+     "en": "H0: uniform (pi = 1/5) vs H1: not."
+    }
+   },
+   {
+    "title": {
+     "fr": "Effectifs attendus",
+     "dar": "Ei",
+     "en": "Expected counts"
+    },
+    "body": {
+     "fr": "Ei = n·pi = 100 × 1/5 = **20** pour chaque jour (tous ≥ 5).",
+     "dar": "Ei = **20** l kol nhar.",
+     "en": "Ei = **20** each day."
+    }
+   },
+   {
+    "title": {
+     "fr": "Calcul de χ²0",
+     "dar": "7sab χ²0",
+     "en": "Computing χ²0"
+    },
+    "body": {
+     "fr": "(22−20)²/20 = 0,2 ; (18−20)²/20 = 0,2 ; (15−20)²/20 = 1,25 ; (20−20)²/20 = 0 ; (25−20)²/20 = 1,25.",
+     "dar": "0,2 ; 0,2 ; 1,25 ; 0 ; 1,25.",
+     "en": "0.2; 0.2; 1.25; 0; 1.25."
+    },
+    "tex": "\\chi^2_0 = 0{,}2 + 0{,}2 + 1{,}25 + 0 + 1{,}25 = 2{,}9"
+   },
+   {
+    "title": {
+     "fr": "Valeur critique",
+     "dar": "Valeur critique",
+     "en": "Critical value"
+    },
+    "body": {
+     "fr": "ν = k − p − 1 = 5 − 0 − 1 = **4** → χ²0,05;4 = 9,488.",
+     "dar": "ν = **4** → 9,488.",
+     "en": "ν = **4** → 9.488."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "2,9 ≤ 9,488 → **on ne rejette pas H0**.",
+     "dar": "2,9 ≤ 9,488 → **ma nrfdouch**.",
+     "en": "2.9 ≤ 9.488 → **do not reject**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "Au risque 5 %, rien ne permet de dire que les pannes dépendent du jour : la répartition uniforme est acceptable.",
+     "dar": "B 5 %, ma kayn walo kaygoul bli pannes kat3allaq b nhar.",
+     "en": "At 5 %, no evidence breakdowns depend on the day."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "χ²0 = 2,9 ≤ 9,488 (ν = 4) → on ne rejette pas H0 : répartition uniforme acceptable.",
+   "dar": "χ² = 2,9 → ma nrfdouch.",
+   "en": "χ² = 2.9 → keep H0."
+  },
+  "commonMistakes": [
+   {
+    "fr": "ν = 5 (oublier le −1).",
+    "dar": "ν = 5.",
+    "en": "ν = 5."
+   },
+   {
+    "fr": "Diviser par Oi au lieu de Ei.",
+    "dar": "Oi f blast Ei.",
+    "en": "Dividing by Oi."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "chi2Uniform",
+     "args": [
+      [
+       22,
+       18,
+       15,
+       20,
+       25
+      ],
+      0.05
+     ],
+     "pick": "chi2"
+    },
+    "expect": 2.9,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.05,
+      4
+     ]
+    },
+    "expect": 9.488,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "dx-t-16",
+  "module": "data",
+  "chapter": "tests",
+  "difficulty": 3,
+  "title": {
+   "fr": "Rédigé — Loi théorique donnée : proportions 9 : 3 : 3 : 1 (χ²)",
+   "dar": "Rédigé — Proportions 9 : 3 : 3 : 1 (χ²)",
+   "en": "Written — Given law: proportions 9 : 3 : 3 : 1 (χ²)"
+  },
+  "statement": {
+   "fr": "Un modèle prévoit quatre catégories dans les proportions **9/16, 3/16, 3/16, 1/16**. Sur **160** observations, on compte **95 ; 28 ; 27 ; 10**. Au risque 5 %, les observations sont-elles conformes au modèle ? On donne χ²0,05;3 = 7,815.",
+   "dar": "Modèle kaytssenna 4 catégories b **9/16, 3/16, 3/16, 1/16**. F **160** : **95 ; 28 ; 27 ; 10**. B 5 %, wach conformes ? χ²0,05;3 = 7,815.",
+   "en": "A model predicts four categories in proportions **9/16, 3/16, 3/16, 1/16**. Out of **160**: **95; 28; 27; 10**. At 5 %, do the data fit? χ²0.05;3 = 7.815."
+  },
+  "hints": [
+   {
+    "fr": "Les pi sont donnés : rien n'est estimé (p = 0).",
+    "dar": "pi m3tiyin : p = 0.",
+    "en": "pi given: p = 0."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Hypothèses",
+     "dar": "Hypothèses",
+     "en": "Hypotheses"
+    },
+    "body": {
+     "fr": "H0 : les catégories suivent les proportions 9 : 3 : 3 : 1 contre H1 : non.",
+     "dar": "H0 : 9 : 3 : 3 : 1 contre H1 : la.",
+     "en": "H0: proportions 9 : 3 : 3 : 1 vs H1: not."
+    }
+   },
+   {
+    "title": {
+     "fr": "Effectifs attendus",
+     "dar": "Ei",
+     "en": "Expected counts"
+    },
+    "body": {
+     "fr": "Ei = 160 × pi = **90 ; 30 ; 30 ; 10**.",
+     "dar": "Ei = **90 ; 30 ; 30 ; 10**.",
+     "en": "Ei = **90; 30; 30; 10**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Calcul de χ²0",
+     "dar": "7sab χ²0",
+     "en": "Computing χ²0"
+    },
+    "body": {
+     "fr": "25/90 ≈ 0,278 ; 4/30 ≈ 0,133 ; 9/30 = 0,3 ; 0/10 = 0.",
+     "dar": "0,278 ; 0,133 ; 0,3 ; 0.",
+     "en": "0.278; 0.133; 0.3; 0."
+    },
+    "tex": "\\chi^2_0 \\approx 0{,}278 + 0{,}133 + 0{,}3 + 0 = 0{,}711"
+   },
+   {
+    "title": {
+     "fr": "Valeur critique",
+     "dar": "Valeur critique",
+     "en": "Critical value"
+    },
+    "body": {
+     "fr": "ν = 4 − 0 − 1 = **3** → χ²0,05;3 = 7,815.",
+     "dar": "ν = **3** → 7,815.",
+     "en": "ν = **3** → 7.815."
+    }
+   },
+   {
+    "title": {
+     "fr": "Décision",
+     "dar": "Qarar",
+     "en": "Decision"
+    },
+    "body": {
+     "fr": "0,711 ≤ 7,815 → **on ne rejette pas H0**.",
+     "dar": "0,711 ≤ 7,815 → **ma nrfdouch**.",
+     "en": "0.711 ≤ 7.815 → **do not reject**."
+    }
+   },
+   {
+    "title": {
+     "fr": "Conclusion",
+     "dar": "Conclusion",
+     "en": "Conclusion"
+    },
+    "body": {
+     "fr": "Au risque 5 %, les observations sont **conformes** au modèle 9 : 3 : 3 : 1.",
+     "dar": "B 5 %, observations **conformes** l modèle.",
+     "en": "At 5 %, the data **fit** the 9 : 3 : 3 : 1 model."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "χ²0 ≈ 0,711 ≤ 7,815 (ν = 3) → on ne rejette pas H0 : conformes au modèle.",
+   "dar": "χ² ≈ 0,711 → ma nrfdouch.",
+   "en": "χ² ≈ 0.711 → keep H0."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser 1/4 pour chaque catégorie au lieu des proportions données.",
+    "dar": "1/4 f blast proportions.",
+    "en": "Using 1/4 for each category."
+   },
+   {
+    "fr": "Retirer des paramètres alors qu'aucun n'est estimé.",
+    "dar": "p ≠ 0.",
+    "en": "Subtracting parameters though none estimated."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "chi2GoF",
+     "args": [
+      [
+       95,
+       28,
+       27,
+       10
+      ],
+      [
+       0.5625,
+       0.1875,
+       0.1875,
+       0.0625
+      ],
+      0,
+      0.05
+     ],
+     "pick": "chi2"
+    },
+    "expect": 0.711,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.05,
+      3
+     ]
+    },
+    "expect": 7.815,
+    "tolerance": 0.001
+   }
+  ]
  }
 ]

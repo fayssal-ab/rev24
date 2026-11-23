@@ -433,7 +433,7 @@ export const UI = {
   'module.priority': { fr: 'Priorité pour le contrôle', dar: 'Lwla l contrôle', en: 'Top priority for the test' },
   'module.priority.sub': { fr: 'Le chapitre qui pèse le plus : méthode, lois et copies modèles.', dar: 'Lfasl li fih ktar no9at : tari9a, lois w copies modèles.', en: 'The chapter that weighs the most: method, laws and model answers.' },
   'home.others': { fr: 'Tous les modules', dar: 'Ga3 les modules', en: 'All modules' },
-  'focus.eyebrow': { fr: 'Prochain contrôle · Analyse de données', dar: 'Contrôle jay · Analyse de données', en: 'Next test · Data analysis' },
+  'focus.eyebrow': { fr: 'Prochain contrôle · Analyse de données · mercredi 25/11', dar: 'Contrôle jay · Analyse de données · larb3 25/11', en: 'Next test · Data analysis · Wednesday 25/11' },
   'focus.title': { fr: 'Tests d\'hypothèses : la méthode pour le contrôle', dar: 'Tests d\'hypothèses : tari9a dyal contrôle', en: 'Hypothesis testing: the method for the test' },
   'focus.sub': { fr: 'Un contrôle écrit, pas un QCM : il faut savoir choisir le test, le rédiger et lire les tables.', dar: 'Contrôle b ktaba, machi QCM : khassek t3ref tkhtar test, tktbou w t9ra tables.', en: 'A written test, not a quiz: you must pick the test, write it up and read the tables.' },
   'focus.p1': { fr: 'Quelle loi utiliser : normale, Student ou Khi-deux', dar: 'Ina loi tst3mel : normale, Student wla Khi-deux', en: 'Which law to use: normal, Student or chi-square' },

@@ -12,6 +12,8 @@ import type { Chapter } from '../lib/schema';
 
 /** Weekday of each module's class in the S1 timetable (0 = Sunday): default test date = next class. */
 const CLASS_DAY: Record<string, number> = { ro: 1, linux: 2, data: 3, oracle: 6, mobile: 6 };
+/** Test dates announced in class (they win over the timetable guess; the student can still change them). */
+const ANNOUNCED: Record<string, string> = { data: '2026-11-25' };
 /** Chapters announced as not part of the test. */
 const OUT: Record<string, string[]> = { data: ['d-intro', 'visu'] };
 const KEY = 'g22-prep-dates';
@@ -88,7 +90,7 @@ export default function PrepPage() {
     if (!content) return [];
     return content
       .map((c) => {
-        const date = dates[c.module.id] || nextClass(CLASS_DAY[c.module.id] ?? 6);
+        const date = dates[c.module.id] || ANNOUNCED[c.module.id] || nextClass(CLASS_DAY[c.module.id] ?? 6);
         return { c, date, ...buildPlan(c, st, parse(date)), mastery: moduleMastery(c, st) };
       })
       .sort((a, b) => (a.days < 0 ? 1 : 0) - (b.days < 0 ? 1 : 0) || a.days - b.days);

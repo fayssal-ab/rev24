@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   groupe VARCHAR(40) NOT NULL DEFAULT '4IIR G22',
   role VARCHAR(10) NOT NULL DEFAULT 'user',      -- 'admin' | 'user'
   status VARCHAR(10) NOT NULL DEFAULT 'pending', -- 'pending' (en attente) | 'approved' | 'blocked'
-  session_id CHAR(36) NULL,                      -- une seule session active par compte
+  session_id CHAR(36) NULL,                      -- session partagée par les appareils du compte (remise à zéro par l'admin)
   last_seen DATETIME(3) NULL,
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),

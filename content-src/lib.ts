@@ -27,6 +27,26 @@ export const steps = (title: T | null, items: StepT[]): Section => ({
   ...(title ? { title: L(title) } : {}),
   items: items.map((x) => ({ title: L(x.t), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}), ...(x.code ? { code: x.code } : {}), ...(x.why ? { why: L(x.why) } : {}) }))
 });
+/** "L'essentiel": the few lines to remember, shown at the top of a chapter */
+export const key = (t: T): Section => ({ type: 'callout', kind: 'key', body: L(t) });
+/** model exam answer (copie modèle): every line visible, as written on the test paper */
+export type CopyLine = { l: T; b: T; tex?: string };
+export const copy = (title: T, statement: T | null, lines: CopyLine[], result?: T): Section => ({
+  type: 'copy',
+  title: L(title),
+  ...(statement ? { statement: L(statement) } : {}),
+  lines: lines.map((x) => ({ label: L(x.l), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}) })),
+  ...(result ? { result: L(result) } : {})
+});
+/** W3Schools-style example. `output` must be the real output of `code` (run it before pasting). */
+export const demo = (title: T, codeStr: string, output?: string, opts: { file?: [string, string]; note?: T } = {}): Section => ({
+  type: 'demo',
+  title: L(title),
+  ...(opts.file ? { file: { name: opts.file[0], content: opts.file[1] } } : {}),
+  code: codeStr,
+  ...(output ? { output } : {}),
+  ...(opts.note ? { note: L(opts.note) } : {})
+});
 export const table = (headers: T[], rows: T[][]): Section => ({ type: 'table', headers: headers.map(L), rows: rows.map((r) => r.map((c) => (typeof c === 'string' && !/`|\*\*/.test(c) ? c : L(c)))) });
 export const anim = (component: string, props?: Record<string, unknown>): Section => ({ type: 'animation', component, ...(props ? { props } : {}) });
 export const quiz = (...questionIds: string[]): Section => ({ type: 'miniQuiz', questionIds });

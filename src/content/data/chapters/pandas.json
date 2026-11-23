@@ -8,12 +8,21 @@
   "en": "Ch. 1 — Working with different data formats (pandas)"
  },
  "summary": {
-  "fr": "Pourquoi pandas, installation, les fonctions read_… (CSV, Excel, JSON, SQL…), écrire avec Series et DataFrame, paramètres de read_excel, puis la correction complète de la Feuille d'exercices N°1.",
+  "fr": "Lire, vérifier, modifier et sauvegarder des données avec pandas : un exemple exécuté pour chaque paramètre (sep, decimal, header, skiprows, sheet_name…), Series et DataFrame, et la Feuille d'exercices N°1 corrigée.",
   "dar": "3lach pandas, installation, les fonctions read_… (CSV, Excel, JSON, SQL…), Series w DataFrame, paramètres dyal read_excel, w correction kamla dyal Feuille N°1.",
   "en": "Why pandas, installation, the read_… functions (CSV, Excel, JSON, SQL…), writing with Series and DataFrame, read_excel parameters, then the full solution of Exercise sheet No. 1."
  },
- "estimatedMinutes": 40,
+ "estimatedMinutes": 50,
  "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. `import pandas as pd`, puis **`pd.read_<format>(chemin)`** renvoie un DataFrame ; **`df.to_<format>(chemin)`** l'écrit.\n2. Après chaque lecture : **`df.shape`, `df.dtypes`, `df.head()`**.\n3. Les paramètres qui tombent : **`sep`, `decimal`, `header=None`, `names`, `skiprows`, `sheet_name`, `index=False`**.\n4. **Series** = 1 dimension ; **DataFrame** = 2 dimensions (collection de Series).",
+    "dar": "1. `import pandas as pd`, w **`pd.read_<format>(chemin)`** kayrje3 DataFrame ; **`df.to_<format>(chemin)`** kaykteb.\n2. Mor kol 9raya : **`df.shape`, `df.dtypes`, `df.head()`**.\n3. Paramètres li kayti7ou : **`sep`, `decimal`, `header=None`, `names`, `skiprows`, `sheet_name`, `index=False`**.\n4. **Series** = bo3d wa7ed ; **DataFrame** = jouj ab3ad (majmou3a dyal Series).",
+    "en": "1. `import pandas as pd`, then **`pd.read_<format>(path)`** returns a DataFrame; **`df.to_<format>(path)`** writes it.\n2. After every read: **`df.shape`, `df.dtypes`, `df.head()`**.\n3. Parameters that come up: **`sep`, `decimal`, `header=None`, `names`, `skiprows`, `sheet_name`, `index=False`**.\n4. **Series** = 1 dimension; **DataFrame** = 2 dimensions (collection of Series)."
+   }
+  },
   {
    "type": "heading",
    "body": {
@@ -276,230 +285,65 @@
   {
    "type": "heading",
    "body": {
-    "fr": "4. Exemples : lire, modifier, sauvegarder",
-    "dar": "4. Amthila : 9ra, beddel, sauvegardi",
-    "en": "4. Examples: read, modify, save"
+    "fr": "4. Lire un fichier et vérifier ce qu'on a lu",
+    "dar": "4. 9ra fichier w t2akked mn chnou 9riti",
+    "en": "4. Read a file and check what you read"
    }
   },
   {
-   "type": "steps",
+   "type": "demo",
    "title": {
-    "fr": "De la lecture à la sauvegarde, ligne par ligne",
-    "dar": "Mn 9raya l sauvegarde, str b str",
-    "en": "From reading to saving, line by line"
+    "fr": "Lire un CSV standard",
+    "dar": "9ra CSV 3adi",
+    "en": "Read a standard CSV"
    },
-   "items": [
-    {
-     "title": {
-      "fr": "Importer pandas",
-      "dar": "Importi pandas",
-      "en": "Import pandas"
-     },
-     "body": {
-      "fr": "On importe la bibliothèque sous son alias habituel `pd`.",
-      "dar": "Kanimportiw b smiya `pd`.",
-      "en": "Import the library with its usual alias `pd`."
-     },
-     "code": "import pandas as pd"
-    },
-    {
-     "title": {
-      "fr": "Lire le fichier Excel",
-      "dar": "9ra Excel",
-      "en": "Read the Excel file"
-     },
-     "body": {
-      "fr": "`read_excel` renvoie un DataFrame qu'on range dans `df`.",
-      "dar": "`read_excel` kayrje3 DataFrame, kan7ttouh f `df`.",
-      "en": "`read_excel` returns a DataFrame stored in `df`."
-     },
-     "code": "df = pd.read_excel(\"notes.xlsx\")\nprint(df.head())   # 5 premières lignes"
-    },
-    {
-     "title": {
-      "fr": "Regarder la structure",
-      "dar": "Chouf structure",
-      "en": "Inspect the structure"
-     },
-     "body": {
-      "fr": "Toujours vérifier ce qu'on a lu : dimensions, noms et types des colonnes.",
-      "dar": "Dima t2akked chnou 9riti : l 7ajm, smiyat w types dyal colonnes.",
-      "en": "Always check what you read: shape, column names and types."
-     },
-     "code": "print(df.shape)     # (lignes, colonnes)\nprint(df.columns)\ndf.info()",
-     "why": {
-      "fr": "Une colonne de nombres lue comme du texte (« 12,5 » avec une virgule) est le bug le plus fréquent : `info()` le montre tout de suite (type object).",
-      "dar": "Colonne d arqam t9rat texte (« 12,5 » b virgule) hiya akther bug : `info()` kayban fih direct (type object).",
-      "en": "A numeric column read as text (\"12,5\" with a comma) is the most frequent bug: `info()` shows it immediately (object type)."
-     }
-    },
-    {
-     "title": {
-      "fr": "Modifier",
-      "dar": "Beddel",
-      "en": "Modify"
-     },
-     "body": {
-      "fr": "Exemple : ajouter une colonne calculée.",
-      "dar": "Mithal : zid colonne m7souba.",
-      "en": "Example: add a computed column."
-     },
-     "code": "df[\"moyenne\"] = (df[\"note1\"] + df[\"note2\"]) / 2"
-    },
-    {
-     "title": {
-      "fr": "Sauvegarder en Excel",
-      "dar": "Sauvegardi f Excel",
-      "en": "Save as Excel"
-     },
-     "body": {
-      "fr": "Sauvegarder les données modifiées dans un nouveau fichier Excel. `index=False` évite d'écrire la colonne 0, 1, 2… des numéros de ligne.",
-      "dar": "Sauvegardi data jdida f Excel. `index=False` bach ma yktebch colonne dyal numéros 0, 1, 2…",
-      "en": "Save the modified data to a new Excel file. `index=False` avoids writing the 0, 1, 2… row-number column."
-     },
-     "code": "df.to_excel(\"notes_modifiees.xlsx\", index=False)"
-    },
-    {
-     "title": {
-      "fr": "Pour JSON ou CSV",
-      "dar": "L JSON wla CSV",
-      "en": "For JSON or CSV"
-     },
-     "body": {
-      "fr": "**Même fonction, autre mot** : on remplace `excel` par `json` ou `csv`, et l'extension du fichier dans le chemin.",
-      "dar": "**Nefs fonction, kelma khra** : kanbeddlou `excel` b `json` wla `csv`, w l extension f chemin.",
-      "en": "**Same function, other word**: replace `excel` by `json` or `csv`, and the file extension in the path."
-     },
-     "code": "df = pd.read_csv(\"notes.csv\")\ndf = pd.read_json(\"notes.json\")\ndf.to_csv(\"notes.csv\", index=False)\ndf.to_json(\"notes.json\")"
-    }
+   "file": {
+    "name": "notes.csv",
+    "content": "nom,note1,note2\nAmine,12,14\nSara,15,17\nYassine,9,11\nHiba,16,13"
+   },
+   "code": "import pandas as pd\n\ndf = pd.read_csv(\"notes.csv\")\nprint(df)",
+   "output": "       nom  note1  note2\n0    Amine     12     14\n1     Sara     15     17\n2  Yassine      9     11\n3     Hiba     16     13",
+   "note": {
+    "fr": "La 1re ligne devient l'en-tête ; pandas ajoute un **index** 0, 1, 2, 3 à gauche.",
+    "dar": "Str lowl kaywli en-tête ; pandas kayzid **index** 0, 1, 2, 3 3la lissar.",
+    "en": "The first row becomes the header; pandas adds an **index** 0, 1, 2, 3 on the left."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Inspecter : shape, columns, dtypes, head",
+    "dar": "Chouf : shape, columns, dtypes, head",
+    "en": "Inspect: shape, columns, dtypes, head"
+   },
+   "code": "print(df.shape)          # (lignes, colonnes)\nprint(list(df.columns))  # noms des colonnes\nprint(df.dtypes)         # type de chaque colonne\nprint(df.head(2))        # 2 premières lignes",
+   "output": "(4, 3)\n['nom', 'note1', 'note2']\nnom      object\nnote1     int64\nnote2     int64\ndtype: object\n     nom  note1  note2\n0  Amine     12     14\n1   Sara     15     17",
+   "note": {
+    "fr": "Réflexe à avoir après **chaque** lecture : si une colonne de notes est `object` (texte), la lecture est ratée. Avec pandas 3, `object` s'affiche `str`.",
+    "dar": "Dir hadchi mor **kol** 9raya : ila colonne dyal notes tla3t `object` (texte), l 9raya ghalta. F pandas 3, `object` kayban `str`.",
+    "en": "Do this after **every** read: if a marks column is `object` (text), the read went wrong. In pandas 3, `object` shows as `str`."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dp-02"
    ]
   },
   {
    "type": "heading",
    "body": {
-    "fr": "5. Écrire des données : Series et DataFrame",
-    "dar": "5. Kteb data : Series w DataFrame",
-    "en": "5. Writing data: Series and DataFrame"
+    "fr": "5. Les paramètres de lecture, un exemple chacun",
+    "dar": "5. Paramètres dyal 9raya, mithal l kol wa7ed",
+    "en": "5. Reading parameters, one example each"
    }
   },
   {
    "type": "text",
    "body": {
-    "fr": "On peut créer des données directement avec les deux structures de pandas :",
-    "dar": "N9drou nsaybou data direct b jouj structures dyal pandas :",
-    "en": "We can create data directly with pandas' two structures:"
-   }
-  },
-  {
-   "type": "code",
-   "lang": "python",
-   "code": "import pandas as pd\n\n# Series : UNE colonne (valeurs + index)\ns = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"], name=\"note\")\nprint(s)\n# Amine      12\n# Sara       15\n# Yassine     9\n# Name: note, dtype: int64\n\n# DataFrame : un TABLEAU (plusieurs colonnes qui partagent le même index)\ndf = pd.DataFrame({\n    \"nom\":  [\"Amine\", \"Sara\", \"Yassine\"],\n    \"note\": [12, 15, 9],\n    \"ville\": [\"Rabat\", \"Salé\", \"Témara\"],\n})\nprint(df)\n#        nom  note   ville\n# 0    Amine    12   Rabat\n# 1     Sara    15    Salé\n# 2  Yassine     9  Témara"
-  },
-  {
-   "type": "table",
-   "headers": [
-    {
-     "fr": "Critère",
-     "dar": "Mi3yar",
-     "en": "Criterion"
-    },
-    {
-     "fr": "Series",
-     "dar": "Series",
-     "en": "Series"
-    },
-    {
-     "fr": "DataFrame",
-     "dar": "DataFrame",
-     "en": "DataFrame"
-    }
-   ],
-   "rows": [
-    [
-     {
-      "fr": "Dimensions",
-      "dar": "Dimensions",
-      "en": "Dimensions"
-     },
-     {
-      "fr": "**1 dimension** (une colonne)",
-      "dar": "**1 bo3d** (colonne wa7da)",
-      "en": "**1 dimension** (one column)"
-     },
-     {
-      "fr": "**2 dimensions** (lignes × colonnes)",
-      "dar": "**2 ab3ad** (stour × colonnes)",
-      "en": "**2 dimensions** (rows × columns)"
-     }
-    ],
-    [
-     {
-      "fr": "Contenu",
-      "dar": "Chnou fiha",
-      "en": "Content"
-     },
-     {
-      "fr": "Valeurs + un index",
-      "dar": "Qiyam + index",
-      "en": "Values + an index"
-     },
-     {
-      "fr": "Plusieurs colonnes, chacune est une Series",
-      "dar": "Bzaf d colonnes, kol wa7da Series",
-      "en": "Several columns, each one is a Series"
-     }
-    ],
-    [
-     {
-      "fr": "Types",
-      "dar": "Types",
-      "en": "Types"
-     },
-     {
-      "fr": "Un seul type",
-      "dar": "Type wa7ed",
-      "en": "One type"
-     },
-     {
-      "fr": "Un type par colonne",
-      "dar": "Type l kol colonne",
-      "en": "One type per column"
-     }
-    ],
-    [
-     {
-      "fr": "Obtenir",
-      "dar": "Kifach tjibha",
-      "en": "Get it"
-     },
-     {
-      "fr": "`df[\"note\"]`",
-      "dar": "`df[\"note\"]`",
-      "en": "`df[\"note\"]`"
-     },
-     {
-      "fr": "`df[[\"nom\", \"note\"]]` ou `pd.read_csv(…)`",
-      "dar": "`df[[\"nom\", \"note\"]]` wla `pd.read_csv(…)`",
-      "en": "`df[[\"nom\", \"note\"]]` or `pd.read_csv(…)`"
-     }
-    ]
-   ]
-  },
-  {
-   "type": "callout",
-   "kind": "exam",
-   "body": {
-    "fr": "**Question du cours : « Donner la différence entre Series et DataFrame. »** Réponse type : une **Series** est un tableau à **une dimension** (une seule colonne de valeurs avec un index) ; un **DataFrame** est un tableau à **deux dimensions** (lignes et colonnes), c'est-à-dire une collection de Series qui partagent le même index. Une colonne d'un DataFrame (`df[\"note\"]`) est une Series.",
-    "dar": "**Sou2al dyal dars : « 3tini l far9 bin Series w DataFrame. »** Jawab : **Series** = tableau b **bo3d wa7ed** (colonne wa7da m3a index) ; **DataFrame** = tableau b **jouj ab3ad** (stour w colonnes), ya3ni majmou3a d Series 3andhom nefs l index. Colonne mn DataFrame (`df[\"note\"]`) hiya Series.",
-    "en": "**Course question: \"Give the difference between Series and DataFrame.\"** Model answer: a **Series** is **one-dimensional** (a single column of values with an index); a **DataFrame** is **two-dimensional** (rows and columns), i.e. a collection of Series sharing the same index. A DataFrame column (`df[\"note\"]`) is a Series."
-   }
-  },
-  {
-   "type": "heading",
-   "body": {
-    "fr": "6. Les principaux paramètres de read_excel()",
-    "dar": "6. Paramètres l mohimmin dyal read_excel()",
-    "en": "6. Main parameters of read_excel()"
+    "fr": "Tableau du cours, puis chaque paramètre utile au contrôle avec **le fichier, le code et le résultat réel**. `read_csv` et `read_excel` partagent la plupart de ces paramètres ; `sep` et `decimal` sont propres aux fichiers texte.",
+    "dar": "Tableau dyal dars, w kol paramètre mohim l contrôle b **fichier, code w natija 7a9i9iya**. `read_csv` w `read_excel` kaytcharkou ktar had paramètres ; `sep` w `decimal` ghir dyal fichiers texte.",
+    "en": "The course table, then each parameter useful for the test with **the file, the code and the real output**. `read_csv` and `read_excel` share most of them; `sep` and `decimal` are for text files only."
    }
   },
   {
@@ -633,11 +477,188 @@
    ]
   },
   {
-   "type": "text",
-   "body": {
-    "fr": "Pour **read_csv**, on retrouve les mêmes plus deux paramètres essentiels : **`sep`** (séparateur de champs, `,` par défaut) et **`decimal`** (séparateur décimal, `.` par défaut).",
-    "dar": "F **read_csv**, kayn nefs l paramètres + jouj mohimmin : **`sep`** (séparateur, `,` par défaut) w **`decimal`** (virgule dyal l a3dad, `.` par défaut).",
-    "en": "For **read_csv**, the same parameters apply plus two essential ones: **`sep`** (field separator, `,` by default) and **`decimal`** (decimal separator, `.` by default)."
+   "type": "demo",
+   "title": {
+    "fr": "sep et decimal : un CSV « à la française »",
+    "dar": "sep w decimal : CSV « b la française »",
+    "en": "sep and decimal: a \"French-style\" CSV"
+   },
+   "file": {
+    "name": "notes_decim.csv",
+    "content": "nom;note1;note2\nAmine;12,5;14\nSara;15,25;17\nYassine;9,75;11"
+   },
+   "code": "df = pd.read_csv(\"notes_decim.csv\")   # sans paramètres\nprint(df.shape)",
+   "output": "(3, 1)",
+   "note": {
+    "fr": "Sans `sep=\";\"`, pandas cherche des virgules : **une seule colonne** est lue. C'est le symptôme à reconnaître.",
+    "dar": "Bla `sep=\";\"`, pandas kay9elleb 3la virgules : **colonne wa7da** bark. Hada howa symptôme.",
+    "en": "Without `sep=\";\"`, pandas looks for commas: **a single column** is read. Learn to spot this symptom."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "La bonne lecture",
+    "dar": "L 9raya s7i7a",
+    "en": "The right read"
+   },
+   "code": "df = pd.read_csv(\"notes_decim.csv\", sep=\";\", decimal=\",\")\nprint(df)\nprint(df.dtypes)",
+   "output": "       nom  note1  note2\n0    Amine  12.50     14\n1     Sara  15.25     17\n2  Yassine   9.75     11\nnom       object\nnote1    float64\nnote2      int64\ndtype: object",
+   "note": {
+    "fr": "Avec `sep=\";\"` seul, `note1` reste du texte (« 12,5 ») : il faut **aussi** `decimal=\",\"` pour obtenir des `float64`.",
+    "dar": "B `sep=\";\"` bou7do, `note1` kayb9a texte (« 12,5 ») : khass **7ta** `decimal=\",\"` bach ykoun `float64`.",
+    "en": "With `sep=\";\"` alone, `note1` stays text (\"12,5\"): you **also** need `decimal=\",\"` to get `float64`."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "header=None : le fichier n'a pas d'en-tête",
+    "dar": "header=None : fichier bla en-tête",
+    "en": "header=None: the file has no header"
+   },
+   "file": {
+    "name": "notes_h.csv",
+    "content": "Amine,12,14\nSara,15,17\nYassine,9,11"
+   },
+   "code": "print(pd.read_csv(\"notes_h.csv\"))               # faux\nprint(pd.read_csv(\"notes_h.csv\", header=None))  # juste",
+   "output": "     Amine  12  14\n0     Sara  15  17\n1  Yassine   9  11\n         0   1   2\n0    Amine  12  14\n1     Sara  15  17\n2  Yassine   9  11",
+   "note": {
+    "fr": "Sans `header=None`, la ligne d'Amine devient l'en-tête et **on perd une observation** (2 lignes au lieu de 3).",
+    "dar": "Bla `header=None`, str dyal Amine kaywli en-tête w **kanmchiw observation** (2 stour f blast 3).",
+    "en": "Without `header=None`, Amine's row becomes the header and **one observation is lost** (2 rows instead of 3)."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "names : donner des noms aux colonnes",
+    "dar": "names : 3ti smiyat l colonnes",
+    "en": "names: name the columns"
+   },
+   "code": "df = pd.read_csv(\"notes_h.csv\", header=None, names=[\"nom\", \"note1\", \"note2\"])\nprint(df)",
+   "output": "       nom  note1  note2\n0    Amine     12     14\n1     Sara     15     17\n2  Yassine      9     11"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "skiprows : sauter une ligne parasite",
+    "dar": "skiprows : fout str zayd",
+    "en": "skiprows: skip an extra line"
+   },
+   "file": {
+    "name": "notes_h_s.csv",
+    "content": "# fichier exporté le 10/10\nAmine,12,14\nSara,15,17\nYassine,9,11"
+   },
+   "code": "df = pd.read_csv(\"notes_h_s.csv\", skiprows=1, header=None)\nprint(df)",
+   "output": "         0   1   2\n0    Amine  12  14\n1     Sara  15  17\n2  Yassine   9  11",
+   "note": {
+    "fr": "`skiprows=1` saute le commentaire, `header=None` dit qu'il n'y a pas d'en-tête après. Les deux sont nécessaires.",
+    "dar": "`skiprows=1` kayfout commentaire, `header=None` kay9ol ma kaynch en-tête moraha. Bjouj lazmin.",
+    "en": "`skiprows=1` skips the comment, `header=None` says there is no header after it. Both are needed."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "index_col : une colonne comme index",
+    "dar": "index_col : colonne tkoun index",
+    "en": "index_col: a column as index"
+   },
+   "code": "df = pd.read_csv(\"notes.csv\", index_col=0)\nprint(df)\nprint(df.loc[\"Sara\", \"note1\"])",
+   "output": "         note1  note2\nnom\nAmine       12     14\nSara        15     17\nYassine      9     11\nHiba        16     13\n15",
+   "note": {
+    "fr": "Les noms remplacent 0, 1, 2… : on accède ensuite à une ligne par son nom avec `.loc`.",
+    "dar": "Smiyat kayweliw f blast 0, 1, 2… : kanwslou l str b smito b `.loc`.",
+    "en": "Names replace 0, 1, 2…: rows are then reached by name with `.loc`."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "usecols : ne lire que certaines colonnes",
+    "dar": "usecols : 9ra ghir chi colonnes",
+    "en": "usecols: read only some columns"
+   },
+   "code": "df = pd.read_csv(\"notes.csv\", usecols=[\"nom\", \"note1\"])\nprint(df)",
+   "output": "       nom  note1\n0    Amine     12\n1     Sara     15\n2  Yassine      9\n3     Hiba     16",
+   "note": {
+    "fr": "Pour Excel on peut aussi donner des lettres : `usecols=\"A:B\"`.",
+    "dar": "F Excel t9der t3ti 7rouf : `usecols=\"A:B\"`.",
+    "en": "For Excel you can also give letters: `usecols=\"A:B\"`."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "nrows : ne lire que le début",
+    "dar": "nrows : 9ra ghir lbdya",
+    "en": "nrows: read only the start"
+   },
+   "code": "df = pd.read_csv(\"notes.csv\", nrows=2)\nprint(df)",
+   "output": "     nom  note1  note2\n0  Amine     12     14\n1   Sara     15     17"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "na_values : marquer les valeurs manquantes",
+    "dar": "na_values : 7edded valeurs manquantes",
+    "en": "na_values: mark missing values"
+   },
+   "file": {
+    "name": "notes_na.csv",
+    "content": "nom,note1,note2\nAmine,12,-\nSara,NA,17\nYassine,9,11"
+   },
+   "code": "df = pd.read_csv(\"notes_na.csv\", na_values=[\"-\"])\nprint(df)\nprint(df.isna().sum())",
+   "output": "       nom  note1  note2\n0    Amine   12.0    NaN\n1     Sara    NaN   17.0\n2  Yassine    9.0   11.0\nnom      0\nnote1    1\nnote2    1\ndtype: int64",
+   "note": {
+    "fr": "« NA » est reconnu par défaut, mais pas « - » : sans `na_values=[\"-\"]`, la colonne `note2` resterait du texte (`object`).",
+    "dar": "« NA » kay3rfo par défaut, « - » la : bla `na_values=[\"-\"]`, `note2` kat b9a texte (`object`).",
+    "en": "\"NA\" is recognised by default, \"-\" is not: without `na_values=[\"-\"]`, `note2` would stay text (`object`)."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "dtype : garder les zéros d'un code",
+    "dar": "dtype : 7afed 3la zéros dyal code",
+    "en": "dtype: keep a code's leading zeros"
+   },
+   "file": {
+    "name": "villes.csv",
+    "content": "code,ville\n007,Rabat\n042,Salé"
+   },
+   "code": "print(pd.read_csv(\"villes.csv\"))\nprint(pd.read_csv(\"villes.csv\", dtype={\"code\": str}))",
+   "output": "   code  ville\n0     7  Rabat\n1    42   Salé\n  code  ville\n0  007  Rabat\n1  042   Salé",
+   "note": {
+    "fr": "Un code (postal, produit, CIN) n'est pas un nombre : `dtype={\"code\": str}` évite que 007 devienne 7.",
+    "dar": "Code (postal, produit…) machi raqm : `dtype={\"code\": str}` bach 007 ma yweliich 7.",
+    "en": "A code (postal, product…) is not a number: `dtype={\"code\": str}` stops 007 from becoming 7."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "converters : transformer une colonne à la lecture",
+    "dar": "converters : beddel colonne f 9raya",
+    "en": "converters: transform a column while reading"
+   },
+   "code": "df = pd.read_csv(\"notes.csv\", converters={\"nom\": str.upper})\nprint(df)",
+   "output": "       nom  note1  note2\n0    AMINE     12     14\n1     SARA     15     17\n2  YASSINE      9     11\n3     HIBA     16     13"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "read_excel : choisir la feuille",
+    "dar": "read_excel : khtar feuille",
+    "en": "read_excel: choose the sheet"
+   },
+   "code": "pd.read_excel(\"notes.xlsx\")                       # 1re feuille (sheet_name=0)\npd.read_excel(\"notes.xlsx\", sheet_name=\"notes_h_s\", skiprows=1, header=None)\npd.read_excel(\"notes.xlsx\", sheet_name=1)          # même chose par numéro\n\ntoutes = pd.read_excel(\"notes.xlsx\", sheet_name=None)\nprint(type(toutes).__name__, list(toutes.keys()))",
+   "output": "dict ['notes', 'notes_h_s']",
+   "note": {
+    "fr": "`sheet_name=None` renvoie un **dictionnaire** {nom de feuille : DataFrame}, pas un DataFrame. La lecture d'un .xlsx demande `openpyxl`.",
+    "dar": "`sheet_name=None` kayrje3 **dictionnaire** {smiyat feuille : DataFrame}, machi DataFrame. .xlsx kaykhsso `openpyxl`.",
+    "en": "`sheet_name=None` returns a **dictionary** {sheet name: DataFrame}, not a DataFrame. Reading .xlsx needs `openpyxl`."
    }
   },
   {
@@ -648,9 +669,9 @@
    "type": "callout",
    "kind": "trap",
    "body": {
-    "fr": "`header=None` veut dire **« il n'y a pas de ligne d'en-tête »**, pas « supprime l'en-tête ». Et `skiprows=1` **saute** la 1re ligne. Les deux ne sont pas interchangeables.",
-    "dar": "`header=None` ma3nah **« ma kaynch str dyal titres »**, machi « 7iyed titres ». W `skiprows=1` **kayfout** str lowl. Machi b7al b7al.",
-    "en": "`header=None` means **\"there is no header row\"**, not \"drop the header\". And `skiprows=1` **skips** the first row. They are not interchangeable."
+    "fr": "`header=None` veut dire **« il n'y a pas de ligne d'en-tête »**, pas « supprime l'en-tête ». `skiprows=1` **saute** la 1re ligne. Les deux ne sont pas interchangeables.",
+    "dar": "`header=None` ma3nah **« ma kaynch str dyal titres »**, machi « 7iyed titres ». `skiprows=1` **kayfout** str lowl. Machi b7al b7al.",
+    "en": "`header=None` means **\"there is no header row\"**, not \"drop the header\". `skiprows=1` **skips** the first row. They are not interchangeable."
    }
   },
   {
@@ -665,9 +686,283 @@
   {
    "type": "heading",
    "body": {
-    "fr": "7. Feuille d'exercices N°1 — correction complète",
-    "dar": "7. Feuille N°1 — correction kamla",
-    "en": "7. Exercise sheet No. 1 — full solution"
+    "fr": "6. Modifier et sauvegarder",
+    "dar": "6. Beddel w sauvegardi",
+    "en": "6. Modify and save"
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Ajouter une colonne puis exporter en CSV",
+    "dar": "Zid colonne w exporti CSV",
+    "en": "Add a column then export to CSV"
+   },
+   "code": "df = pd.read_csv(\"notes.csv\")\ndf[\"moyenne\"] = (df[\"note1\"] + df[\"note2\"]) / 2\ndf.to_csv(\"notes_moy.csv\", index=False)",
+   "output": "nom,note1,note2,moyenne\nAmine,12,14,13.0\nSara,15,17,16.0\nYassine,9,11,10.0\nHiba,16,13,14.5",
+   "note": {
+    "fr": "Contenu du fichier écrit. **Sans** `index=False`, chaque ligne commencerait par son numéro (`0,Amine,…`) et une colonne vide apparaîtrait en tête.",
+    "dar": "Hada contenu dyal fichier. **Bla** `index=False`, kol str kaybda b numéro (`0,Amine,…`) w colonne khawya f lowl.",
+    "en": "Content of the written file. **Without** `index=False`, each row would start with its number (`0,Amine,…`) and an empty column would appear first."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Exporter au format français (« ; » et « , »)",
+    "dar": "Exporti b format français",
+    "en": "Export in French format (\";\" and \",\")"
+   },
+   "code": "df = pd.read_csv(\"notes_decim.csv\", sep=\";\", decimal=\",\")\ndf.to_csv(\"export_fr.csv\", sep=\";\", decimal=\",\", index=False)",
+   "output": "nom;note1;note2\nAmine;12,5;14\nSara;15,25;17\nYassine;9,75;11",
+   "note": {
+    "fr": "`to_csv` accepte les mêmes `sep` et `decimal` que `read_csv`.",
+    "dar": "`to_csv` kayqbel nefs `sep` w `decimal` dyal `read_csv`.",
+    "en": "`to_csv` takes the same `sep` and `decimal` as `read_csv`."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Excel et JSON : même logique, autre mot",
+    "dar": "Excel w JSON : nefs lmantiq, kelma khra",
+    "en": "Excel and JSON: same logic, other word"
+   },
+   "code": "df.to_excel(\"notes_modifiees.xlsx\", index=False)\n\npetit = df.head(2)\nprint(petit.to_json())\nprint(petit.to_json(orient=\"records\"))",
+   "output": "{\"nom\":{\"0\":\"Amine\",\"1\":\"Sara\"},\"note1\":{\"0\":12,\"1\":15},\"note2\":{\"0\":14,\"1\":17}}\n[{\"nom\":\"Amine\",\"note1\":12,\"note2\":14},{\"nom\":\"Sara\",\"note1\":15,\"note2\":17}]",
+   "note": {
+    "fr": "`orient=\"records\"` donne une liste d'objets, un par ligne : le format des API web. Relire : `pd.read_json(\"fichier.json\")`.",
+    "dar": "`orient=\"records\"` kay3ti liste dyal objets, wa7ed l kol str : format dyal API. T9rah : `pd.read_json(\"fichier.json\")`.",
+    "en": "`orient=\"records\"` gives a list of objects, one per row: the web API format. Read back: `pd.read_json(\"file.json\")`."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "7. Écrire des données : Series et DataFrame",
+    "dar": "7. Kteb data : Series w DataFrame",
+    "en": "7. Writing data: Series and DataFrame"
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Series à partir d'une liste, avec un index",
+    "dar": "Series mn liste, b index",
+    "en": "Series from a list, with an index"
+   },
+   "code": "s = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"], name=\"note\")\nprint(s)\nprint(s[\"Sara\"])\nprint(s.mean())",
+   "output": "Amine      12\nSara       15\nYassine     9\nName: note, dtype: int64\n15\n12.0"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Series à partir d'un dictionnaire",
+    "dar": "Series mn dictionnaire",
+    "en": "Series from a dictionary"
+   },
+   "code": "s = pd.Series({\"Rabat\": 1.9, \"Salé\": 1.0, \"Témara\": 0.6})\nprint(s)",
+   "output": "Rabat     1.9\nSalé      1.0\nTémara    0.6\ndtype: float64",
+   "note": {
+    "fr": "Les **clés** deviennent l'index. Sans index fourni (liste simple), pandas met 0, 1, 2…",
+    "dar": "**Clés** kayweliw index. Bla index (liste 3adiya), pandas kaydir 0, 1, 2…",
+    "en": "The **keys** become the index. With no index (plain list), pandas uses 0, 1, 2…"
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "DataFrame à partir d'un dictionnaire de colonnes",
+    "dar": "DataFrame mn dictionnaire dyal colonnes",
+    "en": "DataFrame from a dictionary of columns"
+   },
+   "code": "df = pd.DataFrame({\n    \"nom\":   [\"Amine\", \"Sara\", \"Yassine\"],\n    \"note\":  [12, 15, 9],\n    \"ville\": [\"Rabat\", \"Salé\", \"Témara\"],\n})\nprint(df)\nprint(df.shape)\nprint(type(df[\"note\"]).__name__)          # une colonne\nprint(type(df[[\"nom\", \"note\"]]).__name__)  # plusieurs colonnes",
+   "output": "       nom  note   ville\n0    Amine    12   Rabat\n1     Sara    15    Salé\n2  Yassine     9  Témara\n(3, 3)\nSeries\nDataFrame",
+   "note": {
+    "fr": "`df[\"note\"]` (un nom) renvoie une **Series** ; `df[[\"nom\", \"note\"]]` (une liste) renvoie un **DataFrame**.",
+    "dar": "`df[\"note\"]` (smiya wa7da) → **Series** ; `df[[\"nom\", \"note\"]]` (liste) → **DataFrame**.",
+    "en": "`df[\"note\"]` (one name) returns a **Series**; `df[[\"nom\", \"note\"]]` (a list) returns a **DataFrame**."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "DataFrame à partir de lignes",
+    "dar": "DataFrame mn stour",
+    "en": "DataFrame from rows"
+   },
+   "code": "df = pd.DataFrame([[\"Amine\", 12], [\"Sara\", 15]], columns=[\"nom\", \"note\"])\nprint(df)",
+   "output": "     nom  note\n0  Amine    12\n1   Sara    15"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Filtrer, trier, résumer",
+    "dar": "Filtri, rettib, lkhoulasa",
+    "en": "Filter, sort, summarise"
+   },
+   "code": "df = pd.DataFrame({\"nom\": [\"Amine\", \"Sara\", \"Yassine\"], \"note\": [12, 15, 9]})\nprint(df[df[\"note\"] >= 12])\nprint(df.sort_values(\"note\", ascending=False))\nprint(df[\"note\"].describe())",
+   "output": "     nom  note\n0  Amine    12\n1   Sara    15\n       nom  note\n1     Sara    15\n0    Amine    12\n2  Yassine     9\ncount     3.0\nmean     12.0\nstd       3.0\nmin       9.0\n25%      10.5\n50%      12.0\n75%      13.5\nmax      15.0\nName: note, dtype: float64",
+   "note": {
+    "fr": "`describe()` utilise l'écart-type **corrigé** (n − 1) : ici std = 3,0.",
+    "dar": "`describe()` kayst3mel écart-type **corrigé** (n − 1) : hna std = 3,0.",
+    "en": "`describe()` uses the **corrected** SD (n − 1): here std = 3.0."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Series",
+     "dar": "Series",
+     "en": "Series"
+    },
+    {
+     "fr": "DataFrame",
+     "dar": "DataFrame",
+     "en": "DataFrame"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Dimensions",
+      "dar": "Dimensions",
+      "en": "Dimensions"
+     },
+     {
+      "fr": "**1 dimension** (une colonne)",
+      "dar": "**1 bo3d** (colonne wa7da)",
+      "en": "**1 dimension** (one column)"
+     },
+     {
+      "fr": "**2 dimensions** (lignes × colonnes)",
+      "dar": "**2 ab3ad** (stour × colonnes)",
+      "en": "**2 dimensions** (rows × columns)"
+     }
+    ],
+    [
+     {
+      "fr": "Contenu",
+      "dar": "Chnou fiha",
+      "en": "Content"
+     },
+     {
+      "fr": "Valeurs + un index",
+      "dar": "Qiyam + index",
+      "en": "Values + an index"
+     },
+     {
+      "fr": "Plusieurs colonnes, chacune est une Series",
+      "dar": "Bzaf d colonnes, kol wa7da Series",
+      "en": "Several columns, each one is a Series"
+     }
+    ],
+    [
+     {
+      "fr": "Types",
+      "dar": "Types",
+      "en": "Types"
+     },
+     {
+      "fr": "Un seul type",
+      "dar": "Type wa7ed",
+      "en": "One type"
+     },
+     {
+      "fr": "Un type par colonne",
+      "dar": "Type l kol colonne",
+      "en": "One type per column"
+     }
+    ],
+    [
+     {
+      "fr": "Obtenir",
+      "dar": "Kifach tjibha",
+      "en": "Get it"
+     },
+     {
+      "fr": "`df[\"note\"]`",
+      "dar": "`df[\"note\"]`",
+      "en": "`df[\"note\"]`"
+     },
+     {
+      "fr": "`df[[\"nom\", \"note\"]]` ou `pd.read_csv(…)`",
+      "dar": "`df[[\"nom\", \"note\"]]` wla `pd.read_csv(…)`",
+      "en": "`df[[\"nom\", \"note\"]]` or `pd.read_csv(…)`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Question du cours : différence entre Series et DataFrame",
+    "dar": "Sou2al dyal dars : far9 bin Series w DataFrame",
+    "en": "Course question: Series vs DataFrame"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Series",
+      "dar": "Series",
+      "en": "Series"
+     },
+     "body": {
+      "fr": "Structure à **une dimension** : une suite de valeurs d'un même type, associée à un **index** (étiquettes des lignes).",
+      "dar": "Structure b **bo3d wa7ed** : qiyam b nefs type, m3a **index**.",
+      "en": "**One-dimensional** structure: values of one type with an **index** (row labels)."
+     }
+    },
+    {
+     "label": {
+      "fr": "DataFrame",
+      "dar": "DataFrame",
+      "en": "DataFrame"
+     },
+     "body": {
+      "fr": "Structure à **deux dimensions** (lignes × colonnes), chaque colonne peut avoir son propre type.",
+      "dar": "Structure b **jouj ab3ad** (stour × colonnes), kol colonne b type dyalha.",
+      "en": "**Two-dimensional** structure (rows × columns), each column may have its own type."
+     }
+    },
+    {
+     "label": {
+      "fr": "Lien",
+      "dar": "L3ala9a",
+      "en": "Link"
+     },
+     "body": {
+      "fr": "Un DataFrame est une **collection de Series** qui partagent le même index : `df[\"note\"]` est une Series.",
+      "dar": "DataFrame = **majmou3a dyal Series** b nefs index : `df[\"note\"]` hiya Series.",
+      "en": "A DataFrame is a **collection of Series** sharing the same index: `df[\"note\"]` is a Series."
+     }
+    },
+    {
+     "label": {
+      "fr": "Exemple",
+      "dar": "Mithal",
+      "en": "Example"
+     },
+     "body": {
+      "fr": "`pd.Series([12, 15, 9])` vs `pd.DataFrame({\"nom\": […], \"note\": […]})`.",
+      "dar": "`pd.Series([12, 15, 9])` vs `pd.DataFrame({\"nom\": […], \"note\": […]})`.",
+      "en": "`pd.Series([12, 15, 9])` vs `pd.DataFrame({\"nom\": […], \"note\": […]})`."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "8. Feuille d'exercices N°1 — correction complète",
+    "dar": "8. Feuille N°1 — correction kamla",
+    "en": "8. Exercise sheet No. 1 — full solution"
    }
   },
   {
@@ -813,6 +1108,135 @@
     "dp-07",
     "dp-08",
     "dp-17"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "9. Aide-mémoire : je veux… j'écris…",
+    "dar": "9. Aide-mémoire : bghit… nkteb…",
+    "en": "9. Cheat sheet: I want… I write…"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Je veux…",
+     "dar": "Bghit…",
+     "en": "I want…"
+    },
+    {
+     "fr": "J'écris",
+     "dar": "Nkteb",
+     "en": "I write"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Lire un CSV",
+      "dar": "9ra CSV",
+      "en": "Read a CSV"
+     },
+     "pd.read_csv(\"f.csv\")"
+    ],
+    [
+     {
+      "fr": "Lire depuis une URL",
+      "dar": "9ra mn URL",
+      "en": "Read from a URL"
+     },
+     "pd.read_csv(url + \"f.csv\")"
+    ],
+    [
+     {
+      "fr": "Séparateur « ; », décimale « , »",
+      "dar": "« ; » w « , »",
+      "en": "\";\" separator, \",\" decimal"
+     },
+     "sep=\";\", decimal=\",\""
+    ],
+    [
+     {
+      "fr": "Fichier sans en-tête",
+      "dar": "Bla en-tête",
+      "en": "File without header"
+     },
+     "header=None, names=[…]"
+    ],
+    [
+     {
+      "fr": "Sauter la 1re ligne",
+      "dar": "Fout str lowl",
+      "en": "Skip the first row"
+     },
+     "skiprows=1"
+    ],
+    [
+     {
+      "fr": "Une feuille Excel précise",
+      "dar": "Feuille Excel m7eddda",
+      "en": "A given Excel sheet"
+     },
+     "pd.read_excel(\"f.xlsx\", sheet_name=\"nom\")"
+    ],
+    [
+     {
+      "fr": "Toutes les feuilles",
+      "dar": "Ga3 feuilles",
+      "en": "All sheets"
+     },
+     "sheet_name=None  → dict"
+    ],
+    [
+     {
+      "fr": "Quelques colonnes / lignes",
+      "dar": "Chi colonnes / stour",
+      "en": "Some columns / rows"
+     },
+     "usecols=[…], nrows=n"
+    ],
+    [
+     {
+      "fr": "« - » = valeur manquante",
+      "dar": "« - » = manquante",
+      "en": "\"-\" = missing value"
+     },
+     "na_values=[\"-\"]"
+    ],
+    [
+     {
+      "fr": "Garder 007 en texte",
+      "dar": "007 texte",
+      "en": "Keep 007 as text"
+     },
+     "dtype={\"code\": str}"
+    ],
+    [
+     {
+      "fr": "Vérifier la lecture",
+      "dar": "T2akked",
+      "en": "Check the read"
+     },
+     "df.shape, df.dtypes, df.head()"
+    ],
+    [
+     {
+      "fr": "Exporter sans numéros de ligne",
+      "dar": "Export bla numéros",
+      "en": "Export without row numbers"
+     },
+     "df.to_csv(\"f.csv\", index=False)"
+    ],
+    [
+     {
+      "fr": "Exporter en Excel / JSON",
+      "dar": "Export Excel / JSON",
+      "en": "Export to Excel / JSON"
+     },
+     "df.to_excel(…), df.to_json(…)"
+    ]
    ]
   }
  ],

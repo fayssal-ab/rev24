@@ -86,7 +86,7 @@ export default function ChapterPage() {
           <div className="eyebrow">
             {t('chapter.number')} {idx + 1} / {data.chapters.length} · {tl(data.module.title)}
           </div>
-          <h1 className="h1 mt-2">
+          <h1 className="mt-2 font-display text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-[1.1]">
             <L v={c.title} />
           </h1>
           <p className="mt-2 max-w-3xl text-[15px] text-muted">
@@ -100,9 +100,21 @@ export default function ChapterPage() {
               <Ring value={chapterMastery(data, c.id, st)} size={18} stroke={3} /> {t('module.mastery')}
             </span>
             <ReadAloud text={c.sections.map((x) => (x.type === 'text' || x.type === 'heading' || x.type === 'callout' ? (st.lang === 'en' ? x.body.en : x.body.fr) : '')).join('. ')} en={st.lang === 'en'} />
-            <span className="inline-flex items-center gap-1">
-              <Icon name="database" size={12} /> {t('chapter.saved')}
-            </span>
+          </div>
+          {/* previous / next, W3Schools-style */}
+          <div className="mt-5 flex items-center justify-between gap-2">
+            {prev ? (
+              <Link to={`/m/${id}/c/${prev.id}`} className="btn-ghost btn-sm" data-testid="chapter-prev-top">
+                <Icon name="left" size={14} /> {t('chapter.prev')}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <Link to={`/m/${id}/c/${next.id}`} className="btn-primary btn-sm" data-testid="chapter-next-top">
+                {t('chapter.nextChapter')} <Icon name="right" size={14} />
+              </Link>
+            )}
           </div>
         </header>
 

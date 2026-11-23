@@ -15,6 +15,15 @@
  "estimatedMinutes": 45,
  "sections": [
   {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. **Position** : moyenne = Σx / n ; médiane = valeur du milieu (résiste aux aberrantes) ; mode = la plus fréquente.\n2. **Dispersion** : variance = moyenne des carrés des écarts ; écart-type = √variance ; corrigée → diviser par **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (sert au Chap 2).\n4. **Deux variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.",
+    "dar": "1. **Position** : moyenne = Σx / n ; médiane = l west (ma kat2tharch b aberrantes) ; mode = li ktar tkrar.\n2. **Dispersion** : variance = moyenne dyal mourabba3at l far9 ; écart-type = √variance ; corrigée → 9sem 3la **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (kayst3mel f Fasl 2).\n4. **Jouj variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.",
+    "en": "1. **Location**: mean = Σx / n; median = middle value (robust to outliers); mode = most frequent.\n2. **Spread**: variance = mean of squared deviations; SD = √variance; corrected → divide by **n − 1**.\n3. **Quartiles**: Q1, Q3, IQR = Q3 − Q1 (used in Ch. 2).\n4. **Two variables**: cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Regression**: a = cov(x, y) / V(x), b = ȳ − a x̄."
+   }
+  },
+  {
    "type": "heading",
    "body": {
     "fr": "1. Le vocabulaire de base",
@@ -669,13 +678,48 @@
    }
   },
   {
-   "type": "code",
-   "lang": "python",
-   "code": "import pandas as pd\nimport numpy as np\n\nnotes = pd.Series([8, 12, 10, 15, 10])\nprint(notes.mean())            # 11.0\nprint(notes.median())          # 10.0\nprint(notes.mode()[0])         # 10\nprint(notes.var(ddof=0))       # 5.6   (divise par n)\nprint(notes.var())             # 7.0   (pandas : n - 1 par défaut)\nprint(notes.quantile([0.25, 0.75]))   # 10.0 et 12.0\nprint(notes.describe())        # résumé complet\n\ndf = pd.DataFrame({\"heures\": [1, 2, 3, 4, 5], \"note\": [2, 4, 5, 4, 5]})\nprint(df[\"heures\"].corr(df[\"note\"]))  # 0.7746\na, b = np.polyfit(df[\"heures\"], df[\"note\"], 1)\nprint(a, b)                    # 0.6  2.2",
-   "caption": {
-    "fr": "`describe()` donne d'un coup count, mean, std (n − 1), min, quartiles et max.",
-    "dar": "`describe()` kay3tik f merra wa7da count, mean, std (n − 1), min, quartiles w max.",
-    "en": "`describe()` gives count, mean, std (n − 1), min, quartiles and max in one go."
+   "type": "demo",
+   "title": {
+    "fr": "Position et dispersion d'une série",
+    "dar": "Position w dispersion dyal série",
+    "en": "Location and spread of a series"
+   },
+   "code": "import pandas as pd\n\nnotes = pd.Series([8, 12, 10, 15, 10])\nprint(notes.mean(), notes.median(), notes.mode()[0])\nprint(notes.var(ddof=0))    # divise par n\nprint(notes.var())          # divise par n - 1 (défaut pandas)\nprint(notes.quantile([0.25, 0.75]))",
+   "output": "11.0 10.0 10\n5.6\n7.0\n0.25    10.0\n0.75    12.0\ndtype: float64",
+   "note": {
+    "fr": "Au contrôle, précise toujours le diviseur : **n** (variance de la série, 5,6) ou **n − 1** (variance corrigée, 7,0).",
+    "dar": "F contrôle, goul dima l diviseur : **n** (5,6) wla **n − 1** (corrigée, 7,0).",
+    "en": "In the test always state the divisor: **n** (5.6) or **n − 1** (corrected, 7.0)."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "describe() : le résumé complet",
+    "dar": "describe() : lkhoulasa kamla",
+    "en": "describe(): the full summary"
+   },
+   "code": "print(notes.describe())",
+   "output": "count     5.000000\nmean     11.000000\nstd       2.645751\nmin       8.000000\n25%      10.000000\n50%      10.000000\n75%      12.000000\nmax      15.000000\ndtype: float64",
+   "note": {
+    "fr": "`std` = √7 ≈ 2,646 : pandas utilise **n − 1**. `50%` est la médiane.",
+    "dar": "`std` = √7 ≈ 2,646 : pandas kayst3mel **n − 1**. `50%` hiya médiane.",
+    "en": "`std` = √7 ≈ 2.646: pandas uses **n − 1**. `50%` is the median."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Corrélation et droite des moindres carrés",
+    "dar": "Corrélation w droite dyal moindres carrés",
+    "en": "Correlation and least-squares line"
+   },
+   "code": "import numpy as np\n\ndf = pd.DataFrame({\"heures\": [1, 2, 3, 4, 5], \"note\": [2, 4, 5, 4, 5]})\nprint(round(df[\"heures\"].corr(df[\"note\"]), 4))\na, b = np.polyfit(df[\"heures\"], df[\"note\"], 1)\nprint(round(a, 4), round(b, 4))",
+   "output": "0.7746\n0.6 2.2",
+   "note": {
+    "fr": "On retrouve r ≈ 0,775 et ŷ = 0,6 x + 2,2 calculés à la main plus haut.",
+    "dar": "Nefs r ≈ 0,775 w ŷ = 0,6 x + 2,2 li 7sebna b lyed.",
+    "en": "Same r ≈ 0.775 and ŷ = 0.6 x + 2.2 as computed by hand above."
    }
   },
   {

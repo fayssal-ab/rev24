@@ -23,12 +23,30 @@ export const SectionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('formula'), tex: z.string(), caption: L10nSchema.optional() }),
   z.object({ type: z.literal('table'), headers: z.array(L10nSchema), rows: z.array(z.array(z.union([L10nSchema, z.string()]))) }),
   z.object({ type: z.literal('animation'), component: z.string(), props: z.record(z.unknown()).optional() }),
-  z.object({ type: z.literal('callout'), kind: z.enum(['tip', 'trap', 'exam', 'def', 'example', 'darija', 'formula']), body: L10nSchema, tex: z.string().optional() }),
+  z.object({ type: z.literal('callout'), kind: z.enum(['tip', 'trap', 'exam', 'def', 'example', 'darija', 'formula', 'key']), body: L10nSchema, tex: z.string().optional() }),
   /** worked solution revealed one step at a time */
   z.object({
     type: z.literal('steps'),
     title: L10nSchema.optional(),
     items: z.array(z.object({ title: L10nSchema, body: L10nSchema, tex: z.string().optional(), code: z.string().optional(), why: L10nSchema.optional() })).min(1)
+  }),
+  /** a model exam answer, written out in full the way it is expected on the paper */
+  z.object({
+    type: z.literal('copy'),
+    title: L10nSchema,
+    statement: L10nSchema.optional(),
+    lines: z.array(z.object({ label: L10nSchema, body: L10nSchema, tex: z.string().optional() })).min(1),
+    result: L10nSchema.optional()
+  }),
+  /** W3Schools-style example: optional input file, the code, and its real output */
+  z.object({
+    type: z.literal('demo'),
+    title: L10nSchema,
+    file: z.object({ name: z.string(), content: z.string() }).optional(),
+    code: z.string(),
+    lang: z.enum(['python', 'bash', 'text']).optional(),
+    output: z.string().optional(),
+    note: L10nSchema.optional()
   }),
   z.object({ type: z.literal('miniQuiz'), questionIds: z.array(z.string()).min(1) }),
   z.object({ type: z.literal('mission'), missionId: z.string() })

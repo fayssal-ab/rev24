@@ -16,7 +16,9 @@
  *
  * Access rules:
  *   - a new account starts "pending": it can sign in but sees only the waiting page until the admin approves it
- *   - one session per account: signing in elsewhere invalidates the previous session (session_id in the JWT)
+ *   - an account can be open on several devices at once; session_id (in the JWT) is shared by them and is reset only
+ *     when the admin closes the sessions, changes the password or blocks the account
+ *   - the principal admin (PRINCIPAL_ADMIN) cannot be edited, signed out or deleted by any other admin
  *
  * Env (Netlify → Site configuration → Environment variables):
  *   DATABASE_URL  mysql://avnadmin:PASSWORD@host:port/defaultdb
@@ -156,9 +158,10 @@ function secret() {
   return new TextEncoder().encode(s);
 }
 
-/** New session: stored on the user row, so any older session of the same account stops working. */
+/** Session cookie. Several devices may be signed in at once: they share the account's session_id (created on first sign-in). */
 async function issueCookie(userId: string, req: Request) {
-  const sid = randomUUID();
+  const [rows] = await db().query<UserRow[]>('SELECT session_id FROM users WHERE id = ? LIMIT 1', [userId]);
+  const sid = rows[0]?.session_id ?? randomUUID();
   await db().query('UPDATE users SET session_id = ?, last_seen = CURRENT_TIMESTAMP(3) WHERE id = ?', [sid, userId]);
   const token = await new SignJWT({ sid }).setProtectedHeader({ alg: 'HS256' }).setSubject(userId).setIssuedAt().setExpirationTime(`${SESSION_DAYS}d`).sign(secret());
   const secure = new URL(req.url).protocol === 'https:' ? '; Secure' : '';
@@ -167,7 +170,7 @@ async function issueCookie(userId: string, req: Request) {
 
 const clearCookie = `${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
 
-/** The signed-in user; 401 "session_replaced" when the account was opened in another session since. */
+/** The signed-in user; 401 "session_replaced" when the admin closed the account's sessions (or changed its password) since. */
 async function currentUser(req: Request): Promise<UserRow> {
   const m = new RegExp(`(?:^|;\\s*)${COOKIE}=([^;]+)`).exec(req.headers.get('cookie') ?? '');
   if (!m) throw new HttpError(401, 'not_authenticated');
@@ -226,7 +229,10 @@ type Status = 'pending' | 'approved' | 'blocked';
 const ROLES: Role[] = ['admin', 'user'];
 const STATUSES: Status[] = ['pending', 'approved', 'blocked'];
 
-const DEFAULT_ADMIN = 'fayssal.abaibat@emsi-edu.ma';
+/** Principal admin: always admin, and no other admin can edit, sign out or delete this account. */
+const PRINCIPAL_ADMIN = 'fayssal.abaibat@emsi-edu.ma';
+const DEFAULT_ADMIN = PRINCIPAL_ADMIN;
+const isPrincipal = (u: { email: string }) => u.email.toLowerCase() === PRINCIPAL_ADMIN;
 const emailList = (raw: string | undefined, fallback: string) => {
   const list = (raw ?? '')
     .replace(/["']/g, '')
@@ -235,7 +241,7 @@ const emailList = (raw: string | undefined, fallback: string) => {
     .filter((e) => e.includes('@'));
   return list.length ? list : [fallback];
 };
-const adminEmails = () => emailList(process.env.ADMIN_EMAILS, DEFAULT_ADMIN);
+const adminEmails = () => [...new Set([PRINCIPAL_ADMIN, ...emailList(process.env.ADMIN_EMAILS, DEFAULT_ADMIN)])];
 const isAdmin = (u: UserRow) => u.role === 'admin' || adminEmails().includes(u.email.toLowerCase());
 
 /** Private features, decided on the server so the allowed e-mails never ship in the public JavaScript. */
@@ -332,13 +338,7 @@ async function route(req: Request): Promise<Response> {
   }
 
   if (method === 'POST' && path === '/auth/logout') {
-    // end the session on the server too (only if this cookie is still the active session)
-    try {
-      const u = await currentUser(req);
-      await db().query('UPDATE users SET session_id = NULL WHERE id = ?', [u.id]);
-    } catch {
-      /* already signed out or replaced */
-    }
+    // only this device signs out: the account's other devices stay signed in
     return json(200, { ok: true }, { 'set-cookie': clearCookie });
   }
 
@@ -489,6 +489,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     const target = await findUser('id', u.id);
     if (!target) throw new HttpError(404, 'not_found');
     const self = target.id === me.id;
+    if (isPrincipal(target) && !self) throw new HttpError(403, 'protected_admin');
     if (method === 'PUT' && !u.action) {
       const b = await body(req);
       const role = ROLES.includes(b.role as Role) ? (b.role as Role) : target.role;

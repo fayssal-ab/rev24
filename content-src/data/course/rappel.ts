@@ -1,4 +1,4 @@
-import { L, h, p, def, example, plain, formula, steps, tip, trap, exam, table, code, quiz } from '../../lib';
+import { L, h, p, def, example, plain, formula, steps, tip, trap, exam, table, quiz, demo, key } from '../../lib';
 import type { Chapter } from '../../../src/lib/schema';
 
 /** Rappel (fin du Chap 0) : statistique descriptive et régression linéaire — every number is checked by src/lib/stats. */
@@ -14,6 +14,11 @@ export const chapter: Chapter = {
   ]),
   estimatedMinutes: 45,
   sections: [
+    key([
+      '1. **Position** : moyenne = Σx / n ; médiane = valeur du milieu (résiste aux aberrantes) ; mode = la plus fréquente.\n2. **Dispersion** : variance = moyenne des carrés des écarts ; écart-type = √variance ; corrigée → diviser par **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (sert au Chap 2).\n4. **Deux variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.',
+      '1. **Position** : moyenne = Σx / n ; médiane = l west (ma kat2tharch b aberrantes) ; mode = li ktar tkrar.\n2. **Dispersion** : variance = moyenne dyal mourabba3at l far9 ; écart-type = √variance ; corrigée → 9sem 3la **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (kayst3mel f Fasl 2).\n4. **Jouj variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.',
+      '1. **Location**: mean = Σx / n; median = middle value (robust to outliers); mode = most frequent.\n2. **Spread**: variance = mean of squared deviations; SD = √variance; corrected → divide by **n − 1**.\n3. **Quartiles**: Q1, Q3, IQR = Q3 − Q1 (used in Ch. 2).\n4. **Two variables**: cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Regression**: a = cov(x, y) / V(x), b = ȳ − a x̄.'
+    ]),
     h(['1. Le vocabulaire de base', '1. L mofradat l asasiya', '1. Basic vocabulary']),
     table([['Mot', 'Kelma', 'Word'], ['Signification', 'Ma3na', 'Meaning'], ['Exemple', 'Mithal', 'Example']], [
       [['**Population**', '**Population**', '**Population**'], ['Tout le groupe qu\'on étudie', 'Ga3 l groupe li kandrssou', 'The whole group we study'], ['Tous les étudiants de l\'EMSI', 'Ga3 tlamid dyal EMSI', 'All EMSI students']],
@@ -197,22 +202,34 @@ export const chapter: Chapter = {
     exam(['Au contrôle, présente toujours : **1)** les moyennes, **2)** cov(x, y) et V(x), **3)** a puis b, **4)** l\'équation, **5)** la prédiction ou l\'interprétation de a. Chaque étape rapporte des points, même si le résultat final est faux.', 'F contrôle, dima 9addem : **1)** les moyennes, **2)** cov(x, y) w V(x), **3)** a 3ad b, **4)** l mo3adala, **5)** l prédiction wla tafsir dyal a. Kol étape fiha points, wakha natija l akhira tkoun ghalta.', 'In the test, always show: **1)** the means, **2)** cov(x, y) and V(x), **3)** a then b, **4)** the equation, **5)** the prediction or the meaning of a. Every step earns points, even if the final result is wrong.']),
 
     h(['7. Les mêmes calculs en Python', '7. Nefs l 7sabat b Python', '7. The same calculations in Python']),
-    code(`import pandas as pd
-import numpy as np
+    demo(['Position et dispersion d\'une série', 'Position w dispersion dyal série', 'Location and spread of a series'], `import pandas as pd
 
 notes = pd.Series([8, 12, 10, 15, 10])
-print(notes.mean())            # 11.0
-print(notes.median())          # 10.0
-print(notes.mode()[0])         # 10
-print(notes.var(ddof=0))       # 5.6   (divise par n)
-print(notes.var())             # 7.0   (pandas : n - 1 par défaut)
-print(notes.quantile([0.25, 0.75]))   # 10.0 et 12.0
-print(notes.describe())        # résumé complet
+print(notes.mean(), notes.median(), notes.mode()[0])
+print(notes.var(ddof=0))    # divise par n
+print(notes.var())          # divise par n - 1 (défaut pandas)
+print(notes.quantile([0.25, 0.75]))`, `11.0 10.0 10
+5.6
+7.0
+0.25    10.0
+0.75    12.0
+dtype: float64`, { note: ['Au contrôle, précise toujours le diviseur : **n** (variance de la série, 5,6) ou **n − 1** (variance corrigée, 7,0).', 'F contrôle, goul dima l diviseur : **n** (5,6) wla **n − 1** (corrigée, 7,0).', 'In the test always state the divisor: **n** (5.6) or **n − 1** (corrected, 7.0).'] }),
+    demo(['describe() : le résumé complet', 'describe() : lkhoulasa kamla', 'describe(): the full summary'], `print(notes.describe())`, `count     5.000000
+mean     11.000000
+std       2.645751
+min       8.000000
+25%      10.000000
+50%      10.000000
+75%      12.000000
+max      15.000000
+dtype: float64`, { note: ['`std` = √7 ≈ 2,646 : pandas utilise **n − 1**. `50%` est la médiane.', '`std` = √7 ≈ 2,646 : pandas kayst3mel **n − 1**. `50%` hiya médiane.', '`std` = √7 ≈ 2.646: pandas uses **n − 1**. `50%` is the median.'] }),
+    demo(['Corrélation et droite des moindres carrés', 'Corrélation w droite dyal moindres carrés', 'Correlation and least-squares line'], `import numpy as np
 
 df = pd.DataFrame({"heures": [1, 2, 3, 4, 5], "note": [2, 4, 5, 4, 5]})
-print(df["heures"].corr(df["note"]))  # 0.7746
+print(round(df["heures"].corr(df["note"]), 4))
 a, b = np.polyfit(df["heures"], df["note"], 1)
-print(a, b)                    # 0.6  2.2`, 'python', ['`describe()` donne d\'un coup count, mean, std (n − 1), min, quartiles et max.', '`describe()` kay3tik f merra wa7da count, mean, std (n − 1), min, quartiles w max.', '`describe()` gives count, mean, std (n − 1), min, quartiles and max in one go.']),
+print(round(a, 4), round(b, 4))`, `0.7746
+0.6 2.2`, { note: ['On retrouve r ≈ 0,775 et ŷ = 0,6 x + 2,2 calculés à la main plus haut.', 'Nefs r ≈ 0,775 w ŷ = 0,6 x + 2,2 li 7sebna b lyed.', 'Same r ≈ 0.775 and ŷ = 0.6 x + 2.2 as computed by hand above.'] }),
     quiz('dr-01', 'dr-03', 'dr-05', 'dr-08')
   ],
   keyPoints: [

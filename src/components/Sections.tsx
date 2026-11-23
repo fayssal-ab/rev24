@@ -17,6 +17,7 @@ const CALLOUT: Record<string, { icon: string; cls: string; head: string; key: UI
   def: { icon: 'book', cls: 'border-accent/40 bg-accent/[0.06]', head: 'text-accent', key: 'callout.def' },
   example: { icon: 'compass', cls: 'border-line bg-surface2/70', head: 'text-fg', key: 'callout.example' },
   darija: { icon: 'chat', cls: 'border-accent/30 bg-surface', head: 'text-accent', key: 'callout.darija' },
+  key: { icon: 'target', cls: 'border-fg/80 bg-surface border-2', head: 'text-fg', key: 'callout.key' },
   formula: { icon: 'sigma', cls: 'border-navy/30 bg-navy/[0.04] dark:border-accent2/30 dark:bg-accent2/[0.06]', head: 'text-accent2', key: 'callout.formula' }
 };
 
@@ -88,6 +89,98 @@ function StepByStep({ s, skey }: { s: Extract<Section, { type: 'steps' }>; skey?
           <button className="btn-ghost btn-sm" onClick={() => show(1)}>
             <Icon name="reset" size={14} /> {t('steps.reset')}
           </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Model answer laid out like the test paper: every line visible, label on the left, conclusion boxed. */
+function ExamCopy({ s }: { s: Extract<Section, { type: 'copy' }> }) {
+  const { t } = useT();
+  return (
+    <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
+      <div className="flex items-center gap-2.5 border-b border-line px-4 py-3">
+        <span className="rounded bg-fg px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-bg">{t('copy.badge')}</span>
+        <span className="min-w-0 flex-1 font-semibold">
+          <L v={s.title} />
+        </span>
+      </div>
+      {s.statement && (
+        <div className="border-b border-line bg-surface2/50 px-4 py-3 text-[14.5px]">
+          <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted">{t('copy.statement')}</div>
+          <L v={s.statement} md />
+        </div>
+      )}
+      <ol className="relative">
+        <span className="absolute inset-y-0 left-[2.6rem] w-px bg-bad/30 sm:left-[9.5rem]" aria-hidden />
+        {s.lines.map((x, i) => (
+          <li key={i} className="grid grid-cols-[2.6rem_minmax(0,1fr)] border-b border-dashed border-line/80 last:border-0 sm:grid-cols-[9.5rem_minmax(0,1fr)]">
+            <div className="px-3 py-3 text-[12px] font-bold text-muted">
+              <span className="font-mono text-accent">{i + 1}</span>
+              <span className="ml-2 hidden sm:inline">
+                <L v={x.label} />
+              </span>
+            </div>
+            <div className="min-w-0 px-4 py-3 text-[15px]">
+              <div className="mb-0.5 text-[11px] font-bold uppercase tracking-wide text-muted sm:hidden">
+                <L v={x.label} />
+              </div>
+              <L v={x.body} md />
+              {x.tex && (
+                <div className="mt-1.5 overflow-x-auto">
+                  <Tex tex={x.tex} block />
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+      {s.result && (
+        <div className="flex gap-3 border-t-2 border-ok/50 bg-ok/[0.07] px-4 py-3 text-[15px]">
+          <Icon name="check" size={18} className="mt-0.5 shrink-0 text-ok" />
+          <div>
+            <b className="mr-1">{t('copy.result')}</b>
+            <L v={s.result} md />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Example block: input file → code → output, like a "Try it" box. */
+function Demo({ s }: { s: Extract<Section, { type: 'demo' }> }) {
+  const { t } = useT();
+  return (
+    <div className="overflow-hidden rounded-xl border border-line bg-surface">
+      <div className="flex items-center gap-2 border-b border-line bg-accent/[0.07] px-4 py-2.5">
+        <span className="text-xs font-bold uppercase tracking-wide text-accent">{t('demo.example')}</span>
+        <span className="min-w-0 flex-1 truncate text-sm font-semibold">
+          <L v={s.title} />
+        </span>
+      </div>
+      <div className="space-y-3 p-3 sm:p-4">
+        {s.file && (
+          <div>
+            <div className="mb-1 inline-flex items-center gap-1.5 rounded-t-md border border-b-0 border-line bg-surface2 px-2.5 py-1 font-mono text-[11px] text-muted">
+              <Icon name="file" size={12} /> {s.file.name}
+            </div>
+            <pre className="scroll-thin -mt-1 overflow-x-auto rounded-md rounded-tl-none border border-line bg-surface2/60 px-3 py-2 font-mono text-[12.5px] leading-relaxed">{s.file.content}</pre>
+          </div>
+        )}
+        <Code code={s.code} lang={s.lang ?? 'python'} />
+        {s.output !== undefined && (
+          <div>
+            <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted">{t('demo.output')}</div>
+            <pre className="scroll-thin overflow-x-auto rounded-md border-l-4 border-ok bg-surface2/70 px-3 py-2 font-mono text-[12.5px] leading-relaxed">{s.output}</pre>
+          </div>
+        )}
+        {s.note && (
+          <div className="flex gap-2 text-sm text-muted">
+            <Icon name="bulb" size={15} className="mt-0.5 shrink-0 text-accent" />
+            <L v={s.note} md />
+          </div>
         )}
       </div>
     </div>
@@ -178,6 +271,10 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
     }
     case 'steps':
       return wrap(<StepByStep s={s} skey={skey} />);
+    case 'demo':
+      return wrap(<Demo s={s} />);
+    case 'copy':
+      return wrap(<ExamCopy s={s} />, 'my-6');
     case 'animation': {
       const A = ANIMATIONS[s.component];
       if (!A) return null;

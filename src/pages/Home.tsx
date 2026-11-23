@@ -6,11 +6,10 @@ import { useStore } from '../store/store';
 import { useT, useL } from '../hooks/useT';
 import { moduleMastery } from '../lib/mastery';
 import { Icon } from '../components/Icon';
-import { TOOLS } from '../components/Layout';
 import { ACADEMIC_YEAR, SUBJECTS } from '../lib/catalog';
 import { useResources } from '../lib/resources';
 import { Announcements } from '../components/Announcements';
-import { ControlsBoard } from '../components/ControlsBoard';
+import { ExamFocus } from '../components/ExamFocus';
 
 /** Section title: poster caps with a short green bar. */
 function Title({ children }: { children: string }) {
@@ -40,16 +39,16 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-14">
+    <div className="space-y-10">
       <Announcements />
 
       {/* the class on the cover, with the search right on it */}
       <section className="relative overflow-hidden rounded-2xl border-2 border-fg" aria-label="GROUP 22">
-        <img src={`${import.meta.env.BASE_URL}group22-banner.jpg`} alt="4IIR G22, EMSI Rabat" className="h-[19rem] w-full object-cover object-[50%_35%] sm:h-80" />
+        <img src={`${import.meta.env.BASE_URL}group22-banner.jpg`} alt="4IIR G22, EMSI Rabat" className="h-64 w-full object-cover object-[50%_35%] sm:h-64" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B2440] via-[#0B2440]/70 to-[#0B2440]/10 sm:bg-gradient-to-r sm:from-[#0B2440]/95 sm:via-[#0B2440]/60 sm:to-transparent" />
         <div className="absolute inset-0 flex flex-col justify-end gap-4 p-5 sm:justify-center sm:p-10">
           <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/70">EMSI Rabat · 4IIR · {ACADEMIC_YEAR}</span>
-          <span className="flex items-center gap-3 font-sign text-5xl uppercase leading-none text-white sm:text-7xl">
+          <span className="flex items-center gap-3 font-sign text-5xl uppercase leading-none text-white sm:text-6xl">
             Group
             <span className="sticker inline-block rounded-md bg-accent px-3 py-1.5 text-white">22</span>
           </span>
@@ -70,8 +69,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TEMPORARY: tests this weekend (hides itself, see ControlsBoard.tsx) */}
-      <ControlsBoard />
+      {/* the next written test: one focus, not a list of everything */}
+      <ExamFocus />
 
       {last && lastContent && (
         <Link to={last.path} className="group flex items-center gap-4 rounded-xl border-2 border-fg px-5 py-4 transition hover:bg-fg hover:text-bg" data-testid="resume">
@@ -85,8 +84,8 @@ export default function Home() {
       )}
 
       <section id="modules" className="scroll-mt-28">
-        <Title>{t('home.modules')}</Title>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <Title>{t('home.others')}</Title>
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {SUBJECTS.map((s) => {
             const c = content?.find((x) => x.module.id === s.id);
             const mastery = c ? moduleMastery(c, st) : null;
@@ -120,17 +119,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
-        <Title>{t('home.tools')}</Title>
-        <div className="flex flex-wrap gap-2.5">
-          {TOOLS.map((x) => (
-            <Link key={x.to} to={x.to} className="inline-flex items-center gap-2 rounded-full border-2 border-line bg-surface px-4 py-2.5 text-sm font-semibold transition hover:border-fg">
-              <Icon name={x.icon} size={16} className="text-accent" />
-              {t(x.key)}
-            </Link>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

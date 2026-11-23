@@ -25,6 +25,8 @@ interface AdminUser {
   createdAt: string;
 }
 
+/** Principal admin: no other admin can edit, sign out or delete this account (see netlify/functions/api.mts). */
+const PRINCIPAL_ADMIN = 'fayssal.abaibat@emsi-edu.ma';
 const ERR: Record<string, string> = {
   email_taken: 'Cet e-mail est déjà utilisé.',
   invalid_email: 'E-mail invalide.',
@@ -35,6 +37,7 @@ const ERR: Record<string, string> = {
   invalid_kind: 'Type invalide.',
   cannot_demote_self: 'Tu ne peux pas retirer ton propre rôle admin.',
   cannot_delete_self: 'Tu ne peux pas supprimer ton propre compte.',
+  protected_admin: 'Ce compte est l\'admin principal : il ne peut être ni modifié, ni déconnecté, ni supprimé.',
   cannot_logout_self: 'Utilise « Se déconnecter » pour ta propre session.',
   exists: 'Ce fichier a déjà une modification : modifie-la.',
   forbidden: 'Réservé à l\'admin.',
@@ -189,19 +192,26 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
       <ul className="mt-2 divide-y divide-line rounded-lg border border-line bg-surface">
         {list.map((u) => {
           const self = u.id === me?.id;
+          // the principal admin's account can only be changed by itself (also enforced by the API)
+          const locked = u.email.toLowerCase() === PRINCIPAL_ADMIN && !self;
           return (
             <li key={u.id} className="flex flex-wrap items-center gap-3 px-4 py-3" data-testid="admin-user">
               <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${u.online ? 'bg-ok' : 'bg-line'}`} title={u.online ? 'En ligne' : `Vu : ${fmt(u.lastSeen)}`} />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold">{u.displayName || u.email}</span>
-                  {u.role === 'admin' && <span className="rounded border border-accent/40 px-1.5 text-[10px] font-bold uppercase text-accent">Admin</span>}
+                  {u.role === 'admin' && <span className="rounded border border-accent/40 px-1.5 text-[10px] font-bold uppercase text-accent">{u.email.toLowerCase() === PRINCIPAL_ADMIN ? 'Admin principal' : 'Admin'}</span>}
                   <span className={`rounded border px-1.5 text-[10px] font-bold uppercase ${STATUS[u.status].cls}`}>{STATUS[u.status].label}</span>
                 </div>
                 <div className="truncate text-xs text-muted">
                   {u.email} · {u.groupe} · inscrit le {fmt(u.createdAt)}
                 </div>
               </div>
+              {locked ? (
+                <span className="inline-flex items-center gap-1.5 text-xs text-muted">
+                  <Icon name="lock" size={13} /> Protégé
+                </span>
+              ) : (
               <div className="flex flex-wrap gap-1.5">
                 {u.status !== 'approved' && (
                   <button className="btn-primary btn-sm" onClick={() => void act('PUT', `/admin/users/${u.id}`, { status: 'approved' })} data-testid="admin-approve">
@@ -231,6 +241,7 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
                   </button>
                 )}
               </div>
+              )}
             </li>
           );
         })}

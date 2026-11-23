@@ -1,4 +1,4 @@
-import { L, h, p, def, plain, example, formula, steps, tip, trap, exam, table, code, quiz } from '../../lib';
+import { L, h, p, def, plain, example, formula, steps, tip, trap, exam, table, code, quiz, demo, key } from '../../lib';
 import type { Chapter } from '../../../src/lib/schema';
 
 /** Chap 2 — Nettoyage et prétraitement des données (Pr. A. Kadiri, 19 octobre 2026). Dataset copied from the slides. */
@@ -25,6 +25,11 @@ export const chapter: Chapter = {
   ]),
   estimatedMinutes: 45,
   sections: [
+    key([
+      '1. **Détecter** : `df.isnull().sum()` (nombre de NaN par colonne).\n2. **Supprimer** : `dropna()` (lignes) ou `dropna(axis=1)` (colonnes trop vides).\n3. **Imputer** : moyenne / médiane (numérique), mode (catégoriel), valeur fixe, puis régression ou k-NN.\n4. **Aberrantes** : hors de [Q1 − 1,5 IQR ; Q3 + 1,5 IQR].\n5. **Mettre à l\'échelle** : Min-Max (0 à 1) ou Z-score (moyenne 0, σ 1). **Doublons** : `drop_duplicates()`.',
+      '1. **Kchef** : `df.isnull().sum()` (3adad NaN f kol colonne).\n2. **7iyed** : `dropna()` (stour) wla `dropna(axis=1)` (colonnes khawyin bzaf).\n3. **Imputer** : moyenne / médiane (ar9am), mode (catégories), qima tabta, w régression wla k-NN.\n4. **Aberrantes** : bra [Q1 − 1,5 IQR ; Q3 + 1,5 IQR].\n5. **Échelle** : Min-Max (0 l 1) wla Z-score (moyenne 0, σ 1). **Doublons** : `drop_duplicates()`.',
+      '1. **Detect**: `df.isnull().sum()` (NaN count per column).\n2. **Delete**: `dropna()` (rows) or `dropna(axis=1)` (too-empty columns).\n3. **Impute**: mean / median (numeric), mode (categorical), fixed value, then regression or k-NN.\n4. **Outliers**: outside [Q1 − 1.5 IQR; Q3 + 1.5 IQR].\n5. **Scale**: Min-Max (0 to 1) or Z-score (mean 0, σ 1). **Duplicates**: `drop_duplicates()`.'
+    ]),
     h(['1. Les données manquantes : c\'est quoi, et pourquoi c\'est grave ?', '1. Données manquantes : chnou homa w 3lach khatrin ?', '1. Missing data: what they are and why they matter']),
     def([
       'Les **données manquantes** (*missing data*) sont des **valeurs absentes** dans un jeu de données. Elles peuvent résulter :\n- d\'**erreurs de saisie ou de mesure** ;\n- de **non-réponses** dans des enquêtes ;\n- de **problèmes techniques** (capteurs, bases de données, etc.).\n\nLeur traitement est une **étape essentielle du prétraitement**, car elles peuvent **biaiser les analyses statistiques** ou **fausser les modèles d\'apprentissage automatique**.',
@@ -52,6 +57,18 @@ export const chapter: Chapter = {
       { t: ['Résultat', 'Natija', 'Result'], b: ['`user_id 0` · `age 2` · `income 4` · `click_rate 2`. La colonne **income** est la plus incomplète (4 / 9 ≈ **44 %** manquants).', '`user_id 0` · `age 2` · `income 4` · `click_rate 2`. **income** hiya li na9sa ktar (4/9 ≈ **44 %**).', '`user_id 0` · `age 2` · `income 4` · `click_rate 2`. **income** is the most incomplete (4 / 9 ≈ **44 %** missing).'], why: ['Le cours dit qu\'on supprime une variable si elle a **plus de 40 %** de valeurs manquantes : income est juste au-dessus de ce seuil.', 'Dars kaygoul n7iydou variable ila fiha **ktar mn 40 %** na9ss : income fou9 had l 7add.', 'The course says to drop a variable with **more than 40 %** missing values: income is just above that threshold.'] }
     ]),
 
+    demo(['Le pourcentage de valeurs manquantes', 'Pourcentage dyal valeurs manquantes', 'The percentage of missing values'], `print(df.isnull().sum())
+print((df.isnull().mean() * 100).round(1))`, `user_id       0
+age           2
+income        4
+click_rate    2
+dtype: int64
+user_id        0.0
+age           22.2
+income        44.4
+click_rate    22.2
+dtype: float64`, { note: ['`isnull().mean()` = proportion de NaN. **income** dépasse 40 % : c\'est la candidate à la suppression de colonne (si elle n\'est pas importante).', '`isnull().mean()` = nisba dyal NaN. **income** fayt 40 % : hiya li ymken t7iyed (ila machi mohimma).', '`isnull().mean()` = share of NaN. **income** is above 40 %: the candidate for column deletion (if unimportant).'] }),
+
     h(['3. Méthode 1 : supprimer', '3. Méthode 1 : 7dif', '3. Method 1: delete']),
     table([['Méthode', 'Méthode', 'Method'], ['Code', 'Code', 'Code'], ['Avantage', 'Mzya', 'Pro'], ['Inconvénient', '3ib', 'Con']], [
       [['Suppression des **lignes** (*listwise deletion*)', '7dif **stour**', 'Delete **rows** (*listwise deletion*)'], 'df.dropna()', ['Simple à mettre en œuvre', 'Sahla', 'Simple'], ['**Risque de perte d\'informations importantes**', '**Ymken tdi3 ma3loumat mohimma**', '**Risk of losing important information**']],
@@ -62,6 +79,13 @@ export const chapter: Chapter = {
       { t: ['Résultat', 'Natija', 'Result'], b: ['Il reste **1 ligne sur 9** : on a jeté **89 %** des données !', 'Kayb9a **str wa7ed mn 9** : 7iydna **89 %** mn data !', '**1 row out of 9** remains: we threw away **89 %** of the data!'], why: ['C\'est exactement le « risque de perte d\'informations » de la diapo : quand les NaN sont éparpillés dans plusieurs colonnes, dropna() vide le tableau.', 'Hada howa « risque de perte d\'informations » : mli NaN mfrr9in f bzaf d colonnes, dropna() kaykhwi tableau.', 'This is exactly the "information loss risk" on the slide: when NaNs are spread over several columns, dropna() empties the table.'] },
       { t: ['Et dropna(axis=1) ?', 'W dropna(axis=1) ?', 'And dropna(axis=1)?'], b: ['`axis=1` supprime les **colonnes** qui contiennent au moins un NaN : il ne reste que **user_id**. Encore pire. On préfère donc l\'**imputation**.', '`axis=1` kay7iyed **colonnes** li fihom NaN : kayb9a ghir **user_id**. Ktar khayba. Donc kanfdlou **imputation**.', '`axis=1` drops **columns** with at least one NaN: only **user_id** remains. Even worse. So we prefer **imputation**.'] }
     ]),
+
+    demo(['dropna() sur le jeu du cours', 'dropna() 3la data dyal dars', 'dropna() on the course dataset'], `print(df.dropna())
+print(df.dropna().shape)
+print(df.dropna(axis=1).columns.tolist())`, `   user_id   age   income  click_rate
+0        1  25.0  50000.0        0.15
+(1, 4)
+['user_id']`, { note: ['Supprimer les lignes ne laisse qu\'**1 ligne sur 9** ; supprimer les colonnes ne laisse que `user_id`. C\'est exactement la « perte d\'information » du cours : ici, il faut imputer.', '7dif stour kaykhlli **str wa7d mn 9** ; 7dif colonnes kaykhlli ghir `user_id`. Hadi hiya « perte d\'information » : hna khass imputation.', 'Deleting rows leaves **1 row out of 9**; deleting columns leaves only `user_id`. This is the course\'s "information loss": impute instead.'] }),
 
     h(['4. Méthode 2 : l\'imputation simple (remplacer par une valeur)', '4. Méthode 2 : imputation simple (3awed b qima)', '4. Method 2: simple imputation (replace with a value)']),
     p([
@@ -85,6 +109,18 @@ export const chapter: Chapter = {
       '3lach imputation b moyenne **kat9ss variance** ? Katzid qiyam **= l moyenne bdbt** : l far9 dyalhom = 0, donc majmou3 l mourabba3at ma kayzidch walakin n kayzid. Data katban « mjm3a » ktar mn l 7a9i9a.',
       'Why does mean imputation **reduce the variance**? You add values **exactly equal to the mean**: their deviations are 0, so the sum of squared deviations does not grow while n does. The data look "tighter" than they really are.'
     ]),
+
+    demo(['Moyenne, médiane, mode : les trois imputations', 'Moyenne, médiane, mode : 3 imputations', 'Mean, median, mode: the three imputations'], `age    = df['age'].fillna(df['age'].mean())
+income = df['income'].fillna(df['income'].median())
+click  = df['click_rate'].fillna(df['click_rate'].mode()[0])
+
+print(df['age'].mean(), age.tolist())
+print(df['income'].median(), income.tolist())
+print(df['click_rate'].mode().tolist(), click.tolist())
+print(round(df['age'].std(), 3), round(age.std(), 3))`, `35.0 [25.0, 32.0, 35.0, 45.0, 28.0, 35.0, 35.0, 40.0, 40.0]
+80000.0 [50000.0, 80000.0, 75000.0, 80000.0, 80000.0, 110000.0, 120000.0, 80000.0, 80000.0]
+[0.12] [0.15, 0.22, 0.18, 0.12, 0.25, 0.3, 0.12, 0.12, 0.12]
+7.165 6.205`, { note: ['`mode()` renvoie une **Series** (il peut y avoir plusieurs modes) : d\'où le `[0]`. La dernière ligne prouve que l\'imputation par la moyenne **réduit l\'écart-type** (7,165 → 6,205).', '`mode()` kayrje3 **Series** (ymken bzaf d modes) : 3lach `[0]`. Str lakhor kaybayen bli imputation b moyenne **kat9ss écart-type** (7,165 → 6,205).', '`mode()` returns a **Series** (there may be several modes): hence `[0]`. The last line shows mean imputation **reduces the SD** (7.165 → 6.205).'] }),
 
     h(['5. Méthode 3 : l\'imputation avancée', '5. Méthode 3 : imputation avancée', '5. Method 3: advanced imputation']),
     table([['Méthode', 'Méthode', 'Method'], ['Principe', 'Fikra', 'Idea'], ['Point fort', 'Mzya', 'Strength'], ['Limite', '3ib', 'Limit']], [
@@ -119,6 +155,14 @@ bas, haut = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
 aberrantes = df[(x < bas) | (x > haut)]     # les lignes aberrantes
 df_propre = df[(x >= bas) & (x <= haut)]    # on les retire`, 'python'),
     tip(['Sur un **boxplot** (Chap 4), les « moustaches » s\'arrêtent justement à Q1 − 1,5 IQR et Q3 + 1,5 IQR : les points dessinés au-delà sont les valeurs aberrantes.', 'F **boxplot** (Fasl 4), « moustaches » kaywqfou f Q1 − 1,5 IQR w Q3 + 1,5 IQR : les points li bra homa aberrantes.', 'On a **boxplot** (Ch. 4), the whiskers stop exactly at Q1 − 1.5 IQR and Q3 + 1.5 IQR: points drawn beyond are outliers.']),
+
+    demo(['La méthode IQR exécutée', 'Méthode IQR f Python', 'The IQR method, run'], `s = pd.Series([12, 14, 15, 15, 16, 18, 19, 20, 95], name='note')
+Q1, Q3 = s.quantile(0.25), s.quantile(0.75)
+IQR = Q3 - Q1
+print(Q1, Q3, IQR, Q1 - 1.5 * IQR, Q3 + 1.5 * IQR)
+print(s[(s < Q1 - 1.5 * IQR) | (s > Q3 + 1.5 * IQR)])`, `15.0 19.0 4.0 9.0 25.0
+8    95
+Name: note, dtype: int64`, { note: ['Mêmes valeurs que le calcul à la main : bornes [9 ; 25], seule la ligne 8 (95) est aberrante.', 'Nefs natija dyal 7sab b lyed : [9 ; 25], ghir str 8 (95) aberrante.', 'Same as by hand: bounds [9; 25], only row 8 (95) is an outlier.'] }),
 
     h(['7. Normalisation et standardisation', '7. Normalisation w standardisation', '7. Normalisation and standardisation']),
     plain([
@@ -164,6 +208,9 @@ sl.plot(kind='bar'); plt.show()`, 'python', ['Le code des diapos 21 et 22 (avec 
       '**Tartib dyal TP (« nn9iw data_1.xlsx »)** : 1) `read_excel` + `info()` ; 2) `isnull().sum()` ; 3) 7iyed **doublons** ; 4) 7iyed colonnes > 40 % NaN ila machi mohimmin ; 5) **imputer** l ba9i ; 6) **aberrantes** (IQR) ; 7) **normaliser** ila khass ; 8) `to_excel(…, index=False)`.',
       '**Recommended order for the lab ("clean data_1.xlsx")**: 1) `read_excel` + `info()`; 2) `isnull().sum()`; 3) drop **duplicates**; 4) drop columns > 40 % NaN if unimportant; 5) **impute** the rest; 6) handle **outliers** (IQR); 7) **normalise** if needed; 8) `to_excel(…, index=False)`.'
     ]),
+    demo(['Doublons sur le jeu du cours', 'Doublons f data dyal dars', 'Duplicates in the course dataset'], `print(df.duplicated().tolist())
+print(df.drop_duplicates().shape)`, `[False, False, False, False, False, False, False, False, True]
+(8, 4)`),
     quiz('dn-01', 'dn-03', 'dn-06', 'dn-09')
   ],
   keyPoints: [

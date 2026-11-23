@@ -75,7 +75,7 @@ export default function ChapterPage() {
   const showResume = !dismissed && !done && saved && saved.section > 1 && progress < 5;
 
   return (
-    <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_14rem] xl:gap-10">
+    <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-12">
       {/* reading progress */}
       <div className="fixed inset-x-0 top-16 z-30 h-0.5 bg-transparent">
         <div className="h-full bg-accent transition-[width] duration-150" style={{ width: `${progress}%` }} />
@@ -89,7 +89,7 @@ export default function ChapterPage() {
           <h1 className="mt-2 font-display text-3xl font-bold tracking-tight sm:text-[2.6rem] sm:leading-[1.1]">
             <L v={c.title} />
           </h1>
-          <p className="mt-2 max-w-3xl text-[15px] text-muted">
+          <p className="mt-2 max-w-5xl text-[15px] text-muted lg:text-[17px]">
             <L v={c.summary} />
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted">
@@ -151,7 +151,7 @@ export default function ChapterPage() {
           </details>
         )}
 
-        <div ref={article} className="max-w-3xl">
+        <div ref={article} className="max-w-[78rem]">
           {c.sections.map((s, i) => (
             <SectionView key={i} id={`s-${i}`} skey={`${key}/${i}`} s={s} questions={qmap} missions={data.missions} />
           ))}

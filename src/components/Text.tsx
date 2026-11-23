@@ -178,7 +178,7 @@ export function Code({ code, lang = 'bash', className = '' }: { code: string; la
     return g ? Prism.highlight(code, g, lang) : code.replace(/[<&]/g, (c) => (c === '<' ? '&lt;' : '&amp;'));
   }, [code, lang]);
   return (
-    <pre className={`overflow-x-auto rounded-xl border border-line bg-surface2 p-3 text-[13px] leading-relaxed ${className}`}>
+    <pre className={`overflow-x-auto rounded-xl border border-line bg-surface2 p-3 text-[13px] leading-relaxed lg:text-[14.5px] ${className}`}>
       <code dangerouslySetInnerHTML={{ __html: html }} />
     </pre>
   );

@@ -351,7 +351,7 @@ export function TopBar() {
   const isAdmin = useIsAdmin();
   return (
     <header className="streetbar sticky top-0 z-40">
-      <div className="mx-auto flex h-[68px] max-w-7xl items-center gap-2 px-4 sm:px-6 lg:h-[84px]">
+      <div className="mx-auto flex h-[68px] max-w-[1760px] items-center gap-2 px-4 sm:px-6 xl:px-10 lg:h-[84px]">
         <Link to="/" className="group mr-1 flex shrink-0 items-center gap-2 sm:mr-6 sm:gap-3" aria-label={t('nav.home')}>
           <BrandMark />
           <Wordmark className="hidden text-[1.05rem] min-[360px]:inline-flex sm:text-[1.35rem] lg:text-[1.6rem]" />
@@ -523,7 +523,7 @@ function Footer() {
   const canSeeOral = useCanSeeOral();
   return (
     <footer className="mt-20 border-t border-line bg-surface">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-[1760px] gap-10 px-4 py-12 sm:px-6 xl:px-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">
             <BrandMark small />
@@ -577,7 +577,7 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 px-4 py-4 text-xs text-muted sm:px-6">
+        <div className="mx-auto flex max-w-[1760px] flex-wrap justify-between gap-2 px-4 py-4 text-xs text-muted sm:px-6 xl:px-10">
           <span>GROUP22 · 4IIR · EMSI Rabat · 2026/2027</span>
           <span>{t('footer.sources')}</span>
         </div>
@@ -602,7 +602,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </a>
       <TopBar />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
-      <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-7xl flex-1 px-4 pt-8 sm:px-6 ${reduce ? '' : 'page-in'}`}>
+      <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-[1760px] flex-1 px-4 pt-8 sm:px-6 xl:px-10 ${reduce ? '' : 'page-in'}`}>
         <RouteErrorBoundary>{children}</RouteErrorBoundary>
       </main>
       {!locked && (

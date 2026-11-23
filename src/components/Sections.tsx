@@ -55,7 +55,7 @@ function StepByStep({ s, skey }: { s: Extract<Section, { type: 'steps' }>; skey?
               <div className="font-semibold">
                 <L v={it.title} />
               </div>
-              <L v={it.body} md className="text-[15px]" />
+              <L v={it.body} md className="text-[15px] lg:text-[16.5px]" />
               {it.tex && (
                 <div className="mt-2 rounded-lg bg-surface2/70 px-3 py-1">
                   <Tex tex={it.tex} block />
@@ -107,7 +107,7 @@ function ExamCopy({ s }: { s: Extract<Section, { type: 'copy' }> }) {
         </span>
       </div>
       {s.statement && (
-        <div className="border-b border-line bg-surface2/50 px-4 py-3 text-[14.5px]">
+        <div className="border-b border-line bg-surface2/50 px-4 py-3 text-[14.5px] lg:text-[16px]">
           <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted">{t('copy.statement')}</div>
           <L v={s.statement} md />
         </div>
@@ -116,13 +116,13 @@ function ExamCopy({ s }: { s: Extract<Section, { type: 'copy' }> }) {
         <span className="absolute inset-y-0 left-[2.6rem] w-px bg-bad/30 sm:left-[9.5rem]" aria-hidden />
         {s.lines.map((x, i) => (
           <li key={i} className="grid grid-cols-[2.6rem_minmax(0,1fr)] border-b border-dashed border-line/80 last:border-0 sm:grid-cols-[9.5rem_minmax(0,1fr)]">
-            <div className="px-3 py-3 text-[12px] font-bold text-muted">
+            <div className="px-3 py-3 text-[12px] font-bold text-muted lg:text-[13.5px]">
               <span className="font-mono text-accent">{i + 1}</span>
               <span className="ml-2 hidden sm:inline">
                 <L v={x.label} />
               </span>
             </div>
-            <div className="min-w-0 px-4 py-3 text-[15px]">
+            <div className="min-w-0 px-4 py-3 text-[15px] lg:text-[16.5px]">
               <div className="mb-0.5 text-[11px] font-bold uppercase tracking-wide text-muted sm:hidden">
                 <L v={x.label} />
               </div>
@@ -137,7 +137,7 @@ function ExamCopy({ s }: { s: Extract<Section, { type: 'copy' }> }) {
         ))}
       </ol>
       {s.result && (
-        <div className="flex gap-3 border-t-2 border-ok/50 bg-ok/[0.07] px-4 py-3 text-[15px]">
+        <div className="flex gap-3 border-t-2 border-ok/50 bg-ok/[0.07] px-4 py-3 text-[15px] lg:text-[16.5px]">
           <Icon name="check" size={18} className="mt-0.5 shrink-0 text-ok" />
           <div>
             <b className="mr-1">{t('copy.result')}</b>
@@ -156,7 +156,7 @@ function Demo({ s }: { s: Extract<Section, { type: 'demo' }> }) {
     <div className="overflow-hidden rounded-xl border border-line bg-surface">
       <div className="flex items-center gap-2 border-b border-line bg-accent/[0.07] px-4 py-2.5">
         <span className="text-xs font-bold uppercase tracking-wide text-accent">{t('demo.example')}</span>
-        <span className="min-w-0 flex-1 truncate text-sm font-semibold">
+        <span className="min-w-0 flex-1 truncate text-sm font-semibold lg:text-[15.5px]">
           <L v={s.title} />
         </span>
       </div>
@@ -166,14 +166,14 @@ function Demo({ s }: { s: Extract<Section, { type: 'demo' }> }) {
             <div className="mb-1 inline-flex items-center gap-1.5 rounded-t-md border border-b-0 border-line bg-surface2 px-2.5 py-1 font-mono text-[11px] text-muted">
               <Icon name="file" size={12} /> {s.file.name}
             </div>
-            <pre className="scroll-thin -mt-1 overflow-x-auto rounded-md rounded-tl-none border border-line bg-surface2/60 px-3 py-2 font-mono text-[12.5px] leading-relaxed">{s.file.content}</pre>
+            <pre className="scroll-thin -mt-1 overflow-x-auto rounded-md rounded-tl-none border border-line bg-surface2/60 px-3 py-2 font-mono text-[12.5px] leading-relaxed lg:text-[14px]">{s.file.content}</pre>
           </div>
         )}
         <Code code={s.code} lang={s.lang ?? 'python'} />
         {s.output !== undefined && (
           <div>
             <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted">{t('demo.output')}</div>
-            <pre className="scroll-thin overflow-x-auto rounded-md border-l-4 border-ok bg-surface2/70 px-3 py-2 font-mono text-[12.5px] leading-relaxed">{s.output}</pre>
+            <pre className="scroll-thin overflow-x-auto rounded-md border-l-4 border-ok bg-surface2/70 px-3 py-2 font-mono text-[12.5px] leading-relaxed lg:text-[14px]">{s.output}</pre>
           </div>
         )}
         {s.note && (
@@ -200,14 +200,14 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
   switch (s.type) {
     case 'heading':
       return wrap(
-        <h2 className="flex items-center gap-3 text-xl font-bold tracking-tight sm:text-2xl">
+        <h2 className="flex items-center gap-3 text-xl font-bold tracking-tight sm:text-2xl xl:text-[1.75rem]">
           <span className="h-6 w-1 rounded-full bg-accent" />
           <L v={s.body} />
         </h2>,
         'mb-3 mt-12'
       );
     case 'text':
-      return wrap(<L v={s.body} md className="text-[15.5px] leading-[1.75]" />, 'my-4');
+      return wrap(<L v={s.body} md className="text-[16px] leading-[1.75] lg:text-[17.5px]" />, 'my-4');
     case 'code':
       return wrap(
         <figure>
@@ -233,7 +233,7 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
     case 'table':
       return wrap(
         <div className="overflow-x-auto rounded-xl border border-line bg-surface">
-          <table className="w-full min-w-[420px] text-left text-sm">
+          <table className="w-full min-w-[420px] text-left text-sm lg:text-[15.5px]">
             <thead className="bg-surface2 text-xs uppercase tracking-wide text-muted">
               <tr>
                 {s.headers.map((h, i) => (
@@ -247,7 +247,7 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
               {s.rows.map((r, i) => (
                 <tr key={i} className="border-t border-line align-top even:bg-surface2/30">
                   {r.map((c, j) => (
-                    <td key={j} className={`px-3 py-2.5 ${typeof c === 'string' ? 'font-mono text-[13px] text-accent2' : ''}`}>
+                    <td key={j} className={`px-3 py-2.5 ${typeof c === 'string' ? 'font-mono text-[13px] text-accent2 lg:text-[14.5px]' : ''}`}>
                       {typeof c === 'string' ? c : <L v={c} />}
                     </td>
                   ))}
@@ -265,7 +265,7 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
             <Icon name={c.icon} size={15} /> {t(c.key)}
           </div>
           {s.tex && <Tex tex={s.tex} block />}
-          <L v={s.body} md className="text-[15px]" />
+          <L v={s.body} md className="text-[15px] lg:text-[16.5px]" />
         </aside>
       );
     }

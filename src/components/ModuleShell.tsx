@@ -128,7 +128,7 @@ export default function ModuleShell() {
   if (!data) return <Loading />;
   const tabs = [{ to: `/m/${id}`, icon: 'compass', key: 'module.overview' as UIKey, end: true }, ...PRACTICE.map((x) => ({ to: `/m/${id}/${x.to}`, icon: x.icon, key: x.key, end: false }))];
   return (
-    <div className="lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-8">
+    <div className="lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-8 2xl:grid-cols-[19rem_minmax(0,1fr)] 2xl:gap-12">
       <aside className="scroll-thin sticky top-28 hidden max-h-[calc(100dvh-7rem)] overflow-y-auto pb-6 pr-1 lg:block" aria-label={tl(data.module.title)}>
         <SidebarBody id={id} data={data} />
       </aside>

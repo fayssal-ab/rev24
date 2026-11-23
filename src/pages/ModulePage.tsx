@@ -26,7 +26,6 @@ export default function ModulePage() {
   const practice = [
     { to: 'qcm', icon: 'quiz', label: t('nav.qcm'), n: data.questions.length },
     { to: 'exercices', icon: 'dumbbell', label: t('nav.exercises'), n: data.exercises.length },
-    { to: 'flashcards', icon: 'cards', label: t('nav.flashcards'), n: data.flashcards.length },
     { to: 'examen', icon: 'target', label: t('nav.exam') }
   ];
   // chapter that weighs the most in the test (module.weights): shown first as the priority

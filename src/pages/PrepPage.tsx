@@ -227,8 +227,8 @@ function Tasks({ r, p, light = false }: { r: { c: ModuleContent }; p: DayPlan; l
     );
   if (p.kind === 'rest')
     return (
-      <Link to={`${base}/flashcards`} className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition ${chip}`}>
-        <Icon name="cards" size={12} /> {t('prep.rest')}
+      <Link to={`${base}/qcm?mode=mistakes`} className={`inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-semibold transition ${chip}`}>
+        <Icon name="quiz" size={12} /> {t('prep.rest')}
       </Link>
     );
   return (

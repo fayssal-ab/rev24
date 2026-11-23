@@ -1,0 +1,680 @@
+{
+ "id": "blanc",
+ "module": "data",
+ "order": 7,
+ "title": {
+  "fr": "Examen blanc corrigé — pandas + tests d'hypothèses",
+  "dar": "Examen blanc m-corrigé — pandas + tests d'hypothèses",
+  "en": "Solved mock test — pandas + hypothesis tests"
+ },
+ "summary": {
+  "fr": "Seulement ce qui tombe au contrôle : la révision des étapes, puis 4 exercices (20 pts) avec pour chacun comment démarrer, le code et son vrai résultat, et la rédaction du prof.",
+  "dar": "Ghir li kayji f contrôle : révision dyal les étapes, w 4 exercices (20 pts) : kifach tbda, code b résultat 7a9i9i, w ktaba dyal l prof.",
+  "en": "Only what the test covers: the steps to revise, then 4 exercises (20 pts), each with how to start, real code output and the teacher's write-up."
+ },
+ "estimatedMinutes": 90,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "**Programme du contrôle** : pandas (lire, vérifier, modifier, sauvegarder) + tests d'hypothèses (Z ou Student, bilatéral ou unilatéral, rédaction en 7 lignes). Fais d'abord l'**examen blanc chronométré** (page Examen blanc), puis compare avec la correction ci-dessous.",
+    "dar": "**Programme** : pandas (9ra, t2akked, beddel, sauvegardi) + tests (Z wla Student, bilatéral wla unilatéral, 7 stour). Dir **examen blanc b chrono** 9bel, mn ba3d 9aren m3a correction.",
+    "en": "**Scope**: pandas (read, check, modify, save) + hypothesis tests (Z or Student, two- or one-sided, 7-line write-up). Take the **timed mock** first, then compare."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Révision 1 — pandas : les 4 étapes",
+    "dar": "Révision 1 — pandas : 4 étapes",
+    "en": "Revision 1 — pandas: the 4 steps"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Toujours dans cet ordre",
+    "dar": "Dima b had tartib",
+    "en": "Always in this order"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "1. Lire",
+      "dar": "1. 9ra",
+      "en": "1. Read"
+     },
+     "body": {
+      "fr": "`df = pd.read_csv(…)` ou `pd.read_excel(…)` avec les **bons paramètres** : on les trouve dans l'énoncé (voir le tableau).",
+      "dar": "`pd.read_csv` / `pd.read_excel` b **paramètres** li f énoncé.",
+      "en": "`pd.read_csv` / `pd.read_excel` with the **parameters** the statement gives."
+     }
+    },
+    {
+     "title": {
+      "fr": "2. Vérifier",
+      "dar": "2. T2akked",
+      "en": "2. Check"
+     },
+     "body": {
+      "fr": "`df.head()`, `df.shape`, `df.dtypes`, `df.isna().sum()`. Une colonne de nombres en **object** = lecture ratée.",
+      "dar": "head, shape, dtypes, isna. Nombres f **object** = ghalat.",
+      "en": "head, shape, dtypes, isna. Numbers as **object** = bad read."
+     }
+    },
+    {
+     "title": {
+      "fr": "3. Modifier / sélectionner",
+      "dar": "3. Beddel / khtar",
+      "en": "3. Modify / select"
+     },
+     "body": {
+      "fr": "Nouvelle colonne : `df[\"c\"] = …`. Colonnes : `df[[\"a\", \"b\"]]`. Lignes : `df[df[\"a\"] == x]`.",
+      "dar": "`df[\"c\"] = …` ; `df[[\"a\",\"b\"]]` ; `df[df[\"a\"] == x]`.",
+      "en": "`df[\"c\"] = …`; `df[[\"a\",\"b\"]]`; `df[df[\"a\"] == x]`."
+     }
+    },
+    {
+     "title": {
+      "fr": "4. Sauvegarder",
+      "dar": "4. Sauvegardi",
+      "en": "4. Save"
+     },
+     "body": {
+      "fr": "`df.to_csv(\"f.csv\", index=False)` (+ `sep`, `decimal` si format français), `df.to_excel(…)`.",
+      "dar": "`to_csv(…, index=False)`.",
+      "en": "`to_csv(…, index=False)`."
+     }
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Dans l'énoncé je lis…",
+     "dar": "F énoncé kan9ra…",
+     "en": "The statement says…"
+    },
+    {
+     "fr": "J'écris",
+     "dar": "Nkteb",
+     "en": "I write"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "séparateur « ; »",
+      "dar": "séparateur « ; »",
+      "en": "\";\" separator"
+     },
+     "sep=\";\""
+    ],
+    [
+     {
+      "fr": "décimale « , » (12,5)",
+      "dar": "décimale « , »",
+      "en": "\",\" decimal"
+     },
+     "decimal=\",\""
+    ],
+    [
+     {
+      "fr": "« - » ou « NA » = inconnu",
+      "dar": "« - » = manquante",
+      "en": "\"-\" = unknown"
+     },
+     "na_values=[\"-\"]"
+    ],
+    [
+     {
+      "fr": "pas de ligne d'en-tête",
+      "dar": "bla en-tête",
+      "en": "no header row"
+     },
+     "header=None, names=[…]"
+    ],
+    [
+     {
+      "fr": "feuille « S1 », colonnes A à C, 4 lignes",
+      "dar": "feuille S1, A:C, 4 stour",
+      "en": "sheet S1, A:C, 4 rows"
+     },
+     "sheet_name=\"S1\", usecols=\"A:C\", nrows=4"
+    ],
+    [
+     {
+      "fr": "sans numéros de ligne",
+      "dar": "bla numéros",
+      "en": "without row numbers"
+     },
+     "index=False"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Révision 2 — test d'hypothèse : choisir puis rédiger",
+    "dar": "Révision 2 — test : khtar w kteb",
+    "en": "Revision 2 — test: choose then write"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Question",
+     "dar": "So2al",
+     "en": "Question"
+    },
+    {
+     "fr": "Réponse → conséquence",
+     "dar": "Jawab → natija",
+     "en": "Answer → consequence"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "σ est-il donné (« connu ») ?",
+      "dar": "σ m3tia ?",
+      "en": "Is σ given?"
+     },
+     {
+      "fr": "Oui → **Z0** et la table N(0, 1). Non → **T0** avec S et Student à **ν = n − 1**.",
+      "dar": "Ah → **Z0**. La → **T0** b S, **ν = n − 1**.",
+      "en": "Yes → **Z0**, N(0, 1). No → **T0** with S, Student **ν = n − 1**."
+     }
+    ],
+    [
+     {
+      "fr": "Quel mot dans la question ?",
+      "dar": "Ina kelma f so2al ?",
+      "en": "Which word in the question?"
+     },
+     {
+      "fr": "« différent, déréglé, conforme » → **bilatéral** (α/2). « inférieur, moins de » → **gauche**. « supérieur, dépasse » → **droite**.",
+      "dar": "« déréglé » → bilatéral ; « inférieur » → gauche ; « dépasse » → droite.",
+      "en": "\"different\" → two-sided; \"lower\" → left; \"exceeds\" → right."
+     }
+    ],
+    [
+     {
+      "fr": "Valeur critique ?",
+      "dar": "Valeur critique ?",
+      "en": "Critical value?"
+     },
+     {
+      "fr": "5 % : 1,96 (bilatéral) ou 1,645 (unilatéral) ; Student : t(α/2 ; ν) ou t(α ; ν).",
+      "dar": "1,96 / 1,645 ; Student t(α ; ν).",
+      "en": "1.96 / 1.645; Student t(α; ν)."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Puis les **7 lignes du prof**, toujours les mêmes : **Données → Hypothèses → Statistique et sa loi → Calcul → Valeur critique (région) → Décision → Conclusion dans le contexte**. Même si un calcul est faux, une copie qui suit les 7 lignes garde les points de méthode.",
+    "dar": "Mn ba3d **7 stour dyal l prof** : **Données → Hypothèses → Statistique w loi → 7sab → Valeur critique → Qarar → Conclusion f contexte**. Wakha 7sab ghalat, no9at dyal méthode kayb9aw.",
+    "en": "Then the teacher's **7 lines**: **Data → Hypotheses → Statistic and law → Computation → Critical value → Decision → Conclusion in context**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 1 — Lire et vérifier un CSV (5 pts)",
+    "dar": "Exercice 1 — 9ra w t2akked (5 pts)",
+    "en": "Exercise 1 — Read and check a CSV (5 pts)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "`ventes.csv` utilise « ; », la virgule décimale et « - » pour une quantité inconnue. 1) Lire. 2) 3 premières lignes. 3) Vérifier dimensions et types. 4) Compter les valeurs manquantes. 5) Que donne `pd.read_csv(\"ventes.csv\")` sans paramètre ?",
+    "dar": "`ventes.csv` : « ; », « , », « - ». 1) 9ra. 2) 3 stour. 3) shape w dtypes. 4) NaN. 5) Bla paramètres ?",
+    "en": "`ventes.csv` uses \";\", decimal comma and \"-\". 1) Read. 2) First 3 rows. 3) Shape and types. 4) Missing values. 5) Without parameters?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "**Comment démarrer** : souligne dans l'énoncé les 3 indices (« ; », « , », « - ») → ce sont tes 3 paramètres. Écris d'abord `import pandas as pd`.",
+    "dar": "**Kifach tbda** : 7tt khatt ta7t 3 indices (« ; », « , », « - ») → homa 3 paramètres. Bda b `import pandas as pd`.",
+    "en": "**How to start**: underline the 3 clues (\";\", \",\", \"-\") → your 3 parameters. Start with `import pandas as pd`."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q1–Q2 : lire puis afficher",
+    "dar": "Q1–Q2 : 9ra w werri",
+    "en": "Q1–Q2: read then show"
+   },
+   "file": {
+    "name": "ventes.csv",
+    "content": "date;ville;produit;quantite;prix\n02/11/2026;Rabat;Clavier;3;149,90\n02/11/2026;Casa;Souris;-;59,50\n03/11/2026;Rabat;Ecran;1;1299,00\n03/11/2026;Fes;Clavier;2;149,90\n04/11/2026;Casa;Ecran;-;1299,00\n04/11/2026;Rabat;Souris;5;59,50"
+   },
+   "code": "import pandas as pd\ndf = pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", na_values=[\"-\"])\nprint(df.head(3))",
+   "output": "         date  ville  produit  quantite    prix\n0  02/11/2026  Rabat  Clavier       3.0   149.9\n1  02/11/2026   Casa   Souris       NaN    59.5\n2  03/11/2026  Rabat    Ecran       1.0  1299.0"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q3–Q4 : vérifier",
+    "dar": "Q3–Q4 : t2akked",
+    "en": "Q3–Q4: check"
+   },
+   "code": "print(df.shape)\nprint(df.dtypes)\nprint(df.isna().sum())",
+   "output": "(6, 5)\ndate         object\nville        object\nproduit      object\nquantite    float64\nprix        float64\ndtype: object\ndate        0\nville       0\nproduit     0\nquantite    2\nprix        0\ndtype: int64",
+   "note": {
+    "fr": "quantite et prix en **float64** : les nombres sont bien lus. quantite est en float (et non int) à cause des 2 NaN.",
+    "dar": "quantite w prix **float64** : mzyan. quantite float 7it fiha 2 NaN.",
+    "en": "quantite and prix are **float64**: read correctly. quantite is float because of the 2 NaN."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q5 : sans paramètre (lecture ratée)",
+    "dar": "Q5 : bla paramètres (ghalat)",
+    "en": "Q5: no parameters (bad read)"
+   },
+   "code": "w = pd.read_csv(\"ventes.csv\")\nprint(w.shape)",
+   "output": "(6, 1)",
+   "note": {
+    "fr": "Le séparateur par défaut est la virgule : toute la ligne d'en-tête devient **une seule colonne**, et « 149,90 » est coupé en deux. Réponse attendue : « lecture incorrecte, il faut sep=\";\" et decimal=\",\" ».",
+    "dar": "Séparateur par défaut = virgule : **colonne wa7da**, w 149,90 kayt9sem.",
+    "en": "Default separator is the comma: **one single column**, and 149,90 is split."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Ne jamais conclure sans **vérifier** : `df.dtypes` est la preuve que la lecture est bonne, et le correcteur la cherche.",
+    "dar": "Ma tsalich bla **t2akked** : `df.dtypes` howa dalil.",
+    "en": "Never finish without **checking**: `df.dtypes` is the proof."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 2 — Modifier, filtrer, sauvegarder (5 pts)",
+    "dar": "Exercice 2 — Beddel, filtri, sauvegardi (5 pts)",
+    "en": "Exercise 2 — Modify, filter, save (5 pts)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "1) Colonne `montant` = quantite × prix (2 décimales). 2) Produit et montant des ventes de Rabat. 3) Sauvegarder au format français sans numéros de ligne. 4) Series des notes 12, 15, 9 (Amine, Sara, Yassine) et sa moyenne. 5) Lire les colonnes A à C, 4 lignes, de la feuille « S1 » de `notes.xlsx`.",
+    "dar": "1) montant. 2) Rabat. 3) to_csv français. 4) Series. 5) read_excel.",
+    "en": "1) amount. 2) Rabat. 3) French to_csv. 4) Series. 5) read_excel."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "**Comment démarrer** : chaque question = **une instruction**. Créer → `df[\"col\"] = …` ; filtrer → `df[condition]` ; sauvegarder → `to_csv(…, index=False)`.",
+    "dar": "**Kifach tbda** : kol so2al = **instruction wa7da**.",
+    "en": "**How to start**: each question = **one instruction**."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q1 : nouvelle colonne",
+    "dar": "Q1 : colonne jdida",
+    "en": "Q1: new column"
+   },
+   "code": "df[\"montant\"] = (df[\"quantite\"] * df[\"prix\"]).round(2)\nprint(df)",
+   "output": "         date  ville  produit  quantite    prix  montant\n0  02/11/2026  Rabat  Clavier       3.0   149.9    449.7\n1  02/11/2026   Casa   Souris       NaN    59.5      NaN\n2  03/11/2026  Rabat    Ecran       1.0  1299.0   1299.0\n3  03/11/2026    Fes  Clavier       2.0   149.9    299.8\n4  04/11/2026   Casa    Ecran       NaN  1299.0      NaN\n5  04/11/2026  Rabat   Souris       5.0    59.5    297.5",
+   "note": {
+    "fr": "NaN × prix = **NaN** : pandas ne plante pas, il propage la valeur manquante.",
+    "dar": "NaN × prix = **NaN**.",
+    "en": "NaN × price = **NaN**."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q2 : filtrer les lignes, choisir les colonnes",
+    "dar": "Q2 : filtri stour, khtar colonnes",
+    "en": "Q2: filter rows, pick columns"
+   },
+   "code": "print(df[df[\"ville\"] == \"Rabat\"][[\"produit\", \"montant\"]])",
+   "output": "   produit  montant\n0  Clavier    449.7\n2    Ecran   1299.0\n5   Souris    297.5"
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q3 : sauvegarder au format français",
+    "dar": "Q3 : sauvegardi b format français",
+    "en": "Q3: save in French format"
+   },
+   "code": "df.to_csv(\"ventes_montant.csv\", sep=\";\", decimal=\",\", index=False)",
+   "output": "date;ville;produit;quantite;prix;montant\n02/11/2026;Rabat;Clavier;3,0;149,9;449,7\n02/11/2026;Casa;Souris;;59,5;\n03/11/2026;Rabat;Ecran;1,0;1299,0;1299,0\n03/11/2026;Fes;Clavier;2,0;149,9;299,8\n04/11/2026;Casa;Ecran;;1299,0;\n04/11/2026;Rabat;Souris;5,0;59,5;297,5",
+   "note": {
+    "fr": "Contenu du fichier écrit. Les NaN deviennent des cases vides.",
+    "dar": "Contenu dyal fichier. NaN → khawi.",
+    "en": "File content. NaN become empty cells."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Q4–Q5 : Series et read_excel",
+    "dar": "Q4–Q5 : Series w read_excel",
+    "en": "Q4–Q5: Series and read_excel"
+   },
+   "code": "s = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"])\nprint(s)\nprint(s.mean())\nnotes = pd.read_excel(\"notes.xlsx\", sheet_name=\"S1\", usecols=\"A:C\", nrows=4)",
+   "output": "Amine      12\nSara       15\nYassine     9\ndtype: int64\n12.0"
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 3 — Test Z bilatéral (5 pts)",
+    "dar": "Exercice 3 — Test Z bilatéral (5 pts)",
+    "en": "Exercise 3 — Two-sided Z test (5 pts)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Une machine remplit des bouteilles de **500 mL**, **σ = 4 mL** (connu). Sur **n = 36** bouteilles, **x̄ = 498,5 mL**. Au risque **5 %**, la machine est-elle déréglée ? Donner la P-value.",
+    "dar": "Machine 500 mL, σ = 4 m3rouf, n = 36, x̄ = 498,5, α = 5 %. Mderegla ? P-value ?",
+    "en": "Machine 500 mL, σ = 4 known, n = 36, x̄ = 498.5, α = 5 %. Out of adjustment? P-value?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "**Comment démarrer** : 2 questions. σ donné ? **oui → Z**. Le mot « déréglée » ? → écart dans les deux sens → **bilatéral**, seuil **1,96**.",
+    "dar": "**Kifach tbda** : σ m3tia ? **ah → Z**. « déréglée » → **bilatéral**, **1,96**.",
+    "en": "**How to start**: σ given? **yes → Z**. \"out of adjustment\" → **two-sided**, **1.96**."
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Exercice 3",
+    "dar": "Copie modèle — Exercice 3",
+    "en": "Model answer — Exercise 3"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Données",
+      "dar": "Data",
+      "en": "Data"
+     },
+     "body": {
+      "fr": "µ0 = 500 ; σ = 4 (**connu**) ; n = 36 ; x̄ = 498,5 ; α = 0,05.",
+      "dar": "µ0 = 500 ; σ = 4 (**m3rouf**) ; n = 36 ; x̄ = 498,5 ; α = 0,05.",
+      "en": "µ0 = 500; σ = 4 (**known**); n = 36; x̄ = 498.5; α = 0.05."
+     }
+    },
+    {
+     "label": {
+      "fr": "Hypothèses",
+      "dar": "Hypothèses",
+      "en": "Hypotheses"
+     },
+     "body": {
+      "fr": "H0 : µ = 500 contre H1 : µ ≠ 500 → test **bilatéral**.",
+      "dar": "H0 : µ = 500 contre H1 : µ ≠ 500 → **bilatéral**.",
+      "en": "H0: µ = 500 vs H1: µ ≠ 500 → **two-sided**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Statistique et loi",
+      "dar": "Statistique w loi",
+      "en": "Statistic and law"
+     },
+     "body": {
+      "fr": "Sous H0, Z0 = (x̄ − µ0)/(σ/√n) suit **N(0, 1)**.",
+      "dar": "Sous H0, Z0 ~ **N(0, 1)**.",
+      "en": "Under H0, Z0 ~ **N(0, 1)**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Calcul",
+      "dar": "7sab",
+      "en": "Computation"
+     },
+     "body": {
+      "fr": "σ/√n = 4/6 ≈ 0,667 ; Z0 = (498,5 − 500)/0,667 = **−2,25**.",
+      "dar": "σ/√n ≈ 0,667 ; Z0 = **−2,25**.",
+      "en": "σ/√n ≈ 0.667; Z0 = **−2.25**."
+     },
+     "tex": "Z_0 = \\frac{498{,}5 - 500}{4/\\sqrt{36}} = \\frac{-1{,}5}{0{,}667} = -2{,}25"
+    },
+    {
+     "label": {
+      "fr": "Valeur critique",
+      "dar": "Valeur critique",
+      "en": "Critical value"
+     },
+     "body": {
+      "fr": "z(α/2) = z(0,025) = **1,96** ; région critique : |Z0| > 1,96.",
+      "dar": "z(0,025) = **1,96** ; |Z0| > 1,96.",
+      "en": "z(0.025) = **1.96**; |Z0| > 1.96."
+     }
+    },
+    {
+     "label": {
+      "fr": "Décision",
+      "dar": "Qarar",
+      "en": "Decision"
+     },
+     "body": {
+      "fr": "|Z0| = 2,25 > 1,96 → **on rejette H0**. (P-value = 2(1 − Φ(2,25)) ≈ 0,0244 < 0,05 : même décision.)",
+      "dar": "2,25 > 1,96 → **nrfdou H0** (PV ≈ 0,0244).",
+      "en": "2.25 > 1.96 → **reject H0** (PV ≈ 0.0244)."
+     }
+    },
+    {
+     "label": {
+      "fr": "Conclusion",
+      "dar": "Conclusion",
+      "en": "Conclusion"
+     },
+     "body": {
+      "fr": "Au risque 5 %, la machine est **déréglée** (elle remplit en moyenne moins de 500 mL).",
+      "dar": "B risque 5 %, machine **mderegla**.",
+      "en": "At the 5 % level, the machine is **out of adjustment**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "L'écart-type de x̄ est **σ/√n**, pas σ : sans √n on trouve Z0 = −0,375 et on garde H0 à tort.",
+    "dar": "**σ/√n** machi σ : bla √n Z0 = −0,375 w qarar ghalat.",
+    "en": "Use **σ/√n**, not σ: otherwise Z0 = −0.375 and the wrong decision."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Exercice 4 — Test de Student unilatéral (5 pts)",
+    "dar": "Exercice 4 — Student unilatéral (5 pts)",
+    "en": "Exercise 4 — One-sided Student test (5 pts)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Un fournisseur affirme une autonomie moyenne d'**au moins 10 h**. 9 batteries mesurées (h) : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. σ inconnu. 1) x̄ et S. 2) Au risque 5 %, l'autonomie moyenne est-elle **inférieure** à 10 h ?",
+    "dar": "Fournisseur : **au moins 10 h**. 9 batteries : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. 1) x̄ w S. 2) Wach µ < 10 b 5 % ?",
+    "en": "Supplier claims **at least 10 h**. 9 batteries: 9.6; 10.1; 9.4; 9.8; 9.9; 9.2; 10; 9.5; 9.7. 1) x̄ and S. 2) At 5 %, is the mean **below** 10 h?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "**Comment démarrer** : σ pas donné → **Student**, ν = 9 − 1 = **8**. « inférieure » → **unilatéral gauche** : région T0 < −t(0,05 ; 8). Commence par x̄ et S (diviseur **n − 1**).",
+    "dar": "**Kifach tbda** : σ ma m3tiach → **Student**, ν = **8**. « inférieure » → **gauche**. Bda b x̄ w S (**n − 1**).",
+    "en": "**How to start**: σ not given → **Student**, ν = **8**. \"below\" → **left-tailed**. Start with x̄ and S (**n − 1**)."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "x̄ et S avec pandas (S = .std())",
+    "dar": "x̄ w S b pandas",
+    "en": "x̄ and S with pandas"
+   },
+   "code": "x = pd.Series([9.6, 10.1, 9.4, 9.8, 9.9, 9.2, 10.0, 9.5, 9.7])\nprint(x.mean(), x.std(), len(x))",
+   "output": "9.68888888888889 0.2934469476943169 9",
+   "note": {
+    "fr": "`.std()` de pandas divise par **n − 1** : c'est exactement le S du test de Student.",
+    "dar": "`.std()` kayfasem 3la **n − 1** : howa S.",
+    "en": "pandas `.std()` divides by **n − 1**: it is the S of the test."
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Exercice 4",
+    "dar": "Copie modèle — Exercice 4",
+    "en": "Model answer — Exercise 4"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Données",
+      "dar": "Data",
+      "en": "Data"
+     },
+     "body": {
+      "fr": "µ0 = 10 ; n = 9 ; x̄ = 87,2/9 ≈ 9,689 ; S ≈ 0,2934 ; σ **inconnu** ; α = 0,05.",
+      "dar": "µ0 = 10 ; n = 9 ; x̄ ≈ 9,689 ; S ≈ 0,2934 ; σ **ma m3roufch**.",
+      "en": "µ0 = 10; n = 9; x̄ ≈ 9.689; S ≈ 0.2934; σ **unknown**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Hypothèses",
+      "dar": "Hypothèses",
+      "en": "Hypotheses"
+     },
+     "body": {
+      "fr": "H0 : µ = 10 contre H1 : µ < 10 → **unilatéral gauche**.",
+      "dar": "H0 : µ = 10 ; H1 : µ < 10 → **gauche**.",
+      "en": "H0: µ = 10 vs H1: µ < 10 → **left-tailed**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Statistique et loi",
+      "dar": "Statistique w loi",
+      "en": "Statistic and law"
+     },
+     "body": {
+      "fr": "Sous H0, T0 = (x̄ − µ0)/(S/√n) suit **Student à 8 ddl**.",
+      "dar": "Sous H0, T0 ~ **Student ν = 8**.",
+      "en": "Under H0, T0 ~ **Student, 8 df**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Calcul",
+      "dar": "7sab",
+      "en": "Computation"
+     },
+     "body": {
+      "fr": "S/√n = 0,2934/3 ≈ 0,0978 ; T0 = (9,689 − 10)/0,0978 ≈ **−3,18**.",
+      "dar": "T0 ≈ **−3,18**.",
+      "en": "T0 ≈ **−3.18**."
+     },
+     "tex": "T_0 = \\frac{9{,}689 - 10}{0{,}2934/\\sqrt 9} \\approx -3{,}18"
+    },
+    {
+     "label": {
+      "fr": "Valeur critique",
+      "dar": "Valeur critique",
+      "en": "Critical value"
+     },
+     "body": {
+      "fr": "t(0,05 ; 8) = **1,860** ; région critique : T0 < −1,860.",
+      "dar": "t(0,05 ; 8) = **1,860** ; T0 < −1,860.",
+      "en": "t(0.05; 8) = **1.860**; T0 < −1.860."
+     }
+    },
+    {
+     "label": {
+      "fr": "Décision",
+      "dar": "Qarar",
+      "en": "Decision"
+     },
+     "body": {
+      "fr": "T0 = −3,18 < −1,860 → **on rejette H0** (P-value ≈ 0,0065).",
+      "dar": "−3,18 < −1,860 → **nrfdou H0**.",
+      "en": "−3.18 < −1.860 → **reject H0**."
+     }
+    },
+    {
+     "label": {
+      "fr": "Conclusion",
+      "dar": "Conclusion",
+      "en": "Conclusion"
+     },
+     "body": {
+      "fr": "Au risque 5 %, l'autonomie moyenne est **inférieure à 10 h** : l'affirmation du fournisseur est fausse.",
+      "dar": "B risque 5 %, autonomie **a9al mn 10 h**.",
+      "en": "At 5 %, the mean is **below 10 h**: the claim is false."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "« au moins 10 h » est l'affirmation testée (H0 : µ = 10) ; ce qu'on cherche à montrer (« inférieure ») va dans **H1**. Et avec σ inconnu et n = 9, **jamais** 1,645.",
+    "dar": "« au moins 10 h » = H0 ; « inférieure » = **H1**. W **machi** 1,645.",
+    "en": "\"at least 10 h\" is H0; \"below\" goes in **H1**. And **never** 1.645 here."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Barème indicatif : Ex. 1 = 5, Ex. 2 = 5, Ex. 3 = 5, Ex. 4 = 5. Pour un test, chaque ligne des 7 rapporte des points : **conclusion dans le contexte** comprise.",
+    "dar": "Barème : 5 + 5 + 5 + 5. F test, kol str mn 7 fih no9at.",
+    "en": "Scoring: 5 + 5 + 5 + 5. In a test, each of the 7 lines earns points."
+   }
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "pandas : lire (bons paramètres) → vérifier (shape, dtypes, isna) → modifier → sauvegarder (index=False).",
+   "dar": "pandas : 9ra → t2akked → beddel → sauvegardi.",
+   "en": "pandas: read → check → modify → save."
+  },
+  {
+   "fr": "Test : σ connu → Z, sinon Student ν = n − 1 ; le mot de la question donne bilatéral / gauche / droite ; puis les 7 lignes.",
+   "dar": "Test : Z wla Student ; bilatéral / gauche / droite ; 7 stour.",
+   "en": "Test: Z or Student; two-sided / left / right; then 7 lines."
+  },
+  {
+   "fr": "Ex. 3 : Z0 = −2,25 → rejet ; Ex. 4 : T0 ≈ −3,18 < −1,860 → rejet.",
+   "dar": "Z0 = −2,25 ; T0 ≈ −3,18.",
+   "en": "Z0 = −2.25; T0 ≈ −3.18."
+  }
+ ]
+}

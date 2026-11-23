@@ -19,7 +19,8 @@
   "pandas",
   "nettoyage",
   "visu",
-  "tests"
+  "tests",
+  "blanc"
  ],
  "upcoming": [
   {
@@ -32,13 +33,47 @@
    }
   }
  ],
- "annales": [],
+ "annales": [
+  {
+   "id": "blanc-controle",
+   "title": {
+    "fr": "Examen blanc du contrôle — pandas + tests d'hypothèses",
+    "dar": "Examen blanc dyal contrôle — pandas + tests",
+    "en": "Mock test — pandas + hypothesis tests"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "4 exercices de 5 points, seulement le programme du contrôle. Écris tes réponses sur papier (code + 7 lignes pour les tests), puis compare avec la correction et note-toi.",
+    "dar": "4 exercices × 5 pts, ghir programme dyal contrôle. Kteb f wer9a, mn ba3d 9aren m3a correction.",
+    "en": "4 exercises × 5 pts, test scope only. Write on paper, then compare and grade yourself."
+   },
+   "parts": [
+    {
+     "exerciseId": "d-x-b1",
+     "points": 5
+    },
+    {
+     "exerciseId": "d-x-b2",
+     "points": 5
+    },
+    {
+     "exerciseId": "d-x-b3",
+     "points": 5
+    },
+    {
+     "exerciseId": "d-x-b4",
+     "points": 5
+    }
+   ]
+  }
+ ],
  "weights": {
   "tests": 5,
   "nettoyage": 3,
   "pandas": 3,
   "rappel": 3,
   "visu": 2,
-  "d-intro": 1
+  "d-intro": 1,
+  "blanc": 1
  }
 }

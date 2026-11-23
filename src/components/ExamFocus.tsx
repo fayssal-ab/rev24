@@ -48,6 +48,9 @@ export function ExamFocus() {
             <Link to={`${base}/c/${FOCUS.chapter}`} className="btn-primary" data-testid="focus-start">
               <Icon name="play" size={16} /> {t('focus.cta')}
             </Link>
+            <Link to={`${base}/c/blanc`} className="btn-ghost" data-testid="focus-blanc">
+              <Icon name="flag" size={16} /> {t('focus.blanc')}
+            </Link>
             <Link to={`${base}/exercices?chapter=${FOCUS.chapter}`} className="btn-ghost">
               <Icon name="dumbbell" size={16} /> {t('focus.exercises')}
             </Link>

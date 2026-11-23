@@ -16,7 +16,6 @@ const QcmPage = lazy(() => import('./pages/QcmPage'));
 const ExercisesPage = lazy(() => import('./pages/ExercisesPage'));
 const SheetPage = lazy(() => import('./pages/SheetPage'));
 const ReferencePage = lazy(() => import('./pages/ReferencePage'));
-const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const ExamPage = lazy(() => import('./pages/ExamPage'));
 const TerminalPage = lazy(() => import('./pages/TerminalPage'));
 const StatsLabPage = lazy(() => import('./pages/StatsLabPage'));
@@ -97,7 +96,7 @@ export function App() {
                 <Route path="exercices" element={<ExercisesPage />} />
                 <Route path="fiche" element={<SheetPage />} />
                 <Route path="formulaire" element={<ReferencePage />} />
-                <Route path="flashcards" element={<FlashcardsPage />} />
+                <Route path="flashcards" element={<Navigate to="../qcm?mode=mistakes" replace />} />
                 <Route path="examen" element={<ExamPage />} />
                 <Route path="supports" element={<SupportsPage />} />
               </Route>

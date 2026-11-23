@@ -16,7 +16,6 @@ import type { UIKey } from '../i18n/ui';
 const PRACTICE: { to: string; icon: string; key: UIKey; count?: (d: ModuleContent) => number }[] = [
   { to: 'qcm', icon: 'quiz', key: 'nav.qcm', count: (d) => d.questions.length },
   { to: 'exercices', icon: 'dumbbell', key: 'nav.exercises', count: (d) => d.exercises.length },
-  { to: 'flashcards', icon: 'cards', key: 'nav.flashcards', count: (d) => d.flashcards.length },
   { to: 'examen', icon: 'target', key: 'nav.exam' }
 ];
 const RESOURCES: { to: string; icon: string; key: UIKey }[] = [

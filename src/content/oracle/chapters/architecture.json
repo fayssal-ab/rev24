@@ -238,6 +238,10 @@
    }
   },
   {
+   "type": "animation",
+   "component": "CdbPdbExplorer"
+  },
+  {
    "type": "text",
    "body": {
     "fr": "Depuis **Oracle 12c**, on parle de **conteneur** (*container*) et d'**architecture mutualisée** (*multitenant*). En 19c, c'est le modèle par défaut.",

@@ -75,6 +75,15 @@ export default function Home() {
       {/* the next written test: one focus, not a list of everything */}
       <ExamFocus />
 
+      <Link to="/preparation" className="group flex items-center gap-4 rounded-xl border-2 border-accent bg-accent/5 px-5 py-4 transition hover:bg-accent hover:text-white" data-testid="home-prep">
+        <Icon name="calendar" size={22} className="shrink-0 text-accent group-hover:text-white" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-display text-lg font-bold">{t('nav.prep')}</span>
+          <span className="block truncate text-sm text-muted group-hover:text-white/80">{t('prep.sub')}</span>
+        </span>
+        <Icon name="arrowRight" size={16} className="shrink-0 transition group-hover:translate-x-1" />
+      </Link>
+
       {last && lastContent && (
         <Link to={last.path} className="group flex items-center gap-4 rounded-xl border-2 border-fg px-5 py-4 transition hover:bg-fg hover:text-bg" data-testid="resume">
           <Icon name="history" size={20} className="shrink-0 text-accent" />

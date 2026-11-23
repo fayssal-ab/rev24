@@ -126,3 +126,26 @@ export const MPL = {
   same: { fr: 'Les deux produisent le même graphique :', dar: 'Bjouj kay3tiw nefs graphique :', en: 'Both produce the same chart:' },
   mapping: { fr: 'Correspondances', dar: 'Mo9abalat', en: 'Mapping' }
 };
+
+const t3 = (fr: string, dar: string, en: string) => ({ fr, dar, en });
+
+/** Mean vs median on a number line, with the box plot (course IQR rule). */
+export const SHAPE_MM = {
+  title: t3('Moyenne, médiane et boîte à moustaches', 'Moyenne, médiane w boîte à moustaches', 'Mean, median and box plot'),
+  hint: t3('Déplace la **dernière note** avec le curseur : la **moyenne** (triangle) suit la valeur extrême, la **médiane** (losange) bouge à peine. La boîte va de Q1 à Q3 ; un point **rouge** est hors de [Q1 − 1,5·IQR ; Q3 + 1,5·IQR].', 'Hrrek **akhir note** b curseur : **moyenne** (triangle) katmchi m3a l valeur extrême, **médiane** (losange) ma katt7errekch bzaf. Boîte mn Q1 l Q3 ; point **7mer** = aberrante.', 'Move the **last mark**: the **mean** (triangle) follows the extreme value, the **median** (diamond) barely moves. Box = Q1 to Q3; a **red** dot is outside [Q1 − 1.5·IQR, Q3 + 1.5·IQR].'),
+  last: t3('Dernière note', 'Akhir note', 'Last mark'),
+  mean: t3('Moyenne', 'Moyenne', 'Mean'),
+  median: t3('Médiane', 'Médiane', 'Median'),
+  outlier: t3('valeur aberrante', 'valeur aberrante', 'outlier'),
+  lesson: t3('Avec une valeur aberrante, on préfère la **médiane** (robuste) pour résumer, et pour imputer les valeurs manquantes.', 'Ila kayna aberrante, **médiane** a7san (robuste), 7ta f imputation.', 'With an outlier, prefer the **median** (robust), also for imputation.')
+};
+
+/** Covariance seen as areas: the sign of (x − x̄)(y − ȳ) in each quadrant. */
+export const SHAPE_COR = {
+  title: t3('Covariance et corrélation : la géométrie', 'Covariance w corrélation : b chkal', 'Covariance and correlation: the geometry'),
+  hint: t3('Les deux droites passent par le **point moyen** (x̄ ; ȳ). Chaque point dessine un rectangle jusqu\'à ce centre : **vert** si (x − x̄)(y − ȳ) > 0, **rouge** si < 0. La covariance est la **moyenne de ces aires signées** ; r la ramène entre −1 et 1.', 'Jouj stour kaydouzou mn **point moyen** (x̄ ; ȳ). Kol point kayrsem mostatil : **khdar** ila (x − x̄)(y − ȳ) > 0, **7mer** ila < 0. Covariance = **moyenne dyal had l mesa7at**.', 'Both lines go through the **mean point** (x̄, ȳ). Each point draws a rectangle to it: **green** if (x − x̄)(y − ȳ) > 0, **red** if < 0. Covariance = **mean of these signed areas**; r scales it to [−1, 1].'),
+  sets: [t3('Forte positive', 'Qwiya positive', 'Strong positive'), t3('Négative', 'Négative', 'Negative'), t3('Nulle (nuage)', 'Walou (sa7ab)', 'None (cloud)'), t3('Non linéaire', 'Machi linéaire', 'Non-linear')],
+  noise: t3('Bruit', 'Bruit', 'Noise'),
+  line: t3('Droite des moindres carrés', 'Droite dyal moindres carrés', 'Least-squares line'),
+  trap: t3('**r ≈ 0 ne veut pas dire « aucun lien »** : regarde le jeu « non linéaire » (parabole) — lien fort, mais pas linéaire.', '**r ≈ 0 machi « bla 3ala9a »** : chouf « non linéaire » — 3ala9a qwiya walakin machi linéaire.', '**r ≈ 0 does not mean "no link"**: see the non-linear set — strong link, not linear.')
+};

@@ -1,0 +1,390 @@
+{
+ "id": "annale",
+ "module": "oracle",
+ "order": 9,
+ "title": {
+  "fr": "Annale — Contrôle continu Oracle 2025-2026 corrigé",
+  "dar": "Annale — Contrôle Oracle 2025-2026 m-corrigé",
+  "en": "Past paper — Oracle mid-term 2025-2026 solved"
+ },
+ "summary": {
+  "fr": "Les 20 questions du contrôle (1 pt chacune, parties A, B, C) avec la copie modèle à recopier, le schéma CDB / PDB interactif et les pièges notés au corrigé.",
+  "dar": "20 so2al dyal contrôle (A, B, C) b copie modèle, schéma CDB / PDB w les pièges.",
+  "en": "The 20 test questions (parts A, B, C) with model answers, an interactive CDB / PDB diagram and the traps."
+ },
+ "estimatedMinutes": 60,
+ "sections": [
+  {
+   "type": "text",
+   "body": {
+    "fr": "**20 questions, 20 points** (1 pt chacune), réparties en trois parties : **A** cours (7), **B** architecture et démarrage (7), **C** SQL*Plus (6). Chaque réponse tient en **2 à 3 lignes** : définition + exemple.",
+    "dar": "**20 so2al, 20 point** : **A** cours, **B** architecture w démarrage, **C** SQL*Plus. Kol jawab **2-3 stour** : ta3rif + mithal.",
+    "en": "**20 questions, 20 points**: **A** theory, **B** architecture and startup, **C** SQL*Plus. Each answer: **2–3 lines**, definition + example."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie A — cours (7 points)",
+    "dar": "Partie A — cours (7 points)",
+    "en": "Part A — theory (7 points)"
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Partie A",
+    "dar": "Copie modèle — Partie A",
+    "en": "Model answer — Part A"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "1. SGBDR",
+      "dar": "1. SGBDR",
+      "en": "1. RDBMS"
+     },
+     "body": {
+      "fr": "Logiciel qui crée, stocke et interroge des données en **tables reliées** (modèle relationnel) via **SQL** (ex. Oracle). Rôles : **stocker / manipuler** (LDD, LMD) et **sécuriser l'accès** (utilisateurs, privilèges) ; aussi intégrité, sauvegarde.",
+      "dar": "Logiciel kaykhzen w kay9ra data f **tables mrbouttin** b **SQL**. Dor : **stocker / manipuler** w **sécuriser** (users, privilèges).",
+      "en": "Software that stores and queries data in **related tables** with **SQL**. Roles: **store / manipulate** and **secure access**."
+     }
+    },
+    {
+     "label": {
+      "fr": "2. DBA",
+      "dar": "2. DBA",
+      "en": "2. DBA"
+     },
+     "body": {
+      "fr": "Responsable du bon fonctionnement : **installe** et configure, **crée** les bases, **démarre / arrête** l'instance, gère **utilisateurs et privilèges**, le **stockage**, les **sauvegardes** et les **performances**.",
+      "dar": "Kayinstalli, kaysayb bases, kaydemarri / kaywa9ef, kaydir users, stockage, sauvegardes, performances.",
+      "en": "Installs, creates databases, starts / stops, manages users, storage, backups, performance."
+     }
+    },
+    {
+     "label": {
+      "fr": "3. Connexions",
+      "dar": "3. Connexions",
+      "en": "3. Connections"
+     },
+     "body": {
+      "fr": "**Locale** (sur la machine serveur : `sqlplus / as sysdba` au TP) ; **client / serveur** (autre machine, ex. SQL Developer) ; **multi-tiers** (via un serveur applicatif : navigateur → serveur Web → Oracle).",
+      "dar": "**Locale**, **client / serveur**, **multi-tiers**.",
+      "en": "**Local**, **client / server**, **multi-tier**."
+     }
+    },
+    {
+     "label": {
+      "fr": "4. Instance",
+      "dar": "4. Instance",
+      "en": "4. Instance"
+     },
+     "body": {
+      "fr": "Composée de la **mémoire SGA** et des **processus d'arrière-plan** (PMON, SMON, DBWn, LGWR, CKPT…), créés au démarrage.",
+      "dar": "**SGA** + **processus d'arrière-plan**.",
+      "en": "**SGA** + **background processes**."
+     }
+    },
+    {
+     "label": {
+      "fr": "5. Structures",
+      "dar": "5. Structures",
+      "en": "5. Structures"
+     },
+     "body": {
+      "fr": "Structures **mémoire** (SGA, PGA), structures de **processus** (utilisateur, serveur, arrière-plan), structures de **stockage** (fichiers).",
+      "dar": "**Mémoire**, **processus**, **stockage**.",
+      "en": "**Memory**, **process**, **storage**."
+     }
+    },
+    {
+     "label": {
+      "fr": "6. Variables",
+      "dar": "6. Variables",
+      "en": "6. Variables"
+     },
+     "body": {
+      "fr": "**ORACLE_HOME** : répertoire d'installation du logiciel. **ORACLE_BASE** : racine de l'arborescence (contient ORACLE_HOME). **ORACLE_SID** : nom de l'instance par défaut (ORCL).",
+      "dar": "HOME = installation ; BASE = racine ; SID = instance.",
+      "en": "HOME = install; BASE = root; SID = instance."
+     }
+    },
+    {
+     "label": {
+      "fr": "7. Fichiers",
+      "dar": "7. Fichiers",
+      "en": "7. Files"
+     },
+     "body": {
+      "fr": "**Datafiles** (données), **control files** (structure physique), **redo log files** (historique des modifications).",
+      "dar": "**Datafiles**, **control files**, **redo logs**.",
+      "en": "**Datafiles**, **control files**, **redo logs**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**ORACLE_HOME est DANS ORACLE_BASE**, pas l'inverse. Et le fichier de paramètres (spfile) n'est **pas** un des trois fichiers de la base.",
+    "dar": "**HOME dakhel BASE**. W spfile **machi** men 3 fichiers.",
+    "en": "**HOME is inside BASE**. The spfile is **not** one of the three files."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie B — architecture et démarrage (7 points)",
+    "dar": "Partie B — architecture w démarrage",
+    "en": "Part B — architecture and startup (7 points)"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "CdbPdbExplorer"
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Partie B",
+    "dar": "Copie modèle — Partie B",
+    "en": "Model answer — Part B"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "8. Connexion / session",
+      "dar": "8. Connexion / session",
+      "en": "8. Connection / session"
+     },
+     "body": {
+      "fr": "**Connexion** : lien entre processus utilisateur et processus serveur. **Session** : connexion spécifique d'un utilisateur, du **login** validé à la **déconnexion**.",
+      "dar": "Connexion = lien ; session = mn login l déconnexion.",
+      "en": "Connection = link; session = login to logout."
+     }
+    },
+    {
+     "label": {
+      "fr": "9. Listener",
+      "dar": "9. Listener",
+      "en": "9. Listener"
+     },
+     "body": {
+      "fr": "Le **listener** (TNSLSNR, `lsnrctl`) écoute sur **1521**, vérifie le service demandé puis passe la connexion à un **processus serveur**, qui exécute le SQL et renvoie les résultats.",
+      "dar": "Listener (1521) → processus serveur.",
+      "en": "Listener (1521) → server process."
+     }
+    },
+    {
+     "label": {
+      "fr": "10. PDB$SEED",
+      "dar": "10. PDB$SEED",
+      "en": "10. PDB$SEED"
+     },
+     "body": {
+      "fr": "**Modèle** fourni par Oracle pour créer rapidement de nouvelles PDB ; **READ ONLY**, un seul par CDB.",
+      "dar": "Template READ ONLY bach tsayb PDB.",
+      "en": "READ ONLY template to create PDBs."
+     }
+    },
+    {
+     "label": {
+      "fr": "11. Instance inactive",
+      "dar": "11. Instance inactive",
+      "en": "11. Idle instance"
+     },
+     "body": {
+      "fr": "L'instance est **arrêtée** : base fermée (**SHUTDOWN**), ni SGA ni processus. Il faut **STARTUP**.",
+      "dar": "Instance **m7bousa** → **STARTUP**.",
+      "en": "Instance **down** → **STARTUP**."
+     }
+    },
+    {
+     "label": {
+      "fr": "12. CDB / PDB",
+      "dar": "12. CDB / PDB",
+      "en": "12. CDB / PDB"
+     },
+     "body": {
+      "fr": "**CDB** : conteneur (CDB$ROOT + PDB$SEED + 0, 1 ou plusieurs PDB). **PDB** : base **branchable** vue comme une base classique. Avantages : **ressources partagées** (une SGA, un jeu de processus) et **administration simplifiée**.",
+      "dar": "CDB = conteneur ; PDB = branchable ; ressources partagées, admin sahla.",
+      "en": "CDB = container; PDB = pluggable; shared resources, simpler admin."
+     }
+    },
+    {
+     "label": {
+      "fr": "13. Démarrage",
+      "dar": "13. Démarrage",
+      "en": "13. Startup"
+     },
+     "body": {
+      "fr": "**NOMOUNT** : spfile lu, SGA allouée, processus lancés (« Instance ORACLE lancée »). **MOUNT** : control files lus (« Base de données montée »). **OPEN** : datafiles + redo ouverts (« Base de données ouverte »).",
+      "dar": "NOMOUNT → MOUNT → OPEN b messages.",
+      "en": "NOMOUNT → MOUNT → OPEN with messages."
+     }
+    },
+    {
+     "label": {
+      "fr": "14. Arrêt",
+      "dar": "14. Arrêt",
+      "en": "14. Shutdown"
+     },
+     "body": {
+      "fr": "`SHUTDOWN [NORMAL|TRANSACTIONAL|IMMEDIATE|ABORT]` (NORMAL par défaut) : base **fermée** → **démontée** → instance **arrêtée**.",
+      "dar": "SHUTDOWN : fermée → démontée → arrêtée.",
+      "en": "SHUTDOWN: closed → dismounted → shut down."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "OracleStartup"
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Partie C — SQL*Plus (6 points)",
+    "dar": "Partie C — SQL*Plus",
+    "en": "Part C — SQL*Plus (6 points)"
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Partie C",
+    "dar": "Copie modèle — Partie C",
+    "en": "Model answer — Part C"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "15. SYSDBA",
+      "dar": "15. SYSDBA",
+      "en": "15. SYSDBA"
+     },
+     "body": {
+      "fr": "`sqlplus / as sysdba` : le **/** = authentification par le système d'exploitation (groupe ORA_DBA), `as sysdba` = privilège d'administration (on est **SYS**).",
+      "dar": "`sqlplus / as sysdba` : / = OS.",
+      "en": "`sqlplus / as sysdba`: / = OS authentication."
+     }
+    },
+    {
+     "label": {
+      "fr": "16. show user",
+      "dar": "16. show user",
+      "en": "16. show user"
+     },
+     "body": {
+      "fr": "**USER est \"SYS\"** : avec AS SYSDBA Oracle connecte toujours en SYS, HR/HR est ignoré.",
+      "dar": "**SYS**, machi HR.",
+      "en": "**SYS**, not HR."
+     }
+    },
+    {
+     "label": {
+      "fr": "17. STARTUP MOUNT",
+      "dar": "17. STARTUP MOUNT",
+      "en": "17. STARTUP MOUNT"
+     },
+     "body": {
+      "fr": "« Instance ORACLE lancée … Base de données montée. » : arrêt à la 2e étape, datafiles **fermés** (requête → ORA-01219). Pour finir : `ALTER DATABASE OPEN;`.",
+      "dar": "Montée, datafiles msdoudin → ALTER DATABASE OPEN.",
+      "en": "Mounted, datafiles closed → ALTER DATABASE OPEN."
+     }
+    },
+    {
+     "label": {
+      "fr": "18. show con_name",
+      "dar": "18. show con_name",
+      "en": "18. show con_name"
+     },
+     "body": {
+      "fr": "Le **conteneur courant** : CDB$ROOT après `sqlplus / as sysdba`, ou ORCLPDB après un changement.",
+      "dar": "Conteneur daba : CDB$ROOT wla ORCLPDB.",
+      "en": "Current container."
+     }
+    },
+    {
+     "label": {
+      "fr": "19. Connexion PDB",
+      "dar": "19. Connexion PDB",
+      "en": "19. PDB connection"
+     },
+     "body": {
+      "fr": "`sqlplus hr/secret@localhost:1521/EMSIPDB` — Easy Connect `user/mdp@hôte:port/service`.",
+      "dar": "`sqlplus hr/secret@localhost:1521/EMSIPDB`.",
+      "en": "`sqlplus hr/secret@localhost:1521/EMSIPDB`."
+     }
+    },
+    {
+     "label": {
+      "fr": "20. SET CONTAINER",
+      "dar": "20. SET CONTAINER",
+      "en": "20. SET CONTAINER"
+     },
+     "body": {
+      "fr": "Déplace la session de CDB$ROOT vers **ORCLPDB**. Nécessaire car HR est **local** à la PDB : depuis la racine, `ALTER USER hr …` → **ORA-01918**.",
+      "dar": "Douz l ORCLPDB 7it HR **local** (sinon ORA-01918).",
+      "en": "Moves into ORCLPDB because HR is **local** (else ORA-01918)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Q16 : la réponse n'est **pas** « HR ». Q19 : sans `/EMSIPDB` on vise la racine, où HR n'existe pas.",
+    "dar": "Q16 : **machi** HR. Q19 : bla `/EMSIPDB` → racine.",
+    "en": "Q16: **not** HR. Q19: without `/EMSIPDB` you hit the root."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Méthode : **définition courte + exemple du TP** (ORCL, ORCLPDB, HR). Pour les commandes, écrire aussi le **message SQL*Plus** attendu.",
+    "dar": "Méthode : **ta3rif + mithal mn TP**. W kteb **message SQL*Plus**.",
+    "en": "Method: **short definition + lab example**; for commands, write the expected **SQL*Plus message**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Entraîne-toi en conditions réelles : page **Examen blanc** → « Contrôle continu Oracle 2025-2026 » (auto-correction /20).",
+    "dar": "Dir **Examen blanc** → « Contrôle Oracle 2025-2026 ».",
+    "en": "Practise: **Mock exam** → \"Oracle mid-term 2025-2026\"."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "or-64",
+    "or-65",
+    "or-68",
+    "or-70"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Instance = SGA + processus d'arrière-plan ; base = datafiles, control files, redo logs.",
+   "dar": "Instance = SGA + processus ; base = 3 fichiers.",
+   "en": "Instance = SGA + processes; database = 3 file types."
+  },
+  {
+   "fr": "NOMOUNT (spfile) → MOUNT (control files) → OPEN (datafiles + redo) ; « instance inactive » = SHUTDOWN.",
+   "dar": "NOMOUNT → MOUNT → OPEN.",
+   "en": "NOMOUNT → MOUNT → OPEN; idle = down."
+  },
+  {
+   "fr": "AS SYSDBA = toujours SYS ; HR est local à la PDB → ALTER SESSION SET CONTAINER ou Easy Connect …/EMSIPDB.",
+   "dar": "SYSDBA = SYS ; HR local.",
+   "en": "SYSDBA = SYS; HR is local."
+  }
+ ]
+}

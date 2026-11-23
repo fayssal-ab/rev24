@@ -273,7 +273,9 @@ export function Feedback({ q, ok, response }: { q: Question; ok: boolean; respon
     if (q.kind === 'numeric') return Object.keys(wrongExpl).filter((k) => Math.abs(parseNumber(k) - parseNumber(String(response))) <= (q.tolerance ?? 0.01));
     return [];
   };
-  const wrongPicked = q.kind === 'single' && !ok ? [response as string] : q.kind === 'multi' ? (response as string[]).filter((r) => !(q.answer as string[]).includes(r)) : typedWrong();
+  // an unanswered question arrives here as '' (exam correction): never assume an array
+  const picked = Array.isArray(response) ? response : response ? [String(response)] : [];
+  const wrongPicked = q.kind === 'single' && !ok ? picked : q.kind === 'multi' ? picked.filter((r) => !(q.answer as string[]).includes(r)) : typedWrong();
   const others = Object.keys(wrongExpl).filter((k) => !wrongPicked.includes(k));
   return (
     <div className="mt-4 space-y-3 border-t border-line pt-4" data-testid="feedback">

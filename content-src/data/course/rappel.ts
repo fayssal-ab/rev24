@@ -1,4 +1,4 @@
-import { L, h, p, def, example, plain, formula, steps, tip, trap, exam, table, quiz, demo, key } from '../../lib';
+import { L, h, p, def, example, plain, formula, steps, tip, trap, exam, table, quiz, demo, key, anim } from '../../lib';
 import type { Chapter } from '../../../src/lib/schema';
 
 /** Rappel (fin du Chap 0) : statistique descriptive et régression linéaire — every number is checked by src/lib/stats. */
@@ -107,6 +107,7 @@ export const chapter: Chapter = {
     ]),
 
     h(['4. Les quartiles et l\'écart interquartile (IQR)', '4. Les quartiles w l IQR', '4. Quartiles and the interquartile range (IQR)']),
+    anim('MeanMedianShapes'),
     def([
       '**Q1** (1er quartile) : 25 % des valeurs sont en dessous. **Q2** = la médiane (50 %). **Q3** (3e quartile) : 75 % des valeurs sont en dessous. **IQR = Q3 − Q1** mesure la largeur des 50 % du milieu. C\'est l\'outil du Chap 2 pour détecter les **valeurs aberrantes**.',
       '**Q1** : 25 % dyal l qiyam t7tou. **Q2** = l médiane (50 %). **Q3** : 75 % dyal l qiyam t7tou. **IQR = Q3 − Q1** kay9is l 3ard dyal 50 % li f l west. Hada howa l outil dyal Fasl 2 bach nkchfou **valeurs aberrantes**.',
@@ -120,6 +121,7 @@ export const chapter: Chapter = {
     tip(['Les positions commencent à 0 (comme les index Python) : position 0 = 8, position 1 = 10, position 2 = 10, position 3 = 12, position 4 = 15. Si la position tombe entre deux valeurs (ex. 2,5), on prend le point au milieu entre elles.', 'Les positions kaybdaw mn 0 (b7al index f Python) : position 0 = 8, 1 = 10, 2 = 10, 3 = 12, 4 = 15. Ila position jat bin jouj qiyam (mathalan 2,5), kanakhdou n9ta li f l west binathom.', 'Positions start at 0 (like Python indexes): position 0 = 8, 1 = 10, 2 = 10, 3 = 12, 4 = 15. If the position falls between two values (e.g. 2.5), take the point halfway between them.']),
 
     h(['5. Deux variables : covariance et corrélation', '5. Jouj variables : covariance w corrélation', '5. Two variables: covariance and correlation']),
+    anim('CorrelationShapes'),
     p([
       'Maintenant on observe **deux variables** sur les mêmes étudiants : **x = heures de révision**, **y = note /10**.\n\n**x = 1 ; 2 ; 3 ; 4 ; 5** et **y = 2 ; 4 ; 5 ; 4 ; 5**.\n\nQuestion : **plus on révise, plus la note monte-t-elle ?**',
       'Daba kanchoufou **jouj variables** 3la nefs tlamid : **x = sa3at d révision**, **y = note /10**.\n\n**x = 1 ; 2 ; 3 ; 4 ; 5** w **y = 2 ; 4 ; 5 ; 4 ; 5**.\n\nSou2al : **wach kolma rajje3ti ktar, kolma note tal3a ?**',

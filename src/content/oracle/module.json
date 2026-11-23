@@ -16,7 +16,8 @@
  "chapters": [
   "architecture",
   "instance",
-  "tp1"
+  "tp1",
+  "annale"
  ],
  "upcoming": [
   {
@@ -74,10 +75,40 @@
    }
   }
  ],
- "annales": [],
+ "annales": [
+  {
+   "id": "cc-2025",
+   "title": {
+    "fr": "Contrôle continu Oracle 2025-2026",
+    "dar": "Contrôle Oracle 2025-2026",
+    "en": "Oracle mid-term 2025-2026"
+   },
+   "minutes": 60,
+   "intro": {
+    "fr": "20 questions, 1 point chacune, documents interdits. Réponses courtes : définition + exemple, et le message SQL*Plus pour les commandes.",
+    "dar": "20 so2al, kol wa7ed 1 point. Jawab 9sir : ta3rif + mithal.",
+    "en": "20 questions, 1 point each. Short answers: definition + example."
+   },
+   "parts": [
+    {
+     "exerciseId": "or-x-6",
+     "points": 7
+    },
+    {
+     "exerciseId": "or-x-7",
+     "points": 7
+    },
+    {
+     "exerciseId": "or-x-8",
+     "points": 6
+    }
+   ]
+  }
+ ],
  "weights": {
   "instance": 5,
   "architecture": 4,
-  "tp1": 3
+  "tp1": 3,
+  "annale": 3
  }
 }

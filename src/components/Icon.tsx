@@ -6,6 +6,7 @@ const P: Record<string, string> = {
   x: 'M6 6l12 12M18 6L6 18',
   quiz: 'M9 9a3 3 0 1 1 4 2.8c-.6.3-1 .9-1 1.6V14M12 17.5v.5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
   dumbbell: 'M6 7v10M18 7v10M3 9v6M21 9v6M6 12h12',
+  calendar: 'M4 6h16v15H4zM4 10h16M8 3v5M16 3v5M8 14h2M14 14h2M8 18h2',
   clock: 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
   user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
   terminal: 'M4 5h16v14H4zM7 9l3 3-3 3M12 15h5',

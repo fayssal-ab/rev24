@@ -1,4 +1,5 @@
 import { c1, c2, c3 } from './course';
+import { c4, annaleQuestions, annaleExercises, annaleFlashcards } from './annale';
 import { setCtx, L, single, multi, cmd, order, ex, fc, ref } from '../lib';
 import type { Module } from '../../src/lib/schema';
 
@@ -151,7 +152,7 @@ export const module: Module = {
   color: '#163460',
   icon: 'layers',
   theme: 'crimson',
-  chapters: ['architecture', 'instance', 'tp1'],
+  chapters: ['architecture', 'instance', 'tp1', 'annale'],
   upcoming: [
     { id: 'o-install', order: 1, title: L(['Chap 1 — Introduction et installation', 'Fasl 1 — Installation', 'Ch. 1 — Introduction and installation']) },
     { id: 'o-params', order: 4, title: L(['Chap 4 — Paramètres et fichiers de paramètres', 'Fasl 4 — Paramètres', 'Ch. 4 — Parameters and parameter files']) },
@@ -160,14 +161,22 @@ export const module: Module = {
     { id: 'o-control', order: 7, title: L(['Chap 7 — Fichiers de contrôle', 'Fasl 7 — Control files', 'Ch. 7 — Control files']) },
     { id: 'o-tbs', order: 8, title: L(['Chap 8 — Tablespaces', 'Fasl 8 — Tablespaces', 'Ch. 8 — Tablespaces']) }
   ],
-  annales: [],
-  weights: { instance: 5, architecture: 4, tp1: 3 }
+  annales: [
+    {
+      id: 'cc-2025',
+      title: L(['Contrôle continu Oracle 2025-2026', 'Contrôle Oracle 2025-2026', 'Oracle mid-term 2025-2026']),
+      minutes: 60,
+      intro: L(['20 questions, 1 point chacune, documents interdits. Réponses courtes : définition + exemple, et le message SQL*Plus pour les commandes.', '20 so2al, kol wa7ed 1 point. Jawab 9sir : ta3rif + mithal.', '20 questions, 1 point each. Short answers: definition + example.']),
+      parts: [{ exerciseId: 'or-x-6', points: 7 }, { exerciseId: 'or-x-7', points: 7 }, { exerciseId: 'or-x-8', points: 6 }]
+    }
+  ],
+  weights: { instance: 5, architecture: 4, tp1: 3, annale: 3 }
 };
 
-export const chapters = [c1, c2, c3];
-export const questions = [...qa, ...qi];
-export const exercises = exs;
-export const flashcards = [...archFc, ...instFc];
+export const chapters = [c1, c2, c3, c4];
+export const questions = [...qa, ...qi, ...annaleQuestions];
+export const exercises = [...exs, ...annaleExercises];
+export const flashcards = [...archFc, ...instFc, ...annaleFlashcards];
 export const reference = [
   ref('r-or-1', 'SHOW PDBS · SHOW CON_NAME · SHOW SGA · SHOW PARAMETER x', ['Commandes SQL*Plus', 'SQL*Plus', 'SQL*Plus commands']),
   ref('r-or-2', 'ALTER SESSION SET CONTAINER=ORCLPDB;', ['Changer de conteneur', 'Beddel conteneur', 'Switch container']),

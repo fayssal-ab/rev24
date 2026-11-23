@@ -1,4 +1,4 @@
-import { L, h, p, def, plain, example, formula, steps, tip, trap, exam, table, code, quiz, demo, key } from '../../lib';
+import { L, h, p, def, plain, example, formula, steps, tip, trap, exam, table, code, quiz, demo, key, anim } from '../../lib';
 import type { Chapter } from '../../../src/lib/schema';
 
 /** Chap 2 — Nettoyage et prétraitement des données (Pr. A. Kadiri, 19 octobre 2026). Dataset copied from the slides. */
@@ -135,6 +135,7 @@ print(round(df['age'].std(), 3), round(age.std(), 3))`, `35.0 [25.0, 32.0, 35.0,
     tip(['Le cours précise que d\'autres méthodes seront vues dans un **mini-projet** : retiens au minimum les 6 de ce chapitre (2 suppressions, moyenne/médiane/mode, valeur fixe, régression, k-NN).', 'Dars kaygoul bli méthodes khrin ghadi tchoufhom f **mini-projet** : 7fed 3la l a9al had 6.', 'The course says other methods will come in a **mini-project**: know at least these 6.']),
 
     h(['6. Les valeurs aberrantes et la méthode IQR', '6. Valeurs aberrantes w méthode IQR', '6. Outliers and the IQR method']),
+    anim('MeanMedianShapes'),
     def([
       'Les **valeurs aberrantes** (*outliers*) sont des valeurs **très éloignées de la norme** et **non représentatives** des données. Elles peuvent résulter d\'une **faute de saisie** ou de **circonstances exceptionnelles**. Elles risquent de **fausser les analyses ou les modèles**.',
       '**Valeurs aberrantes** (*outliers*) homa qiyam **b3ad bzaf 3la l 3adi** w **ma kayemttlouch** data. Kayjiw mn **ghalat f saisie** wla **dorouf istitna2iya**. Ymken **ykhssrou t7lil wla modèles**.',

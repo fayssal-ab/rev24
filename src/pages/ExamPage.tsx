@@ -12,11 +12,54 @@ import { Bar } from '../components/Ring';
 import { confetti } from '../components/confetti';
 import type { Question, L10n, Module, Exercise } from '../lib/schema';
 import { L as Txt, Code, Tex } from '../components/Text';
+import { chapterMastery } from '../lib/mastery';
+import type { ModuleContent } from '../lib/content';
+
+/** French-style honours from a grade /20. */
+export function mentionKey(note: number) {
+  return note >= 16 ? 'exam.mention.tb' : note >= 14 ? 'exam.mention.b' : note >= 12 ? 'exam.mention.ab' : note >= 10 ? 'exam.mention.p' : 'exam.mention.i';
+}
+
+/** Big circular gauge for the grade. */
+function NoteRing({ note }: { note: number }) {
+  const pct = note / 20;
+  const c = 2 * Math.PI * 52;
+  const col = note >= 14 ? 'var(--ok)' : note >= 10 ? 'var(--warn)' : 'var(--bad)';
+  return (
+    <svg viewBox="0 0 120 120" className="h-40 w-40">
+      <circle cx={60} cy={60} r={52} fill="none" stroke="rgb(var(--surface2))" strokeWidth={10} />
+      {pct > 0 && <circle cx={60} cy={60} r={52} fill="none" stroke={`rgb(${col})`} strokeWidth={10} strokeLinecap="round" strokeDasharray={`${c * pct} ${c}`} transform="rotate(-90 60 60)" style={{ transition: 'stroke-dasharray 1s ease' }} />}
+      <text x={60} y={60} textAnchor="middle" fontSize="26" fontWeight={900} fill="rgb(var(--fg))">
+        {String(note).replace('.', ',')}
+      </text>
+      <text x={60} y={80} textAnchor="middle" fontSize="12" fill="rgb(var(--muted))">
+        /20
+      </text>
+    </svg>
+  );
+}
+
+/** Sparkline of the last grades of a module. */
+function NotesLine({ notes }: { notes: number[] }) {
+  if (notes.length < 2) return null;
+  const w = 260;
+  const h = 70;
+  const pts = notes.map((n, i) => [10 + (i * (w - 20)) / (notes.length - 1), h - 8 - (n / 20) * (h - 16)] as const);
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full max-w-[320px]">
+      <line x1={10} x2={w - 10} y1={h - 8 - (10 / 20) * (h - 16)} y2={h - 8 - (10 / 20) * (h - 16)} stroke="rgb(var(--line))" strokeDasharray="3 3" />
+      <polyline points={pts.map((p) => p.join(',')).join(' ')} fill="none" stroke="rgb(var(--accent))" strokeWidth={2.5} strokeLinejoin="round" />
+      {pts.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={i === pts.length - 1 ? 4.5 : 3} fill={i === pts.length - 1 ? 'rgb(var(--accent))' : 'rgb(var(--surface))'} stroke="rgb(var(--accent))" strokeWidth={1.5} />
+      ))}
+    </svg>
+  );
+}
 
 export const EXAM_SIZE = 30;
 export const EXAM_MINUTES = 45;
 
-export function ExamRunner({ pool, weights, module, onDone, size = EXAM_SIZE, minutes = EXAM_MINUTES, titles = {} }: { pool: Question[]; weights: Record<string, number>; module: string; titles?: Record<string, L10n>; onDone?: (note: number, perChapter: Record<string, { ok: number; total: number }>, wrong: Question[]) => void; size?: number; minutes?: number }) {
+export function ExamRunner({ pool, weights, module, onDone, onRetry, onAgain, size = EXAM_SIZE, minutes = EXAM_MINUTES, titles = {} }: { pool: Question[]; weights: Record<string, number>; module: string; titles?: Record<string, L10n>; onDone?: (note: number, perChapter: Record<string, { ok: number; total: number }>, wrong: Question[]) => void; onRetry?: (wrong: Question[]) => void; onAgain?: () => void; size?: number; minutes?: number }) {
   const { t } = useT();
   const tl = useL();
   const st = useStore();
@@ -49,15 +92,68 @@ export function ExamRunner({ pool, weights, module, onDone, size = EXAM_SIZE, mi
   }, [left]);
   const chapters = useMemo(() => [...new Set(qs.map((q) => q.chapter))], [qs]);
 
-  if (result)
+  if (result) {
+    const wrong = qs.filter((q) => !(resp[q.id] !== undefined && checkAnswer(q, resp[q.id]!)));
+    const tagStats = new Map<string, { wrong: number; total: number }>();
+    for (const q of qs)
+      for (const tag of q.tags.filter((x) => x !== 'annale')) {
+        const e = tagStats.get(tag) ?? { wrong: 0, total: 0 };
+        e.total++;
+        if (wrong.includes(q)) e.wrong++;
+        tagStats.set(tag, e);
+      }
+    const weak = [...tagStats.entries()].filter(([, v]) => v.wrong > 0).sort((a, b) => b[1].wrong / b[1].total - a[1].wrong / a[1].total || b[1].wrong - a[1].wrong).slice(0, 8);
+    const notes = st.exams.filter((e) => e.module === module).slice(-10).map((e) => e.note);
     return (
       <div className="space-y-4" data-testid="exam-result">
-        <div className="card p-6 text-center">
-          <div className="text-sm text-muted">{t('exam.note')}</div>
-          <div className={`text-5xl font-extrabold tabular-nums ${result.note >= 10 ? 'text-ok' : 'text-bad'}`}>{String(result.note).replace('.', ',')}/20</div>
-          <div className="mt-1 text-sm text-muted">
-            {result.ok}/{result.total}
+        <div className="card grid items-center gap-6 p-6 sm:grid-cols-[auto_minmax(0,1fr)]">
+          <div className="mx-auto">
+            <NoteRing note={result.note} />
           </div>
+          <div className="space-y-3 text-center sm:text-left">
+            <div>
+              <div className="text-sm text-muted">{t('exam.note')}</div>
+              <div className={`font-display text-3xl font-black ${result.note >= 10 ? 'text-ok' : 'text-bad'}`}>{t(mentionKey(result.note))}</div>
+              <div className="text-sm text-muted">
+                {result.ok}/{result.total}
+              </div>
+            </div>
+            {notes.length > 1 && (
+              <div>
+                <div className="mb-1 text-xs font-bold uppercase tracking-wide text-muted">{t('exam.progress')}</div>
+                <NotesLine notes={notes} />
+              </div>
+            )}
+            <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
+              {wrong.length > 0 && onRetry && (
+                <button className="btn-primary" onClick={() => onRetry(wrong)} data-testid="exam-retry">
+                  <Icon name="reset" size={16} /> {t('exam.retry')} ({wrong.length})
+                </button>
+              )}
+              {onAgain && (
+                <button className="btn-ghost" onClick={onAgain}>
+                  <Icon name="play" size={16} /> {t('exam.again')}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="card p-4">
+          <h2 className="mb-2 font-semibold">{t('exam.weak')}</h2>
+          {weak.length === 0 ? (
+            <p className="text-sm text-ok">{t('exam.weakNone')}</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {weak.map(([tag, v]) => (
+                <span key={tag} className="inline-flex items-center gap-2 rounded-lg border border-bad/30 bg-bad/5 px-2.5 py-1 text-sm">
+                  <span className="font-mono font-semibold">{tag}</span>
+                  <span className="font-mono text-xs text-bad">
+                    {v.wrong}/{v.total}
+                  </span>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         <div className="card p-4">
           <h2 className="mb-2 font-semibold">{t('exam.heatmap')}</h2>
@@ -108,6 +204,7 @@ export function ExamRunner({ pool, weights, module, onDone, size = EXAM_SIZE, mi
         </ol>
       </div>
     );
+  }
 
   const q = qs[i];
   const mm = Math.floor(left / 60000);
@@ -157,22 +254,58 @@ export default function ExamPage() {
   const id = useModuleParam();
   const { data } = useModuleContent(id);
   const { t } = useT();
-  const allExams = useStore((s) => s.exams);
-  const exams = allExams.filter((e) => e.module === id);
-  const [started, setStarted] = useState(0);
+  const st = useStore();
+  const exams = st.exams.filter((e) => e.module === id);
+  const [run, setRun] = useState<{ key: number; pool: Question[]; size: number; minutes: number; weights?: Record<string, number> } | null>(null);
   const [annale, setAnnale] = useState<string | null>(null);
   if (!data) return <Loading />;
   const an = data.module.annales.find((a) => a.id === annale);
   if (an) return <AnnaleRunner key={an.id} annale={an} exercises={data.exercises} module={id} />;
-  if (started) return <ExamRunner key={started} pool={data.questions} weights={data.module.weights} module={id} titles={Object.fromEntries(data.chapters.map((c) => [c.id, c.title]))} />;
+  const titles = Object.fromEntries(data.chapters.map((c) => [c.id, c.title]));
+  const normal = () => setRun({ key: Date.now(), pool: data.questions, size: EXAM_SIZE, minutes: EXAM_MINUTES });
+  const boss = () => {
+    // weak chapters weigh up to 3× more; only medium and hard questions
+    const weights = Object.fromEntries(data.chapters.map((c) => [c.id, (data.module.weights[c.id] ?? 1) * (1 + (100 - chapterMastery(data as ModuleContent, c.id, st)) / 50)]));
+    const pool = data.questions.filter((q) => q.difficulty >= 2);
+    setRun({ key: Date.now(), pool: pool.length >= 10 ? pool : data.questions, size: 20, minutes: 25, weights });
+  };
+  if (run)
+    return (
+      <ExamRunner
+        key={run.key}
+        pool={run.pool}
+        weights={run.weights ?? data.module.weights}
+        module={id}
+        size={run.size}
+        minutes={run.minutes}
+        titles={titles}
+        onRetry={(wrong) => setRun({ key: Date.now(), pool: wrong, size: wrong.length, minutes: Math.max(5, Math.ceil(wrong.length * 1.5)), weights: run.weights })}
+        onAgain={() => setRun(null)}
+      />
+    );
   return (
     <div className="space-y-4">
       <PageTitle title={t('exam.title')} sub={<L v={data.module.title} />} />
-      <div className="card space-y-3 p-5">
-        <p>{t('exam.rules')}</p>
-        <button className="btn-primary w-full" onClick={() => setStarted(Date.now())} data-testid="exam-start">
-          <Icon name="play" size={16} /> {t('exam.start')}
-        </button>
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="card flex flex-col gap-3 p-5">
+          <h2 className="flex items-center gap-2 font-semibold">
+            <Icon name="target" size={18} className="text-accent" /> {t('exam.title')}
+          </h2>
+          <p className="flex-1 text-sm">{t('exam.rules')}</p>
+          <button className="btn-primary w-full" onClick={normal} data-testid="exam-start">
+            <Icon name="play" size={16} /> {t('exam.start')}
+          </button>
+        </div>
+        <div className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-line bg-[linear-gradient(135deg,rgb(var(--navy)),#3b0d18)] p-5 text-white shadow-sm" data-testid="boss-card">
+          <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10" />
+          <h2 className="flex items-center gap-2 font-semibold">
+            <Icon name="flame" size={18} className="text-[#ff9f6e]" /> {t('boss.title')}
+          </h2>
+          <p className="flex-1 text-sm text-white/85">{t('boss.rules')}</p>
+          <button className="w-full rounded-xl bg-white px-4 py-2.5 font-bold text-[#3b0d18] transition hover:bg-white/90" onClick={boss} data-testid="boss-start">
+            <Icon name="bolt" size={16} className="mr-1 inline" /> {t('boss.start')}
+          </button>
+        </div>
       </div>
       {data.module.annales.map((a) => (
         <div key={a.id} className="card space-y-2 p-5" data-testid={`annale-${a.id}`}>
@@ -188,11 +321,14 @@ export default function ExamPage() {
       {exams.length > 0 && (
         <div className="card p-4">
           <h2 className="mb-2 font-semibold">{t('exam.history')}</h2>
-          <ul className="space-y-1 text-sm">
+          <NotesLine notes={exams.slice(-10).map((e) => e.note)} />
+          <ul className="mt-2 space-y-1 text-sm">
             {[...exams].reverse().slice(0, 10).map((e) => (
               <li key={e.date} className="flex justify-between">
                 <span className="text-muted">{new Date(e.date).toLocaleString()}</span>
-                <span className="font-mono font-bold">{String(e.note).replace('.', ',')}/20</span>
+                <span className="font-mono font-bold">
+                  {String(e.note).replace('.', ',')}/20 · {t(mentionKey(e.note))}
+                </span>
               </li>
             ))}
           </ul>

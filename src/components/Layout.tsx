@@ -33,6 +33,12 @@ const LANGS: { code: Lang; label: string; name: string }[] = [
 /** Study tools and reference material ("Ressources" menu). */
 export const TOOLS: { to: string; icon: string; key: UIKey; desc: UIKey }[] = [
   {
+    to: '/preparation',
+    icon: 'calendar',
+    key: 'nav.prep',
+    desc: 'prep.sub'
+  },
+  {
     to: '/supports',
     icon: 'inbox',
     key: 'nav.supports',

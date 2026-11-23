@@ -1,0 +1,695 @@
+[
+ {
+  "id": "or-60",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Une instance Oracle est composée de…",
+   "dar": "Instance Oracle fiha…",
+   "en": "An Oracle instance is made of…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "la SGA et les processus d'arrière-plan",
+     "dar": "SGA w processus d'arrière-plan",
+     "en": "the SGA and the background processes"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "les datafiles et les control files",
+     "dar": "datafiles w control files",
+     "en": "datafiles and control files"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la PGA et les redo log files",
+     "dar": "PGA w redo logs",
+     "en": "the PGA and redo log files"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Instance = **mémoire SGA + processus d'arrière-plan**, créés au démarrage (elle vit en RAM). Les fichiers forment la **base**.",
+   "dar": "Instance = **SGA + processus**, f RAM. Fichiers = **base**.",
+   "en": "Instance = **SGA + background processes**, in RAM. Files = **database**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce sont les fichiers de la base, pas l'instance.",
+    "dar": "Hadou fichiers dyal base.",
+    "en": "Those are database files."
+   },
+   "c": {
+    "fr": "La PGA est privée à chaque processus serveur ; les redo logs sont sur disque.",
+    "dar": "PGA khassa, redo f disque.",
+    "en": "PGA is private; redo logs are on disk."
+   }
+  },
+  "tags": [
+   "instance",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-61",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Les trois grandes structures d'un serveur Oracle sont…",
+   "dar": "3 structures dyal serveur Oracle ?",
+   "en": "The three main structures of an Oracle server are…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "les structures mémoire",
+     "dar": "structures mémoire",
+     "en": "memory structures"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "les structures de processus",
+     "dar": "structures de processus",
+     "en": "process structures"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "les structures de stockage",
+     "dar": "structures de stockage",
+     "en": "storage structures"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "les structures réseau",
+     "dar": "structures réseau",
+     "en": "network structures"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "**Mémoire** (SGA, PGA), **processus** (utilisateur, serveur, arrière-plan), **stockage** (fichiers sur disque).",
+   "dar": "Mémoire, processus, stockage.",
+   "en": "**Memory**, **process**, **storage**."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "Le réseau (listener) n'est pas une des trois structures.",
+    "dar": "Réseau machi menhom.",
+    "en": "Network is not one of them."
+   }
+  },
+  "tags": [
+   "architecture",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-62",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que contient la variable **ORACLE_SID** ?",
+   "dar": "ORACLE_SID fih ?",
+   "en": "What does **ORACLE_SID** hold?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le nom de l'instance par défaut (ex. ORCL)",
+     "dar": "Smiya dyal instance (ORCL)",
+     "en": "The default instance name (e.g. ORCL)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Le répertoire d'installation du logiciel",
+     "dar": "Dossier d'installation",
+     "en": "The software install directory"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le port du listener",
+     "dar": "Port dyal listener",
+     "en": "The listener port"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**ORACLE_SID** = nom de l'instance ; **ORACLE_HOME** = installation du logiciel ; **ORACLE_BASE** = racine qui contient ORACLE_HOME.",
+   "dar": "SID = instance ; HOME = logiciel ; BASE = racine.",
+   "en": "SID = instance; HOME = software; BASE = root containing HOME."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est ORACLE_HOME.",
+    "dar": "Hadi ORACLE_HOME.",
+    "en": "That is ORACLE_HOME."
+   },
+   "c": {
+    "fr": "Le port (1521) n'est pas une variable d'environnement du cours.",
+    "dar": "Port machi variable.",
+    "en": "Not this variable."
+   }
+  },
+  "tags": [
+   "variables",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-63",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle relation entre ORACLE_HOME et ORACLE_BASE ?",
+   "dar": "HOME w BASE ?",
+   "en": "How are ORACLE_HOME and ORACLE_BASE related?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ORACLE_HOME est dans ORACLE_BASE",
+     "dar": "HOME dakhel BASE",
+     "en": "ORACLE_HOME is inside ORACLE_BASE"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "ORACLE_BASE est dans ORACLE_HOME",
+     "dar": "BASE dakhel HOME",
+     "en": "ORACLE_BASE is inside ORACLE_HOME"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Ex. ORACLE_BASE = C:\\app\\oracle ; ORACLE_HOME = C:\\app\\oracle\\product\\19.0.0\\dbhome_1.",
+   "dar": "BASE = C:\\app\\oracle ; HOME dakhlo.",
+   "en": "BASE = C:\\app\\oracle; HOME inside it."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Piège classique : c'est l'inverse.",
+    "dar": "L3eks.",
+    "en": "Classic trap: reversed."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   }
+  },
+  "tags": [
+   "variables",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-64",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "« Connecté à une instance inactive » signifie…",
+   "dar": "« Instance inactive » ya3ni…",
+   "en": "\"Connected to an idle instance\" means…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "l'instance est arrêtée (SHUTDOWN) : il faut faire STARTUP",
+     "dar": "instance m7bousa : STARTUP",
+     "en": "the instance is down: run STARTUP"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "la base est ouverte mais personne n'est connecté",
+     "dar": "base m7loula bla users",
+     "en": "the database is open but unused"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la base est en MOUNT",
+     "dar": "base f MOUNT",
+     "en": "the database is MOUNTED"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Ni SGA ni processus : la base est **fermée** (état SHUTDOWN). On démarre avec **STARTUP**.",
+   "dar": "Bla SGA bla processus → **STARTUP**.",
+   "en": "No SGA, no processes → **STARTUP**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "« Inactive » ≠ « sans utilisateurs ».",
+    "dar": "Inactive ≠ bla users.",
+    "en": "Idle ≠ unused."
+   },
+   "c": {
+    "fr": "En MOUNT l'instance tourne déjà.",
+    "dar": "F MOUNT instance khdama.",
+    "en": "In MOUNT the instance runs."
+   }
+  },
+  "tags": [
+   "demarrage",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-65",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "`sqlplus HR/HR as sysdba` puis `show user` affiche…",
+   "dar": "`sqlplus HR/HR as sysdba` → show user ?",
+   "en": "`sqlplus HR/HR as sysdba` then `show user` prints…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "USER est \"SYS\"",
+     "dar": "USER est \"SYS\"",
+     "en": "USER is \"SYS\""
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "USER est \"HR\"",
+     "dar": "USER est \"HR\"",
+     "en": "USER is \"HR\""
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ORA-01017",
+     "dar": "ORA-01017",
+     "en": "ORA-01017"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Avec **AS SYSDBA**, Oracle connecte toujours en **SYS** (authentification par le système d'exploitation) : HR/HR est ignoré.",
+   "dar": "AS SYSDBA → dima **SYS**.",
+   "en": "**AS SYSDBA** always connects as **SYS**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Piège : ce n'est pas HR.",
+    "dar": "Machi HR.",
+    "en": "Trap: not HR."
+   },
+   "c": {
+    "fr": "L'OS authentifie, pas d'erreur.",
+    "dar": "OS kay authentifi.",
+    "en": "The OS authenticates."
+   }
+  },
+  "tags": [
+   "connexion",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-66",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Rôle du **PDB$SEED** ?",
+   "dar": "Dor dyal PDB$SEED ?",
+   "en": "Role of **PDB$SEED**?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Modèle en lecture seule pour créer de nouvelles PDB",
+     "dar": "Modèle read only bach tsayb PDB",
+     "en": "Read-only template to create new PDBs"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La PDB où l'on installe HR",
+     "dar": "PDB dyal HR",
+     "en": "The PDB holding HR"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La racine qui contient le dictionnaire",
+     "dar": "Racine dyal dictionnaire",
+     "en": "The root holding the dictionary"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "PDB$SEED = **template** READ ONLY, un seul par CDB ; on ne s'y connecte pas pour travailler.",
+   "dar": "Template read only, wa7ed f CDB.",
+   "en": "READ ONLY template, one per CDB."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "HR est dans ORCLPDB.",
+    "dar": "HR f ORCLPDB.",
+    "en": "HR lives in ORCLPDB."
+   },
+   "c": {
+    "fr": "C'est CDB$ROOT.",
+    "dar": "Hadi CDB$ROOT.",
+    "en": "That is CDB$ROOT."
+   }
+  },
+  "tags": [
+   "cdb",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-67",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel processus reçoit les demandes de connexion réseau (port 1521) et les passe à un processus serveur ?",
+   "dar": "Chkoun kaysme3 f port 1521 ?",
+   "en": "Which process receives network connection requests (port 1521)?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le listener (TNSLSNR, lsnrctl)",
+     "dar": "Listener (lsnrctl)",
+     "en": "The listener (TNSLSNR, lsnrctl)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "PMON",
+     "dar": "PMON",
+     "en": "PMON"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "LGWR",
+     "dar": "LGWR",
+     "en": "LGWR"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le **listener** écoute (1521), vérifie le service (ex. ORCLPDB) puis confie la connexion à un **processus serveur**, qui exécute le SQL.",
+   "dar": "Listener → processus serveur.",
+   "en": "**Listener** → **server process**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "PMON surveille les processus (nettoyage).",
+    "dar": "PMON = nettoyage.",
+    "en": "PMON cleans up."
+   },
+   "c": {
+    "fr": "LGWR écrit les redo logs.",
+    "dar": "LGWR = redo.",
+    "en": "LGWR writes redo."
+   }
+  },
+  "tags": [
+   "connexion",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-68",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "`STARTUP MOUNT` : que peut-on faire ensuite ?",
+   "dar": "Mn ba3d STARTUP MOUNT ?",
+   "en": "After `STARTUP MOUNT`?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le DBA travaille ; les utilisateurs n'ont pas accès aux données (ALTER DATABASE OPEN pour ouvrir)",
+     "dar": "DBA ykhdem ; users la ; ALTER DATABASE OPEN",
+     "en": "Only the DBA works; users cannot query (ALTER DATABASE OPEN)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les utilisateurs peuvent lire les tables",
+     "dar": "Users y9raw tables",
+     "en": "Users can read tables"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Rien, l'instance n'est pas lancée",
+     "dar": "Walou",
+     "en": "Nothing, no instance"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "MOUNT = SGA + processus + **control files** lus ; datafiles fermés (une requête → ORA-01219).",
+   "dar": "MOUNT : control files ; datafiles msdoudin.",
+   "en": "MOUNT: control files read; datafiles closed."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Il faut OPEN pour les données.",
+    "dar": "Khass OPEN.",
+    "en": "OPEN is needed."
+   },
+   "c": {
+    "fr": "L'instance est lancée dès NOMOUNT.",
+    "dar": "Instance mn NOMOUNT.",
+    "en": "Instance runs from NOMOUNT."
+   }
+  },
+  "tags": [
+   "demarrage",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-69",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Connecte-toi en hr/secret à la PDB **EMSIPDB** sur localhost:1521 (SQL*Plus, Easy Connect).",
+   "dar": "Connexion hr/secret l EMSIPDB.",
+   "en": "Connect as hr/secret to **EMSIPDB** on localhost:1521."
+  },
+  "answer": [
+   "sqlplus hr/secret@localhost:1521/EMSIPDB",
+   "sqlplus hr/secret@localhost:1521/emsipdb"
+  ],
+  "explanation": {
+   "fr": "Easy Connect : `utilisateur/mdp@hôte:port/service`. HR est **local** à la PDB : sans `/EMSIPDB` on vise la racine.",
+   "dar": "user/mdp@hôte:port/service.",
+   "en": "`user/pwd@host:port/service`."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "connexion",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-70",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Depuis CDB$ROOT, `ALTER USER hr ACCOUNT UNLOCK;` renvoie…",
+   "dar": "F ROOT, ALTER USER hr ?",
+   "en": "From CDB$ROOT, `ALTER USER hr ACCOUNT UNLOCK;` gives…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "ORA-01918 : l'utilisateur HR n'existe pas",
+     "dar": "ORA-01918",
+     "en": "ORA-01918: user HR does not exist"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Utilisateur modifié",
+     "dar": "Modifié",
+     "en": "User altered"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "ORA-65096",
+     "dar": "ORA-65096",
+     "en": "ORA-65096"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "HR est un utilisateur **local** de ORCLPDB. D'abord `ALTER SESSION SET CONTAINER=ORCLPDB;`.",
+   "dar": "HR local → dkhol l ORCLPDB.",
+   "en": "HR is **local** → switch to ORCLPDB first."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Pas depuis la racine.",
+    "dar": "Machi mn ROOT.",
+    "en": "Not from the root."
+   },
+   "c": {
+    "fr": "ORA-65096 concerne CREATE USER sans C##.",
+    "dar": "65096 = CREATE USER.",
+    "en": "65096 is for CREATE USER."
+   }
+  },
+  "tags": [
+   "cdb",
+   "annale"
+  ]
+ },
+ {
+  "id": "or-71",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence connexion / session ?",
+   "dar": "Connexion vs session ?",
+   "en": "Connection vs session?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Connexion = lien processus utilisateur ↔ serveur ; session = utilisateur validé, du login à la déconnexion",
+     "dar": "Connexion = lien ; session = user mn login l logout",
+     "en": "Connection = the link; session = a logged-in user from login to logout"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "C'est la même chose",
+     "dar": "Nefs l7aja",
+     "en": "Same thing"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La session est le lien réseau",
+     "dar": "Session = réseau",
+     "en": "Session is the network link"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Image : la connexion est le **câble**, la session est l'**appel** sur ce câble. Une connexion peut porter plusieurs sessions.",
+   "dar": "Câble vs appel.",
+   "en": "Cable vs call."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "c": {
+    "fr": "Inversé.",
+    "dar": "L3eks.",
+    "en": "Reversed."
+   }
+  },
+  "tags": [
+   "connexion",
+   "annale"
+  ]
+ }
+]

@@ -366,6 +366,10 @@
    }
   },
   {
+   "type": "animation",
+   "component": "MeanMedianShapes"
+  },
+  {
    "type": "callout",
    "kind": "def",
    "body": {
@@ -399,6 +403,10 @@
     "dar": "5. Jouj variables : covariance w corrélation",
     "en": "5. Two variables: covariance and correlation"
    }
+  },
+  {
+   "type": "animation",
+   "component": "CorrelationShapes"
   },
   {
    "type": "text",

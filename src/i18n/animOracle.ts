@@ -135,3 +135,17 @@ export const RO_GAME = {
   timeBonus: t('Bonus temps', 'Bonus wa9t', 'Time bonus'),
   hint: t('Indice', 'Indice', 'Hint')
 };
+
+export const CDB_VIS = {
+  title: t('CDB / PDB : où est ta session ?', 'CDB / PDB : fin kayna session dyalek ?', 'CDB / PDB: where is your session?'),
+  hint: t('Clique une commande : le rond **SYS** montre le conteneur courant de la session, et la console affiche la réponse de SQL*Plus.', 'Cliqui 3la commande : rond **SYS** kayban fin kayna session, w console katwerrik jawab SQL*Plus.', 'Click a command: the **SYS** dot shows the session\'s current container and the console shows SQL*Plus\'s answer.'),
+  root: t('Dictionnaire, utilisateurs **communs** (C##…)', 'Dictionnaire, users **communs** (C##…)', 'Dictionary, **common** users (C##…)'),
+  seed: t('Modèle **READ ONLY** pour créer des PDB', 'Modèle **READ ONLY** bach tsayb PDB', '**READ ONLY** template for new PDBs'),
+  pdb: t('Schéma **HR**, utilisateurs **locaux**', 'Schéma **HR**, users **locaux**', '**HR** schema, **local** users'),
+  newPdb: t('Nouvelle PDB, clonée depuis le seed', 'PDB jdida, mnsoukha mn seed', 'New PDB, cloned from the seed'),
+  shared: t('Une seule instance pour tous les conteneurs : SGA + processus (PMON, SMON, DBWn, LGWR, CKPT)', 'Instance wa7da l ga3 conteneurs : SGA + processus', 'One instance for every container: SGA + processes'),
+  sharedShort: t('une seule instance, partagée par tous les conteneurs', 'instance wa7da, mchtaraka bin ga3 conteneurs', 'one instance, shared by every container'),
+  files: t('Chaque conteneur a ses datafiles ; control files et redo logs sont communs à la CDB', 'Kol conteneur 3ndo datafiles ; control files w redo mchtarkin', 'Each container has its datafiles; control files and redo logs belong to the CDB'),
+  reset: t('Recommencer', '3awed', 'Reset'),
+  console: t('Console SQL*Plus', 'Console SQL*Plus', 'SQL*Plus console')
+};

@@ -59,6 +59,7 @@ export const c1: Chapter = {
     quiz('or-01', 'or-02', 'or-03'),
 
     h(['3. L\'architecture multitenant : CDB et PDB', '3. Multitenant : CDB w PDB', '3. Multitenant architecture: CDB and PDB']),
+    anim('CdbPdbExplorer'),
     p(['Depuis **Oracle 12c**, on parle de **conteneur** (*container*) et d\'**architecture mutualisée** (*multitenant*). En 19c, c\'est le modèle par défaut.', 'Mn **Oracle 12c**, kayn **conteneur** w **architecture mutualisée** (*multitenant*). F 19c hiya par défaut.', 'Since **Oracle 12c** there are **containers** and a **multitenant** architecture; it is the default in 19c.']),
     table([['Critère', 'Mi3yar', 'Criterion'], ['Conteneur (CDB)', 'Conteneur (CDB)', 'Container (CDB)'], ['Pluggable database (PDB)', 'PDB', 'Pluggable database (PDB)']], [
       [['Définition', 'Ta3rif', 'Definition'], ['**Collection logique** de données et de métadonnées dans une architecture mutualisée', '**Majmou3a mantiqiya** dyal data w métadonnées', '**Logical collection** of data and metadata'], ['**Collection d\'objets**, schémas, données…', '**Majmou3a d objets**, schémas, data', '**Collection of objects**, schemas, data…']],

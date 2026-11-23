@@ -633,6 +633,10 @@
    }
   },
   {
+   "type": "animation",
+   "component": "MeanMedianShapes"
+  },
+  {
    "type": "callout",
    "kind": "def",
    "body": {

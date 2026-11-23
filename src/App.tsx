@@ -28,6 +28,7 @@ const SupportsPage = lazy(() => import('./pages/SupportsPage'));
 const ExplorePage = lazy(() => import('./pages/ExplorePage'));
 const PendingPage = lazy(() => import('./pages/PendingPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
+const PrepPage = lazy(() => import('./pages/PrepPage'));
 
 /** Private group site: when accounts are on, every page requires signing in. */
 function AuthGate({ children }: { children: ReactNode }) {
@@ -105,6 +106,7 @@ export function App() {
               <Route path="/bibliotheque" element={<ToSupports />} />
               <Route path="/admin" element={<AdminRoute />} />
               <Route path="/terminal" element={<TerminalPage />} />
+              <Route path="/preparation" element={<PrepPage />} />
               <Route
                 path="/stats-lab"
                 element={

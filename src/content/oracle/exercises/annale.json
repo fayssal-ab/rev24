@@ -1,0 +1,197 @@
+[
+ {
+  "id": "or-x-6",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "CC 2025-2026 — Partie A (7 questions)",
+   "dar": "CC — Partie A",
+   "en": "Mid-term — Part A"
+  },
+  "statement": {
+   "fr": "1) Définir un SGBDR et citer deux rôles. 2) Rôle d'un DBA Oracle. 3) Les trois types de connexions. 4) Une instance est composée de … et de … 5) Les trois grandes structures d'un serveur Oracle. 6) ORACLE_HOME, ORACLE_BASE, ORACLE_SID. 7) Les trois types de fichiers physiques d'une CDB.",
+   "dar": "7 so2alat dyal cours (Chap 2 w 3).",
+   "en": "7 course questions (Ch. 2 and 3)."
+  },
+  "hints": [
+   {
+    "fr": "Chaque réponse tient en 2 lignes.",
+    "dar": "Kol jawab f 2 stour.",
+    "en": "Two lines per answer."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Q1–Q3",
+     "dar": "Q1–Q3",
+     "en": "Q1–Q3"
+    },
+    "body": {
+     "fr": "SGBDR : logiciel qui gère des données en **tables reliées** via SQL ; rôles : stocker/manipuler (LDD, LMD), sécuriser (utilisateurs, privilèges), intégrité, sauvegarde. DBA : installe, crée les bases, démarre/arrête, gère utilisateurs, stockage, sauvegardes, performances. Connexions : **locale**, **client/serveur**, **multi-tiers**.",
+     "dar": "SGBDR ; DBA ; locale, client/serveur, multi-tiers.",
+     "en": "RDBMS; DBA; local, client/server, multi-tier."
+    }
+   },
+   {
+    "title": {
+     "fr": "Q4–Q7",
+     "dar": "Q4–Q7",
+     "en": "Q4–Q7"
+    },
+    "body": {
+     "fr": "Instance = **SGA** + **processus d'arrière-plan**. Structures : **mémoire**, **processus**, **stockage**. ORACLE_HOME = installation ; ORACLE_BASE = racine (contient HOME) ; ORACLE_SID = nom de l'instance. Fichiers : **datafiles**, **control files**, **redo log files**.",
+     "dar": "SGA + processus ; 3 structures ; variables ; 3 fichiers.",
+     "en": "SGA + processes; 3 structures; variables; 3 files."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la copie modèle de la Partie A dans le chapitre Annale.",
+   "dar": "Chouf copie modèle.",
+   "en": "See the model answer."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Inverser ORACLE_HOME et ORACLE_BASE.",
+    "dar": "HOME/BASE l3eks.",
+    "en": "Swapping HOME and BASE."
+   },
+   {
+    "fr": "Citer les fichiers de paramètres parmi les 3 fichiers de la base.",
+    "dar": "spfile machi menhom.",
+    "en": "Listing the spfile among the 3."
+   }
+  ]
+ },
+ {
+  "id": "or-x-7",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "CC 2025-2026 — Partie B (7 questions)",
+   "dar": "CC — Partie B",
+   "en": "Mid-term — Part B"
+  },
+  "statement": {
+   "fr": "8) Connexion vs session. 9) Processus qui coordonne les connexions client ↔ base. 10) Rôle du PDB$SEED. 11) « Connecté à une instance inactive » : état de la base ? 12) Compléter : une CDB est…, une PDB est…, deux avantages du multitenant. 13) Les trois étapes du démarrage. 14) Les étapes de l'arrêt et la commande.",
+   "dar": "7 so2alat : session, listener, seed, états, CDB/PDB, démarrage, arrêt.",
+   "en": "7 questions: session, listener, seed, states, CDB/PDB, startup, shutdown."
+  },
+  "hints": [
+   {
+    "fr": "Démarrage : NOMOUNT → MOUNT → OPEN.",
+    "dar": "NOMOUNT → MOUNT → OPEN.",
+    "en": "NOMOUNT → MOUNT → OPEN."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Q8–Q11",
+     "dar": "Q8–Q11",
+     "en": "Q8–Q11"
+    },
+    "body": {
+     "fr": "Connexion = lien processus utilisateur ↔ serveur ; session = utilisateur validé jusqu'à la déconnexion. **Listener** (1521, lsnrctl) puis processus serveur. PDB$SEED = modèle READ ONLY pour créer des PDB. Instance inactive = **SHUTDOWN** → STARTUP.",
+     "dar": "Session ; listener ; seed ; SHUTDOWN.",
+     "en": "Session; listener; seed; SHUTDOWN."
+    }
+   },
+   {
+    "title": {
+     "fr": "Q12–Q14",
+     "dar": "Q12–Q14",
+     "en": "Q12–Q14"
+    },
+    "body": {
+     "fr": "CDB = conteneur (CDB$ROOT + PDB$SEED + PDB) ; PDB = base branchable vue comme une base classique ; avantages : ressources partagées, administration simplifiée. Démarrage : **NOMOUNT** (spfile, SGA, processus) → **MOUNT** (control files) → **OPEN** (datafiles + redo). Arrêt `SHUTDOWN [NORMAL|TRANSACTIONAL|IMMEDIATE|ABORT]` : base fermée → démontée → instance arrêtée.",
+     "dar": "CDB/PDB ; 3 étapes ; SHUTDOWN.",
+     "en": "CDB/PDB; 3 stages; SHUTDOWN."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la copie modèle de la Partie B.",
+   "dar": "Copie modèle B.",
+   "en": "See model answer B."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier les messages SQL*Plus de chaque étape.",
+    "dar": "Messages dyal kol étape.",
+    "en": "Forgetting each stage's message."
+   }
+  ]
+ },
+ {
+  "id": "or-x-8",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "CC 2025-2026 — Partie C (6 questions, SQL*Plus)",
+   "dar": "CC — Partie C",
+   "en": "Mid-term — Part C"
+  },
+  "statement": {
+   "fr": "15) Se connecter en SYSDBA sans nom d'utilisateur. 16) `sqlplus HR/HR as sysdba` puis `show user` ? 17) Résultat de STARTUP MOUNT (justifier). 18) Que montre `show con_name` ? 19) Se connecter à la PDB EMSIPDB (OPEN) en HR/secret. 20) Expliquer `ALTER SESSION SET CONTAINER=ORCLPDB` avant d'activer HR.",
+   "dar": "6 so2alat dyal SQL*Plus.",
+   "en": "6 SQL*Plus questions."
+  },
+  "hints": [
+   {
+    "fr": "AS SYSDBA = toujours SYS.",
+    "dar": "SYSDBA = SYS.",
+    "en": "SYSDBA = SYS."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Q15–Q17",
+     "dar": "Q15–Q17",
+     "en": "Q15–Q17"
+    },
+    "body": {
+     "fr": "`sqlplus / as sysdba` (authentification OS). `show user` → **USER est \"SYS\"**. STARTUP MOUNT : « Instance ORACLE lancée … Base de données montée. » — datafiles fermés, puis `ALTER DATABASE OPEN;`.",
+     "dar": "sysdba ; SYS ; montée.",
+     "en": "sysdba; SYS; mounted."
+    },
+    "code": "sqlplus / as sysdba\nSQL> show user\nUSER est \"SYS\"\nSQL> STARTUP MOUNT\nInstance ORACLE lancée.\nBase de données montée."
+   },
+   {
+    "title": {
+     "fr": "Q18–Q20",
+     "dar": "Q18–Q20",
+     "en": "Q18–Q20"
+    },
+    "body": {
+     "fr": "`show con_name` → conteneur courant (CDB$ROOT ou ORCLPDB). Connexion : `sqlplus hr/secret@localhost:1521/EMSIPDB`. HR est **local** à ORCLPDB : depuis la racine → ORA-01918, donc on change de conteneur d'abord.",
+     "dar": "con_name ; Easy Connect ; HR local.",
+     "en": "con_name; Easy Connect; HR is local."
+    },
+    "code": "SQL> ALTER SESSION SET CONTAINER=ORCLPDB;\nSQL> ALTER USER hr IDENTIFIED BY root ACCOUNT UNLOCK;"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Voir la copie modèle de la Partie C.",
+   "dar": "Copie modèle C.",
+   "en": "See model answer C."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Répondre « HR » à show user.",
+    "dar": "Jawb HR.",
+    "en": "Answering \"HR\"."
+   },
+   {
+    "fr": "Oublier le service /EMSIPDB.",
+    "dar": "Nsit /EMSIPDB.",
+    "en": "Forgetting /EMSIPDB."
+   }
+  ]
+ }
+]

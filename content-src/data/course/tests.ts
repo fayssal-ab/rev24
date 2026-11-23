@@ -37,10 +37,10 @@ export const chapter: Chapter = {
       '**Course example 1 (rocket).** The specification requires a mean speed of **40 cm/s**, σ = 2. Over n = 25 trials, x̄ = **41.25**. A sample never lands exactly on 40: the test says whether the 1.25 gap is **too big to be chance**.'
     ]),
     table([['Hypothèse', 'Hypothèse', 'Hypothesis'], ['Écriture', 'Ktaba', 'Written'], ['Type de test', 'Naw3 test', 'Test type']], [
-      [['**H0** (nulle)', '**H0** (nulle)', '**H0** (null)'], 'µ = µ0', ['Toujours avec **=**', 'Dima b **=**', 'Always with **=**']],
-      [['**H1** (alternative)', '**H1**', '**H1** (alternative)'], 'µ ≠ µ0', ['**Bilatéral**', '**Bilatéral**', '**Two-sided**']],
-      [['**H1**', '**H1**', '**H1**'], 'µ < µ0', ['**Unilatéral à gauche**', '**Unilatéral gauche**', '**Left-tailed**']],
-      [['**H1**', '**H1**', '**H1**'], 'µ > µ0', ['**Unilatéral à droite**', '**Unilatéral droite**', '**Right-tailed**']]
+      [['**H0** (nulle)', '**H0** (nulle)', '**H0** (null)'], '$\\mu = \\mu_0$', ['Toujours avec **=**', 'Dima b **=**', 'Always with **=**']],
+      [['**H1** (alternative)', '**H1**', '**H1** (alternative)'], '$\\mu \\neq \\mu_0$', ['**Bilatéral**', '**Bilatéral**', '**Two-sided**']],
+      [['**H1**', '**H1**', '**H1**'], '$\\mu < \\mu_0$', ['**Unilatéral à gauche**', '**Unilatéral gauche**', '**Left-tailed**']],
+      [['**H1**', '**H1**', '**H1**'], '$\\mu > \\mu_0$', ['**Unilatéral à droite**', '**Unilatéral droite**', '**Right-tailed**']]
     ]),
     p([
       '**Région critique** : la zone où la statistique a **peu de chances** de tomber si H0 est vraie. Dedans → **rejet de H0, conclusion forte**. Dehors → **non-rejet, conclusion faible** (on n\'a pas prouvé H0, on manque seulement de preuves contre elle).',
@@ -57,9 +57,9 @@ export const chapter: Chapter = {
       'Two questions are enough. **(a) What is tested?** a mean or the shape of a law. **(b) What does the statement give?** σ (population) or only the data / S.'
     ]),
     table([['Situation', 'L7ala', 'Situation'], ['Statistique', 'Statistique', 'Statistic'], ['Loi sous H0', 'Loi ila H0 s7i7a', 'Law under H0'], ['Table à lire', 'Table', 'Table to read']], [
-      [['Moyenne, **σ connu**', 'Moyenne, **σ m3rouf**', 'Mean, **σ known**'], 'Z0 = (x̄ − µ0) / (σ/√n)', 'N(0, 1)', ['Normale : zα ou zα/2', 'Normale : zα wla zα/2', 'Normal: zα or zα/2']],
-      [['Moyenne, **σ inconnu**', 'Moyenne, **σ ma m3roufch**', 'Mean, **σ unknown**'], 'T0 = (x̄ − µ0) / (S/√n)', 'Student, ν = n − 1', ['Student : tα;n−1', 'Student : tα;n−1', 'Student: tα;n−1']],
-      [['**Forme d\'une loi** (ajustement)', '**Chkl dyal loi**', '**Shape of a law** (fit)'], 'χ²0 = Σ (Oi − Ei)² / Ei', 'χ², ν = k − p − 1', ['Khi-deux : χ²α;ν', 'Khi-deux : χ²α;ν', 'Chi-square: χ²α;ν']]
+      [['Moyenne, **σ connu**', 'Moyenne, **σ m3rouf**', 'Mean, **σ known**'], '$Z_0 = \\dfrac{\\bar x - \\mu_0}{\\sigma/\\sqrt{n}}$', '$\\mathcal{N}(0,\\,1)$', ['Normale : $z_{\\alpha}$ ou $z_{\\alpha/2}$', 'Normale : $z_{\\alpha}$ wla $z_{\\alpha/2}$', 'Normal: $z_{\\alpha}$ or $z_{\\alpha/2}$']],
+      [['Moyenne, **σ inconnu**', 'Moyenne, **σ ma m3roufch**', 'Mean, **σ unknown**'], '$T_0 = \\dfrac{\\bar x - \\mu_0}{S/\\sqrt{n}}$', '$\\text{Student } t_{n-1}$', ['Student : $t_{\\alpha;\\,n-1}$', 'Student : $t_{\\alpha;\\,n-1}$', 'Student: $t_{\\alpha;\\,n-1}$']],
+      [['**Forme d\'une loi** (ajustement)', '**Chkl dyal loi**', '**Shape of a law** (fit)'], '$\\chi^2_0 = \\sum \\dfrac{(O_i - E_i)^2}{E_i}$', '$\\chi^2_{\\,k-p-1}$', ['Khi-deux : $\\chi^2_{\\alpha;\\,\\nu}$', 'Khi-deux : $\\chi^2_{\\alpha;\\,\\nu}$', 'Chi-square: $\\chi^2_{\\alpha;\\,\\nu}$']]
     ]),
     p([
       '**Trouver H1 dans l\'énoncé** : ce sont les mots de la question qui décident.',
@@ -67,9 +67,9 @@ export const chapter: Chapter = {
       '**Finding H1 in the statement**: the words of the question decide.'
     ]),
     table([['L\'énoncé dit…', 'L énoncé kay9ol…', 'The statement says…'], ['H1', 'H1', 'H1'], ['Rejet si', 'Rfed ila', 'Reject if']], [
-      [['« différent », « déréglée », « conforme ? », « la moyenne est-elle de… ? »', '« différent », « déréglée », « conforme ? »', '"different", "out of adjustment", "is the mean…?"'], 'µ ≠ µ0', '|Z0| > zα/2'],
-      [['« inférieur », « baisse », « diminue », « moins de »', '« inférieur », « baisse », « na9es »', '"lower", "decrease", "less than"'], 'µ < µ0', 'Z0 < −zα'],
-      [['« supérieur », « dépasse », « augmente », « plus de »', '« supérieur », « dépasse », « zayd »', '"higher", "exceeds", "increase", "more than"'], 'µ > µ0', 'Z0 > zα']
+      [['« différent », « déréglée », « conforme ? », « la moyenne est-elle de… ? »', '« différent », « déréglée », « conforme ? »', '"different", "out of adjustment", "is the mean…?"'], '$\\mu \\neq \\mu_0$', '$|Z_0| > z_{\\alpha/2}$'],
+      [['« inférieur », « baisse », « diminue », « moins de »', '« inférieur », « baisse », « na9es »', '"lower", "decrease", "less than"'], '$\\mu < \\mu_0$', '$Z_0 < -z_{\\alpha}$'],
+      [['« supérieur », « dépasse », « augmente », « plus de »', '« supérieur », « dépasse », « zayd »', '"higher", "exceeds", "increase", "more than"'], '$\\mu > \\mu_0$', '$Z_0 > z_{\\alpha}$']
     ]),
     tip([
       '**« Seuil de confiance 98 % »** veut dire **α = 2 %**. En bilatéral on lit la table à **α/2 = 1 %**, en unilatéral à **α**.',
@@ -206,8 +206,8 @@ export const chapter: Chapter = {
     // ------------------------------------------------------------------
     h(['7. Exemple 3 — test unilatéral (glycémie)', '7. Mithal 3 — unilatéral (glycémie)', '7. Example 3 — one-sided test (blood sugar)']),
     table([['Cas', '7ala', 'Case'], ['Gauche, H1 : µ < µ0', 'Gauche, H1 : µ < µ0', 'Left, H1: µ < µ0'], ['Droite, H1 : µ > µ0', 'Droite, H1 : µ > µ0', 'Right, H1: µ > µ0']], [
-      [['σ connu', 'σ m3rouf', 'σ known'], 'Z0 < −zα', 'Z0 > zα'],
-      [['σ inconnu', 'σ ma m3roufch', 'σ unknown'], 'T0 < −tα;n−1', 'T0 > tα;n−1']
+      [['σ connu', 'σ m3rouf', 'σ known'], '$Z_0 < -z_{\\alpha}$', '$Z_0 > z_{\\alpha}$'],
+      [['σ inconnu', 'σ ma m3roufch', 'σ unknown'], '$T_0 < -t_{\\alpha;\\,n-1}$', '$T_0 > t_{\\alpha;\\,n-1}$']
     ]),
     p([
       'Même statistique ; seule la région critique change : **tout α d\'un seul côté**, et **le signe compte** (pas de valeur absolue).',
@@ -244,9 +244,9 @@ export const chapter: Chapter = {
       'The **P-value (PV)** is the **smallest α** at which H0 is rejected. Rule: **α > PV → reject H0**; large PV → keep H0.'
     ]),
     table([['Test', 'Test', 'Test'], ['σ connu', 'σ m3rouf', 'σ known'], ['σ inconnu', 'σ ma m3roufch', 'σ unknown']], [
-      [['Bilatéral', 'Bilatéral', 'Two-sided'], 'PV = 2(1 − Φ(|z0|))', 'PV = 2 P(T > |t0|)'],
-      [['Gauche', 'Gauche', 'Left'], 'PV = Φ(z0)', 'PV = P(T < t0)'],
-      [['Droite', 'Droite', 'Right'], 'PV = 1 − Φ(z0)', 'PV = P(T > t0)']
+      [['Bilatéral', 'Bilatéral', 'Two-sided'], '$PV = 2\\,(1 - \\Phi(|z_0|))$', '$PV = 2\\,P(T > |t_0|)$'],
+      [['Gauche', 'Gauche', 'Left'], '$PV = \\Phi(z_0)$', '$PV = P(T < t_0)$'],
+      [['Droite', 'Droite', 'Right'], '$PV = 1 - \\Phi(z_0)$', '$PV = P(T > t_0)$']
     ]),
     copy(['P-value de la fusée', 'P-value dyal fusée', 'Rocket P-value'], null, [
       { l: ['Formule', 'Formule', 'Formula'], b: ['Bilatéral, σ connu → PV = 2(1 − Φ(|z0|)) avec z0 = 3,125.', 'Bilatéral, σ m3rouf → PV = 2(1 − Φ(|z0|)), z0 = 3,125.', 'Two-sided, σ known → PV = 2(1 − Φ(|z0|)), z0 = 3.125.'] },

@@ -21,6 +21,16 @@ const CALLOUT: Record<string, { icon: string; cls: string; head: string; key: UI
   formula: { icon: 'sigma', cls: 'border-navy/30 bg-navy/[0.04] dark:border-accent2/30 dark:bg-accent2/[0.06]', head: 'text-accent2', key: 'callout.formula' }
 };
 
+/** Table cells: `$…$` is typeset with KaTeX, plain numbers stay readable, other strings are code-like. */
+const TEX_CELL = /^\$[^$]+\$$/;
+const NUM_CELL = /^[\d\s,.∞%()+=−–-]+$/;
+function cellClass(c: unknown): string {
+  if (typeof c !== 'string') return '';
+  if (TEX_CELL.test(c)) return 'whitespace-nowrap text-[15px] text-fg lg:text-[17px]';
+  if (NUM_CELL.test(c)) return 'font-mono tabular-nums text-[13.5px] text-fg lg:text-[15px]';
+  return 'font-mono text-[13px] text-accent2 lg:text-[14.5px]';
+}
+
 /** A worked solution shown one step at a time (the number of steps revealed is saved on the device). */
 function StepByStep({ s, skey }: { s: Extract<Section, { type: 'steps' }>; skey?: string }) {
   const { t } = useT();
@@ -245,10 +255,10 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
             </thead>
             <tbody>
               {s.rows.map((r, i) => (
-                <tr key={i} className="border-t border-line align-top even:bg-surface2/30">
+                <tr key={i} className="border-t border-line align-middle even:bg-surface2/30">
                   {r.map((c, j) => (
-                    <td key={j} className={`px-3 py-2.5 ${typeof c === 'string' ? 'font-mono text-[13px] text-accent2 lg:text-[14.5px]' : ''}`}>
-                      {typeof c === 'string' ? c : <L v={c} />}
+                    <td key={j} className={`px-3 py-2.5 ${cellClass(c)}`}>
+                      {typeof c !== 'string' ? <L v={c} /> : TEX_CELL.test(c) ? <Tex tex={c.slice(1, -1)} /> : c}
                     </td>
                   ))}
                 </tr>

@@ -74,7 +74,7 @@
       "dar": "**H0** (nulle)",
       "en": "**H0** (null)"
      },
-     "µ = µ0",
+     "$\\mu = \\mu_0$",
      {
       "fr": "Toujours avec **=**",
       "dar": "Dima b **=**",
@@ -87,7 +87,7 @@
       "dar": "**H1**",
       "en": "**H1** (alternative)"
      },
-     "µ ≠ µ0",
+     "$\\mu \\neq \\mu_0$",
      {
       "fr": "**Bilatéral**",
       "dar": "**Bilatéral**",
@@ -100,7 +100,7 @@
       "dar": "**H1**",
       "en": "**H1**"
      },
-     "µ < µ0",
+     "$\\mu < \\mu_0$",
      {
       "fr": "**Unilatéral à gauche**",
       "dar": "**Unilatéral gauche**",
@@ -113,7 +113,7 @@
       "dar": "**H1**",
       "en": "**H1**"
      },
-     "µ > µ0",
+     "$\\mu > \\mu_0$",
      {
       "fr": "**Unilatéral à droite**",
       "dar": "**Unilatéral droite**",
@@ -184,12 +184,12 @@
       "dar": "Moyenne, **σ m3rouf**",
       "en": "Mean, **σ known**"
      },
-     "Z0 = (x̄ − µ0) / (σ/√n)",
-     "N(0, 1)",
+     "$Z_0 = \\dfrac{\\bar x - \\mu_0}{\\sigma/\\sqrt{n}}$",
+     "$\\mathcal{N}(0,\\,1)$",
      {
-      "fr": "Normale : zα ou zα/2",
-      "dar": "Normale : zα wla zα/2",
-      "en": "Normal: zα or zα/2"
+      "fr": "Normale : $z_{\\alpha}$ ou $z_{\\alpha/2}$",
+      "dar": "Normale : $z_{\\alpha}$ wla $z_{\\alpha/2}$",
+      "en": "Normal: $z_{\\alpha}$ or $z_{\\alpha/2}$"
      }
     ],
     [
@@ -198,12 +198,12 @@
       "dar": "Moyenne, **σ ma m3roufch**",
       "en": "Mean, **σ unknown**"
      },
-     "T0 = (x̄ − µ0) / (S/√n)",
-     "Student, ν = n − 1",
+     "$T_0 = \\dfrac{\\bar x - \\mu_0}{S/\\sqrt{n}}$",
+     "$\\text{Student } t_{n-1}$",
      {
-      "fr": "Student : tα;n−1",
-      "dar": "Student : tα;n−1",
-      "en": "Student: tα;n−1"
+      "fr": "Student : $t_{\\alpha;\\,n-1}$",
+      "dar": "Student : $t_{\\alpha;\\,n-1}$",
+      "en": "Student: $t_{\\alpha;\\,n-1}$"
      }
     ],
     [
@@ -212,12 +212,12 @@
       "dar": "**Chkl dyal loi**",
       "en": "**Shape of a law** (fit)"
      },
-     "χ²0 = Σ (Oi − Ei)² / Ei",
-     "χ², ν = k − p − 1",
+     "$\\chi^2_0 = \\sum \\dfrac{(O_i - E_i)^2}{E_i}$",
+     "$\\chi^2_{\\,k-p-1}$",
      {
-      "fr": "Khi-deux : χ²α;ν",
-      "dar": "Khi-deux : χ²α;ν",
-      "en": "Chi-square: χ²α;ν"
+      "fr": "Khi-deux : $\\chi^2_{\\alpha;\\,\\nu}$",
+      "dar": "Khi-deux : $\\chi^2_{\\alpha;\\,\\nu}$",
+      "en": "Chi-square: $\\chi^2_{\\alpha;\\,\\nu}$"
      }
     ]
    ]
@@ -256,8 +256,8 @@
       "dar": "« différent », « déréglée », « conforme ? »",
       "en": "\"different\", \"out of adjustment\", \"is the mean…?\""
      },
-     "µ ≠ µ0",
-     "|Z0| > zα/2"
+     "$\\mu \\neq \\mu_0$",
+     "$|Z_0| > z_{\\alpha/2}$"
     ],
     [
      {
@@ -265,8 +265,8 @@
       "dar": "« inférieur », « baisse », « na9es »",
       "en": "\"lower\", \"decrease\", \"less than\""
      },
-     "µ < µ0",
-     "Z0 < −zα"
+     "$\\mu < \\mu_0$",
+     "$Z_0 < -z_{\\alpha}$"
     ],
     [
      {
@@ -274,8 +274,8 @@
       "dar": "« supérieur », « dépasse », « zayd »",
       "en": "\"higher\", \"exceeds\", \"increase\", \"more than\""
      },
-     "µ > µ0",
-     "Z0 > zα"
+     "$\\mu > \\mu_0$",
+     "$Z_0 > z_{\\alpha}$"
     ]
    ]
   },
@@ -920,8 +920,8 @@
       "dar": "σ m3rouf",
       "en": "σ known"
      },
-     "Z0 < −zα",
-     "Z0 > zα"
+     "$Z_0 < -z_{\\alpha}$",
+     "$Z_0 > z_{\\alpha}$"
     ],
     [
      {
@@ -929,8 +929,8 @@
       "dar": "σ ma m3roufch",
       "en": "σ unknown"
      },
-     "T0 < −tα;n−1",
-     "T0 > tα;n−1"
+     "$T_0 < -t_{\\alpha;\\,n-1}$",
+     "$T_0 > t_{\\alpha;\\,n-1}$"
     ]
    ]
   },
@@ -1084,8 +1084,8 @@
       "dar": "Bilatéral",
       "en": "Two-sided"
      },
-     "PV = 2(1 − Φ(|z0|))",
-     "PV = 2 P(T > |t0|)"
+     "$PV = 2\\,(1 - \\Phi(|z_0|))$",
+     "$PV = 2\\,P(T > |t_0|)$"
     ],
     [
      {
@@ -1093,8 +1093,8 @@
       "dar": "Gauche",
       "en": "Left"
      },
-     "PV = Φ(z0)",
-     "PV = P(T < t0)"
+     "$PV = \\Phi(z_0)$",
+     "$PV = P(T < t_0)$"
     ],
     [
      {
@@ -1102,8 +1102,8 @@
       "dar": "Droite",
       "en": "Right"
      },
-     "PV = 1 − Φ(z0)",
-     "PV = P(T > t0)"
+     "$PV = 1 - \\Phi(z_0)$",
+     "$PV = P(T > t_0)$"
     ]
    ]
   },

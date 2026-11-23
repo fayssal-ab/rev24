@@ -39,20 +39,19 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="mx-auto max-w-[1400px] space-y-10">
       <Announcements />
 
-      {/* the class on the cover, with the search right on it */}
-      <section className="relative overflow-hidden rounded-2xl border-2 border-fg" aria-label="GROUP 22">
-        <img src={`${import.meta.env.BASE_URL}group22-banner.jpg`} alt="4IIR G22, EMSI Rabat" className="h-64 w-full object-cover object-[50%_35%] sm:h-64" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B2440] via-[#0B2440]/70 to-[#0B2440]/10 sm:bg-gradient-to-r sm:from-[#0B2440]/95 sm:via-[#0B2440]/60 sm:to-transparent" />
-        <div className="absolute inset-0 flex flex-col justify-end gap-4 p-5 sm:justify-center sm:p-10">
-          <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/70">EMSI Rabat · 4IIR · {ACADEMIC_YEAR}</span>
-          <span className="flex items-center gap-3 font-sign text-5xl uppercase leading-none text-white sm:text-6xl">
+      {/* cover: brand + search on the left, the class photo on the right (never upscaled, so it stays sharp) */}
+      <section className="grid overflow-hidden rounded-2xl border border-line bg-[#0B2440] text-white shadow-sm lg:h-[380px] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]" aria-label="GROUP 22">
+        <div className="relative order-2 flex flex-col justify-center gap-5 p-6 sm:p-10 lg:order-1">
+          <div className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
+          <span className="relative font-mono text-[11px] uppercase tracking-[0.3em] text-white/60">EMSI Rabat · 4IIR · {ACADEMIC_YEAR}</span>
+          <span className="relative flex items-center gap-3 font-sign text-5xl uppercase leading-none sm:text-6xl xl:text-7xl">
             Group
             <span className="sticker inline-block rounded-md bg-accent px-3 py-1.5 text-white">22</span>
           </span>
-          <form onSubmit={submit} role="search" className="flex max-w-md items-center gap-2 rounded-full bg-white p-1.5 pl-4 text-[#0E1E2E] shadow-lg">
+          <form onSubmit={submit} role="search" className="relative flex max-w-md items-center gap-2 rounded-full bg-white p-1.5 pl-4 text-[#0E1E2E] shadow-lg">
             <Icon name="search" size={18} className="shrink-0 text-[#586878]" />
             <input
               value={q}
@@ -66,6 +65,10 @@ export default function Home() {
               <Icon name="arrowRight" size={16} />
             </button>
           </form>
+        </div>
+        <div className="relative order-1 h-52 sm:h-64 lg:order-2 lg:h-full">
+          <img src={`${import.meta.env.BASE_URL}group22-banner.jpg`} alt="4IIR G22, EMSI Rabat" className="absolute inset-0 h-full w-full object-cover object-[50%_40%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B2440] via-transparent to-transparent lg:bg-gradient-to-r lg:from-[#0B2440] lg:via-[#0B2440]/10 lg:to-transparent" />
         </div>
       </section>
 

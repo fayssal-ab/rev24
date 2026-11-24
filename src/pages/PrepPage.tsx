@@ -9,7 +9,7 @@ import { chapterMastery, moduleMastery } from '../lib/mastery';
 import { Icon } from '../components/Icon';
 import { Loading, PageTitle } from '../components/Layout';
 import type { Chapter } from '../lib/schema';
-import { useFocus } from '../lib/focus';
+import { useEvents } from '../lib/events';
 
 /** Weekday of each module's class in the S1 timetable (0 = Sunday): default test date = next class. */
 const CLASS_DAY: Record<string, number> = { ro: 1, linux: 2, data: 3, oracle: 6, mobile: 6 };
@@ -46,10 +46,10 @@ interface DayPlan {
 }
 
 /** Spread the chapters that are not mastered over the days left; the eve is for the mock exam, the day itself for the Boss mode. */
-function buildPlan(c: ModuleContent, st: Parameters<typeof chapterMastery>[2], test: Date, extraOut: string[] = []): { days: number; plan: DayPlan[]; todo: { c: Chapter; m: number }[] } {
+function buildPlan(c: ModuleContent, st: Parameters<typeof chapterMastery>[2], test: Date): { days: number; plan: DayPlan[]; todo: { c: Chapter; m: number }[] } {
   const today = midnight(new Date());
   const days = Math.round((test.getTime() - today.getTime()) / DAY);
-  const out = [...(OUT[c.module.id] ?? []), ...extraOut];
+  const out = OUT[c.module.id] ?? [];
   const todo = c.chapters
     .filter((ch) => !out.includes(ch.id))
     .map((ch) => ({ c: ch, m: chapterMastery(c, ch.id, st) }))
@@ -75,8 +75,8 @@ export default function PrepPage() {
   const st = useStore();
   const content = useAllModules(MODULES.map((m) => m.id));
   const [dates, setDates] = useState<Record<string, string>>(readDates);
-  // the test announced by the admin (home page card) gives its module's date and out-of-test chapters
-  const { focus, custom } = useFocus();
+  // tests and exams posted by the admin give each module its next date
+  const { events } = useEvents();
   const setDate = (id: string, v: string) => {
     const next = { ...dates, [id]: v };
     setDates(next);
@@ -93,12 +93,12 @@ export default function PrepPage() {
     if (!content) return [];
     return content
       .map((c) => {
-        const fromAdmin = custom && focus.enabled && focus.module === c.module.id;
-        const date = dates[c.module.id] || (fromAdmin && focus.date) || ANNOUNCED[c.module.id] || nextClass(CLASS_DAY[c.module.id] ?? 6);
-        return { c, date, ...buildPlan(c, st, parse(date), fromAdmin ? focus.out : []), mastery: moduleMastery(c, st) };
+        const posted = events.find((e) => e.module === c.module.id && e.kind !== 'cr')?.date;
+        const date = dates[c.module.id] || posted || ANNOUNCED[c.module.id] || nextClass(CLASS_DAY[c.module.id] ?? 6);
+        return { c, date, ...buildPlan(c, st, parse(date)), mastery: moduleMastery(c, st) };
       })
       .sort((a, b) => (a.days < 0 ? 1 : 0) - (b.days < 0 ? 1 : 0) || a.days - b.days);
-  }, [content, dates, st, focus, custom]);
+  }, [content, dates, st, events]);
 
   if (!content) return <Loading />;
   const todayIso = iso(new Date());

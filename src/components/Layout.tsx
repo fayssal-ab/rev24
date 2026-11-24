@@ -15,14 +15,9 @@ import type { UIKey } from '../i18n/ui';
 import { authEnabled, signOut, useAuth, useCanSeeOral, useIsAdmin } from '../auth/auth';
 import { DocumentPreview } from './ui';
 import { GlobalSearch, useSearch } from './GlobalSearch';
+import { Avatar } from './Avatar';
+import { ChatDock, useChat, useChatEnabled } from './ChatPanel';
 
-const initials = (name: string) =>
-  name
-    .split(/[\s.@_-]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join('') || '?';
 
 const LANGS: { code: Lang; label: string; name: string }[] = [
   { code: 'fr', label: 'FR', name: 'Français' },
@@ -293,14 +288,14 @@ function UserMenu() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="grid h-10 w-10 place-items-center rounded-full bg-accent text-[13px] font-bold tracking-wide text-white ring-offset-2 ring-offset-bg transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent"
+        className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-accent text-[13px] font-bold tracking-wide text-white ring-offset-2 ring-offset-bg transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-accent"
         aria-label={t('auth.account')}
         aria-haspopup="menu"
         aria-expanded={open}
         title={name}
         data-testid="user-menu"
       >
-        {user ? initials(name) : <Icon name="user" size={18} />}
+        {user ? <Avatar name={name} src={user.avatar} size={40} /> : <Icon name="user" size={18} />}
       </button>
       <AnimatePresence>
         {open && (
@@ -314,7 +309,7 @@ function UserMenu() {
           >
             {user && (
               <div className="mb-1 flex items-center gap-3 border-b border-line px-3 pb-3 pt-2">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white">{initials(name)}</span>
+                <Avatar name={name} src={user.avatar} size={40} />
                 <span className="min-w-0">
                   <span className="block truncate font-semibold">{name}</span>
                   <span className="block truncate text-xs text-muted">{user.email}</span>
@@ -456,7 +451,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             </div>
             {user && (
               <Link to="/profil" className="mb-4 flex items-center gap-3 rounded-xl border border-line p-3 transition-colors hover:bg-surface2" data-testid="drawer-user">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent font-mono text-sm font-semibold text-white">{initials(user.displayName || user.email)}</span>
+                <Avatar name={user.displayName || user.email} src={user.avatar} size={44} />
                 <span className="min-w-0">
                   <span className="block truncate font-semibold">{user.displayName || user.email}</span>
                   <span className="block truncate text-sm text-muted">{user.email}</span>
@@ -510,8 +505,12 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                 </Link>
               )}
               {authEnabled && user && (
-                <button className="btn-ghost w-full text-bad" onClick={() => void signOut()}>
-                  <Icon name="external" size={15} /> {t('auth.signout')} · <span className="truncate font-normal">{user.email}</span>
+                <button
+                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-bad/40 bg-bad/[0.08] px-4 font-semibold text-bad transition-colors hover:bg-bad hover:text-white active:scale-[0.99]"
+                  onClick={() => void signOut()}
+                  data-testid="drawer-signout"
+                >
+                  <Icon name="external" size={17} /> {t('auth.signout')}
                 </button>
               )}
             </div>
@@ -598,11 +597,15 @@ export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = location;
   const reduce = useReducedMotion();
   const locked = useLocked();
+  // the chat is docked on the right: on wide screens the page makes room for it instead of being covered
+  const chatWanted = useChat((s) => s.open);
+  const chatEnabled = useChatEnabled();
+  const chatOpen = chatWanted && chatEnabled && !locked;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
-    <div className="flex min-h-[100dvh] flex-col">
+    <div className={`flex min-h-[100dvh] flex-col transition-[padding] duration-200 ${chatOpen ? 'xl:pr-[22rem]' : ''}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-white">
         {t('a11y.skip')}
       </a>
@@ -617,6 +620,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <BadgeToast />
           <DocumentPreview />
           <GlobalSearch />
+          <ChatDock />
         </>
       )}
     </div>

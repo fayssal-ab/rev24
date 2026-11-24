@@ -12,7 +12,11 @@
  *   PUT  /api/progress        { data, updatedAt }
  *   GET  /api/supports                                           → documents added / edited by the admin
  *   GET  /api/announcements                                      → admin announcements
- *   GET  /api/focus                                              → next test on the home page (admin setting) | null
+ *   GET  /api/chat?after=<id>                                    → last 20 chat messages (older ones are deleted)
+ *   POST /api/chat            { body }                           → post a message (1 every 1.5 s)
+ *   GET  /api/users/:id/avatar                                   → profile picture
+ *   GET  /api/users/:id/profile                                  → a member's public profile + study summary
+ *   GET  /api/events                                             → upcoming tests, exams and lab reports (past ones are deleted)
  *   /api/admin/*                                                 → CRUD users, supports, announcements (admin only)
  *
  * Access rules:
@@ -26,7 +30,6 @@
  *   DB_CA_CERT    Aiven "CA certificate" (PEM text, -----BEGIN CERTIFICATE----- …)
  *   JWT_SECRET    long random string (≥ 32 characters)
  *   DB_SSL        (local dev only) "off" to connect without TLS
- *   ORAL_EMAILS   (optional) comma-separated e-mails allowed to see the oral-presentation coach
  *   ADMIN_EMAILS  (optional) comma-separated admin e-mails (default: fayssal.abaibat@emsi-edu.ma)
  */
 import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from 'mysql2/promise';
@@ -114,6 +117,17 @@ function migrate(): Promise<void> {
     if (!have.has('session_id')) await p.query(`ALTER TABLE users ADD COLUMN session_id CHAR(36) NULL`);
     if (!have.has('last_seen')) await p.query(`ALTER TABLE users ADD COLUMN last_seen DATETIME(3) NULL`);
     if (!have.has('online_since')) await p.query(`ALTER TABLE users ADD COLUMN online_since DATETIME(3) NULL`);
+    // profile picture: small JPEG/PNG/WebP data URL (resized in the browser), served by GET /api/users/:id/avatar
+    if (!have.has('avatar')) await p.query(`ALTER TABLE users ADD COLUMN avatar MEDIUMTEXT NULL`);
+    if (!have.has('avatar_at')) await p.query(`ALTER TABLE users ADD COLUMN avatar_at DATETIME(3) NULL`);
+    // group chat: only the last CHAT_KEEP messages are kept
+    await p.query(`CREATE TABLE IF NOT EXISTS chat_messages (
+      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      user_id CHAR(36) NOT NULL,
+      body VARCHAR(500) NOT NULL,
+      created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     await p.query(`CREATE TABLE IF NOT EXISTS supports (
       id CHAR(36) NOT NULL PRIMARY KEY,
       ref VARCHAR(255) NULL,
@@ -133,11 +147,17 @@ function migrate(): Promise<void> {
       pinned TINYINT(1) NOT NULL DEFAULT 0,
       created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
-    // small key → JSON settings edited by the admin (e.g. "focus": the next test shown on the home page)
-    await p.query(`CREATE TABLE IF NOT EXISTS settings (
-      k VARCHAR(40) NOT NULL PRIMARY KEY,
-      v JSON NOT NULL,
-      updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+    // upcoming tests / exams / lab reports shown on the home page; a row is deleted once its time has passed
+    await p.query(`CREATE TABLE IF NOT EXISTS events (
+      id CHAR(36) NOT NULL PRIMARY KEY,
+      kind VARCHAR(10) NOT NULL DEFAULT 'controle',
+      module VARCHAR(20) NOT NULL,
+      day CHAR(10) NOT NULL,
+      time CHAR(5) NOT NULL DEFAULT '',
+      ends_at DATETIME(3) NOT NULL,
+      message TEXT NOT NULL,
+      created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      KEY ix_events_ends (ends_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     for (const e of adminEmails()) await p.query(`UPDATE users SET role = 'admin', status = 'approved' WHERE email = ?`, [e]);
   })().catch((e) => {
@@ -249,6 +269,7 @@ type UserRow = RowDataPacket & {
   status: string;
   session_id: string | null;
   last_seen: Date | null;
+  avatar_at: Date | null;
   created_at: Date;
   /** admin listing only (computed by MySQL) */
   seen_ago?: number | null;
@@ -274,10 +295,6 @@ const emailList = (raw: string | undefined, fallback: string) => {
 const adminEmails = () => [...new Set([PRINCIPAL_ADMIN, ...emailList(process.env.ADMIN_EMAILS, DEFAULT_ADMIN)])];
 const isAdmin = (u: UserRow) => u.role === 'admin' || adminEmails().includes(u.email.toLowerCase());
 
-/** Private features, decided on the server so the allowed e-mails never ship in the public JavaScript. */
-const DEFAULT_ORAL = 'fayssal.abaibat@emsi-edu.ma';
-/** Tolerant parsing: quotes, commas / semicolons / spaces as separators; empty → default. */
-const oralEmails = () => emailList(process.env.ORAL_EMAILS, DEFAULT_ORAL);
 const publicUser = (u: UserRow) => {
   const admin = isAdmin(u);
   return {
@@ -288,9 +305,13 @@ const publicUser = (u: UserRow) => {
     createdAt: u.created_at,
     role: admin ? 'admin' : 'user',
     status: admin ? 'approved' : u.status,
-    features: admin || oralEmails().includes(u.email.toLowerCase()) ? ['oral'] : []
+    avatar: avatarUrl(u),
+    // the presentation coach is private to the principal admin (not other admins, not ORAL_EMAILS)
+    features: isPrincipal(u) ? ['oral'] : []
   };
 };
+/** Versioned URL of the profile picture (relative to /api), null = initials. */
+const avatarUrl = (u: { id: string; avatar_at: Date | null }) => (u.avatar_at ? `/users/${u.id}/avatar?v=${new Date(u.avatar_at).getTime()}` : null);
 /** Admin listing: same as publicUser + activity. */
 const adminUser = (u: UserRow) => {
   const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
@@ -303,7 +324,7 @@ let dummyHash: string | null = null;
 const dummy = () => (dummyHash ??= bcrypt.hashSync('not-a-real-password', 11));
 
 async function findUser(where: 'id' | 'email', value: string) {
-  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
+  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
   return rows[0];
 }
 
@@ -322,8 +343,6 @@ async function route(req: Request): Promise<Response> {
       DB_CA_CERT_blocks: (process.env.DB_CA_CERT?.match(/BEGIN CERTIFICATE/g) ?? []).length,
       DB_CA_CERT_newlines: (process.env.DB_CA_CERT?.match(/\n/g) ?? []).length,
       JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32,
-      ORAL_EMAILS_count: oralEmails().length,
-      ORAL_EMAILS_set: process.env.ORAL_EMAILS !== undefined
     };
     try {
       await migrate();
@@ -393,6 +412,12 @@ async function route(req: Request): Promise<Response> {
     const displayName = str(b.displayName, 120);
     const groupe = str(b.groupe, 40);
     await db().query('UPDATE users SET display_name = COALESCE(NULLIF(?, \'\'), display_name), groupe = COALESCE(NULLIF(?, \'\'), groupe) WHERE id = ?', [displayName, groupe, userId]);
+    // avatar: a data URL sets it, '' or null removes it, absent leaves it
+    if (b.avatar === '' || b.avatar === null) await db().query('UPDATE users SET avatar = NULL, avatar_at = NULL WHERE id = ?', [userId]);
+    else if (typeof b.avatar === 'string') {
+      if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(b.avatar) || b.avatar.length > 200_000) throw new HttpError(400, 'invalid_avatar');
+      await db().query('UPDATE users SET avatar = ?, avatar_at = NOW(3) WHERE id = ?', [b.avatar, userId]);
+    }
     return json(200, { user: publicUser((await findUser('id', userId))!) });
   }
 
@@ -411,6 +436,56 @@ async function route(req: Request): Promise<Response> {
   // ----- everything below needs an approved account
   if (publicUser(me).status !== 'approved') throw new HttpError(403, me.status === 'blocked' ? 'blocked' : 'pending');
 
+  // ----- profile pictures (versioned URL → cached for a long time)
+  const av = /^\/users\/([0-9a-f-]{36})\/avatar$/.exec(path);
+  if (method === 'GET' && av) {
+    const [rows] = await db().query<RowDataPacket[]>('SELECT avatar FROM users WHERE id = ? LIMIT 1', [av[1]]);
+    const m = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(String(rows[0]?.avatar ?? ''));
+    if (!m) throw new HttpError(404, 'not_found');
+    return new Response(Buffer.from(m[2], 'base64'), { status: 200, headers: { 'content-type': m[1], 'cache-control': 'private, max-age=31536000, immutable' } });
+  }
+
+  // ----- public profile of a group member: name, picture, activity and what they studied (from their saved progress)
+  const pr = /^\/users\/([0-9a-f-]{36})\/profile$/.exec(path);
+  if (method === 'GET' && pr) {
+    const [rows] = await db().query<RowDataPacket[]>(
+      `SELECT u.id, u.display_name, u.email, u.groupe, u.role, u.status, u.session_id, u.avatar_at, u.created_at,
+              TIMESTAMPDIFF(SECOND, u.last_seen, NOW(3)) AS seen_ago, p.data
+         FROM users u LEFT JOIN progress p ON p.user_id = u.id WHERE u.id = ? LIMIT 1`,
+      [pr[1]]
+    );
+    const u = rows[0];
+    if (!u || (u.status !== 'approved' && !adminEmails().includes(String(u.email).toLowerCase()))) throw new HttpError(404, 'not_found');
+    const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
+    return json(200, {
+      profile: {
+        id: u.id,
+        displayName: u.display_name || String(u.email).split('@')[0],
+        groupe: u.groupe,
+        avatar: avatarUrl(u as { id: string; avatar_at: Date | null }),
+        createdAt: u.created_at,
+        online: !!u.session_id && seenAgo !== null && seenAgo < ONLINE_S,
+        seenAgo,
+        study: studySummary(u.data)
+      }
+    });
+  }
+
+  // ----- group chat (last CHAT_KEEP messages; ?after=<id> returns only newer ones)
+  if (method === 'GET' && path === '/chat') {
+    const after = Number(new URL(req.url).searchParams.get('after') ?? 0) || 0;
+    return json(200, { messages: await chatList(after) });
+  }
+  if (method === 'POST' && path === '/chat') {
+    const text = str((await body(req)).body, 500).replace(/\s+\n/g, '\n');
+    if (!text) throw new HttpError(400, 'empty');
+    const [last] = await db().query<RowDataPacket[]>('SELECT TIMESTAMPDIFF(MICROSECOND, MAX(created_at), NOW(3)) AS us FROM chat_messages WHERE user_id = ?', [userId]);
+    if (last[0]?.us != null && Number(last[0].us) < 1_500_000) throw new HttpError(429, 'too_fast');
+    await db().query('INSERT INTO chat_messages (user_id, body) VALUES (?, ?)', [userId, text]);
+    await db().query(`DELETE FROM chat_messages WHERE id NOT IN (SELECT id FROM (SELECT id FROM chat_messages ORDER BY id DESC LIMIT ${CHAT_KEEP}) AS keep)`);
+    return json(201, { messages: await chatList(0) });
+  }
+
   if (method === 'GET' && path === '/supports') {
     const [rows] = await db().query<RowDataPacket[]>('SELECT id, ref, subject, kind, title, url, sort, hidden, created_at FROM supports ORDER BY subject, sort, title');
     return json(200, { supports: rows.map(supportOut) });
@@ -421,7 +496,7 @@ async function route(req: Request): Promise<Response> {
     return json(200, { announcements: rows.map(annOut) });
   }
 
-  if (method === 'GET' && path === '/focus') return json(200, { focus: await readFocus() });
+  if (method === 'GET' && path === '/events') return json(200, { events: await listEvents() });
 
   if (path.startsWith('/admin/')) return admin(req, method, path.slice('/admin'.length), me);
 
@@ -482,30 +557,72 @@ function supportFields(b: Record<string, unknown>) {
   return { ref, subject, kind, title, url, sort, hidden };
 }
 
-/** The next test shown on the home page, set by the admin (null = never set: the app shows its built-in default). */
-type Focus = { enabled: boolean; kind: 'controle' | 'examen'; module: string; chapter: string; date: string; time: string; room: string; title: string; message: string; out: string[] };
-async function readFocus(): Promise<Focus | null> {
-  const [rows] = await db().query<RowDataPacket[]>("SELECT v FROM settings WHERE k = 'focus' LIMIT 1");
-  if (!rows[0]) return null;
-  return (typeof rows[0].v === 'string' ? JSON.parse(rows[0].v) : rows[0].v) as Focus;
+/**
+ * Upcoming tests, exams and lab reports ("compte rendu"), several per day and for any module.
+ * `ends_at` is the instant the item stops being relevant (its time, or the end of its day), sent by the admin's
+ * browser in UTC so the local time zone is respected; anything past it is deleted on the next read.
+ */
+type EventKind = 'controle' | 'examen' | 'cr';
+const EVENT_KINDS: EventKind[] = ['controle', 'examen', 'cr'];
+const eventOut = (r: RowDataPacket) => ({ id: r.id, kind: r.kind, module: r.module, date: r.day, time: r.time, endsAt: r.ends_at, message: r.message, createdAt: r.created_at });
+async function listEvents() {
+  await db().query('DELETE FROM events WHERE ends_at < NOW(3)');
+  const [rows] = await db().query<RowDataPacket[]>('SELECT * FROM events ORDER BY ends_at, created_at');
+  return rows.map(eventOut);
 }
-function focusFields(b: Record<string, unknown>): Focus {
-  const id = (v: unknown, max: number) => (typeof v === 'string' && /^[a-z0-9-]*$/i.test(v) ? v.slice(0, max) : '');
-  const date = typeof b.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(b.date) ? b.date : '';
+function eventFields(b: Record<string, unknown>) {
+  const kind = EVENT_KINDS.includes(b.kind as EventKind) ? (b.kind as EventKind) : 'controle';
+  const module = typeof b.module === 'string' && /^[a-z0-9-]{1,20}$/i.test(b.module) ? b.module : '';
+  const day = typeof b.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(b.date) ? b.date : '';
   const time = typeof b.time === 'string' && /^\d{2}:\d{2}$/.test(b.time) ? b.time : '';
-  const module = id(b.module, 20);
-  if (!module) throw new HttpError(400, 'missing_fields');
+  const ends = typeof b.endsAt === 'string' ? new Date(b.endsAt) : null;
+  if (!module || !day || !ends || Number.isNaN(ends.getTime())) throw new HttpError(400, 'missing_fields');
+  if (ends.getTime() < Date.now()) throw new HttpError(400, 'past_date');
+  const message = typeof b.message === 'string' ? b.message.trim().slice(0, 3000) : '';
+  return { kind, module, day, time, ends, message };
+}
+
+const CHAT_KEEP = 20;
+async function chatList(after: number) {
+  const [rows] = await db().query<RowDataPacket[]>(
+    `SELECT m.id, m.body, m.created_at, u.id AS uid, u.display_name, u.email, u.avatar_at, u.role
+       FROM chat_messages m JOIN users u ON u.id = m.user_id
+      WHERE m.id > ? ORDER BY m.id DESC LIMIT ${CHAT_KEEP}`,
+    [after]
+  );
+  return rows.reverse().map((r) => ({
+    id: Number(r.id),
+    body: r.body,
+    at: r.created_at,
+    user: { id: r.uid, name: r.display_name || String(r.email).split('@')[0], avatar: avatarUrl({ id: r.uid, avatar_at: r.avatar_at }), admin: r.role === 'admin' || adminEmails().includes(String(r.email).toLowerCase()) }
+  }));
+}
+
+/** What a member studied, from their saved progress: never the raw data (answers, cards…), only a summary. */
+function studySummary(raw: unknown) {
+  type P = { xp?: number; streak?: { count?: number }; read?: Record<string, boolean>; chapterPos?: Record<string, { pct?: number; at?: number }>; exams?: { module?: string; note?: number; date?: number }[]; exercises?: Record<string, string>; qstats?: Record<string, unknown>; lastVisit?: { module?: string; chapter?: string; at?: number } | null };
+  let d: P = {};
+  try {
+    d = (typeof raw === 'string' ? JSON.parse(raw) : raw ?? {}) as P;
+  } catch {
+    d = {};
+  }
+  const read = Object.entries(d.read ?? {}).filter(([, v]) => v).map(([k]) => k);
+  const inProgress = Object.entries(d.chapterPos ?? {})
+    .filter(([k, v]) => !d.read?.[k] && (v?.pct ?? 0) > 0)
+    .sort((a, b) => (b[1]?.at ?? 0) - (a[1]?.at ?? 0))
+    .slice(0, 8)
+    .map(([k, v]) => ({ key: k, pct: Math.round(v?.pct ?? 0) }));
+  const exams = (d.exams ?? []).slice(-5).reverse().map((e) => ({ module: e.module ?? '', note: Math.round((e.note ?? 0) * 10) / 10, date: e.date ?? 0 }));
   return {
-    enabled: b.enabled !== false,
-    kind: b.kind === 'examen' ? 'examen' : 'controle',
-    module,
-    chapter: id(b.chapter, 40),
-    date,
-    time,
-    room: str(b.room, 60),
-    title: str(b.title, 200),
-    message: typeof b.message === 'string' ? b.message.trim().slice(0, 3000) : '',
-    out: Array.isArray(b.out) ? b.out.map((x) => id(x, 40)).filter(Boolean).slice(0, 40) : []
+    xp: d.xp ?? 0,
+    streak: d.streak?.count ?? 0,
+    read,
+    inProgress,
+    exams,
+    exercisesOk: Object.values(d.exercises ?? {}).filter((v) => v === 'ok').length,
+    questions: Object.keys(d.qstats ?? {}).length,
+    lastVisit: d.lastVisit ? { module: d.lastVisit.module ?? '', chapter: d.lastVisit.chapter ?? '', at: d.lastVisit.at ?? 0 } : null
   };
 }
 
@@ -520,7 +637,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
   // ----- users
   if (method === 'GET' && path === '/users') {
     const [rows] = await p.query<UserRow[]>(
-      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at,
+      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, created_at,
               TIMESTAMPDIFF(SECOND, last_seen, NOW(3)) AS seen_ago,
               TIMESTAMPDIFF(SECOND, online_since, NOW(3)) AS online_for
          FROM users ORDER BY (status = 'pending') DESC, created_at DESC`
@@ -623,20 +740,30 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     return json(200, { ok: true });
   }
 
-  // ----- home page: next test (+ optional announcement with what it covers)
-  if (method === 'PUT' && path === '/focus') {
-    const b = await body(req);
-    const f = focusFields(b);
-    await p.query("INSERT INTO settings (k, v) VALUES ('focus', ?) ON DUPLICATE KEY UPDATE v = VALUES(v)", [JSON.stringify(f)]);
-    if (b.announce === true) {
-      const title = str(b.announceTitle, 200) || f.title || (f.kind === 'examen' ? 'Examen' : 'Contrôle');
-      await p.query('INSERT INTO announcements (id, title, body, pinned) VALUES (?, ?, ?, 1)', [randomUUID(), title, f.message]);
-    }
-    return json(200, { focus: f });
+  // ----- chat moderation
+  const cm = /^\/chat\/(\d+)$/.exec(path);
+  if (cm && method === 'DELETE') {
+    await p.query('DELETE FROM chat_messages WHERE id = ?', [Number(cm[1])]);
+    return json(200, { messages: await chatList(0) });
   }
-  if (method === 'DELETE' && path === '/focus') {
-    await p.query("DELETE FROM settings WHERE k = 'focus'");
-    return json(200, { focus: null });
+
+  // ----- upcoming tests / exams / lab reports
+  if (method === 'POST' && path === '/events') {
+    const f = eventFields(await body(req));
+    const id = randomUUID();
+    await p.query('INSERT INTO events (id, kind, module, day, time, ends_at, message) VALUES (?, ?, ?, ?, ?, ?, ?)', [id, f.kind, f.module, f.day, f.time, f.ends, f.message]);
+    return json(201, { events: await listEvents() });
+  }
+  const ev = idOf('events');
+  if (ev && method === 'PUT') {
+    const f = eventFields(await body(req));
+    const [r] = await p.query<ResultSetHeader>('UPDATE events SET kind = ?, module = ?, day = ?, time = ?, ends_at = ?, message = ? WHERE id = ?', [f.kind, f.module, f.day, f.time, f.ends, f.message, ev.id]);
+    if (!r.affectedRows) throw new HttpError(404, 'not_found');
+    return json(200, { events: await listEvents() });
+  }
+  if (ev && method === 'DELETE') {
+    await p.query('DELETE FROM events WHERE id = ?', [ev.id]);
+    return json(200, { events: await listEvents() });
   }
 
   // ----- announcements

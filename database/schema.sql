@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS users (
   session_id CHAR(36) NULL,                      -- session partagée par les appareils du compte (remise à zéro par l'admin)
   last_seen DATETIME(3) NULL,                    -- dernière activité (mise à jour toutes les ~45 s quand l'onglet est ouvert)
   online_since DATETIME(3) NULL,                 -- début de la visite en cours (pour « en ligne depuis »)
+  avatar MEDIUMTEXT NULL,                        -- photo de profil (data URL JPEG/PNG/WebP, redimensionnée dans le navigateur)
+  avatar_at DATETIME(3) NULL,                    -- version de la photo (URL mise en cache)
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   UNIQUE KEY uq_users_email (email)
@@ -44,9 +46,25 @@ CREATE TABLE IF NOT EXISTS announcements (
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Réglages modifiés par l'admin (clé → JSON). "focus" = le prochain contrôle affiché sur la page d'accueil.
-CREATE TABLE IF NOT EXISTS settings (
-  k VARCHAR(40) NOT NULL PRIMARY KEY,
-  v JSON NOT NULL,
-  updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
+-- Contrôles, examens et comptes rendus annoncés sur l'accueil (plusieurs par jour, tout module).
+-- ends_at = heure de fin (ou fin de journée) en UTC ; la ligne est supprimée automatiquement une fois passée.
+CREATE TABLE IF NOT EXISTS events (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  kind VARCHAR(10) NOT NULL DEFAULT 'controle',   -- 'controle' | 'examen' | 'cr' (compte rendu)
+  module VARCHAR(20) NOT NULL,
+  day CHAR(10) NOT NULL,                          -- AAAA-MM-JJ (affichage)
+  time CHAR(5) NOT NULL DEFAULT '',               -- HH:MM ou vide
+  ends_at DATETIME(3) NOT NULL,
+  message TEXT NOT NULL,
+  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  KEY ix_events_ends (ends_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Discussion du groupe : seuls les 20 derniers messages sont gardés (les plus anciens sont supprimés à chaque envoi).
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  body VARCHAR(500) NOT NULL,
+  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -4,7 +4,7 @@
  *     presence: who is online now, since when, who just arrived, last seen (refreshed every 20 s)
  *   - Supports : add a document (Drive link / URL), edit or hide a built-in file, delete
  *   - Annonces : messages shown at the top of the home page
- *   - Accueil : the next test shown on the home page (module, date, time, room, what it covers, chapters out of it)
+ *   - Contrôles · CR : tests, exams and lab reports shown on the home page (several per day, any module, auto-removed once past)
  * Admin-only tool: labels are in French.
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
@@ -13,9 +13,8 @@ import { api, useAuth } from '../auth/auth';
 import { KINDS, RESOURCES, SUBJECTS, subjectById, type ResourceKind } from '../lib/catalog';
 import { useRemoteSupports, type RemoteSupport } from '../lib/resources';
 import type { Announcement } from '../components/Announcements';
-import { MODULES, loadModule } from '../lib/content';
-import { DEFAULT_FOCUS, daysUntil, setFocusCache, type Focus } from '../lib/focus';
-import type { Chapter } from '../lib/schema';
+import { MODULES } from '../lib/content';
+import { endsAtIso, setEventsCache, type EventKind, type UpcomingEvent } from '../lib/events';
 
 type Status = 'pending' | 'approved' | 'blocked';
 interface AdminUser {
@@ -86,6 +85,7 @@ const ERR: Record<string, string> = {
   cannot_logout_self: 'Utilise « Se déconnecter » pour ta propre session.',
   exists: 'Ce fichier a déjà une modification : modifie-la.',
   forbidden: 'Réservé à l\'admin.',
+  past_date: 'Cette date / heure est déjà passée.',
   network: 'Serveur injoignable.'
 };
 const errMsg = (code: string) => ERR[code] ?? `Erreur (${code})`;
@@ -708,208 +708,166 @@ function AnnouncementsTab() {
   );
 }
 
-// ---------------------------------------------------------------- home page: next test
-function FocusTab() {
-  const [form, setForm] = useState<Focus | null>(null);
-  const [custom, setCustom] = useState(false);
-  const [chapters, setChapters] = useState<Chapter[]>([]);
-  const [announce, setAnnounce] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
-  const [busy, setBusy] = useState(false);
+// ---------------------------------------------------------------- home page: tests, exams, lab reports
+type EventForm = { id?: string; kind: EventKind; module: string; date: string; time: string; message: string };
+const KIND_LABEL: Record<EventKind, string> = { controle: 'Contrôle', examen: 'Examen', cr: 'Compte rendu' };
+const todayIso = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+const emptyEvent = (): EventForm => ({ kind: 'controle', module: MODULES[0]?.id ?? 'data', date: todayIso(), time: '', message: '' });
 
+function EventsTab() {
+  const [list, setList] = useState<UpcomingEvent[] | null>(null);
+  const [form, setForm] = useState<EventForm>(emptyEvent);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState<string | null>(null);
+
+  const apply = (events: UpcomingEvent[]) => {
+    setList(events);
+    setEventsCache(events);
+  };
   const load = useCallback(async () => {
-    const r = await api<{ focus: Focus | null }>('GET', '/focus');
-    if (!r.ok) return setError(errMsg(r.error));
-    setCustom(!!r.data.focus);
-    setForm({ ...DEFAULT_FOCUS, ...(r.data.focus ?? {}) });
+    const r = await api<{ events: UpcomingEvent[] }>('GET', '/events');
+    if (r.ok) apply(r.data.events);
+    else setError(errMsg(r.error));
   }, []);
   useEffect(() => {
     void load();
   }, [load]);
-  // chapters of the chosen module (priority chapter + chapters out of the test)
-  const moduleId = form?.module;
-  useEffect(() => {
-    if (!moduleId) return;
-    let live = true;
-    void loadModule(moduleId).then((c) => live && setChapters(c.chapters));
-    return () => {
-      live = false;
-    };
-  }, [moduleId]);
 
-  if (!form) return <p className="py-8 text-center text-sm text-muted">{error ?? 'Chargement…'}</p>;
-  const set = (p: Partial<Focus>) => (setSaved(false), setForm({ ...form, ...p }));
-  const mod = MODULES.find((m) => m.id === form.module);
-  const days = daysUntil(form.date);
-
+  const set = (p: Partial<EventForm>) => (setSaved(null), setForm({ ...form, ...p }));
   const save = async (e: FormEvent) => {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const r = await api<{ focus: Focus }>('PUT', '/admin/focus', { ...form, announce });
+    const payload = { kind: form.kind, module: form.module, date: form.date, time: form.time, message: form.message, endsAt: endsAtIso(form.date, form.time) };
+    const r = form.id ? await api<{ events: UpcomingEvent[] }>('PUT', `/admin/events/${form.id}`, payload) : await api<{ events: UpcomingEvent[] }>('POST', '/admin/events', payload);
     setBusy(false);
     if (!r.ok) return setError(errMsg(r.error));
-    setFocusCache(r.data.focus);
-    setCustom(true);
-    setAnnounce(false);
-    setSaved(true);
+    apply(r.data.events);
+    setSaved(form.id ? 'Modifié.' : 'Ajouté : il est sur l\'accueil.');
+    setForm({ ...emptyEvent(), kind: form.kind, date: form.date });
   };
-  const reset = async () => {
-    if (!confirmDo('Revenir à la carte par défaut (Analyse de données) ?')) return;
-    const r = await api('DELETE', '/admin/focus');
+  const remove = async (ev: UpcomingEvent) => {
+    if (!confirmDo(`Supprimer « ${KIND_LABEL[ev.kind]} · ${MODULES.find((m) => m.id === ev.module)?.title.fr ?? ev.module} » du ${ev.date} ?`)) return;
+    const r = await api<{ events: UpcomingEvent[] }>('DELETE', `/admin/events/${ev.id}`);
     if (!r.ok) return setError(errMsg(r.error));
-    setFocusCache(null);
-    setSaved(false);
-    await load();
+    apply(r.data.events);
+    if (form.id === ev.id) setForm(emptyEvent());
   };
+  const edit = (ev: UpcomingEvent) => (setSaved(null), setError(null), setForm({ id: ev.id, kind: ev.kind, module: ev.module, date: ev.date, time: ev.time, message: ev.message }));
+  const dayLabel = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const days = [...new Set((list ?? []).map((e) => e.date))];
+  const cr = form.kind === 'cr';
 
   return (
-    <form onSubmit={save} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]" data-testid="admin-focus">
-      <div className="space-y-4">
-        <label className={`flex items-center gap-3 rounded-lg border p-3 ${form.enabled ? 'border-ok/40 bg-ok/[0.05]' : 'border-line bg-surface2/60'}`}>
-          <input type="checkbox" checked={form.enabled} onChange={(e) => set({ enabled: e.target.checked })} />
-          <span>
-            <span className="block font-semibold">Afficher le prochain contrôle sur l&apos;accueil</span>
-            <span className="block text-xs text-muted">Décoche pour retirer la carte quand il n&apos;y a pas de contrôle à venir.</span>
-          </span>
-        </label>
-
-        <div className="grid gap-3 sm:grid-cols-3">
-          <F label="Type">
-            <select className="input" value={form.kind} onChange={(e) => set({ kind: e.target.value as Focus['kind'] })}>
-              <option value="controle">Contrôle</option>
-              <option value="examen">Examen</option>
-            </select>
-          </F>
-          <F label="Module">
-            <select className="input" value={form.module} onChange={(e) => set({ module: e.target.value, chapter: '', out: [] })}>
-              {MODULES.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.title.fr}
-                </option>
-              ))}
-            </select>
-          </F>
-          <F label="Chapitre prioritaire">
-            <select className="input" value={form.chapter} onChange={(e) => set({ chapter: e.target.value })}>
-              <option value="">Premier chapitre</option>
-              {chapters.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.title.fr}
-                </option>
-              ))}
-            </select>
-          </F>
+    <div className="grid gap-6 lg:grid-cols-[22rem_minmax(0,1fr)]" data-testid="admin-events">
+      <form onSubmit={save} className="h-fit space-y-3 rounded-xl border border-line bg-surface p-4 lg:sticky lg:top-28">
+        <div className="font-semibold">{form.id ? 'Modifier' : 'Ajouter un contrôle, un examen ou un compte rendu'}</div>
+        <div className="grid grid-cols-3 gap-1.5">
+          {(['controle', 'examen', 'cr'] as const).map((k) => (
+            <button
+              type="button"
+              key={k}
+              onClick={() => set({ kind: k })}
+              className={`rounded-lg border px-2 py-1.5 text-xs font-bold ${form.kind === k ? (k === 'cr' ? 'border-bad bg-bad text-white' : 'border-accent bg-accent text-white') : 'border-line text-muted hover:text-fg'}`}
+            >
+              {KIND_LABEL[k]}
+            </button>
+          ))}
         </div>
-
-        <div className="grid gap-3 sm:grid-cols-3">
-          <F label="Date">
-            <input className="input" type="date" value={form.date} onChange={(e) => set({ date: e.target.value })} />
+        <F label="Module">
+          <select className="input" value={form.module} onChange={(e) => set({ module: e.target.value })}>
+            {MODULES.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.title.fr}
+              </option>
+            ))}
+          </select>
+        </F>
+        <div className="grid grid-cols-2 gap-3">
+          <F label={cr ? 'À rendre le' : 'Date'}>
+            <input className="input" type="date" required min={todayIso()} value={form.date} onChange={(e) => set({ date: e.target.value })} />
           </F>
-          <F label="Heure (facultatif)">
+          <F label={cr ? 'Avant (heure)' : 'Heure'}>
             <input className="input" type="time" value={form.time} onChange={(e) => set({ time: e.target.value })} />
           </F>
-          <F label="Salle (facultatif)">
-            <input className="input" value={form.room} maxLength={60} placeholder="ex. B12" onChange={(e) => set({ room: e.target.value })} />
-          </F>
         </div>
-
-        <F label="Titre (vide = titre automatique)">
-          <input className="input" value={form.title} maxLength={200} placeholder={`${form.kind === 'examen' ? 'Examen' : 'Contrôle'} — ${mod?.title.fr ?? ''}`} onChange={(e) => set({ title: e.target.value })} />
-        </F>
-        <F label="Ce qui tombe (un point par ligne)">
+        <F label={cr ? 'Consignes (ce qu\'il faut rendre)' : 'Ce qui tombe (un point par ligne)'}>
           <textarea
-            className="input min-h-[140px]"
+            className="input min-h-[110px]"
             value={form.message}
             maxLength={3000}
-            placeholder={'Exemple :\n- pandas : lire, vérifier, modifier, sauvegarder\n- test Z et Student dans les 3 cas ≠, <, >\n- calculatrice autorisée, pas de documents'}
+            placeholder={cr ? 'ex. Compte rendu du TP 3, PDF sur Classroom' : 'ex.\n- pandas : lire, vérifier, sauvegarder\n- tests Z et Student, 3 cas ≠, <, >'}
             onChange={(e) => set({ message: e.target.value })}
           />
         </F>
-
-        {chapters.length > 0 && (
-          <div>
-            <div className="mb-1.5 text-xs font-semibold text-muted">Chapitres hors contrôle (barrés sur l&apos;accueil, retirés du plan de révision)</div>
-            <div className="flex flex-wrap gap-1.5">
-              {chapters.map((c) => {
-                const out = form.out.includes(c.id);
-                return (
-                  <button
-                    type="button"
-                    key={c.id}
-                    className={`chip !py-1 !text-sm ${out ? '!border-bad !text-bad line-through' : ''}`}
-                    onClick={() => set({ out: out ? form.out.filter((x) => x !== c.id) : [...form.out, c.id] })}
-                  >
-                    {c.title.fr}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        <label className="flex items-start gap-3 rounded-lg border border-line p-3">
-          <input type="checkbox" className="mt-1" checked={announce} onChange={(e) => setAnnounce(e.target.checked)} />
-          <span>
-            <span className="block font-semibold">Publier aussi une annonce</span>
-            <span className="block text-xs text-muted">Annonce épinglée en haut de l&apos;accueil, avec le titre et le texte « Ce qui tombe ».</span>
-          </span>
-        </label>
-
+        <p className="text-[11px] text-muted">Sans heure : visible jusqu&apos;à la fin de la journée. Il disparaît de l&apos;accueil et de la base dès que l&apos;heure est passée.</p>
         <ErrorLine error={error} />
         <div className="flex flex-wrap items-center gap-2">
-          <button className="btn-primary" disabled={busy}>
-            <Icon name="check" size={16} /> Enregistrer
+          <button className="btn-primary btn-sm" disabled={busy}>
+            <Icon name="check" size={14} /> {form.id ? 'Enregistrer' : 'Ajouter'}
           </button>
-          {custom && (
-            <button type="button" className="btn-ghost" onClick={() => void reset()}>
-              <Icon name="reset" size={16} /> Carte par défaut
+          {form.id && (
+            <button type="button" className="btn-ghost btn-sm" onClick={() => setForm(emptyEvent())}>
+              Annuler
             </button>
           )}
-          {saved && <span className="text-sm font-semibold text-ok">Enregistré : l&apos;accueil est à jour.</span>}
-          {!custom && <span className="text-xs text-muted">Rien n&apos;est encore enregistré : l&apos;accueil montre la carte par défaut.</span>}
+          {saved && <span className="text-xs font-semibold text-ok">{saved}</span>}
+        </div>
+      </form>
+
+      <div>
+        {!list && <p className="py-8 text-center text-sm text-muted">Chargement…</p>}
+        {list && !list.length && <p className="rounded-lg border border-dashed border-line px-4 py-8 text-center text-sm text-muted">Rien à venir : l&apos;accueil n&apos;affiche aucun contrôle.</p>}
+        <div className="space-y-5">
+          {days.map((d) => (
+            <section key={d}>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-muted first-letter:uppercase">{dayLabel(d)}</h3>
+              <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
+                {list!
+                  .filter((e) => e.date === d)
+                  .map((e) => (
+                    <li key={e.id} className={`flex items-start gap-3 px-4 py-3 ${e.kind === 'cr' ? 'bg-bad/[0.04]' : ''} ${form.id === e.id ? 'ring-2 ring-inset ring-accent' : ''}`} data-testid="admin-event">
+                      <Icon name={e.kind === 'cr' ? 'file' : 'calendar'} size={16} className={`mt-1 shrink-0 ${e.kind === 'cr' ? 'text-bad' : 'text-accent'}`} />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-x-2">
+                          <span className={`text-[11px] font-bold uppercase ${e.kind === 'cr' ? 'text-bad' : 'text-accent'}`}>{KIND_LABEL[e.kind]}</span>
+                          <span className="font-semibold">{MODULES.find((m) => m.id === e.module)?.title.fr ?? e.module}</span>
+                          <span className="text-sm text-muted">{e.time ? (e.kind === 'cr' ? `avant ${e.time.replace(':', 'h')}` : e.time.replace(':', 'h')) : 'toute la journée'}</span>
+                        </div>
+                        {e.message && <p className="mt-0.5 whitespace-pre-line text-sm text-muted">{e.message}</p>}
+                      </div>
+                      <div className="flex shrink-0 gap-1.5">
+                        <button className="btn-ghost btn-sm" onClick={() => edit(e)}>
+                          <Icon name="settings" size={14} /> Modifier
+                        </button>
+                        <button className="btn-ghost btn-sm text-bad" title="Supprimer" onClick={() => void remove(e)} data-testid="admin-event-delete">
+                          <Icon name="trash" size={14} />
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </div>
-
-      {/* preview */}
-      <aside className="h-fit rounded-xl border border-line bg-surface p-4 lg:sticky lg:top-28">
-        <div className="eyebrow mb-2">Aperçu</div>
-        {form.enabled ? (
-          <>
-            <div className="text-[11px] font-bold uppercase tracking-wide text-accent">
-              Prochain {form.kind === 'examen' ? 'examen' : 'contrôle'} · {mod?.title.fr}
-            </div>
-            <div className="mt-1 font-display text-lg font-bold leading-snug">{form.title || `${form.kind === 'examen' ? 'Examen' : 'Contrôle'} — ${mod?.title.fr ?? ''}`}</div>
-            <div className="mt-2 text-sm">
-              {form.date ? new Date(`${form.date}T12:00:00`).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : 'Date à confirmer'}
-              {form.time && ` · ${form.time.replace(':', 'h')}`}
-              {form.room && ` · salle ${form.room}`}
-            </div>
-            {days !== null && (
-              <div className={`mt-1 text-xs font-bold ${days < 0 ? 'text-muted' : days <= 1 ? 'text-bad' : 'text-accent'}`}>
-                {days < 0 ? 'Passé : pense à le changer ou à masquer la carte' : days === 0 ? "Aujourd'hui" : days === 1 ? 'Demain' : `Dans ${days} jours`}
-              </div>
-            )}
-            {form.message && <p className="mt-3 whitespace-pre-line rounded-lg bg-accent/[0.06] p-2.5 text-sm">{form.message}</p>}
-          </>
-        ) : (
-          <p className="text-sm text-muted">Carte masquée : aucun contrôle n&apos;est affiché sur l&apos;accueil.</p>
-        )}
-      </aside>
-    </form>
+    </div>
   );
 }
 
 // ---------------------------------------------------------------- page
-type Tab = 'users' | 'focus' | 'supports' | 'announcements';
+type Tab = 'users' | 'events' | 'supports' | 'announcements';
 
 export default function AdminPage() {
   const [tab, setTab] = useState<Tab>('users');
   const [pending, setPending] = useState(0);
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: 'users', label: 'Comptes', icon: 'user' },
-    { id: 'focus', label: 'Accueil · contrôle', icon: 'calendar' },
+    { id: 'events', label: 'Contrôles · CR', icon: 'calendar' },
     { id: 'supports', label: 'Supports', icon: 'inbox' },
     { id: 'announcements', label: 'Annonces', icon: 'bell' }
   ];
@@ -918,7 +876,7 @@ export default function AdminPage() {
       <div className="mb-6 border-b border-line pb-6">
         <div className="eyebrow mb-2">GROUP22 · Administration</div>
         <h1 className="h1">Tableau de bord</h1>
-        <p className="mt-2 text-[15px] text-muted">Valide les nouveaux comptes, vois qui est en ligne, choisis le contrôle affiché sur l&apos;accueil, gère les supports et publie des annonces.</p>
+        <p className="mt-2 text-[15px] text-muted">Valide les nouveaux comptes, vois qui est en ligne, annonce les contrôles et comptes rendus, gère les supports et publie des annonces.</p>
       </div>
       <div className="scroll-thin mb-6 flex gap-1 overflow-x-auto border-b border-line" role="tablist">
         {tabs.map((x) => (
@@ -938,7 +896,7 @@ export default function AdminPage() {
       <div hidden={tab !== 'users'}>
         <UsersTab onPending={setPending} />
       </div>
-      {tab === 'focus' && <FocusTab />}
+      {tab === 'events' && <EventsTab />}
       {tab === 'supports' && <SupportsTab />}
       {tab === 'announcements' && <AnnouncementsTab />}
     </div>

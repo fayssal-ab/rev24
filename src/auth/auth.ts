@@ -6,7 +6,7 @@ import { useStore, EXPORT_KEYS, type State } from '../store/store';
  * Enabled when VITE_AUTH=on (set on Netlify). Without it the site runs in "local mode" exactly as before.
  */
 export const authEnabled = import.meta.env.VITE_AUTH === 'on';
-const API = (import.meta.env.VITE_API_URL ?? '/api').replace(/\/$/, '');
+export const API = (import.meta.env.VITE_API_URL ?? '/api').replace(/\/$/, '');
 
 export interface User {
   id: string;
@@ -17,6 +17,8 @@ export interface User {
   /** pending = waiting for the admin's approval; blocked = refused / suspended */
   status: 'pending' | 'approved' | 'blocked';
   features: string[];
+  /** profile picture URL (relative to the API), null = initials */
+  avatar: string | null;
 }
 
 interface AuthState {
@@ -210,7 +212,7 @@ export async function changePassword(current: string, next: string): Promise<Aut
   return r.ok ? { ok: true } : { ok: false, error: r.error };
 }
 
-export async function updateProfile(p: { displayName?: string; groupe?: string }): Promise<AuthResult> {
+export async function updateProfile(p: { displayName?: string; groupe?: string; avatar?: string | null }): Promise<AuthResult> {
   const r = await api<{ user: User }>('PUT', '/profile', p);
   if (!r.ok) return { ok: false, error: r.error };
   useAuth.setState({ user: r.data.user });

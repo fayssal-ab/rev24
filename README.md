@@ -24,7 +24,7 @@ Chaque étudiant crée son compte (e-mail + mot de passe) ; sa progression est e
 
 - API : `netlify/functions/api.mts` (Netlify Function, servie sous `/api/*`) — mots de passe hachés avec bcrypt, session dans un cookie `httpOnly` signé (JWT), chaque utilisateur n'accède qu'à ses données.
 - Tables : `database/schema.sql` (créées automatiquement au premier appel de l'API).
-- Le coach de présentation orale n'est visible que pour les e-mails listés dans `ORAL_EMAILS` (côté serveur).
+- Le coach de présentation orale n'est visible que pour l'admin principal (fayssal.abaibat@emsi-edu.ma), décidé côté serveur.
 
 Variables d'environnement (Netlify → Site configuration → Environment variables) :
 
@@ -34,7 +34,6 @@ Variables d'environnement (Netlify → Site configuration → Environment variab
 | `DATABASE_URL` | `mysql://avnadmin:MOT_DE_PASSE@hôte:port/defaultdb` (Aiven → Service URI) |
 | `DB_CA_CERT` | contenu du « CA certificate » Aiven (texte PEM) |
 | `JWT_SECRET` | longue chaîne aléatoire (≥ 32 caractères) |
-| `ORAL_EMAILS` | facultatif, e-mails autorisés pour le coach oral (séparés par des virgules) |
 
 En local : copier `.env.example` en `.env.local`, lancer `npm run dev:api` puis `VITE_AUTH=on npm run dev`.
 

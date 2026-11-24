@@ -9,7 +9,9 @@ import { Icon } from '../components/Icon';
 import { ACADEMIC_YEAR, SUBJECTS } from '../lib/catalog';
 import { useResources } from '../lib/resources';
 import { Announcements } from '../components/Announcements';
-import { ExamFocus } from '../components/ExamFocus';
+import { UpcomingTests } from '../components/UpcomingTests';
+import { Avatar } from '../components/Avatar';
+import { useAuth } from '../auth/auth';
 
 /** Section title: poster caps with a short green bar. */
 function Title({ children }: { children: string }) {
@@ -32,6 +34,9 @@ export default function Home() {
   const last = st.lastVisit;
   const lastContent = last && content?.find((c) => c.module.id === last.module);
   const lastChapter = last?.chapter ? lastContent?.chapters.find((c) => c.id === last.chapter) : undefined;
+  const user = useAuth((a) => a.user);
+  const first = (user?.displayName || '').trim().split(/\s+/)[0] ?? '';
+  const readCount = Object.values(st.read).filter(Boolean).length;
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -40,6 +45,7 @@ export default function Home() {
 
   return (
     <div className="mx-auto max-w-[1400px] space-y-10">
+      <UpcomingTests />
       <Announcements />
 
       {/* cover: brand + search on the left, the class photo on the right (never upscaled, so it stays sharp) */}
@@ -72,28 +78,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* the next written test: one focus, not a list of everything */}
-      <ExamFocus />
-
-      <Link to="/preparation" className="group flex items-center gap-4 rounded-xl border-2 border-accent bg-accent/5 px-5 py-4 transition hover:bg-accent hover:text-white" data-testid="home-prep">
-        <Icon name="calendar" size={22} className="shrink-0 text-accent group-hover:text-white" />
-        <span className="min-w-0 flex-1">
-          <span className="block font-display text-lg font-bold">{t('nav.prep')}</span>
-          <span className="block truncate text-sm text-muted group-hover:text-white/80">{t('prep.sub')}</span>
-        </span>
-        <Icon name="arrowRight" size={16} className="shrink-0 transition group-hover:translate-x-1" />
-      </Link>
-
-      {last && lastContent && (
-        <Link to={last.path} className="group flex items-center gap-4 rounded-xl border-2 border-fg px-5 py-4 transition hover:bg-fg hover:text-bg" data-testid="resume">
-          <Icon name="history" size={20} className="shrink-0 text-accent" />
-          <span className="min-w-0 flex-1 truncate font-semibold">
-            <span className="text-muted group-hover:text-bg/70">{t('home.resume')} · </span>
-            {lastChapter ? tl(lastChapter.title) : tl(lastContent.module.title)}
-          </span>
-          <Icon name="arrowRight" size={16} className="shrink-0 transition group-hover:translate-x-1" />
-        </Link>
-      )}
+      {/* welcome strip: who I am, where I am, what to do next */}
+      <section className="grid gap-4 rounded-2xl border border-line bg-surface p-4 shadow-sm sm:p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center" data-testid="home-welcome">
+        <div className="flex min-w-0 items-center gap-4">
+          {user ? <Avatar name={user.displayName || user.email} src={user.avatar} size={52} className="ring-2 ring-accent/30" /> : <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full bg-accent/10 text-accent"><Icon name="user" size={24} /></span>}
+          <div className="min-w-0">
+            <div className="truncate font-display text-xl font-bold">
+              {t('home.hello')}
+              {first ? `, ${first}` : ''}
+            </div>
+            <div className="mt-1.5 flex flex-wrap gap-1.5 text-xs font-semibold">
+              <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2.5 py-1 text-accent">
+                <Icon name="star" size={12} /> {t('prog.level')} {Math.floor(st.xp / 500) + 1} · {st.xp} XP
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-warn/10 px-2.5 py-1 text-warn">
+                <Icon name="flame" size={12} /> {st.streak.count} {t('home.days')}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-surface2 px-2.5 py-1 text-muted">
+                <Icon name="book" size={12} /> {readCount} {t('home.chaptersRead')}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          {last && lastContent && (
+            <Link to={last.path} className="btn-primary min-w-0 justify-start sm:max-w-[22rem]" data-testid="resume">
+              <Icon name="history" size={16} />
+              <span className="truncate">
+                {t('home.resume')} · {lastChapter ? tl(lastChapter.title) : tl(lastContent.module.title)}
+              </span>
+            </Link>
+          )}
+          <Link to="/preparation" className="btn-ghost justify-start" data-testid="home-prep">
+            <Icon name="calendar" size={16} /> {t('nav.prep')}
+          </Link>
+        </div>
+      </section>
 
       <section id="modules" className="scroll-mt-28">
         <Title>{t('home.others')}</Title>
@@ -115,8 +135,11 @@ export default function Home() {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-display text-[1.05rem] font-semibold">{tl(s.title)}</span>
                   {mastery !== null ? (
-                    <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full bg-surface2" title={`${mastery}%`}>
-                      <span className="block h-full bg-accent" style={{ width: `${mastery}%` }} />
+                    <span className="mt-1.5 flex items-center gap-2">
+                      <span className="block h-1.5 flex-1 overflow-hidden rounded-full bg-surface2" title={`${mastery}%`}>
+                        <span className="block h-full rounded-full bg-accent transition-[width] duration-700" style={{ width: `${mastery}%` }} />
+                      </span>
+                      <span className="font-mono text-[11px] tabular-nums text-muted">{mastery}%</span>
                     </span>
                   ) : (
                     <span className="mt-0.5 block text-xs text-muted">

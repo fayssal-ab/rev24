@@ -11,6 +11,57 @@ import { Ring } from '../components/Ring';
 import { Icon } from '../components/Icon';
 import type { UIKey } from '../i18n/ui';
 import { authEnabled, changePassword, signOut, updateProfile, useAuth, useCanSeeOral } from '../auth/auth';
+import { Avatar, toAvatarDataUrl } from '../components/Avatar';
+
+/** Profile picture with "change" / "remove" (resized to 160 px in the browser before upload). */
+function AvatarEditor() {
+  const { t } = useT();
+  const user = useAuth((a) => a.user);
+  const input = useRef<HTMLInputElement>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState(false);
+  const name = user?.displayName || user?.email || '?';
+  const pick = async (file?: File) => {
+    if (!file) return;
+    setBusy(true);
+    setErr(false);
+    try {
+      const r = await updateProfile({ avatar: await toAvatarDataUrl(file) });
+      setErr(!r.ok);
+    } catch {
+      setErr(true);
+    }
+    setBusy(false);
+  };
+  if (!authEnabled || !user)
+    return (
+      <span className="icon-tile h-14 w-14 shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/20 sm:h-16 sm:w-16">
+        <Icon name="user" size={28} />
+      </span>
+    );
+  return (
+    <div className="flex shrink-0 items-center gap-3 md:flex-col md:items-center md:gap-1.5">
+      <button type="button" className="group relative rounded-full ring-2 ring-white/30 transition hover:ring-emerald-300" onClick={() => input.current?.click()} aria-label={t('profile.avatar.change')} data-testid="avatar-change">
+        <Avatar name={name} src={user.avatar} size={72} />
+        <span className="absolute inset-0 grid place-items-center rounded-full bg-black/45 opacity-0 transition group-hover:opacity-100">
+          <Icon name={busy ? 'clock' : 'image'} size={22} />
+        </span>
+      </button>
+      <input ref={input} type="file" accept="image/*" className="hidden" onChange={(e) => void pick(e.target.files?.[0]).finally(() => (e.target.value = ''))} />
+      <div className="flex gap-2 text-[11px] font-semibold">
+        <button type="button" className="text-emerald-300 hover:underline" onClick={() => input.current?.click()} disabled={busy}>
+          {t('profile.avatar.change')}
+        </button>
+        {user.avatar && (
+          <button type="button" className="text-white/60 hover:text-white hover:underline" onClick={() => void updateProfile({ avatar: null })} disabled={busy}>
+            {t('profile.avatar.remove')}
+          </button>
+        )}
+      </div>
+      {err && <span className="text-[11px] text-red-300">{t('profile.avatar.err')}</span>}
+    </div>
+  );
+}
 
 const OralPage = lazy(() => import('./OralPage'));
 const BADGES = ['chmod', 'root', 'h0', 'terminal', 'exam', 'streak'];
@@ -36,9 +87,7 @@ export default function ProfilePage({ tab = 'progress' }: { tab?: Tab }) {
         <div className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
         {/* stacked on phones: avatar + name, then level, then stats — never squeezed into one row */}
         <div className="relative flex flex-col gap-5 md:flex-row md:items-center">
-          <span className="icon-tile h-14 w-14 shrink-0 rounded-2xl bg-white/10 ring-1 ring-white/20 sm:h-16 sm:w-16">
-            <Icon name="user" size={28} />
-          </span>
+          <AvatarEditor />
           <div className="w-full min-w-0 md:flex-1">
             <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-300">{t('app.student')}</div>
             <h1 className="mt-1 break-words text-2xl font-extrabold sm:text-3xl">{user?.displayName || t('profile.title')}</h1>

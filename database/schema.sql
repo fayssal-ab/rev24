@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
   role VARCHAR(10) NOT NULL DEFAULT 'user',      -- 'admin' | 'user'
   status VARCHAR(10) NOT NULL DEFAULT 'pending', -- 'pending' (en attente) | 'approved' | 'blocked'
   session_id CHAR(36) NULL,                      -- session partagée par les appareils du compte (remise à zéro par l'admin)
-  last_seen DATETIME(3) NULL,
+  last_seen DATETIME(3) NULL,                    -- dernière activité (mise à jour toutes les ~45 s quand l'onglet est ouvert)
+  online_since DATETIME(3) NULL,                 -- début de la visite en cours (pour « en ligne depuis »)
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   UNIQUE KEY uq_users_email (email)
@@ -41,4 +42,11 @@ CREATE TABLE IF NOT EXISTS announcements (
   body TEXT NOT NULL,
   pinned TINYINT(1) NOT NULL DEFAULT 0,
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Réglages modifiés par l'admin (clé → JSON). "focus" = le prochain contrôle affiché sur la page d'accueil.
+CREATE TABLE IF NOT EXISTS settings (
+  k VARCHAR(40) NOT NULL PRIMARY KEY,
+  v JSON NOT NULL,
+  updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

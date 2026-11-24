@@ -12,6 +12,7 @@
  *   PUT  /api/progress        { data, updatedAt }
  *   GET  /api/supports                                           → documents added / edited by the admin
  *   GET  /api/announcements                                      → admin announcements
+ *   GET  /api/focus                                              → next test on the home page (admin setting) | null
  *   /api/admin/*                                                 → CRUD users, supports, announcements (admin only)
  *
  * Access rules:
@@ -112,6 +113,7 @@ function migrate(): Promise<void> {
     }
     if (!have.has('session_id')) await p.query(`ALTER TABLE users ADD COLUMN session_id CHAR(36) NULL`);
     if (!have.has('last_seen')) await p.query(`ALTER TABLE users ADD COLUMN last_seen DATETIME(3) NULL`);
+    if (!have.has('online_since')) await p.query(`ALTER TABLE users ADD COLUMN online_since DATETIME(3) NULL`);
     await p.query(`CREATE TABLE IF NOT EXISTS supports (
       id CHAR(36) NOT NULL PRIMARY KEY,
       ref VARCHAR(255) NULL,
@@ -130,6 +132,12 @@ function migrate(): Promise<void> {
       body TEXT NOT NULL,
       pinned TINYINT(1) NOT NULL DEFAULT 0,
       created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    // small key → JSON settings edited by the admin (e.g. "focus": the next test shown on the home page)
+    await p.query(`CREATE TABLE IF NOT EXISTS settings (
+      k VARCHAR(40) NOT NULL PRIMARY KEY,
+      v JSON NOT NULL,
+      updated_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     for (const e of adminEmails()) await p.query(`UPDATE users SET role = 'admin', status = 'approved' WHERE email = ?`, [e]);
   })().catch((e) => {
@@ -162,7 +170,8 @@ function secret() {
 async function issueCookie(userId: string, req: Request) {
   const [rows] = await db().query<UserRow[]>('SELECT session_id FROM users WHERE id = ? LIMIT 1', [userId]);
   const sid = rows[0]?.session_id ?? randomUUID();
-  await db().query('UPDATE users SET session_id = ?, last_seen = CURRENT_TIMESTAMP(3) WHERE id = ?', [sid, userId]);
+  await db().query('UPDATE users SET session_id = ? WHERE id = ?', [sid, userId]);
+  await touch(userId, true);
   const token = await new SignJWT({ sid }).setProtectedHeader({ alg: 'HS256' }).setSubject(userId).setIssuedAt().setExpirationTime(`${SESSION_DAYS}d`).sign(secret());
   const secure = new URL(req.url).protocol === 'https:' ? '; Secure' : '';
   return `${COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${secure}`;
@@ -186,9 +195,27 @@ async function currentUser(req: Request): Promise<UserRow> {
   const u = await findUser('id', sub);
   if (!u) throw new HttpError(401, 'not_authenticated');
   if (!u.session_id || u.session_id !== sid) throw new HttpError(401, 'session_replaced');
-  // last activity, at most once a minute
-  if (!u.last_seen || Date.now() - new Date(u.last_seen).getTime() > 60_000) await db().query('UPDATE users SET last_seen = CURRENT_TIMESTAMP(3) WHERE id = ?', [u.id]);
+  await touch(u.id);
   return u;
+}
+
+/**
+ * Presence. An open, visible tab calls /auth/me every 30 s, so last_seen is at most ~75 s old while someone is on the site.
+ * - online: session open and last_seen < ONLINE_S ago
+ * - online_since: start of the current visit (reset when the previous activity is older than VISIT_GAP_S)
+ * All durations are computed by MySQL (NOW(3)) so the server and database clocks never have to agree.
+ */
+const ONLINE_S = 120;
+const VISIT_GAP_S = 180;
+async function touch(id: string, force = false) {
+  // online_since is assigned first: MySQL evaluates SET left to right, so it still sees the previous last_seen
+  await db().query(
+    `UPDATE users
+        SET online_since = IF(last_seen IS NULL OR online_since IS NULL OR last_seen < NOW(3) - INTERVAL ${VISIT_GAP_S} SECOND, NOW(3), online_since),
+            last_seen = NOW(3)
+      WHERE id = ? AND (? OR last_seen IS NULL OR last_seen < NOW(3) - INTERVAL 45 SECOND)`,
+    [id, force]
+  );
 }
 
 async function body(req: Request): Promise<Record<string, unknown>> {
@@ -223,6 +250,9 @@ type UserRow = RowDataPacket & {
   session_id: string | null;
   last_seen: Date | null;
   created_at: Date;
+  /** admin listing only (computed by MySQL) */
+  seen_ago?: number | null;
+  online_for?: number | null;
 };
 type Role = 'admin' | 'user';
 type Status = 'pending' | 'approved' | 'blocked';
@@ -262,7 +292,11 @@ const publicUser = (u: UserRow) => {
   };
 };
 /** Admin listing: same as publicUser + activity. */
-const adminUser = (u: UserRow) => ({ ...publicUser(u), online: !!u.session_id && !!u.last_seen && Date.now() - new Date(u.last_seen).getTime() < 5 * 60_000, lastSeen: u.last_seen });
+const adminUser = (u: UserRow) => {
+  const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
+  const online = !!u.session_id && seenAgo !== null && seenAgo < ONLINE_S;
+  return { ...publicUser(u), online, lastSeen: u.last_seen, seenAgo, onlineFor: online && u.online_for != null ? Number(u.online_for) : null };
+};
 
 /** Hash compared against when the e-mail is unknown, so the response time does not reveal which e-mails exist. */
 let dummyHash: string | null = null;
@@ -387,6 +421,8 @@ async function route(req: Request): Promise<Response> {
     return json(200, { announcements: rows.map(annOut) });
   }
 
+  if (method === 'GET' && path === '/focus') return json(200, { focus: await readFocus() });
+
   if (path.startsWith('/admin/')) return admin(req, method, path.slice('/admin'.length), me);
 
   if (method === 'GET' && path === '/progress') {
@@ -446,6 +482,33 @@ function supportFields(b: Record<string, unknown>) {
   return { ref, subject, kind, title, url, sort, hidden };
 }
 
+/** The next test shown on the home page, set by the admin (null = never set: the app shows its built-in default). */
+type Focus = { enabled: boolean; kind: 'controle' | 'examen'; module: string; chapter: string; date: string; time: string; room: string; title: string; message: string; out: string[] };
+async function readFocus(): Promise<Focus | null> {
+  const [rows] = await db().query<RowDataPacket[]>("SELECT v FROM settings WHERE k = 'focus' LIMIT 1");
+  if (!rows[0]) return null;
+  return (typeof rows[0].v === 'string' ? JSON.parse(rows[0].v) : rows[0].v) as Focus;
+}
+function focusFields(b: Record<string, unknown>): Focus {
+  const id = (v: unknown, max: number) => (typeof v === 'string' && /^[a-z0-9-]*$/i.test(v) ? v.slice(0, max) : '');
+  const date = typeof b.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(b.date) ? b.date : '';
+  const time = typeof b.time === 'string' && /^\d{2}:\d{2}$/.test(b.time) ? b.time : '';
+  const module = id(b.module, 20);
+  if (!module) throw new HttpError(400, 'missing_fields');
+  return {
+    enabled: b.enabled !== false,
+    kind: b.kind === 'examen' ? 'examen' : 'controle',
+    module,
+    chapter: id(b.chapter, 40),
+    date,
+    time,
+    room: str(b.room, 60),
+    title: str(b.title, 200),
+    message: typeof b.message === 'string' ? b.message.trim().slice(0, 3000) : '',
+    out: Array.isArray(b.out) ? b.out.map((x) => id(x, 40)).filter(Boolean).slice(0, 40) : []
+  };
+}
+
 async function admin(req: Request, method: string, path: string, me: UserRow): Promise<Response> {
   if (!isAdmin(me)) throw new HttpError(403, 'forbidden');
   const p = db();
@@ -456,7 +519,12 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
 
   // ----- users
   if (method === 'GET' && path === '/users') {
-    const [rows] = await p.query<UserRow[]>('SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at FROM users ORDER BY (status = \'pending\') DESC, created_at DESC');
+    const [rows] = await p.query<UserRow[]>(
+      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, created_at,
+              TIMESTAMPDIFF(SECOND, last_seen, NOW(3)) AS seen_ago,
+              TIMESTAMPDIFF(SECOND, online_since, NOW(3)) AS online_for
+         FROM users ORDER BY (status = 'pending') DESC, created_at DESC`
+    );
     return json(200, { users: rows.map(adminUser) });
   }
   if (method === 'POST' && path === '/users') {
@@ -553,6 +621,22 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
   if (s && method === 'DELETE') {
     await p.query('DELETE FROM supports WHERE id = ?', [s.id]);
     return json(200, { ok: true });
+  }
+
+  // ----- home page: next test (+ optional announcement with what it covers)
+  if (method === 'PUT' && path === '/focus') {
+    const b = await body(req);
+    const f = focusFields(b);
+    await p.query("INSERT INTO settings (k, v) VALUES ('focus', ?) ON DUPLICATE KEY UPDATE v = VALUES(v)", [JSON.stringify(f)]);
+    if (b.announce === true) {
+      const title = str(b.announceTitle, 200) || f.title || (f.kind === 'examen' ? 'Examen' : 'Contrôle');
+      await p.query('INSERT INTO announcements (id, title, body, pinned) VALUES (?, ?, ?, 1)', [randomUUID(), title, f.message]);
+    }
+    return json(200, { focus: f });
+  }
+  if (method === 'DELETE' && path === '/focus') {
+    await p.query("DELETE FROM settings WHERE k = 'focus'");
+    return json(200, { focus: null });
   }
 
   // ----- announcements

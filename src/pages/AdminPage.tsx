@@ -1,16 +1,21 @@
 /**
  * Admin dashboard (admin accounts only, checked again by the API):
- *   - Comptes : approve / block new sign-ups, edit, reset password, close session, delete, create
+ *   - Comptes : approve / block new sign-ups, edit, reset password, close session, delete, create;
+ *     presence: who is online now, since when, who just arrived, last seen (refreshed every 20 s)
  *   - Supports : add a document (Drive link / URL), edit or hide a built-in file, delete
  *   - Annonces : messages shown at the top of the home page
+ *   - Accueil : the next test shown on the home page (module, date, time, room, what it covers, chapters out of it)
  * Admin-only tool: labels are in French.
  */
-import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Icon } from '../components/Icon';
 import { api, useAuth } from '../auth/auth';
 import { KINDS, RESOURCES, SUBJECTS, subjectById, type ResourceKind } from '../lib/catalog';
 import { useRemoteSupports, type RemoteSupport } from '../lib/resources';
 import type { Announcement } from '../components/Announcements';
+import { MODULES, loadModule } from '../lib/content';
+import { DEFAULT_FOCUS, daysUntil, setFocusCache, type Focus } from '../lib/focus';
+import type { Chapter } from '../lib/schema';
 
 type Status = 'pending' | 'approved' | 'blocked';
 interface AdminUser {
@@ -22,7 +27,47 @@ interface AdminUser {
   status: Status;
   online: boolean;
   lastSeen: string | null;
+  /** seconds since the last activity (computed by the database), null = never signed in */
+  seenAgo: number | null;
+  /** seconds since the current visit started, only when online */
+  onlineFor: number | null;
   createdAt: string;
+}
+
+/** Presence filters. "Vient d'arriver" = online and the visit started less than 10 minutes ago. */
+type Activity = 'any' | 'online' | 'new' | 'today' | 'week' | 'inactive';
+const NEW_S = 10 * 60;
+const WEEK_S = 7 * 86400;
+const REFRESH_MS = 20_000;
+const secondsSinceMidnight = () => {
+  const d = new Date();
+  return d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds();
+};
+const ACTIVITY: { id: Activity; label: string; test: (u: AdminUser) => boolean }[] = [
+  { id: 'any', label: 'Toute activité', test: () => true },
+  { id: 'online', label: 'En ligne maintenant', test: (u) => u.online },
+  { id: 'new', label: 'Vient d\'arriver', test: (u) => u.online && (u.onlineFor ?? Infinity) < NEW_S },
+  { id: 'today', label: 'Vu aujourd\'hui', test: (u) => u.seenAgo !== null && u.seenAgo <= secondsSinceMidnight() },
+  { id: 'week', label: '7 derniers jours', test: (u) => u.seenAgo !== null && u.seenAgo < WEEK_S },
+  { id: 'inactive', label: 'Inactifs (+7 j)', test: (u) => u.seenAgo === null || u.seenAgo >= WEEK_S }
+];
+
+/** "12 min", "3 h 05", "4 j" */
+function duration(sec: number): string {
+  if (sec < 60) return 'moins d\'1 min';
+  const m = Math.floor(sec / 60);
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h} h ${String(m % 60).padStart(2, '0')}`;
+  return `${Math.floor(h / 24)} j`;
+}
+/** Presence line of a user: "En ligne · depuis 12 min", "Vu il y a 3 h", "Jamais connecté". */
+function presence(u: AdminUser): { text: string; cls: string } {
+  if (u.online) return { text: u.onlineFor !== null ? `En ligne · depuis ${duration(u.onlineFor)}` : 'En ligne', cls: 'text-ok' };
+  if (u.seenAgo === null) return { text: 'Jamais connecté', cls: 'text-muted' };
+  if (u.seenAgo < 60) return { text: 'Vu à l\'instant', cls: 'text-muted' };
+  if (u.seenAgo < WEEK_S) return { text: `Vu il y a ${duration(u.seenAgo)}`, cls: 'text-muted' };
+  return { text: `Vu le ${fmt(u.lastSeen)}`, cls: 'text-muted' };
 }
 
 /** Principal admin: no other admin can edit, sign out or delete this account (see netlify/functions/api.mts). */
@@ -113,6 +158,10 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
   const [users, setUsers] = useState<AdminUser[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | Status>('all');
+  const [activity, setActivity] = useState<Activity>('any');
+  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
+  const [arrivals, setArrivals] = useState<{ key: string; name: string }[]>([]);
+  const onlineIds = useRef<Set<string> | null>(null);
   const [q, setQ] = useState('');
   const [form, setForm] = useState<UserForm | null>(null);
   const [formErr, setFormErr] = useState<string | null>(null);
@@ -122,12 +171,29 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
     const r = await api<{ users: AdminUser[] }>('GET', '/admin/users');
     if (r.ok) {
       setUsers(r.data.users);
+      setUpdatedAt(Date.now());
       onPending(r.data.users.filter((u) => u.status === 'pending').length);
+      // who came online since the previous refresh (not on the first load)
+      const now = new Set(r.data.users.filter((u) => u.online).map((u) => u.id));
+      const before = onlineIds.current;
+      onlineIds.current = now;
+      if (before) {
+        const fresh = r.data.users.filter((u) => u.online && !before.has(u.id) && u.id !== me?.id);
+        if (fresh.length) setArrivals((a) => [...a, ...fresh.map((u) => ({ key: `${u.id}-${Date.now()}`, name: u.displayName || u.email }))].slice(-4));
+      }
     } else setError(errMsg(r.error));
-  }, [onPending]);
+  }, [onPending, me?.id]);
   useEffect(() => {
     void load();
+    // live presence: refresh while the admin page is visible
+    const id = setInterval(() => document.visibilityState === 'visible' && void load(), REFRESH_MS);
+    return () => clearInterval(id);
   }, [load]);
+  useEffect(() => {
+    if (!arrivals.length) return;
+    const id = setTimeout(() => setArrivals((a) => a.slice(1)), 8000);
+    return () => clearTimeout(id);
+  }, [arrivals]);
 
   const act = async (method: string, path: string, body?: unknown) => {
     setError(null);
@@ -149,10 +215,14 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
     await load();
   };
 
+  const actTest = ACTIVITY.find((a) => a.id === activity)!.test;
   const list = (users ?? []).filter(
-    (u) => (filter === 'all' || u.status === filter) && (!q.trim() || `${u.displayName} ${u.email} ${u.groupe}`.toLowerCase().includes(q.trim().toLowerCase()))
+    (u) => (filter === 'all' || u.status === filter) && actTest(u) && (!q.trim() || `${u.displayName} ${u.email} ${u.groupe}`.toLowerCase().includes(q.trim().toLowerCase()))
   );
+  // with a presence filter, the most recently active first
+  if (activity !== 'any') list.sort((a, b) => (a.online === b.online ? (a.seenAgo ?? Infinity) - (b.seenAgo ?? Infinity) : a.online ? -1 : 1));
   const count = (s: Status) => (users ?? []).filter((u) => u.status === s).length;
+  const countAct = (id: Activity) => (users ?? []).filter(ACTIVITY.find((a) => a.id === id)!.test).length;
 
   return (
     <div>
@@ -161,16 +231,56 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
           { label: 'Comptes', n: users?.length ?? 0, icon: 'user' },
           { label: 'En attente', n: count('pending'), icon: 'clock' },
           { label: 'Approuvés', n: count('approved'), icon: 'checkCircle' },
-          { label: 'En ligne', n: (users ?? []).filter((u) => u.online).length, icon: 'bolt' }
-        ].map((x) => (
-          <div key={x.label} className="card flex items-center gap-3 p-4">
-            <Icon name={x.icon} size={18} className="text-accent" />
-            <div>
-              <div className="font-display text-2xl font-bold tabular-nums">{x.n}</div>
-              <div className="text-xs text-muted">{x.label}</div>
+          { label: 'En ligne', n: countAct('online'), icon: 'bolt', act: 'online' as Activity }
+        ].map((x) =>
+          x.act ? (
+            <button key={x.label} className={`card flex items-center gap-3 p-4 text-left transition hover:border-ok/60 ${activity === x.act ? '!border-ok' : ''}`} onClick={() => setActivity(activity === x.act ? 'any' : x.act)} title="Afficher qui est en ligne">
+              <span className="relative grid h-[18px] w-[18px] place-items-center">
+                {x.n > 0 && <span className="absolute h-3 w-3 animate-ping rounded-full bg-ok/60" />}
+                <span className={`h-2.5 w-2.5 rounded-full ${x.n > 0 ? 'bg-ok' : 'bg-line'}`} />
+              </span>
+              <div>
+                <div className="font-display text-2xl font-bold tabular-nums">{x.n}</div>
+                <div className="text-xs text-muted">{x.label}</div>
+              </div>
+            </button>
+          ) : (
+            <div key={x.label} className="card flex items-center gap-3 p-4">
+              <Icon name={x.icon} size={18} className="text-accent" />
+              <div>
+                <div className="font-display text-2xl font-bold tabular-nums">{x.n}</div>
+                <div className="text-xs text-muted">{x.label}</div>
+              </div>
             </div>
-          </div>
+          )
+        )}
+      </div>
+
+      {arrivals.length > 0 && (
+        <div className="mb-4 space-y-1.5" aria-live="polite">
+          {arrivals.map((a) => (
+            <div key={a.key} className="flex items-center gap-2 rounded-lg border border-ok/40 bg-ok/[0.07] px-3 py-2 text-sm">
+              <span className="h-2 w-2 rounded-full bg-ok" />
+              <b>{a.name}</b> vient de se connecter.
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="mb-3 flex flex-wrap items-center gap-2" data-testid="admin-activity">
+        <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted">
+          <Icon name="history" size={14} /> Activité
+        </span>
+        {ACTIVITY.map((a) => (
+          <button key={a.id} className={`chip !py-1 !text-sm ${activity === a.id ? '!border-ok !text-ok' : ''}`} onClick={() => setActivity(a.id)}>
+            {a.id === 'online' && <span className={`h-2 w-2 rounded-full ${countAct('online') ? 'bg-ok' : 'bg-line'}`} />}
+            {a.label}
+            {a.id !== 'any' && <span className="text-[11px] tabular-nums text-muted">{countAct(a.id)}</span>}
+          </button>
         ))}
+        <span className="ml-auto text-[11px] text-muted" title="La liste se met à jour toute seule">
+          {updatedAt ? `Actualisé à ${new Date(updatedAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} · auto 20 s` : ''}
+        </span>
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -196,12 +306,19 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
           const locked = u.email.toLowerCase() === PRINCIPAL_ADMIN && !self;
           return (
             <li key={u.id} className="flex flex-wrap items-center gap-3 px-4 py-3" data-testid="admin-user">
-              <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${u.online ? 'bg-ok' : 'bg-line'}`} title={u.online ? 'En ligne' : `Vu : ${fmt(u.lastSeen)}`} />
+              <span className="relative grid h-2.5 w-2.5 shrink-0 place-items-center" title={presence(u).text}>
+                {u.online && <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-ok/50" />}
+                <span className={`h-2.5 w-2.5 rounded-full ${u.online ? 'bg-ok' : 'bg-line'}`} />
+              </span>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-semibold">{u.displayName || u.email}</span>
                   {u.role === 'admin' && <span className="rounded border border-accent/40 px-1.5 text-[10px] font-bold uppercase text-accent">{u.email.toLowerCase() === PRINCIPAL_ADMIN ? 'Admin principal' : 'Admin'}</span>}
                   <span className={`rounded border px-1.5 text-[10px] font-bold uppercase ${STATUS[u.status].cls}`}>{STATUS[u.status].label}</span>
+                  {u.online && (u.onlineFor ?? Infinity) < NEW_S && <span className="rounded bg-ok px-1.5 text-[10px] font-bold uppercase text-white">Vient d'arriver</span>}
+                </div>
+                <div className={`text-xs font-medium ${presence(u).cls}`} data-testid="admin-presence">
+                  {presence(u).text}
                 </div>
                 <div className="truncate text-xs text-muted">
                   {u.email} · {u.groupe} · inscrit le {fmt(u.createdAt)}
@@ -245,7 +362,7 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
             </li>
           );
         })}
-        {users && !list.length && <li className="px-4 py-8 text-center text-sm text-muted">Aucun compte.</li>}
+        {users && !list.length && <li className="px-4 py-8 text-center text-sm text-muted">{activity === 'online' ? 'Personne n\'est en ligne pour l\'instant.' : 'Aucun compte.'}</li>}
       </ul>
 
       {form && (
@@ -591,14 +708,208 @@ function AnnouncementsTab() {
   );
 }
 
+// ---------------------------------------------------------------- home page: next test
+function FocusTab() {
+  const [form, setForm] = useState<Focus | null>(null);
+  const [custom, setCustom] = useState(false);
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [announce, setAnnounce] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  const load = useCallback(async () => {
+    const r = await api<{ focus: Focus | null }>('GET', '/focus');
+    if (!r.ok) return setError(errMsg(r.error));
+    setCustom(!!r.data.focus);
+    setForm({ ...DEFAULT_FOCUS, ...(r.data.focus ?? {}) });
+  }, []);
+  useEffect(() => {
+    void load();
+  }, [load]);
+  // chapters of the chosen module (priority chapter + chapters out of the test)
+  const moduleId = form?.module;
+  useEffect(() => {
+    if (!moduleId) return;
+    let live = true;
+    void loadModule(moduleId).then((c) => live && setChapters(c.chapters));
+    return () => {
+      live = false;
+    };
+  }, [moduleId]);
+
+  if (!form) return <p className="py-8 text-center text-sm text-muted">{error ?? 'Chargement…'}</p>;
+  const set = (p: Partial<Focus>) => (setSaved(false), setForm({ ...form, ...p }));
+  const mod = MODULES.find((m) => m.id === form.module);
+  const days = daysUntil(form.date);
+
+  const save = async (e: FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    const r = await api<{ focus: Focus }>('PUT', '/admin/focus', { ...form, announce });
+    setBusy(false);
+    if (!r.ok) return setError(errMsg(r.error));
+    setFocusCache(r.data.focus);
+    setCustom(true);
+    setAnnounce(false);
+    setSaved(true);
+  };
+  const reset = async () => {
+    if (!confirmDo('Revenir à la carte par défaut (Analyse de données) ?')) return;
+    const r = await api('DELETE', '/admin/focus');
+    if (!r.ok) return setError(errMsg(r.error));
+    setFocusCache(null);
+    setSaved(false);
+    await load();
+  };
+
+  return (
+    <form onSubmit={save} className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]" data-testid="admin-focus">
+      <div className="space-y-4">
+        <label className={`flex items-center gap-3 rounded-lg border p-3 ${form.enabled ? 'border-ok/40 bg-ok/[0.05]' : 'border-line bg-surface2/60'}`}>
+          <input type="checkbox" checked={form.enabled} onChange={(e) => set({ enabled: e.target.checked })} />
+          <span>
+            <span className="block font-semibold">Afficher le prochain contrôle sur l&apos;accueil</span>
+            <span className="block text-xs text-muted">Décoche pour retirer la carte quand il n&apos;y a pas de contrôle à venir.</span>
+          </span>
+        </label>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          <F label="Type">
+            <select className="input" value={form.kind} onChange={(e) => set({ kind: e.target.value as Focus['kind'] })}>
+              <option value="controle">Contrôle</option>
+              <option value="examen">Examen</option>
+            </select>
+          </F>
+          <F label="Module">
+            <select className="input" value={form.module} onChange={(e) => set({ module: e.target.value, chapter: '', out: [] })}>
+              {MODULES.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.title.fr}
+                </option>
+              ))}
+            </select>
+          </F>
+          <F label="Chapitre prioritaire">
+            <select className="input" value={form.chapter} onChange={(e) => set({ chapter: e.target.value })}>
+              <option value="">Premier chapitre</option>
+              {chapters.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.title.fr}
+                </option>
+              ))}
+            </select>
+          </F>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          <F label="Date">
+            <input className="input" type="date" value={form.date} onChange={(e) => set({ date: e.target.value })} />
+          </F>
+          <F label="Heure (facultatif)">
+            <input className="input" type="time" value={form.time} onChange={(e) => set({ time: e.target.value })} />
+          </F>
+          <F label="Salle (facultatif)">
+            <input className="input" value={form.room} maxLength={60} placeholder="ex. B12" onChange={(e) => set({ room: e.target.value })} />
+          </F>
+        </div>
+
+        <F label="Titre (vide = titre automatique)">
+          <input className="input" value={form.title} maxLength={200} placeholder={`${form.kind === 'examen' ? 'Examen' : 'Contrôle'} — ${mod?.title.fr ?? ''}`} onChange={(e) => set({ title: e.target.value })} />
+        </F>
+        <F label="Ce qui tombe (un point par ligne)">
+          <textarea
+            className="input min-h-[140px]"
+            value={form.message}
+            maxLength={3000}
+            placeholder={'Exemple :\n- pandas : lire, vérifier, modifier, sauvegarder\n- test Z et Student dans les 3 cas ≠, <, >\n- calculatrice autorisée, pas de documents'}
+            onChange={(e) => set({ message: e.target.value })}
+          />
+        </F>
+
+        {chapters.length > 0 && (
+          <div>
+            <div className="mb-1.5 text-xs font-semibold text-muted">Chapitres hors contrôle (barrés sur l&apos;accueil, retirés du plan de révision)</div>
+            <div className="flex flex-wrap gap-1.5">
+              {chapters.map((c) => {
+                const out = form.out.includes(c.id);
+                return (
+                  <button
+                    type="button"
+                    key={c.id}
+                    className={`chip !py-1 !text-sm ${out ? '!border-bad !text-bad line-through' : ''}`}
+                    onClick={() => set({ out: out ? form.out.filter((x) => x !== c.id) : [...form.out, c.id] })}
+                  >
+                    {c.title.fr}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <label className="flex items-start gap-3 rounded-lg border border-line p-3">
+          <input type="checkbox" className="mt-1" checked={announce} onChange={(e) => setAnnounce(e.target.checked)} />
+          <span>
+            <span className="block font-semibold">Publier aussi une annonce</span>
+            <span className="block text-xs text-muted">Annonce épinglée en haut de l&apos;accueil, avec le titre et le texte « Ce qui tombe ».</span>
+          </span>
+        </label>
+
+        <ErrorLine error={error} />
+        <div className="flex flex-wrap items-center gap-2">
+          <button className="btn-primary" disabled={busy}>
+            <Icon name="check" size={16} /> Enregistrer
+          </button>
+          {custom && (
+            <button type="button" className="btn-ghost" onClick={() => void reset()}>
+              <Icon name="reset" size={16} /> Carte par défaut
+            </button>
+          )}
+          {saved && <span className="text-sm font-semibold text-ok">Enregistré : l&apos;accueil est à jour.</span>}
+          {!custom && <span className="text-xs text-muted">Rien n&apos;est encore enregistré : l&apos;accueil montre la carte par défaut.</span>}
+        </div>
+      </div>
+
+      {/* preview */}
+      <aside className="h-fit rounded-xl border border-line bg-surface p-4 lg:sticky lg:top-28">
+        <div className="eyebrow mb-2">Aperçu</div>
+        {form.enabled ? (
+          <>
+            <div className="text-[11px] font-bold uppercase tracking-wide text-accent">
+              Prochain {form.kind === 'examen' ? 'examen' : 'contrôle'} · {mod?.title.fr}
+            </div>
+            <div className="mt-1 font-display text-lg font-bold leading-snug">{form.title || `${form.kind === 'examen' ? 'Examen' : 'Contrôle'} — ${mod?.title.fr ?? ''}`}</div>
+            <div className="mt-2 text-sm">
+              {form.date ? new Date(`${form.date}T12:00:00`).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : 'Date à confirmer'}
+              {form.time && ` · ${form.time.replace(':', 'h')}`}
+              {form.room && ` · salle ${form.room}`}
+            </div>
+            {days !== null && (
+              <div className={`mt-1 text-xs font-bold ${days < 0 ? 'text-muted' : days <= 1 ? 'text-bad' : 'text-accent'}`}>
+                {days < 0 ? 'Passé : pense à le changer ou à masquer la carte' : days === 0 ? "Aujourd'hui" : days === 1 ? 'Demain' : `Dans ${days} jours`}
+              </div>
+            )}
+            {form.message && <p className="mt-3 whitespace-pre-line rounded-lg bg-accent/[0.06] p-2.5 text-sm">{form.message}</p>}
+          </>
+        ) : (
+          <p className="text-sm text-muted">Carte masquée : aucun contrôle n&apos;est affiché sur l&apos;accueil.</p>
+        )}
+      </aside>
+    </form>
+  );
+}
+
 // ---------------------------------------------------------------- page
-type Tab = 'users' | 'supports' | 'announcements';
+type Tab = 'users' | 'focus' | 'supports' | 'announcements';
 
 export default function AdminPage() {
   const [tab, setTab] = useState<Tab>('users');
   const [pending, setPending] = useState(0);
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: 'users', label: 'Comptes', icon: 'user' },
+    { id: 'focus', label: 'Accueil · contrôle', icon: 'calendar' },
     { id: 'supports', label: 'Supports', icon: 'inbox' },
     { id: 'announcements', label: 'Annonces', icon: 'bell' }
   ];
@@ -607,7 +918,7 @@ export default function AdminPage() {
       <div className="mb-6 border-b border-line pb-6">
         <div className="eyebrow mb-2">GROUP22 · Administration</div>
         <h1 className="h1">Tableau de bord</h1>
-        <p className="mt-2 text-[15px] text-muted">Valide les nouveaux comptes, gère les supports de cours et publie des annonces.</p>
+        <p className="mt-2 text-[15px] text-muted">Valide les nouveaux comptes, vois qui est en ligne, choisis le contrôle affiché sur l&apos;accueil, gère les supports et publie des annonces.</p>
       </div>
       <div className="scroll-thin mb-6 flex gap-1 overflow-x-auto border-b border-line" role="tablist">
         {tabs.map((x) => (
@@ -627,6 +938,7 @@ export default function AdminPage() {
       <div hidden={tab !== 'users'}>
         <UsersTab onPending={setPending} />
       </div>
+      {tab === 'focus' && <FocusTab />}
       {tab === 'supports' && <SupportsTab />}
       {tab === 'announcements' && <AnnouncementsTab />}
     </div>

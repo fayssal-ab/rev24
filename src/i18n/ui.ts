@@ -435,6 +435,8 @@ export const UI = {
   'home.others': { fr: 'Tous les modules', dar: 'Ga3 les modules', en: 'All modules' },
   'focus.blanc': { fr: 'Examen blanc corrigé', dar: 'Examen blanc m-corrigé', en: 'Solved mock test' },
   'focus.eyebrow': { fr: 'Prochain contrôle · Analyse de données · mercredi 25/11', dar: 'Contrôle jay · Analyse de données · larb3 25/11', en: 'Next test · Data analysis · Wednesday 25/11' },
+  'proof.label': { fr: 'Démonstration', dar: 'Démonstration', en: 'Proof' },
+  'proof.end': { fr: 'Fin de la démonstration', dar: 'Sala l burhan', en: 'End of proof' },
   'focus.title': { fr: 'Tests d\'hypothèses : la méthode pour le contrôle', dar: 'Tests d\'hypothèses : tari9a dyal contrôle', en: 'Hypothesis testing: the method for the test' },
   'focus.sub': { fr: 'Un contrôle écrit, pas un QCM : il faut savoir choisir le test, le rédiger et lire les tables.', dar: 'Contrôle b ktaba, machi QCM : khassek t3ref tkhtar test, tktbou w t9ra tables.', en: 'A written test, not a quiz: you must pick the test, write it up and read the tables.' },
   'focus.p1': { fr: 'Quelle loi utiliser : normale, Student ou Khi-deux', dar: 'Ina loi tst3mel : normale, Student wla Khi-deux', en: 'Which law to use: normal, Student or chi-square' },

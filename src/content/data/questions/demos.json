@@ -1,0 +1,546 @@
+[
+ {
+  "id": "dd-01",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi divise-t-on Σ(xi − x̄)² par **n − 1** pour obtenir S² ?",
+   "dar": "3lach kanfasmou Σ(xi − x̄)² 3la **n − 1** bach nl9aw S² ?",
+   "en": "Why divide Σ(xi − x̄)² by **n − 1** to get S²?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Pour que E(S²) = σ² (estimateur sans biais)",
+     "dar": "Bach E(S²) = σ² (sans biais)",
+     "en": "So that E(S²) = σ² (unbiased)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Parce que n − 1 rend le calcul plus simple",
+     "dar": "7it n − 1 sahl",
+     "en": "Because n − 1 is simpler"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Parce que pandas l'impose",
+     "dar": "7it pandas bghat",
+     "en": "Because pandas requires it"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Pour que S soit toujours plus petit que σ",
+     "dar": "Bach S dima sghir",
+     "en": "So that S is always smaller than σ"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "On démontre E[Σ(xi − x̄)²] = (n − 1)σ² : diviser par n − 1 donne exactement σ² en moyenne. Diviser par n donnerait (n − 1)σ²/n, trop petit.",
+   "dar": "E[Σ(xi − x̄)²] = (n − 1)σ² → n9smou 3la n − 1 bach nl9aw σ².",
+   "en": "E[Σ(xi − x̄)²] = (n − 1)σ², so dividing by n − 1 gives σ² on average."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La raison est mathématique (biais), pas la simplicité.",
+    "dar": "Sbab riyadi (biais).",
+    "en": "The reason is bias, not simplicity."
+   },
+   "c": {
+    "fr": "pandas suit la formule, il ne la décide pas (`.std()` utilise ddof = 1).",
+    "dar": "pandas kaytb3 formule (ddof = 1).",
+    "en": "pandas follows the formula (ddof = 1)."
+   },
+   "d": {
+    "fr": "Au contraire, n − 1 rend S² un peu **plus grand**.",
+    "dar": "Bil3aks, n − 1 kaykbbar S².",
+    "en": "On the contrary, n − 1 makes S² slightly **larger**."
+   }
+  },
+  "tags": [
+   "demos",
+   "student"
+  ]
+ },
+ {
+  "id": "dd-02",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Dans T0 = (x̄ − µ0)/(S/√n), pourquoi la loi de T0 ne dépend-elle **pas** de σ (inconnu) ?",
+   "dar": "F T0 = (x̄ − µ0)/(S/√n), 3lach loi dyal T0 **ma katb9ach** 3la σ ?",
+   "en": "Why does the law of T0 **not** depend on the unknown σ?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Car T0 = Z / √(K/(n − 1)) et σ se simplifie entre Z et K",
+     "dar": "7it T0 = Z / √(K/(n − 1)) w σ kat-simplifia",
+     "en": "Because T0 = Z / √(K/(n − 1)) and σ cancels"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Car S = σ exactement",
+     "dar": "7it S = σ",
+     "en": "Because S = σ exactly"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Car n est grand",
+     "dar": "7it n kbir",
+     "en": "Because n is large"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Car on remplace σ par 1",
+     "dar": "7it σ = 1",
+     "en": "Because σ is replaced by 1"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "On écrit T0 = [(x̄ − µ0)/(σ/√n)] / √[((n − 1)S²/σ²)/(n − 1)] : le σ du numérateur et celui du dénominateur se simplifient. Il reste Z ~ N(0, 1) divisé par √(χ²(n − 1)/(n − 1)) : c'est la définition de Student(n − 1).",
+   "dar": "σ f lfo9 w σ f lta7t kaytsimplifiaw → Student(n − 1).",
+   "en": "σ cancels between numerator and denominator → Student(n − 1)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "S est une estimation de σ, jamais égale à coup sûr.",
+    "dar": "S ghir ta9dir.",
+    "en": "S only estimates σ."
+   },
+   "c": {
+    "fr": "Le résultat est exact pour tout n (données normales).",
+    "dar": "S7i7 l kol n.",
+    "en": "Exact for any n."
+   },
+   "d": {
+    "fr": "σ n'est pas remplacé : il disparaît par simplification.",
+    "dar": "σ kaytsimplifia.",
+    "en": "σ cancels out."
+   }
+  },
+  "tags": [
+   "demos",
+   "student"
+  ]
+ },
+ {
+  "id": "dd-03",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "On sait que Z² suit χ²(1). Avec z(0,025) = 1,96, calcule le seuil χ²(0,05 ; 1) ≈ 1,96² (3 décimales).",
+   "dar": "Z² ~ χ²(1). B z(0,025) = 1,96, 7seb χ²(0,05 ; 1) ≈ 1,96² (3 décimales).",
+   "en": "Z² ~ χ²(1). With z(0.025) = 1.96, compute χ²(0.05; 1) ≈ 1.96² (3 decimals)."
+  },
+  "answer": 3.841,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "chi2Crit",
+   "args": [
+    0.05,
+    1
+   ]
+  },
+  "explanation": {
+   "fr": "P(Z² > c²) = P(|Z| > c) = α. Donc χ²(α ; 1) = z(α/2)² : 1,96² = 3,8416 ≈ **3,841** (la table).",
+   "dar": "1,96² ≈ **3,841**.",
+   "en": "1.96² ≈ **3.841**."
+  },
+  "wrongExplanations": {
+   "1.96": {
+    "fr": "C'est z, il faut l'élever au carré.",
+    "dar": "Khass tmorabba3.",
+    "en": "Square it."
+   }
+  },
+  "tags": [
+   "demos",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dd-04",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "µ0 = 500, σ = 4 (connu), n = 36, α = 5 %, H1 : µ > 500. Au-dessus de quelle valeur de **x̄** rejette-t-on H0 ? (2 décimales)",
+   "dar": "µ0 = 500, σ = 4, n = 36, α = 5 %, H1 : µ > 500. Mn ina qima dyal **x̄** kanrfdou H0 ? (2 décimales)",
+   "en": "µ0 = 500, σ = 4, n = 36, α = 5 %, H1: µ > 500. Above which **x̄** is H0 rejected? (2 decimals)"
+  },
+  "answer": 501.1,
+  "tolerance": 0.02,
+  "explanation": {
+   "fr": "Z0 > 1,645 ⇔ (x̄ − 500)/(4/6) > 1,645 ⇔ x̄ > 500 + 1,645 × 0,667 ≈ **501,10**.",
+   "dar": "x̄ > 500 + 1,645 × 4/6 ≈ **501,10**.",
+   "en": "x̄ > 500 + 1.645 × 4/6 ≈ **501.10**."
+  },
+  "wrongExplanations": {
+   "501.31": {
+    "fr": "Ça c'est le seuil bilatéral (1,96).",
+    "dar": "Hada bilatéral (1,96).",
+    "en": "That is the two-sided threshold."
+   },
+   "506.58": {
+    "fr": "Tu as oublié √n.",
+    "dar": "Nsiti √n.",
+    "en": "You forgot √n."
+   }
+  },
+  "tags": [
+   "demos",
+   "regions"
+  ]
+ },
+ {
+  "id": "dd-05",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Test Z : la P-value **unilatérale** du côté de Z0 vaut 0,0122. Quelle est la P-value **bilatérale** ?",
+   "dar": "Test Z : PV **unilatérale** (jiha dyal Z0) = 0,0122. Ch7al PV **bilatérale** ?",
+   "en": "Z test: the **one-sided** P-value on Z0's side is 0.0122. What is the **two-sided** one?"
+  },
+  "answer": 0.0244,
+  "tolerance": 0.0002,
+  "compute": {
+   "fn": "pValueZ",
+   "args": [
+    -2.25,
+    "two"
+   ]
+  },
+  "explanation": {
+   "fr": "Loi symétrique : PV bilatérale = 2 × PV unilatérale (côté de Z0) = 2 × 0,0122 = **0,0244**.",
+   "dar": "2 × 0,0122 = **0,0244**.",
+   "en": "2 × 0.0122 = **0.0244**."
+  },
+  "wrongExplanations": {
+   "0.0061": {
+    "fr": "On multiplie par 2, on ne divise pas.",
+    "dar": "Darb f 2.",
+    "en": "Multiply by 2."
+   }
+  },
+  "tags": [
+   "demos",
+   "pvalue"
+  ]
+ },
+ {
+  "id": "dd-06",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Test bilatéral Z au risque α. « On rejette H0 : µ = µ0 » est équivalent à :",
+   "dar": "Test bilatéral Z b α. « Nrfdou H0 : µ = µ0 » kaysawi :",
+   "en": "Two-sided Z test at α. \"Reject H0: µ = µ0\" is equivalent to:"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "µ0 n'est pas dans l'intervalle de confiance x̄ ± z(α/2)·σ/√n",
+     "dar": "µ0 barra IC x̄ ± z(α/2)·σ/√n",
+     "en": "µ0 is outside x̄ ± z(α/2)·σ/√n"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "x̄ n'est pas dans l'intervalle",
+     "dar": "x̄ barra IC",
+     "en": "x̄ outside the interval"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "µ0 est dans l'intervalle",
+     "dar": "µ0 dakhel IC",
+     "en": "µ0 inside the interval"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "La P-value est plus grande que α",
+     "dar": "PV kbar mn α",
+     "en": "P-value larger than α"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "|x̄ − µ0|/(σ/√n) > z(α/2) ⇔ |x̄ − µ0| > z(α/2)·σ/√n ⇔ µ0 hors de [x̄ − z·σ/√n ; x̄ + z·σ/√n].",
+   "dar": "|x̄ − µ0| > z·σ/√n ⇔ µ0 barra IC.",
+   "en": "|x̄ − µ0| > z·σ/√n ⇔ µ0 outside the CI."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "x̄ est toujours au centre de son intervalle.",
+    "dar": "x̄ dima f lwesst.",
+    "en": "x̄ is always at the centre."
+   },
+   "c": {
+    "fr": "C'est la condition pour **garder** H0.",
+    "dar": "Hadi bach **nkhalliw** H0.",
+    "en": "That is the condition to **keep** H0."
+   },
+   "d": {
+    "fr": "On rejette quand PV **<** α.",
+    "dar": "Nrfdou ila PV **<** α.",
+    "en": "Reject when PV **<** α."
+   }
+  },
+  "tags": [
+   "demos",
+   "ic"
+  ]
+ },
+ {
+  "id": "dd-07",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Test du χ² d'ajustement avec **k = 2 classes** (proportion p). Que vaut χ²0 ?",
+   "dar": "χ² d'ajustement b **k = 2 classes** (proportion p). Ch7al χ²0 ?",
+   "en": "χ² fit test with **k = 2 classes** (proportion p). What is χ²0?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Z0², avec Z0 = (X − np)/√(np(1 − p))",
+     "dar": "Z0², Z0 = (X − np)/√(np(1 − p))",
+     "en": "Z0², with Z0 = (X − np)/√(np(1 − p))"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "2·Z0",
+     "dar": "2·Z0",
+     "en": "2·Z0"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Z0",
+     "dar": "Z0",
+     "en": "Z0"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "√Z0",
+     "dar": "√Z0",
+     "en": "√Z0"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "O2 − E2 = −(O1 − E1), donc χ² = (X − np)²·[1/(np) + 1/(n(1 − p))] = (X − np)²/(np(1 − p)) = Z0². Et ν = 2 − 1 = 1 : cohérent avec Z² ~ χ²(1).",
+   "dar": "χ² = (X − np)²/(np(1 − p)) = Z0².",
+   "en": "χ² = (X − np)²/(np(1 − p)) = Z0²."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce n'est pas linéaire : c'est un carré.",
+    "dar": "Machi 2Z : morabba3.",
+    "en": "It is a square, not 2Z."
+   },
+   "c": {
+    "fr": "χ² est un carré, toujours positif.",
+    "dar": "χ² morabba3.",
+    "en": "χ² is a square."
+   },
+   "d": {
+    "fr": "C'est l'inverse.",
+    "dar": "L3aks.",
+    "en": "The opposite."
+   }
+  },
+  "tags": [
+   "demos",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dd-08",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Si K ~ χ²(8), que vaut E(K) ?",
+   "dar": "Ila K ~ χ²(8), ch7al E(K) ?",
+   "en": "If K ~ χ²(8), what is E(K)?"
+  },
+  "answer": 8,
+  "tolerance": 0,
+  "explanation": {
+   "fr": "K = Z1² + … + Z8², et E(Zi²) = V(Zi) + E(Zi)² = 1 + 0 = 1. Donc E(K) = **8** = ν.",
+   "dar": "E(Zi²) = 1 → E(K) = **8**.",
+   "en": "E(Zi²) = 1 → E(K) = **8**."
+  },
+  "wrongExplanations": {
+   "16": {
+    "fr": "16 = 2ν, c'est la variance.",
+    "dar": "16 = variance.",
+    "en": "16 is the variance."
+   },
+   "64": {
+    "fr": "E(K) = ν, pas ν².",
+    "dar": "E(K) = ν.",
+    "en": "E(K) = ν."
+   }
+  },
+  "tags": [
+   "demos",
+   "chi2"
+  ]
+ },
+ {
+  "id": "dd-09",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quand n devient grand, la valeur critique t(0,025 ; n − 1) de Student tend vers :",
+   "dar": "Mli n kaykbar, t(0,025 ; n − 1) kayqarreb l :",
+   "en": "As n grows, t(0.025; n − 1) tends to:"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "1,96",
+     "dar": "1,96",
+     "en": "1.96"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "0",
+     "dar": "0",
+     "en": "0"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "2,306",
+     "dar": "2,306",
+     "en": "2.306"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "+∞",
+     "dar": "+∞",
+     "en": "+∞"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "S → σ quand n grandit, donc T0 → Z0 : t(0,025 ; 8) = 2,306 ; ν = 30 : 2,042 ; ν = 100 : 1,984 ; ν → ∞ : **1,96**.",
+   "dar": "S → σ → t → **1,96**.",
+   "en": "S → σ so t → **1.96**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La valeur critique diminue mais ne va pas à 0.",
+    "dar": "Ma katwsalch l 0.",
+    "en": "It does not go to 0."
+   },
+   "c": {
+    "fr": "2,306 c'est pour ν = 8 seulement.",
+    "dar": "2,306 ghir ν = 8.",
+    "en": "2.306 is only ν = 8."
+   },
+   "d": {
+    "fr": "Elle diminue, elle ne grandit pas.",
+    "dar": "Katn9es.",
+    "en": "It decreases."
+   }
+  },
+  "tags": [
+   "demos",
+   "student"
+  ]
+ },
+ {
+  "id": "dd-10",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Test χ² de normalité sur **6 classes**, µ et σ estimés par x̄ et S. Combien de degrés de liberté ν ?",
+   "dar": "χ² normalité, **6 classes**, µ w σ m9addrin. Ch7al ν ?",
+   "en": "χ² normality test, **6 classes**, µ and σ estimated. How many df ν?"
+  },
+  "answer": 3,
+  "tolerance": 0,
+  "explanation": {
+   "fr": "ν = k − p − 1 = 6 − 2 − 1 = **3** : on perd 1 pour ΣOi = ΣEi = n, et 1 par paramètre estimé.",
+   "dar": "ν = 6 − 2 − 1 = **3**.",
+   "en": "ν = 6 − 2 − 1 = **3**."
+  },
+  "wrongExplanations": {
+   "4": {
+    "fr": "p = 2 (µ et σ), pas 1.",
+    "dar": "p = 2.",
+    "en": "p = 2."
+   },
+   "5": {
+    "fr": "k − 1 oublie les 2 paramètres estimés.",
+    "dar": "Nsiti p = 2.",
+    "en": "You forgot p = 2."
+   }
+  },
+  "tags": [
+   "demos",
+   "chi2"
+  ]
+ }
+]

@@ -1,0 +1,310 @@
+[
+ {
+  "id": "d-x-dm1",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 3,
+  "title": {
+   "fr": "Démontrer : loi de x̄ et région critique (σ connu)",
+   "dar": "Démontrer : loi dyal x̄ w région critique (σ m3rouf)",
+   "en": "Prove: law of x̄ and critical region (σ known)"
+  },
+  "statement": {
+   "fr": "X1, …, Xn indépendantes, de loi N(µ, σ²), σ connu. 1) Démontrer que E(x̄) = µ et V(x̄) = σ²/n. 2) En déduire que Z = (x̄ − µ)/(σ/√n) suit N(0, 1). 3) Pour H0 : µ = µ0 contre H1 : µ > µ0 au risque α, démontrer que la région critique est Z0 > z(α), puis l'écrire sur x̄. Application : µ0 = 500, σ = 4, n = 36, α = 5 %.",
+   "dar": "X1, …, Xn mosta9illin, loi N(µ, σ²), σ m3rouf. 1) Bayyen E(x̄) = µ w V(x̄) = σ²/n. 2) Stantej Z ~ N(0, 1). 3) L H0 : µ = µ0 contre H1 : µ > µ0 b α, bayyen région critique Z0 > z(α), w kteb-ha 3la x̄. Application : µ0 = 500, σ = 4, n = 36, α = 5 %.",
+   "en": "X1, …, Xn independent N(µ, σ²), σ known. 1) Prove E(x̄) = µ and V(x̄) = σ²/n. 2) Deduce Z ~ N(0, 1). 3) For H0: µ = µ0 vs H1: µ > µ0 at α, prove the critical region is Z0 > z(α), then write it on x̄. Application: µ0 = 500, σ = 4, n = 36, α = 5 %."
+  },
+  "hints": [
+   {
+    "fr": "E est linéaire ; V(aX) = a²V(X) ; V d'une somme de variables indépendantes = somme des V.",
+    "dar": "E linéaire ; V(aX) = a²V(X) ; V(somme) = somme V (mosta9illin).",
+    "en": "E is linear; V(aX) = a²V(X); V of an independent sum = sum of V."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) E et V",
+     "dar": "1) E w V",
+     "en": "1) E and V"
+    },
+    "body": {
+     "fr": "E(x̄) = (1/n)ΣE(Xi) = (1/n)·nµ = µ. V(x̄) = (1/n²)ΣV(Xi) (indépendance) = (1/n²)·nσ² = σ²/n.",
+     "dar": "E(x̄) = µ ; V(x̄) = nσ²/n² = σ²/n.",
+     "en": "E(x̄) = µ; V(x̄) = nσ²/n² = σ²/n."
+    },
+    "tex": "V(\\bar X) = \\frac{1}{n^2}\\sum V(X_i) = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}"
+   },
+   {
+    "title": {
+     "fr": "2) Centrer-réduire",
+     "dar": "2) Centrer-réduire",
+     "en": "2) Standardise"
+    },
+    "body": {
+     "fr": "Une somme de normales indépendantes est normale, donc x̄ ~ N(µ, σ²/n). Z = (x̄ − µ)/(σ/√n) : E(Z) = 0, V(Z) = V(x̄)/(σ²/n) = 1 → Z ~ N(0, 1).",
+     "dar": "x̄ normale → Z : E = 0, V = 1 → N(0, 1).",
+     "en": "x̄ normal → Z has E = 0, V = 1 → N(0, 1)."
+    }
+   },
+   {
+    "title": {
+     "fr": "3) Région critique",
+     "dar": "3) Région critique",
+     "en": "3) Critical region"
+    },
+    "body": {
+     "fr": "On rejette si Z0 > c, avec P(Z > c | H0) = α ⇔ 1 − Φ(c) = α ⇔ c = z(α). Sur x̄ : x̄ > µ0 + z(α)·σ/√n. Application : 500 + 1,645 × 4/6 ≈ **501,10 mL**.",
+     "dar": "P(Z > c) = α ⇔ c = z(α). x̄ > µ0 + z(α)σ/√n = **501,10**.",
+     "en": "P(Z > c) = α ⇔ c = z(α). x̄ > 501.10."
+    },
+    "tex": "\\bar x > \\mu_0 + z_{\\alpha}\\frac{\\sigma}{\\sqrt n} = 500 + 1{,}645 \\times \\frac{4}{6} \\approx 501{,}10"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "E(x̄) = µ, V(x̄) = σ²/n, Z ~ N(0, 1) ; région H1 : µ > µ0 : Z0 > z(α) ⇔ x̄ > µ0 + z(α)σ/√n ≈ 501,10.",
+   "dar": "V(x̄) = σ²/n ; x̄ > 501,10.",
+   "en": "V(x̄) = σ²/n; x̄ > 501.10."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire V(x̄) = σ²/n² ou σ/n.",
+    "dar": "V(x̄) = σ²/n machi σ/n.",
+    "en": "V(x̄) = σ²/n, not σ/n."
+   },
+   {
+    "fr": "Oublier que V(aX) = a²V(X).",
+    "dar": "Nsiti a².",
+    "en": "Forgetting a²."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.05
+     ]
+    },
+    "expect": 1.645,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "d-x-dm2",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 3,
+  "title": {
+   "fr": "Démontrer : T0 suit Student(n − 1)",
+   "dar": "Démontrer : T0 ~ Student(n − 1)",
+   "en": "Prove: T0 follows Student(n − 1)"
+  },
+  "statement": {
+   "fr": "On admet : Z = (x̄ − µ)/(σ/√n) ~ N(0, 1), K = (n − 1)S²/σ² ~ χ²(n − 1), Z et K indépendantes, et la définition T = Z/√(K/ν) ~ Student(ν). 1) Démontrer que T0 = (x̄ − µ)/(S/√n) suit Student(n − 1). 2) Démontrer que E[Σ(xi − x̄)²] = (n − 1)σ² (justifie le n − 1 de S²). 3) Application : 9 batteries, x̄ ≈ 9,689, S ≈ 0,2934, µ0 = 9,5 : calculer T0 et ν.",
+   "dar": "Admis : Z ~ N(0, 1), K = (n − 1)S²/σ² ~ χ²(n − 1), mosta9illin, w T = Z/√(K/ν) ~ Student(ν). 1) Bayyen T0 = (x̄ − µ)/(S/√n) ~ Student(n − 1). 2) Bayyen E[Σ(xi − x̄)²] = (n − 1)σ². 3) Application : 9 batteries, x̄ ≈ 9,689, S ≈ 0,2934, µ0 = 9,5 : T0 w ν.",
+   "en": "Given: Z ~ N(0, 1), K = (n − 1)S²/σ² ~ χ²(n − 1), independent, and T = Z/√(K/ν) ~ Student(ν). 1) Prove T0 = (x̄ − µ)/(S/√n) ~ Student(n − 1). 2) Prove E[Σ(xi − x̄)²] = (n − 1)σ². 3) Application: 9 batteries, x̄ ≈ 9.689, S ≈ 0.2934, µ0 = 9.5: T0 and ν."
+  },
+  "hints": [
+   {
+    "fr": "Divise numérateur et dénominateur de T0 par σ/√n.",
+    "dar": "Fasem lfo9 w lta7t 3la σ/√n.",
+    "en": "Divide top and bottom by σ/√n."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Le σ se simplifie",
+     "dar": "1) σ kaytsimplifia",
+     "en": "1) σ cancels"
+    },
+    "body": {
+     "fr": "T0 = [(x̄ − µ)/(σ/√n)] / (S/σ) = Z / √(S²/σ²) = Z / √(K/(n − 1)). C'est exactement la définition de Student à ν = n − 1.",
+     "dar": "T0 = Z / (S/σ) = Z / √(K/(n − 1)) → Student(n − 1).",
+     "en": "T0 = Z / (S/σ) = Z / √(K/(n − 1)) → Student(n − 1)."
+    },
+    "tex": "T_0 = \\frac{\\frac{\\bar x - \\mu}{\\sigma/\\sqrt n}}{\\sqrt{\\frac{(n-1)S^2/\\sigma^2}{n-1}}} = \\frac{Z}{\\sqrt{K/(n-1)}}"
+   },
+   {
+    "title": {
+     "fr": "2) Le n − 1",
+     "dar": "2) n − 1",
+     "en": "2) The n − 1"
+    },
+    "body": {
+     "fr": "Σ(xi − x̄)² = Σ(xi − µ)² − n(x̄ − µ)². En espérance : nσ² − n·(σ²/n) = (n − 1)σ². Donc E(S²) = σ² avec S² = Σ(xi − x̄)²/(n − 1).",
+     "dar": "E = nσ² − σ² = (n − 1)σ² → E(S²) = σ².",
+     "en": "E = nσ² − σ² = (n − 1)σ² → E(S²) = σ²."
+    },
+    "tex": "E\\Big[\\sum (x_i-\\bar x)^2\\Big] = n\\sigma^2 - n\\frac{\\sigma^2}{n} = (n-1)\\sigma^2"
+   },
+   {
+    "title": {
+     "fr": "3) Application",
+     "dar": "3) Application",
+     "en": "3) Application"
+    },
+    "body": {
+     "fr": "ν = 9 − 1 = **8** ; S/√n = 0,2934/3 ≈ 0,0978 ; T0 = 0,1889/0,0978 ≈ **1,93**.",
+     "dar": "ν = **8** ; T0 ≈ **1,93**.",
+     "en": "ν = **8**; T0 ≈ **1.93**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "T0 = Z/√(K/(n − 1)) ~ Student(n − 1) (σ disparaît) ; E[Σ(xi − x̄)²] = (n − 1)σ² ; application : ν = 8, T0 ≈ 1,93.",
+   "dar": "T0 ~ Student(n − 1) ; ν = 8 ; T0 ≈ 1,93.",
+   "en": "T0 ~ Student(n − 1); ν = 8; T0 ≈ 1.93."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire « S ≈ σ donc T0 ~ N(0, 1) » : faux pour n petit.",
+    "dar": "S ≈ σ → N(0, 1) : ghalat ila n sghir.",
+    "en": "\"S ≈ σ so normal\": wrong for small n."
+   },
+   {
+    "fr": "Oublier que Σ(xi − x̄) = 0 fait perdre 1 degré de liberté.",
+    "dar": "Σ(xi − x̄) = 0 → ddl na9es 1.",
+    "en": "Σ(xi − x̄) = 0 costs one df."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "tStatData",
+     "args": [
+      [
+       9.6,
+       10.1,
+       9.4,
+       9.8,
+       9.9,
+       9.2,
+       10,
+       9.5,
+       9.7
+      ],
+      9.5
+     ]
+    },
+    "expect": 1.9311,
+    "tolerance": 0.001
+   }
+  ]
+ },
+ {
+  "id": "d-x-dm3",
+  "module": "data",
+  "chapter": "demos",
+  "difficulty": 3,
+  "title": {
+   "fr": "Démontrer : Z² = χ²(1) et χ² à 2 classes",
+   "dar": "Démontrer : Z² = χ²(1) w χ² b 2 classes",
+   "en": "Prove: Z² = χ²(1) and χ² with 2 classes"
+  },
+  "statement": {
+   "fr": "1) Démontrer que χ²(α ; 1) = z(α/2)² et vérifier avec les tables à 5 % et 1 %. 2) Une pièce est lancée n fois, X = nombre de « pile », H0 : p = p0. Démontrer que le χ² d'ajustement à 2 classes vaut Z0² avec Z0 = (X − np0)/√(np0(1 − p0)). 3) Application : n = 100, X = 60, p0 = 0,5 : calculer χ²0 et décider à 5 %.",
+   "dar": "1) Bayyen χ²(α ; 1) = z(α/2)² w t2akked b tables (5 % w 1 %). 2) Pièce mlou7a n mra, X = 3adad « pile », H0 : p = p0. Bayyen χ² b 2 classes = Z0². 3) Application : n = 100, X = 60, p0 = 0,5 : χ²0 w qarar b 5 %.",
+   "en": "1) Prove χ²(α; 1) = z(α/2)² and check with the tables at 5 % and 1 %. 2) A coin tossed n times, X = heads, H0: p = p0. Prove the 2-class χ² equals Z0². 3) Application: n = 100, X = 60, p0 = 0.5: χ²0 and decision at 5 %."
+  },
+  "hints": [
+   {
+    "fr": "Z² > c² ⇔ |Z| > c. Et avec 2 classes, O2 − E2 = −(O1 − E1).",
+    "dar": "Z² > c² ⇔ |Z| > c ; O2 − E2 = −(O1 − E1).",
+    "en": "Z² > c² ⇔ |Z| > c; O2 − E2 = −(O1 − E1)."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Z² et χ²(1)",
+     "dar": "1) Z² w χ²(1)",
+     "en": "1) Z² and χ²(1)"
+    },
+    "body": {
+     "fr": "Z² ~ χ²(1) (définition, ν = 1). P(Z² > c²) = P(|Z| > c) = α ⇔ c = z(α/2). Donc χ²(α ; 1) = z(α/2)² : 1,96² = 3,8416 ≈ **3,841** ; 2,576² = **6,635**.",
+     "dar": "1,96² ≈ 3,841 ; 2,576² ≈ 6,635.",
+     "en": "1.96² ≈ 3.841; 2.576² ≈ 6.635."
+    }
+   },
+   {
+    "title": {
+     "fr": "2) χ² à 2 classes",
+     "dar": "2) χ² b 2 classes",
+     "en": "2) 2-class χ²"
+    },
+    "body": {
+     "fr": "O1 = X, E1 = np0 ; O2 = n − X, E2 = n(1 − p0), donc O2 − E2 = −(X − np0). χ² = (X − np0)²[1/(np0) + 1/(n(1 − p0))] = (X − np0)²/(np0(1 − p0)) = Z0².",
+     "dar": "χ² = (X − np0)²/(np0(1 − p0)) = Z0².",
+     "en": "χ² = (X − np0)²/(np0(1 − p0)) = Z0²."
+    },
+    "tex": "\\frac{1}{np_0} + \\frac{1}{n(1-p_0)} = \\frac{1}{np_0(1-p_0)}"
+   },
+   {
+    "title": {
+     "fr": "3) Application",
+     "dar": "3) Application",
+     "en": "3) Application"
+    },
+    "body": {
+     "fr": "Z0 = (60 − 50)/√25 = **2** ; χ²0 = 10²/50 + 10²/50 = **4** = Z0². ν = 2 − 1 = 1 → 4 > 3,841 → **rejet de H0** (et |Z0| = 2 > 1,96 : même décision).",
+     "dar": "Z0 = 2 ; χ²0 = 4 > 3,841 → **rfed H0**.",
+     "en": "Z0 = 2; χ²0 = 4 > 3.841 → **reject H0**."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "χ²(α ; 1) = z(α/2)² (3,841 = 1,96²) ; à 2 classes χ² = Z0² ; application χ²0 = 4 > 3,841 → rejet, p ≠ 0,5.",
+   "dar": "χ²(1) = Z² ; χ²0 = 4 → rfed.",
+   "en": "χ²(1) = Z²; χ²0 = 4 → reject."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Prendre ν = 2 (nombre de classes) au lieu de 1.",
+    "dar": "ν = 2 ghalat : ν = 1.",
+    "en": "ν = 2 is wrong: ν = 1."
+   }
+  ],
+  "checks": [
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.05,
+      1
+     ]
+    },
+    "expect": 3.8415,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "chi2Crit",
+     "args": [
+      0.01,
+      1
+     ]
+    },
+    "expect": 6.6349,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "chi2Uniform",
+     "args": [
+      [
+       60,
+       40
+      ],
+      0.05
+     ],
+     "pick": "chi2"
+    },
+    "expect": 4,
+    "tolerance": 0.0001
+   }
+  ]
+ }
+]

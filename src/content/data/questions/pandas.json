@@ -1008,9 +1008,9 @@
   "difficulty": 3,
   "kind": "single",
   "prompt": {
-   "fr": "Pourquoi utiliser `url + \"notes.csv\"` dans le corrigé de la Feuille N°1 ?",
-   "dar": "3lach url + \"notes.csv\" ?",
-   "en": "Why url + \"notes.csv\"?"
+   "fr": "On écrit `url = \"https://exemple.ma/data/\"` puis `df = pd.read_csv(url + \"notes.csv\")`. Pourquoi cela marche-t-il ?",
+   "dar": "`url = \"https://exemple.ma/data/\"` w `pd.read_csv(url + \"notes.csv\")`. 3lach khdama ?",
+   "en": "`url = \"https://exemple.ma/data/\"` then `pd.read_csv(url + \"notes.csv\")`. Why does it work?"
   },
   "options": [
    {

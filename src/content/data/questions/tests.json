@@ -452,9 +452,9 @@
   "difficulty": 2,
   "kind": "numeric",
   "prompt": {
-   "fr": "**Fusée** : µ0 = 40, σ = 2, n = 25, x̄ = 41,25. Calcule Z0.",
-   "dar": "**Fusée** : 7seb Z0.",
-   "en": "**Rocket**: compute Z0."
+   "fr": "Des fusées doivent atteindre en moyenne µ0 = 40 km ; σ = 2 km (connu). Sur n = 25 fusées, x̄ = 41,25 km. Calcule Z0.",
+   "dar": "Fusées : µ0 = 40 km, σ = 2 (m3rouf), n = 25, x̄ = 41,25. 7seb Z0.",
+   "en": "Rockets: µ0 = 40 km, σ = 2 (known), n = 25, x̄ = 41.25. Compute Z0."
   },
   "answer": 3.125,
   "tolerance": 0.01,
@@ -496,9 +496,9 @@
   "difficulty": 2,
   "kind": "single",
   "prompt": {
-   "fr": "Fusée (bilatéral, α = 5 %) : Z0 = 3,125. Décision ?",
-   "dar": "Fusée : qarar ?",
-   "en": "Rocket: decision?"
+   "fr": "µ0 = 40, σ = 2 (connu), n = 25, x̄ = 41,25 → Z0 = 3,125. Test **bilatéral** (H1 : µ ≠ 40) au risque α = 5 %. Décision ?",
+   "dar": "µ0 = 40, σ = 2, n = 25, x̄ = 41,25 → Z0 = 3,125. Test **bilatéral** b α = 5 %. Qarar ?",
+   "en": "µ0 = 40, σ = 2 (known), n = 25, x̄ = 41.25 → Z0 = 3.125. **Two-sided** test at α = 5 %. Decision?"
   },
   "options": [
    {
@@ -569,9 +569,9 @@
   "difficulty": 3,
   "kind": "numeric",
   "prompt": {
-   "fr": "Fusée : calcule la **P-value** bilatérale associée à Z0 = 3,125 (4 décimales).",
-   "dar": "PV dyal Z0 = 3,125 ?",
-   "en": "Two-sided P-value for Z0 = 3.125 (4 decimals)?"
+   "fr": "Test Z **bilatéral** : Z0 = 3,125. Calcule la **P-value** (4 décimales).",
+   "dar": "Test Z **bilatéral** : Z0 = 3,125. 7seb **P-value** (4 décimales).",
+   "en": "**Two-sided** Z test: Z0 = 3.125. Compute the **P-value** (4 decimals)."
   },
   "answer": 0.0018,
   "tolerance": 0.0002,
@@ -606,9 +606,9 @@
   "difficulty": 1,
   "kind": "numeric",
   "prompt": {
-   "fr": "Comprimés : calcule x̄ (0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80).",
-   "dar": "Comprimés : x̄ ?",
-   "en": "Tablets: x̄?"
+   "fr": "Masses de 10 comprimés (g) : 0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80. Calcule x̄.",
+   "dar": "Masses dyal 10 comprimés (g) : 0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80. 7seb x̄.",
+   "en": "Masses of 10 tablets (g): 0.81 0.84 0.83 0.80 0.85 0.86 0.85 0.83 0.84 0.80. Compute x̄."
   },
   "answer": 0.831,
   "tolerance": 0.0005,
@@ -647,9 +647,9 @@
   "difficulty": 2,
   "kind": "numeric",
   "prompt": {
-   "fr": "Comprimés : calcule l'écart-type corrigé S (diviseur n − 1), 4 décimales.",
-   "dar": "Comprimés : S ?",
-   "en": "Tablets: corrected S (n − 1)?"
+   "fr": "Masses de 10 comprimés (g) : 0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80 (x̄ = 0,831). Calcule l'écart-type corrigé S (diviseur n − 1), 4 décimales.",
+   "dar": "Masses dyal 10 comprimés : 0,81 0,84 0,83 0,80 0,85 0,86 0,85 0,83 0,84 0,80 (x̄ = 0,831). 7seb S (n − 1), 4 décimales.",
+   "en": "Masses of 10 tablets: 0.81 0.84 0.83 0.80 0.85 0.86 0.85 0.83 0.84 0.80 (x̄ = 0.831). Compute the corrected S (n − 1), 4 decimals."
   },
   "answer": 0.0213,
   "tolerance": 0.0002,
@@ -694,9 +694,9 @@
   "difficulty": 2,
   "kind": "numeric",
   "prompt": {
-   "fr": "Comprimés : µ0 = 0,83. Calcule T0 (3 décimales).",
-   "dar": "Comprimés : T0 ?",
-   "en": "Tablets: T0?"
+   "fr": "σ inconnu, n = 10, x̄ = 0,831, S ≈ 0,0213, µ0 = 0,83. Calcule T0 (3 décimales).",
+   "dar": "σ ma m3roufch, n = 10, x̄ = 0,831, S ≈ 0,0213, µ0 = 0,83. 7seb T0 (3 décimales).",
+   "en": "σ unknown, n = 10, x̄ = 0.831, S ≈ 0.0213, µ0 = 0.83. Compute T0 (3 decimals)."
   },
   "answer": 0.148,
   "tolerance": 0.002,
@@ -736,9 +736,9 @@
   "difficulty": 2,
   "kind": "numeric",
   "prompt": {
-   "fr": "Comprimés, seuil de confiance 98 % bilatéral : valeur critique t(0,01 ; 9) ?",
-   "dar": "t(0,01 ; 9) ?",
-   "en": "Critical value t(0.01; 9)?"
+   "fr": "Test de Student **bilatéral**, n = 10, α = 2 % (confiance 98 %) : valeur critique t(0,01 ; 9) ?",
+   "dar": "Student **bilatéral**, n = 10, α = 2 % : t(0,01 ; 9) ?",
+   "en": "**Two-sided** Student test, n = 10, α = 2 %: critical value t(0.01; 9)?"
   },
   "answer": 2.821,
   "tolerance": 0.002,
@@ -778,9 +778,9 @@
   "difficulty": 2,
   "kind": "single",
   "prompt": {
-   "fr": "Comprimés : T0 ≈ 0,148 et t(0,01 ; 9) = 2,821. Conclusion ?",
-   "dar": "Conclusion ?",
-   "en": "Conclusion?"
+   "fr": "Test de Student **bilatéral** (H1 : µ ≠ 0,83), n = 10, α = 2 % : T0 ≈ 0,148 et t(0,01 ; 9) = 2,821. Conclusion ?",
+   "dar": "Student **bilatéral**, n = 10, α = 2 % : T0 ≈ 0,148, t(0,01 ; 9) = 2,821. Conclusion ?",
+   "en": "**Two-sided** Student test, n = 10, α = 2 %: T0 ≈ 0.148, t(0.01; 9) = 2.821. Conclusion?"
   },
   "options": [
    {
@@ -851,9 +851,9 @@
   "difficulty": 2,
   "kind": "numeric",
   "prompt": {
-   "fr": "**Glycémie** : µ0 = 1, σ = 0,1, n = 9, x̄ = 1,12. Calcule Z0.",
-   "dar": "**Glycémie** : Z0 ?",
-   "en": "**Blood sugar**: Z0?"
+   "fr": "Glycémie : µ0 = 1 g/L, σ = 0,1 (connu), n = 9 patients, x̄ = 1,12. Calcule Z0.",
+   "dar": "Glycémie : µ0 = 1, σ = 0,1 (m3rouf), n = 9, x̄ = 1,12. 7seb Z0.",
+   "en": "Blood sugar: µ0 = 1, σ = 0.1 (known), n = 9, x̄ = 1.12. Compute Z0."
   },
   "answer": 3.6,
   "tolerance": 0.01,
@@ -890,9 +890,9 @@
   "difficulty": 3,
   "kind": "single",
   "prompt": {
-   "fr": "Glycémie : test **unilatéral gauche** (H1 : µ < 1), α = 5 %, Z0 = 3,6. Décision ?",
-   "dar": "Glycémie gauche, Z0 = 3,6 ?",
-   "en": "Left-tailed, Z0 = 3.6. Decision?"
+   "fr": "µ0 = 1, σ = 0,1 (connu), n = 9, x̄ = 1,12 → Z0 = 3,6. Test **unilatéral gauche** (H1 : µ < 1), α = 5 %. Décision ?",
+   "dar": "µ0 = 1, σ = 0,1, n = 9, x̄ = 1,12 → Z0 = 3,6. **Gauche** (H1 : µ < 1), α = 5 %. Qarar ?",
+   "en": "µ0 = 1, σ = 0.1 (known), n = 9, x̄ = 1.12 → Z0 = 3.6. **Left-tailed** (H1: µ < 1), α = 5 %. Decision?"
   },
   "options": [
    {
@@ -964,9 +964,9 @@
   "difficulty": 3,
   "kind": "numeric",
   "prompt": {
-   "fr": "Glycémie (unilatéral gauche) : P-value pour Z0 = 3,6 ?",
-   "dar": "PV gauche Z0 = 3,6 ?",
-   "en": "Left-tailed P-value for Z0 = 3.6?"
+   "fr": "Test Z **unilatéral gauche** (H1 : µ < µ0) : Z0 = 3,6. P-value ?",
+   "dar": "Test Z **gauche** : Z0 = 3,6. P-value ?",
+   "en": "**Left-tailed** Z test: Z0 = 3.6. P-value?"
   },
   "answer": 0.9998,
   "tolerance": 0.0002,

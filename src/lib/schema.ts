@@ -30,6 +30,12 @@ export const SectionSchema = z.discriminatedUnion('type', [
     title: L10nSchema.optional(),
     items: z.array(z.object({ title: L10nSchema, body: L10nSchema, tex: z.string().optional(), code: z.string().optional(), why: L10nSchema.optional() })).min(1)
   }),
+  /** a mathematical proof: every line visible, one property per line, display maths, ends with a box */
+  z.object({
+    type: z.literal('proof'),
+    title: L10nSchema.optional(),
+    lines: z.array(z.object({ title: L10nSchema, body: L10nSchema, tex: z.string().optional() })).min(1)
+  }),
   /** a model exam answer, written out in full the way it is expected on the paper */
   z.object({
     type: z.literal('copy'),

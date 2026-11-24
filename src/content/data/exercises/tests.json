@@ -879,9 +879,9 @@
    "en": "Power and β"
   },
   "statement": {
-   "fr": "Reprends la fusée (µ0 = 40, σ = 2, n = 25, bilatéral 5 %). Si la vraie moyenne est µ = 41, quelle est la puissance du test ? Que vaut β ? Comment augmenter la puissance sans toucher à α ?",
-   "dar": "Puissance ila µ = 41 ?",
-   "en": "Rocket: power if µ = 41? β? How to raise power?"
+   "fr": "Une machine fabrique des pièces de longueur µ0 = 40 cm, σ = 2 cm (connu). On teste H0 : µ = 40 contre H1 : µ ≠ 40 sur n = 25 pièces, au risque α = 5 %. Si la vraie moyenne est µ = 41 cm, quelle est la puissance du test ? Que vaut β ? Comment augmenter la puissance sans toucher à α ?",
+   "dar": "Machine : µ0 = 40 cm, σ = 2 (m3rouf). Test H0 : µ = 40 contre H1 : µ ≠ 40, n = 25, α = 5 %. Ila µ l7a9i9iya = 41, ch7al puissance ? β ? Kifach tzid puissance bla matbeddel α ?",
+   "en": "A machine makes parts of length µ0 = 40 cm, σ = 2 cm (known). Test H0: µ = 40 vs H1: µ ≠ 40 with n = 25 at α = 5 %. If the true mean is µ = 41, what is the power? β? How to raise power without changing α?"
   },
   "hints": [
    {
@@ -1109,9 +1109,9 @@
    "en": "Confidence interval and test"
   },
   "statement": {
-   "fr": "Pour la fusée, construis l'intervalle de confiance à 95 % de µ. Explique pourquoi on retrouve la conclusion du test bilatéral.",
-   "dar": "IC 95 % fusée.",
-   "en": "Build the 95 % CI for the rocket mean."
+   "fr": "Une machine fabrique des pièces de longueur µ0 = 40 cm, σ = 2 cm (connu). Sur n = 25 pièces, x̄ = 41,25 cm. Construis l'intervalle de confiance à 95 % de µ, puis explique pourquoi on retrouve la conclusion du test bilatéral H0 : µ = 40 au risque 5 %.",
+   "dar": "Machine : µ0 = 40 cm, σ = 2 (m3rouf), n = 25, x̄ = 41,25. Bni IC 95 % dyal µ, w fesser 3lach kat l9a nefs conclusion dyal test bilatéral H0 : µ = 40 b 5 %.",
+   "en": "A machine makes parts with µ0 = 40 cm, σ = 2 cm (known). On n = 25 parts, x̄ = 41.25 cm. Build the 95 % CI of µ and explain why it gives the same conclusion as the two-sided test of H0: µ = 40 at 5 %."
   },
   "hints": [
    {

@@ -1,0 +1,965 @@
+{
+ "id": "demos",
+ "module": "data",
+ "order": 6.5,
+ "title": {
+  "fr": "Démonstrations — loi normale, Student, χ² et leurs relations",
+  "dar": "Démonstrations — loi normale, Student, χ² w les relations binathom",
+  "en": "Proofs — normal law, Student, χ² and how they relate"
+ },
+ "summary": {
+  "fr": "D'où viennent les formules : loi de x̄, Z quand σ est connu, les 3 régions (≠, <, >), la P-value, le lien test ⇔ intervalle, le n − 1 de S, Student quand σ est inconnu, le χ², et les ponts entre les trois lois.",
+  "dar": "Mnin jaw les formules : loi dyal x̄, Z mli σ m3rouf, 3 régions (≠, <, >), P-value, test ⇔ intervalle, n − 1 dyal S, Student mli σ ma m3roufch, χ², w les ponts bin 3 lois.",
+  "en": "Where the formulas come from: law of x̄, Z when σ is known, the 3 regions (≠, <, >), the P-value, test ⇔ interval, the n − 1 of S, Student when σ is unknown, χ², and the bridges between the three laws."
+ },
+ "estimatedMinutes": 50,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. **σ connu** : x̄ ~ N(µ, σ²/n) donc **Z = (x̄ − µ)/(σ/√n) ~ N(0, 1)**.\n2. **σ inconnu** : on remplace σ par S (diviseur n − 1) → **T = Z / √(χ²(n − 1)/(n − 1)) ~ Student(n − 1)** : σ se simplifie.\n3. **χ²(ν)** = somme de ν carrés de N(0, 1) ; **Z² = χ²(1)** donc 1,96² = 3,841.\n4. Les 3 régions viennent toutes de **P(rejeter | H0) = α** : ≠ → α/2 de chaque côté ; < → α à gauche ; > → α à droite.\n5. **n grand** : Student → N(0, 1) (2,306 → 1,96).",
+    "dar": "1. **σ m3rouf** : x̄ ~ N(µ, σ²/n) → **Z ~ N(0, 1)**.\n2. **σ ma m3roufch** : nbeddlou σ b S (n − 1) → **T = Z / √(χ²(n − 1)/(n − 1)) ~ Student(n − 1)** : σ kaytsimplifia.\n3. **χ²(ν)** = majmou3 ν morabba3at dyal N(0, 1) ; **Z² = χ²(1)** → 1,96² = 3,841.\n4. 3 régions kamlin jayin mn **P(rfed | H0) = α** : ≠ → α/2 f kol jiha ; < → α f lisr ; > → α f limen.\n5. **n kbir** : Student → N(0, 1).",
+    "en": "1. **σ known**: x̄ ~ N(µ, σ²/n) so **Z ~ N(0, 1)**.\n2. **σ unknown**: replace σ by S (n − 1) → **T = Z / √(χ²(n − 1)/(n − 1)) ~ Student(n − 1)**: σ cancels.\n3. **χ²(ν)** = sum of ν squared N(0, 1); **Z² = χ²(1)** so 1.96² = 3.841.\n4. The 3 regions all come from **P(reject | H0) = α**.\n5. **Large n**: Student → N(0, 1)."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Loi",
+     "dar": "Loi",
+     "en": "Law"
+    },
+    {
+     "fr": "Définition",
+     "dar": "Ta3rif",
+     "en": "Definition"
+    },
+    {
+     "fr": "Quand ?",
+     "dar": "Imta ?",
+     "en": "When?"
+    },
+    {
+     "fr": "Lien",
+     "dar": "Rabt",
+     "en": "Link"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Normale N(0, 1)",
+      "dar": "Normale N(0, 1)",
+      "en": "Normal N(0, 1)"
+     },
+     "$Z = \\frac{\\bar x - \\mu}{\\sigma/\\sqrt n}$",
+     {
+      "fr": "Moyenne, **σ connu**",
+      "dar": "Moyenne, **σ m3rouf**",
+      "en": "Mean, **σ known**"
+     },
+     {
+      "fr": "Brique de base des deux autres",
+      "dar": "Asas dyal jouj lokhrin",
+      "en": "Building block of the other two"
+     }
+    ],
+    [
+     {
+      "fr": "Khi-deux χ²(ν)",
+      "dar": "Khi-deux χ²(ν)",
+      "en": "Chi-square χ²(ν)"
+     },
+     "$K = Z_1^2 + \\dots + Z_\\nu^2$",
+     {
+      "fr": "Ajustement d'une loi ; variance",
+      "dar": "Ajustement ; variance",
+      "en": "Goodness of fit; variance"
+     },
+     "$Z^2 = \\chi^2(1)$"
+    ],
+    [
+     {
+      "fr": "Student t(ν)",
+      "dar": "Student t(ν)",
+      "en": "Student t(ν)"
+     },
+     "$T = \\frac{Z}{\\sqrt{K/\\nu}}$",
+     {
+      "fr": "Moyenne, **σ inconnu**",
+      "dar": "Moyenne, **σ ma m3roufch**",
+      "en": "Mean, **σ unknown**"
+     },
+     "$t(\\nu) \\to N(0,1)$"
+    ]
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D1. La loi de x̄ (σ connu)",
+    "dar": "D1. Loi dyal x̄ (σ m3rouf)",
+    "en": "D1. The law of x̄ (σ known)"
+   }
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "Démontrer que x̄ ~ N(µ, σ²/n)",
+    "dar": "Bayyen x̄ ~ N(µ, σ²/n)",
+    "en": "Prove x̄ ~ N(µ, σ²/n)"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Hypothèses",
+      "dar": "Hypothèses",
+      "en": "Assumptions"
+     },
+     "body": {
+      "fr": "X1, …, Xn **indépendantes**, même loi N(µ, σ²). x̄ = (X1 + … + Xn)/n.",
+      "dar": "X1, …, Xn **mosta9illin**, nefs loi N(µ, σ²). x̄ = (X1 + … + Xn)/n.",
+      "en": "X1, …, Xn **independent**, same law N(µ, σ²)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Espérance",
+      "dar": "Espérance",
+      "en": "Mean"
+     },
+     "body": {
+      "fr": "L'espérance est linéaire.",
+      "dar": "Espérance linéaire.",
+      "en": "Expectation is linear."
+     },
+     "tex": "E(\\bar X) = \\frac{1}{n}\\sum_{i=1}^n E(X_i) = \\frac{1}{n}\\, n\\mu = \\mu"
+    },
+    {
+     "title": {
+      "fr": "Variance",
+      "dar": "Variance",
+      "en": "Variance"
+     },
+     "body": {
+      "fr": "V(aX) = a²V(X), et pour des variables **indépendantes** la variance d'une somme est la somme des variances.",
+      "dar": "V(aX) = a²V(X) ; mosta9illin → V(somme) = somme V.",
+      "en": "V(aX) = a²V(X); independent → V(sum) = sum of V."
+     },
+     "tex": "V(\\bar X) = \\frac{1}{n^2}\\sum_{i=1}^n V(X_i) = \\frac{n\\sigma^2}{n^2} = \\frac{\\sigma^2}{n}"
+    },
+    {
+     "title": {
+      "fr": "Loi",
+      "dar": "Loi",
+      "en": "Law"
+     },
+     "body": {
+      "fr": "Une somme de normales indépendantes est normale. Donc x̄ ~ N(µ, σ²/n). Si les Xi ne sont pas normales mais **n ≥ 30**, c'est vrai approximativement (théorème central limite).",
+      "dar": "Majmou3 normales = normale → x̄ ~ N(µ, σ²/n). Ila machi normales w **n ≥ 30** → ta9riban (TCL).",
+      "en": "A sum of independent normals is normal. If not normal but **n ≥ 30**: approximately (CLT)."
+     },
+     "tex": "\\bar X \\sim N\\!\\left(\\mu,\\ \\frac{\\sigma^2}{n}\\right)"
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "L'écart-type de x̄ est **σ/√n**, pas σ : plus n est grand, plus x̄ est précis. C'est pour ça qu'on divise par σ/√n dans Z0.",
+    "dar": "Écart-type dyal x̄ howa **σ/√n**, machi σ : kol ma n kbir, x̄ d9i9. Hadchi 3lach kanfasmou 3la σ/√n f Z0.",
+    "en": "The SD of x̄ is **σ/√n**, not σ: that is why Z0 divides by σ/√n."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D2. Centrer-réduire : Z ~ N(0, 1)",
+    "dar": "D2. Centrer-réduire : Z ~ N(0, 1)",
+    "en": "D2. Standardising: Z ~ N(0, 1)"
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Définir Z",
+      "dar": "Ta3rif Z",
+      "en": "Define Z"
+     },
+     "body": {
+      "fr": "On retire la moyenne et on divise par l'écart-type de x̄.",
+      "dar": "N7iydou moyenne w nfasmou 3la écart-type dyal x̄.",
+      "en": "Subtract the mean, divide by the SD of x̄."
+     },
+     "tex": "Z = \\frac{\\bar X - \\mu}{\\sigma/\\sqrt n}"
+    },
+    {
+     "title": {
+      "fr": "E(Z) = 0",
+      "dar": "E(Z) = 0",
+      "en": "E(Z) = 0"
+     },
+     "body": {
+      "fr": "E(Z) = (E(x̄) − µ)/(σ/√n) = (µ − µ)/(σ/√n) = 0.",
+      "dar": "E(Z) = (µ − µ)/(σ/√n) = 0.",
+      "en": "E(Z) = (µ − µ)/(σ/√n) = 0."
+     }
+    },
+    {
+     "title": {
+      "fr": "V(Z) = 1",
+      "dar": "V(Z) = 1",
+      "en": "V(Z) = 1"
+     },
+     "body": {
+      "fr": "Une constante retirée ne change pas la variance ; diviser par a divise la variance par a².",
+      "dar": "Constante ma katbeddelch V ; t9sem 3la a → V/a².",
+      "en": "A constant does not change V; dividing by a divides V by a²."
+     },
+     "tex": "V(Z) = \\frac{V(\\bar X)}{\\sigma^2/n} = \\frac{\\sigma^2/n}{\\sigma^2/n} = 1"
+    },
+    {
+     "title": {
+      "fr": "Conclusion",
+      "dar": "Conclusion",
+      "en": "Conclusion"
+     },
+     "body": {
+      "fr": "Z est normale (transformation affine d'une normale), de moyenne 0 et variance 1 : **Z ~ N(0, 1)**. Sous H0 (µ = µ0), on calcule donc **Z0 = (x̄ − µ0)/(σ/√n)** et on lit la table N(0, 1).",
+      "dar": "Z normale, E = 0, V = 1 → **Z ~ N(0, 1)**. Sous H0 : **Z0 = (x̄ − µ0)/(σ/√n)**.",
+      "en": "Z is normal with mean 0 and variance 1: **Z ~ N(0, 1)**. Under H0: **Z0 = (x̄ − µ0)/(σ/√n)**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D3. Les 3 régions critiques (≠, <, >)",
+    "dar": "D3. 3 régions critiques (≠, <, >)",
+    "en": "D3. The 3 critical regions (≠, <, >)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le principe est toujours le même : on choisit la région R pour que **P(Z0 ∈ R | H0 vraie) = α** (erreur de 1re espèce), placée **du côté de H1**.",
+    "dar": "Lmabda2 dima nefso : nkhtarou région R bach **P(Z0 ∈ R | H0 s7i7a) = α**, f **jiha dyal H1**.",
+    "en": "Always the same principle: choose R so that **P(Z0 ∈ R | H0) = α**, placed **on H1's side**."
+   }
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "H1 : µ ≠ µ0 (bilatéral)",
+    "dar": "H1 : µ ≠ µ0 (bilatéral)",
+    "en": "H1: µ ≠ µ0 (two-sided)"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Forme",
+      "dar": "Chkl",
+      "en": "Shape"
+     },
+     "body": {
+      "fr": "Un écart dans les deux sens contredit H0 → R = { |Z0| > c }.",
+      "dar": "Far9 f jouj jihat → R = { |Z0| > c }.",
+      "en": "A gap either way → R = { |Z0| > c }."
+     }
+    },
+    {
+     "title": {
+      "fr": "Calcul de c",
+      "dar": "7sab c",
+      "en": "Finding c"
+     },
+     "body": {
+      "fr": "Par symétrie, P(|Z| > c) = 2(1 − Φ(c)).",
+      "dar": "Symétrie : P(|Z| > c) = 2(1 − Φ(c)).",
+      "en": "By symmetry, P(|Z| > c) = 2(1 − Φ(c))."
+     },
+     "tex": "2\\,(1 - \\Phi(c)) = \\alpha \\iff \\Phi(c) = 1 - \\tfrac{\\alpha}{2} \\iff c = z_{\\alpha/2}"
+    },
+    {
+     "title": {
+      "fr": "À 5 %",
+      "dar": "B 5 %",
+      "en": "At 5 %"
+     },
+     "body": {
+      "fr": "Φ(c) = 0,975 → c = **1,96**. On rejette si **|Z0| > 1,96**.",
+      "dar": "Φ(c) = 0,975 → **1,96** → rfed ila **|Z0| > 1,96**.",
+      "en": "Φ(c) = 0.975 → **1.96**: reject if **|Z0| > 1.96**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "H1 : µ < µ0 (unilatéral gauche)",
+    "dar": "H1 : µ < µ0 (gauche)",
+    "en": "H1: µ < µ0 (left)"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Forme",
+      "dar": "Chkl",
+      "en": "Shape"
+     },
+     "body": {
+      "fr": "Seules les petites valeurs de x̄ contredisent H0 → R = { Z0 < −c }.",
+      "dar": "Ghir x̄ sghira katnaqed H0 → R = { Z0 < −c }.",
+      "en": "Only small x̄ contradicts H0 → R = { Z0 < −c }."
+     }
+    },
+    {
+     "title": {
+      "fr": "Calcul de c",
+      "dar": "7sab c",
+      "en": "Finding c"
+     },
+     "body": {
+      "fr": "Φ(−c) = 1 − Φ(c).",
+      "dar": "Φ(−c) = 1 − Φ(c).",
+      "en": "Φ(−c) = 1 − Φ(c)."
+     },
+     "tex": "P(Z < -c) = \\Phi(-c) = 1 - \\Phi(c) = \\alpha \\iff c = z_{\\alpha}"
+    },
+    {
+     "title": {
+      "fr": "À 5 %",
+      "dar": "B 5 %",
+      "en": "At 5 %"
+     },
+     "body": {
+      "fr": "Φ(c) = 0,95 → c = **1,645**. On rejette si **Z0 < −1,645** (avec le signe).",
+      "dar": "**1,645** → rfed ila **Z0 < −1,645** (b signe).",
+      "en": "**1.645**: reject if **Z0 < −1.645** (with the sign)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "H1 : µ > µ0 (unilatéral droite)",
+    "dar": "H1 : µ > µ0 (droite)",
+    "en": "H1: µ > µ0 (right)"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Forme",
+      "dar": "Chkl",
+      "en": "Shape"
+     },
+     "body": {
+      "fr": "Seules les grandes valeurs de x̄ contredisent H0 → R = { Z0 > c }.",
+      "dar": "Ghir x̄ kbira → R = { Z0 > c }.",
+      "en": "Only large x̄ → R = { Z0 > c }."
+     }
+    },
+    {
+     "title": {
+      "fr": "Calcul de c",
+      "dar": "7sab c",
+      "en": "Finding c"
+     },
+     "body": {
+      "fr": "Tout α est à droite.",
+      "dar": "α kamla f limen.",
+      "en": "All of α on the right."
+     },
+     "tex": "P(Z > c) = 1 - \\Phi(c) = \\alpha \\iff c = z_{\\alpha}"
+    },
+    {
+     "title": {
+      "fr": "À 5 %",
+      "dar": "B 5 %",
+      "en": "At 5 %"
+     },
+     "body": {
+      "fr": "c = **1,645**. On rejette si **Z0 > 1,645**.",
+      "dar": "**1,645** → rfed ila **Z0 > 1,645**.",
+      "en": "**1.645**: reject if **Z0 > 1.645**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\bar x > \\mu_0 + z_{\\alpha}\\tfrac{\\sigma}{\\sqrt n} \\qquad \\bar x < \\mu_0 - z_{\\alpha}\\tfrac{\\sigma}{\\sqrt n} \\qquad |\\bar x - \\mu_0| > z_{\\alpha/2}\\tfrac{\\sigma}{\\sqrt n}",
+   "body": {
+    "fr": "**Les mêmes régions écrites sur x̄** (on multiplie Z0 > c par σ/√n > 0, puis on ajoute µ0). Exemple µ0 = 500, σ = 4, n = 36, α = 5 % : droite x̄ > **501,10** ; gauche x̄ < **498,90** ; bilatéral x̄ < **498,69** ou x̄ > **501,31**.",
+    "dar": "**Nefs régions 3la x̄** (nedarbou f σ/√n w nzidou µ0). Mithal µ0 = 500, σ = 4, n = 36 : droite x̄ > **501,10** ; gauche x̄ < **498,90** ; bilatéral x̄ < **498,69** wla > **501,31**.",
+    "en": "**The same regions on x̄**. Example µ0 = 500, σ = 4, n = 36: right x̄ > **501.10**; left x̄ < **498.90**; two-sided x̄ < **498.69** or > **501.31**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D4. La P-value et la règle « PV < α »",
+    "dar": "D4. P-value w lqa3ida « PV < α »",
+    "en": "D4. The P-value and the rule \"PV < α\""
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Définition",
+      "dar": "Ta3rif",
+      "en": "Definition"
+     },
+     "body": {
+      "fr": "PV = probabilité, sous H0, d'obtenir une statistique **au moins aussi extrême** que z0, **dans le sens de H1**.",
+      "dar": "PV = proba, sous H0, dyal statistique **extrême b7al z0 wla ktar**, f **jiha dyal H1**.",
+      "en": "PV = probability under H0 of a statistic **at least as extreme** as z0, **in H1's direction**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Les 3 formules",
+      "dar": "3 formules",
+      "en": "The 3 formulas"
+     },
+     "body": {
+      "fr": "> : PV = P(Z > z0) = 1 − Φ(z0). < : PV = P(Z < z0) = Φ(z0). ≠ : PV = P(|Z| > |z0|) = 2(1 − Φ(|z0|)).",
+      "dar": "> : 1 − Φ(z0). < : Φ(z0). ≠ : 2(1 − Φ(|z0|)).",
+      "en": ">: 1 − Φ(z0). <: Φ(z0). ≠: 2(1 − Φ(|z0|))."
+     }
+    },
+    {
+     "title": {
+      "fr": "Équivalence (cas >)",
+      "dar": "Équivalence (cas >)",
+      "en": "Equivalence (case >)"
+     },
+     "body": {
+      "fr": "Φ est croissante, donc on peut passer d'une inégalité à l'autre.",
+      "dar": "Φ croissante.",
+      "en": "Φ is increasing."
+     },
+     "tex": "PV < \\alpha \\iff 1 - \\Phi(z_0) < \\alpha \\iff \\Phi(z_0) > 1 - \\alpha \\iff z_0 > z_{\\alpha}"
+    },
+    {
+     "title": {
+      "fr": "Conclusion",
+      "dar": "Conclusion",
+      "en": "Conclusion"
+     },
+     "body": {
+      "fr": "« PV < α » et « Z0 dans la région critique » sont **la même décision**. Même calcul pour < et ≠. Et PV bilatérale = **2 × PV unilatérale** (côté de z0) : ex. Z0 = −2,25 → 0,0122 et 0,0244.",
+      "dar": "« PV < α » = « Z0 f région » : **nefs qarar**. PV bilatérale = **2 × unilatérale** : Z0 = −2,25 → 0,0122 w 0,0244.",
+      "en": "Same decision. Two-sided PV = **2 × one-sided**: Z0 = −2.25 → 0.0122 and 0.0244."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D5. Test bilatéral ⇔ intervalle de confiance",
+    "dar": "D5. Test bilatéral ⇔ intervalle de confiance",
+    "en": "D5. Two-sided test ⇔ confidence interval"
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Non-rejet",
+      "dar": "Ma nrfdouch",
+      "en": "Not rejecting"
+     },
+     "body": {
+      "fr": "On garde H0 si |Z0| ≤ z(α/2).",
+      "dar": "Nkhalliw H0 ila |Z0| ≤ z(α/2).",
+      "en": "Keep H0 if |Z0| ≤ z(α/2)."
+     },
+     "tex": "\\left|\\frac{\\bar x - \\mu_0}{\\sigma/\\sqrt n}\\right| \\le z_{\\alpha/2} \\iff \\bar x - z_{\\alpha/2}\\tfrac{\\sigma}{\\sqrt n} \\le \\mu_0 \\le \\bar x + z_{\\alpha/2}\\tfrac{\\sigma}{\\sqrt n}"
+    },
+    {
+     "title": {
+      "fr": "Lecture",
+      "dar": "9raya",
+      "en": "Reading"
+     },
+     "body": {
+      "fr": "On garde H0 **si et seulement si µ0 est dans l'IC à 1 − α**. Exemple : x̄ = 498,5, σ = 4, n = 36 → IC 95 % = [**497,19** ; **499,81**]. 500 n'y est pas → rejet (comme |Z0| = 2,25 > 1,96).",
+      "dar": "Nkhalliw H0 **ghir ila µ0 dakhel IC**. Mithal : IC 95 % = [497,19 ; 499,81], 500 barra → rfed.",
+      "en": "Keep H0 **iff µ0 is in the 1 − α CI**. Example: CI = [497.19; 499.81], 500 outside → reject."
+     }
+    },
+    {
+     "title": {
+      "fr": "σ inconnu",
+      "dar": "σ ma m3roufch",
+      "en": "σ unknown"
+     },
+     "body": {
+      "fr": "Même démonstration avec S et t(α/2 ; n − 1) : IC = x̄ ± t·S/√n.",
+      "dar": "Nefs chi b S w t(α/2 ; n − 1).",
+      "en": "Same with S and t(α/2; n − 1)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D6. Pourquoi S² divise par n − 1",
+    "dar": "D6. 3lach S² kayfasem 3la n − 1",
+    "en": "D6. Why S² divides by n − 1"
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Décomposition",
+      "dar": "Décomposition",
+      "en": "Decomposition"
+     },
+     "body": {
+      "fr": "On écrit xi − µ = (xi − x̄) + (x̄ − µ) et on développe ; le double produit est nul car Σ(xi − x̄) = 0.",
+      "dar": "xi − µ = (xi − x̄) + (x̄ − µ) ; double produit = 0 7it Σ(xi − x̄) = 0.",
+      "en": "xi − µ = (xi − x̄) + (x̄ − µ); cross term is 0 since Σ(xi − x̄) = 0."
+     },
+     "tex": "\\sum (x_i - \\bar x)^2 = \\sum (x_i - \\mu)^2 - n(\\bar x - \\mu)^2"
+    },
+    {
+     "title": {
+      "fr": "Espérance",
+      "dar": "Espérance",
+      "en": "Expectation"
+     },
+     "body": {
+      "fr": "E[(xi − µ)²] = σ² et E[(x̄ − µ)²] = V(x̄) = σ²/n.",
+      "dar": "E[(xi − µ)²] = σ² ; E[(x̄ − µ)²] = σ²/n.",
+      "en": "E[(xi − µ)²] = σ²; E[(x̄ − µ)²] = σ²/n."
+     },
+     "tex": "E\\Big[\\sum (x_i - \\bar x)^2\\Big] = n\\sigma^2 - n\\cdot\\frac{\\sigma^2}{n} = (n-1)\\,\\sigma^2"
+    },
+    {
+     "title": {
+      "fr": "Conclusion",
+      "dar": "Conclusion",
+      "en": "Conclusion"
+     },
+     "body": {
+      "fr": "Donc **S² = Σ(xi − x̄)²/(n − 1)** vérifie E(S²) = σ² : estimateur **sans biais**. Diviser par n donnerait en moyenne (n − 1)σ²/n < σ². C'est le `.std()` de pandas (ddof = 1).",
+      "dar": "**S² = Σ(xi − x̄)²/(n − 1)** → E(S²) = σ² (**sans biais**). Howa `.std()` dyal pandas.",
+      "en": "**S² = Σ(xi − x̄)²/(n − 1)** is **unbiased**. It is pandas `.std()` (ddof = 1)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D7. La loi du χ² et (n − 1)S²/σ²",
+    "dar": "D7. Loi dyal χ² w (n − 1)S²/σ²",
+    "en": "D7. The χ² law and (n − 1)S²/σ²"
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Définition",
+      "dar": "Ta3rif",
+      "en": "Definition"
+     },
+     "body": {
+      "fr": "Si Z1, …, Zν sont N(0, 1) indépendantes, K = Z1² + … + Zν² suit **χ²(ν)**, ν = degrés de liberté.",
+      "dar": "Z1, …, Zν N(0, 1) mosta9illin → K = ΣZi² ~ **χ²(ν)**.",
+      "en": "Z1, …, Zν independent N(0, 1) → K = ΣZi² ~ **χ²(ν)**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Espérance = ν",
+      "dar": "Espérance = ν",
+      "en": "Mean = ν"
+     },
+     "body": {
+      "fr": "E(Zi²) = V(Zi) + E(Zi)² = 1 + 0 = 1, donc E(K) = ν. (Et V(K) = 2ν.)",
+      "dar": "E(Zi²) = 1 → E(K) = ν.",
+      "en": "E(Zi²) = 1 → E(K) = ν."
+     },
+     "tex": "E(K) = \\sum_{i=1}^{\\nu} E(Z_i^2) = \\nu"
+    },
+    {
+     "title": {
+      "fr": "Lien avec S²",
+      "dar": "Rabt m3a S²",
+      "en": "Link with S²"
+     },
+     "body": {
+      "fr": "(n − 1)S²/σ² = Σ((xi − x̄)/σ)² : n carrés, mais liés par **une** contrainte Σ(xi − x̄) = 0 → on perd 1 degré de liberté. Résultat (théorème de Fisher, admis) : **(n − 1)S²/σ² ~ χ²(n − 1)**, indépendant de x̄.",
+      "dar": "n morabba3at, walakin **contrainte wa7da** Σ(xi − x̄) = 0 → ddl na9es 1 : **(n − 1)S²/σ² ~ χ²(n − 1)** (Fisher, admis).",
+      "en": "n squares tied by **one** constraint → one df lost: **(n − 1)S²/σ² ~ χ²(n − 1)** (Fisher, admitted)."
+     },
+     "tex": "\\frac{(n-1)S^2}{\\sigma^2} = \\sum_{i=1}^n \\left(\\frac{x_i - \\bar x}{\\sigma}\\right)^2 \\sim \\chi^2(n-1)"
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D8. σ inconnu : T0 suit Student(n − 1)",
+    "dar": "D8. σ ma m3roufch : T0 ~ Student(n − 1)",
+    "en": "D8. σ unknown: T0 follows Student(n − 1)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "T = \\frac{Z}{\\sqrt{K/\\nu}} \\sim t(\\nu) \\qquad Z \\sim N(0,1),\\ K \\sim \\chi^2(\\nu) \\text{ indépendantes}",
+   "body": {
+    "fr": "**Définition de Student** : une N(0, 1) divisée par la racine d'un χ² divisé par ses ddl.",
+    "dar": "**Ta3rif dyal Student** : N(0, 1) m9soma 3la jdr dyal χ² m9soum 3la ddl dyalo.",
+    "en": "**Definition of Student**: an N(0, 1) divided by the root of a χ² over its df."
+   }
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "Démontrer que T0 = (x̄ − µ)/(S/√n) ~ t(n − 1)",
+    "dar": "Bayyen T0 ~ t(n − 1)",
+    "en": "Prove T0 ~ t(n − 1)"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Faire apparaître σ",
+      "dar": "Dkhel σ",
+      "en": "Bring in σ"
+     },
+     "body": {
+      "fr": "On divise le haut et le bas par σ/√n.",
+      "dar": "Nfasmou lfo9 w lta7t 3la σ/√n.",
+      "en": "Divide top and bottom by σ/√n."
+     },
+     "tex": "T_0 = \\frac{\\bar x - \\mu}{S/\\sqrt n} = \\frac{\\dfrac{\\bar x - \\mu}{\\sigma/\\sqrt n}}{S/\\sigma}"
+    },
+    {
+     "title": {
+      "fr": "Reconnaître Z et K",
+      "dar": "3ref Z w K",
+      "en": "Recognise Z and K"
+     },
+     "body": {
+      "fr": "En haut Z ~ N(0, 1) (D2). En bas S/σ = √(S²/σ²) = √(K/(n − 1)) avec K = (n − 1)S²/σ² ~ χ²(n − 1) (D7).",
+      "dar": "Lfo9 Z ; lta7t S/σ = √(K/(n − 1)), K ~ χ²(n − 1).",
+      "en": "Top Z; bottom S/σ = √(K/(n − 1)), K ~ χ²(n − 1)."
+     },
+     "tex": "T_0 = \\frac{Z}{\\sqrt{K/(n-1)}}"
+    },
+    {
+     "title": {
+      "fr": "Conclure",
+      "dar": "Conclure",
+      "en": "Conclude"
+     },
+     "body": {
+      "fr": "Z et K indépendantes → c'est la définition : **T0 ~ Student(n − 1)**. Le σ inconnu **a disparu** : on peut calculer T0 et lire la table. Exemple : 9 batteries, x̄ ≈ 9,689, S ≈ 0,2934, µ0 = 9,5 → ν = 8, T0 ≈ **1,93**.",
+      "dar": "**T0 ~ Student(n − 1)** ; σ **mcha**. Mithal : ν = 8, T0 ≈ **1,93**.",
+      "en": "**T0 ~ Student(n − 1)**; σ **is gone**. Example: ν = 8, T0 ≈ **1.93**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Les 3 régions (≠, <, >) de D3 restent **les mêmes**, en remplaçant z par t(· ; n − 1) : |T0| > t(α/2 ; n − 1), T0 < −t(α ; n − 1), T0 > t(α ; n − 1).",
+    "dar": "3 régions dyal D3 **hiya hiya**, ghir nbeddlou z b t(· ; n − 1).",
+    "en": "The 3 regions of D3 stay **the same**, replacing z by t(·; n − 1)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D9. Student → loi normale quand n grandit",
+    "dar": "D9. Student → normale mli n kaykbar",
+    "en": "D9. Student → normal as n grows"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "K/ν est une moyenne de ν carrés d'espérance 1 : quand ν grandit, K/ν → 1 (loi des grands nombres), donc **T = Z/√(K/ν) → Z ~ N(0, 1)**. Concrètement S → σ.",
+    "dar": "K/ν moyenne dyal ν morabba3at (E = 1) : ν kbir → K/ν → 1 → **T → Z ~ N(0, 1)**. Ya3ni S → σ.",
+    "en": "K/ν is a mean of ν squares with mean 1: as ν grows, K/ν → 1, so **T → Z ~ N(0, 1)**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "ν = n − 1",
+     "dar": "ν = n − 1",
+     "en": "ν = n − 1"
+    },
+    {
+     "fr": "8",
+     "dar": "8",
+     "en": "8"
+    },
+    {
+     "fr": "30",
+     "dar": "30",
+     "en": "30"
+    },
+    {
+     "fr": "100",
+     "dar": "100",
+     "en": "100"
+    },
+    {
+     "fr": "∞",
+     "dar": "∞",
+     "en": "∞"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "t(0,025 ; ν)",
+      "dar": "t(0,025 ; ν)",
+      "en": "t(0.025; ν)"
+     },
+     "2,306",
+     "2,042",
+     "1,984",
+     {
+      "fr": "**1,96** = z(0,025)",
+      "dar": "**1,96**",
+      "en": "**1.96**"
+     }
+    ],
+    [
+     {
+      "fr": "t(0,05 ; ν)",
+      "dar": "t(0,05 ; ν)",
+      "en": "t(0.05; ν)"
+     },
+     "1,860",
+     "1,697",
+     "1,660",
+     {
+      "fr": "**1,645** = z(0,05)",
+      "dar": "**1,645**",
+      "en": "**1.645**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Student a des **queues plus épaisses** : comme S est incertain, il faut un écart plus grand pour rejeter (2,306 au lieu de 1,96 pour n = 9). Utiliser 1,96 avec σ inconnu et n petit = rejeter trop souvent.",
+    "dar": "Student **dnab dyalha ghlad** : S ma m3roufch mzyan, khass far9 kbir bach nrfdou (2,306 f blast 1,96 l n = 9).",
+    "en": "Student has **heavier tails**: a larger gap is needed (2.306 instead of 1.96 for n = 9)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D10. Normale et χ² : Z² = χ²(1)",
+    "dar": "D10. Normale w χ² : Z² = χ²(1)",
+    "en": "D10. Normal and χ²: Z² = χ²(1)"
+   }
+  },
+  {
+   "type": "proof",
+   "lines": [
+    {
+     "title": {
+      "fr": "Relation",
+      "dar": "Rabt",
+      "en": "Relation"
+     },
+     "body": {
+      "fr": "Par définition (ν = 1), Z² ~ χ²(1).",
+      "dar": "Ta3rif (ν = 1) : Z² ~ χ²(1).",
+      "en": "By definition (ν = 1), Z² ~ χ²(1)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Seuils",
+      "dar": "Seuils",
+      "en": "Thresholds"
+     },
+     "body": {
+      "fr": "Z² > c² ⇔ |Z| > c, donc P(Z² > c²) = P(|Z| > c) = α donne c = z(α/2).",
+      "dar": "Z² > c² ⇔ |Z| > c → c = z(α/2).",
+      "en": "Z² > c² ⇔ |Z| > c → c = z(α/2)."
+     },
+     "tex": "\\chi^2_{\\alpha;\\,1} = z_{\\alpha/2}^2"
+    },
+    {
+     "title": {
+      "fr": "Vérification sur les tables",
+      "dar": "T2akked b tables",
+      "en": "Check on the tables"
+     },
+     "body": {
+      "fr": "5 % : 1,96² = 3,8416 ≈ **3,841** ✓. 1 % : 2,576² = 6,635 ≈ **6,635** ✓. Un test χ² à 1 ddl et un test Z bilatéral donnent **la même décision**.",
+      "dar": "1,96² ≈ **3,841** ; 2,576² ≈ **6,635**.",
+      "en": "1.96² ≈ **3.841**; 2.576² ≈ **6.635**."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D11. Le χ² d'ajustement à 2 classes = Z²",
+    "dar": "D11. χ² d'ajustement b 2 classes = Z²",
+    "en": "D11. The 2-class χ² fit = Z²"
+   }
+  },
+  {
+   "type": "proof",
+   "title": {
+    "fr": "X « succès » sur n essais, H0 : p = p0",
+    "dar": "X « succès » f n mra, H0 : p = p0",
+    "en": "X successes in n trials, H0: p = p0"
+   },
+   "lines": [
+    {
+     "title": {
+      "fr": "Tableau",
+      "dar": "Tableau",
+      "en": "Table"
+     },
+     "body": {
+      "fr": "Classe 1 : O1 = X, E1 = np0. Classe 2 : O2 = n − X, E2 = n(1 − p0). Donc **O2 − E2 = −(O1 − E1)**.",
+      "dar": "O1 = X, E1 = np0 ; O2 = n − X, E2 = n(1 − p0) → **O2 − E2 = −(O1 − E1)**.",
+      "en": "O1 = X, E1 = np0; O2 = n − X, E2 = n(1 − p0) → **O2 − E2 = −(O1 − E1)**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Calcul",
+      "dar": "7sab",
+      "en": "Computation"
+     },
+     "body": {
+      "fr": "Les deux numérateurs sont égaux à (X − np0)² ; on met au même dénominateur.",
+      "dar": "Jouj numérateurs = (X − np0)².",
+      "en": "Both numerators are (X − np0)²."
+     },
+     "tex": "\\chi^2 = (X - np_0)^2\\left[\\frac{1}{np_0} + \\frac{1}{n(1-p_0)}\\right] = \\frac{(X - np_0)^2}{np_0(1-p_0)} = Z_0^2"
+    },
+    {
+     "title": {
+      "fr": "Exemple",
+      "dar": "Mithal",
+      "en": "Example"
+     },
+     "body": {
+      "fr": "n = 100, X = 60, p0 = 0,5 : Z0 = 10/5 = **2**, χ²0 = 100/50 + 100/50 = **4** = 2². ν = k − 1 = 1 → 4 > 3,841 ⇔ 2 > 1,96 : **rejet** dans les deux cas.",
+      "dar": "Z0 = 2, χ²0 = 4 = 2² → 4 > 3,841 ⇔ 2 > 1,96 : **rfed**.",
+      "en": "Z0 = 2, χ²0 = 4 = 2²: **reject** both ways."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "D12. Les degrés de liberté du χ² : ν = k − p − 1",
+    "dar": "D12. ddl dyal χ² : ν = k − p − 1",
+    "en": "D12. χ² degrees of freedom: ν = k − p − 1"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "On part de **k** écarts (Oi − Ei). **−1** : ils sont liés par ΣOi = ΣEi = n (le dernier se déduit des autres, comme Σ(xi − x̄) = 0 pour S²). **−p** : chaque paramètre estimé sur les données (µ par x̄, σ par S…) rapproche les Ei des Oi et enlève une liberté. Normalité sur 4 classes avec µ et σ estimés : ν = 4 − 2 − 1 = **1**.",
+    "dar": "Nbdaw b **k** far9. **−1** : ΣOi = ΣEi = n. **−p** : kol paramètre m9addar mn data kay7iyed ddl. Normalité 4 classes, µ w σ m9addrin : ν = 4 − 2 − 1 = **1**.",
+    "en": "Start with **k** gaps. **−1**: ΣOi = ΣEi = n. **−p**: each estimated parameter removes one. Normality on 4 classes with µ, σ estimated: ν = **1**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Ne pas confondre : Student → **n − 1** (une contrainte Σ(xi − x̄) = 0) ; χ² d'ajustement → **k − p − 1** (k classes, pas n valeurs).",
+    "dar": "Ma tkhaltch : Student → **n − 1** ; χ² → **k − p − 1** (k classes, machi n).",
+    "en": "Do not mix: Student → **n − 1**; χ² fit → **k − p − 1** (k classes, not n)."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Au contrôle, une démonstration se rédige comme les étapes ci-dessus : **hypothèses** (indépendance, normalité), **propriété utilisée** à chaque ligne (linéarité de E, V(aX) = a²V(X), symétrie de Φ…), puis **conclusion encadrée**. Termine par l'application numérique quand il y en a une.",
+    "dar": "F contrôle, démonstration katkteb b7al étapes : **hypothèses**, **propriété** f kol str, w **conclusion**. Kmel b application numérique.",
+    "en": "In the test, write a proof like the steps above: **assumptions**, the **property used** on each line, then the **conclusion**, then the numbers."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dd-01",
+    "dd-02",
+    "dd-03",
+    "dd-04",
+    "dd-05",
+    "dd-06",
+    "dd-07",
+    "dd-08",
+    "dd-09",
+    "dd-10"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "E(x̄) = µ, V(x̄) = σ²/n → Z = (x̄ − µ)/(σ/√n) ~ N(0, 1) quand σ est connu.",
+   "dar": "V(x̄) = σ²/n → Z ~ N(0, 1).",
+   "en": "V(x̄) = σ²/n → Z ~ N(0, 1)."
+  },
+  {
+   "fr": "Régions : P(rejeter | H0) = α → ≠ : |Z0| > z(α/2) ; < : Z0 < −z(α) ; > : Z0 > z(α). PV < α ⇔ statistique dans la région.",
+   "dar": "Régions mn P(rfed | H0) = α ; PV < α ⇔ région.",
+   "en": "Regions from P(reject | H0) = α; PV < α ⇔ region."
+  },
+  {
+   "fr": "E[Σ(xi − x̄)²] = (n − 1)σ² → S² divise par n − 1 ; (n − 1)S²/σ² ~ χ²(n − 1).",
+   "dar": "S² b n − 1 ; (n − 1)S²/σ² ~ χ²(n − 1).",
+   "en": "S² with n − 1; (n − 1)S²/σ² ~ χ²(n − 1)."
+  },
+  {
+   "fr": "T0 = Z/√(K/(n − 1)) ~ Student(n − 1) : σ se simplifie ; t → N(0, 1) quand n grandit.",
+   "dar": "T0 = Z/√(K/(n − 1)) ; σ kaytsimplifia ; t → N(0, 1).",
+   "en": "T0 = Z/√(K/(n − 1)); σ cancels; t → N(0, 1)."
+  },
+  {
+   "fr": "Z² = χ²(1) : 1,96² = 3,841 ; χ² à 2 classes = Z0² ; ν = k − p − 1.",
+   "dar": "Z² = χ²(1) ; 2 classes = Z0² ; ν = k − p − 1.",
+   "en": "Z² = χ²(1); 2 classes = Z0²; ν = k − p − 1."
+  }
+ ]
+}

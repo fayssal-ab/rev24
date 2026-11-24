@@ -5,20 +5,20 @@
   "chapter": "blanc",
   "difficulty": 2,
   "title": {
-   "fr": "Examen blanc — Ex. 1 : lire et vérifier un CSV",
-   "dar": "Examen blanc — Ex. 1 : 9ra w t2akked",
-   "en": "Mock test — Ex. 1: read and check a CSV"
+   "fr": "Examen blanc — Ex. 1 : pandas (lire, vérifier, modifier, sauvegarder)",
+   "dar": "Examen blanc — Ex. 1 : pandas (9ra, t2akked, beddel, sauvegardi)",
+   "en": "Mock test — Ex. 1: pandas (read, check, modify, save)"
   },
   "statement": {
-   "fr": "Le fichier `ventes.csv` (ci-dessous) utilise « ; » comme séparateur, « , » comme décimale et « - » pour une quantité inconnue.\n1) Écrire l'instruction qui le lit correctement dans `df`. 2) Afficher les 3 premières lignes. 3) Donner les instructions qui vérifient la lecture (dimensions, types) et le résultat attendu. 4) Compter les valeurs manquantes par colonne. 5) Que se passe-t-il avec `pd.read_csv(\"ventes.csv\")` sans paramètre ?",
-   "dar": "Fichier `ventes.csv` : « ; », « , » w « - ». 1) 9rah mzyan. 2) 3 stour lwlin. 3) T2akked (shape, dtypes). 4) Ch7al mn NaN f kol colonne. 5) Chnou kayw9e3 bla paramètres ?",
-   "en": "`ventes.csv` uses \";\", \",\" and \"-\". 1) Read it. 2) First 3 rows. 3) Check shape and types. 4) Count missing values. 5) What happens without parameters?"
+   "fr": "Le fichier `ventes.csv` (ci-dessous) utilise « ; » comme séparateur, « , » comme décimale et « - » pour une quantité inconnue.\n**A.** 1) Lire le fichier correctement dans `df`. 2) Afficher les 3 premières lignes. 3) Vérifier la lecture (dimensions, types). 4) Compter les valeurs manquantes par colonne. 5) Que donne `pd.read_csv(\"ventes.csv\")` sans paramètre ?\n**B.** 6) Créer la colonne `montant` = quantite × prix (2 décimales). 7) Afficher produit et montant des ventes de Rabat. 8) Sauvegarder `df` dans `ventes_montant.csv` au format français, sans numéros de ligne. 9) Créer la Series des notes 12, 15, 9 indexée par Amine, Sara, Yassine et afficher sa moyenne. 10) Lire seulement les colonnes A à C et 4 lignes de la feuille « S1 » de `notes.xlsx`.",
+   "dar": "Fichier `ventes.csv` : séparateur « ; », décimale « , » w « - » = quantité ma m3roufach.\n**A.** 1) 9rah mzyan f `df`. 2) Werri 3 stour lwlin. 3) T2akked mn 9raya (shape, dtypes). 4) 7seb NaN f kol colonne. 5) Chnou kay3ti `pd.read_csv(\"ventes.csv\")` bla paramètres ?\n**B.** 6) Colonne `montant` = quantite × prix (2 décimales). 7) Werri produit w montant dyal Rabat. 8) Sauvegardi f `ventes_montant.csv` b format français, bla numéros dyal stour. 9) Series dyal notes 12, 15, 9 (Amine, Sara, Yassine) w moyenne dyalha. 10) 9ra ghir colonnes A tal C w 4 stour mn feuille « S1 » dyal `notes.xlsx`.",
+   "en": "`ventes.csv` uses \";\" as separator, \",\" as decimal and \"-\" for an unknown quantity.\n**A.** 1) Read it into `df`. 2) Show the first 3 rows. 3) Check the read (shape, types). 4) Count missing values per column. 5) What does `pd.read_csv(\"ventes.csv\")` give without parameters?\n**B.** 6) Create `montant` = quantite × prix (2 decimals). 7) Show product and amount for Rabat. 8) Save to `ventes_montant.csv` in French format, without row numbers. 9) Series of marks 12, 15, 9 indexed by Amine, Sara, Yassine and its mean. 10) Read only columns A to C and 4 rows of sheet \"S1\" of `notes.xlsx`."
   },
   "hints": [
    {
-    "fr": "Repère dans l'énoncé les 3 indices : séparateur, décimale, valeur manquante.",
-    "dar": "Chouf 3 indices : séparateur, décimale, manquante.",
-    "en": "Spot the 3 clues: separator, decimal, missing value."
+    "fr": "Repère les 3 indices de l'énoncé (« ; », « , », « - ») : ce sont tes 3 paramètres. Ensuite chaque question = une instruction.",
+    "dar": "Chouf 3 indices (« ; », « , », « - ») : homa 3 paramètres. Mn ba3d kol so2al = instruction wa7da.",
+    "en": "Spot the 3 clues (\";\", \",\", \"-\"): your 3 parameters. Then each question = one instruction."
    }
   ],
   "solutionSteps": [
@@ -30,8 +30,8 @@
     },
     "body": {
      "fr": "Trois indices → trois paramètres : `sep=\";\"`, `decimal=\",\"`, `na_values=[\"-\"]`.",
-     "dar": "3 indices → 3 paramètres.",
-     "en": "3 clues → 3 parameters."
+     "dar": "3 indices → 3 paramètres : `sep=\";\"`, `decimal=\",\"`, `na_values=[\"-\"]`.",
+     "en": "3 clues → 3 parameters: `sep=\";\"`, `decimal=\",\"`, `na_values=[\"-\"]`."
     },
     "code": "import pandas as pd\ndf = pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", na_values=[\"-\"])\nprint(df.head(3))"
    },
@@ -42,9 +42,9 @@
      "en": "3–4) Check"
     },
     "body": {
-     "fr": "`df.shape` → (6, 5) ; `df.dtypes` : quantite et prix en **float64** (nombres) → lecture réussie. `df.isna().sum()` → quantite : 2, les autres 0.",
-     "dar": "(6, 5) ; float64 ; quantite = 2 NaN.",
-     "en": "(6, 5); float64; quantite has 2 NaN."
+     "fr": "`df.shape` → (6, 5) ; `df.dtypes` : quantite et prix en **float64** → lecture réussie. `df.isna().sum()` → quantite : 2, les autres 0.",
+     "dar": "(6, 5) ; quantite w prix **float64** → 9raya mzyana ; quantite fiha 2 NaN.",
+     "en": "(6, 5); quantite and prix are **float64**; quantite has 2 NaN."
     },
     "code": "print(df.shape)\nprint(df.dtypes)\nprint(df.isna().sum())"
    },
@@ -56,26 +56,70 @@
     },
     "body": {
      "fr": "Séparateur par défaut = virgule : l'en-tête devient **une seule colonne** (shape (6, 1)) et « 149,90 » est coupé en deux. Lecture ratée.",
-     "dar": "Colonne wa7da (6, 1), w 149,90 kayt9sem.",
-     "en": "One single column (6, 1); 149,90 is split."
+     "dar": "Séparateur par défaut = virgule : **colonne wa7da** (6, 1), w 149,90 kayt9sem. 9raya ghalta.",
+     "en": "Default separator is the comma: **one single column** (6, 1), 149,90 is split. Bad read."
     }
+   },
+   {
+    "title": {
+     "fr": "6–7) Colonne et filtre",
+     "dar": "6–7) Colonne w filtre",
+     "en": "6–7) Column and filter"
+    },
+    "body": {
+     "fr": "NaN × prix = NaN (pas d'erreur). Filtre : condition entre crochets, puis liste de colonnes.",
+     "dar": "NaN × prix = NaN (bla erreur). Filtre : condition bin crochets, mn ba3d liste dyal colonnes.",
+     "en": "NaN × price = NaN (no error). Filter: condition in brackets, then a list of columns."
+    },
+    "code": "df[\"montant\"] = (df[\"quantite\"] * df[\"prix\"]).round(2)\nprint(df[df[\"ville\"] == \"Rabat\"][[\"produit\", \"montant\"]])"
+   },
+   {
+    "title": {
+     "fr": "8) Sauvegarde",
+     "dar": "8) Sauvegarde",
+     "en": "8) Save"
+    },
+    "body": {
+     "fr": "`to_csv` reprend `sep` et `decimal` ; `index=False` enlève les numéros de ligne.",
+     "dar": "`to_csv` b nefs `sep` w `decimal` ; `index=False` kay7iyed numéros.",
+     "en": "`to_csv` with the same `sep` and `decimal`; `index=False` drops row numbers."
+    },
+    "code": "df.to_csv(\"ventes_montant.csv\", sep=\";\", decimal=\",\", index=False)"
+   },
+   {
+    "title": {
+     "fr": "9–10) Series et read_excel",
+     "dar": "9–10) Series w read_excel",
+     "en": "9–10) Series and read_excel"
+    },
+    "body": {
+     "fr": "Series = une colonne + un index ; moyenne 12.0. Excel : `sheet_name`, `usecols`, `nrows`.",
+     "dar": "Series = colonne + index ; moyenne 12.0. Excel : `sheet_name`, `usecols`, `nrows`.",
+     "en": "Series = one column + an index; mean 12.0. Excel: `sheet_name`, `usecols`, `nrows`."
+    },
+    "code": "s = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"])\nprint(s.mean())          # 12.0\nnotes = pd.read_excel(\"notes.xlsx\", sheet_name=\"S1\", usecols=\"A:C\", nrows=4)"
    }
   ],
   "finalAnswer": {
-   "fr": "`pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", na_values=[\"-\"])` ; shape (6, 5) ; quantite float64 avec 2 valeurs manquantes.",
-   "dar": "sep, decimal, na_values ; (6, 5) ; 2 NaN.",
-   "en": "sep, decimal, na_values; (6, 5); 2 NaN."
+   "fr": "`pd.read_csv(\"ventes.csv\", sep=\";\", decimal=\",\", na_values=[\"-\"])` ; shape (6, 5) ; quantite float64 avec 2 NaN ; montants 449.7, NaN, 1299.0, 299.8, NaN, 297.5 ; Rabat : Clavier 449.7, Ecran 1299.0, Souris 297.5 ; moyenne de la Series 12.0.",
+   "dar": "sep, decimal, na_values ; (6, 5) ; 2 NaN ; montants ; Rabat 3 stour ; 12.0.",
+   "en": "sep, decimal, na_values; (6, 5); 2 NaN; amounts; Rabat 3 rows; 12.0."
   },
   "commonMistakes": [
    {
     "fr": "Oublier `decimal=\",\"` : prix devient du texte (object).",
-    "dar": "Nsit decimal → object.",
-    "en": "Forgetting decimal → object."
+    "dar": "Nsit `decimal=\",\"` → prix kaywlli texte (object).",
+    "en": "Forgetting `decimal=\",\"` → prix becomes text (object)."
    },
    {
-    "fr": "Écrire `na_values=\"-\"` puis ne pas vérifier avec `isna()`.",
-    "dar": "Ma t2akkedtich.",
-    "en": "Not checking with isna()."
+    "fr": "Oublier `index=False` : une colonne de numéros apparaît dans le fichier.",
+    "dar": "Nsit `index=False` → colonne dyal numéros f fichier.",
+    "en": "Forgetting `index=False` → a column of numbers in the file."
+   },
+   {
+    "fr": "Écrire `df[\"ville\" == \"Rabat\"]` : la condition doit porter sur `df[\"ville\"]`.",
+    "dar": "`df[\"ville\" == \"Rabat\"]` ghalat : khass `df[\"ville\"] == \"Rabat\"`.",
+    "en": "`df[\"ville\" == \"Rabat\"]` is wrong: use `df[\"ville\"] == \"Rabat\"`."
    }
   ],
   "data": "date;ville;produit;quantite;prix\n02/11/2026;Rabat;Clavier;3;149,90\n02/11/2026;Casa;Souris;-;59,50\n03/11/2026;Rabat;Ecran;1;1299,00\n03/11/2026;Fes;Clavier;2;149,90\n04/11/2026;Casa;Ecran;-;1299,00\n04/11/2026;Rabat;Souris;5;59,50"
@@ -84,147 +128,107 @@
   "id": "d-x-b2",
   "module": "data",
   "chapter": "blanc",
-  "difficulty": 2,
-  "title": {
-   "fr": "Examen blanc — Ex. 2 : modifier, filtrer, sauvegarder",
-   "dar": "Examen blanc — Ex. 2 : beddel w sauvegardi",
-   "en": "Mock test — Ex. 2: modify, filter, save"
-  },
-  "statement": {
-   "fr": "Avec `df` de l'exercice 1 : 1) Créer la colonne `montant` = quantite × prix arrondie à 2 décimales. 2) Afficher produit et montant des ventes de Rabat. 3) Sauvegarder `df` dans `ventes_montant.csv` au format français, sans numéros de ligne. 4) Créer une Series des notes 12, 15, 9 indexée par Amine, Sara, Yassine, et afficher sa moyenne. 5) Écrire l'instruction qui lit seulement les colonnes A à C et 4 lignes de la feuille « S1 » de `notes.xlsx`.",
-   "dar": "Montant, filtre Rabat, to_csv français, Series, read_excel b paramètres.",
-   "en": "Amount column, Rabat filter, French to_csv, Series, read_excel with parameters."
-  },
-  "hints": [
-   {
-    "fr": "Une colonne se crée par simple affectation : `df[\"nouvelle\"] = …`.",
-    "dar": "`df[\"jdida\"] = …`.",
-    "en": "`df[\"new\"] = …`."
-   }
-  ],
-  "solutionSteps": [
-   {
-    "title": {
-     "fr": "1–2) Colonne et filtre",
-     "dar": "1–2) Colonne w filtre",
-     "en": "1–2) Column and filter"
-    },
-    "body": {
-     "fr": "NaN × prix = NaN (pas d'erreur). Filtre : condition entre crochets, puis liste de colonnes.",
-     "dar": "NaN × prix = NaN.",
-     "en": "NaN × price = NaN."
-    },
-    "code": "df[\"montant\"] = (df[\"quantite\"] * df[\"prix\"]).round(2)\nprint(df[df[\"ville\"] == \"Rabat\"][[\"produit\", \"montant\"]])"
-   },
-   {
-    "title": {
-     "fr": "3) Sauvegarde",
-     "dar": "3) Sauvegarde",
-     "en": "3) Save"
-    },
-    "body": {
-     "fr": "`to_csv` reprend `sep` et `decimal` ; `index=False` enlève les numéros de ligne.",
-     "dar": "Nefs sep w decimal ; index=False.",
-     "en": "Same sep and decimal; index=False."
-    },
-    "code": "df.to_csv(\"ventes_montant.csv\", sep=\";\", decimal=\",\", index=False)"
-   },
-   {
-    "title": {
-     "fr": "4–5) Series et read_excel",
-     "dar": "4–5) Series w read_excel",
-     "en": "4–5) Series and read_excel"
-    },
-    "body": {
-     "fr": "Series = une colonne + un index ; moyenne 12.0. Excel : `sheet_name`, `usecols`, `nrows`.",
-     "dar": "Series ; 12.0 ; sheet_name, usecols, nrows.",
-     "en": "Series; 12.0; sheet_name, usecols, nrows."
-    },
-    "code": "s = pd.Series([12, 15, 9], index=[\"Amine\", \"Sara\", \"Yassine\"])\nprint(s.mean())          # 12.0\npd.read_excel(\"notes.xlsx\", sheet_name=\"S1\", usecols=\"A:C\", nrows=4)"
-   }
-  ],
-  "finalAnswer": {
-   "fr": "Montants 449.7, NaN, 1299.0, 299.8, NaN, 297.5 ; Rabat : Clavier 449.7, Ecran 1299.0, Souris 297.5 ; moyenne de la Series 12.0.",
-   "dar": "Montants w filtre ; 12.0.",
-   "en": "Amounts and filter; 12.0."
-  },
-  "commonMistakes": [
-   {
-    "fr": "Oublier `index=False` : une colonne de numéros apparaît dans le fichier.",
-    "dar": "Nsit index=False.",
-    "en": "Forgetting index=False."
-   },
-   {
-    "fr": "Écrire `df[\"ville\" == \"Rabat\"]` : la condition doit porter sur `df[\"ville\"]`.",
-    "dar": "Condition ghalta.",
-    "en": "Wrong condition syntax."
-   }
-  ]
- },
- {
-  "id": "d-x-b3",
-  "module": "data",
-  "chapter": "blanc",
   "difficulty": 3,
   "title": {
-   "fr": "Examen blanc — Ex. 3 : test Z bilatéral",
-   "dar": "Examen blanc — Ex. 3 : test Z bilatéral",
-   "en": "Mock test — Ex. 3: two-sided Z test"
+   "fr": "Examen blanc — Ex. 2 : loi normale (σ connu), les 3 cas ≠, <, >",
+   "dar": "Examen blanc — Ex. 2 : loi normale (σ m3rouf), 3 cas ≠, <, >",
+   "en": "Mock test — Ex. 2: normal law (σ known), the 3 cases ≠, <, >"
   },
   "statement": {
-   "fr": "Une machine remplit des bouteilles de **500 mL**. L'écart-type du remplissage est connu : **σ = 4 mL**. Sur **36** bouteilles, on trouve une moyenne de **498,5 mL**. Au risque **α = 5 %**, la machine est-elle déréglée ? Donner aussi la P-value.",
-   "dar": "Machine 500 mL, σ = 4 m3rouf, n = 36, x̄ = 498,5, α = 5 %. Wach mderegla ? W P-value.",
-   "en": "Machine set at 500 mL, σ = 4 known, n = 36, x̄ = 498.5, α = 5 %. Out of adjustment? Give the P-value."
+   "fr": "Une machine doit remplir des bouteilles de **500 mL**. L'écart-type est connu : **σ = 4 mL**. Sur **n = 36** bouteilles, on trouve **x̄ = 498,5 mL**. Au risque **α = 5 %** :\na) La machine est-elle **déréglée** ?\nb) Remplit-elle en moyenne **moins** de 500 mL ?\nc) Remplit-elle en moyenne **plus** de 500 mL ?\nPour chaque cas : hypothèses, région critique, décision, P-value et conclusion.\nd) Refaire a) et b) au risque **α = 1 %**.",
+   "dar": "Machine khassha t3emmer bouteilles dyal **500 mL**. σ m3rouf : **σ = 4 mL**. F **n = 36** bouteille, **x̄ = 498,5 mL**. B risque **α = 5 %** :\na) Wach machine **mderegla** ?\nb) Wach kat3emmer f moyenne **a9al** mn 500 mL ?\nc) Wach kat3emmer f moyenne **ktar** mn 500 mL ?\nL kol cas : hypothèses, région critique, qarar, P-value w conclusion.\nd) 3awed a) w b) b risque **α = 1 %**.",
+   "en": "A machine must fill **500 mL** bottles. σ is known: **σ = 4 mL**. On **n = 36** bottles, **x̄ = 498.5 mL**. At **α = 5 %**:\na) Is the machine **out of adjustment**?\nb) Does it fill **less** than 500 mL on average?\nc) Does it fill **more** than 500 mL on average?\nFor each: hypotheses, critical region, decision, P-value, conclusion.\nd) Redo a) and b) at **α = 1 %**."
   },
   "hints": [
    {
-    "fr": "σ connu → Z. « déréglée » = dans un sens ou dans l'autre → bilatéral.",
-    "dar": "σ m3rouf → Z ; déréglée → bilatéral.",
-    "en": "σ known → Z; \"out of adjustment\" → two-sided."
+    "fr": "σ donné → **Z**. Les 3 cas ont la **même statistique** Z0 : calcule-la une seule fois, seule la région critique change (≠ → 1,96 des deux côtés ; < → −1,645 ; > → +1,645).",
+    "dar": "σ m3tia → **Z**. 3 cas 3ndhom **nefs statistique** Z0 : 7sebha mra wa7da, ghir région critique katbeddel (≠ → 1,96 ; < → −1,645 ; > → +1,645).",
+    "en": "σ given → **Z**. The 3 cases share **one statistic** Z0: compute it once; only the critical region changes."
    }
   ],
   "solutionSteps": [
    {
     "title": {
-     "fr": "Hypothèses et statistique",
-     "dar": "Hypothèses w statistique",
-     "en": "Hypotheses and statistic"
+     "fr": "Statistique (commune aux 3 cas)",
+     "dar": "Statistique (nefsha f 3 cas)",
+     "en": "Statistic (same for the 3 cases)"
     },
     "body": {
-     "fr": "H0 : µ = 500 contre H1 : µ ≠ 500 (bilatéral). Sous H0, Z0 = (x̄ − µ0)/(σ/√n) suit N(0, 1).",
-     "dar": "H0 : µ = 500 ; H1 : µ ≠ 500.",
-     "en": "H0: µ = 500 vs H1: µ ≠ 500."
+     "fr": "Sous H0 : µ = 500, Z0 = (x̄ − µ0)/(σ/√n) ~ N(0, 1). σ/√n = 4/6 ≈ 0,667 ; Z0 = −1,5/0,667 = **−2,25**.",
+     "dar": "Sous H0 : µ = 500, Z0 ~ N(0, 1). σ/√n = 4/6 ≈ 0,667 ; Z0 = **−2,25**.",
+     "en": "Under H0: µ = 500, Z0 ~ N(0, 1). σ/√n ≈ 0.667; Z0 = **−2.25**."
+    },
+    "tex": "Z_0 = \\frac{498{,}5 - 500}{4/\\sqrt{36}} = -2{,}25"
+   },
+   {
+    "title": {
+     "fr": "a) H1 : µ ≠ 500 (bilatéral)",
+     "dar": "a) H1 : µ ≠ 500 (bilatéral)",
+     "en": "a) H1: µ ≠ 500 (two-sided)"
+    },
+    "body": {
+     "fr": "Région critique |Z0| > z(0,025) = 1,96. |−2,25| = 2,25 > 1,96 → **rejet de H0**. PV = 2(1 − Φ(2,25)) ≈ **0,0244**. La machine est déréglée.",
+     "dar": "|Z0| > 1,96 ? 2,25 > 1,96 → **rfed H0**. PV ≈ **0,0244**. Machine mderegla.",
+     "en": "|Z0| > 1.96? 2.25 > 1.96 → **reject H0**. PV ≈ **0.0244**."
     }
    },
    {
     "title": {
-     "fr": "Calcul et décision",
-     "dar": "7sab w qarar",
-     "en": "Computation and decision"
+     "fr": "b) H1 : µ < 500 (gauche)",
+     "dar": "b) H1 : µ < 500 (gauche)",
+     "en": "b) H1: µ < 500 (left)"
     },
     "body": {
-     "fr": "σ/√n = 4/6 ≈ 0,667 ; Z0 = −1,5/0,667 = **−2,25**. |Z0| = 2,25 > z(0,025) = 1,96 → **rejet de H0**. PV = 2(1 − Φ(2,25)) ≈ **0,0244** < 0,05.",
-     "dar": "Z0 = −2,25 ; 2,25 > 1,96 → rejet ; PV ≈ 0,0244.",
-     "en": "Z0 = −2.25; 2.25 > 1.96 → reject; PV ≈ 0.0244."
+     "fr": "Région critique Z0 < −z(0,05) = −1,645. −2,25 < −1,645 → **rejet de H0**. PV = Φ(−2,25) ≈ **0,0122**. Elle remplit moins de 500 mL.",
+     "dar": "Z0 < −1,645 ? −2,25 < −1,645 → **rfed H0**. PV ≈ **0,0122**. Kat3emmer a9al mn 500.",
+     "en": "Z0 < −1.645? −2.25 < −1.645 → **reject H0**. PV ≈ **0.0122**."
+    }
+   },
+   {
+    "title": {
+     "fr": "c) H1 : µ > 500 (droite)",
+     "dar": "c) H1 : µ > 500 (droite)",
+     "en": "c) H1: µ > 500 (right)"
     },
-    "tex": "Z_0 = \\frac{498{,}5 - 500}{4/\\sqrt{36}} = -2{,}25"
+    "body": {
+     "fr": "Région critique Z0 > 1,645. −2,25 n'est pas > 1,645 → **on ne rejette pas H0**. PV = 1 − Φ(−2,25) ≈ **0,9878**. Rien ne montre qu'elle remplit plus.",
+     "dar": "Z0 > 1,645 ? −2,25 la → **ma nrfdouch H0**. PV ≈ **0,9878**.",
+     "en": "Z0 > 1.645? No → **do not reject H0**. PV ≈ **0.9878**."
+    }
+   },
+   {
+    "title": {
+     "fr": "d) Au risque 1 %",
+     "dar": "d) B risque 1 %",
+     "en": "d) At 1 %"
+    },
+    "body": {
+     "fr": "a) z(0,005) = 2,576 : 2,25 < 2,576 → non-rejet. b) z(0,01) = 2,326 : −2,25 n'est pas < −2,326 → non-rejet. Cohérent avec les P-values : 0,0244 et 0,0122 sont > 0,01.",
+     "dar": "a) 2,25 < 2,576 → ma nrfdouch. b) −2,25 machi < −2,326 → ma nrfdouch. PV 0,0244 w 0,0122 kbar mn 0,01.",
+     "en": "a) 2.25 < 2.576 → keep. b) −2.25 not < −2.326 → keep. Both PVs are > 0.01."
+    }
    }
   ],
   "finalAnswer": {
-   "fr": "Z0 = −2,25, |Z0| > 1,96 : au risque 5 %, la machine est **déréglée** (PV ≈ 0,0244).",
-   "dar": "Rejet : machine mderegla.",
-   "en": "Reject: the machine is out of adjustment."
+   "fr": "Z0 = −2,25. À 5 % : a) rejet (PV ≈ 0,0244) ; b) rejet (PV ≈ 0,0122) ; c) non-rejet (PV ≈ 0,9878). À 1 % : a) et b) non-rejet.",
+   "dar": "Z0 = −2,25. 5 % : a) rfed ; b) rfed ; c) la. 1 % : a) w b) la.",
+   "en": "Z0 = −2.25. 5 %: a) reject; b) reject; c) keep. 1 %: a) and b) keep."
   },
   "commonMistakes": [
    {
-    "fr": "Diviser par σ au lieu de σ/√n (Z0 = −0,375 → mauvaise décision).",
-    "dar": "Nsit √n.",
-    "en": "Forgetting √n."
+    "fr": "Prendre |Z0| en unilatéral : en c), |−2,25| > 1,645 mais Z0 est **du mauvais côté**, on ne rejette pas.",
+    "dar": "|Z0| f unilatéral : f c), Z0 f **jiha lokhra**, ma nrfdouch.",
+    "en": "Using |Z0| one-sided: in c) Z0 is on **the wrong side**."
    },
    {
-    "fr": "Prendre 1,645 (unilatéral) au lieu de 1,96.",
-    "dar": "1,645 machi hna.",
-    "en": "Using 1.645 instead of 1.96."
+    "fr": "Prendre 1,645 en bilatéral ou 1,96 en unilatéral.",
+    "dar": "1,645 f bilatéral wla 1,96 f unilatéral.",
+    "en": "1.645 two-sided or 1.96 one-sided."
+   },
+   {
+    "fr": "Diviser par σ au lieu de σ/√n (Z0 = −0,375).",
+    "dar": "t9assem 3la σ f blast σ/√n.",
+    "en": "Dividing by σ instead of σ/√n."
    }
   ],
   "checks": [
@@ -251,80 +255,195 @@
     },
     "expect": 0.0244,
     "tolerance": 0.0002
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      -2.25,
+      "left"
+     ]
+    },
+    "expect": 0.0122,
+    "tolerance": 0.0002
+   },
+   {
+    "compute": {
+     "fn": "pValueZ",
+     "args": [
+      -2.25,
+      "right"
+     ]
+    },
+    "expect": 0.9878,
+    "tolerance": 0.0002
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.025
+     ]
+    },
+    "expect": 1.96,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.05
+     ]
+    },
+    "expect": 1.645,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.005
+     ]
+    },
+    "expect": 2.576,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "zCrit",
+     "args": [
+      0.01
+     ]
+    },
+    "expect": 2.326,
+    "tolerance": 0.001
    }
   ]
  },
  {
-  "id": "d-x-b4",
+  "id": "d-x-b3",
   "module": "data",
   "chapter": "blanc",
   "difficulty": 3,
   "title": {
-   "fr": "Examen blanc — Ex. 4 : test de Student unilatéral",
-   "dar": "Examen blanc — Ex. 4 : Student unilatéral",
-   "en": "Mock test — Ex. 4: one-sided Student test"
+   "fr": "Examen blanc — Ex. 3 : Student (σ inconnu), les 3 cas ≠, >, <",
+   "dar": "Examen blanc — Ex. 3 : Student (σ ma m3roufch), 3 cas ≠, >, <",
+   "en": "Mock test — Ex. 3: Student (σ unknown), the 3 cases ≠, >, <"
   },
   "statement": {
-   "fr": "Un fournisseur affirme que l'autonomie moyenne de ses batteries est d'**au moins 10 h**. On mesure 9 batteries (heures) : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. σ est inconnu. 1) Calculer x̄ et S (à la main ou avec pandas). 2) Au risque **5 %**, peut-on dire que l'autonomie moyenne est **inférieure** à 10 h ?",
-   "dar": "Fournisseur : autonomie **au moins 10 h**. 9 batteries : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. σ ma m3roufch. x̄, S, w wach µ < 10 b risque 5 % ?",
-   "en": "Supplier claims **at least 10 h**. 9 batteries: 9.6; 10.1; 9.4; 9.8; 9.9; 9.2; 10; 9.5; 9.7. σ unknown. Compute x̄ and S; at 5 %, is the mean **below** 10 h?"
+   "fr": "Un fournisseur annonce une autonomie moyenne de **9,5 h** pour ses batteries. On mesure 9 batteries (heures) : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. σ est **inconnu**.\n1) Avec pandas, calculer x̄ et S.\n2) Au risque **5 %** : a) l'autonomie moyenne est-elle **différente** de 9,5 h ? b) est-elle **supérieure** à 9,5 h ? c) est-elle **inférieure** à 9,5 h ? Pour chaque cas : hypothèses, région critique, décision, P-value, conclusion.\n3) a) et b) ne donnent pas la même décision : pourquoi ?",
+   "dar": "Fournisseur kay9oul autonomie moyenne **9,5 h**. 9 batteries (s3at) : 9,6 ; 10,1 ; 9,4 ; 9,8 ; 9,9 ; 9,2 ; 10 ; 9,5 ; 9,7. σ **ma m3roufch**.\n1) B pandas, 7seb x̄ w S.\n2) B risque **5 %** : a) wach autonomie **mkhtalfa** 3la 9,5 h ? b) wach **ktar** mn 9,5 h ? c) wach **a9al** mn 9,5 h ? L kol cas : hypothèses, région critique, qarar, P-value, conclusion.\n3) a) w b) ma 3tawch nefs qarar : 3lach ?",
+   "en": "A supplier announces a mean battery life of **9.5 h**. 9 batteries measured (hours): 9.6; 10.1; 9.4; 9.8; 9.9; 9.2; 10; 9.5; 9.7. σ is **unknown**.\n1) With pandas, compute x̄ and S.\n2) At **5 %**: a) is the mean **different** from 9.5 h? b) **greater** than 9.5 h? c) **less** than 9.5 h? For each: hypotheses, critical region, decision, P-value, conclusion.\n3) a) and b) disagree: why?"
   },
   "hints": [
    {
-    "fr": "σ inconnu → Student à ν = n − 1 = 8. « inférieure » → unilatéral **gauche**.",
-    "dar": "σ ma m3roufch → Student ν = 8 ; gauche.",
-    "en": "σ unknown → Student ν = 8; left-tailed."
+    "fr": "σ pas donné → **Student à ν = n − 1 = 8**. Calcule T0 une seule fois ; bilatéral → t(0,025 ; 8) = 2,306, unilatéral → t(0,05 ; 8) = 1,860.",
+    "dar": "σ ma m3tiach → **Student ν = 8**. 7seb T0 mra wa7da ; bilatéral → 2,306, unilatéral → 1,860.",
+    "en": "σ not given → **Student, ν = 8**. Compute T0 once; two-sided → 2.306, one-sided → 1.860."
    }
   ],
   "solutionSteps": [
    {
     "title": {
-     "fr": "x̄ et S",
-     "dar": "x̄ w S",
-     "en": "x̄ and S"
+     "fr": "1) x̄ et S avec pandas",
+     "dar": "1) x̄ w S b pandas",
+     "en": "1) x̄ and S with pandas"
     },
     "body": {
-     "fr": "x̄ = 87,2/9 ≈ **9,689** ; S ≈ **0,2934** (diviseur n − 1). Avec pandas, `.std()` donne directement S.",
-     "dar": "x̄ ≈ 9,689 ; S ≈ 0,2934.",
-     "en": "x̄ ≈ 9.689; S ≈ 0.2934."
+     "fr": "`.std()` de pandas divise par **n − 1** : c'est le S du test. x̄ ≈ **9,689** ; S ≈ **0,2934**.",
+     "dar": "`.std()` kayfasem 3la **n − 1**. x̄ ≈ **9,689** ; S ≈ **0,2934**.",
+     "en": "`.std()` divides by **n − 1**. x̄ ≈ **9.689**; S ≈ **0.2934**."
     },
-    "code": "x = pd.Series([9.6, 10.1, 9.4, 9.8, 9.9, 9.2, 10.0, 9.5, 9.7])\nprint(x.mean(), x.std())   # 9.68888888888889 0.2934469476943169"
+    "code": "import pandas as pd\nx = pd.Series([9.6, 10.1, 9.4, 9.8, 9.9, 9.2, 10.0, 9.5, 9.7])\nprint(x.mean(), x.std(), len(x))   # 9.68888888888889 0.2934469476943169 9"
    },
    {
     "title": {
-     "fr": "Test",
-     "dar": "Test",
-     "en": "Test"
+     "fr": "Statistique (commune aux 3 cas)",
+     "dar": "Statistique (nefsha f 3 cas)",
+     "en": "Statistic (same for the 3 cases)"
     },
     "body": {
-     "fr": "H0 : µ = 10 contre H1 : µ < 10. T0 = (9,689 − 10)/(0,2934/3) ≈ **−3,18**. Région critique : T0 < −t(0,05 ; 8) = **−1,860**. −3,18 < −1,860 → **rejet de H0** (PV ≈ 0,0065).",
-     "dar": "T0 ≈ −3,18 < −1,860 → rejet.",
-     "en": "T0 ≈ −3.18 < −1.860 → reject."
+     "fr": "Sous H0 : µ = 9,5, T0 = (x̄ − µ0)/(S/√n) ~ t(8). S/√n = 0,2934/3 ≈ 0,0978 ; T0 = 0,1889/0,0978 ≈ **1,93**.",
+     "dar": "Sous H0, T0 ~ t(8). S/√n ≈ 0,0978 ; T0 ≈ **1,93**.",
+     "en": "Under H0, T0 ~ t(8). S/√n ≈ 0.0978; T0 ≈ **1.93**."
     },
-    "tex": "T_0 = \\frac{9{,}689 - 10}{0{,}2934/\\sqrt 9} \\approx -3{,}18"
+    "tex": "T_0 = \\frac{9{,}689 - 9{,}5}{0{,}2934/\\sqrt 9} \\approx 1{,}93"
+   },
+   {
+    "title": {
+     "fr": "a) H1 : µ ≠ 9,5 (bilatéral)",
+     "dar": "a) H1 : µ ≠ 9,5 (bilatéral)",
+     "en": "a) H1: µ ≠ 9.5 (two-sided)"
+    },
+    "body": {
+     "fr": "|T0| > t(0,025 ; 8) = 2,306 ? 1,93 < 2,306 → **on ne rejette pas H0** (PV ≈ 0,0896).",
+     "dar": "1,93 < 2,306 → **ma nrfdouch H0** (PV ≈ 0,0896).",
+     "en": "1.93 < 2.306 → **do not reject H0** (PV ≈ 0.0896)."
+    }
+   },
+   {
+    "title": {
+     "fr": "b) H1 : µ > 9,5 (droite)",
+     "dar": "b) H1 : µ > 9,5 (droite)",
+     "en": "b) H1: µ > 9.5 (right)"
+    },
+    "body": {
+     "fr": "T0 > t(0,05 ; 8) = 1,860 ? 1,93 > 1,860 → **rejet de H0** (PV ≈ 0,0448). L'autonomie dépasse 9,5 h.",
+     "dar": "1,93 > 1,860 → **rfed H0** (PV ≈ 0,0448). Autonomie ktar mn 9,5 h.",
+     "en": "1.93 > 1.860 → **reject H0** (PV ≈ 0.0448)."
+    }
+   },
+   {
+    "title": {
+     "fr": "c) H1 : µ < 9,5 (gauche)",
+     "dar": "c) H1 : µ < 9,5 (gauche)",
+     "en": "c) H1: µ < 9.5 (left)"
+    },
+    "body": {
+     "fr": "T0 < −1,860 ? 1,93 non → **on ne rejette pas H0** (PV ≈ 0,955).",
+     "dar": "1,93 machi < −1,860 → **ma nrfdouch H0** (PV ≈ 0,955).",
+     "en": "1.93 is not < −1.860 → **do not reject H0** (PV ≈ 0.955)."
+    }
+   },
+   {
+    "title": {
+     "fr": "3) Pourquoi a) ≠ b) ?",
+     "dar": "3) 3lach a) ≠ b) ?",
+     "en": "3) Why a) ≠ b)?"
+    },
+    "body": {
+     "fr": "En bilatéral, α = 5 % est **coupé en deux** (2,5 % de chaque côté) → seuil 2,306. En unilatéral, **tout α est du côté droit** → seuil 1,860, plus bas. T0 = 1,93 est entre les deux. Même chose avec les P-values : PV bilatérale = 2 × 0,0448 = 0,0896.",
+     "dar": "F bilatéral, α **mt9soum 3la 2** → 2,306. F unilatéral, **α kamla f jiha wa7da** → 1,860. T0 = 1,93 binathom. PV bilatérale = 2 × 0,0448.",
+     "en": "Two-sided splits α in half → 2.306; one-sided puts all α on one side → 1.860. T0 = 1.93 lies between."
+    }
    }
   ],
   "finalAnswer": {
-   "fr": "Au risque 5 %, l'autonomie moyenne est **inférieure à 10 h** : l'affirmation du fournisseur est rejetée.",
-   "dar": "Rejet : a9al mn 10 h.",
-   "en": "Reject: mean below 10 h."
+   "fr": "x̄ ≈ 9,689 ; S ≈ 0,2934 ; T0 ≈ 1,93. a) non-rejet (PV ≈ 0,0896) ; b) rejet (PV ≈ 0,0448) : autonomie > 9,5 h ; c) non-rejet.",
+   "dar": "T0 ≈ 1,93 : a) la ; b) rfed ; c) la.",
+   "en": "T0 ≈ 1.93: a) keep; b) reject; c) keep."
   },
   "commonMistakes": [
    {
-    "fr": "Utiliser la loi normale (1,645) alors que σ est inconnu et n = 9.",
-    "dar": "1,645 machi hna : Student.",
-    "en": "Using 1.645 instead of Student."
+    "fr": "Utiliser 1,96 / 1,645 (loi normale) alors que σ est inconnu et n = 9.",
+    "dar": "1,96 / 1,645 machi hna : Student.",
+    "en": "Using 1.96 / 1.645 instead of Student."
    },
    {
-    "fr": "Calculer l'écart-type avec n (0,2767) au lieu de n − 1.",
-    "dar": "S b n − 1.",
-    "en": "S uses n − 1."
+    "fr": "ν = 9 au lieu de 8.",
+    "dar": "ν = 9 f blast 8.",
+    "en": "ν = 9 instead of 8."
+   },
+   {
+    "fr": "Calculer S avec n (0,2767) au lieu de n − 1.",
+    "dar": "S b n f blast n − 1.",
+    "en": "S with n instead of n − 1."
    }
   ],
   "checks": [
    {
     "compute": {
-     "fn": "tStatData",
+     "fn": "mean",
      "args": [
       [
        9.6,
@@ -336,23 +455,11 @@
        10,
        9.5,
        9.7
-      ],
-      10
+      ]
      ]
     },
-    "expect": -3.1806,
-    "tolerance": 0.001
-   },
-   {
-    "compute": {
-     "fn": "tCrit",
-     "args": [
-      0.05,
-      8
-     ]
-    },
-    "expect": 1.86,
-    "tolerance": 0.001
+    "expect": 9.6889,
+    "tolerance": 0.0001
    },
    {
     "compute": {
@@ -373,6 +480,85 @@
     },
     "expect": 0.2934,
     "tolerance": 0.0001
+   },
+   {
+    "compute": {
+     "fn": "tStatData",
+     "args": [
+      [
+       9.6,
+       10.1,
+       9.4,
+       9.8,
+       9.9,
+       9.2,
+       10,
+       9.5,
+       9.7
+      ],
+      9.5
+     ]
+    },
+    "expect": 1.9311,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.025,
+      8
+     ]
+    },
+    "expect": 2.306,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "tCrit",
+     "args": [
+      0.05,
+      8
+     ]
+    },
+    "expect": 1.86,
+    "tolerance": 0.001
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      1.9311,
+      8,
+      "two"
+     ]
+    },
+    "expect": 0.0896,
+    "tolerance": 0.0005
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      1.9311,
+      8,
+      "right"
+     ]
+    },
+    "expect": 0.0448,
+    "tolerance": 0.0005
+   },
+   {
+    "compute": {
+     "fn": "pValueT",
+     "args": [
+      1.9311,
+      8,
+      "left"
+     ]
+    },
+    "expect": 0.9552,
+    "tolerance": 0.0005
    }
   ]
  }

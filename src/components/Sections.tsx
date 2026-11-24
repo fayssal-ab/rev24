@@ -109,6 +109,44 @@ function StepByStep({ s, skey }: { s: Extract<Section, { type: 'steps' }>; skey?
   );
 }
 
+/** A proof set like a maths textbook: plain surface, numbered lines, centred display maths, end-of-proof box. */
+function Proof({ s }: { s: Extract<Section, { type: 'proof' }> }) {
+  const { t } = useT();
+  return (
+    <div className="rounded-xl border border-line bg-surface px-5 py-4 sm:px-7 sm:py-5">
+      <div className="mb-3 flex flex-wrap items-baseline gap-x-2 border-b border-line pb-2">
+        <span className="font-display text-[15px] font-bold italic lg:text-[16.5px]">{t('proof.label')}</span>
+        {s.title && (
+          <span className="text-[15px] text-muted lg:text-[16.5px]">
+            — <L v={s.title} />
+          </span>
+        )}
+      </div>
+      <ol className="space-y-3.5">
+        {s.lines.map((x, i) => (
+          <li key={i} className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-1">
+            <span className="pt-px font-mono text-[13px] font-bold text-muted lg:text-[14px]">({i + 1})</span>
+            <div className="min-w-0 text-[15px] leading-relaxed text-fg lg:text-[16.5px]">
+              <span className="mr-1.5 font-semibold">
+                <L v={x.title} />.
+              </span>
+              <L v={x.body} md />
+              {x.tex && (
+                <div className="my-2 overflow-x-auto py-1 text-center text-fg">
+                  <Tex tex={x.tex} block />
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="mt-2 text-right text-lg leading-none text-fg" aria-label={t('proof.end')}>
+        ∎
+      </div>
+    </div>
+  );
+}
+
 /** Model answer laid out like the test paper: every line visible, label on the left, conclusion boxed. */
 function ExamCopy({ s }: { s: Extract<Section, { type: 'copy' }> }) {
   const { t } = useT();
@@ -287,6 +325,8 @@ export function SectionView({ s, questions, missions, id, skey }: { s: Section; 
       return wrap(<StepByStep s={s} skey={skey} />);
     case 'demo':
       return wrap(<Demo s={s} />);
+    case 'proof':
+      return wrap(<Proof s={s} />, 'my-6');
     case 'copy':
       return wrap(<ExamCopy s={s} />, 'my-6');
     case 'animation': {

@@ -27,6 +27,12 @@ export const steps = (title: T | null, items: StepT[]): Section => ({
   ...(title ? { title: L(title) } : {}),
   items: items.map((x) => ({ title: L(x.t), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}), ...(x.code ? { code: x.code } : {}), ...(x.why ? { why: L(x.why) } : {}) }))
 });
+/** clean mathematical proof, all lines visible: same item shape as `steps` */
+export const proof = (title: T | null, items: StepT[]): Section => ({
+  type: 'proof',
+  ...(title ? { title: L(title) } : {}),
+  lines: items.map((x) => ({ title: L(x.t), body: L(x.b), ...(x.tex ? { tex: x.tex } : {}) }))
+});
 /** "L'essentiel": the few lines to remember, shown at the top of a chapter */
 export const key = (t: T): Section => ({ type: 'callout', kind: 'key', body: L(t) });
 /** model exam answer (copie modèle): every line visible, as written on the test paper */

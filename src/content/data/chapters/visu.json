@@ -1,0 +1,1050 @@
+{
+ "id": "visu",
+ "module": "data",
+ "order": 5,
+ "title": {
+  "fr": "Chap 4 — Visualisation des données",
+  "dar": "Fasl 4 — Visualisation dyal data",
+  "en": "Ch. 4 — Data visualisation"
+ },
+ "summary": {
+  "fr": "Pourquoi visualiser, l'écosystème Python, l'architecture de Matplotlib (Figure / Axes), les deux styles, les graphiques de base, les subplots, les bonnes pratiques, le choix du graphique, l'export, Seaborn et la visualisation avec pandas.",
+  "dar": "3lach nrsmou, l écosystème Python, architecture dyal Matplotlib (Figure / Axes), jouj styles, graphiques de base, subplots, bonnes pratiques, khtiyar l graphique, export, Seaborn w pandas.",
+  "en": "Why visualise, the Python ecosystem, Matplotlib's architecture (Figure / Axes), the two styles, basic charts, subplots, good practice, choosing a chart, export, Seaborn and plotting with pandas."
+ },
+ "estimatedMinutes": 45,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Pourquoi visualiser les données ?",
+    "dar": "1. 3lach nrsmou data ?",
+    "en": "1. Why visualise data?"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le cours donne **5 raisons** :\n1. **Compréhension rapide** des patterns et tendances ;\n2. **Détection d'anomalies** et de valeurs aberrantes ;\n3. **Communication efficace** des résultats ;\n4. **Validation d'hypothèses** statistiques ;\n5. **Aide à la décision** basée sur les données.",
+    "dar": "Dars kay3ti **5 asbab** :\n1. **Tfhem b zerba** patterns w tendances ;\n2. **Tkchef anomalies** w valeurs aberrantes ;\n3. **Tbligh natija** b wodou7 ;\n4. **Tvalidi hypothèses** statistiques ;\n5. **T3awen f l qarar** mbni 3la data.",
+    "en": "The course gives **5 reasons**:\n1. **Quick understanding** of patterns and trends;\n2. **Detecting anomalies** and outliers;\n3. **Communicating results** effectively;\n4. **Validating** statistical hypotheses;\n5. **Supporting data-driven decisions**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Un tableau de 1 000 lignes, personne ne le lit. Un histogramme de ces 1 000 valeurs se comprend en 2 secondes. Visualiser, c'est **traduire des chiffres en image** pour le cerveau.",
+    "dar": "Tableau fih 1 000 str, 7ta wa7ed ma ghay9rah. Histogramme dyal 1 000 qima katfhmo f 2 thawani. Visualisation = **ttarjem l arqam l tswira** l l mokh.",
+    "en": "Nobody reads a 1,000-row table. A histogram of those values is understood in 2 seconds. Visualising means **translating numbers into a picture** for the brain."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-01"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. L'écosystème Python pour la visualisation",
+    "dar": "2. L écosystème Python",
+    "en": "2. The Python visualisation ecosystem"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Bibliothèque",
+     "dar": "Bibliothèque",
+     "en": "Library"
+    },
+    {
+     "fr": "Utilisation principale",
+     "dar": "Fach katsta3mel",
+     "en": "Main use"
+    },
+    {
+     "fr": "Niveau",
+     "dar": "Mostawa",
+     "en": "Level"
+    }
+   ],
+   "rows": [
+    [
+     "Matplotlib",
+     {
+      "fr": "Graphiques 2D de base",
+      "dar": "Graphiques 2D asasiyin",
+      "en": "Basic 2D charts"
+     },
+     {
+      "fr": "Fondamental",
+      "dar": "Asasi",
+      "en": "Fundamental"
+     }
+    ],
+    [
+     "Pandas",
+     {
+      "fr": "Exploration rapide",
+      "dar": "Exploration b zerba",
+      "en": "Quick exploration"
+     },
+     {
+      "fr": "Débutant",
+      "dar": "Mobtadi2",
+      "en": "Beginner"
+     }
+    ],
+    [
+     "Altair",
+     {
+      "fr": "Visualisation déclarative",
+      "dar": "Déclarative",
+      "en": "Declarative"
+     },
+     {
+      "fr": "Intermédiaire",
+      "dar": "Moutawassit",
+      "en": "Intermediate"
+     }
+    ],
+    [
+     "Seaborn",
+     {
+      "fr": "Visualisation statistique",
+      "dar": "Statistique",
+      "en": "Statistical"
+     },
+     {
+      "fr": "Intermédiaire",
+      "dar": "Moutawassit",
+      "en": "Intermediate"
+     }
+    ],
+    [
+     "Plotly",
+     {
+      "fr": "Graphiques interactifs",
+      "dar": "Interactifs",
+      "en": "Interactive"
+     },
+     {
+      "fr": "Avancé",
+      "dar": "Motaqaddim",
+      "en": "Advanced"
+     }
+    ],
+    [
+     "Bokeh",
+     {
+      "fr": "Applications web",
+      "dar": "Applications web",
+      "en": "Web apps"
+     },
+     {
+      "fr": "Avancé",
+      "dar": "Motaqaddim",
+      "en": "Advanced"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "pip install matplotlib seaborn pandas plotly bokeh altair"
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Matplotlib : architecture et deux styles",
+    "dar": "3. Matplotlib : architecture w jouj styles",
+    "en": "3. Matplotlib: architecture and two styles"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Matplotlib est organisé en couches. Les deux objets à retenir : la **Figure** = toute la « feuille » (la fenêtre, l'image exportée) ; un **Axes** = **un** graphique à l'intérieur (avec ses axes x/y, son titre, sa légende). Une Figure peut contenir plusieurs Axes (subplots).",
+    "dar": "Matplotlib mrtteb f couches. Jouj objets mohimmin : **Figure** = l « werqa » kamla (fenêtre, image) ; **Axes** = graphique **wa7ed** dakhelha (b axes x/y, titre, légende). Figure t9der ykoun fiha bzaf d Axes (subplots).",
+    "en": "Matplotlib is built in layers. Two objects to remember: the **Figure** = the whole \"sheet\" (window, exported image); an **Axes** = **one** chart inside it (with its x/y axes, title, legend). A Figure can hold several Axes (subplots)."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Mi3yar",
+     "en": "Criterion"
+    },
+    {
+     "fr": "Style MATLAB (procédural)",
+     "dar": "Style MATLAB",
+     "en": "MATLAB style (procedural)"
+    },
+    {
+     "fr": "Style orienté objet (recommandé)",
+     "dar": "Style objet (recommandé)",
+     "en": "Object-oriented style (recommended)"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Création",
+      "dar": "Création",
+      "en": "Creation"
+     },
+     {
+      "fr": "`plt.figure()` puis `plt.subplot(2, 1, 1)`",
+      "dar": "`plt.figure()` w `plt.subplot(...)`",
+      "en": "`plt.figure()` then `plt.subplot(2, 1, 1)`"
+     },
+     {
+      "fr": "`fig, (ax1, ax2) = plt.subplots(2, 1)`",
+      "dar": "`fig, (ax1, ax2) = plt.subplots(2, 1)`",
+      "en": "`fig, (ax1, ax2) = plt.subplots(2, 1)`"
+     }
+    ],
+    [
+     {
+      "fr": "Tracer",
+      "dar": "Rsem",
+      "en": "Draw"
+     },
+     {
+      "fr": "`plt.plot(x, y)`",
+      "dar": "`plt.plot(x, y)`",
+      "en": "`plt.plot(x, y)`"
+     },
+     {
+      "fr": "`ax1.plot(x, y)`",
+      "dar": "`ax1.plot(x, y)`",
+      "en": "`ax1.plot(x, y)`"
+     }
+    ],
+    [
+     {
+      "fr": "Titre",
+      "dar": "Titre",
+      "en": "Title"
+     },
+     {
+      "fr": "`plt.title('…')`",
+      "dar": "`plt.title('…')`",
+      "en": "`plt.title('…')`"
+     },
+     {
+      "fr": "`ax1.set_title('…')`",
+      "dar": "`ax1.set_title('…')`",
+      "en": "`ax1.set_title('…')`"
+     }
+    ],
+    [
+     {
+      "fr": "Mise en page",
+      "dar": "Mise en page",
+      "en": "Layout"
+     },
+     {
+      "fr": "`plt.tight_layout()`",
+      "dar": "`plt.tight_layout()`",
+      "en": "`plt.tight_layout()`"
+     },
+     {
+      "fr": "`fig.tight_layout()`",
+      "dar": "`fig.tight_layout()`",
+      "en": "`fig.tight_layout()`"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "En orienté objet, les fonctions prennent **`set_`** : `ax.set_title`, `ax.set_xlabel`, `ax.set_ylabel`, `ax.set_xticks`. Écrire `ax.title(\"…\")` est une erreur classique au contrôle.",
+    "dar": "F style objet, les fonctions fihom **`set_`** : `ax.set_title`, `ax.set_xlabel`… Ktba `ax.title(\"…\")` ghalat classique.",
+    "en": "In OO style the methods start with **`set_`**: `ax.set_title`, `ax.set_xlabel`, `ax.set_ylabel`. Writing `ax.title(\"…\")` is a classic test mistake."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "MatplotlibStyles"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-02",
+    "dv-03"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Les graphiques de base",
+    "dar": "4. Graphiques de base",
+    "en": "4. Basic charts"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Le graphique linéaire du cours, ligne par ligne",
+    "dar": "Graphique linéaire dyal dars, str b str",
+    "en": "The course line chart, line by line"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Préparer les données",
+      "dar": "Wjjed data",
+      "en": "Prepare the data"
+     },
+     "body": {
+      "fr": "`np.linspace(0, 4*np.pi, 100)` crée **100 points régulièrement espacés** entre 0 et 4π.",
+      "dar": "`linspace` kaysayb **100 n9ta** bin 0 w 4π.",
+      "en": "`np.linspace(0, 4*np.pi, 100)` creates **100 evenly spaced points** between 0 and 4π."
+     },
+     "code": "import numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 4*np.pi, 100)\ny1 = np.sin(x)\ny2 = np.cos(x)"
+    },
+    {
+     "title": {
+      "fr": "Créer la figure et l'axe",
+      "dar": "Sayb figure w axe",
+      "en": "Create figure and axes"
+     },
+     "body": {
+      "fr": "`figsize=(10, 4)` = largeur 10 pouces, hauteur 4.",
+      "dar": "`figsize=(10, 4)` = 3ard 10, tol 4.",
+      "en": "`figsize=(10, 4)` = width 10 in, height 4."
+     },
+     "code": "fig, ax = plt.subplots(figsize=(10, 4))"
+    },
+    {
+     "title": {
+      "fr": "Tracer les deux courbes",
+      "dar": "Rsem jouj courbes",
+      "en": "Draw both curves"
+     },
+     "body": {
+      "fr": "`'b-'` = bleu trait plein, `'r--'` = rouge pointillés ; `label` sert à la légende.",
+      "dar": "`'b-'` = zre9 khatt, `'r--'` = 7mer pointillés.",
+      "en": "`'b-'` = solid blue, `'r--'` = dashed red; `label` feeds the legend."
+     },
+     "code": "ax.plot(x, y1, 'b-', label='sin(x)', linewidth=2)\nax.plot(x, y2, 'r--', label='cos(x)', linewidth=2)"
+    },
+    {
+     "title": {
+      "fr": "Habiller",
+      "dar": "Lbbes",
+      "en": "Dress it"
+     },
+     "body": {
+      "fr": "Axes nommés, titre, légende, grille légère.",
+      "dar": "Smiyat, titre, légende, grille.",
+      "en": "Axis names, title, legend, light grid."
+     },
+     "code": "ax.set_xlabel('x')\nax.set_ylabel('y')\nax.set_title('Fonctions trigonométriques')\nax.legend()\nax.grid(True, alpha=0.3)\nplt.show()"
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Graphique",
+     "dar": "Graphique",
+     "en": "Chart"
+    },
+    {
+     "fr": "Fonction",
+     "dar": "Fonction",
+     "en": "Function"
+    },
+    {
+     "fr": "À quoi il sert",
+     "dar": "Fach",
+     "en": "Purpose"
+    },
+    {
+     "fr": "Paramètres du cours",
+     "dar": "Paramètres",
+     "en": "Course parameters"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Ligne",
+      "dar": "Ligne",
+      "en": "Line"
+     },
+     "ax.plot(x, y)",
+     {
+      "fr": "Évolution, fonction continue",
+      "dar": "Tatawor",
+      "en": "Trend, continuous function"
+     },
+     "'b-', 'r--', label, linewidth"
+    ],
+    [
+     {
+      "fr": "Nuage de points",
+      "dar": "Nuage de points",
+      "en": "Scatter"
+     },
+     "ax.scatter(x, y)",
+     {
+      "fr": "**Relation** entre deux variables",
+      "dar": "**3ala9a** bin jouj variables",
+      "en": "**Relationship** between two variables"
+     },
+     "c=colors, s=sizes, alpha=0.7, cmap='viridis' + plt.colorbar"
+    ],
+    [
+     {
+      "fr": "Histogramme",
+      "dar": "Histogramme",
+      "en": "Histogram"
+     },
+     "ax.hist(data)",
+     {
+      "fr": "**Distribution** d'une variable",
+      "dar": "**Tawzi3** dyal variable",
+      "en": "**Distribution** of a variable"
+     },
+     "bins=30, alpha, color, edgecolor, cumulative=True, density=True"
+    ],
+    [
+     {
+      "fr": "Barres",
+      "dar": "Barres",
+      "en": "Bars"
+     },
+     "ax.bar(x, h)",
+     {
+      "fr": "**Comparer** des catégories",
+      "dar": "**9aren** catégories",
+      "en": "**Compare** categories"
+     },
+     "bar_width, x_pos ± width/2 (groupées), set_xticks"
+    ],
+    [
+     {
+      "fr": "Camembert",
+      "dar": "Camembert",
+      "en": "Pie"
+     },
+     "ax.pie(sizes)",
+     {
+      "fr": "**Parts d'un tout** (en %)",
+      "dar": "**Nisab** mn kol (%)",
+      "en": "**Parts of a whole** (%)"
+     },
+     "labels, explode, autopct='%1.1f%%', startangle=90"
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "# Nuage de points (diapo 13)\nn_points = 100\nx = np.random.randn(n_points)\ny = 2*x + np.random.randn(n_points)*0.5\nfig, ax = plt.subplots(figsize=(8, 6))\nscatter = ax.scatter(x, y, c=np.random.rand(n_points), s=100*np.random.rand(n_points), alpha=0.7, cmap='viridis')\nplt.colorbar(scatter, label='Intensité')\n\n# Histogramme simple et cumulatif (diapo 15)\ndata1 = np.random.normal(0, 1, 1000)\nfig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))\nax1.hist(data1, bins=30, alpha=0.7, color='skyblue', edgecolor='black')\nax2.hist(data1, bins=30, cumulative=True, density=True)\n\n# Barres groupées (diapo 17)\ncategories = ['Cat A', 'Cat B', 'Cat C', 'Cat D']\nx_pos = np.arange(len(categories)); w = 0.35\nax.bar(x_pos - w/2, [23, 45, 56, 12], w, label='Serie 1')\nax.bar(x_pos + w/2, [34, 30, 45, 23], w, label='Serie 2')\nax.set_xticks(x_pos); ax.set_xticklabels(categories)\n\n# Camembert (diapo 19)\nax.pie([45, 20, 15, 12, 8], labels=['Python', 'Java', 'C++', 'JavaScript', 'Other'],\n       explode=(0.1, 0, 0, 0, 0), autopct='%1.1f%%', startangle=90)",
+   "caption": {
+    "fr": "Les codes des diapos, regroupés.",
+    "dar": "Codes dyal diapos.",
+    "en": "The slide code, grouped."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "`density=True` met l'histogramme en **proportions** (aire totale = 1) ; avec `cumulative=True`, la dernière barre atteint donc **1** : c'est la fonction de répartition empirique.",
+    "dar": "`density=True` = **nisab** (majmou3 = 1) ; m3a `cumulative=True` lekher kaywsel l **1**.",
+    "en": "`density=True` turns counts into **proportions** (total area 1); with `cumulative=True` the last bar reaches **1**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-08",
+    "dv-09",
+    "dv-10",
+    "dv-11"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Subplots : plusieurs graphiques dans une figure",
+    "dar": "5. Subplots : bzaf d graphiques f figure",
+    "en": "5. Subplots: several charts in one figure"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "fig, axes = plt.subplots(2, 2, figsize=(12, 10))   # grille 2 x 2\nfig.suptitle('Grille de graphiques 2x2')\naxes[0, 0].plot(x, np.sin(x), 'b-');   axes[0, 0].set_title('Sinus')\naxes[0, 1].plot(x, np.cos(x), 'r-');   axes[0, 1].set_title('Cosinus')\naxes[1, 0].scatter(x, np.tan(x), alpha=0.5); axes[1, 0].set_title('Tangente')\naxes[1, 1].hist(np.random.randn(1000), bins=30); axes[1, 1].set_title('Distribution normale')\nplt.tight_layout()\nplt.show()"
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "`axes` est un tableau 2D : **`axes[ligne, colonne]`**, en partant de 0. `suptitle` = titre de toute la figure ; `set_title` = titre d'un seul graphique. `tight_layout()` évite que les titres se chevauchent.",
+    "dar": "`axes` tableau 2D : **`axes[str, colonne]`** mn 0. `suptitle` = titre dyal figure kamla ; `set_title` = titre dyal graphique wa7ed. `tight_layout()` bach ma ytkhllatouch.",
+    "en": "`axes` is a 2-D array: **`axes[row, col]`**, from 0. `suptitle` = whole-figure title; `set_title` = one chart. `tight_layout()` prevents overlapping titles."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. Bonnes pratiques et erreurs courantes",
+    "dar": "6. Bonnes pratiques w akhta2",
+    "en": "6. Good practice and common mistakes"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Règles d'or",
+     "dar": "Qawa3id dhahabiya",
+     "en": "Golden rules"
+    },
+    {
+     "fr": "Erreurs courantes",
+     "dar": "Akhta2 kathira",
+     "en": "Common mistakes"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Simplicité** : un message par graphique",
+      "dar": "**Bsata** : message wa7ed",
+      "en": "**Simplicity**: one message per chart"
+     },
+     {
+      "fr": "Graphiques **3D inutiles**",
+      "dar": "**3D** bla 7aja",
+      "en": "Useless **3D**"
+     }
+    ],
+    [
+     {
+      "fr": "**Clarté** : labels explicites",
+      "dar": "**Wodou7** : labels wad7in",
+      "en": "**Clarity**: explicit labels"
+     },
+     {
+      "fr": "Couleurs **non accessibles** (daltonisme)",
+      "dar": "Alwan ma kaybanouch (daltonisme)",
+      "en": "**Inaccessible** colours (colour-blindness)"
+     }
+    ],
+    [
+     {
+      "fr": "**Précision** : échelles appropriées",
+      "dar": "**Di9a** : échelles mnasbin",
+      "en": "**Precision**: proper scales"
+     },
+     {
+      "fr": "Échelles **logarithmiques non justifiées**",
+      "dar": "Log bla sabab",
+      "en": "**Unjustified log** scales"
+     }
+    ],
+    [
+     {
+      "fr": "**Efficacité** : couleurs significatives",
+      "dar": "Alwan 3andhom ma3na",
+      "en": "**Efficiency**: meaningful colours"
+     },
+     {
+      "fr": "**Trop d'information**",
+      "dar": "**Bzaf d ma3loumat**",
+      "en": "**Too much information**"
+     }
+    ],
+    [
+     {
+      "fr": "**Honnêteté** : pas d'échelles trompeuses",
+      "dar": "**Amana** : bla échelles ghachin",
+      "en": "**Honesty**: no misleading scales"
+     },
+     {
+      "fr": "**Labels illisibles**",
+      "dar": "Labels ma kayt9raw",
+      "en": "**Unreadable labels**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-07",
+    "dv-18"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "7. Choisir le bon type de graphique",
+    "dar": "7. Khtar l graphique l mnasb",
+    "en": "7. Choosing the right chart"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Objectif",
+     "dar": "Lhadaf",
+     "en": "Goal"
+    },
+    {
+     "fr": "Recommandés",
+     "dar": "Mzyanin",
+     "en": "Recommended"
+    },
+    {
+     "fr": "À éviter",
+     "dar": "Tjenneb",
+     "en": "Avoid"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Comparaison",
+      "dar": "Mo9arana",
+      "en": "Comparison"
+     },
+     {
+      "fr": "Barres, Radar",
+      "dar": "Barres, Radar",
+      "en": "Bars, Radar"
+     },
+     {
+      "fr": "Camembert, 3D",
+      "dar": "Camembert, 3D",
+      "en": "Pie, 3D"
+     }
+    ],
+    [
+     {
+      "fr": "Distribution",
+      "dar": "Tawzi3",
+      "en": "Distribution"
+     },
+     {
+      "fr": "Histogramme, Box, Violon",
+      "dar": "Histogramme, Box, Violon",
+      "en": "Histogram, Box, Violin"
+     },
+     {
+      "fr": "Ligne, Barres",
+      "dar": "Ligne, Barres",
+      "en": "Line, Bars"
+     }
+    ],
+    [
+     {
+      "fr": "Composition",
+      "dar": "Tarkib",
+      "en": "Composition"
+     },
+     {
+      "fr": "Empilé, Treemap",
+      "dar": "Empilé, Treemap",
+      "en": "Stacked, Treemap"
+     },
+     {
+      "fr": "Camembert (sauf %)",
+      "dar": "Camembert (illa %)",
+      "en": "Pie (except %)"
+     }
+    ],
+    [
+     {
+      "fr": "Relation",
+      "dar": "3ala9a",
+      "en": "Relationship"
+     },
+     {
+      "fr": "Scatter, Line, Heatmap",
+      "dar": "Scatter, Line, Heatmap",
+      "en": "Scatter, Line, Heatmap"
+     },
+     {
+      "fr": "Barres, Camembert",
+      "dar": "Barres, Camembert",
+      "en": "Bars, Pie"
+     }
+    ],
+    [
+     {
+      "fr": "Évolution",
+      "dar": "Tatawor",
+      "en": "Evolution"
+     },
+     {
+      "fr": "Ligne, Aire",
+      "dar": "Ligne, Aire",
+      "en": "Line, Area"
+     },
+     {
+      "fr": "Barres (temps long)",
+      "dar": "Barres (wa9t twil)",
+      "en": "Bars (long time)"
+     }
+    ],
+    [
+     {
+      "fr": "Données spatiales",
+      "dar": "Data jughrafiya",
+      "en": "Spatial data"
+     },
+     {
+      "fr": "Carte, Choroplèthe",
+      "dar": "Carte, Choroplèthe",
+      "en": "Map, Choropleth"
+     },
+     {
+      "fr": "Tous sauf cartes",
+      "dar": "Kolchi ghir cartes",
+      "en": "Anything but maps"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "ChartChooser"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Question type : « Quel graphique pour montrer la **distribution** des salaires ? » → **histogramme** (ou boxplot / violon), jamais une ligne. « Pour la **relation** taille/poids ? » → **scatter**.",
+    "dar": "Sou2al : « **tawzi3** dyal salaires ? » → **histogramme** (wla boxplot). « **3ala9a** tol/wazn ? » → **scatter**.",
+    "en": "Typical question: \"Chart for the **distribution** of salaries?\" → **histogram** (or box/violin). \"For the height/weight **relationship**?\" → **scatter**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-04",
+    "dv-05",
+    "dv-06"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "8. Workflow, export et publication",
+    "dar": "8. Workflow, export w publication",
+    "en": "8. Workflow, export and publishing"
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Le workflow recommandé du cours",
+    "dar": "Workflow dyal dars",
+    "en": "The course's recommended workflow"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Exploration",
+      "dar": "Exploration",
+      "en": "Exploration"
+     },
+     "body": {
+      "fr": "`df.plot()`, `sns.pairplot()` : regarder vite, sans soigner.",
+      "dar": "`df.plot()`, `sns.pairplot()` : chouf b zerba.",
+      "en": "`df.plot()`, `sns.pairplot()`: look quickly."
+     }
+    },
+    {
+     "title": {
+      "fr": "Analyse",
+      "dar": "Analyse",
+      "en": "Analysis"
+     },
+     "body": {
+      "fr": "`sns.relplot()`, `sns.catplot()` : comparer par groupes.",
+      "dar": "`relplot`, `catplot` : 9aren groupes.",
+      "en": "`sns.relplot()`, `sns.catplot()`: compare groups."
+     }
+    },
+    {
+     "title": {
+      "fr": "Présentation",
+      "dar": "Présentation",
+      "en": "Presentation"
+     },
+     "body": {
+      "fr": "`plt.subplots()` + personnalisation.",
+      "dar": "`plt.subplots()` + personnalisation.",
+      "en": "`plt.subplots()` + styling."
+     }
+    },
+    {
+     "title": {
+      "fr": "Validation",
+      "dar": "Validation",
+      "en": "Validation"
+     },
+     "body": {
+      "fr": "Vérifier échelles, labels, accessibilité.",
+      "dar": "T2akked échelles, labels, accessibilité.",
+      "en": "Check scales, labels, accessibility."
+     }
+    },
+    {
+     "title": {
+      "fr": "Export",
+      "dar": "Export",
+      "en": "Export"
+     },
+     "body": {
+      "fr": "`savefig()` avec haute résolution (`dpi=300`, `bbox_inches='tight'`).",
+      "dar": "`savefig()` b `dpi=300`.",
+      "en": "`savefig()` at high resolution."
+     },
+     "code": "fig.savefig('mon_graphique.png', dpi=300)\nfig.savefig('mon_graphique.pdf')   # vectoriel\nfig.savefig('mon_graphique.svg')   # vectoriel"
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Format",
+     "dar": "Format",
+     "en": "Format"
+    },
+    {
+     "fr": "Usage recommandé",
+     "dar": "Fin",
+     "en": "Recommended use"
+    }
+   ],
+   "rows": [
+    [
+     "PNG",
+     {
+      "fr": "Web, présentations",
+      "dar": "Web, présentations",
+      "en": "Web, slides"
+     }
+    ],
+    [
+     "PDF",
+     {
+      "fr": "Publications scientifiques (vectoriel)",
+      "dar": "Publications (vectoriel)",
+      "en": "Scientific papers (vector)"
+     }
+    ],
+    [
+     "SVG",
+     {
+      "fr": "Édition vectorielle",
+      "dar": "Édition vectorielle",
+      "en": "Vector editing"
+     }
+    ],
+    [
+     "JPG",
+     {
+      "fr": "Photos — **à éviter pour les graphiques**",
+      "dar": "Tswer — **machi l graphiques**",
+      "en": "Photos — **avoid for charts**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-12",
+    "dv-17"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "9. Seaborn : la visualisation statistique",
+    "dar": "9. Seaborn : visualisation statistique",
+    "en": "9. Seaborn: statistical visualisation"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Seaborn est **basé sur Matplotlib**, avec une **interface de haut niveau**, **spécialisée en statistique**, **intégrée nativement à pandas** (on lui donne `data=df` et des noms de colonnes) et avec des **thèmes esthétiques par défaut**.",
+    "dar": "Seaborn **mbni 3la Matplotlib**, **interface sahla**, **mtkhasssa f statistique**, **mrbouta b pandas** (`data=df` w smiyat colonnes), w **thèmes zwinin par défaut**.",
+    "en": "Seaborn is **built on Matplotlib**, with a **high-level interface**, **specialised in statistics**, **natively integrated with pandas** (`data=df` plus column names) and **nice default themes**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Famille",
+     "dar": "Famille",
+     "en": "Family"
+    },
+    {
+     "fr": "Fonctions du cours",
+     "dar": "Fonctions",
+     "en": "Course functions"
+    },
+    {
+     "fr": "Ce qu'elles montrent",
+     "dar": "Chnou kaybyynou",
+     "en": "What they show"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Distribution",
+      "dar": "Tawzi3",
+      "en": "Distribution"
+     },
+     "histplot(kde=True), kdeplot, ecdfplot, boxplot",
+     {
+      "fr": "Forme d'une variable, comparaison par groupe (`hue`)",
+      "dar": "Chkl dyal variable",
+      "en": "Shape of a variable, by group (`hue`)"
+     }
+    ],
+    [
+     {
+      "fr": "Relations",
+      "dar": "3ala9at",
+      "en": "Relationships"
+     },
+     "scatterplot, lineplot, relplot",
+     {
+      "fr": "Lien entre deux variables ; relplot = **multi-facettes** (`col=`)",
+      "dar": "3ala9a ; relplot = facettes",
+      "en": "Link between two variables; relplot = **facets** (`col=`)"
+     }
+    ],
+    [
+     {
+      "fr": "Matrices",
+      "dar": "Matrices",
+      "en": "Matrices"
+     },
+     "heatmap(corr, annot=True)",
+     {
+      "fr": "**Matrice de corrélation**",
+      "dar": "**Matrice de corrélation**",
+      "en": "**Correlation matrix**"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "import seaborn as sns\ntips = sns.load_dataset('tips')\nsns.scatterplot(data=tips, x='total_bill', y='tip', hue='time')   # couleur par 'time'\nsns.histplot(data=tips, x='total_bill', kde=True)\nsns.boxplot(data=tips, x='day', y='total_bill')\n\niris = sns.load_dataset('iris')\ncorr_matrix = iris.select_dtypes(include=[np.number]).corr()\nsns.heatmap(corr_matrix, annot=True, fmt=\".2f\", cmap='coolwarm', center=0, square=True)\nmask = np.triu(np.ones_like(corr_matrix, dtype=bool))   # cacher le triangle supérieur\nsns.heatmap(corr_matrix, mask=mask, annot=True, fmt=\".2f\")"
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "La **heatmap de corrélation** relie ce chapitre au Rappel : chaque case est un **r** entre −1 et 1. `annot=True` écrit la valeur, `fmt=\".2f\"` l'arrondit à 2 décimales, `center=0` met le blanc à r = 0.",
+    "dar": "**Heatmap** = kol khana fiha **r** bin −1 w 1. `annot=True` kaykteb l qima, `fmt=\".2f\"` 2 ar9am.",
+    "en": "The **correlation heatmap** links back to the Reminder: each cell is an **r** between −1 and 1."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-13",
+    "dv-14"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "10. Visualiser directement avec pandas",
+    "dar": "10. Rsem direct b pandas",
+    "en": "10. Plotting directly with pandas"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "python",
+   "code": "df['A'].plot(title='Série A')                 # ligne\ndf[['A', 'B']].plot()                          # plusieurs séries\ndf['A'].plot.hist(bins=20, alpha=0.7)          # histogramme\ndf[['A', 'B', 'C']].plot.box()                 # boîtes à moustaches\ndf[['A', 'B']].plot.area(alpha=0.5, stacked=False)\ndf.plot.scatter(x='A', y='B', c='C', cmap='viridis')"
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Avantages de pandas : **syntaxe concise** (`df.plot()`), **intégration données / graphiques**, **exploration rapide**, **utilise l'index automatiquement** (des dates en index deviennent l'axe x).",
+    "dar": "Mzayat pandas : **syntaxe 9sira**, **data w graphique m3a ba3d**, **exploration b zerba**, **index kaywli axe x automatiquement**.",
+    "en": "pandas advantages: **concise syntax**, **data/plot integration**, **quick exploration**, **uses the index automatically** (dates become the x-axis)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dv-15"
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**Pour aller plus loin** (cité dans la conclusion du cours) : Plotly (interactif), Bokeh (web), Geopandas (cartes), Dash (tableaux de bord), Altair (déclaratif).",
+    "dar": "**Bach tmchi b3id** : Plotly, Bokeh, Geopandas, Dash, Altair.",
+    "en": "**Going further** (course conclusion): Plotly, Bokeh, Geopandas, Dash, Altair."
+   }
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "5 raisons : comprendre vite, détecter les anomalies, communiquer, valider des hypothèses, décider.",
+   "dar": "5 asbab dyal visualisation.",
+   "en": "5 reasons: understand, detect anomalies, communicate, validate, decide."
+  },
+  {
+   "fr": "Figure = la feuille, Axes = un graphique ; style orienté objet `fig, ax = plt.subplots()` + `ax.set_…` recommandé.",
+   "dar": "Figure / Axes ; style objet.",
+   "en": "Figure = sheet, Axes = one chart; OO style recommended."
+  },
+  {
+   "fr": "plot (évolution), scatter (relation), hist (distribution), bar (comparaison), pie (parts en %).",
+   "dar": "plot, scatter, hist, bar, pie.",
+   "en": "plot, scatter, hist, bar, pie and their uses."
+  },
+  {
+   "fr": "Règles d'or : simplicité, clarté, précision, efficacité, honnêteté ; éviter 3D, couleurs non accessibles, trop d'info.",
+   "dar": "Qawa3id dhahabiya.",
+   "en": "Golden rules and common mistakes."
+  },
+  {
+   "fr": "Export : PNG (web), PDF/SVG (vectoriel), pas de JPG pour un graphique ; `savefig(dpi=300)`.",
+   "dar": "PNG, PDF, SVG ; machi JPG.",
+   "en": "PNG, PDF/SVG, not JPG; `savefig(dpi=300)`."
+  },
+  {
+   "fr": "Seaborn : histplot/kdeplot/ecdfplot/boxplot, scatterplot/lineplot/relplot, heatmap ; pandas : `df.plot.*`.",
+   "dar": "Seaborn w pandas.",
+   "en": "Seaborn functions and pandas `df.plot.*`."
+  }
+ ]
+}

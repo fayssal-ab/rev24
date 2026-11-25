@@ -1,0 +1,645 @@
+[
+ {
+  "id": "dr-01",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Notes 8 ; 12 ; 10 ; 15 ; 10 : calcule la moyenne.",
+   "dar": "Notes 8 ; 12 ; 10 ; 15 ; 10 : 7seb l moyenne.",
+   "en": "Marks 8 ; 12 ; 10 ; 15 ; 10: compute the mean."
+  },
+  "answer": 11,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "mean",
+   "args": [
+    [
+     8,
+     12,
+     10,
+     15,
+     10
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "Somme = 55, n = 5 → $\\bar x = 55/5 = 11$.",
+   "dar": "Majmou3 = 55, n = 5 → 11.",
+   "en": "Sum = 55, n = 5 → 11."
+  },
+  "wrongExplanations": {
+   "10": {
+    "fr": "10 est la médiane (et le mode), pas la moyenne.",
+    "dar": "10 hiya l médiane.",
+    "en": "10 is the median (and mode)."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "moyenne"
+  ]
+ },
+ {
+  "id": "dr-02",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même série : la médiane ?",
+   "dar": "Nefs série : l médiane ?",
+   "en": "Same data: the median?"
+  },
+  "answer": 10,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "median",
+   "args": [
+    [
+     8,
+     12,
+     10,
+     15,
+     10
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "Trier : 8 ; 10 ; **10** ; 12 ; 15 → valeur du milieu = 10.",
+   "dar": "Rtteb : 8 ; 10 ; **10** ; 12 ; 15 → 10.",
+   "en": "Sort: 8 ; 10 ; **10** ; 12 ; 15 → 10."
+  },
+  "wrongExplanations": {
+   "12": {
+    "fr": "Tu as pris la valeur du milieu sans trier.",
+    "dar": "Ma rttebtich.",
+    "en": "You did not sort first."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "mediane"
+  ]
+ },
+ {
+  "id": "dr-03",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même série : variance (diviseur n).",
+   "dar": "Nefs série : variance (9sem 3la n).",
+   "en": "Same data: variance (divide by n)."
+  },
+  "answer": 5.6,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "popVariance",
+   "args": [
+    [
+     8,
+     12,
+     10,
+     15,
+     10
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "Écarts −3, 1, −1, 4, −1 → carrés 9, 1, 1, 16, 1 → somme 28 → 28/5 = **5,6**.",
+   "dar": "28/5 = 5,6.",
+   "en": "Squares sum to 28 → 28/5 = **5.6**."
+  },
+  "wrongExplanations": {
+   "0": {
+    "fr": "La somme des écarts fait 0 : il faut les mettre au carré.",
+    "dar": "Khass l mourabba3.",
+    "en": "Square the deviations."
+   },
+   "7": {
+    "fr": "7 = variance corrigée (n − 1). La question demande n.",
+    "dar": "Hadi b n − 1.",
+    "en": "That is the n − 1 version."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "variance"
+  ]
+ },
+ {
+  "id": "dr-04",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même série : écart-type corrigé S (diviseur n − 1), 2 décimales.",
+   "dar": "Écart-type corrigé S (n − 1) ?",
+   "en": "Corrected standard deviation S (n − 1), 2 decimals."
+  },
+  "answer": 2.65,
+  "tolerance": 0.01,
+  "compute": {
+   "fn": "sampleSd",
+   "args": [
+    [
+     8,
+     12,
+     10,
+     15,
+     10
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "$S = \\sqrt{28/4} = \\sqrt 7 \\approx 2{,}65$ — c'est ce que renvoie pandas `.std()`.",
+   "dar": "$\\sqrt 7 \\approx 2{,}65$.",
+   "en": "$\\sqrt 7 \\approx 2.65$ — what pandas `.std()` returns."
+  },
+  "wrongExplanations": {
+   "2.37": {
+    "fr": "2,37 = écart-type avec diviseur n.",
+    "dar": "Hada b n.",
+    "en": "That uses n."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "variance"
+  ]
+ },
+ {
+  "id": "dr-05",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quel paramètre résiste le mieux à une valeur aberrante ?",
+   "dar": "Ina paramètre ma kayt2tharch b qima ghriba ?",
+   "en": "Which measure best resists an outlier?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "La médiane",
+     "dar": "L médiane",
+     "en": "The median"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La moyenne",
+     "dar": "L moyenne",
+     "en": "The mean"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La variance",
+     "dar": "Variance",
+     "en": "The variance"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "L'étendue (max − min)",
+     "dar": "L'étendue",
+     "en": "The range"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "La médiane ne dépend que de la valeur du milieu : remplacer 15 par 95 ne la change pas.",
+   "dar": "L médiane kat3tamed ghir 3la l west.",
+   "en": "The median only depends on the middle value."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La moyenne utilise toutes les valeurs : 95 la ferait exploser.",
+    "dar": "L moyenne kat2tharr.",
+    "en": "The mean uses every value."
+   },
+   "c": {
+    "fr": "La variance (carrés des écarts) est encore plus sensible.",
+    "dar": "Variance ktar.",
+    "en": "Variance is even more sensitive."
+   },
+   "d": {
+    "fr": "L'étendue dépend directement du max.",
+    "dar": "Kat3tamed 3la max.",
+    "en": "Range depends on the max."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "mediane"
+  ]
+ },
+ {
+  "id": "dr-06",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "`df[\"note\"].std()` en pandas calcule…",
+   "dar": "`df[\"note\"].std()` f pandas kay7seb…",
+   "en": "In pandas, `df[\"note\"].std()` computes…"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "l'écart-type avec diviseur n − 1",
+     "dar": "écart-type b n − 1",
+     "en": "the standard deviation with n − 1"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "l'écart-type avec diviseur n",
+     "dar": "b n",
+     "en": "with n"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "la variance",
+     "dar": "variance",
+     "en": "the variance"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "l'écart interquartile",
+     "dar": "IQR",
+     "en": "the IQR"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Par défaut `ddof=1` → diviseur n − 1. Pour diviser par n : `std(ddof=0)`.",
+   "dar": "Par défaut ddof=1.",
+   "en": "Default `ddof=1` → n − 1."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est NumPy `np.std()` qui divise par n par défaut.",
+    "dar": "NumPy hwa li b n.",
+    "en": "NumPy uses n by default."
+   },
+   "c": {
+    "fr": "`.var()` donne la variance ; `.std()` sa racine.",
+    "dar": ".var() hiya variance.",
+    "en": "`.var()` is the variance."
+   },
+   "d": {
+    "fr": "L'IQR se calcule avec `quantile`.",
+    "dar": "quantile.",
+    "en": "IQR uses `quantile`."
+   }
+  },
+  "tags": [
+   "descriptive",
+   "pandas"
+  ]
+ },
+ {
+  "id": "dr-07",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Notes 8 ; 10 ; 10 ; 12 ; 15 (convention pandas) : IQR = Q3 − Q1 ?",
+   "dar": "IQR (pandas) ?",
+   "en": "IQR (pandas convention)?"
+  },
+  "answer": 2,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "iqrBounds",
+   "args": [
+    [
+     8,
+     12,
+     10,
+     15,
+     10
+    ]
+   ],
+   "pick": "iqr"
+  },
+  "explanation": {
+   "fr": "Q1 (position 1) = 10, Q3 (position 3) = 12 → IQR = **2**.",
+   "dar": "Q1 = 10, Q3 = 12 → 2.",
+   "en": "Q1 = 10, Q3 = 12 → **2**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "descriptive",
+   "quartiles"
+  ]
+ },
+ {
+  "id": "dr-08",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "x = 1…5 (heures), y = 2 ; 4 ; 5 ; 4 ; 5 (notes) : covariance (diviseur n) ?",
+   "dar": "Covariance (n) ?",
+   "en": "Covariance (divide by n)?"
+  },
+  "answer": 1.2,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "covariance",
+   "args": [
+    [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    [
+     2,
+     4,
+     5,
+     4,
+     5
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "Produits des écarts : 4, 0, 0, 0, 2 → somme 6 → 6/5 = **1,2**.",
+   "dar": "6/5 = 1,2.",
+   "en": "Products 4, 0, 0, 0, 2 → 6/5 = **1.2**."
+  },
+  "wrongExplanations": {
+   "1.5": {
+    "fr": "1,5 = 6/4 : covariance corrigée (n − 1).",
+    "dar": "b n − 1.",
+    "en": "That is the n − 1 version."
+   }
+  },
+  "tags": [
+   "regression",
+   "covariance"
+  ]
+ },
+ {
+  "id": "dr-09",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même données : coefficient de corrélation r (3 décimales).",
+   "dar": "r ?",
+   "en": "Correlation coefficient r (3 decimals)?"
+  },
+  "answer": 0.775,
+  "tolerance": 0.002,
+  "compute": {
+   "fn": "correlation",
+   "args": [
+    [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    [
+     2,
+     4,
+     5,
+     4,
+     5
+    ]
+   ]
+  },
+  "explanation": {
+   "fr": "$r = \\frac{1{,}2}{\\sqrt 2 \\sqrt{1{,}2}} \\approx 0{,}775$",
+   "dar": "r ≈ 0,775.",
+   "en": "r ≈ 0.775."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "regression",
+   "correlation"
+  ]
+ },
+ {
+  "id": "dr-10",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même données : pente a de la droite des moindres carrés.",
+   "dar": "L pente a ?",
+   "en": "Slope a of the least-squares line?"
+  },
+  "answer": 0.6,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "linReg",
+   "args": [
+    [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    [
+     2,
+     4,
+     5,
+     4,
+     5
+    ]
+   ],
+   "pick": "a"
+  },
+  "explanation": {
+   "fr": "a = cov / V(x) = 1,2 / 2 = **0,6**.",
+   "dar": "1,2 / 2.",
+   "en": "1.2 / 2 = **0.6**."
+  },
+  "wrongExplanations": {
+   "1.2": {
+    "fr": "Tu as oublié de diviser par V(x) = 2.",
+    "dar": "Na9es / V(x).",
+    "en": "Divide by V(x) = 2."
+   }
+  },
+  "tags": [
+   "regression",
+   "mco"
+  ]
+ },
+ {
+  "id": "dr-11",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Même données : ordonnée à l'origine b.",
+   "dar": "b ?",
+   "en": "Intercept b?"
+  },
+  "answer": 2.2,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "linReg",
+   "args": [
+    [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    [
+     2,
+     4,
+     5,
+     4,
+     5
+    ]
+   ],
+   "pick": "b"
+  },
+  "explanation": {
+   "fr": "b = ȳ − a x̄ = 4 − 0,6 × 3 = **2,2**.",
+   "dar": "4 − 1,8.",
+   "en": "4 − 1.8 = **2.2**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "regression",
+   "mco"
+  ]
+ },
+ {
+  "id": "dr-12",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 1,
+  "kind": "numeric",
+  "prompt": {
+   "fr": "Avec ŷ = 0,6 x + 2,2, quelle note prédire pour 6 heures ?",
+   "dar": "ŷ l 6 sa3at ?",
+   "en": "Predicted mark for 6 hours?"
+  },
+  "answer": 5.8,
+  "tolerance": 0.001,
+  "compute": {
+   "fn": "arith",
+   "args": [
+    5.8
+   ]
+  },
+  "explanation": {
+   "fr": "0,6 × 6 + 2,2 = **5,8**.",
+   "dar": "3,6 + 2,2.",
+   "en": "3.6 + 2.2 = **5.8**."
+  },
+  "wrongExplanations": {},
+  "tags": [
+   "regression",
+   "prediction"
+  ]
+ },
+ {
+  "id": "dr-13",
+  "module": "data",
+  "chapter": "rappel",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles affirmations sur r sont vraies ?",
+   "dar": "Chnou s7i7 3la r ?",
+   "en": "Which statements about r are true?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "r est toujours entre −1 et 1",
+     "dar": "r dima bin −1 w 1",
+     "en": "r is always between −1 and 1"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "r < 0 : quand x augmente, y a tendance à diminuer",
+     "dar": "r < 0 : x tal3, y habet",
+     "en": "r < 0: as x rises, y tends to fall"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "r = 0,9 prouve que x cause y",
+     "dar": "r = 0,9 = sabab",
+     "en": "r = 0.9 proves x causes y"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "r ≈ 0 prouve qu'il n'y a aucune liaison",
+     "dar": "r ≈ 0 = walou",
+     "en": "r ≈ 0 proves there is no link at all"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b"
+  ],
+  "explanation": {
+   "fr": "r mesure une liaison **linéaire**, entre −1 et 1. Le signe donne le sens.",
+   "dar": "r = 3ala9a khattiya.",
+   "en": "r measures a **linear** link, between −1 and 1."
+  },
+  "wrongExplanations": {
+   "c": {
+    "fr": "Corrélation ≠ causalité.",
+    "dar": "Machi sabab.",
+    "en": "Correlation ≠ causation."
+   },
+   "d": {
+    "fr": "r ≈ 0 : pas de liaison **linéaire** ; une liaison courbe reste possible.",
+    "dar": "Ymken mo3wjja.",
+    "en": "A curved link is still possible."
+   }
+  },
+  "tags": [
+   "regression",
+   "correlation"
+  ]
+ }
+]

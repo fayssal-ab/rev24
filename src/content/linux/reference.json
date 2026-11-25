@@ -81,6 +81,46 @@
   }
  },
  {
+  "id": "r-fhs-1",
+  "chapter": "install-fhs",
+  "syntax": "/boot ≥1 Gio · / ≥10 Gio · /home ≥1 Gio · swap selon RAM · /var ≥5 Go · /boot/efi 200 Mo (UEFI)",
+  "desc": {
+   "fr": "Partitionnement recommandé (cours)",
+   "dar": "Partitions recommandées",
+   "en": "Recommended partitions"
+  }
+ },
+ {
+  "id": "r-fhs-2",
+  "chapter": "install-fhs",
+  "syntax": "TP1 (100 Go) : /boot 1 · /boot/efi 1 · / 20 · /home 50 · /var 24 · swap 4",
+  "desc": {
+   "fr": "Schéma du TP1",
+   "dar": "Schéma TP1",
+   "en": "TP1 scheme"
+  }
+ },
+ {
+  "id": "r-fhs-3",
+  "chapter": "install-fhs",
+  "syntax": "lsblk -f · df -hT · cat /etc/fstab · swapon --show",
+  "desc": {
+   "fr": "Vérifier disques, montages et swap",
+   "dar": "Disques w montages",
+   "en": "Check disks, mounts, swap"
+  }
+ },
+ {
+  "id": "r-fhs-4",
+  "chapter": "install-fhs",
+  "syntax": "/etc config · /var variable · /usr programmes · /dev périphériques · /proc noyau",
+  "desc": {
+   "fr": "FHS en une ligne",
+   "dar": "FHS",
+   "en": "FHS in one line"
+  }
+ },
+ {
   "id": "r-tp1-1",
   "chapter": "tp1",
   "syntax": "pwd · cd [rep] · cd - · cd ~",
@@ -314,6 +354,76 @@
    "fr": "IP/port client et serveur de la session SSH",
    "dar": "IP/port dyal SSH",
    "en": "Client/server IP and ports of the SSH session"
+  }
+ },
+ {
+  "id": "r-boot-1",
+  "chapter": "demarrage",
+  "syntax": "BIOS/UEFI → GRUB2 → noyau + initramfs → PID 1 systemd → default.target",
+  "desc": {
+   "fr": "Séquence de démarrage",
+   "dar": "Démarrage",
+   "en": "Boot sequence"
+  }
+ },
+ {
+  "id": "r-boot-2",
+  "chapter": "demarrage",
+  "syntax": "/etc/default/grub · /etc/grub.d/ · grub2-mkconfig -o /boot/grub2/grub.cfg",
+  "desc": {
+   "fr": "Configurer GRUB2",
+   "dar": "GRUB2",
+   "en": "Configure GRUB2"
+  }
+ },
+ {
+  "id": "r-boot-3",
+  "chapter": "demarrage",
+  "syntax": "0 poweroff · 1 rescue · 3 multi-user · 5 graphical · 6 reboot (.target)",
+  "desc": {
+   "fr": "Runlevels → cibles",
+   "dar": "Runlevels → targets",
+   "en": "Runlevels → targets"
+  }
+ },
+ {
+  "id": "r-boot-4",
+  "chapter": "demarrage",
+  "syntax": "systemctl get-default · set-default X.target · isolate X.target",
+  "desc": {
+   "fr": "Cible par défaut / immédiate",
+   "dar": "Cible",
+   "en": "Default / immediate target"
+  }
+ },
+ {
+  "id": "r-boot-5",
+  "chapter": "demarrage",
+  "syntax": "systemctl start|stop|restart|reload|enable|disable|mask|status · daemon-reload",
+  "desc": {
+   "fr": "Gérer un service",
+   "dar": "Services",
+   "en": "Manage a service"
+  }
+ },
+ {
+  "id": "r-boot-6",
+  "chapter": "demarrage",
+  "syntax": "journalctl -b [-1] · -u svc · -p err · --since \"1 hour ago\" · -n 50 · -f",
+  "desc": {
+   "fr": "Journaux",
+   "dar": "Logs",
+   "en": "Logs"
+  }
+ },
+ {
+  "id": "r-boot-7",
+  "chapter": "demarrage",
+  "syntax": "shutdown -r|-h|-P|-c [hh:mm|+mm] \"msg\" · systemctl poweroff|halt|reboot|suspend|hibernate",
+  "desc": {
+   "fr": "Arrêt du système",
+   "dar": "Arrêt",
+   "en": "Shutdown"
   }
  },
  {

@@ -15,7 +15,7 @@ const err = (m: string) => errors.push(m);
 
 const MIN: Record<string, { questions: number; command?: number; numeric?: number; hard: number; exercises: number; missions?: number }> = {
   linux: { questions: 120, command: 30, hard: 30, exercises: 25, missions: 10 },
-  data: { questions: 55, numeric: 20, hard: 15, exercises: 20 }
+  data: { questions: 80, numeric: 20, hard: 20, exercises: 20 }
 };
 
 const ids = new Set<string>();

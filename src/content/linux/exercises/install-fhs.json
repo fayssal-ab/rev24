@@ -1,0 +1,210 @@
+[
+ {
+  "id": "lx-f-1",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "title": {
+   "fr": "Partitionner un disque de 100 Go (schéma du TP1)",
+   "dar": "Partitionner disque 100 Go (TP1)",
+   "en": "Partition a 100 GB disk (TP1 scheme)"
+  },
+  "statement": {
+   "fr": "Pendant l'installation de RHEL 9 sur une VM UEFI avec un disque de **100 Go**, vous choisissez le partitionnement manuel. 1) Donnez le schéma du TP1 (point de montage et taille). 2) Justifiez chaque partition. 3) Quelle partition faut-il en plus en UEFI et quel est son système de fichiers ? 4) Vérifiez le résultat après installation.",
+   "dar": "Installation RHEL 9 f VM UEFI b disque **100 Go**, partitionnement manuel. 1) Schéma dyal TP1. 2) 3lach kol partition. 3) Partition zayda f UEFI w système dyalha ? 4) T2akked mor installation.",
+   "en": "Installing RHEL 9 on a UEFI VM with a **100 GB** disk, manual partitioning. 1) TP1 scheme. 2) Justify each. 3) Extra partition for UEFI and its filesystem? 4) Check after install."
+  },
+  "hints": [
+   {
+    "fr": "Repartis comme le TP : petites partitions de démarrage, / confortable, la plus grosse part pour /home.",
+    "dar": "B7al TP : démarrage sghar, / mzyana, /home kbira.",
+    "en": "Like the TP: small boot partitions, a roomy /, most for /home."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Schéma",
+     "dar": "1) Schéma",
+     "en": "1) Scheme"
+    },
+    "body": {
+     "fr": "/boot **1 Go** · /boot/efi **1 Go** · / **20 Go** · /home **50 Go** · /var **24 Go** · swap **4 Go** (total 100 Go).",
+     "dar": "/boot 1 · /boot/efi 1 · / 20 · /home 50 · /var 24 · swap 4.",
+     "en": "/boot 1 · /boot/efi 1 · / 20 · /home 50 · /var 24 · swap 4."
+    }
+   },
+   {
+    "title": {
+     "fr": "2) Justification",
+     "dar": "2) 3lach",
+     "en": "2) Why"
+    },
+    "body": {
+     "fr": "/boot : noyaux + initramfs (≥ 1 Gio, séparée). / : système (≥ 10 Gio). /home : données utilisateurs, conservées lors d'une réinstallation. /var : logs, cache, paquets — un serveur web/BD y écrit beaucoup. swap : mémoire virtuelle (selon la RAM).",
+     "dar": "/boot noyaux ; / système ; /home data ; /var logs ; swap mémoire virtuelle.",
+     "en": "/boot kernels; / system; /home data; /var logs; swap virtual memory."
+    }
+   },
+   {
+    "title": {
+     "fr": "3) UEFI",
+     "dar": "3) UEFI",
+     "en": "3) UEFI"
+    },
+    "body": {
+     "fr": "**/boot/efi** = partition système EFI (**ESP**), en **FAT32 (vfat)**, qui contient `EFI/redhat/grubx64.efi`. 200 Mo suffisent (taille par défaut du partitionnement automatique), le TP en met 1 Go.",
+     "dar": "**/boot/efi** (ESP) f **vfat**.",
+     "en": "**/boot/efi** (ESP) in **vfat**."
+    }
+   },
+   {
+    "title": {
+     "fr": "4) Vérification",
+     "dar": "4) T2akked",
+     "en": "4) Check"
+    },
+    "body": {
+     "fr": "Arbre des disques et montages, puis espace utilisé.",
+     "dar": "lsblk w df -h.",
+     "en": "lsblk and df -h."
+    },
+    "code": "lsblk -f\ndf -hT\ncat /etc/fstab\nswapon --show"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/boot 1 Go, /boot/efi 1 Go (vfat, UEFI), / 20 Go, /home 50 Go, /var 24 Go, swap 4 Go ; vérification lsblk -f, df -hT, /etc/fstab, swapon --show.",
+   "dar": "1/1/20/50/24/4 Go ; lsblk, df -h.",
+   "en": "1/1/20/50/24/4 GB; lsblk, df -h."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier /boot/efi sur une machine UEFI : le système ne démarre pas.",
+    "dar": "Nsiti /boot/efi f UEFI.",
+    "en": "Forgetting /boot/efi on UEFI."
+   },
+   {
+    "fr": "Confondre / et /root.",
+    "dar": "Khalti / w /root.",
+    "en": "Mixing up / and /root."
+   }
+  ]
+ },
+ {
+  "id": "lx-f-2",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "title": {
+   "fr": "FHS : où trouver quoi ?",
+   "dar": "FHS : fin kayn chnou ?",
+   "en": "FHS: where is what?"
+  },
+  "statement": {
+   "fr": "Pour chaque besoin, donnez le répertoire FHS et un exemple : a) modifier le nom de la machine ; b) lire les logs d'Apache ; c) trouver le noyau ; d) une commande de base utilisable par tous ; e) une commande d'administration ; f) le disque comme fichier ; g) les infos CPU ; h) monter une clé USB à la main ; i) installer un logiciel tiers ; j) les fichiers temporaires.",
+   "dar": "L kol 7aja, 3ti répertoire FHS w mithal : a) smiya dyal machine ; b) logs Apache ; c) noyau ; d) commande de base ; e) commande admin ; f) disque ka fichier ; g) infos CPU ; h) monter USB b yeddek ; i) logiciel tiers ; j) temporaires.",
+   "en": "For each need give the FHS directory and an example: a) hostname; b) Apache logs; c) kernel; d) basic command; e) admin command; f) disk as a file; g) CPU info; h) mount a USB stick by hand; i) third-party software; j) temporary files."
+  },
+  "hints": [
+   {
+    "fr": "Pense « Tout est fichier » et à la règle : config = /etc, variable = /var, programmes = /usr.",
+    "dar": "Config = /etc, variable = /var, programmes = /usr.",
+    "en": "Config = /etc, variable = /var, programs = /usr."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "a) **/etc/hostname** (ou `hostnamectl`) · b) **/var/log/httpd/** · c) **/boot/vmlinuz-…** · d) **/bin** (→ /usr/bin) : ls, cp · e) **/sbin** (→ /usr/sbin) : fdisk, useradd · f) **/dev/sda** · g) **/proc/cpuinfo** · h) **/mnt** : `mount /dev/sdb1 /mnt` · i) **/opt** · j) **/tmp** (ou /var/tmp pour survivre au redémarrage).",
+     "dar": "a) /etc/hostname · b) /var/log/httpd · c) /boot · d) /bin · e) /sbin · f) /dev/sda · g) /proc/cpuinfo · h) /mnt · i) /opt · j) /tmp.",
+     "en": "a) /etc/hostname · b) /var/log/httpd · c) /boot · d) /bin · e) /sbin · f) /dev/sda · g) /proc/cpuinfo · h) /mnt · i) /opt · j) /tmp."
+    },
+    "code": "cat /etc/hostname\nls /var/log/\nls /boot\nls -ld /bin /sbin\nls -l /dev/sda*\nhead /proc/cpuinfo"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc, /var/log, /boot, /bin, /sbin, /dev, /proc, /mnt, /opt, /tmp.",
+   "dar": "etc, var/log, boot, bin, sbin, dev, proc, mnt, opt, tmp.",
+   "en": "etc, var/log, boot, bin, sbin, dev, proc, mnt, opt, tmp."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre la config dans /var ou les logs dans /etc.",
+    "dar": "Config f /var.",
+    "en": "Config in /var."
+   },
+   {
+    "fr": "Chercher le noyau dans /bin.",
+    "dar": "Noyau f /bin.",
+    "en": "Kernel in /bin."
+   }
+  ]
+ },
+ {
+  "id": "lx-f-3",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 3,
+  "title": {
+   "fr": "Pourquoi un serveur a-t-il besoin de /var séparé ?",
+   "dar": "3lach serveur khasso /var séparé ?",
+   "en": "Why does a server need a separate /var?"
+  },
+  "statement": {
+   "fr": "Un serveur web RHEL 9 n'a qu'une partition / de 20 Go. Après quelques semaines, plus personne ne peut se connecter et les services plantent. `df -h` montre / à 100 %. 1) Quelle est la cause probable ? 2) Où regarder ? 3) Quelle décision de partitionnement aurait évité le problème ?",
+   "dar": "Serveur web RHEL 9 b / wa7da 20 Go. Mor chi simanat, ta wa7ed ma y9der ydkhol. `df -h` : / 100 %. 1) Sbab ? 2) Fin tchouf ? 3) Partitionnement li kan ghadi ymne3 hadchi ?",
+   "en": "A RHEL 9 web server has only a 20 GB /. After weeks, logins fail and services crash; / is 100 % full. 1) Likely cause? 2) Where to look? 3) Which partitioning choice would have avoided it?"
+  },
+  "hints": [
+   {
+    "fr": "Ce qui grossit tout seul sur un serveur : les journaux et les caches.",
+    "dar": "Chnou kaykber wa7do : logs w cache.",
+    "en": "What grows by itself: logs and caches."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1–2) Cause",
+     "dar": "1–2) Sbab",
+     "en": "1–2) Cause"
+    },
+    "body": {
+     "fr": "Les **logs** (/var/log) et caches (/var/cache) ont rempli /. On le confirme en mesurant les gros dossiers.",
+     "dar": "**Logs** w cache 3emrou /.",
+     "en": "**Logs** and caches filled /."
+    },
+    "code": "df -h /\ndu -sh /var/* 2>/dev/null | sort -h | tail\njournalctl --disk-usage"
+   },
+   {
+    "title": {
+     "fr": "3) Prévention",
+     "dar": "3) Prévention",
+     "en": "3) Prevention"
+    },
+    "body": {
+     "fr": "Une partition **/var séparée** (le cours : « critique pour serveurs web », au moins 5 Go) : si les logs la remplissent, / et /home continuent de fonctionner.",
+     "dar": "**/var séparée** : ila t3emrat, / w /home khddamin.",
+     "en": "A **separate /var**: if logs fill it, / and /home keep working."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Cause : /var (logs, cache) a rempli / ; diagnostic df -h + du -sh /var/* ; solution : partition /var séparée (≥ 5 Go, plus sur un serveur web).",
+   "dar": "/var 3emrat / ; /var séparée.",
+   "en": "/var filled /; separate /var."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Supprimer des fichiers dans /usr ou /etc au hasard.",
+    "dar": "Tms7 f /usr wla /etc.",
+    "en": "Deleting things in /usr or /etc."
+   }
+  ]
+ }
+]

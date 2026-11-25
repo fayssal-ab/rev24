@@ -16,7 +16,7 @@ const CLASS_DAY: Record<string, number> = { ro: 1, linux: 2, data: 3, oracle: 6,
 /** Test dates announced in class (they win over the timetable guess; the student can still change them). */
 const ANNOUNCED: Record<string, string> = { data: '2026-11-25' };
 /** Chapters announced as not part of the test. */
-const OUT: Record<string, string[]> = { data: ['d-intro', 'visu'] };
+const OUT: Record<string, string[]> = { linux: ['paquets', 'users'] };
 const KEY = 'g22-prep-dates';
 const DAY = 86_400_000;
 

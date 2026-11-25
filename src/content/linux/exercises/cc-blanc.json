@@ -1,0 +1,2428 @@
+[
+ {
+  "id": "lx-cc-1",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "CC blanc — Ex. 1 : partitionner un serveur (4 pts)",
+   "dar": "CC blanc — Ex. 1 : partitions serveur (4 pts)",
+   "en": "Mock CC — Ex. 1: partition a server (4 pts)"
+  },
+  "statement": {
+   "fr": "On installe RHEL 9 sur un **serveur web** UEFI avec un disque de **60 Go** et 4 Go de RAM. 1) Proposez un schéma de partitionnement (point de montage, taille, système de fichiers). 2) Justifiez /boot, /var et /home. 3) Quelle partition est indispensable en UEFI ? 4) Donnez 3 commandes pour vérifier le résultat.",
+   "dar": "RHEL 9 f **serveur web** UEFI, disque **60 Go**, 4 Go RAM. 1) Schéma. 2) 3lach /boot, /var, /home. 3) Partition darouriya f UEFI. 4) 3 commandes dyal t2akked.",
+   "en": "RHEL 9 on a UEFI **web server**, **60 GB** disk, 4 GB RAM. 1) Scheme. 2) Justify /boot, /var, /home. 3) Mandatory UEFI partition. 4) 3 check commands."
+  },
+  "hints": [
+   {
+    "fr": "Reprends les tailles minimales du cours et donne le reste à /var (serveur web).",
+    "dar": "Tailles minimales w lba9i l /var.",
+    "en": "Use the course minimums, give the rest to /var."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Schéma (exemple valable)",
+     "dar": "1) Schéma",
+     "en": "1) Scheme"
+    },
+    "body": {
+     "fr": "/boot/efi 600 Mo (vfat) · /boot 1 Go (xfs) · / 20 Go (xfs) · /var 25 Go (xfs) · /home 10 Go (xfs) · swap 4 Go. Total ≈ 60 Go.",
+     "dar": "0,6 · 1 · 20 · 25 · 10 · 4 Go.",
+     "en": "0.6 · 1 · 20 · 25 · 10 · 4 GB."
+    }
+   },
+   {
+    "title": {
+     "fr": "2–3) Justification",
+     "dar": "2–3) 3lach",
+     "en": "2–3) Why"
+    },
+    "body": {
+     "fr": "/boot (≥ 1 Gio, séparée) : noyaux + initramfs. /var : logs et cache d'un serveur web qui grossissent sans remplir /. /home : données utilisateurs conservées si on réinstalle. En UEFI : **/boot/efi** (ESP, vfat) sinon la machine ne démarre pas.",
+     "dar": "/boot noyaux ; /var logs ; /home data ; /boot/efi darouriya.",
+     "en": "/boot kernels; /var logs; /home data; /boot/efi mandatory."
+    }
+   },
+   {
+    "title": {
+     "fr": "4) Vérifier",
+     "dar": "4) T2akked",
+     "en": "4) Check"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "lsblk -f\ndf -hT\ncat /etc/fstab"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Schéma avec /boot/efi (vfat), /boot ≥ 1 Go, / ≥ 10–20 Go, /var la plus grande (serveur web), /home, swap ≈ RAM ; vérification lsblk -f, df -hT, /etc/fstab.",
+   "dar": "/boot/efi, /boot, /, /var kbira, /home, swap.",
+   "en": "/boot/efi, /boot, /, large /var, /home, swap."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Pas de /boot/efi en UEFI.",
+    "dar": "Bla /boot/efi.",
+    "en": "No /boot/efi."
+   },
+   {
+    "fr": "Total supérieur à 60 Go.",
+    "dar": "Ktar mn 60 Go.",
+    "en": "Over 60 GB."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "/boot/efi (ESP) en vfat pour UEFI",
+     "dar": "/boot/efi (ESP) en vfat pour UEFI",
+     "en": "/boot/efi (ESP) en vfat pour UEFI"
+    },
+    "any": [
+     "/boot/efi && vfat",
+     "/boot/efi && fat"
+    ],
+    "w": 3
+   },
+   {
+    "label": {
+     "fr": "/boot/efi présente",
+     "dar": "/boot/efi présente",
+     "en": "/boot/efi présente"
+    },
+    "any": [
+     "/boot/efi"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/boot ≥ 1 Go",
+     "dar": "/boot ≥ 1 Go",
+     "en": "/boot ≥ 1 Go"
+    },
+    "any": [
+     "/boot 1",
+     "/boot : 1",
+     "/boot = 1",
+     "/boot (1"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "/ (racine) dimensionnée",
+     "dar": "/ (racine) dimensionnée",
+     "en": "/ (racine) dimensionnée"
+    },
+    "any": [
+     "/ 20",
+     "/ : 20",
+     "racine"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/var séparée pour le serveur web (logs)",
+     "dar": "/var séparée pour le serveur web (logs)",
+     "en": "/var séparée pour le serveur web (logs)"
+    },
+    "any": [
+     "/var && log"
+    ],
+    "w": 3
+   },
+   {
+    "label": {
+     "fr": "/home : données utilisateurs conservées",
+     "dar": "/home : données utilisateurs conservées",
+     "en": "/home : données utilisateurs conservées"
+    },
+    "any": [
+     "/home && donnees",
+     "/home && utilisateur"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "swap",
+     "dar": "swap",
+     "en": "swap"
+    },
+    "any": [
+     "swap"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "lsblk",
+     "dar": "lsblk",
+     "en": "lsblk"
+    },
+    "any": [
+     "lsblk"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "df -h",
+     "dar": "df -h",
+     "en": "df -h"
+    },
+    "any": [
+     "df -h",
+     "df -ht"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/etc/fstab",
+     "dar": "/etc/fstab",
+     "en": "/etc/fstab"
+    },
+    "any": [
+     "fstab"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "lx-cc-2",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "CC blanc — Ex. 2 : FHS (4 pts)",
+   "dar": "CC blanc — Ex. 2 : FHS (4 pts)",
+   "en": "Mock CC — Ex. 2: FHS (4 pts)"
+  },
+  "statement": {
+   "fr": "Indiquez le répertoire concerné : a) la configuration du serveur SSH ; b) les journaux du serveur web ; c) le noyau et l'initramfs ; d) la commande useradd ; e) le deuxième disque ; f) la mémoire disponible vue par le noyau ; g) un logiciel tiers installé à la main ; h) le dossier personnel de root. Puis : pourquoi /tmp ne convient-il pas pour garder un fichier ? Que constate-t-on avec `ls -ld /bin` sur RHEL 9 ?",
+   "dar": "Répertoire : a) config SSH ; b) logs web ; c) noyau + initramfs ; d) useradd ; e) disque 2 ; f) mémoire (noyau) ; g) logiciel tiers ; h) home root. W : /tmp ? `ls -ld /bin` f RHEL 9 ?",
+   "en": "Directory: a) SSH config; b) web logs; c) kernel + initramfs; d) useradd; e) second disk; f) memory (kernel view); g) third-party software; h) root's home. Then: /tmp? `ls -ld /bin` on RHEL 9?"
+  },
+  "hints": [
+   {
+    "fr": "/etc config · /var variable · /boot démarrage · /sbin admin · /dev matériel · /proc noyau · /opt tiers.",
+    "dar": "etc, var, boot, sbin, dev, proc, opt.",
+    "en": "etc, var, boot, sbin, dev, proc, opt."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "a) /etc/ssh/ (sshd_config) · b) /var/log/httpd/ (ou nginx) · c) /boot · d) /sbin → /usr/sbin/useradd · e) /dev/sdb · f) /proc/meminfo · g) /opt · h) /root. /tmp est **vidé** au démarrage (préférer /var/tmp). Sur RHEL 9, **/bin est un lien** vers /usr/bin (fusion /usr).",
+     "dar": "etc/ssh · var/log/httpd · boot · sbin · dev/sdb · proc/meminfo · opt · root ; /tmp kaytkhwa ; /bin → usr/bin.",
+     "en": "etc/ssh · var/log/httpd · boot · sbin · dev/sdb · proc/meminfo · opt · root; /tmp is wiped; /bin → usr/bin."
+    },
+    "code": "ls /etc/ssh/sshd_config /var/log/httpd /boot\nwhich useradd; ls -l /dev/sdb\ngrep MemAvailable /proc/meminfo\nls -ld /bin /tmp"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc/ssh, /var/log/httpd, /boot, /usr/sbin, /dev/sdb, /proc/meminfo, /opt, /root ; /tmp vidé au démarrage ; /bin -> usr/bin.",
+   "dar": "etc, var/log, boot, sbin, dev, proc, opt, root.",
+   "en": "etc, var/log, boot, sbin, dev, proc, opt, root."
+  },
+  "commonMistakes": [
+   {
+    "fr": "/root confondu avec /.",
+    "dar": "/root ≠ /.",
+    "en": "/root ≠ /."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "a) /etc/ssh",
+     "dar": "a) /etc/ssh",
+     "en": "a) /etc/ssh"
+    },
+    "any": [
+     "/etc/ssh"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "b) /var/log",
+     "dar": "b) /var/log",
+     "en": "b) /var/log"
+    },
+    "any": [
+     "/var/log"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "c) /boot",
+     "dar": "c) /boot",
+     "en": "c) /boot"
+    },
+    "any": [
+     "/boot"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "d) /sbin ou /usr/sbin",
+     "dar": "d) /sbin ou /usr/sbin",
+     "en": "d) /sbin ou /usr/sbin"
+    },
+    "any": [
+     "sbin"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "e) /dev/sdb",
+     "dar": "e) /dev/sdb",
+     "en": "e) /dev/sdb"
+    },
+    "any": [
+     "/dev/sdb",
+     "/dev/sd"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "f) /proc/meminfo",
+     "dar": "f) /proc/meminfo",
+     "en": "f) /proc/meminfo"
+    },
+    "any": [
+     "/proc/meminfo",
+     "/proc"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "g) /opt",
+     "dar": "g) /opt",
+     "en": "g) /opt"
+    },
+    "any": [
+     "/opt"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "h) /root",
+     "dar": "h) /root",
+     "en": "h) /root"
+    },
+    "any": [
+     "/root"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/tmp vidé au démarrage",
+     "dar": "/tmp vidé au démarrage",
+     "en": "/tmp vidé au démarrage"
+    },
+    "any": [
+     "/tmp && vid",
+     "/tmp && efface",
+     "/tmp && redemarr"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/bin lien vers /usr/bin",
+     "dar": "/bin lien vers /usr/bin",
+     "en": "/bin lien vers /usr/bin"
+    },
+    "any": [
+     "usr/bin && lien",
+     "usr/bin && link",
+     "-> usr/bin"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "lx-cc-3",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "CC blanc — Ex. 3 : séquence de démarrage et pannes (4 pts)",
+   "dar": "CC blanc — Ex. 3 : démarrage w pannes (4 pts)",
+   "en": "Mock CC — Ex. 3: boot sequence and failures (4 pts)"
+  },
+  "statement": {
+   "fr": "1) Ordonnez : noyau, systemd, UEFI, initramfs monté, GRUB2, default.target. 2) Pour chaque symptôme, dites quelle étape a échoué et que vérifier : a) l'écran reste sur l'invite `grub>` ; b) « Kernel panic - not syncing: No working init found » ; c) le système tombe dans un shell d'urgence (dracut) « cannot mount root » ; d) la machine démarre mais le serveur web ne répond pas.",
+   "dar": "1) Rettab : noyau, systemd, UEFI, initramfs, GRUB2, default.target. 2) L kol symptôme : ina marhala w chnou tchouf.",
+   "en": "1) Order the steps. 2) For each symptom: which step failed and what to check."
+  },
+  "hints": [
+   {
+    "fr": "Chaque message appartient à une étape précise : GRUB, noyau, initramfs, systemd.",
+    "dar": "Kol message 3ndo marhala.",
+    "en": "Each message belongs to one step."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Ordre",
+     "dar": "1) Tartib",
+     "en": "1) Order"
+    },
+    "body": {
+     "fr": "UEFI → GRUB2 → noyau → initramfs monté → systemd (PID 1) → default.target.",
+     "dar": "UEFI → GRUB2 → noyau → initramfs → systemd → target.",
+     "en": "UEFI → GRUB2 → kernel → initramfs → systemd → target."
+    }
+   },
+   {
+    "title": {
+     "fr": "2) Pannes",
+     "dar": "2) Pannes",
+     "en": "2) Failures"
+    },
+    "body": {
+     "fr": "a) **GRUB2** ne trouve pas sa configuration : /boot/grub2/grub.cfg (régénérer avec grub2-mkconfig). b) **PID 1** introuvable : le noyau n'a pas trouvé systemd (/sbin/init). c) **initramfs** : pilotes/LVM pour monter / absents ou mauvais `root=` dans GRUB_CMDLINE_LINUX (dracut -f pour reconstruire). d) **systemd / service** : `systemctl status httpd`, `journalctl -u httpd -b`.",
+     "dar": "a) GRUB2 ; b) PID 1 ; c) initramfs ; d) service.",
+     "en": "a) GRUB2; b) PID 1; c) initramfs; d) service."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "UEFI → GRUB2 → noyau → initramfs → systemd → default.target ; a) GRUB2/grub.cfg b) PID 1 c) initramfs/root= d) service (status, journalctl -u).",
+   "dar": "GRUB2, PID 1, initramfs, service.",
+   "en": "GRUB2, PID 1, initramfs, service."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Accuser le BIOS pour un problème qui survient après le menu GRUB.",
+    "dar": "BIOS machi houwa.",
+    "en": "Blaming the BIOS."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Ordre UEFI → GRUB2 → noyau → initramfs → systemd → target",
+     "dar": "Ordre UEFI → GRUB2 → noyau → initramfs → systemd → target",
+     "en": "Ordre UEFI → GRUB2 → noyau → initramfs → systemd → target"
+    },
+    "any": [
+     "uefi && grub && noyau && initramfs && systemd && target"
+    ],
+    "w": 3
+   },
+   {
+    "label": {
+     "fr": "a) grub> : GRUB2 / grub.cfg",
+     "dar": "a) grub> : GRUB2 / grub.cfg",
+     "en": "a) grub> : GRUB2 / grub.cfg"
+    },
+    "any": [
+     "grub.cfg",
+     "grub2-mkconfig"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "b) kernel panic : PID 1 / init introuvable",
+     "dar": "b) kernel panic : PID 1 / init introuvable",
+     "en": "b) kernel panic : PID 1 / init introuvable"
+    },
+    "any": [
+     "pid 1",
+     "init && introuvable",
+     "systemd && introuvable",
+     "init && trouv"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "c) cannot mount root : initramfs / root=",
+     "dar": "c) cannot mount root : initramfs / root=",
+     "en": "c) cannot mount root : initramfs / root="
+    },
+    "any": [
+     "initramfs",
+     "dracut",
+     "root="
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "d) service : systemctl status + journalctl -u",
+     "dar": "d) service : systemctl status + journalctl -u",
+     "en": "d) service : systemctl status + journalctl -u"
+    },
+    "any": [
+     "systemctl status && journalctl",
+     "status && journalctl -u"
+    ],
+    "w": 2
+   }
+  ]
+ },
+ {
+  "id": "lx-cc-4",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "CC blanc — Ex. 4 : GRUB2 (4 pts)",
+   "dar": "CC blanc — Ex. 4 : GRUB2 (4 pts)",
+   "en": "Mock CC — Ex. 4: GRUB2 (4 pts)"
+  },
+  "statement": {
+   "fr": "1) Quel fichier modifie-t-on pour régler le menu et pourquoi pas /boot/grub2/grub.cfg ? 2) Écrivez les lignes pour : menu affiché **15 s**, démarrer la **dernière entrée choisie**, supprimer l'entrée **Recovery**, passer l'option noyau **quiet**. 3) Donnez la commande qui applique les changements. 4) Comment vérifier les options reçues par le noyau après le redémarrage ?",
+   "dar": "1) Ina fichier w 3lach machi grub.cfg ? 2) Lignes : **15 s**, **akhir entrée**, bla **Recovery**, **quiet**. 3) Commande. 4) T2akked.",
+   "en": "1) Which file and why not grub.cfg? 2) Lines: **15 s**, **last entry**, no **Recovery**, **quiet**. 3) Command. 4) Check."
+  },
+  "hints": [
+   {
+    "fr": "/etc/default/grub contient des lignes VARIABLE=valeur.",
+    "dar": "VARIABLE=valeur.",
+    "en": "VARIABLE=value."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **/etc/default/grub** : grub.cfg est **généré** par grub2-mkconfig (modifs écrasées). 2–4) :",
+     "dar": "1) /etc/default/grub (grub.cfg générée).",
+     "en": "1) /etc/default/grub (grub.cfg is generated)."
+    },
+    "code": "GRUB_TIMEOUT=15\nGRUB_DEFAULT=saved\nGRUB_DISABLE_RECOVERY=\"true\"\nGRUB_CMDLINE_LINUX=\"... quiet\"\n\ngrub2-mkconfig -o /boot/grub2/grub.cfg\ncat /proc/cmdline      # après reboot"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc/default/grub : GRUB_TIMEOUT=15, GRUB_DEFAULT=saved, GRUB_DISABLE_RECOVERY=\"true\", quiet dans GRUB_CMDLINE_LINUX ; grub2-mkconfig -o /boot/grub2/grub.cfg ; cat /proc/cmdline.",
+   "dar": "TIMEOUT, DEFAULT, RECOVERY, CMDLINE ; grub2-mkconfig ; /proc/cmdline.",
+   "en": "TIMEOUT, DEFAULT, RECOVERY, CMDLINE; grub2-mkconfig; /proc/cmdline."
+  },
+  "commonMistakes": [
+   {
+    "fr": "grub2-mkconfig sans -o.",
+    "dar": "Bla -o.",
+    "en": "Without -o."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Fichier /etc/default/grub",
+     "dar": "Fichier /etc/default/grub",
+     "en": "Fichier /etc/default/grub"
+    },
+    "any": [
+     "/etc/default/grub"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "grub.cfg généré (ne pas éditer)",
+     "dar": "grub.cfg généré (ne pas éditer)",
+     "en": "grub.cfg généré (ne pas éditer)"
+    },
+    "any": [
+     "genere",
+     "grub2-mkconfig"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "GRUB_TIMEOUT=15",
+     "dar": "GRUB_TIMEOUT=15",
+     "en": "GRUB_TIMEOUT=15"
+    },
+    "any": [
+     "grub_timeout=15"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "GRUB_DEFAULT=saved",
+     "dar": "GRUB_DEFAULT=saved",
+     "en": "GRUB_DEFAULT=saved"
+    },
+    "any": [
+     "grub_default=saved"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "GRUB_DISABLE_RECOVERY=\"true\"",
+     "dar": "GRUB_DISABLE_RECOVERY=\"true\"",
+     "en": "GRUB_DISABLE_RECOVERY=\"true\""
+    },
+    "any": [
+     "grub_disable_recovery=true",
+     "grub_disable_recovery=\"true\""
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "quiet dans GRUB_CMDLINE_LINUX",
+     "dar": "quiet dans GRUB_CMDLINE_LINUX",
+     "en": "quiet dans GRUB_CMDLINE_LINUX"
+    },
+    "any": [
+     "grub_cmdline_linux && quiet"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "dar": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "en": "grub2-mkconfig -o /boot/grub2/grub.cfg"
+    },
+    "any": [
+     "grub2-mkconfig -o /boot/grub2/grub.cfg"
+    ],
+    "w": 3
+   },
+   {
+    "label": {
+     "fr": "Vérifier : cat /proc/cmdline",
+     "dar": "Vérifier : cat /proc/cmdline",
+     "en": "Vérifier : cat /proc/cmdline"
+    },
+    "any": [
+     "/proc/cmdline",
+     "grubby"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "lx-cc-5",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "CC blanc — Ex. 5 : systemd et arrêt (4 pts)",
+   "dar": "CC blanc — Ex. 5 : systemd w arrêt (4 pts)",
+   "en": "Mock CC — Ex. 5: systemd and shutdown (4 pts)"
+  },
+  "statement": {
+   "fr": "1) Quelle est la cible par défaut et comment la passer en **mode texte** de façon permanente ? 2) Passez en mode texte **tout de suite** sans redémarrer. 3) Le service **httpd** doit tourner maintenant et à chaque démarrage. 4) Empêchez totalement le démarrage de **cups**. 5) Programmez l'arrêt (coupure) à **23h00** avec le message « Fin de journée », puis annulez-le. 6) Affichez les erreurs de httpd depuis le démarrage actuel.",
+   "dar": "1) Cible par défaut w mode **texte** dima. 2) Mode texte **daba**. 3) **httpd** daba w f démarrage. 4) Bloqui **cups**. 5) Arrêt **23h00** b message, w lghi. 6) Erreurs httpd mn démarrage.",
+   "en": "1) Default target, text mode permanently. 2) Text mode now. 3) httpd now and at boot. 4) Block cups. 5) Power off at 23:00 with a message, then cancel. 6) httpd errors since boot."
+  },
+  "hints": [
+   {
+    "fr": "set-default = permanent, isolate = maintenant, enable --now = les deux, mask = interdit.",
+    "dar": "set-default, isolate, enable --now, mask.",
+    "en": "set-default, isolate, enable --now, mask."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "systemctl get-default                          # 1\nsystemctl set-default multi-user.target\nsystemctl isolate multi-user.target            # 2\nsystemctl enable --now httpd                   # 3\nsystemctl mask cups                            # 4\nshutdown -P 23:00 \"Fin de journée\"             # 5\nshutdown -c\njournalctl -u httpd -b -p err                  # 6"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "get-default / set-default multi-user.target ; isolate multi-user.target ; enable --now httpd ; mask cups ; shutdown -P 23:00 \"Fin de journée\" puis shutdown -c ; journalctl -u httpd -b -p err.",
+   "dar": "set-default, isolate, enable --now, mask, shutdown, journalctl.",
+   "en": "set-default, isolate, enable --now, mask, shutdown, journalctl."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Utiliser disable au lieu de mask (un autre service peut encore démarrer cups).",
+    "dar": "disable machi mask.",
+    "en": "disable is not mask."
+   },
+   {
+    "fr": "Oublier --now.",
+    "dar": "Nsiti --now.",
+    "en": "Forgetting --now."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "systemctl get-default",
+     "dar": "systemctl get-default",
+     "en": "systemctl get-default"
+    },
+    "any": [
+     "get-default"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "set-default multi-user.target",
+     "dar": "set-default multi-user.target",
+     "en": "set-default multi-user.target"
+    },
+    "any": [
+     "set-default multi-user.target"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "isolate multi-user.target",
+     "dar": "isolate multi-user.target",
+     "en": "isolate multi-user.target"
+    },
+    "any": [
+     "isolate multi-user.target"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "enable --now httpd",
+     "dar": "enable --now httpd",
+     "en": "enable --now httpd"
+    },
+    "any": [
+     "enable --now httpd",
+     "enable httpd && start httpd"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "mask cups",
+     "dar": "mask cups",
+     "en": "mask cups"
+    },
+    "any": [
+     "mask cups"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "shutdown à 23:00 avec message",
+     "dar": "shutdown à 23:00 avec message",
+     "en": "shutdown à 23:00 avec message"
+    },
+    "any": [
+     "shutdown && 23:00"
+    ],
+    "w": 2
+   },
+   {
+    "label": {
+     "fr": "shutdown -c",
+     "dar": "shutdown -c",
+     "en": "shutdown -c"
+    },
+    "any": [
+     "shutdown -c"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "journalctl -u httpd -b -p err",
+     "dar": "journalctl -u httpd -b -p err",
+     "en": "journalctl -u httpd -b -p err"
+    },
+    "any": [
+     "journalctl && -u httpd && -p err",
+     "journalctl -u httpd"
+    ],
+    "w": 2
+   }
+  ]
+ },
+ {
+  "id": "lx-e-1",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 1 : RHEL et installation (5 pts)",
+   "dar": "Facile — Ex. 1 : RHEL w installation (5 pts)",
+   "en": "Easy — Ex. 1: RHEL and installation (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Qu'est-ce que RHEL ? 2) Quel est le rôle de Fedora par rapport à RHEL ? 3) D'où vient CentOS ? 4) Donnez la configuration minimale du cours pour installer RHEL 9 (processeur, mémoire, disque). 5) Quel type de logiciels choisit-on au TP1 ?",
+   "dar": "1) RHEL chnou ? 2) Dor Fedora ? 3) CentOS mnin ? 4) Configuration minimale. 5) Logiciels f TP1 ?",
+   "en": "1) What is RHEL? 2) Fedora's role? 3) Where does CentOS come from? 4) Minimum configuration. 5) Software selection in TP1?"
+  },
+  "hints": [
+   {
+    "fr": "Le cours, slides « Présentation de Red Hat » et « Configuration requise ».",
+    "dar": "Slides Red Hat w configuration.",
+    "en": "Course slides."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Red Hat Enterprise Linux : distribution **entreprise**, stable, sécurisée, avec **support professionnel**. 2) **Fedora** = distribution communautaire, **laboratoire** des nouveautés de RHEL. 3) CentOS = **sources libres de RHEL recompilées**. 4) **64 bits**, **1 Go** RAM (2 recommandés), **10 Go** disque (20 recommandés). 5) **Server with GUI**.",
+     "dar": "Entreprise, laboratoire, sources recompilées, 64 bits/1 Go/10 Go, Server with GUI.",
+     "en": "Enterprise, lab, rebuilt sources, 64-bit/1 GB/10 GB, Server with GUI."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "RHEL entreprise + support ; Fedora laboratoire ; CentOS sources recompilées ; 64 bits, 1 Go, 10 Go ; Server with GUI.",
+   "dar": "RHEL, Fedora, CentOS, minimum, Server with GUI.",
+   "en": "RHEL, Fedora, CentOS, minimum, Server with GUI."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que Fedora est la version payante.",
+    "dar": "Fedora payante : ghalat.",
+    "en": "Saying Fedora is paid."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "RHEL : entreprise / support professionnel",
+     "dar": "RHEL : entreprise / support professionnel",
+     "en": "RHEL : entreprise / support professionnel"
+    },
+    "any": [
+     "entreprise",
+     "support"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Fedora : laboratoire / communautaire",
+     "dar": "Fedora : laboratoire / communautaire",
+     "en": "Fedora : laboratoire / communautaire"
+    },
+    "any": [
+     "laboratoire",
+     "communaut"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "CentOS : sources de RHEL recompilées",
+     "dar": "CentOS : sources de RHEL recompilées",
+     "en": "CentOS : sources de RHEL recompilées"
+    },
+    "any": [
+     "sources && compil",
+     "source"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "64 bits",
+     "dar": "64 bits",
+     "en": "64 bits"
+    },
+    "any": [
+     "64"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "1 Go de RAM",
+     "dar": "1 Go de RAM",
+     "en": "1 Go de RAM"
+    },
+    "any": [
+     "1 go",
+     "1go",
+     "2 go"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "10 Go de disque",
+     "dar": "10 Go de disque",
+     "en": "10 Go de disque"
+    },
+    "any": [
+     "10 go",
+     "10go",
+     "20 go"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Server with GUI",
+     "dar": "Server with GUI",
+     "en": "Server with GUI"
+    },
+    "any": [
+     "server with gui",
+     "gui"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-e-2",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 2 : le rôle des répertoires (5 pts)",
+   "dar": "Facile — Ex. 2 : dor dyal répertoires (5 pts)",
+   "en": "Easy — Ex. 2: what each directory is for (5 pts)"
+  },
+  "statement": {
+   "fr": "Donnez le rôle de : /etc, /home, /var, /tmp, /dev, /proc, /boot, /bin, /root, /usr. Que signifie FHS ?",
+   "dar": "Dor dyal : /etc, /home, /var, /tmp, /dev, /proc, /boot, /bin, /root, /usr. FHS chnou ?",
+   "en": "Role of: /etc, /home, /var, /tmp, /dev, /proc, /boot, /bin, /root, /usr. What is FHS?"
+  },
+  "hints": [
+   {
+    "fr": "Une ligne par répertoire suffit.",
+    "dar": "Ster l kol répertoire.",
+    "en": "One line each."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "/etc **configuration** · /home **répertoires des utilisateurs** · /var **données variables (logs)** · /tmp **fichiers temporaires** · /dev **périphériques** · /proc **processus et noyau (virtuel)** · /boot **noyau et démarrage** · /bin **commandes de base** · /root **home de root** · /usr **programmes et bibliothèques**. FHS = **Filesystem Hierarchy Standard**.",
+     "dar": "config, users, logs, temporaires, périphériques, processus, démarrage, commandes, root, programmes.",
+     "en": "config, users, logs, temp, devices, processes, boot, commands, root, programs."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "etc config, home utilisateurs, var logs, tmp temporaires, dev périphériques, proc processus, boot démarrage, bin commandes, root admin, usr programmes ; FHS = Filesystem Hierarchy Standard.",
+   "dar": "Rôles + FHS.",
+   "en": "Roles + FHS."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre /root et /.",
+    "dar": "/root ≠ /.",
+    "en": "/root ≠ /."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "/etc : configuration",
+     "dar": "/etc : configuration",
+     "en": "/etc : configuration"
+    },
+    "any": [
+     "/etc && config"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/home : utilisateurs",
+     "dar": "/home : utilisateurs",
+     "en": "/home : utilisateurs"
+    },
+    "any": [
+     "/home && utilisateur",
+     "/home && user",
+     "/home && perso"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/var : données variables / logs",
+     "dar": "/var : données variables / logs",
+     "en": "/var : données variables / logs"
+    },
+    "any": [
+     "/var && log",
+     "/var && variable"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/tmp : temporaires",
+     "dar": "/tmp : temporaires",
+     "en": "/tmp : temporaires"
+    },
+    "any": [
+     "/tmp && tempor"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/dev : périphériques",
+     "dar": "/dev : périphériques",
+     "en": "/dev : périphériques"
+    },
+    "any": [
+     "/dev && periph",
+     "/dev && device",
+     "/dev && materiel"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/proc : processus / noyau",
+     "dar": "/proc : processus / noyau",
+     "en": "/proc : processus / noyau"
+    },
+    "any": [
+     "/proc && process",
+     "/proc && noyau",
+     "/proc && virtuel"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/boot : démarrage / noyau",
+     "dar": "/boot : démarrage / noyau",
+     "en": "/boot : démarrage / noyau"
+    },
+    "any": [
+     "/boot && demarr",
+     "/boot && noyau",
+     "/boot && boot"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/bin : commandes",
+     "dar": "/bin : commandes",
+     "en": "/bin : commandes"
+    },
+    "any": [
+     "/bin && command"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/root : home de root",
+     "dar": "/root : home de root",
+     "en": "/root : home de root"
+    },
+    "any": [
+     "/root && root"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/usr : programmes",
+     "dar": "/usr : programmes",
+     "en": "/usr : programmes"
+    },
+    "any": [
+     "/usr && program",
+     "/usr && logiciel",
+     "/usr && biblio"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "FHS = Filesystem Hierarchy Standard",
+     "dar": "FHS = Filesystem Hierarchy Standard",
+     "en": "FHS = Filesystem Hierarchy Standard"
+    },
+    "any": [
+     "filesystem hierarchy standard",
+     "hierarchy"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "lx-e-3",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 3 : les étapes du démarrage (5 pts)",
+   "dar": "Facile — Ex. 3 : marahil démarrage (5 pts)",
+   "en": "Easy — Ex. 3: boot steps (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Citez dans l'ordre les 5 étapes du démarrage. 2) Quel est le rôle de GRUB2 ? 3) Quel est le PID de systemd et pourquoi est-il particulier ? 4) Quelle commande affiche l'arbre des processus ?",
+   "dar": "1) 5 marahil b tartib. 2) Dor GRUB2. 3) PID dyal systemd w 3lach khass. 4) Commande dyal chajara processus.",
+   "en": "1) The 5 steps in order. 2) GRUB2's role. 3) systemd's PID and why special. 4) Process tree command."
+  },
+  "hints": [
+   {
+    "fr": "Power on → … → Ready.",
+    "dar": "Power on → … → Ready.",
+    "en": "Power on → … → Ready."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **BIOS/UEFI** → **GRUB2** → **noyau** (+ initramfs) → **systemd (PID 1)** → **système prêt** (cible par défaut). 2) GRUB2 = **chargeur de démarrage** : menu, **charge le noyau** et l'initramfs, passe les paramètres. 3) **PID 1** : seul processus lancé par le noyau, il démarre tous les autres (sinon kernel panic). 4) **pstree**.",
+     "dar": "BIOS/UEFI → GRUB2 → noyau → systemd → prêt ; chargeur ; PID 1 ; pstree.",
+     "en": "BIOS/UEFI → GRUB2 → kernel → systemd → ready; loader; PID 1; pstree."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "BIOS/UEFI, GRUB2, noyau, systemd (PID 1), prêt ; GRUB2 charge le noyau ; PID 1 lance tout ; pstree.",
+   "dar": "Ordre, GRUB2, PID 1, pstree.",
+   "en": "Order, GRUB2, PID 1, pstree."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre systemd avant le noyau.",
+    "dar": "systemd 9bel noyau : ghalat.",
+    "en": "systemd before the kernel."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "BIOS / UEFI en premier",
+     "dar": "BIOS / UEFI en premier",
+     "en": "BIOS / UEFI en premier"
+    },
+    "any": [
+     "bios",
+     "uefi"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "GRUB2",
+     "dar": "GRUB2",
+     "en": "GRUB2"
+    },
+    "any": [
+     "grub"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Noyau (+ initramfs)",
+     "dar": "Noyau (+ initramfs)",
+     "en": "Noyau (+ initramfs)"
+    },
+    "any": [
+     "noyau",
+     "kernel"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "systemd",
+     "dar": "systemd",
+     "en": "systemd"
+    },
+    "any": [
+     "systemd"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "GRUB2 charge le noyau",
+     "dar": "GRUB2 charge le noyau",
+     "en": "GRUB2 charge le noyau"
+    },
+    "any": [
+     "charge && noyau",
+     "charg && kernel",
+     "chargeur"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "PID 1",
+     "dar": "PID 1",
+     "en": "PID 1"
+    },
+    "any": [
+     "pid 1",
+     "pid=1",
+     "pid : 1"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "pstree",
+     "dar": "pstree",
+     "en": "pstree"
+    },
+    "any": [
+     "pstree"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-e-4",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 4 : premières commandes systemctl (5 pts)",
+   "dar": "Facile — Ex. 4 : systemctl (5 pts)",
+   "en": "Easy — Ex. 4: first systemctl commands (5 pts)"
+  },
+  "statement": {
+   "fr": "Pour le service **sshd** : 1) afficher son état ; 2) le démarrer ; 3) l'arrêter ; 4) l'activer au démarrage ; 5) afficher la cible par défaut ; 6) redémarrer la machine.",
+   "dar": "**sshd** : 1) état ; 2) start ; 3) stop ; 4) démarrage ; 5) cible par défaut ; 6) reboot.",
+   "en": "**sshd**: 1) status; 2) start; 3) stop; 4) at boot; 5) default target; 6) reboot."
+  },
+  "hints": [
+   {
+    "fr": "systemctl <action> sshd.",
+    "dar": "systemctl <action> sshd.",
+    "en": "systemctl <action> sshd."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "systemctl status sshd\nsystemctl start sshd\nsystemctl stop sshd\nsystemctl enable sshd\nsystemctl get-default\nsystemctl reboot"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "status, start, stop, enable sshd ; get-default ; systemctl reboot.",
+   "dar": "status, start, stop, enable, get-default, reboot.",
+   "en": "status, start, stop, enable, get-default, reboot."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre start (maintenant) et enable (au démarrage).",
+    "dar": "start ≠ enable.",
+    "en": "start ≠ enable."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "systemctl status sshd",
+     "dar": "systemctl status sshd",
+     "en": "systemctl status sshd"
+    },
+    "any": [
+     "status sshd"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "systemctl start sshd",
+     "dar": "systemctl start sshd",
+     "en": "systemctl start sshd"
+    },
+    "any": [
+     "start sshd"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "systemctl stop sshd",
+     "dar": "systemctl stop sshd",
+     "en": "systemctl stop sshd"
+    },
+    "any": [
+     "stop sshd"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "systemctl enable sshd",
+     "dar": "systemctl enable sshd",
+     "en": "systemctl enable sshd"
+    },
+    "any": [
+     "enable sshd",
+     "enable --now sshd"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "systemctl get-default",
+     "dar": "systemctl get-default",
+     "en": "systemctl get-default"
+    },
+    "any": [
+     "get-default"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "systemctl reboot",
+     "dar": "systemctl reboot",
+     "en": "systemctl reboot"
+    },
+    "any": [
+     "reboot"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-h-1",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 1 : BIOS/MBR et partitions (5 pts)",
+   "dar": "Difficile — Ex. 1 : BIOS/MBR w partitions (5 pts)",
+   "en": "Hard — Ex. 1: BIOS/MBR and partitions (5 pts)"
+  },
+  "statement": {
+   "fr": "Une vieille machine démarre en **BIOS** avec un disque **MBR de 3 To**. 1) Que contient le MBR et quelle est sa taille ? 2) Quelle limite du MBR pose problème ici ? 3) Combien de partitions primaires le MBR autorise-t-il ? 4) Que proposez-vous pour utiliser tout le disque ? 5) Avec quelle commande vérifie-t-on le mode de démarrage ?",
+   "dar": "Machine **BIOS**, disque **MBR 3 To**. 1) MBR fih chnou w ch7al ? 2) Limite ? 3) Ch7al primaires ? 4) 7al ? 5) Commande dyal mode.",
+   "en": "Old **BIOS** machine with a **3 TB MBR** disk. 1) MBR content and size? 2) Which limit? 3) How many primary partitions? 4) Your fix? 5) Boot-mode check."
+  },
+  "hints": [
+   {
+    "fr": "Compare avec UEFI + GPT.",
+    "dar": "9aren m3a UEFI + GPT.",
+    "en": "Compare with UEFI + GPT."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **512 octets** (secteur 0) : **code d'amorçage** (chargeur étape 1) + **table des partitions**. 2) MBR limité à **2 To**. 3) **4 primaires** (ou 3 + une étendue). 4) **UEFI + GPT** (disques > 2 To, 128 partitions, ESP /boot/efi). 5) `[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS`.",
+     "dar": "512 octets ; 2 To ; 4 ; UEFI + GPT ; /sys/firmware/efi.",
+     "en": "512 bytes; 2 TB; 4; UEFI + GPT; /sys/firmware/efi."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "MBR = 512 octets (code + table) ; limite 2 To ; 4 primaires ; passer en UEFI + GPT ; /sys/firmware/efi.",
+   "dar": "512 o, 2 To, 4, GPT.",
+   "en": "512 B, 2 TB, 4, GPT."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire qu'il suffit d'une partition étendue pour dépasser 2 To.",
+    "dar": "Étendue ma kat7ellch.",
+    "en": "An extended partition does not lift 2 TB."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "512 octets",
+     "dar": "512 octets",
+     "en": "512 octets"
+    },
+    "any": [
+     "512"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Code d'amorçage + table des partitions",
+     "dar": "Code d'amorçage + table des partitions",
+     "en": "Code d'amorçage + table des partitions"
+    },
+    "any": [
+     "table && partition",
+     "code && amorc"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Limite 2 To",
+     "dar": "Limite 2 To",
+     "en": "Limite 2 To"
+    },
+    "any": [
+     "2 to",
+     "2to",
+     "2 tb"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "4 partitions primaires",
+     "dar": "4 partitions primaires",
+     "en": "4 partitions primaires"
+    },
+    "any": [
+     "4 primaire",
+     "4 partitions",
+     "quatre"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "UEFI + GPT",
+     "dar": "UEFI + GPT",
+     "en": "UEFI + GPT"
+    },
+    "any": [
+     "gpt"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "/sys/firmware/efi",
+     "dar": "/sys/firmware/efi",
+     "en": "/sys/firmware/efi"
+    },
+    "any": [
+     "/sys/firmware/efi"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-h-2",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 2 : entrée GRUB personnalisée (5 pts)",
+   "dar": "Difficile — Ex. 2 : entrée GRUB (5 pts)",
+   "en": "Hard — Ex. 2: custom GRUB entry (5 pts)"
+  },
+  "statement": {
+   "fr": "On veut une entrée de menu **« Maintenance »** qui démarre le noyau actuel en **mode secours** (rescue.target), et la choisir **par défaut une seule fois** au prochain démarrage. 1) Dans quel fichier écrit-on l'entrée ? 2) Que doit contenir la ligne du noyau ? 3) Comment appliquer ? 4) Comment la sélectionner une seule fois ? 5) Comment vérifier les entrées ?",
+   "dar": "Entrée **« Maintenance »** b **rescue.target**, par défaut **mra wa7da**. 1) Fichier ? 2) Ligne noyau ? 3) Appliquer ? 4) Mra wa7da ? 5) T2akked ?",
+   "en": "Menu entry **\"Maintenance\"** booting into **rescue.target**, default **once**. 1) File? 2) Kernel line? 3) Apply? 4) Once? 5) Check?"
+  },
+  "hints": [
+   {
+    "fr": "40_custom, systemd.unit=, grub2-reboot.",
+    "dar": "40_custom, systemd.unit=, grub2-reboot.",
+    "en": "40_custom, systemd.unit=, grub2-reboot."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1–2) /etc/grub.d/40_custom",
+     "dar": "1–2) 40_custom",
+     "en": "1–2) 40_custom"
+    },
+    "body": {
+     "fr": "Copier les lignes linux/initrd de l'entrée actuelle et ajouter **systemd.unit=rescue.target**.",
+     "dar": "Zid **systemd.unit=rescue.target**.",
+     "en": "Add **systemd.unit=rescue.target**."
+    },
+    "code": "menuentry \"Maintenance\" {\n    linux /vmlinuz-$(uname -r) root=/dev/mapper/rhel-root ro systemd.unit=rescue.target\n    initrd /initramfs-$(uname -r).img\n}"
+   },
+   {
+    "title": {
+     "fr": "3–5) Appliquer, une fois, vérifier",
+     "dar": "3–5) Appliquer",
+     "en": "3–5) Apply"
+    },
+    "body": {
+     "fr": "GRUB_DEFAULT doit valoir **saved** pour que grub2-reboot fonctionne.",
+     "dar": "GRUB_DEFAULT=saved.",
+     "en": "GRUB_DEFAULT=saved."
+    },
+    "code": "grub2-mkconfig -o /boot/grub2/grub.cfg\ngrub2-reboot \"Maintenance\"\ngrep menuentry /boot/grub2/grub.cfg\ngrubby --info=ALL | grep title"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc/grub.d/40_custom (menuentry, linux … systemd.unit=rescue.target, initrd) ; grub2-mkconfig -o /boot/grub2/grub.cfg ; GRUB_DEFAULT=saved + grub2-reboot \"Maintenance\" ; vérif grep menuentry / grubby.",
+   "dar": "40_custom, rescue.target, grub2-mkconfig, grub2-reboot.",
+   "en": "40_custom, rescue.target, grub2-mkconfig, grub2-reboot."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Écrire l'entrée dans grub.cfg (écrasée).",
+    "dar": "F grub.cfg : ghatmse7.",
+    "en": "Writing it in grub.cfg."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "/etc/grub.d/40_custom",
+     "dar": "/etc/grub.d/40_custom",
+     "en": "/etc/grub.d/40_custom"
+    },
+    "any": [
+     "40_custom"
+    ],
+    "w": 1.5
+   },
+   {
+    "label": {
+     "fr": "menuentry \"Maintenance\"",
+     "dar": "menuentry \"Maintenance\"",
+     "en": "menuentry \"Maintenance\""
+    },
+    "any": [
+     "menuentry"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "systemd.unit=rescue.target",
+     "dar": "systemd.unit=rescue.target",
+     "en": "systemd.unit=rescue.target"
+    },
+    "any": [
+     "systemd.unit=rescue.target",
+     "rescue.target"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "dar": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "en": "grub2-mkconfig -o /boot/grub2/grub.cfg"
+    },
+    "any": [
+     "grub2-mkconfig -o"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grub2-reboot (une seule fois) + saved",
+     "dar": "grub2-reboot (une seule fois) + saved",
+     "en": "grub2-reboot (une seule fois) + saved"
+    },
+    "any": [
+     "grub2-reboot"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Vérification (grep menuentry / grubby)",
+     "dar": "Vérification (grep menuentry / grubby)",
+     "en": "Vérification (grep menuentry / grubby)"
+    },
+    "any": [
+     "grubby",
+     "grep menuentry"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-h-3",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 3 : service qui dépend du réseau (5 pts)",
+   "dar": "Difficile — Ex. 3 : service w réseau (5 pts)",
+   "en": "Hard — Ex. 3: a network-dependent service (5 pts)"
+  },
+  "statement": {
+   "fr": "Le service **api.service** (programme /opt/api/run) échoue au démarrage car il se lance avant que le réseau soit prêt, puis reste en **failed**. 1) Écrivez une unité correcte (attente du réseau, relance automatique, cible multi-user). 2) Où la placer ? 3) Quelles commandes après la modification ? 4) Comment effacer l'état failed ? 5) Comment savoir ce qui ralentit le démarrage ?",
+   "dar": "**api.service** kaybda 9bel réseau w kaybqa **failed**. 1) Unité s7i7a. 2) Fin. 3) Commandes. 4) 7iyed failed. 5) Chnou kay3etel démarrage.",
+   "en": "**api.service** starts before the network and stays **failed**. 1) Correct unit. 2) Where. 3) Commands. 4) Clear failed. 5) What slows boot."
+  },
+  "hints": [
+   {
+    "fr": "After= et Wants=network-online.target ; Restart= ; daemon-reload ; reset-failed ; systemd-analyze blame.",
+    "dar": "network-online.target, Restart, daemon-reload, reset-failed, blame.",
+    "en": "network-online.target, Restart, daemon-reload, reset-failed, blame."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1–2) /etc/systemd/system/api.service",
+     "dar": "1–2) Unité",
+     "en": "1–2) Unit"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "[Unit]\nDescription=API\nWants=network-online.target\nAfter=network-online.target\n\n[Service]\nExecStart=/opt/api/run\nRestart=on-failure\nRestartSec=5\n\n[Install]\nWantedBy=multi-user.target"
+   },
+   {
+    "title": {
+     "fr": "3–5) Commandes",
+     "dar": "3–5) Commandes",
+     "en": "3–5) Commands"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "systemctl daemon-reload\nsystemctl reset-failed api.service\nsystemctl enable --now api.service\nsystemctl status api\nsystemd-analyze blame | head\nsystemd-analyze critical-chain api.service"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Unité avec Wants/After=network-online.target, Restart=on-failure, WantedBy=multi-user.target dans /etc/systemd/system ; daemon-reload, reset-failed, enable --now ; systemd-analyze blame / critical-chain.",
+   "dar": "network-online, Restart, daemon-reload, reset-failed, blame.",
+   "en": "network-online, Restart, daemon-reload, reset-failed, blame."
+  },
+  "commonMistakes": [
+   {
+    "fr": "After=network.target seul ne garantit pas une adresse IP.",
+    "dar": "network.target bo7dha ma kafyach.",
+    "en": "network.target alone is not enough."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "After=network-online.target",
+     "dar": "After=network-online.target",
+     "en": "After=network-online.target"
+    },
+    "any": [
+     "after=network-online.target",
+     "network-online"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Wants=network-online.target",
+     "dar": "Wants=network-online.target",
+     "en": "Wants=network-online.target"
+    },
+    "any": [
+     "wants=network-online.target",
+     "wants="
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Restart=on-failure",
+     "dar": "Restart=on-failure",
+     "en": "Restart=on-failure"
+    },
+    "any": [
+     "restart=on-failure",
+     "restart=always",
+     "restart="
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "WantedBy=multi-user.target",
+     "dar": "WantedBy=multi-user.target",
+     "en": "WantedBy=multi-user.target"
+    },
+    "any": [
+     "wantedby=multi-user.target"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "/etc/systemd/system",
+     "dar": "/etc/systemd/system",
+     "en": "/etc/systemd/system"
+    },
+    "any": [
+     "/etc/systemd/system"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "systemctl daemon-reload",
+     "dar": "systemctl daemon-reload",
+     "en": "systemctl daemon-reload"
+    },
+    "any": [
+     "daemon-reload"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "reset-failed",
+     "dar": "reset-failed",
+     "en": "reset-failed"
+    },
+    "any": [
+     "reset-failed"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "systemd-analyze blame",
+     "dar": "systemd-analyze blame",
+     "en": "systemd-analyze blame"
+    },
+    "any": [
+     "systemd-analyze",
+     "blame"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-h-4",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 4 : enquête journalctl (5 pts)",
+   "dar": "Difficile — Ex. 4 : journalctl (5 pts)",
+   "en": "Hard — Ex. 4: journalctl investigation (5 pts)"
+  },
+  "statement": {
+   "fr": "Hier entre **09:00 et 10:00**, la base **mariadb** a planté et la machine a redémarré deux fois depuis. Donnez les commandes pour : 1) lister les démarrages enregistrés ; 2) voir les messages de mariadb hier entre 9h et 10h ; 3) voir les erreurs critiques et plus graves de l'avant-dernier démarrage ; 4) les 20 derniers messages d'erreur de mariadb ; 5) l'espace occupé par le journal. Citez l'ordre des priorités.",
+   "dar": "mariadb plantat **lbar7 09:00–10:00** w reboot jouj mrat. Commandes : 1) liste boots ; 2) mariadb lbar7 9h–10h ; 3) crit+ dyal boot 9bel l 9bel ; 4) 20 erreurs mariadb ; 5) taille journal. Tartib dyal priorités.",
+   "en": "mariadb crashed **yesterday 09:00–10:00**, two reboots since. Commands for: 1) boots; 2) mariadb 9–10 yesterday; 3) crit+ from two boots ago; 4) last 20 mariadb errors; 5) journal size. Priority order."
+  },
+  "hints": [
+   {
+    "fr": "--list-boots, --since/--until, -b -2, -p crit, -n 20, --disk-usage.",
+    "dar": "--list-boots, --since, -b -2, -p, -n, --disk-usage.",
+    "en": "--list-boots, --since, -b -2, -p, -n, --disk-usage."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Priorités : emerg 0, alert 1, crit 2, err 3, warning 4, notice 5, info 6, debug 7.",
+     "dar": "emerg 0 → debug 7.",
+     "en": "emerg 0 → debug 7."
+    },
+    "code": "journalctl --list-boots                                        # 1\njournalctl -u mariadb --since \"yesterday 09:00\" --until \"yesterday 10:00\"   # 2\njournalctl -b -2 -p crit                                       # 3\njournalctl -u mariadb -p err -n 20                             # 4\njournalctl --disk-usage                                        # 5"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "--list-boots ; -u mariadb --since \"yesterday 09:00\" --until \"yesterday 10:00\" ; -b -2 -p crit ; -u mariadb -p err -n 20 ; --disk-usage ; emerg 0 … debug 7.",
+   "dar": "list-boots, since/until, -b -2, -p err -n 20, disk-usage.",
+   "en": "list-boots, since/until, -b -2, -p err -n 20, disk-usage."
+  },
+  "commonMistakes": [
+   {
+    "fr": "-b -1 alors qu'il y a eu deux redémarrages depuis.",
+    "dar": "-b -2 machi -b -1.",
+    "en": "-b -2, not -b -1."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "journalctl --list-boots",
+     "dar": "journalctl --list-boots",
+     "en": "journalctl --list-boots"
+    },
+    "any": [
+     "--list-boots"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "-u mariadb avec --since/--until",
+     "dar": "-u mariadb avec --since/--until",
+     "en": "-u mariadb avec --since/--until"
+    },
+    "any": [
+     "--since && --until && mariadb",
+     "--since && mariadb"
+    ],
+    "w": 1.5
+   },
+   {
+    "label": {
+     "fr": "-b -2 -p crit",
+     "dar": "-b -2 -p crit",
+     "en": "-b -2 -p crit"
+    },
+    "any": [
+     "-b -2 && -p crit",
+     "-b -2"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "-u mariadb -p err -n 20",
+     "dar": "-u mariadb -p err -n 20",
+     "en": "-u mariadb -p err -n 20"
+    },
+    "any": [
+     "-n 20 && -p err",
+     "-n 20"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "--disk-usage",
+     "dar": "--disk-usage",
+     "en": "--disk-usage"
+    },
+    "any": [
+     "--disk-usage"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Ordre des priorités (emerg 0 … debug 7)",
+     "dar": "Ordre des priorités (emerg 0 … debug 7)",
+     "en": "Ordre des priorités (emerg 0 … debug 7)"
+    },
+    "any": [
+     "emerg && debug",
+     "emerg"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-x-1",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 1 : mot de passe root perdu (5 pts)",
+   "dar": "Expert — Ex. 1 : mot de passe root (5 pts)",
+   "en": "Expert — Ex. 1: lost root password (5 pts)"
+  },
+  "statement": {
+   "fr": "Le mot de passe **root** d'un serveur RHEL 9 est perdu. Décrivez la procédure complète depuis le menu GRUB jusqu'au redémarrage, en expliquant **pourquoi** chaque étape est nécessaire (dont SELinux).",
+   "dar": "Mot de passe **root** tlef f RHEL 9. Procédure kamla mn menu GRUB 7ta reboot, w **3lach** kol marhala (SELinux).",
+   "en": "The RHEL 9 **root** password is lost. Full procedure from the GRUB menu to reboot, explaining **why** (including SELinux)."
+  },
+  "hints": [
+   {
+    "fr": "rd.break arrête le démarrage dans l'initramfs, avant le vrai système.",
+    "dar": "rd.break kay7ebbes f initramfs.",
+    "en": "rd.break stops inside the initramfs."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Procédure",
+     "dar": "Procédure",
+     "en": "Procedure"
+    },
+    "body": {
+     "fr": "Au menu : **e** sur l'entrée, ajouter **rd.break** en fin de ligne linux, **Ctrl+X**. On arrive dans l'**initramfs** : le vrai / est monté **en lecture seule** sur **/sysroot**. On le remonte en écriture, on **chroot** dedans, on change le mot de passe, on crée **/.autorelabel** (le fichier /etc/shadow modifié hors de SELinux doit être réétiqueté, sinon plus personne ne se connecte), puis exit deux fois.",
+     "dar": "e → rd.break → Ctrl+X → remount rw /sysroot → chroot → passwd → touch /.autorelabel → exit ×2.",
+     "en": "e → rd.break → Ctrl+X → remount rw → chroot → passwd → /.autorelabel → exit ×2."
+    },
+    "code": "mount -o remount,rw /sysroot\nchroot /sysroot\npasswd root\ntouch /.autorelabel\nexit\nexit"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "e, rd.break, Ctrl+X ; mount -o remount,rw /sysroot ; chroot /sysroot ; passwd root ; touch /.autorelabel (SELinux) ; exit, exit.",
+   "dar": "rd.break, remount rw, chroot, passwd, autorelabel.",
+   "en": "rd.break, remount rw, chroot, passwd, autorelabel."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier /.autorelabel : connexion impossible après redémarrage (contexte SELinux de /etc/shadow).",
+    "dar": "Nsiti autorelabel.",
+    "en": "Forgetting autorelabel."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Touche e sur l'entrée GRUB (éditer)",
+     "dar": "Touche e sur l'entrée GRUB (éditer)",
+     "en": "Touche e sur l'entrée GRUB (éditer)"
+    },
+    "any": [
+     "touche e",
+     "appuyer sur e",
+     "appuie sur e",
+     "taper e",
+     "editer",
+     "edit"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "rd.break sur la ligne linux",
+     "dar": "rd.break sur la ligne linux",
+     "en": "rd.break sur la ligne linux"
+    },
+    "any": [
+     "rd.break"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "mount -o remount,rw /sysroot",
+     "dar": "mount -o remount,rw /sysroot",
+     "en": "mount -o remount,rw /sysroot"
+    },
+    "any": [
+     "remount,rw /sysroot",
+     "remount,rw"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "chroot /sysroot",
+     "dar": "chroot /sysroot",
+     "en": "chroot /sysroot"
+    },
+    "any": [
+     "chroot /sysroot",
+     "chroot"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "passwd root",
+     "dar": "passwd root",
+     "en": "passwd root"
+    },
+    "any": [
+     "passwd"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "touch /.autorelabel (SELinux)",
+     "dar": "touch /.autorelabel (SELinux)",
+     "en": "touch /.autorelabel (SELinux)"
+    },
+    "any": [
+     ".autorelabel"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "lx-x-2",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 2 : UEFI en détail (5 pts)",
+   "dar": "Expert — Ex. 2 : UEFI b tafsil (5 pts)",
+   "en": "Expert — Ex. 2: UEFI in depth (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Décrivez ce que fait le firmware UEFI jusqu'au lancement de GRUB sur RHEL 9 (table, partition, fichier). 2) Que contient /boot/efi/EFI/redhat ? 3) Pourquoi y trouve-t-on aussi un grub.cfg, et que contient-il ? 4) Citez trois avantages d'UEFI sur le BIOS. 5) Que se passe-t-il si la partition /boot/efi est absente ou corrompue ?",
+   "dar": "1) UEFI 7ta GRUB (table, partition, fichier). 2) /boot/efi/EFI/redhat fih chnou ? 3) 3lach grub.cfg tma ? 4) 3 mzayat. 5) Ila /boot/efi ma kaynach ?",
+   "en": "1) UEFI up to GRUB. 2) Content of /boot/efi/EFI/redhat. 3) Why a grub.cfg there? 4) Three advantages. 5) If /boot/efi is missing?"
+  },
+  "hints": [
+   {
+    "fr": "GPT → ESP (vfat) → grubx64.efi ; le grub.cfg EFI est un relais.",
+    "dar": "GPT → ESP → grubx64.efi ; relais.",
+    "en": "GPT → ESP → grubx64.efi; relay."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Lit la **GPT**, monte l'**ESP** (**/boot/efi**, FAT/vfat), lance **grubx64.efi** (via shimx64.efi si Secure Boot). 2) **shimx64.efi**, **grubx64.efi**, un **grub.cfg**. 3) C'est un **relais** (`configfile`) vers la vraie configuration **/boot/grub2/grub.cfg**. 4) **GPT > 2 To** et plus de partitions, interface graphique / réseau, **sécurité (Secure Boot)**, écrit en C, modulaire. 5) Le firmware ne trouve aucun chargeur : **pas de démarrage** (réinstaller les paquets grub2-efi/shim et recréer l'entrée).",
+     "dar": "GPT, ESP, grubx64.efi ; relais ; > 2 To, sécurité ; pas de démarrage.",
+     "en": "GPT, ESP, grubx64.efi; relay; > 2 TB, security; no boot."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "GPT → ESP /boot/efi (vfat) → shimx64.efi/grubx64.efi ; grub.cfg EFI = relais vers /boot/grub2/grub.cfg ; GPT > 2 To, Secure Boot, interface/réseau ; sans ESP pas de démarrage.",
+   "dar": "GPT, ESP, grubx64, relais, > 2 To.",
+   "en": "GPT, ESP, grubx64, relay, > 2 TB."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que le grub.cfg de l'ESP est la vraie configuration.",
+    "dar": "grub.cfg EFI = relais.",
+    "en": "The EFI grub.cfg is a relay."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "GPT",
+     "dar": "GPT",
+     "en": "GPT"
+    },
+    "any": [
+     "gpt"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "ESP /boot/efi (vfat)",
+     "dar": "ESP /boot/efi (vfat)",
+     "en": "ESP /boot/efi (vfat)"
+    },
+    "any": [
+     "/boot/efi",
+     "esp"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grubx64.efi (shim)",
+     "dar": "grubx64.efi (shim)",
+     "en": "grubx64.efi (shim)"
+    },
+    "any": [
+     "grubx64",
+     "grub.efi",
+     "shim"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grub.cfg EFI = relais vers /boot/grub2/grub.cfg",
+     "dar": "grub.cfg EFI = relais vers /boot/grub2/grub.cfg",
+     "en": "grub.cfg EFI = relais vers /boot/grub2/grub.cfg"
+    },
+    "any": [
+     "/boot/grub2/grub.cfg",
+     "relais",
+     "configfile"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Avantages : > 2 To, Secure Boot…",
+     "dar": "Avantages : > 2 To, Secure Boot…",
+     "en": "Avantages : > 2 To, Secure Boot…"
+    },
+    "any": [
+     "2 to",
+     "secure",
+     "securit"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Sans ESP : pas de démarrage",
+     "dar": "Sans ESP : pas de démarrage",
+     "en": "Sans ESP : pas de démarrage"
+    },
+    "any": [
+     "ne demarre pas",
+     "pas de demarrage",
+     "demarre pas",
+     "impossible"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-x-3",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 3 : de SysVinit à systemd (5 pts)",
+   "dar": "Expert — Ex. 3 : SysVinit → systemd (5 pts)",
+   "en": "Expert — Ex. 3: from SysVinit to systemd (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Expliquez la ligne `id:3:initdefault:` de /etc/inittab et donnez l'équivalent systemd. 2) Que signifient `/etc/rc3.d/S55sshd` et `/etc/rc3.d/K10cups` ? 3) Traduisez en systemd : `init 1`, `init 6`, `runlevel`, `chkconfig sshd on`. 4) Pourquoi systemd démarre-t-il plus vite ? 5) Un vieux script /etc/init.d/backup existe : comment le remplacer proprement ?",
+   "dar": "1) `id:3:initdefault:` w équivalent systemd. 2) S55sshd w K10cups. 3) Traduction : init 1, init 6, runlevel, chkconfig sshd on. 4) 3lach systemd sri3. 5) Script /etc/init.d/backup ?",
+   "en": "1) `id:3:initdefault:` and systemd equivalent. 2) S55sshd and K10cups. 3) Translate init 1, init 6, runlevel, chkconfig sshd on. 4) Why systemd is faster. 5) Replace /etc/init.d/backup."
+  },
+  "hints": [
+   {
+    "fr": "Format id:niveaux:action:processus ; S = start, K = kill, nn = ordre.",
+    "dar": "S start, K kill, nn tartib.",
+    "en": "S start, K kill, nn order."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Format **id:niveaux:action:processus** : niveau par défaut = **3** (multi-utilisateurs texte) → `systemctl set-default multi-user.target`. 2) Au passage en niveau 3, **S** = lancer sshd (**ordre 55**), **K** = arrêter cups (**ordre 10**) ; liens vers /etc/init.d/. 3) `systemctl isolate rescue.target` · `systemctl reboot` · `systemctl get-default` (ou `runlevel` reste dispo) · `systemctl enable sshd`. 4) Démarrage **parallèle** grâce aux **sockets** (pas séquentiel), dépendances explicites, moins de scripts shell. 5) Écrire **/etc/systemd/system/backup.service** ([Unit]/[Service] ExecStart/[Install]), `daemon-reload`, `enable --now`.",
+     "dar": "initdefault → set-default ; S/K + ordre ; isolate rescue, reboot, get-default, enable ; parallèle ; unité .service.",
+     "en": "initdefault → set-default; S/K + order; isolate rescue, reboot, get-default, enable; parallel; .service unit."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "initdefault 3 → set-default multi-user.target ; S = start / K = kill dans l'ordre nn ; isolate rescue.target, reboot, get-default, enable sshd ; parallèle (sockets) ; backup.service + daemon-reload + enable --now.",
+   "dar": "set-default, S/K, isolate, enable, sockets, .service.",
+   "en": "set-default, S/K, isolate, enable, sockets, .service."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que K signifie « keep ».",
+    "dar": "K = kill.",
+    "en": "K means kill."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Niveau par défaut 3 → multi-user.target",
+     "dar": "Niveau par défaut 3 → multi-user.target",
+     "en": "Niveau par défaut 3 → multi-user.target"
+    },
+    "any": [
+     "multi-user.target"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "set-default",
+     "dar": "set-default",
+     "en": "set-default"
+    },
+    "any": [
+     "set-default"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "S = démarrer, K = arrêter (ordre)",
+     "dar": "S = démarrer, K = arrêter (ordre)",
+     "en": "S = démarrer, K = arrêter (ordre)"
+    },
+    "any": [
+     "start && kill",
+     "demarr && arret",
+     "lance && arret"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "init 1 → rescue.target",
+     "dar": "init 1 → rescue.target",
+     "en": "init 1 → rescue.target"
+    },
+    "any": [
+     "rescue.target"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "init 6 → reboot",
+     "dar": "init 6 → reboot",
+     "en": "init 6 → reboot"
+    },
+    "any": [
+     "reboot"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "chkconfig → systemctl enable",
+     "dar": "chkconfig → systemctl enable",
+     "en": "chkconfig → systemctl enable"
+    },
+    "any": [
+     "enable sshd"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Parallèle (sockets)",
+     "dar": "Parallèle (sockets)",
+     "en": "Parallèle (sockets)"
+    },
+    "any": [
+     "parallel",
+     "socket"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Unité .service + daemon-reload",
+     "dar": "Unité .service + daemon-reload",
+     "en": "Unité .service + daemon-reload"
+    },
+    "any": [
+     "backup.service",
+     ".service && daemon-reload"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "lx-x-4",
+  "module": "linux",
+  "chapter": "cc-blanc",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 4 : diagnostic complet d'un démarrage (5 pts)",
+   "dar": "Expert — Ex. 4 : diagnostic démarrage (5 pts)",
+   "en": "Expert — Ex. 4: full boot diagnosis (5 pts)"
+  },
+  "statement": {
+   "fr": "Après une mise à jour du noyau, le serveur démarre **en 3 minutes** au lieu de 30 s, et le service **nfs-server** est en échec **uniquement au démarrage** (il fonctionne si on le relance à la main). 1) Comment mesurer et localiser la lenteur ? 2) Comment lire les messages du démarrage précédent liés à nfs-server ? 3) Quelle est la cause probable de l'échec seulement au démarrage et comment la corriger durablement sans modifier le fichier fourni par le paquet ? 4) Comment revenir à l'ancien noyau par défaut en attendant ?",
+   "dar": "Mor mise à jour noyau, démarrage **3 min**, w **nfs-server** kayfchel **ghir f démarrage**. 1) 9is w l9a lenteur. 2) Messages boot 9bel dyal nfs-server. 3) Sbab w 7al dayem bla ma tbeddel fichier dyal paquet. 4) Rje3 l noyau l9dim.",
+   "en": "After a kernel update, boot takes **3 min** and **nfs-server** fails **only at boot**. 1) Measure and locate. 2) Previous-boot messages. 3) Cause and lasting fix without editing the package file. 4) Revert to the old kernel."
+  },
+  "hints": [
+   {
+    "fr": "systemd-analyze, journalctl -b -1, drop-in avec systemctl edit, grubby --set-default.",
+    "dar": "systemd-analyze, -b -1, systemctl edit, grubby.",
+    "en": "systemd-analyze, -b -1, systemctl edit, grubby."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1–2) Mesurer et lire",
+     "dar": "1–2) 9is w 9ra",
+     "en": "1–2) Measure and read"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "systemd-analyze\nsystemd-analyze blame | head\nsystemd-analyze critical-chain\njournalctl -b -1 -u nfs-server\njournalctl -b -1 -p err"
+   },
+   {
+    "title": {
+     "fr": "3) Cause et correction durable",
+     "dar": "3) Sbab w 7al",
+     "en": "3) Cause and fix"
+    },
+    "body": {
+     "fr": "Ordre/dépendances : nfs-server démarre avant que le réseau (ou le stockage) soit prêt. On ajoute un **drop-in** (dans /etc/systemd/system/nfs-server.service.d/) avec **systemctl edit**, sans toucher /usr/lib/systemd/system.",
+     "dar": "Ordre : 9bel réseau. **Drop-in** b **systemctl edit**.",
+     "en": "Ordering: before the network. **Drop-in** via **systemctl edit**."
+    },
+    "code": "systemctl edit nfs-server\n# [Unit]\n# Wants=network-online.target\n# After=network-online.target\nsystemctl daemon-reload"
+   },
+   {
+    "title": {
+     "fr": "4) Ancien noyau",
+     "dar": "4) Noyau l9dim",
+     "en": "4) Old kernel"
+    },
+    "body": {
+     "fr": "Commandes :",
+     "dar": "Les commandes :",
+     "en": "Commands:"
+    },
+    "code": "grubby --info=ALL | grep -E \"^kernel|^index\"\ngrubby --set-default=/boot/vmlinuz-<ancienne-version>\ngrubby --default-kernel"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "systemd-analyze / blame / critical-chain ; journalctl -b -1 -u nfs-server ; dépendance réseau → drop-in via systemctl edit (Wants/After=network-online.target) + daemon-reload ; grubby --set-default=<ancien noyau>.",
+   "dar": "analyze, -b -1, systemctl edit, grubby.",
+   "en": "analyze, -b -1, systemctl edit, grubby."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Modifier /usr/lib/systemd/system/nfs-server.service (écrasé à la prochaine mise à jour).",
+    "dar": "Ma tbeddelch /usr/lib.",
+    "en": "Do not edit /usr/lib."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "systemd-analyze (blame / critical-chain)",
+     "dar": "systemd-analyze (blame / critical-chain)",
+     "en": "systemd-analyze (blame / critical-chain)"
+    },
+    "any": [
+     "systemd-analyze",
+     "blame",
+     "critical-chain"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "journalctl -b -1 -u nfs-server",
+     "dar": "journalctl -b -1 -u nfs-server",
+     "en": "journalctl -b -1 -u nfs-server"
+    },
+    "any": [
+     "-b -1 && nfs",
+     "-b -1"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Cause : démarre avant le réseau (After/Wants network-online)",
+     "dar": "Cause : démarre avant le réseau (After/Wants network-online)",
+     "en": "Cause : démarre avant le réseau (After/Wants network-online)"
+    },
+    "any": [
+     "network-online",
+     "reseau"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Drop-in avec systemctl edit (pas /usr/lib)",
+     "dar": "Drop-in avec systemctl edit (pas /usr/lib)",
+     "en": "Drop-in avec systemctl edit (pas /usr/lib)"
+    },
+    "any": [
+     "systemctl edit",
+     "drop-in",
+     ".service.d"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "grubby --set-default (ancien noyau)",
+     "dar": "grubby --set-default (ancien noyau)",
+     "en": "grubby --set-default (ancien noyau)"
+    },
+    "any": [
+     "grubby --set-default",
+     "set-default=/boot",
+     "grub2-set-default"
+    ],
+    "w": 1
+   }
+  ]
+ }
+]

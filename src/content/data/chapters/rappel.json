@@ -1,0 +1,770 @@
+{
+ "id": "rappel",
+ "module": "data",
+ "order": 2,
+ "title": {
+  "fr": "Chap 0 (suite) — Rappel : statistique descriptive et régression linéaire",
+  "dar": "Fasl 0 (tatimma) — Rappel : statistique descriptive w régression linéaire",
+  "en": "Ch. 0 (cont.) — Reminder: descriptive statistics and linear regression"
+ },
+ "summary": {
+  "fr": "Moyenne, médiane, mode, variance, écart-type, quartiles, covariance, corrélation et droite des moindres carrés : chaque formule expliquée depuis zéro, puis calculée à la main étape par étape.",
+  "dar": "Moyenne, médiane, mode, variance, écart-type, quartiles, covariance, corrélation w droite dyal moindres carrés : kol formule mcharha mn zero, w m7souba b lyed étape par étape.",
+  "en": "Mean, median, mode, variance, standard deviation, quartiles, covariance, correlation and the least-squares line: every formula explained from zero, then computed by hand step by step."
+ },
+ "estimatedMinutes": 45,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. **Position** : moyenne = Σx / n ; médiane = valeur du milieu (résiste aux aberrantes) ; mode = la plus fréquente.\n2. **Dispersion** : variance = moyenne des carrés des écarts ; écart-type = √variance ; corrigée → diviser par **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (sert au Chap 2).\n4. **Deux variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.",
+    "dar": "1. **Position** : moyenne = Σx / n ; médiane = l west (ma kat2tharch b aberrantes) ; mode = li ktar tkrar.\n2. **Dispersion** : variance = moyenne dyal mourabba3at l far9 ; écart-type = √variance ; corrigée → 9sem 3la **n − 1**.\n3. **Quartiles** : Q1, Q3, IQR = Q3 − Q1 (kayst3mel f Fasl 2).\n4. **Jouj variables** : cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Régression** : a = cov(x, y) / V(x), b = ȳ − a x̄.",
+    "en": "1. **Location**: mean = Σx / n; median = middle value (robust to outliers); mode = most frequent.\n2. **Spread**: variance = mean of squared deviations; SD = √variance; corrected → divide by **n − 1**.\n3. **Quartiles**: Q1, Q3, IQR = Q3 − Q1 (used in Ch. 2).\n4. **Two variables**: cov(x, y), r = cov / (σx σy) ∈ [−1, 1].\n5. **Regression**: a = cov(x, y) / V(x), b = ȳ − a x̄."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Le vocabulaire de base",
+    "dar": "1. L mofradat l asasiya",
+    "en": "1. Basic vocabulary"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Mot",
+     "dar": "Kelma",
+     "en": "Word"
+    },
+    {
+     "fr": "Signification",
+     "dar": "Ma3na",
+     "en": "Meaning"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Population**",
+      "dar": "**Population**",
+      "en": "**Population**"
+     },
+     {
+      "fr": "Tout le groupe qu'on étudie",
+      "dar": "Ga3 l groupe li kandrssou",
+      "en": "The whole group we study"
+     },
+     {
+      "fr": "Tous les étudiants de l'EMSI",
+      "dar": "Ga3 tlamid dyal EMSI",
+      "en": "All EMSI students"
+     }
+    ],
+    [
+     {
+      "fr": "**Échantillon**",
+      "dar": "**Échantillon** (3ayyina)",
+      "en": "**Sample**"
+     },
+     {
+      "fr": "Une partie de la population qu'on observe vraiment",
+      "dar": "Jouz2 mn population li kanchoufouh b s7",
+      "en": "The part of the population we actually observe"
+     },
+     {
+      "fr": "Les 30 étudiants de 4IIR G22",
+      "dar": "30 tlmid dyal 4IIR G22",
+      "en": "The 30 students of 4IIR G22"
+     }
+    ],
+    [
+     {
+      "fr": "**Individu**",
+      "dar": "**Individu**",
+      "en": "**Individual**"
+     },
+     {
+      "fr": "Un élément observé (une ligne du tableau)",
+      "dar": "Element wa7ed (str f tableau)",
+      "en": "One observed element (one table row)"
+     },
+     {
+      "fr": "Un étudiant",
+      "dar": "Tlmid wa7ed",
+      "en": "One student"
+     }
+    ],
+    [
+     {
+      "fr": "**Variable quantitative**",
+      "dar": "**Variable quantitative**",
+      "en": "**Quantitative variable**"
+     },
+     {
+      "fr": "Un nombre qu'on peut calculer (discrète : 0, 1, 2… ; continue : 12,75…)",
+      "dar": "Raqm li n9dro n7sbouh (discrète : 0, 1, 2… ; continue : 12,75…)",
+      "en": "A number you can compute with (discrete: 0, 1, 2…; continuous: 12.75…)"
+     },
+     {
+      "fr": "Note, âge, salaire",
+      "dar": "Note, 3omr, salaire",
+      "en": "Mark, age, salary"
+     }
+    ],
+    [
+     {
+      "fr": "**Variable qualitative**",
+      "dar": "**Variable qualitative**",
+      "en": "**Qualitative variable**"
+     },
+     {
+      "fr": "Une catégorie, pas un calcul",
+      "dar": "Catégorie, machi 7sab",
+      "en": "A category, not a calculation"
+     },
+     {
+      "fr": "Ville, filière, sexe",
+      "dar": "Mdina, filière, jins",
+      "en": "City, programme, sex"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Dans un tableau pandas (Chap 1), **chaque ligne est un individu** et **chaque colonne est une variable**. Toute la suite du cours repose sur cette image.",
+    "dar": "F tableau dyal pandas (Fasl 1), **kol str howa individu** w **kol colonne hiya variable**. Ga3 dars mbni 3la had tswira.",
+    "en": "In a pandas table (Ch. 1), **each row is an individual** and **each column is a variable**. The whole course builds on this picture."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Les paramètres de position : où se trouve le « centre » ?",
+    "dar": "2. Paramètres de position : fin kayn « l west » ?",
+    "en": "2. Measures of location: where is the \"centre\"?"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "On va tout calculer sur **un seul exemple** : les notes de 5 étudiants au contrôle.\n\n**x = 8 ; 12 ; 10 ; 15 ; 10** (n = 5 valeurs)",
+    "dar": "Ghadi n7sbou kolchi 3la **mithal wa7ed** : notes dyal 5 tlamid f contrôle.\n\n**x = 8 ; 12 ; 10 ; 15 ; 10** (n = 5 qiyam)",
+    "en": "We will compute everything on **one single example**: the test marks of 5 students.\n\n**x = 8 ; 12 ; 10 ; 15 ; 10** (n = 5 values)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\bar x = \\frac{1}{n}\\sum_{i=1}^{n} x_i = \\frac{x_1 + x_2 + \\dots + x_n}{n}",
+   "body": {
+    "fr": "**La moyenne** $\\bar x$ (« x barre ») : on additionne toutes les valeurs, puis on divise par leur nombre. Le symbole $\\sum$ (sigma) veut simplement dire « fais la somme ».",
+    "dar": "**L moyenne** $\\bar x$ (« x barre ») : kanjem3ou ga3 l qiyam, w kan9ssmou 3la 3adadhom. Rmz $\\sum$ (sigma) ma3nah ghir « jme3 ».",
+    "en": "**The mean** $\\bar x$ (\"x bar\"): add all the values, then divide by how many there are. The symbol $\\sum$ (sigma) simply means \"add them up\"."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Calcul de la moyenne, de la médiane et du mode",
+    "dar": "7sab l moyenne, l médiane w l mode",
+    "en": "Computing the mean, the median and the mode"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Somme des valeurs",
+      "dar": "Majmou3 l qiyam",
+      "en": "Sum of the values"
+     },
+     "body": {
+      "fr": "On additionne : 8 + 12 + 10 + 15 + 10 = **55**.",
+      "dar": "Kanjem3ou : 8 + 12 + 10 + 15 + 10 = **55**.",
+      "en": "Add: 8 + 12 + 10 + 15 + 10 = **55**."
+     },
+     "tex": "\\sum x_i = 8+12+10+15+10 = 55"
+    },
+    {
+     "title": {
+      "fr": "Diviser par n",
+      "dar": "Q9sem 3la n",
+      "en": "Divide by n"
+     },
+     "body": {
+      "fr": "Il y a n = 5 notes, donc la moyenne vaut **11**.",
+      "dar": "3andna n = 5 notes, donc l moyenne = **11**.",
+      "en": "There are n = 5 marks, so the mean is **11**."
+     },
+     "tex": "\\bar x = \\frac{55}{5} = 11",
+     "why": {
+      "fr": "La moyenne, c'est la note que tout le monde aurait si on « partageait » les points équitablement.",
+      "dar": "L moyenne hiya no9ta li kol wa7ed ghadi yakhod ila 9ssmna l points b l 3adl.",
+      "en": "The mean is the mark everyone would get if the points were shared out equally."
+     }
+    },
+    {
+     "title": {
+      "fr": "La médiane : trier d'abord",
+      "dar": "L médiane : rtteb 9bel",
+      "en": "The median: sort first"
+     },
+     "body": {
+      "fr": "On range dans l'ordre croissant : **8 ; 10 ; 10 ; 12 ; 15**. n = 5 est impair, la médiane est la valeur du milieu (la 3ᵉ) : **Me = 10**. Si n était pair, on prendrait la moyenne des deux valeurs du milieu.",
+      "dar": "Kanrttbou mn sghir l kbir : **8 ; 10 ; 10 ; 12 ; 15**. n = 5 fardi, l médiane hiya l qima li f l west (talta) : **Me = 10**. Ila kan n zawji, kanakhdou moyenne dyal jouj li f l west.",
+      "en": "Sort in increasing order: **8 ; 10 ; 10 ; 12 ; 15**. n = 5 is odd, the median is the middle value (the 3rd): **Me = 10**. If n were even, take the mean of the two middle values."
+     },
+     "why": {
+      "fr": "La médiane coupe les données en deux moitiés : 50 % en dessous, 50 % au-dessus. Elle ne bouge pas si un étudiant a 95 au lieu de 15 : elle **résiste aux valeurs aberrantes**, la moyenne non.",
+      "dar": "L médiane kat9ssem data 3la jouj : 50 % t7t, 50 % fou9. Ma katbeddelch ila chi wa7ed 3ando 95 f blast 15 : hiya **ma kat2tharch b l qiyam l ghriba**, l moyenne la.",
+      "en": "The median splits the data into two halves: 50 % below, 50 % above. It does not move if one student has 95 instead of 15: it **resists outliers**, the mean does not."
+     }
+    },
+    {
+     "title": {
+      "fr": "Le mode",
+      "dar": "L mode",
+      "en": "The mode"
+     },
+     "body": {
+      "fr": "Le **mode** est la valeur la plus fréquente : 10 apparaît 2 fois → **Mo = 10**. C'est le seul paramètre utilisable pour une variable qualitative (ex. la ville la plus fréquente).",
+      "dar": "L **mode** hiya l qima li ktar tkrar : 10 bant 2 merrat → **Mo = 10**. Hwa l paramètre l wa7id li ymken l variable qualitative (mathalan l mdina li ktar tkrrat).",
+      "en": "The **mode** is the most frequent value: 10 appears twice → **Mo = 10**. It is the only measure usable for a qualitative variable (e.g. the most frequent city)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Les paramètres de dispersion : les valeurs sont-elles serrées ou étalées ?",
+    "dar": "3. Paramètres de dispersion : wach l qiyam mjm3in wla mfrr9in ?",
+    "en": "3. Measures of spread: are the values tight or scattered?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Deux classes peuvent avoir **la même moyenne 11** : l'une avec des notes 10, 11, 12 (serrées), l'autre avec 2, 11, 20 (étalées). La moyenne ne voit pas la différence. Il faut une mesure de **dispersion** : la **variance** et l'**écart-type**.",
+    "dar": "Jouj a9ssam ymken ykoun 3andhom **nefs l moyenne 11** : wa7ed fih notes 10, 11, 12 (9rib mn ba3dhom), w lakhor 2, 11, 20 (b3ad). L moyenne ma katchoufch l far9. Khassna mesure dyal **dispersion** : **variance** w **écart-type**.",
+    "en": "Two classes can have **the same mean 11**: one with marks 10, 11, 12 (tight), the other with 2, 11, 20 (spread out). The mean cannot see the difference. We need a **spread** measure: the **variance** and the **standard deviation**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "V(x) = \\frac{1}{n}\\sum_{i=1}^{n}(x_i - \\bar x)^2 \\qquad \\sigma = \\sqrt{V(x)}",
+   "body": {
+    "fr": "**Variance** = moyenne des **carrés des écarts** à la moyenne. **Écart-type** σ = racine carrée de la variance (il revient dans la même unité que les données : des points, des euros…).",
+    "dar": "**Variance** = moyenne dyal **mourabba3at dyal l far9** m3a l moyenne. **Écart-type** σ = jidr dyal variance (kayrje3 b nefs l wa7da dyal data : points, dirhams…).",
+    "en": "**Variance** = mean of the **squared deviations** from the mean. **Standard deviation** σ = square root of the variance (back in the data's unit: points, dirhams…)."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Variance et écart-type des notes 8 ; 12 ; 10 ; 15 ; 10",
+    "dar": "Variance w écart-type dyal 8 ; 12 ; 10 ; 15 ; 10",
+    "en": "Variance and standard deviation of 8 ; 12 ; 10 ; 15 ; 10"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Écarts à la moyenne",
+      "dar": "L far9 m3a l moyenne",
+      "en": "Deviations from the mean"
+     },
+     "body": {
+      "fr": "On soustrait $\\bar x = 11$ à chaque note : 8 − 11 = **−3** ; 12 − 11 = **1** ; 10 − 11 = **−1** ; 15 − 11 = **4** ; 10 − 11 = **−1**.",
+      "dar": "Kanna9ssou $\\bar x = 11$ mn kol note : 8 − 11 = **−3** ; 12 − 11 = **1** ; 10 − 11 = **−1** ; 15 − 11 = **4** ; 10 − 11 = **−1**.",
+      "en": "Subtract $\\bar x = 11$ from each mark: 8 − 11 = **−3** ; 12 − 11 = **1** ; 10 − 11 = **−1** ; 15 − 11 = **4** ; 10 − 11 = **−1**."
+     },
+     "why": {
+      "fr": "Vérification rapide : la somme des écarts fait toujours 0 (−3 + 1 − 1 + 4 − 1 = 0). C'est pour ça qu'on ne peut pas simplement faire la moyenne des écarts.",
+      "dar": "Verification : majmou3 l far9 dima = 0 (−3 + 1 − 1 + 4 − 1 = 0). Hadchi 3lach ma n9droch ndirou ghir moyenne dyal l far9.",
+      "en": "Quick check: deviations always add up to 0 (−3 + 1 − 1 + 4 − 1 = 0). That is why we cannot just average the deviations."
+     }
+    },
+    {
+     "title": {
+      "fr": "Mettre au carré",
+      "dar": "Dir l mourabba3",
+      "en": "Square them"
+     },
+     "body": {
+      "fr": "(−3)² = **9** ; 1² = **1** ; (−1)² = **1** ; 4² = **16** ; (−1)² = **1**. Le carré supprime les signes moins.",
+      "dar": "(−3)² = **9** ; 1² = **1** ; (−1)² = **1** ; 4² = **16** ; (−1)² = **1**. L mourabba3 kay7iyed l signe na9ss.",
+      "en": "(−3)² = **9** ; 1² = **1** ; (−1)² = **1** ; 4² = **16** ; (−1)² = **1**. Squaring removes the minus signs."
+     }
+    },
+    {
+     "title": {
+      "fr": "Somme des carrés",
+      "dar": "Majmou3 l mourabba3at",
+      "en": "Sum of squares"
+     },
+     "body": {
+      "fr": "9 + 1 + 1 + 16 + 1 = **28**.",
+      "dar": "9 + 1 + 1 + 16 + 1 = **28**.",
+      "en": "9 + 1 + 1 + 16 + 1 = **28**."
+     },
+     "tex": "\\sum (x_i-\\bar x)^2 = 28"
+    },
+    {
+     "title": {
+      "fr": "Variance",
+      "dar": "Variance",
+      "en": "Variance"
+     },
+     "body": {
+      "fr": "On divise par n = 5 : **V = 5,6**.",
+      "dar": "Kan9ssmou 3la n = 5 : **V = 5,6**.",
+      "en": "Divide by n = 5: **V = 5.6**."
+     },
+     "tex": "V(x) = \\frac{28}{5} = 5{,}6"
+    },
+    {
+     "title": {
+      "fr": "Écart-type",
+      "dar": "Écart-type",
+      "en": "Standard deviation"
+     },
+     "body": {
+      "fr": "On prend la racine : **σ ≈ 2,37 points**. En moyenne, une note s'éloigne d'environ 2,4 points de 11.",
+      "dar": "Kanakhdou l jidr : **σ ≈ 2,37 points**. F l moyenne, note kat-b3ed b ta9riban 2,4 points 3la 11.",
+      "en": "Take the square root: **σ ≈ 2.37 points**. On average, a mark is about 2.4 points away from 11."
+     },
+     "tex": "\\sigma = \\sqrt{5{,}6} \\approx 2{,}37"
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**n ou n − 1 ?** Sur un **échantillon** on utilise souvent la variance **corrigée** $S^2 = \\frac{1}{n-1}\\sum (x_i-\\bar x)^2$. Ici : 28 / 4 = **7**, donc S ≈ **2,65**. Attention : **pandas `.var()` et `.std()` divisent par n − 1** par défaut, alors que **NumPy `np.var()` divise par n**. C'est ce S (avec n − 1) qu'on utilise dans le test de Student (Chap 5).",
+    "dar": "**n wla n − 1 ?** F **échantillon** ghaliban kanst3mlou variance **corrigée** $S^2 = \\frac{1}{n-1}\\sum (x_i-\\bar x)^2$. Hna : 28 / 4 = **7**, donc S ≈ **2,65**. 3endak : **pandas `.var()` w `.std()` kay9ssmou 3la n − 1** par défaut, walakin **NumPy `np.var()` kay9ssem 3la n**. Had S (b n − 1) howa li kanst3mlou f test de Student (Fasl 5).",
+    "en": "**n or n − 1?** On a **sample** we often use the **corrected** variance $S^2 = \\frac{1}{n-1}\\sum (x_i-\\bar x)^2$. Here: 28 / 4 = **7**, so S ≈ **2.65**. Careful: **pandas `.var()` and `.std()` divide by n − 1** by default, whereas **NumPy `np.var()` divides by n**. This S (with n − 1) is the one used in the Student test (Ch. 5)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Les quartiles et l'écart interquartile (IQR)",
+    "dar": "4. Les quartiles w l IQR",
+    "en": "4. Quartiles and the interquartile range (IQR)"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "MeanMedianShapes"
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**Q1** (1er quartile) : 25 % des valeurs sont en dessous. **Q2** = la médiane (50 %). **Q3** (3e quartile) : 75 % des valeurs sont en dessous. **IQR = Q3 − Q1** mesure la largeur des 50 % du milieu. C'est l'outil du Chap 2 pour détecter les **valeurs aberrantes**.",
+    "dar": "**Q1** : 25 % dyal l qiyam t7tou. **Q2** = l médiane (50 %). **Q3** : 75 % dyal l qiyam t7tou. **IQR = Q3 − Q1** kay9is l 3ard dyal 50 % li f l west. Hada howa l outil dyal Fasl 2 bach nkchfou **valeurs aberrantes**.",
+    "en": "**Q1** (1st quartile): 25 % of the values are below it. **Q2** = the median (50 %). **Q3** (3rd quartile): 75 % are below it. **IQR = Q3 − Q1** measures the width of the middle 50 %. It is the Ch. 2 tool to detect **outliers**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "Notes triées **8 ; 10 ; 10 ; 12 ; 15**. Avec la convention de pandas (`df.quantile(0.25)`), la position de Q1 est (n − 1) × 0,25 = 1 → Q1 = **10** ; la position de Q3 est (n − 1) × 0,75 = 3 → Q3 = **12**. Donc **IQR = 12 − 10 = 2**.",
+    "dar": "Notes mrttbin **8 ; 10 ; 10 ; 12 ; 15**. B tari9a dyal pandas (`df.quantile(0.25)`), blasat Q1 = (n − 1) × 0,25 = 1 → Q1 = **10** ; blasat Q3 = (n − 1) × 0,75 = 3 → Q3 = **12**. Donc **IQR = 12 − 10 = 2**.",
+    "en": "Sorted marks **8 ; 10 ; 10 ; 12 ; 15**. With pandas' convention (`df.quantile(0.25)`), the position of Q1 is (n − 1) × 0.25 = 1 → Q1 = **10**; the position of Q3 is (n − 1) × 0.75 = 3 → Q3 = **12**. So **IQR = 12 − 10 = 2**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Les positions commencent à 0 (comme les index Python) : position 0 = 8, position 1 = 10, position 2 = 10, position 3 = 12, position 4 = 15. Si la position tombe entre deux valeurs (ex. 2,5), on prend le point au milieu entre elles.",
+    "dar": "Les positions kaybdaw mn 0 (b7al index f Python) : position 0 = 8, 1 = 10, 2 = 10, 3 = 12, 4 = 15. Ila position jat bin jouj qiyam (mathalan 2,5), kanakhdou n9ta li f l west binathom.",
+    "en": "Positions start at 0 (like Python indexes): position 0 = 8, 1 = 10, 2 = 10, 3 = 12, 4 = 15. If the position falls between two values (e.g. 2.5), take the point halfway between them."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Deux variables : covariance et corrélation",
+    "dar": "5. Jouj variables : covariance w corrélation",
+    "en": "5. Two variables: covariance and correlation"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "CorrelationShapes"
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Maintenant on observe **deux variables** sur les mêmes étudiants : **x = heures de révision**, **y = note /10**.\n\n**x = 1 ; 2 ; 3 ; 4 ; 5** et **y = 2 ; 4 ; 5 ; 4 ; 5**.\n\nQuestion : **plus on révise, plus la note monte-t-elle ?**",
+    "dar": "Daba kanchoufou **jouj variables** 3la nefs tlamid : **x = sa3at d révision**, **y = note /10**.\n\n**x = 1 ; 2 ; 3 ; 4 ; 5** w **y = 2 ; 4 ; 5 ; 4 ; 5**.\n\nSou2al : **wach kolma rajje3ti ktar, kolma note tal3a ?**",
+    "en": "Now we observe **two variables** on the same students: **x = revision hours**, **y = mark /10**.\n\n**x = 1 ; 2 ; 3 ; 4 ; 5** and **y = 2 ; 4 ; 5 ; 4 ; 5**.\n\nQuestion: **does the mark go up when students revise more?**"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "\\mathrm{cov}(x,y) = \\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\bar x)(y_i-\\bar y) \\qquad r = \\frac{\\mathrm{cov}(x,y)}{\\sigma_x\\,\\sigma_y}",
+   "body": {
+    "fr": "**Covariance** : positive si x et y montent ensemble, négative si l'un monte quand l'autre descend. **Coefficient de corrélation r** : la covariance « mise à l'échelle », toujours entre **−1 et +1**.",
+    "dar": "**Covariance** : mojaba ila x w y kaytl3ou m3a ba3d, salba ila wa7ed tal3 w lakhor habet. **Coefficient de corrélation r** : covariance « m9ada », dima bin **−1 w +1**.",
+    "en": "**Covariance**: positive if x and y rise together, negative if one rises while the other falls. **Correlation coefficient r**: the covariance \"rescaled\", always between **−1 and +1**."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Calcul de la covariance et de r",
+    "dar": "7sab covariance w r",
+    "en": "Computing the covariance and r"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Les deux moyennes",
+      "dar": "Jouj moyennes",
+      "en": "The two means"
+     },
+     "body": {
+      "fr": "$\\bar x = (1+2+3+4+5)/5 = 15/5 = 3$ et $\\bar y = (2+4+5+4+5)/5 = 20/5 = 4$.",
+      "dar": "$\\bar x = 15/5 = 3$ w $\\bar y = 20/5 = 4$.",
+      "en": "$\\bar x = 15/5 = 3$ and $\\bar y = 20/5 = 4$."
+     }
+    },
+    {
+     "title": {
+      "fr": "Les écarts de chaque variable",
+      "dar": "L far9 dyal kol variable",
+      "en": "Deviations of each variable"
+     },
+     "body": {
+      "fr": "x − 3 : **−2 ; −1 ; 0 ; 1 ; 2**\ny − 4 : **−2 ; 0 ; 1 ; 0 ; 1**",
+      "dar": "x − 3 : **−2 ; −1 ; 0 ; 1 ; 2**\ny − 4 : **−2 ; 0 ; 1 ; 0 ; 1**",
+      "en": "x − 3: **−2 ; −1 ; 0 ; 1 ; 2**\ny − 4: **−2 ; 0 ; 1 ; 0 ; 1**"
+     }
+    },
+    {
+     "title": {
+      "fr": "Produits des écarts, puis moyenne",
+      "dar": "Dreb l far9at, 3ad moyenne",
+      "en": "Multiply the deviations, then average"
+     },
+     "body": {
+      "fr": "(−2)(−2) = 4 ; (−1)(0) = 0 ; (0)(1) = 0 ; (1)(0) = 0 ; (2)(1) = 2. Somme = **6**, donc cov = 6 / 5 = **1,2** > 0 : les deux variables **montent ensemble**.",
+      "dar": "(−2)(−2) = 4 ; (−1)(0) = 0 ; 0 ; 0 ; (2)(1) = 2. Majmou3 = **6**, donc cov = 6 / 5 = **1,2** > 0 : jouj variables **kaytl3ou m3a ba3d**.",
+      "en": "(−2)(−2) = 4 ; (−1)(0) = 0 ; 0 ; 0 ; (2)(1) = 2. Sum = **6**, so cov = 6 / 5 = **1.2** > 0: both variables **rise together**."
+     },
+     "tex": "\\mathrm{cov}(x,y) = \\frac{4+0+0+0+2}{5} = 1{,}2"
+    },
+    {
+     "title": {
+      "fr": "Les deux écarts-types",
+      "dar": "Jouj écarts-types",
+      "en": "The two standard deviations"
+     },
+     "body": {
+      "fr": "Carrés des écarts de x : 4, 1, 0, 1, 4 → somme 10 → V(x) = 2 → σx ≈ 1,414. Carrés des écarts de y : 4, 0, 1, 0, 1 → somme 6 → V(y) = 1,2 → σy ≈ 1,095.",
+      "dar": "Mourabba3at x : 4, 1, 0, 1, 4 → 10 → V(x) = 2 → σx ≈ 1,414. Mourabba3at y : 4, 0, 1, 0, 1 → 6 → V(y) = 1,2 → σy ≈ 1,095.",
+      "en": "Squared x deviations: 4, 1, 0, 1, 4 → 10 → V(x) = 2 → σx ≈ 1.414. Squared y deviations: 4, 0, 1, 0, 1 → 6 → V(y) = 1.2 → σy ≈ 1.095."
+     }
+    },
+    {
+     "title": {
+      "fr": "Le coefficient r",
+      "dar": "L coefficient r",
+      "en": "The coefficient r"
+     },
+     "body": {
+      "fr": "r = 1,2 / (1,414 × 1,095) ≈ **0,775**. Proche de +1 → **liaison linéaire positive assez forte**.",
+      "dar": "r = 1,2 / (1,414 × 1,095) ≈ **0,775**. 9rib l +1 → **3ala9a khattiya mojaba 9wiya chwiya**.",
+      "en": "r = 1.2 / (1.414 × 1.095) ≈ **0.775**. Close to +1 → **fairly strong positive linear relationship**."
+     },
+     "tex": "r = \\frac{1{,}2}{\\sqrt{2}\\,\\sqrt{1{,}2}} \\approx 0{,}775"
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Valeur de r",
+     "dar": "Qimat r",
+     "en": "Value of r"
+    },
+    {
+     "fr": "Interprétation",
+     "dar": "Tafsir",
+     "en": "Interpretation"
+    }
+   ],
+   "rows": [
+    [
+     "r = +1",
+     {
+      "fr": "Les points sont exactement sur une droite qui monte",
+      "dar": "Les points kamlin 3la khatt tal3",
+      "en": "Points exactly on a rising line"
+     }
+    ],
+    [
+     "0,7 < r < 1",
+     {
+      "fr": "Liaison positive forte",
+      "dar": "3ala9a mojaba 9wiya",
+      "en": "Strong positive link"
+     }
+    ],
+    [
+     "r ≈ 0",
+     {
+      "fr": "Pas de liaison **linéaire** (il peut y avoir une liaison courbe)",
+      "dar": "Ma kaynach 3ala9a **khattiya** (ymken tkoun mo3wjja)",
+      "en": "No **linear** link (there may be a curved one)"
+     }
+    ],
+    [
+     "r < 0",
+     {
+      "fr": "Quand x monte, y descend",
+      "dar": "Mli x tal3, y habet",
+      "en": "When x rises, y falls"
+     }
+    ],
+    [
+     "r = −1",
+     {
+      "fr": "Exactement sur une droite qui descend",
+      "dar": "Kamlin 3la khatt habet",
+      "en": "Exactly on a falling line"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "**Corrélation ≠ causalité.** Les ventes de glaces et les noyades sont corrélées… parce qu'il fait chaud. r mesure une liaison, pas une cause.",
+    "dar": "**Corrélation ≠ sababiya.** Bi3 d glace w l gher9 mrboutin… 7it kayn s-sh-sh (l7ar). r kay9is 3ala9a, machi sabab.",
+    "en": "**Correlation ≠ causation.** Ice-cream sales and drownings are correlated… because it is hot. r measures a link, not a cause."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. La régression linéaire simple (moindres carrés)",
+    "dar": "6. Régression linéaire simple (moindres carrés)",
+    "en": "6. Simple linear regression (least squares)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "On cherche la **droite** $\\hat y = a\\,x + b$ qui passe « au plus près » des points. « Au plus près » = elle rend **minimale la somme des carrés des erreurs** $\\sum (y_i - \\hat y_i)^2$ : c'est la méthode des **moindres carrés**. **a** est la pente (combien y gagne quand x augmente de 1), **b** l'ordonnée à l'origine (la valeur de y quand x = 0).",
+    "dar": "Kanqellbou 3la **khatt** $\\hat y = a\\,x + b$ li kaydouz « 9rib b zaf » mn les points. « 9rib bzaf » = kay-rje3 **majmou3 mourabba3at l akhta2** $\\sum (y_i - \\hat y_i)^2$ **sghir ma ymken** : hadi hiya tari9at **moindres carrés**. **a** hiya l pente (ch7al katzid y mli x katzid b 1), **b** hiya l qima dyal y mli x = 0.",
+    "en": "We look for the **line** $\\hat y = a\\,x + b$ that passes \"as close as possible\" to the points. \"As close as possible\" = it **minimises the sum of squared errors** $\\sum (y_i - \\hat y_i)^2$: the **least-squares** method. **a** is the slope (how much y gains when x increases by 1), **b** the intercept (the value of y when x = 0)."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "formula",
+   "tex": "a = \\frac{\\mathrm{cov}(x,y)}{V(x)} \\qquad b = \\bar y - a\\,\\bar x \\qquad R^2 = r^2",
+   "body": {
+    "fr": "Les deux formules à connaître par cœur. Le **R²** dit quelle part de la variation de y est expliquée par x (entre 0 et 1).",
+    "dar": "Jouj formules khassek t7fedhom. **R²** kaygoul ch7al mn tbeddol dyal y mfssr b x (bin 0 w 1).",
+    "en": "The two formulas to know by heart. **R²** tells what share of the variation of y is explained by x (between 0 and 1)."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "La droite de régression note = a × heures + b",
+    "dar": "Droite dyal régression note = a × sa3at + b",
+    "en": "The regression line mark = a × hours + b"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Calculer la pente a",
+      "dar": "7seb l pente a",
+      "en": "Compute the slope a"
+     },
+     "body": {
+      "fr": "On réutilise les calculs d'avant : cov(x, y) = 1,2 et V(x) = 2. Donc **a = 0,6**.",
+      "dar": "Kan3awdou nst3mlou l 7sab li fat : cov(x, y) = 1,2 w V(x) = 2. Donc **a = 0,6**.",
+      "en": "Reuse the previous results: cov(x, y) = 1.2 and V(x) = 2. So **a = 0.6**."
+     },
+     "tex": "a = \\frac{1{,}2}{2} = 0{,}6",
+     "why": {
+      "fr": "Chaque heure de révision en plus rapporte en moyenne **0,6 point**.",
+      "dar": "Kol sa3a zayda d révision kat3ti f l moyenne **0,6 point**.",
+      "en": "Each extra revision hour brings on average **0.6 point**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Calculer b",
+      "dar": "7seb b",
+      "en": "Compute b"
+     },
+     "body": {
+      "fr": "La droite passe toujours par le point moyen $(\\bar x, \\bar y) = (3, 4)$. Donc b = 4 − 0,6 × 3 = **2,2**.",
+      "dar": "L khatt dima kaydouz mn n9ta l moyenne $(\\bar x, \\bar y) = (3, 4)$. Donc b = 4 − 0,6 × 3 = **2,2**.",
+      "en": "The line always goes through the mean point $(\\bar x, \\bar y) = (3, 4)$. So b = 4 − 0.6 × 3 = **2.2**."
+     },
+     "tex": "b = 4 - 0{,}6 \\times 3 = 2{,}2"
+    },
+    {
+     "title": {
+      "fr": "Écrire l'équation",
+      "dar": "Kteb l mo3adala",
+      "en": "Write the equation"
+     },
+     "body": {
+      "fr": "**ŷ = 0,6 x + 2,2**.",
+      "dar": "**ŷ = 0,6 x + 2,2**.",
+      "en": "**ŷ = 0.6 x + 2.2**."
+     }
+    },
+    {
+     "title": {
+      "fr": "Prédire",
+      "dar": "Tnba2",
+      "en": "Predict"
+     },
+     "body": {
+      "fr": "Un étudiant qui révise **6 heures** : ŷ = 0,6 × 6 + 2,2 = **5,8 / 10**. C'est l'analyse **prédictive** du Chap 0.",
+      "dar": "Tlmid li rajje3 **6 sa3at** : ŷ = 0,6 × 6 + 2,2 = **5,8 / 10**. Hadi hiya analyse **prédictive** dyal Fasl 0.",
+      "en": "A student who revises **6 hours**: ŷ = 0.6 × 6 + 2.2 = **5.8 / 10**. This is the **predictive** analysis of Ch. 0."
+     }
+    },
+    {
+     "title": {
+      "fr": "Qualité de l'ajustement",
+      "dar": "Jawda dyal l khatt",
+      "en": "Quality of the fit"
+     },
+     "body": {
+      "fr": "R² = r² = 0,775² ≈ **0,60** : les heures de révision expliquent environ **60 %** des différences de notes. Le reste vient d'autres facteurs (sommeil, niveau de départ…).",
+      "dar": "R² = r² ≈ **0,60** : sa3at d révision kayfssrou ta9riban **60 %** mn l far9 f notes. L ba9i jay mn 7wayej khrin (n3as, l mostawa…).",
+      "en": "R² = r² ≈ **0.60**: revision hours explain about **60 %** of the differences in marks. The rest comes from other factors (sleep, prior level…)."
+     }
+    }
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Au contrôle, présente toujours : **1)** les moyennes, **2)** cov(x, y) et V(x), **3)** a puis b, **4)** l'équation, **5)** la prédiction ou l'interprétation de a. Chaque étape rapporte des points, même si le résultat final est faux.",
+    "dar": "F contrôle, dima 9addem : **1)** les moyennes, **2)** cov(x, y) w V(x), **3)** a 3ad b, **4)** l mo3adala, **5)** l prédiction wla tafsir dyal a. Kol étape fiha points, wakha natija l akhira tkoun ghalta.",
+    "en": "In the test, always show: **1)** the means, **2)** cov(x, y) and V(x), **3)** a then b, **4)** the equation, **5)** the prediction or the meaning of a. Every step earns points, even if the final result is wrong."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "7. Les mêmes calculs en Python",
+    "dar": "7. Nefs l 7sabat b Python",
+    "en": "7. The same calculations in Python"
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Position et dispersion d'une série",
+    "dar": "Position w dispersion dyal série",
+    "en": "Location and spread of a series"
+   },
+   "code": "import pandas as pd\n\nnotes = pd.Series([8, 12, 10, 15, 10])\nprint(notes.mean(), notes.median(), notes.mode()[0])\nprint(notes.var(ddof=0))    # divise par n\nprint(notes.var())          # divise par n - 1 (défaut pandas)\nprint(notes.quantile([0.25, 0.75]))",
+   "output": "11.0 10.0 10\n5.6\n7.0\n0.25    10.0\n0.75    12.0\ndtype: float64",
+   "note": {
+    "fr": "Au contrôle, précise toujours le diviseur : **n** (variance de la série, 5,6) ou **n − 1** (variance corrigée, 7,0).",
+    "dar": "F contrôle, goul dima l diviseur : **n** (5,6) wla **n − 1** (corrigée, 7,0).",
+    "en": "In the test always state the divisor: **n** (5.6) or **n − 1** (corrected, 7.0)."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "describe() : le résumé complet",
+    "dar": "describe() : lkhoulasa kamla",
+    "en": "describe(): the full summary"
+   },
+   "code": "print(notes.describe())",
+   "output": "count     5.000000\nmean     11.000000\nstd       2.645751\nmin       8.000000\n25%      10.000000\n50%      10.000000\n75%      12.000000\nmax      15.000000\ndtype: float64",
+   "note": {
+    "fr": "`std` = √7 ≈ 2,646 : pandas utilise **n − 1**. `50%` est la médiane.",
+    "dar": "`std` = √7 ≈ 2,646 : pandas kayst3mel **n − 1**. `50%` hiya médiane.",
+    "en": "`std` = √7 ≈ 2.646: pandas uses **n − 1**. `50%` is the median."
+   }
+  },
+  {
+   "type": "demo",
+   "title": {
+    "fr": "Corrélation et droite des moindres carrés",
+    "dar": "Corrélation w droite dyal moindres carrés",
+    "en": "Correlation and least-squares line"
+   },
+   "code": "import numpy as np\n\ndf = pd.DataFrame({\"heures\": [1, 2, 3, 4, 5], \"note\": [2, 4, 5, 4, 5]})\nprint(round(df[\"heures\"].corr(df[\"note\"]), 4))\na, b = np.polyfit(df[\"heures\"], df[\"note\"], 1)\nprint(round(a, 4), round(b, 4))",
+   "output": "0.7746\n0.6 2.2",
+   "note": {
+    "fr": "On retrouve r ≈ 0,775 et ŷ = 0,6 x + 2,2 calculés à la main plus haut.",
+    "dar": "Nefs r ≈ 0,775 w ŷ = 0,6 x + 2,2 li 7sebna b lyed.",
+    "en": "Same r ≈ 0.775 and ŷ = 0.6 x + 2.2 as computed by hand above."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "dr-01",
+    "dr-03",
+    "dr-05",
+    "dr-08"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Moyenne = somme / n ; médiane = valeur du milieu après tri (résiste aux valeurs aberrantes) ; mode = valeur la plus fréquente.",
+   "dar": "Moyenne = majmou3 / n ; médiane = l west mn b3d tartib ; mode = li ktar tkrar.",
+   "en": "Mean = sum / n; median = middle value after sorting (robust to outliers); mode = most frequent value."
+  },
+  {
+   "fr": "Variance = moyenne des carrés des écarts ; écart-type = sa racine. pandas `.var()`/`.std()` divisent par n − 1, NumPy par n.",
+   "dar": "Variance = moyenne dyal mourabba3at l far9 ; écart-type = jidrha. pandas b n − 1, NumPy b n.",
+   "en": "Variance = mean of squared deviations; standard deviation = its square root. pandas `.var()`/`.std()` use n − 1, NumPy uses n."
+  },
+  {
+   "fr": "Q1, Q3 et IQR = Q3 − Q1 : base de la détection des valeurs aberrantes (Chap 2).",
+   "dar": "Q1, Q3 w IQR = Q3 − Q1 : asas dyal kachf l qiyam l ghriba (Fasl 2).",
+   "en": "Q1, Q3 and IQR = Q3 − Q1: the basis of outlier detection (Ch. 2)."
+  },
+  {
+   "fr": "cov(x, y) = moyenne des produits des écarts ; r = cov / (σx σy), entre −1 et 1 ; corrélation ≠ causalité.",
+   "dar": "cov = moyenne dyal produits ; r bin −1 w 1 ; corrélation ≠ sababiya.",
+   "en": "cov = mean of products of deviations; r = cov / (σx σy), between −1 and 1; correlation ≠ causation."
+  },
+  {
+   "fr": "Moindres carrés : a = cov(x, y) / V(x), b = ȳ − a x̄, R² = r². Exemple : ŷ = 0,6 x + 2,2.",
+   "dar": "Moindres carrés : a = cov / V(x), b = ȳ − a x̄, R² = r².",
+   "en": "Least squares: a = cov(x, y) / V(x), b = ȳ − a x̄, R² = r². Example: ŷ = 0.6 x + 2.2."
+  }
+ ]
+}

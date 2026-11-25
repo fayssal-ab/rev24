@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
+import { grade, pointsOf, rubricOf } from '../lib/grade';
 import { confirmDialog } from '../components/Confirm';
 import { Link } from 'react-router-dom';
 import { useModuleContent } from '../hooks/useModule';
@@ -339,27 +341,60 @@ export default function ExamPage() {
   );
 }
 
-/** Timed past exam paper: statements only, then the full correction and self-grading /20. */
+/**
+ * Timed exam paper: the student writes an answer under each exercise; at the end each answer is marked
+ * automatically against the exercise's marking scheme (lib/grade.ts: full / half / no credit per expected element),
+ * the full correction is shown and the mark can still be adjusted by hand. Answers are kept on the device.
+ */
 function AnnaleRunner({ annale, exercises, module }: { annale: Module['annales'][number]; exercises: Exercise[]; module: string }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const addExam = useStore((s) => s.addExam);
+  const KEY = `g22-annale-${module}-${annale.id}`;
   const [end] = useState(() => Date.now() + annale.minutes * 60_000);
   const [now, setNow] = useState(Date.now());
   const [done, setDone] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, string>>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    } catch {
+      return {};
+    }
+  });
   const [score, setScore] = useState<Record<string, number>>({});
+  useEffect(() => {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(answers));
+    } catch {
+      /* private mode */
+    }
+  }, [KEY, answers]);
   useEffect(() => {
     if (done) return;
     const iv = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(iv);
   }, [done]);
   const left = Math.max(0, end - now);
-  useEffect(() => {
-    if (left === 0) setDone(true);
-  }, [left]);
   const parts = annale.parts.map((p) => ({ ...p, ex: exercises.find((e) => e.id === p.exerciseId)! })).filter((p) => p.ex);
   const groups = [...new Set(parts.map((p) => p.group).filter(Boolean))];
   const max = parts.filter((p) => !p.group || p.group === groups[0]).reduce((a, p) => a + p.points, 0);
+  // automatic marking of every answer
+  const marks = useMemo(
+    () => Object.fromEntries(parts.map((p) => [p.exerciseId, grade(answers[p.exerciseId] ?? '', rubricOf(p.ex, lang))])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [done, lang]
+  );
+  const finish = () => {
+    setDone(true);
+    setScore(Object.fromEntries(parts.map((p) => [p.exerciseId, pointsOf(grade(answers[p.exerciseId] ?? '', rubricOf(p.ex, lang)).ratio, p.points)])));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  useEffect(() => {
+    if (left === 0 && !done) finish();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [left]);
   const total = Object.values(score).reduce((a, b) => a + b, 0);
+  const note = Math.round((total / max) * 20 * 4) / 4;
   return (
     <div className="space-y-4" data-testid="annale-running">
       <PageTitle title={<Txt v={annale.title} />} />
@@ -368,53 +403,112 @@ function AnnaleRunner({ annale, exercises, module }: { annale: Module['annales']
           {String(Math.floor(left / 60000)).padStart(2, '0')}:{String(Math.floor((left % 60000) / 1000)).padStart(2, '0')}
         </span>
         {!done ? (
-          <button className="btn-primary btn-sm ml-auto" onClick={async () => (await confirmDialog({ title: t('exam.confirm') })) && setDone(true)}>
+          <button className="btn-primary btn-sm ml-auto" onClick={async () => (await confirmDialog({ title: t('exam.confirm') })) && finish()} data-testid="annale-submit">
             {t('exam.submit')}
           </button>
         ) : (
-          <span className="ml-auto font-bold">
-            {t('exam.note')} : {Math.round((total / max) * 20 * 4) / 4}/20
+          <span className="ml-auto font-bold" data-testid="annale-note">
+            {t('exam.note')} : {String(note).replace('.', ',')}/20
           </span>
         )}
       </div>
       <Txt v={annale.intro} md className="text-sm text-muted" />
-      {parts.map((p, i) => (
-        <section key={p.exerciseId} className="card space-y-3 p-4">
-          <h2 className="font-semibold">
-            {i + 1}. <Txt v={p.ex.title} /> {p.group && <span className="chip">{p.group}</span>} <span className="text-xs text-muted">({p.points} pts)</span>
-          </h2>
-          <Txt v={p.ex.statement} md />
-          {p.ex.data && <Code code={p.ex.data} lang="text" />}
-          {done && (
-            <div className="space-y-2 border-t border-line pt-3">
-              {p.ex.solutionSteps.map((s, k) => (
-                <div key={k}>
-                  <div className="font-semibold">
-                    <Txt v={s.title} />
-                  </div>
-                  <Txt v={s.body} md />
-                  {s.code && <Code code={s.code} />}
-                  {s.tex && <Tex tex={s.tex} block />}
-                </div>
-              ))}
-              <div className="rounded-xl border border-ok/50 bg-ok/10 p-2">
-                <Txt v={p.ex.finalAnswer} md />
-              </div>
-              <label className="flex items-center gap-2 text-sm">
-                {t('common.score')} :
-                <input type="range" min={0} max={p.points} step={0.5} value={score[p.exerciseId] ?? 0} onChange={(e) => setScore({ ...score, [p.exerciseId]: +e.target.value })} />
-                <span className="font-mono">
-                  {score[p.exerciseId] ?? 0}/{p.points}
-                </span>
-              </label>
-            </div>
-          )}
-        </section>
-      ))}
       {done && (
-        <button className="btn-primary w-full" onClick={() => addExam({ module, date: Date.now(), note: Math.round((total / max) * 20 * 4) / 4, ok: total, total: max, perChapter: {} })}>
-          <Icon name="check" size={16} /> {t('common.validate')}
-        </button>
+        <div className="rounded-xl border border-accent/40 bg-accent/[0.06] p-4 text-sm">
+          <b>{t('grade.title')}</b> {t('grade.how')}
+        </div>
+      )}
+      {parts.map((p, i) => {
+        const m = marks[p.exerciseId];
+        return (
+          <section key={p.exerciseId} className="card space-y-3 p-4" data-testid="annale-part">
+            <h2 className="font-semibold">
+              {i + 1}. <Txt v={p.ex.title} /> {p.group && <span className="chip">{p.group}</span>} <span className="text-xs text-muted">({p.points} pts)</span>
+            </h2>
+            <Txt v={p.ex.statement} md />
+            {p.ex.data && <Code code={p.ex.data} lang="text" />}
+            {/* the answer sheet */}
+            <div>
+              <div className="mb-1 text-xs font-bold uppercase tracking-wide text-muted">{t('grade.answer')}</div>
+              <TextareaAutosize
+                minRows={5}
+                value={answers[p.exerciseId] ?? ''}
+                onChange={(e) => setAnswers({ ...answers, [p.exerciseId]: e.target.value })}
+                readOnly={done}
+                placeholder={t('grade.placeholder')}
+                spellCheck={false}
+                className={`input w-full resize-none font-mono text-[13.5px] leading-relaxed ${done ? 'opacity-80' : ''}`}
+                data-testid="annale-answer"
+              />
+            </div>
+            {done && m && (
+              <div className="space-y-3 border-t border-line pt-3">
+                <div className="rounded-xl border border-line bg-surface2/50 p-3" data-testid="annale-grade">
+                  <div className="mb-2 flex flex-wrap items-center gap-2 text-sm font-semibold">
+                    <Icon name="checkCircle" size={16} className="text-accent" /> {t('grade.auto')} :{' '}
+                    <span className="font-mono">
+                      {String(pointsOf(m.ratio, p.points)).replace('.', ',')}/{p.points}
+                    </span>
+                    <span className="text-xs font-normal text-muted">({Math.round(m.ratio * 100)} %)</span>
+                  </div>
+                  <ul className="space-y-1 text-sm">
+                    {m.items.map((it, k) => (
+                      <li key={k} className="flex items-start gap-2">
+                        <span className={`mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full text-[10px] font-bold text-white ${it.status === 'ok' ? 'bg-ok' : it.status === 'part' ? 'bg-warn' : 'bg-bad'}`}>
+                          {it.status === 'ok' ? '✓' : it.status === 'part' ? '~' : '✗'}
+                        </span>
+                        <span className={it.status === 'miss' ? 'text-muted' : ''}>{it.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {p.ex.solutionSteps.map((s, k) => (
+                  <div key={k}>
+                    <div className="font-semibold">
+                      <Txt v={s.title} />
+                    </div>
+                    <Txt v={s.body} md />
+                    {s.code && <Code code={s.code} />}
+                    {s.tex && <Tex tex={s.tex} block />}
+                  </div>
+                ))}
+                <div className="rounded-xl border border-ok/50 bg-ok/10 p-2">
+                  <Txt v={p.ex.finalAnswer} md />
+                </div>
+                <label className="flex items-center gap-2 text-sm">
+                  {t('grade.adjust')} :
+                  <input type="range" min={0} max={p.points} step={0.25} value={score[p.exerciseId] ?? 0} onChange={(e) => setScore({ ...score, [p.exerciseId]: +e.target.value })} />
+                  <span className="font-mono">
+                    {String(score[p.exerciseId] ?? 0).replace('.', ',')}/{p.points}
+                  </span>
+                </label>
+              </div>
+            )}
+          </section>
+        );
+      })}
+      {done && (
+        <div className="flex flex-wrap gap-2">
+          <button
+            className="btn-primary flex-1"
+            disabled={saved}
+            onClick={() => {
+              addExam({ module, date: Date.now(), note, ok: total, total: max, perChapter: {} });
+              setSaved(true);
+            }}
+          >
+            <Icon name="check" size={16} /> {saved ? t('grade.saved') : t('common.validate')}
+          </button>
+          <button
+            className="btn-ghost"
+            onClick={() => {
+              localStorage.removeItem(KEY);
+              window.location.reload();
+            }}
+          >
+            <Icon name="reset" size={16} /> {t('grade.again')}
+          </button>
+        </div>
       )}
     </div>
   );

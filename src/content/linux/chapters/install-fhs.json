@@ -1,0 +1,662 @@
+{
+ "id": "install-fhs",
+ "module": "linux",
+ "order": 1.5,
+ "title": {
+  "fr": "Chap 1 — Installation de RHEL 9 et FHS",
+  "dar": "Fasl 1 — Installation dyal RHEL 9 w FHS",
+  "en": "Ch. 1 — Installing RHEL 9 and the FHS"
+ },
+ "summary": {
+  "fr": "Au CC : RHEL, Fedora et CentOS, configuration requise, partitionnement recommandé (/boot, /, /home, swap, /var, /boot/efi), schéma du TP1, et la norme FHS répertoire par répertoire.",
+  "dar": "F CC : RHEL, Fedora, CentOS, configuration, partitions (/boot, /, /home, swap, /var, /boot/efi), schéma TP1, w FHS répertoire b répertoire.",
+  "en": "In the test: RHEL, Fedora and CentOS, requirements, recommended partitioning, the TP1 scheme, and the FHS directory by directory."
+ },
+ "estimatedMinutes": 40,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. **RHEL** = distribution entreprise (payante en binaire, sources libres → **CentOS**) ; **Fedora** = son laboratoire communautaire.\n2. Minimum : **64 bits, 1 Go RAM (2 recommandés), 10 Go disque (20 recommandés)**.\n3. Partitions recommandées : **/**, **/home**, **/boot**, **/boot/efi** (UEFI) et **swap** ; en option **/var** et **/usr**.\n4. **FHS 3.0 (2015)** : une seule arborescence qui part de **/** ; **tout est fichier**.\n5. Règle d'or : **/etc** = configuration, **/var** = données variables, **/usr** = programmes, **/dev** = périphériques, **/proc** = noyau en mémoire.",
+    "dar": "1. **RHEL** = entreprise (sources libres → **CentOS**) ; **Fedora** = laboratoire.\n2. Minimum : **64 bits, 1 Go RAM, 10 Go disque**.\n3. Partitions : **/**, **/home**, **/boot**, **/boot/efi**, **swap** ; option **/var**, **/usr**.\n4. **FHS 3.0** : chajara wa7da mn **/** ; **kolchi fichier**.\n5. **/etc** config, **/var** variable, **/usr** programmes, **/dev** périphériques, **/proc** noyau.",
+    "en": "1. **RHEL** = enterprise (open sources → **CentOS**); **Fedora** = its lab.\n2. Minimum: **64-bit, 1 GB RAM, 10 GB disk**.\n3. Partitions: **/**, **/home**, **/boot**, **/boot/efi**, **swap**; optional **/var**, **/usr**.\n4. **FHS 3.0**: one tree from **/**; **everything is a file**.\n5. **/etc** config, **/var** variable, **/usr** programs, **/dev** devices, **/proc** kernel."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "[Fiche PDF des commandes du CC à imprimer](/docs/linux-cc-commandes.pdf) (documents papier autorisés)",
+    "dar": "[Fiche PDF dyal commandes](/docs/linux-cc-commandes.pdf) (documents autorisés)",
+    "en": "[Printable command sheet (PDF)](/docs/linux-cc-commandes.pdf) (paper documents allowed)"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "CC : **documents papier autorisés**. Le correcteur attend donc des réponses **justifiées et appliquées** (un schéma de partitions argumenté, le bon répertoire avec un exemple, la bonne commande), pas une définition recopiée.",
+    "dar": "CC : **documents autorisés** : jawab **mbarer w mtab9** (schéma m3allel, répertoire + mithal, commande), machi définition mnsoukha.",
+    "en": "Test: **paper documents allowed**, so answers must be **justified and applied**, not copied definitions."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. RHEL, Fedora, CentOS",
+    "dar": "1. RHEL, Fedora, CentOS",
+    "en": "1. RHEL, Fedora, CentOS"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Distribution",
+     "dar": "Distribution",
+     "en": "Distribution"
+    },
+    {
+     "fr": "Ce qu'il faut retenir",
+     "dar": "Chnou t3a9el",
+     "en": "What to remember"
+    }
+   ],
+   "rows": [
+    [
+     "RHEL",
+     {
+      "fr": "Red Hat Enterprise Linux : stable, sécurisée, **support professionnel** ; la plus utilisée en entreprise. Binaire payant (abonnement), mais **Red Hat Developer Subscription** gratuite pour un développeur.",
+      "dar": "Stable, support pro ; payante walakin Developer Subscription gratuite.",
+      "en": "Stable, pro support; paid binaries but a free Developer Subscription."
+     }
+    ],
+    [
+     "Fedora",
+     {
+      "fr": "Distribution **communautaire** : **laboratoire** des nouveautés intégrées plus tard dans RHEL.",
+      "dar": "**Laboratoire** dyal RHEL.",
+      "en": "Community **lab** for RHEL."
+     }
+    ],
+    [
+     "CentOS",
+     {
+      "fr": "Recompilation des **sources libres** de RHEL (les sources sont publiques mais doivent être compilées).",
+      "dar": "Sources dyal RHEL m-compilyin.",
+      "en": "Rebuilt from RHEL's open sources."
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lf-01"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Avant d'installer : configuration et machine virtuelle",
+    "dar": "2. 9bel installation : configuration w VM",
+    "en": "2. Before installing: requirements and VM"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Ressource",
+     "dar": "Ressource",
+     "en": "Resource"
+    },
+    {
+     "fr": "Minimum (cours)",
+     "dar": "Minimum (cours)",
+     "en": "Minimum (course)"
+    },
+    {
+     "fr": "VM du TP1",
+     "dar": "VM TP1",
+     "en": "TP1 VM"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Processeur",
+      "dar": "Processeur",
+      "en": "CPU"
+     },
+     "64 bits",
+     "2 vCPU"
+    ],
+    [
+     {
+      "fr": "Mémoire",
+      "dar": "Mémoire",
+      "en": "Memory"
+     },
+     {
+      "fr": "1 Go (2 Go recommandés)",
+      "dar": "1 Go (2 recommandés)",
+      "en": "1 GB (2 recommended)"
+     },
+     "4 Go"
+    ],
+    [
+     {
+      "fr": "Disque",
+      "dar": "Disque",
+      "en": "Disk"
+     },
+     {
+      "fr": "10 Go (20 Go recommandés)",
+      "dar": "10 Go (20 recommandés)",
+      "en": "10 GB (20 recommended)"
+     },
+     {
+      "fr": "100 Go (SATA/SCSI, dynamique)",
+      "dar": "100 Go",
+      "en": "100 GB"
+     }
+    ],
+    [
+     {
+      "fr": "Réseau",
+      "dar": "Réseau",
+      "en": "Network"
+     },
+     "—",
+     "NAT ou Bridge"
+    ],
+    [
+     {
+      "fr": "Média",
+      "dar": "Média",
+      "en": "Media"
+     },
+     "—",
+     "rhel-9.6-x86_64-boot.iso"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Étapes du TP1 : démarrer la VM → **Install Red Hat Enterprise Linux 9** → langue Français → clavier Français, source détectée depuis l'ISO, logiciels **Server with GUI**, destination : disque de 100 Go en **partitionnement manuel** → mot de passe **root** fort + un utilisateur administrateur → après le redémarrage, **instantané « Installation_propre »**.",
+    "dar": "TP1 : Install RHEL 9 → Français → **Server with GUI** → **partitionnement manuel** → mot de passe root + user admin → **snapshot « Installation_propre »**.",
+    "en": "TP1: Install RHEL 9 → French → **Server with GUI** → **manual partitioning** → root password + admin user → **snapshot \"Installation_propre\"**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lf-02"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Le partitionnement",
+    "dar": "3. Partitionnement",
+    "en": "3. Partitioning"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Une **partition** est une portion du disque traitée comme un disque indépendant. RHEL 9 propose des partitions standard ou des volumes **LVM** (`rhel-root`, `rhel-home`, `rhel-swap`), redimensionnables plus tard.",
+    "dar": "**Partition** = jiha mn disque b7al disque mosta9il. RHEL 9 : standard wla **LVM**.",
+    "en": "A **partition** is a slice of the disk used as an independent disk. RHEL 9: standard or **LVM** volumes."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Partition",
+     "dar": "Partition",
+     "en": "Partition"
+    },
+    {
+     "fr": "Taille recommandée",
+     "dar": "Taille",
+     "en": "Size"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    },
+    {
+     "fr": "À retenir",
+     "dar": "T3a9el",
+     "en": "Remember"
+    }
+   ],
+   "rows": [
+    [
+     "/boot",
+     {
+      "fr": "≥ 1 Gio",
+      "dar": "≥ 1 Gio",
+      "en": "≥ 1 GiB"
+     },
+     {
+      "fr": "Noyau et fichiers de démarrage",
+      "dar": "Noyau w démarrage",
+      "en": "Kernel and boot files"
+     },
+     {
+      "fr": "Séparée **obligatoire**",
+      "dar": "Séparée **obligatoire**",
+      "en": "Separate, **mandatory**"
+     }
+    ],
+    [
+     "/",
+     {
+      "fr": "≥ 10 Gio",
+      "dar": "≥ 10 Gio",
+      "en": "≥ 10 GiB"
+     },
+     {
+      "fr": "Racine du système",
+      "dar": "Racine",
+      "en": "System root"
+     },
+     {
+      "fr": "≠ /root (home de root)",
+      "dar": "≠ /root",
+      "en": "≠ /root"
+     }
+    ],
+    [
+     "/home",
+     {
+      "fr": "≥ 1 Gio",
+      "dar": "≥ 1 Gio",
+      "en": "≥ 1 GiB"
+     },
+     {
+      "fr": "Données utilisateurs",
+      "dar": "Data users",
+      "en": "User data"
+     },
+     {
+      "fr": "Upgrades sans perte de données",
+      "dar": "Bla ma ttlef data",
+      "en": "Upgrades without data loss"
+     }
+    ],
+    [
+     "swap",
+     {
+      "fr": "Selon la RAM",
+      "dar": "Selon RAM",
+      "en": "Depends on RAM"
+     },
+     {
+      "fr": "Mémoire virtuelle",
+      "dar": "Mémoire virtuelle",
+      "en": "Virtual memory"
+     },
+     {
+      "fr": "Pas de point de montage",
+      "dar": "Bla point de montage",
+      "en": "No mount point"
+     }
+    ],
+    [
+     "/var",
+     {
+      "fr": "≥ 5 Go",
+      "dar": "≥ 5 Go",
+      "en": "≥ 5 GB"
+     },
+     {
+      "fr": "Logs, cache, paquets",
+      "dar": "Logs, cache",
+      "en": "Logs, cache, packages"
+     },
+     {
+      "fr": "Critique pour un serveur web",
+      "dar": "Mohim l serveur web",
+      "en": "Critical for web servers"
+     }
+    ],
+    [
+     "/usr",
+     {
+      "fr": "5–10 Go",
+      "dar": "5–10 Go",
+      "en": "5–10 GB"
+     },
+     {
+      "fr": "Logiciels système",
+      "dar": "Logiciels",
+      "en": "System software"
+     },
+     {
+      "fr": "10 Go pour une station de développement",
+      "dar": "10 Go l dév",
+      "en": "10 GB for development"
+     }
+    ],
+    [
+     "/boot/efi",
+     {
+      "fr": "200 Mo",
+      "dar": "200 Mo",
+      "en": "200 MB"
+     },
+     {
+      "fr": "Partition système EFI (ESP)",
+      "dar": "ESP",
+      "en": "EFI system partition"
+     },
+     {
+      "fr": "UEFI seulement, en vfat",
+      "dar": "UEFI, vfat",
+      "en": "UEFI only, vfat"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Schéma imposé au TP1 pour **100 Go** : /boot **1 Go** · /boot/efi **1 Go** · / **20 Go** · /home **50 Go** · /var **24 Go** · swap **4 Go**.",
+    "dar": "TP1 (100 Go) : 1 · 1 · 20 · 50 · 24 · 4.",
+    "en": "TP1 (100 GB): 1 · 1 · 20 · 50 · 24 · 4."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "lsblk -f            # disques, partitions, LVM, systèmes de fichiers, montages\ndf -hT              # espace utilisé / libre par système de fichiers\ncat /etc/fstab      # montages faits au démarrage\nswapon --show       # swap actif",
+   "caption": {
+    "fr": "Vérifier le partitionnement après l'installation",
+    "dar": "T2akked mn partitions",
+    "en": "Check partitioning after install"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Partitionnement automatique : RHEL ne crée une **/home séparée** que si le disque est assez grand (le cours : **55 Gio minimum**).",
+    "dar": "Automatique : /home séparée ghir ila disque ≥ **55 Gio**.",
+    "en": "Automatic: separate /home only on disks ≥ **55 GiB**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lf-03",
+    "lf-04",
+    "lf-05",
+    "lf-14",
+    "lf-15"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. La norme FHS",
+    "dar": "4. Norme FHS",
+    "en": "4. The FHS"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "**FHS** (*Filesystem Hierarchy Standard*) définit l'arborescence et le contenu des principaux répertoires de GNU/Linux et de la plupart des Unix. Version actuelle **3.0 (juin 2015)**. Un système Unix a **une seule arborescence** (arbre) qui part de **/**, et **tout est fichier** (même les disques et les processus).",
+    "dar": "**FHS** kat-7added chajara w contenu dyal répertoires. **3.0 (2015)**. Chajara **wa7da** mn **/**, **kolchi fichier**.",
+    "en": "**FHS** defines the tree and content of the main directories. **3.0 (2015)**. **One** tree from **/**, **everything is a file**."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "FHSTree"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Répertoire",
+     "dar": "Répertoire",
+     "en": "Directory"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
+    }
+   ],
+   "rows": [
+    [
+     "/bin",
+     {
+      "fr": "Commandes de base utilisables par tous",
+      "dar": "Commandes de base l kolchi",
+      "en": "Basic commands for everyone"
+     },
+     "ls, cp, cat"
+    ],
+    [
+     "/sbin",
+     {
+      "fr": "Commandes d'administration (root)",
+      "dar": "Commandes admin",
+      "en": "Admin commands"
+     },
+     "fdisk, useradd, reboot"
+    ],
+    [
+     "/etc",
+     {
+      "fr": "Configuration du système",
+      "dar": "Configuration",
+      "en": "Configuration"
+     },
+     "/etc/passwd, /etc/fstab"
+    ],
+    [
+     "/home",
+     {
+      "fr": "Répertoires personnels des utilisateurs",
+      "dar": "Home dyal users",
+      "en": "Users' homes"
+     },
+     "/home/amine"
+    ],
+    [
+     "/root",
+     {
+      "fr": "Home de l'administrateur root",
+      "dar": "Home dyal root",
+      "en": "root's home"
+     },
+     {
+      "fr": "accès root seulement",
+      "dar": "ghir root",
+      "en": "root only"
+     }
+    ],
+    [
+     "/var",
+     {
+      "fr": "Données variables",
+      "dar": "Data li katbeddel",
+      "en": "Variable data"
+     },
+     "/var/log, /var/cache"
+    ],
+    [
+     "/tmp",
+     {
+      "fr": "Fichiers temporaires (vidé au démarrage)",
+      "dar": "Temporaires",
+      "en": "Temporary files"
+     },
+     {
+      "fr": "sticky bit t",
+      "dar": "sticky bit",
+      "en": "sticky bit"
+     }
+    ],
+    [
+     "/usr",
+     {
+      "fr": "Programmes, bibliothèques, docs (Unix System Resources)",
+      "dar": "Programmes w bibliothèques",
+      "en": "Programs and libraries"
+     },
+     "/usr/bin, /usr/share"
+    ],
+    [
+     "/lib",
+     {
+      "fr": "Bibliothèques partagées et modules du noyau",
+      "dar": "Bibliothèques w modules",
+      "en": "Shared libraries, kernel modules"
+     },
+     "/lib/modules"
+    ],
+    [
+     "/boot",
+     {
+      "fr": "Noyau, initramfs, GRUB : indispensables au démarrage",
+      "dar": "Noyau, initramfs, GRUB",
+      "en": "Kernel, initramfs, GRUB"
+     },
+     "vmlinuz-*, grub2/"
+    ],
+    [
+     "/dev",
+     {
+      "fr": "Périphériques sous forme de fichiers spéciaux",
+      "dar": "Périphériques",
+      "en": "Devices as special files"
+     },
+     "/dev/sda, /dev/null"
+    ],
+    [
+     "/proc",
+     {
+      "fr": "Virtuel : processus et noyau, en mémoire",
+      "dar": "Virtuel : processus w noyau",
+      "en": "Virtual: processes and kernel"
+     },
+     "/proc/cpuinfo, /proc/1"
+    ],
+    [
+     "/media",
+     {
+      "fr": "Montage automatique des supports amovibles",
+      "dar": "Amovibles automatique",
+      "en": "Auto-mounted removable media"
+     },
+     {
+      "fr": "clé USB",
+      "dar": "clé USB",
+      "en": "USB stick"
+     }
+    ],
+    [
+     "/mnt",
+     {
+      "fr": "Montages temporaires faits par l'admin",
+      "dar": "Montage manuel",
+      "en": "Manual temporary mounts"
+     },
+     "mount /dev/sdb1 /mnt"
+    ],
+    [
+     "/opt",
+     {
+      "fr": "Logiciels additionnels (tiers)",
+      "dar": "Logiciels tiers",
+      "en": "Add-on software"
+     },
+     "/opt/google"
+    ],
+    [
+     "/run",
+     {
+      "fr": "Données d'exécution depuis le démarrage (PID, sockets)",
+      "dar": "Data d exécution",
+      "en": "Runtime data"
+     },
+     "/run/media"
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "cd / && ls -l               # la racine (les répertoires du tableau)\nls -ld /bin /sbin /lib      # RHEL 9 : liens vers /usr/bin, /usr/sbin, /usr/lib\nfile /bin/ls /dev/sda       # exécutable · fichier spécial bloc\nls /proc | head; cat /proc/version\nls -ld /tmp                 # drwxrwxrwt : le t = sticky bit",
+   "caption": {
+    "fr": "Explorer le FHS (TP1, partie 3)",
+    "dar": "Explorer FHS",
+    "en": "Explore the FHS"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Pour répondre vite : demande-toi **« ça change souvent ? »** (→ /var), **« ça se configure ? »** (→ /etc), **« c'est un programme ? »** (→ /usr/bin ou /usr/sbin), **« c'est du matériel ? »** (→ /dev), **« c'est le noyau en direct ? »** (→ /proc).",
+    "dar": "Sowel rasek : katbeddel ? → /var ; config ? → /etc ; programme ? → /usr ; matériel ? → /dev ; noyau ? → /proc.",
+    "en": "Ask: changes often? → /var; configuration? → /etc; program? → /usr; hardware? → /dev; live kernel? → /proc."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "lf-06",
+    "lf-07",
+    "lf-08",
+    "lf-09",
+    "lf-10",
+    "lf-11",
+    "lf-12",
+    "lf-13",
+    "lf-16"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "RHEL (entreprise, support) ← Fedora (laboratoire) ; CentOS = sources de RHEL recompilées.",
+   "dar": "RHEL ← Fedora ; CentOS = sources RHEL.",
+   "en": "RHEL ← Fedora; CentOS = rebuilt RHEL sources."
+  },
+  {
+   "fr": "Minimum 64 bits, 1 Go RAM, 10 Go disque ; TP1 : 2 vCPU, 4 Go, 100 Go, Server with GUI, partitionnement manuel.",
+   "dar": "64 bits, 1 Go, 10 Go ; TP1 : 2 vCPU, 4 Go, 100 Go.",
+   "en": "64-bit, 1 GB, 10 GB; TP1: 2 vCPU, 4 GB, 100 GB."
+  },
+  {
+   "fr": "Partitions : /boot ≥1 Gio, / ≥10 Gio, /home, swap, /var ≥5 Go, /boot/efi 200 Mo (UEFI, vfat) ; TP1 : 1/1/20/50/24/4 Go.",
+   "dar": "/boot, /, /home, swap, /var, /boot/efi ; TP1 1/1/20/50/24/4.",
+   "en": "/boot, /, /home, swap, /var, /boot/efi; TP1 1/1/20/50/24/4."
+  },
+  {
+   "fr": "FHS 3.0 (2015) : /etc config, /var variable, /usr programmes, /dev périphériques, /proc virtuel, /tmp vidé, /root ≠ /.",
+   "dar": "FHS : etc, var, usr, dev, proc, tmp, root ≠ /.",
+   "en": "FHS: etc, var, usr, dev, proc, tmp, root ≠ /."
+  }
+ ]
+}

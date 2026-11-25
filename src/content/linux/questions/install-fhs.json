@@ -1,0 +1,1095 @@
+[
+ {
+  "id": "lf-01",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi Red Hat a-t-il créé Fedora ?",
+   "dar": "3lach Red Hat dar Fedora ?",
+   "en": "Why did Red Hat create Fedora?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Comme laboratoire communautaire : les nouveautés y sont testées avant d'entrer dans RHEL",
+     "dar": "Laboratoire communautaire : jdid kayt-testa tma 9bel RHEL",
+     "en": "As a community lab: new features are tested there before reaching RHEL"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Pour remplacer RHEL",
+     "dar": "Bach t3awed RHEL",
+     "en": "To replace RHEL"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour les serveurs uniquement",
+     "dar": "Ghir l serveurs",
+     "en": "For servers only"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Parce que RHEL est fermé",
+     "dar": "7it RHEL msdoud",
+     "en": "Because RHEL is closed source"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "RHEL n'est pas livrée gratuitement en binaire. **Fedora** est la distribution communautaire qui sert de **laboratoire** : les fonctionnalités y sont développées puis intégrées plus tard à RHEL.",
+   "dar": "RHEL ma katjich gratuite. **Fedora** hiya **laboratoire** dyal RHEL.",
+   "en": "RHEL binaries are not free. **Fedora** is the community **lab** whose features later reach RHEL."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Fedora ne remplace pas RHEL : elle la précède.",
+    "dar": "Fedora kat-sbe9 RHEL, ma kat3awedhach.",
+    "en": "Fedora precedes RHEL, it does not replace it."
+   },
+   "c": {
+    "fr": "Fedora est une distribution généraliste (postes et serveurs).",
+    "dar": "Fedora 3amma.",
+    "en": "Fedora is general purpose."
+   },
+   "d": {
+    "fr": "Les sources de RHEL sont libres et accessibles (d'où CentOS).",
+    "dar": "Sources dyal RHEL m7loulin (CentOS).",
+    "en": "RHEL sources are open (hence CentOS)."
+   }
+  },
+  "tags": [
+   "installation"
+  ]
+ },
+ {
+  "id": "lf-02",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Configuration minimale indiquée dans le cours pour installer RHEL 9 ?",
+   "dar": "Configuration minimale dyal RHEL 9 f cours ?",
+   "en": "Minimum configuration for RHEL 9 in the course?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Processeur 64 bits, 1 Go de RAM (2 Go recommandés), 10 Go de disque (20 Go recommandés)",
+     "dar": "64 bits, 1 Go RAM (2 recommandés), 10 Go disque (20 recommandés)",
+     "en": "64-bit CPU, 1 GB RAM (2 recommended), 10 GB disk (20 recommended)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "32 bits, 512 Mo, 4 Go",
+     "dar": "32 bits, 512 Mo, 4 Go",
+     "en": "32-bit, 512 MB, 4 GB"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "64 bits, 8 Go RAM, 100 Go",
+     "dar": "64 bits, 8 Go, 100 Go",
+     "en": "64-bit, 8 GB, 100 GB"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Aucune contrainte",
+     "dar": "Walou",
+     "en": "No constraint"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Slide « Configuration requise » : **64 bits**, **1 Go** de RAM (2 Go ou plus recommandés), **10 Go** de disque (20 Go ou plus recommandés). Le TP1 utilise une VM plus confortable : 2 vCPU, 4 Go, 100 Go.",
+   "dar": "**64 bits**, **1 Go** RAM (2 recommandés), **10 Go** disque (20 recommandés). TP1 : 2 vCPU, 4 Go, 100 Go.",
+   "en": "**64-bit**, **1 GB** RAM (2+ recommended), **10 GB** disk (20+ recommended). TP1 VM: 2 vCPU, 4 GB, 100 GB."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "RHEL 9 n'existe qu'en 64 bits.",
+    "dar": "RHEL 9 ghir 64 bits.",
+    "en": "RHEL 9 is 64-bit only."
+   },
+   "c": {
+    "fr": "C'est la VM du TP (confortable), pas le minimum.",
+    "dar": "Hadi VM dyal TP, machi minimum.",
+    "en": "That is the TP VM, not the minimum."
+   },
+   "d": {
+    "fr": "Il y a un minimum.",
+    "dar": "Kayn minimum.",
+    "en": "There is a minimum."
+   }
+  },
+  "tags": [
+   "installation"
+  ]
+ },
+ {
+  "id": "lf-03",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Quelles partitions le cours recommande-t-il au minimum ?",
+   "dar": "Ach men partitions kay-recommandi cours ?",
+   "en": "Which partitions does the course recommend at least?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "/",
+     "dar": "/",
+     "en": "/"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "/home",
+     "dar": "/home",
+     "en": "/home"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "/boot",
+     "dar": "/boot",
+     "en": "/boot"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "/boot/efi (UEFI)",
+     "dar": "/boot/efi (UEFI)",
+     "en": "/boot/efi (UEFI)"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "swap",
+     "dar": "swap",
+     "en": "swap"
+    }
+   },
+   {
+    "id": "f",
+    "text": {
+     "fr": "/proc",
+     "dar": "/proc",
+     "en": "/proc"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "« L'installation nécessite au moins une partition, mais on recommande au moins : **/**, **/home**, **/boot**, **/boot/efi** et **swap**. » `/proc` est un système de fichiers **virtuel** créé par le noyau : on ne le partitionne pas.",
+   "dar": "**/**, **/home**, **/boot**, **/boot/efi**, **swap**. `/proc` virtuel.",
+   "en": "**/**, **/home**, **/boot**, **/boot/efi**, **swap**. `/proc` is virtual."
+  },
+  "wrongExplanations": {
+   "f": {
+    "fr": "/proc est virtuel (créé en mémoire par le noyau), jamais une partition.",
+    "dar": "/proc virtuel.",
+    "en": "/proc is virtual, never a partition."
+   }
+  },
+  "tags": [
+   "partitionnement"
+  ]
+ },
+ {
+  "id": "lf-04",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle taille recommandée pour /boot sur RHEL 9 ?",
+   "dar": "Ch7al l /boot ?",
+   "en": "Recommended size for /boot on RHEL 9?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Au moins 1 Gio",
+     "dar": "1 Gio 3la l a9al",
+     "en": "At least 1 GiB"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "100 Mio",
+     "dar": "100 Mio",
+     "en": "100 MiB"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "10 Gio",
+     "dar": "10 Gio",
+     "en": "10 GiB"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Égale à la RAM",
+     "dar": "Kif RAM",
+     "en": "Same as RAM"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "/boot contient le **noyau** (vmlinuz) et l'**initramfs** de chaque version installée : **au moins 1 Gio**, partition **séparée obligatoire**.",
+   "dar": "/boot = noyau + initramfs : **1 Gio** 3la l a9al, séparée.",
+   "en": "/boot holds kernels and initramfs: **at least 1 GiB**, separate."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Trop petit : plusieurs noyaux + initramfs ne tiennent pas.",
+    "dar": "Sghira bzaf.",
+    "en": "Too small."
+   },
+   "c": {
+    "fr": "C'est la taille conseillée pour / (racine).",
+    "dar": "Hadi dyal /.",
+    "en": "That is the size for /."
+   },
+   "d": {
+    "fr": "C'est la règle (ancienne) du swap.",
+    "dar": "Hadi dyal swap.",
+    "en": "That is the (old) swap rule."
+   }
+  },
+  "tags": [
+   "partitionnement"
+  ]
+ },
+ {
+  "id": "lf-05",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi séparer /home de / ?",
+   "dar": "3lach nfr9ou /home 3la / ?",
+   "en": "Why separate /home from /?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Séparer données système et utilisateurs : réinstaller / mettre à jour le système sans perdre les données",
+     "dar": "Nfr9ou système w data : nbeddlou système bla ma ntelfou data",
+     "en": "Separate system and user data: reinstall/upgrade without losing data"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "C'est obligatoire pour démarrer",
+     "dar": "Darouri l démarrage",
+     "en": "Required to boot"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Pour accélérer le noyau",
+     "dar": "Bach noyau ykoun sri3",
+     "en": "To speed up the kernel"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Pour que root ait un dossier",
+     "dar": "Bach root y3ndou dossier",
+     "en": "So root has a folder"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Slide : « Séparation données système/utilisateurs — permet upgrades **sans perte de données** ». Si / est réinstallée ou pleine, /home reste intacte.",
+   "dar": "**Bla ma ntelfou data** mli nbeddlou système.",
+   "en": "Upgrades **without data loss**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le système démarre avec une seule partition /.",
+    "dar": "Système kaybda b / wa7da.",
+    "en": "The system boots with / only."
+   },
+   "c": {
+    "fr": "Aucun rapport avec le noyau.",
+    "dar": "Ma 3ndha 3la9a.",
+    "en": "Unrelated to the kernel."
+   },
+   "d": {
+    "fr": "Le dossier de root est /root, dans /.",
+    "dar": "/root f /.",
+    "en": "root's home is /root, inside /."
+   }
+  },
+  "tags": [
+   "partitionnement"
+  ]
+ },
+ {
+  "id": "lf-06",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Ne pas confondre : que désigne /root ?",
+   "dar": "Ma tkhaltch : /root chnou ?",
+   "en": "Don't mix up: what is /root?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le répertoire personnel de l'administrateur root",
+     "dar": "Dossier personnel dyal root",
+     "en": "The root user's home directory"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "La racine du système de fichiers",
+     "dar": "Racine dyal système",
+     "en": "The filesystem root"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La partition de démarrage",
+     "dar": "Partition démarrage",
+     "en": "The boot partition"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Le dossier des commandes",
+     "dar": "Dossier commandes",
+     "en": "The commands folder"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**/** (slash) est la **racine** de l'arborescence ; **/root** est le **home de l'utilisateur root** (accessible à root seulement). Le cours le souligne : « Ne pas confondre avec /root ».",
+   "dar": "**/** = racine ; **/root** = home dyal root.",
+   "en": "**/** is the root of the tree; **/root** is root's home."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "La racine, c'est /.",
+    "dar": "Racine = /.",
+    "en": "The root is /."
+   },
+   "c": {
+    "fr": "C'est /boot.",
+    "dar": "/boot.",
+    "en": "That is /boot."
+   },
+   "d": {
+    "fr": "Ce sont /bin et /usr/bin.",
+    "dar": "/bin w /usr/bin.",
+    "en": "That is /bin and /usr/bin."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-07",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que signifie FHS ?",
+   "dar": "FHS chnou ?",
+   "en": "What does FHS stand for?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Filesystem Hierarchy Standard",
+     "dar": "Filesystem Hierarchy Standard",
+     "en": "Filesystem Hierarchy Standard"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "File Hosting Service",
+     "dar": "File Hosting Service",
+     "en": "File Hosting Service"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Fast Hard-disk System",
+     "dar": "Fast Hard-disk System",
+     "en": "Fast Hard-disk System"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Filesystem Home Structure",
+     "dar": "Filesystem Home Structure",
+     "en": "Filesystem Home Structure"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**Filesystem Hierarchy Standard** : norme qui définit l'arborescence et le contenu des principaux répertoires des systèmes GNU/Linux et de la plupart des Unix. Version actuelle : **3.0 (juin 2015)**.",
+   "dar": "**Filesystem Hierarchy Standard**, version **3.0 (2015)**.",
+   "en": "**Filesystem Hierarchy Standard**, version **3.0 (2015)**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Hors sujet.",
+    "dar": "Machi hadi.",
+    "en": "Off topic."
+   },
+   "c": {
+    "fr": "Inventé.",
+    "dar": "Mkhtar3.",
+    "en": "Made up."
+   },
+   "d": {
+    "fr": "Presque, mais H = Hierarchy.",
+    "dar": "H = Hierarchy.",
+    "en": "H = Hierarchy."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-08",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où se trouvent les fichiers de configuration du système ?",
+   "dar": "Fin kaynin fichiers dyal configuration ?",
+   "en": "Where are the system configuration files?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "/etc",
+     "dar": "/etc",
+     "en": "/etc"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "/var",
+     "dar": "/var",
+     "en": "/var"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "/usr",
+     "dar": "/usr",
+     "en": "/usr"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "/opt",
+     "dar": "/opt",
+     "en": "/opt"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**/etc** : configuration du système (ex. `/etc/passwd`, `/etc/fstab`, `/etc/hostname`, `/etc/default/grub`, `/etc/ssh/`).",
+   "dar": "**/etc** = configuration.",
+   "en": "**/etc** = configuration."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "/var : données variables (logs, cache, spool).",
+    "dar": "/var = data li katbeddel.",
+    "en": "/var: variable data."
+   },
+   "c": {
+    "fr": "/usr : programmes et bibliothèques (lecture seule).",
+    "dar": "/usr = programmes.",
+    "en": "/usr: programs."
+   },
+   "d": {
+    "fr": "/opt : logiciels additionnels.",
+    "dar": "/opt = logiciels zayda.",
+    "en": "/opt: add-on software."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-09",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où sont écrits les journaux (logs) du système ?",
+   "dar": "Fin kaytktbou logs ?",
+   "en": "Where are system logs written?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "/var/log",
+     "dar": "/var/log",
+     "en": "/var/log"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "/etc/log",
+     "dar": "/etc/log",
+     "en": "/etc/log"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "/tmp/log",
+     "dar": "/tmp/log",
+     "en": "/tmp/log"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "/proc/log",
+     "dar": "/proc/log",
+     "en": "/proc/log"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**/var** = données **variables** : `/var/log` (journaux), `/var/cache` (cache, ex. dnf), `/var/spool` (files d'attente), `/var/www`… D'où l'intérêt d'une partition /var séparée sur un serveur : des logs qui gonflent ne remplissent pas /.",
+   "dar": "**/var/log**. /var séparée bach logs ma y3emrouch /.",
+   "en": "**/var/log**. A separate /var keeps logs from filling /."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "/etc ne contient que de la configuration.",
+    "dar": "/etc = config.",
+    "en": "/etc is config only."
+   },
+   "c": {
+    "fr": "/tmp est vidé au redémarrage.",
+    "dar": "/tmp kaytkhwa.",
+    "en": "/tmp is cleared at reboot."
+   },
+   "d": {
+    "fr": "/proc est virtuel (processus, noyau).",
+    "dar": "/proc virtuel.",
+    "en": "/proc is virtual."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-10",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que représentent les fichiers de /dev ?",
+   "dar": "Chnou houma fichiers dyal /dev ?",
+   "en": "What do the files in /dev represent?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les périphériques (disques, terminaux…) sous forme de fichiers spéciaux",
+     "dar": "Périphériques f chkl fichiers spéciaux",
+     "en": "Devices (disks, terminals…) as special files"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les programmes en développement",
+     "dar": "Programmes f développement",
+     "en": "Programs under development"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Les fichiers supprimés",
+     "dar": "Fichiers mms7in",
+     "en": "Deleted files"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "La documentation",
+     "dar": "Documentation",
+     "en": "Documentation"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "« Tout est fichier » : `/dev/sda` (1er disque), `/dev/sda1` (1re partition), `/dev/nvme0n1`, `/dev/tty1`, `/dev/null` (poubelle), `/dev/zero`…",
+   "dar": "« Kolchi fichier » : /dev/sda, /dev/null…",
+   "en": "\"Everything is a file\": /dev/sda, /dev/null…"
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "« dev » = devices, pas development.",
+    "dar": "dev = devices.",
+    "en": "dev = devices."
+   },
+   "c": {
+    "fr": "Il n'y a pas de corbeille système.",
+    "dar": "Ma kaynach corbeille.",
+    "en": "No system trash."
+   },
+   "d": {
+    "fr": "La doc est dans /usr/share/doc et man.",
+    "dar": "Doc f /usr/share/doc.",
+    "en": "Docs are in /usr/share/doc."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-11",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que contient /proc ?",
+   "dar": "Chnou kayn f /proc ?",
+   "en": "What is in /proc?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Un système de fichiers virtuel : informations sur les processus et le noyau, en mémoire",
+     "dar": "Système virtuel : processus w noyau, f mémoire",
+     "en": "A virtual filesystem: process and kernel information, in memory"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Les programmes installés",
+     "dar": "Programmes",
+     "en": "Installed programs"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Les fichiers de démarrage",
+     "dar": "Fichiers démarrage",
+     "en": "Boot files"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Les home des utilisateurs",
+     "dar": "Home dyal users",
+     "en": "User homes"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "/proc n'existe pas sur le disque : le noyau le crée **en mémoire**. Un dossier par PID (`/proc/1` = systemd), plus `/proc/cpuinfo`, `/proc/meminfo`, `/proc/version`…",
+   "dar": "/proc f **mémoire** : /proc/<PID>, cpuinfo, meminfo.",
+   "en": "/proc lives **in memory**: /proc/<PID>, cpuinfo, meminfo."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Les programmes sont dans /usr/bin.",
+    "dar": "/usr/bin.",
+    "en": "Programs are in /usr/bin."
+   },
+   "c": {
+    "fr": "C'est /boot.",
+    "dar": "/boot.",
+    "en": "That is /boot."
+   },
+   "d": {
+    "fr": "C'est /home.",
+    "dar": "/home.",
+    "en": "That is /home."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-12",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Quelle différence entre /mnt et /media ?",
+   "dar": "Far9 bin /mnt w /media ?",
+   "en": "Difference between /mnt and /media?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "/media : montage automatique des supports amovibles (USB, DVD) ; /mnt : montages temporaires faits à la main par l'admin",
+     "dar": "/media = amovibles automatique ; /mnt = montage manuel",
+     "en": "/media: automatic removable media; /mnt: manual temporary mounts"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "/mnt est pour les utilisateurs, /media pour root",
+     "dar": "/mnt users, /media root",
+     "en": "/mnt for users, /media for root"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "/media contient les vidéos",
+     "dar": "/media = vidéos",
+     "en": "/media holds videos"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Clé USB branchée → montée automatiquement sous **/media/<user>/<label>** (ou /run/media sur RHEL). **/mnt** sert aux montages ponctuels faits par l'administrateur (`mount /dev/sdb1 /mnt`).",
+   "dar": "/media automatique ; /mnt manuel.",
+   "en": "/media automatic; /mnt manual."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Les deux ont un usage différent.",
+    "dar": "Kayn far9.",
+    "en": "They differ."
+   },
+   "c": {
+    "fr": "Ce n'est pas une question de droits.",
+    "dar": "Machi droits.",
+    "en": "Not about permissions."
+   },
+   "d": {
+    "fr": "« media » = supports amovibles.",
+    "dar": "media = amovibles.",
+    "en": "\"media\" = removable media."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-13",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que devient le contenu de /tmp après un redémarrage ?",
+   "dar": "Chnou kaywli /tmp mor redémarrage ?",
+   "en": "What happens to /tmp after a reboot?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Il est effacé (fichiers temporaires)",
+     "dar": "Kaytmse7",
+     "en": "It is wiped"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Il est sauvegardé dans /var",
+     "dar": "Kayt-sauvegarda f /var",
+     "en": "Saved to /var"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il est déplacé dans /home",
+     "dar": "Kaymchi /home",
+     "en": "Moved to /home"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Rien ne change",
+     "dar": "Walou",
+     "en": "Nothing changes"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "/tmp = fichiers **temporaires**, accessibles en écriture par tous (sticky bit `t` : chacun ne supprime que ses fichiers). Sur RHEL 9 il est nettoyé au démarrage / périodiquement (`systemd-tmpfiles`). Pour des temporaires qui survivent : **/var/tmp**.",
+   "dar": "/tmp **temporaire**, kaytmse7. Li bghiti yb9a : /var/tmp.",
+   "en": "/tmp is **temporary**, wiped. Persistent temps: /var/tmp."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "/var/tmp est un autre dossier, rien n'y est copié.",
+    "dar": "/var/tmp dossier akhor.",
+    "en": "/var/tmp is separate."
+   },
+   "c": {
+    "fr": "Non.",
+    "dar": "La.",
+    "en": "No."
+   },
+   "d": {
+    "fr": "Il est vidé.",
+    "dar": "Kaytkhwa.",
+    "en": "It is emptied."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ },
+ {
+  "id": "lf-14",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les partitions et disques sous forme d'arbre (taille, point de montage).",
+   "dar": "Werri disques w partitions b chkl chajara.",
+   "en": "Show disks and partitions as a tree (size, mount point)."
+  },
+  "answer": [
+   "lsblk",
+   "lsblk -f"
+  ],
+  "explanation": {
+   "fr": "`lsblk` affiche les disques (`sda`, `nvme0n1`), leurs partitions et volumes LVM (`rhel-root`, `rhel-home`, `rhel-swap`) avec taille et **point de montage**. `lsblk -f` ajoute le type de système de fichiers (xfs, vfat, swap).",
+   "dar": "`lsblk` = disques + partitions + montage.",
+   "en": "`lsblk` = disks, partitions, mount points."
+  },
+  "wrongExplanations": {
+   "fdisk -l": {
+    "fr": "Fonctionne (en root), mais n'affiche pas les points de montage.",
+    "dar": "Bla points de montage.",
+    "en": "No mount points."
+   },
+   "df -h": {
+    "fr": "Montre l'espace utilisé des systèmes **montés**, pas l'arbre des disques.",
+    "dar": "Espace utilisé ghir.",
+    "en": "Shows used space only."
+   }
+  },
+  "tags": [
+   "partitionnement"
+  ]
+ },
+ {
+  "id": "lf-15",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche l'espace disque utilisé et libre de chaque système de fichiers monté, en unités lisibles.",
+   "dar": "Werri espace mst3mel w khawi b unités wad7in.",
+   "en": "Show used and free space of each mounted filesystem in human units."
+  },
+  "answer": [
+   "df -h",
+   "df -hT",
+   "df -Th"
+  ],
+  "explanation": {
+   "fr": "`df -h` (human) : taille, utilisé, disponible et % pour /, /home, /boot, /var… `-T` ajoute le type (xfs).",
+   "dar": "`df -h`.",
+   "en": "`df -h`."
+  },
+  "wrongExplanations": {
+   "du -sh": {
+    "fr": "du mesure la taille d'un dossier, pas l'espace libre des partitions.",
+    "dar": "du = taille dossier.",
+    "en": "du measures a folder."
+   },
+   "df": {
+    "fr": "Sans -h, les tailles sont en blocs de 1 Ko.",
+    "dar": "Bla -h, blocs.",
+    "en": "Without -h, 1K blocks."
+   }
+  },
+  "tags": [
+   "partitionnement"
+  ]
+ },
+ {
+  "id": "lf-16",
+  "module": "linux",
+  "chapter": "install-fhs",
+  "difficulty": 3,
+  "kind": "single",
+  "prompt": {
+   "fr": "Sur RHEL 9, que constate-t-on avec `ls -ld /bin /sbin /lib` ?",
+   "dar": "F RHEL 9, `ls -ld /bin /sbin /lib` chnou kaywerri ?",
+   "en": "On RHEL 9, what does `ls -ld /bin /sbin /lib` show?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Ce sont des liens symboliques vers /usr/bin, /usr/sbin et /usr/lib",
+     "dar": "Liens symboliques l /usr/bin, /usr/sbin, /usr/lib",
+     "en": "Symlinks to /usr/bin, /usr/sbin, /usr/lib"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Ce sont des partitions",
+     "dar": "Partitions",
+     "en": "Partitions"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Ils sont vides",
+     "dar": "Khawyin",
+     "en": "Empty"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Ils n'existent pas",
+     "dar": "Ma kaynin",
+     "en": "They don't exist"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "RHEL 9 applique la fusion **/usr** (« usrmerge ») : `/bin -> usr/bin`, `/sbin -> usr/sbin`, `/lib -> usr/lib`, `/lib64 -> usr/lib64`. Le rôle FHS reste le même : /bin = commandes de base pour tous, /sbin = commandes d'administration.",
+   "dar": "RHEL 9 : `/bin -> usr/bin` (usrmerge). Rôle FHS nefso.",
+   "en": "RHEL 9 merged /usr: `/bin -> usr/bin`. Same FHS role."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Pas des partitions : des liens (l en tête de ls -l).",
+    "dar": "Liens (l).",
+    "en": "Symlinks (l)."
+   },
+   "c": {
+    "fr": "Ils pointent vers des dossiers pleins de commandes.",
+    "dar": "Fihom commandes.",
+    "en": "They point to full folders."
+   },
+   "d": {
+    "fr": "Ils existent (en tant que liens).",
+    "dar": "Kaynin (liens).",
+    "en": "They exist (as links)."
+   }
+  },
+  "tags": [
+   "fhs"
+  ]
+ }
+]

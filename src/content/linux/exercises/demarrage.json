@@ -1,0 +1,243 @@
+[
+ {
+  "id": "lx-d-1",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Raconter le démarrage d'une machine UEFI",
+   "dar": "Ch7a démarrage UEFI",
+   "en": "Explain a UEFI boot"
+  },
+  "statement": {
+   "fr": "Une VM RHEL 9 démarre en UEFI. Décrivez chaque étape, de la mise sous tension jusqu'à l'écran de connexion graphique, en citant à chaque fois le **fichier** ou le **composant** concerné.",
+   "dar": "VM RHEL 9 UEFI : ch7a kol marhala mn tension 7ta écran de connexion, b **fichier** wla **composant**.",
+   "en": "A RHEL 9 VM boots in UEFI. Describe each step up to the graphical login, naming the **file** or **component**."
+  },
+  "hints": [
+   {
+    "fr": "5 étapes : firmware, chargeur, noyau, PID 1, cible.",
+    "dar": "5 marahil.",
+    "en": "5 steps."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponse",
+     "dar": "Jawab",
+     "en": "Answer"
+    },
+    "body": {
+     "fr": "1) **UEFI** : POST, lit la **GPT**, monte l'**ESP /boot/efi**, lance **/boot/efi/EFI/redhat/grubx64.efi**. 2) **GRUB2** lit **/boot/grub2/grub.cfg** (menu, GRUB_TIMEOUT), charge **/boot/vmlinuz-…** et **/boot/initramfs-….img**, passe les paramètres (GRUB_CMDLINE_LINUX). 3) **Noyau** : détecte le matériel, monte l'**initramfs** comme racine temporaire, charge les pilotes, monte le vrai **/**. 4) Lance **PID 1 = systemd** (/usr/lib/systemd/systemd). 5) systemd démarre en **parallèle** les unités jusqu'à **default.target** (ici graphical.target → gdm).",
+     "dar": "UEFI → GRUB2 (grub.cfg, vmlinuz, initramfs) → noyau (monte /) → systemd → graphical.target.",
+     "en": "UEFI → GRUB2 → kernel → systemd → graphical.target."
+    },
+    "code": "[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS\nls /boot /boot/efi/EFI/redhat\ncat /proc/cmdline\nsystemctl get-default\nsystemd-analyze blame | head"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "UEFI (GPT, ESP, grubx64.efi) → GRUB2 (/boot/grub2/grub.cfg → vmlinuz + initramfs) → noyau (initramfs puis /) → systemd PID 1 → default.target.",
+   "dar": "UEFI → GRUB2 → noyau → systemd → cible.",
+   "en": "UEFI → GRUB2 → kernel → systemd → target."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier l'initramfs ou le confondre avec /boot.",
+    "dar": "Nsiti initramfs.",
+    "en": "Forgetting initramfs."
+   },
+   {
+    "fr": "Dire que GRUB lance les services.",
+    "dar": "GRUB kaylanci services : ghalat.",
+    "en": "Saying GRUB starts services."
+   }
+  ]
+ },
+ {
+  "id": "lx-d-2",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Modifier le menu GRUB2",
+   "dar": "Beddel menu GRUB2",
+   "en": "Change the GRUB2 menu"
+  },
+  "statement": {
+   "fr": "1) Affichez le menu GRUB pendant **10 secondes**. 2) Démarrez par défaut sur la **dernière entrée choisie**. 3) Gardez l'option noyau **quiet** et retirez **rhgb**. 4) Appliquez et vérifiez. Donnez les commandes et les lignes modifiées.",
+   "dar": "1) Menu **10 s**. 2) Par défaut : **akhir entrée**. 3) Zid **quiet**, 7iyed **rhgb**. 4) Appliquer w t2akked.",
+   "en": "1) Menu for **10 s**. 2) Default: **last chosen entry**. 3) Keep **quiet**, remove **rhgb**. 4) Apply and check."
+  },
+  "hints": [
+   {
+    "fr": "Tout se règle dans /etc/default/grub, puis une seule commande génère grub.cfg.",
+    "dar": "/etc/default/grub, mn ba3d grub2-mkconfig.",
+    "en": "/etc/default/grub, then grub2-mkconfig."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Modifier /etc/default/grub",
+     "dar": "Beddel /etc/default/grub",
+     "en": "Edit /etc/default/grub"
+    },
+    "body": {
+     "fr": "Sauvegarde, puis lignes : GRUB_TIMEOUT=10 · GRUB_DEFAULT=saved · GRUB_TIMEOUT_STYLE=menu · GRUB_CMDLINE_LINUX sans rhgb, avec quiet.",
+     "dar": "TIMEOUT=10, DEFAULT=saved, CMDLINE bla rhgb.",
+     "en": "TIMEOUT=10, DEFAULT=saved, CMDLINE without rhgb."
+    },
+    "code": "cp -p /etc/default/grub /etc/default/grub.bak\nvi /etc/default/grub\n# GRUB_TIMEOUT=10\n# GRUB_DEFAULT=saved\n# GRUB_TIMEOUT_STYLE=menu\n# GRUB_CMDLINE_LINUX=\"... quiet\"     (rhgb retiré)"
+   },
+   {
+    "title": {
+     "fr": "Appliquer et vérifier",
+     "dar": "Appliquer w t2akked",
+     "en": "Apply and check"
+    },
+    "body": {
+     "fr": "Régénérer grub.cfg puis contrôler.",
+     "dar": "grub2-mkconfig, mn ba3d grep.",
+     "en": "Regenerate and check."
+    },
+    "code": "grub2-mkconfig -o /boot/grub2/grub.cfg\ngrep -E \"timeout|default\" /boot/grub2/grub.cfg | head\ngrubby --info=DEFAULT     # options du noyau par défaut\nreboot                    # puis cat /proc/cmdline"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc/default/grub : GRUB_TIMEOUT=10, GRUB_DEFAULT=saved, GRUB_CMDLINE_LINUX sans rhgb ; grub2-mkconfig -o /boot/grub2/grub.cfg ; vérif : grubby --info=DEFAULT, /proc/cmdline.",
+   "dar": "TIMEOUT, DEFAULT, CMDLINE ; grub2-mkconfig.",
+   "en": "TIMEOUT, DEFAULT, CMDLINE; grub2-mkconfig."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Éditer /boot/grub2/grub.cfg directement.",
+    "dar": "Tbeddel grub.cfg.",
+    "en": "Editing grub.cfg."
+   },
+   {
+    "fr": "Oublier -o : rien n'est écrit.",
+    "dar": "Nsiti -o.",
+    "en": "Forgetting -o."
+   }
+  ]
+ },
+ {
+  "id": "lx-d-3",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "title": {
+   "fr": "Créer et activer un service systemd",
+   "dar": "Dir service systemd",
+   "en": "Create and enable a systemd service"
+  },
+  "statement": {
+   "fr": "Le script **/usr/local/bin/sauvegarde.sh** doit tourner comme service : démarré après le réseau, relancé s'il échoue, lancé à chaque démarrage en mode multi-utilisateurs. 1) Écrivez l'unité **sauvegarde.service** et dites où la placer. 2) Donnez les commandes pour la prendre en compte, la lancer maintenant et au démarrage. 3) Comment voir son état et ses logs ?",
+   "dar": "Script **/usr/local/bin/sauvegarde.sh** : service mor réseau, restart ila fchel, f kol démarrage. 1) Kteb **sauvegarde.service** w fin. 2) Commandes. 3) État w logs.",
+   "en": "Make **/usr/local/bin/sauvegarde.sh** a service: after network, restart on failure, at every multi-user boot. 1) Write the unit and where. 2) Commands. 3) Status and logs."
+  },
+  "hints": [
+   {
+    "fr": "Trois sections : [Unit], [Service], [Install].",
+    "dar": "3 sections.",
+    "en": "Three sections."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "1) Le fichier",
+     "dar": "1) Fichier",
+     "en": "1) The file"
+    },
+    "body": {
+     "fr": "Dans **/etc/systemd/system/** (unités de l'admin).",
+     "dar": "F **/etc/systemd/system/**.",
+     "en": "In **/etc/systemd/system/**."
+    },
+    "code": "# /etc/systemd/system/sauvegarde.service\n[Unit]\nDescription=Sauvegarde\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=/usr/local/bin/sauvegarde.sh\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target"
+   },
+   {
+    "title": {
+     "fr": "2–3) Commandes",
+     "dar": "2–3) Commandes",
+     "en": "2–3) Commands"
+    },
+    "body": {
+     "fr": "daemon-reload après toute création/modification ; enable --now = démarrage + maintenant.",
+     "dar": "daemon-reload, enable --now, status, journalctl -u.",
+     "en": "daemon-reload, enable --now, status, journalctl -u."
+    },
+    "code": "systemctl daemon-reload\nsystemctl enable --now sauvegarde.service\nsystemctl status sauvegarde\nsystemctl is-enabled sauvegarde; systemctl is-active sauvegarde\njournalctl -u sauvegarde -f"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "/etc/systemd/system/sauvegarde.service ([Unit] After=network.target · [Service] ExecStart, Restart=on-failure · [Install] WantedBy=multi-user.target) ; daemon-reload ; enable --now ; status ; journalctl -u sauvegarde.",
+   "dar": "[Unit]/[Service]/[Install] ; daemon-reload ; enable --now.",
+   "en": "[Unit]/[Service]/[Install]; daemon-reload; enable --now."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier daemon-reload : systemd ne voit pas le nouveau fichier.",
+    "dar": "Nsiti daemon-reload.",
+    "en": "Forgetting daemon-reload."
+   },
+   {
+    "fr": "Oublier [Install] : enable n'a rien à activer.",
+    "dar": "Bla [Install].",
+    "en": "No [Install] section."
+   }
+  ]
+ },
+ {
+  "id": "lx-d-4",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 3,
+  "title": {
+   "fr": "Diagnostiquer une panne avec journalctl",
+   "dar": "Diagnostic b journalctl",
+   "en": "Troubleshoot with journalctl"
+  },
+  "statement": {
+   "fr": "14h30 : le service web **nginx** est inaccessible depuis environ 30 minutes, et la machine a redémarré seule cette nuit. Donnez, dans l'ordre, les commandes pour : 1) voir l'état du service ; 2) les erreurs des 30 dernières minutes ; 3) les 50 derniers messages de nginx ; 4) les erreurs du démarrage précédent ; 5) relancer et surveiller en direct.",
+   "dar": "nginx ma khddamch hadi 30 d9i9a, w machine dart reboot f lil. Commandes : 1) état ; 2) erreurs 30 min ; 3) 50 messages nginx ; 4) erreurs boot li 9bel ; 5) restart w surveillance.",
+   "en": "nginx down for ~30 min and the machine rebooted overnight. Commands: 1) status; 2) last 30 min errors; 3) last 50 nginx lines; 4) previous boot errors; 5) restart and follow."
+  },
+  "hints": [
+   {
+    "fr": "Filtres : -u (unité), -p (priorité), --since, -n, -b, -f.",
+    "dar": "-u, -p, --since, -n, -b, -f.",
+    "en": "-u, -p, --since, -n, -b, -f."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Commandes",
+     "dar": "Commandes",
+     "en": "Commands"
+    },
+    "body": {
+     "fr": "Du plus général au plus ciblé, puis action et vérification.",
+     "dar": "Mn 3am l khass.",
+     "en": "From general to specific."
+    },
+    "code": "systemctl status nginx                       # 1\njournalctl --since \"30 minutes ago\" -p err   # 2\njournalctl -u nginx -n 50                    # 3\njournalctl -b -1 -p err                      # 4\nsystemctl restart nginx                      # 5\njournalctl -u nginx -f"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "status nginx · journalctl --since \"30 minutes ago\" -p err · journalctl -u nginx -n 50 · journalctl -b -1 -p err · systemctl restart nginx + journalctl -u nginx -f.",
+   "dar": "status, --since, -n 50, -b -1, restart + -f.",
+   "en": "status, --since, -n 50, -b -1, restart + -f."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Redémarrer la machine avant de lire les logs (on perd des indices).",
+    "dar": "Reboot 9bel logs.",
+    "en": "Rebooting before reading logs."
+   }
+  ]
+ }
+]

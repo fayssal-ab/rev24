@@ -1,0 +1,1391 @@
+[
+ {
+  "id": "ld-01",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 1,
+  "kind": "order",
+  "prompt": {
+   "fr": "Remets les étapes du démarrage dans l'ordre.",
+   "dar": "Rettab marahil dyal démarrage.",
+   "en": "Put the boot steps in order."
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Mise sous tension, firmware BIOS/UEFI (POST)",
+     "dar": "Tension, BIOS/UEFI (POST)",
+     "en": "Power on, BIOS/UEFI firmware (POST)"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Chargeur de démarrage GRUB2",
+     "dar": "GRUB2",
+     "en": "GRUB2 boot loader"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Noyau Linux + initramfs",
+     "dar": "Noyau + initramfs",
+     "en": "Linux kernel + initramfs"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Processus PID 1 (systemd)",
+     "dar": "PID 1 (systemd)",
+     "en": "PID 1 (systemd)"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": "Cible par défaut atteinte : système prêt",
+     "dar": "Cible par défaut : système wajed",
+     "en": "Default target reached: ready"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "e"
+  ],
+  "explanation": {
+   "fr": "Power on → **Pre-OS (BIOS/UEFI)** → **Boot loader (GRUB2)** → **Linux kernel** (+ initramfs) → **PID 1 (systemd)** → Ready.",
+   "dar": "BIOS/UEFI → GRUB2 → noyau → systemd → prêt.",
+   "en": "BIOS/UEFI → GRUB2 → kernel → systemd → ready."
+  },
+  "tags": [
+   "sequence"
+  ]
+ },
+ {
+  "id": "ld-02",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que fait le BIOS avant de chercher le système ?",
+   "dar": "Chnou kaydir BIOS 9bel ?",
+   "en": "What does the BIOS do first?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le POST : tests du matériel (mémoire, clavier, disques…)",
+     "dar": "POST : tests dyal matériel",
+     "en": "POST: hardware self-tests"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Il monte /",
+     "dar": "Kaymonti /",
+     "en": "Mounts /"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Il lance systemd",
+     "dar": "Kaylanci systemd",
+     "en": "Starts systemd"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Il lit /etc/fstab",
+     "dar": "Kay9ra fstab",
+     "en": "Reads fstab"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**POST** (*Power-On Self Test*) : recensement et tests du matériel, puis recherche du **MBR** (secteur 0) sur le périphérique de démarrage choisi.",
+   "dar": "**POST**, mn ba3d **MBR**.",
+   "en": "**POST**, then the **MBR**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le noyau monte / (après l'initramfs).",
+    "dar": "Noyau li kaymonti.",
+    "en": "The kernel mounts /."
+   },
+   "c": {
+    "fr": "systemd est lancé par le noyau.",
+    "dar": "Noyau kaylanci systemd.",
+    "en": "The kernel starts systemd."
+   },
+   "d": {
+    "fr": "fstab est lu par systemd.",
+    "dar": "systemd kay9ra fstab.",
+    "en": "systemd reads fstab."
+   }
+  },
+  "tags": [
+   "bios"
+  ]
+ },
+ {
+  "id": "ld-03",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Que contient le MBR ?",
+   "dar": "Chnou fih MBR ?",
+   "en": "What is in the MBR?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Les 512 premiers octets du disque : code d'amorçage (étape 1) + table des partitions",
+     "dar": "512 octets : code d amorçage + table des partitions",
+     "en": "First 512 bytes: boot code (stage 1) + partition table"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Le noyau",
+     "dar": "Noyau",
+     "en": "The kernel"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "La configuration de GRUB",
+     "dar": "Config GRUB",
+     "en": "GRUB configuration"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "La partition /boot",
+     "dar": "/boot",
+     "en": "The /boot partition"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**MBR** (*Master Boot Record*) = **secteur 0, 512 octets** : le **code d'amorçage** (chargeur étape 1) et la **table des partitions** (+ la signature 0x55AA). Le chargeur étape 1 lance l'étape 2 depuis /boot (GRUB).",
+   "dar": "**512 octets** : code + table.",
+   "en": "**512 bytes**: code + table."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le noyau est dans /boot.",
+    "dar": "Noyau f /boot.",
+    "en": "Kernel is in /boot."
+   },
+   "c": {
+    "fr": "grub.cfg est dans /boot/grub2.",
+    "dar": "grub.cfg f /boot/grub2.",
+    "en": "grub.cfg is in /boot/grub2."
+   },
+   "d": {
+    "fr": "/boot est une partition, pas un secteur.",
+    "dar": "/boot partition.",
+    "en": "/boot is a partition."
+   }
+  },
+  "tags": [
+   "bios"
+  ]
+ },
+ {
+  "id": "ld-04",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Avantage de UEFI + GPT sur BIOS + MBR ?",
+   "dar": "Mzya dyal UEFI + GPT ?",
+   "en": "Advantage of UEFI + GPT?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Démarrer sur des disques/partitions de plus de 2 To, plus de partitions, interface et sécurité modernes",
+     "dar": "> 2 To, partitions ktar, sécurité",
+     "en": "> 2 TB disks, more partitions, modern security"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Démarrer sans noyau",
+     "dar": "Bla noyau",
+     "en": "Boot without a kernel"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Ne plus avoir besoin de GRUB",
+     "dar": "Bla GRUB",
+     "en": "No GRUB needed"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Être compatible 16 bits",
+     "dar": "16 bits",
+     "en": "16-bit compatibility"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "UEFI remplace le BIOS : interface graphique, réseau, sécurité intégrée, écrit en C, et support **GPT** (remplace le MBR) pour démarrer sur des partitions de **plus de 2 To**. Il lit la GPT et monte l'**ESP** (**/boot/efi**) qui contient `EFI/redhat/grubx64.efi`.",
+   "dar": "UEFI : **GPT** (> 2 To), ESP = **/boot/efi**.",
+   "en": "UEFI: **GPT** (> 2 TB), ESP = **/boot/efi**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Le noyau reste indispensable.",
+    "dar": "Noyau darouri.",
+    "en": "The kernel is still needed."
+   },
+   "c": {
+    "fr": "UEFI charge GRUB (grubx64.efi).",
+    "dar": "UEFI kaychargi GRUB.",
+    "en": "UEFI loads GRUB."
+   },
+   "d": {
+    "fr": "C'est l'inverse : UEFI est moderne.",
+    "dar": "L3aks.",
+    "en": "The opposite."
+   }
+  },
+  "tags": [
+   "uefi"
+  ]
+ },
+ {
+  "id": "ld-05",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 1,
+  "kind": "single",
+  "prompt": {
+   "fr": "Rôle principal d'un chargeur de démarrage ?",
+   "dar": "Dor dyal chargeur ?",
+   "en": "Main role of a boot loader?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Charger le noyau (et l'initramfs) en mémoire et le lancer",
+     "dar": "Chargi noyau w initramfs w lanci",
+     "en": "Load the kernel (and initramfs) and start it"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Créer les utilisateurs",
+     "dar": "Users",
+     "en": "Create users"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Monter /home",
+     "dar": "Monter /home",
+     "en": "Mount /home"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Lancer les services",
+     "dar": "Services",
+     "en": "Start services"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Il fait la **transition entre le matériel et le noyau** ; il peut aussi proposer plusieurs noyaux/OS et passer des **paramètres au noyau**. Chargeurs : GRUB, **GRUB2** (actuel), LILO (abandonné).",
+   "dar": "**Transition** matériel → noyau.",
+   "en": "**Bridge** hardware → kernel."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ça se fait avec useradd.",
+    "dar": "useradd.",
+    "en": "That is useradd."
+   },
+   "c": {
+    "fr": "C'est systemd (fstab).",
+    "dar": "systemd.",
+    "en": "systemd does it."
+   },
+   "d": {
+    "fr": "C'est systemd.",
+    "dar": "systemd.",
+    "en": "systemd does it."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "ld-06",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Après avoir modifié /etc/default/grub, que faut-il faire ?",
+   "dar": "Mor tbeddel /etc/default/grub ?",
+   "en": "After editing /etc/default/grub?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Régénérer grub.cfg avec grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "dar": "grub2-mkconfig -o /boot/grub2/grub.cfg",
+     "en": "Regenerate with grub2-mkconfig -o /boot/grub2/grub.cfg"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Rien, c'est lu au démarrage",
+     "dar": "Walou",
+     "en": "Nothing"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Éditer grub.cfg à la main",
+     "dar": "Beddel grub.cfg b yeddek",
+     "en": "Edit grub.cfg by hand"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Redémarrer systemd",
+     "dar": "Restart systemd",
+     "en": "Restart systemd"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "GRUB2 ne lit que **/boot/grub2/grub.cfg**, fichier **généré** à partir de **/etc/default/grub** et des scripts **/etc/grub.d/** par **grub2-mkconfig**. On n'édite jamais grub.cfg.",
+   "dar": "**grub2-mkconfig -o /boot/grub2/grub.cfg**.",
+   "en": "**grub2-mkconfig -o /boot/grub2/grub.cfg**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "/etc/default/grub n'est pas lu au démarrage.",
+    "dar": "Ma kayt9rach.",
+    "en": "Not read at boot."
+   },
+   "c": {
+    "fr": "Écrasé à la prochaine génération.",
+    "dar": "Ghaytmse7.",
+    "en": "Overwritten."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Ma 3ndha 3la9a.",
+    "en": "Unrelated."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "ld-07",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "GRUB_DEFAULT=saved signifie :",
+   "dar": "GRUB_DEFAULT=saved ya3ni :",
+   "en": "GRUB_DEFAULT=saved means:"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Démarrer par défaut la dernière entrée enregistrée (activée)",
+     "dar": "Akhir entrée msjjla",
+     "en": "Boot the last saved entry"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Démarrer la première entrée",
+     "dar": "Lowla",
+     "en": "The first entry"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Sauvegarder grub.cfg",
+     "dar": "Sauvegarder",
+     "en": "Back up grub.cfg"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Désactiver le menu",
+     "dar": "Bla menu",
+     "en": "Hide the menu"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "GRUB_DEFAULT accepte un **numéro** (0 = première entrée), un **nom** d'entrée ou **saved** (dernière entrée enregistrée dans grubenv). GRUB_TIMEOUT = secondes avant le choix par défaut.",
+   "dar": "Numéro, nom wla **saved**.",
+   "en": "Number, name or **saved**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est GRUB_DEFAULT=0.",
+    "dar": "GRUB_DEFAULT=0.",
+    "en": "That is 0."
+   },
+   "c": {
+    "fr": "Aucun rapport avec une sauvegarde.",
+    "dar": "Machi sauvegarde.",
+    "en": "Not a backup."
+   },
+   "d": {
+    "fr": "C'est GRUB_TIMEOUT_STYLE=hidden / timeout.",
+    "dar": "TIMEOUT_STYLE.",
+    "en": "That is TIMEOUT_STYLE."
+   }
+  },
+  "tags": [
+   "grub"
+  ]
+ },
+ {
+  "id": "ld-08",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Pourquoi le noyau a-t-il besoin de l'initramfs ?",
+   "dar": "3lach noyau khasso initramfs ?",
+   "en": "Why does the kernel need initramfs?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Il contient les pilotes (modules) nécessaires pour accéder au vrai / et le monter",
+     "dar": "Fih pilotes bach ymonti / l7a9i9i",
+     "en": "It holds the drivers needed to mount the real /"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Il contient les comptes utilisateurs",
+     "dar": "Fih users",
+     "en": "User accounts"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "C'est la configuration de GRUB",
+     "dar": "Config GRUB",
+     "en": "GRUB config"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "C'est le swap",
+     "dar": "Swap",
+     "en": "It is swap"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Les pilotes sont des **modules** (fichiers) : pour les charger il faut un système de fichiers… déjà monté. L'**initramfs** (*initial RAM filesystem*, ancien nom initrd) est une **racine temporaire en mémoire**, chargée par GRUB avec le noyau (`vmlinuz`), qui contient le strict minimum (pilotes disque, LVM, chiffrement) pour monter le vrai **/** puis lancer `/init`.",
+   "dar": "**Racine temporaire** f mémoire b pilotes bach ymonti /.",
+   "en": "A **temporary root** in RAM with the drivers to mount /."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Les comptes sont dans /etc/passwd.",
+    "dar": "/etc/passwd.",
+    "en": "/etc/passwd."
+   },
+   "c": {
+    "fr": "C'est grub.cfg.",
+    "dar": "grub.cfg.",
+    "en": "grub.cfg."
+   },
+   "d": {
+    "fr": "Sans rapport.",
+    "dar": "Walou.",
+    "en": "Unrelated."
+   }
+  },
+  "tags": [
+   "initramfs"
+  ]
+ },
+ {
+  "id": "ld-09",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Message « Kernel panic - not syncing: No working init found » : que s'est-il passé ?",
+   "dar": "« Kernel panic … No working init found » : chnou w9e3 ?",
+   "en": "\"Kernel panic … No working init found\": what happened?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Le noyau n'a pas trouvé le programme du PID 1 (init/systemd)",
+     "dar": "Noyau ma l9ach PID 1",
+     "en": "The kernel did not find the PID 1 program"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "GRUB est absent",
+     "dar": "Bla GRUB",
+     "en": "GRUB is missing"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Le BIOS a échoué au POST",
+     "dar": "POST",
+     "en": "POST failed"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Un service a planté",
+     "dar": "Service",
+     "en": "A service crashed"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "Le **PID 1** est le **seul processus lancé par le noyau** : il initialise tout le reste. S'il est introuvable, le noyau **panique**.",
+   "dar": "PID 1 ma kaynch → **panic**.",
+   "en": "No PID 1 → **panic**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "GRUB a fonctionné puisque le noyau tourne.",
+    "dar": "GRUB khdem.",
+    "en": "GRUB worked."
+   },
+   "c": {
+    "fr": "Le POST est bien avant le noyau.",
+    "dar": "POST 9bel.",
+    "en": "POST is much earlier."
+   },
+   "d": {
+    "fr": "Un service qui plante est géré par systemd (failed).",
+    "dar": "systemd.",
+    "en": "systemd handles it."
+   }
+  },
+  "tags": [
+   "pid1"
+  ]
+ },
+ {
+  "id": "ld-10",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 1,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche l'arbre des processus (pour voir le gestionnaire de services au sommet).",
+   "dar": "Werri chajara dyal processus.",
+   "en": "Show the process tree."
+  },
+  "answer": [
+   "pstree",
+   "pstree -p"
+  ],
+  "explanation": {
+   "fr": "Au sommet : **systemd** (PID 1). `pstree -p` ajoute les PID. `ps -p 1` le confirme aussi.",
+   "dar": "Fo9 : **systemd**.",
+   "en": "Top: **systemd**."
+  },
+  "wrongExplanations": {
+   "ps aux": {
+    "fr": "Liste les processus mais pas sous forme d'arbre.",
+    "dar": "Liste machi chajara.",
+    "en": "A list, not a tree."
+   }
+  },
+  "tags": [
+   "pid1"
+  ]
+ },
+ {
+  "id": "ld-11",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "SysVinit : niveau d'exécution 3 =",
+   "dar": "SysVinit : runlevel 3 =",
+   "en": "SysVinit runlevel 3 ="
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Multi-utilisateurs complet en mode texte (sans interface graphique)",
+     "dar": "Multi-users texte",
+     "en": "Full multi-user, text mode"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Arrêt",
+     "dar": "Arrêt",
+     "en": "Halt"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Graphique",
+     "dar": "Graphique",
+     "en": "Graphical"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Redémarrage",
+     "dar": "Redémarrage",
+     "en": "Reboot"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "0 arrêt · 1 (s, S) mono-utilisateur (maintenance, root seul) · 2 non utilisé · **3 multi-utilisateurs texte** · 4 non utilisé · 5 multi-utilisateurs graphique · 6 redémarrage. Le niveau par défaut était `initdefault` dans **/etc/inittab**.",
+   "dar": "**3 = multi-users texte** ; 5 graphique ; 0 arrêt ; 6 reboot.",
+   "en": "**3 = multi-user text**; 5 graphical."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Arrêt = 0.",
+    "dar": "0.",
+    "en": "0."
+   },
+   "c": {
+    "fr": "Graphique = 5.",
+    "dar": "5.",
+    "en": "5."
+   },
+   "d": {
+    "fr": "Redémarrage = 6.",
+    "dar": "6.",
+    "en": "6."
+   }
+  },
+  "tags": [
+   "sysvinit"
+  ]
+ },
+ {
+  "id": "ld-12",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Défauts de SysVinit qui ont mené à systemd ?",
+   "dar": "Mochkil dyal SysVinit ?",
+   "en": "SysVinit drawbacks?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "Démarrage séquentiel des services",
+     "dar": "Séquentiel",
+     "en": "Sequential start"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Gestion des dépendances très basique",
+     "dar": "Dépendances basiques",
+     "en": "Basic dependencies"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "Presque tout en scripts shell : lent",
+     "dar": "Scripts shell : bti2",
+     "en": "Shell scripts: slow"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "Impossible de redémarrer la machine",
+     "dar": "Ma y9derch reboot",
+     "en": "Cannot reboot"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c"
+  ],
+  "explanation": {
+   "fr": "Démarrage **séquentiel**, dépendances **basiques**, tout en **scripts shell** → lent. systemd **parallélise** (sockets), **uniformise** et accélère le démarrage.",
+   "dar": "Séquentiel, dépendances, scripts → systemd parallèle.",
+   "en": "Sequential, basic deps, scripts → systemd parallel."
+  },
+  "wrongExplanations": {
+   "d": {
+    "fr": "init 6 redémarre très bien.",
+    "dar": "init 6 khddam.",
+    "en": "init 6 reboots."
+   }
+  },
+  "tags": [
+   "sysvinit"
+  ]
+ },
+ {
+  "id": "ld-13",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Équivalent systemd du niveau d'exécution 5 ?",
+   "dar": "systemd dyal runlevel 5 ?",
+   "en": "systemd equivalent of runlevel 5?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "graphical.target",
+     "dar": "graphical.target",
+     "en": "graphical.target"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "multi-user.target",
+     "dar": "multi-user.target",
+     "en": "multi-user.target"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "rescue.target",
+     "dar": "rescue.target",
+     "en": "rescue.target"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "default.service",
+     "dar": "default.service",
+     "en": "default.service"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "0 → **poweroff.target** · 1 → **rescue.target** · 3 → **multi-user.target** · 5 → **graphical.target** · 6 → **reboot.target**. graphical.target requiert multi-user.target.",
+   "dar": "5 → **graphical.target**.",
+   "en": "5 → **graphical.target**."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "C'est le 3.",
+    "dar": "3.",
+    "en": "3."
+   },
+   "c": {
+    "fr": "C'est le 1.",
+    "dar": "1.",
+    "en": "1."
+   },
+   "d": {
+    "fr": "N'existe pas.",
+    "dar": "Ma kaynch.",
+    "en": "Does not exist."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ld-14",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Fais démarrer la machine en mode texte multi-utilisateurs à chaque démarrage.",
+   "dar": "Khalli machine tbda f mode texte dima.",
+   "en": "Make the machine boot in multi-user text mode."
+  },
+  "answer": [
+   "systemctl set-default multi-user.target"
+  ],
+  "explanation": {
+   "fr": "`set-default` change le lien `default.target` (permanent). `systemctl get-default` vérifie. Pour changer **tout de suite** sans redémarrer : `systemctl isolate multi-user.target`.",
+   "dar": "`set-default` = dima ; `isolate` = daba.",
+   "en": "`set-default` = permanent; `isolate` = now."
+  },
+  "wrongExplanations": {
+   "systemctl isolate multi-user.target": {
+    "fr": "Change maintenant, mais pas au prochain démarrage.",
+    "dar": "Daba walakin machi dima.",
+    "en": "Now only, not permanent."
+   },
+   "init 3": {
+    "fr": "Ancienne commande SysVinit, non permanente.",
+    "dar": "Ancienne, machi dima.",
+    "en": "Old and not permanent."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ld-15",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "multi",
+  "prompt": {
+   "fr": "Types d'unités systemd ?",
+   "dar": "Types dyal unités ?",
+   "en": "systemd unit types?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": ".service",
+     "dar": ".service",
+     "en": ".service"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": ".target",
+     "dar": ".target",
+     "en": ".target"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": ".socket",
+     "dar": ".socket",
+     "en": ".socket"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": ".mount",
+     "dar": ".mount",
+     "en": ".mount"
+    }
+   },
+   {
+    "id": "e",
+    "text": {
+     "fr": ".runlevel",
+     "dar": ".runlevel",
+     "en": ".runlevel"
+    }
+   }
+  ],
+  "answer": [
+   "a",
+   "b",
+   "c",
+   "d"
+  ],
+  "explanation": {
+   "fr": "Une **unité** = un fichier de configuration : **service** (processus), **socket**, **target** (groupe d'unités, remplace les runlevels), **mount** / **automount** (montages, depuis fstab), snapshot…",
+   "dar": "service, socket, target, mount…",
+   "en": "service, socket, target, mount…"
+  },
+  "wrongExplanations": {
+   "e": {
+    "fr": "Les runlevels sont remplacés par des targets.",
+    "dar": "Runlevels → targets.",
+    "en": "Runlevels became targets."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ld-16",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Où mettre un fichier .service écrit ou modifié par l'administrateur ?",
+   "dar": "Fin t7ett .service dyalek ?",
+   "en": "Where does an admin-written .service go?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "/etc/systemd/system/",
+     "dar": "/etc/systemd/system/",
+     "en": "/etc/systemd/system/"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "/usr/lib/systemd/system/",
+     "dar": "/usr/lib/systemd/system/",
+     "en": "/usr/lib/systemd/system/"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "/etc/init.d/",
+     "dar": "/etc/init.d/",
+     "en": "/etc/init.d/"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "/boot/",
+     "dar": "/boot/",
+     "en": "/boot/"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**/usr/lib/systemd/system** = unités fournies par le système et les paquets ; **/etc/systemd/system** = unités **personnalisées/modifiées par l'admin** (prioritaires). Après modification : `systemctl daemon-reload`.",
+   "dar": "/etc/systemd/system (admin) ; /usr/lib (paquets).",
+   "en": "/etc/systemd/system (admin); /usr/lib (packages)."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Réservé aux paquets (écrasé lors des mises à jour).",
+    "dar": "Dyal paquets.",
+    "en": "Package files."
+   },
+   "c": {
+    "fr": "Scripts SysVinit.",
+    "dar": "SysVinit.",
+    "en": "SysVinit scripts."
+   },
+   "d": {
+    "fr": "Démarrage.",
+    "dar": "Démarrage.",
+    "en": "Boot files."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ld-17",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "Différence entre enable et start ?",
+   "dar": "Far9 bin enable w start ?",
+   "en": "enable vs start?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "start lance maintenant ; enable lance à chaque démarrage",
+     "dar": "start daba ; enable f kol démarrage",
+     "en": "start now; enable at every boot"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Aucune",
+     "dar": "Walou",
+     "en": "None"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "enable lance maintenant",
+     "dar": "enable daba",
+     "en": "enable starts now"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "start est permanent",
+     "dar": "start dima",
+     "en": "start is permanent"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "`start` = **maintenant** (jusqu'au prochain arrêt) ; `enable` = **au démarrage** (lien vers la cible de WantedBy). Les deux : `systemctl enable --now httpd`.",
+   "dar": "start = daba ; enable = démarrage ; `enable --now` = jouj.",
+   "en": "start = now; enable = boot; `enable --now` = both."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ce sont deux choses différentes.",
+    "dar": "Mkhtalfin.",
+    "en": "Different."
+   },
+   "c": {
+    "fr": "Non, sauf avec --now.",
+    "dar": "Ghir b --now.",
+    "en": "Only with --now."
+   },
+   "d": {
+    "fr": "Non : start disparaît au redémarrage.",
+    "dar": "start kaymchi.",
+    "en": "start is lost at reboot."
+   }
+  },
+  "tags": [
+   "systemd"
+  ]
+ },
+ {
+  "id": "ld-18",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Affiche les erreurs (et plus grave) du démarrage précédent.",
+   "dar": "Werri erreurs dyal démarrage li 9bel.",
+   "en": "Show errors (or worse) from the previous boot."
+  },
+  "answer": [
+   "journalctl -b -1 -p err",
+   "journalctl -p err -b -1"
+  ],
+  "explanation": {
+   "fr": "`-b -1` = boot précédent (`-b` seul = actuel, `--list-boots` pour la liste) ; `-p err` = priorité err et plus grave. Priorités : emerg 0, alert 1, crit 2, err 3, warning 4, notice 5, info 6, debug 7.",
+   "dar": "`-b -1` boot li 9bel ; `-p err`.",
+   "en": "`-b -1` previous boot; `-p err`."
+  },
+  "wrongExplanations": {
+   "journalctl -b -p err": {
+    "fr": "C'est le démarrage actuel, pas le précédent.",
+    "dar": "Hada daba.",
+    "en": "That is the current boot."
+   },
+   "journalctl -p err": {
+    "fr": "Toutes les sessions mélangées.",
+    "dar": "Kolchi mkhalet.",
+    "en": "All boots mixed."
+   }
+  },
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ld-19",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Suis en direct les messages du service sshd.",
+   "dar": "Tb3 messages dyal sshd f direct.",
+   "en": "Follow sshd messages live."
+  },
+  "answer": [
+   "journalctl -u sshd -f",
+   "journalctl -fu sshd",
+   "journalctl -f -u sshd"
+  ],
+  "explanation": {
+   "fr": "`-u` = unité, `-f` = *follow* (comme tail -f).",
+   "dar": "`-u` unité, `-f` direct.",
+   "en": "`-u` unit, `-f` follow."
+  },
+  "wrongExplanations": {
+   "journalctl -u sshd": {
+    "fr": "Affiche l'historique, sans suivre.",
+    "dar": "Bla -f.",
+    "en": "Without -f."
+   }
+  },
+  "tags": [
+   "journal"
+  ]
+ },
+ {
+  "id": "ld-20",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "command",
+  "prompt": {
+   "fr": "Programme un redémarrage dans 10 minutes avec le message « Maintenance ».",
+   "dar": "Brmej reboot f 10 d9ay9 b message « Maintenance ».",
+   "en": "Schedule a reboot in 10 minutes with the message \"Maintenance\"."
+  },
+  "answer": [
+   "shutdown -r +10 \"Maintenance\"",
+   "shutdown -r +10 'Maintenance'",
+   "shutdown -r +10 Maintenance"
+  ],
+  "explanation": {
+   "fr": "`shutdown [OPTION] [HEURE] [MESSAGE]` : `-r` redémarrer, `-h` arrêter, `-P` éteindre, `-c` annuler ; heure `hh:mm` ou `+mm`.",
+   "dar": "`-r` reboot, `+10` d9ay9, message.",
+   "en": "`-r` reboot, `+10` minutes, message."
+  },
+  "wrongExplanations": {
+   "shutdown -h +10 \"Maintenance\"": {
+    "fr": "-h arrête au lieu de redémarrer.",
+    "dar": "-h = arrêt.",
+    "en": "-h halts."
+   },
+   "reboot": {
+    "fr": "Redémarre immédiatement, sans délai ni message.",
+    "dar": "Daba bla message.",
+    "en": "Immediately."
+   }
+  },
+  "tags": [
+   "arret"
+  ]
+ },
+ {
+  "id": "ld-21",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "systemctl halt ou systemctl poweroff ?",
+   "dar": "halt wla poweroff ?",
+   "en": "halt or poweroff?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "halt arrête le CPU mais laisse la machine sous tension ; poweroff coupe l'alimentation",
+     "dar": "halt bla coupure ; poweroff kay9te3 tension",
+     "en": "halt keeps power; poweroff cuts it"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Identiques",
+     "dar": "Nefs l7aja",
+     "en": "Identical"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "halt redémarre",
+     "dar": "halt reboot",
+     "en": "halt reboots"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "poweroff met en veille",
+     "dar": "poweroff veille",
+     "en": "poweroff sleeps"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**poweroff** : arrêt + signal ACPI qui **coupe l'alimentation**. **halt** : arrête le CPU mais **laisse sous tension** (maintenance bas niveau). `--no-wall` évite le message aux utilisateurs.",
+   "dar": "poweroff kay9te3 ; halt ma kay9te3ch.",
+   "en": "poweroff cuts power; halt does not."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Ils diffèrent sur l'alimentation.",
+    "dar": "Kayn far9.",
+    "en": "They differ."
+   },
+   "c": {
+    "fr": "C'est reboot.",
+    "dar": "reboot.",
+    "en": "That is reboot."
+   },
+   "d": {
+    "fr": "C'est suspend.",
+    "dar": "suspend.",
+    "en": "That is suspend."
+   }
+  },
+  "tags": [
+   "arret"
+  ]
+ },
+ {
+  "id": "ld-22",
+  "module": "linux",
+  "chapter": "demarrage",
+  "difficulty": 2,
+  "kind": "single",
+  "prompt": {
+   "fr": "suspend ou hibernate ?",
+   "dar": "suspend wla hibernate ?",
+   "en": "suspend or hibernate?"
+  },
+  "options": [
+   {
+    "id": "a",
+    "text": {
+     "fr": "suspend garde l'état en RAM (rapide, perdu en cas de coupure) ; hibernate l'écrit sur disque (swap) et éteint",
+     "dar": "suspend f RAM ; hibernate f disque",
+     "en": "suspend keeps RAM; hibernate writes to disk"
+    }
+   },
+   {
+    "id": "b",
+    "text": {
+     "fr": "Identiques",
+     "dar": "Nefs l7aja",
+     "en": "Identical"
+    }
+   },
+   {
+    "id": "c",
+    "text": {
+     "fr": "hibernate est plus rapide à reprendre",
+     "dar": "hibernate sri3",
+     "en": "hibernate resumes faster"
+    }
+   },
+   {
+    "id": "d",
+    "text": {
+     "fr": "suspend éteint complètement",
+     "dar": "suspend kayt-fi",
+     "en": "suspend powers off"
+    }
+   }
+  ],
+  "answer": "a",
+  "explanation": {
+   "fr": "**suspend** : état en **RAM**, reprise rapide, vulnérable aux coupures. **hibernate** : état sur **disque**, machine éteinte, reprise plus lente. **hybrid-sleep** : les deux. Les bloquer : `systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target`.",
+   "dar": "suspend RAM ; hibernate disque ; mask bach tbloqui.",
+   "en": "suspend RAM; hibernate disk; mask to block."
+  },
+  "wrongExplanations": {
+   "b": {
+    "fr": "Différents.",
+    "dar": "Mkhtalfin.",
+    "en": "Different."
+   },
+   "c": {
+    "fr": "C'est l'inverse.",
+    "dar": "L3aks.",
+    "en": "The opposite."
+   },
+   "d": {
+    "fr": "suspend garde la RAM alimentée.",
+    "dar": "RAM b tension.",
+    "en": "RAM stays powered."
+   }
+  },
+  "tags": [
+   "arret"
+  ]
+ }
+]

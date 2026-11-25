@@ -1,0 +1,714 @@
+{
+ "id": "d-intro",
+ "module": "data",
+ "order": 1,
+ "title": {
+  "fr": "Chap 0 — Introduction à l'analyse de données",
+  "dar": "Fasl 0 — Mo9addima l analyse de données",
+  "en": "Ch. 0 — Introduction to data analysis"
+ },
+ "summary": {
+  "fr": "Ce qu'est l'analyse de données, ses 4 objectifs, les 5 types d'analyse, les 5 étapes de la démarche, les outils, les domaines et le rôle dans la décision.",
+  "dar": "Chnou hiya analyse de données, 4 ahdaf dyalha, 5 anwa3, 5 étapes, les outils, fin katsta3mel w kifach kat3awen f l qarar.",
+  "en": "What data analysis is, its 4 goals, the 5 types of analysis, the 5 steps, the tools, the fields and its role in decision-making."
+ },
+ "estimatedMinutes": 30,
+ "sections": [
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. C'est quoi, l'analyse de données ?",
+    "dar": "1. Chnou hiya analyse de données ?",
+    "en": "1. What is data analysis?"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "L'analyse de données est le **processus de collecte, de transformation et d'organisation des données** afin de **tirer des conclusions**, **faire des prédictions** et **prendre des décisions éclairées**.\n\nAutrement dit : c'est l'ensemble des **méthodes et outils** qui permettent d'**extraire une information utile à partir de données brutes**, pour aider à la **compréhension** et à la **prise de décision**.",
+    "dar": "Analyse de données hiya l **process** li fih kanjem3ou data, kanbeddlouha w kanrttbouha, bach **nkhrjou b conclusions**, **ntnab2ou** b chi 7aja, w **nakhdou qarar** mbni 3la ma3loumat.\n\nB kelma khra : hiya majmou3a d **méthodes w outils** li kaykhrjou **ma3louma mfida mn data khama** (brute), bach nfhmou w nqarrrou mzyan.",
+    "en": "Data analysis is the **process of collecting, transforming and organising data** in order to **draw conclusions**, **make predictions** and **take informed decisions**.\n\nIn other words: it is the set of **methods and tools** used to **extract useful information from raw data**, to help **understanding** and **decision-making**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Imagine un cahier rempli de chiffres : les notes de toute la classe, matière par matière. Tel quel, ce cahier ne dit rien : ce sont des **données brutes**. Si tu calcules la moyenne de chaque matière, tu repères la matière la plus difficile, et tu décides d'y passer plus de temps : tu viens de faire de l'**analyse de données**. Données brutes → information → décision.",
+    "dar": "Tkhayel cahier 3amer b l arqam : notes dyal l9ism kamel, kol matière. Hakka bo7do, had l cahier ma kaygoul walou : hadi hiya **data brute**. Ila 7sebti l moyenne dyal kol matière, ghadi tchouf ach hiya s3iba, w t9arrer tzid fiha l wa9t : hna derti **analyse de données**. Data khama → ma3louma → qarar.",
+    "en": "Picture a notebook full of numbers: every student's marks, subject by subject. As it is, the notebook says nothing: this is **raw data**. If you compute the average of each subject, spot the hardest one and decide to spend more time on it, you have just done **data analysis**. Raw data → information → decision."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Les 4 objectifs principaux",
+    "dar": "2. 4 ahdaf ra2isiya",
+    "en": "2. The 4 main goals"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le professeur donne **4 objectifs**. Retiens-les dans l'ordre, ils vont du plus simple au plus utile :\n\n1. **Décrire** les phénomènes observés : *qu'est-ce que je vois ?*\n2. **Identifier les relations** entre variables : *qu'est-ce qui est lié à quoi ?*\n3. **Prédire** des comportements futurs : *que va-t-il se passer ?*\n4. **Aider à la prise de décision** : *que dois-je faire ?*",
+    "dar": "Lprof 3tana **4 ahdaf**. 7fedhom b tartib, kaybdaw mn sahel l mfid :\n\n1. **Wsef** (décrire) dakchi li kanchoufou : *chnou kayn ?*\n2. **L9a l 3ala9at** bin les variables : *chnou mrbout b chnou ?*\n3. **Tnba2** (prédire) b chnou ghadi ywqe3 : *chnou ghadi ykoun mn b3d ?*\n4. **3awen f l qarar** : *chnou khassni ndir ?*",
+    "en": "The professor lists **4 goals**. Learn them in order, from the simplest to the most useful:\n\n1. **Describe** the observed phenomena: *what do I see?*\n2. **Identify relationships** between variables: *what is linked to what?*\n3. **Predict** future behaviour: *what will happen?*\n4. **Support decision-making**: *what should I do?*"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "example",
+   "body": {
+    "fr": "**Exemple du cours : la santé.** Un hôpital collecte l'âge, la tension et le taux de sucre de ses patients.\n- **Décrire** : quel est le taux de sucre moyen des patients ?\n- **Relier** : identifier les **facteurs de risque du diabète** (l'âge est-il lié au taux de sucre ?).\n- **Prédire / regrouper** : **regrouper les patients selon des profils similaires**.\n- **Décider** : **adapter les traitements** à chaque profil.\n\n→ L'analyse de données **transforme les observations en connaissance**.",
+    "dar": "**Mithal dyal lprof : sa7a.** Sbitar kayjme3 l3omr, tension w nisbat sokkar dyal lmrda.\n- **Wsef** : ch7al l moyenne dyal sokkar 3and lmrda ?\n- **Rbet** : nl9aw **facteurs de risque dyal diabète** (wach l3omr mrbout b sokkar ?).\n- **Tnba2 / jme3** : **njem3ou lmrda li kayt chabhou** f profils.\n- **Qarrer** : **nbeddlou l traitement** 3la 7sab kol profil.\n\n→ Analyse de données **kat7awel l observations l ma3rifa** (connaissance).",
+    "en": "**Course example: health.** A hospital collects its patients' age, blood pressure and sugar level.\n- **Describe**: what is the patients' average sugar level?\n- **Relate**: identify the **risk factors of diabetes** (is age linked to sugar level?).\n- **Predict / group**: **group patients with similar profiles**.\n- **Decide**: **adapt the treatment** to each profile.\n\n→ Data analysis **turns observations into knowledge**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-01",
+    "di-09"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Les 5 types d'analyse de données",
+    "dar": "3. 5 anwa3 dyal analyse",
+    "en": "3. The 5 types of data analysis"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "C'est **le tableau le plus important du chapitre** : il tombe très souvent en QCM. Pour chaque type, retiens **son objectif** et **ses méthodes**.",
+    "dar": "Hada **akther tableau mohim f fasl** : kayti7 bzaf f QCM. L kol naw3, 7fed **l hadaf dyalo** w **les méthodes dyalo**.",
+    "en": "This is **the most important table of the chapter**: it comes up very often in quizzes. For each type, learn **its goal** and **its methods**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Type",
+     "dar": "Naw3",
+     "en": "Type"
+    },
+    {
+     "fr": "Objectif",
+     "dar": "Lhadaf",
+     "en": "Goal"
+    },
+    {
+     "fr": "Méthodes",
+     "dar": "Méthodes",
+     "en": "Methods"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Descriptive**",
+      "dar": "**Descriptive**",
+      "en": "**Descriptive**"
+     },
+     {
+      "fr": "Résumer les données",
+      "dar": "Nlakhssou data",
+      "en": "Summarise the data"
+     },
+     {
+      "fr": "Moyenne, variance, graphiques",
+      "dar": "Moyenne, variance, graphiques",
+      "en": "Mean, variance, charts"
+     }
+    ],
+    [
+     {
+      "fr": "**Exploratoire**",
+      "dar": "**Exploratoire**",
+      "en": "**Exploratory**"
+     },
+     {
+      "fr": "Découvrir des structures",
+      "dar": "Nktachfou structures mkhbbin",
+      "en": "Discover structures"
+     },
+     {
+      "fr": "ACP, AFC, clustering",
+      "dar": "ACP, AFC, clustering",
+      "en": "PCA, CA, clustering"
+     }
+    ],
+    [
+     {
+      "fr": "**Confirmatoire**",
+      "dar": "**Confirmatoire**",
+      "en": "**Confirmatory**"
+     },
+     {
+      "fr": "Tester des hypothèses",
+      "dar": "Ntestiw hypothèses",
+      "en": "Test hypotheses"
+     },
+     {
+      "fr": "Tests statistiques",
+      "dar": "Tests statistiques",
+      "en": "Statistical tests"
+     }
+    ],
+    [
+     {
+      "fr": "**Prédictive**",
+      "dar": "**Prédictive**",
+      "en": "**Predictive**"
+     },
+     {
+      "fr": "Anticiper des valeurs",
+      "dar": "Ntnab2ou b l qiyam",
+      "en": "Anticipate values"
+     },
+     {
+      "fr": "Régression, machine learning",
+      "dar": "Régression, machine learning",
+      "en": "Regression, machine learning"
+     }
+    ],
+    [
+     {
+      "fr": "**Prescriptive**",
+      "dar": "**Prescriptive**",
+      "en": "**Prescriptive**"
+     },
+     {
+      "fr": "Optimiser la décision",
+      "dar": "N7ssnou l qarar",
+      "en": "Optimise the decision"
+     },
+     {
+      "fr": "Simulation, optimisation",
+      "dar": "Simulation, optimisation",
+      "en": "Simulation, optimisation"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Comment reconnaître le type en 3 secondes",
+    "dar": "Kifach t3ref naw3 f 3 thawani",
+    "en": "How to recognise the type in 3 seconds"
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Cherche le verbe de la question",
+      "dar": "Qelleb 3la l fi3l f sou2al",
+      "en": "Look for the verb in the question"
+     },
+     "body": {
+      "fr": "Chaque type répond à une question différente : **« que s'est-il passé ? »** (descriptive), **« qu'est-ce qui se cache ? »** (exploratoire), **« est-ce vrai ? »** (confirmatoire), **« que va-t-il se passer ? »** (prédictive), **« que faut-il faire ? »** (prescriptive).",
+      "dar": "Kol naw3 kayjaweb 3la sou2al : **« chnou wqe3 ? »** (descriptive), **« chnou mkhbbi ? »** (exploratoire), **« wach s7i7 ? »** (confirmatoire), **« chnou ghadi ywqe3 ? »** (prédictive), **« chnou khassna ndirou ? »** (prescriptive).",
+      "en": "Each type answers a different question: **\"what happened?\"** (descriptive), **\"what is hidden?\"** (exploratory), **\"is it true?\"** (confirmatory), **\"what will happen?\"** (predictive), **\"what should we do?\"** (prescriptive)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Regarde la méthode citée",
+      "dar": "Chouf l méthode li mdkoura",
+      "en": "Look at the method mentioned"
+     },
+     "body": {
+      "fr": "Si l'énoncé cite une méthode, c'est gagné : **moyenne/variance → descriptive**, **ACP/AFC/clustering → exploratoire**, **test (Student, χ²) → confirmatoire**, **régression/ML → prédictive**, **optimisation/simulation → prescriptive**.",
+      "dar": "Ila l énoncé dkar méthode, sahla : **moyenne/variance → descriptive**, **ACP/AFC/clustering → exploratoire**, **test (Student, χ²) → confirmatoire**, **régression/ML → prédictive**, **optimisation/simulation → prescriptive**.",
+      "en": "If the statement names a method, you are done: **mean/variance → descriptive**, **PCA/CA/clustering → exploratory**, **test (Student, χ²) → confirmatory**, **regression/ML → predictive**, **optimisation/simulation → prescriptive**."
+     },
+     "why": {
+      "fr": "Les QCM du contrôle donnent presque toujours une méthode dans la phrase.",
+      "dar": "QCM dyal contrôle tqriban dima kay3tiw méthode f jomla.",
+      "en": "Test quizzes almost always name a method in the sentence."
+     }
+    },
+    {
+     "title": {
+      "fr": "Attention à confirmatoire vs exploratoire",
+      "dar": "3endak tkhllet confirmatoire m3a exploratoire",
+      "en": "Careful: confirmatory vs exploratory"
+     },
+     "body": {
+      "fr": "**Confirmatoire** : on avait une **hypothèse AVANT** de regarder les données, on la teste. **Exploratoire** : **aucune hypothèse** au départ, on cherche ce que les données cachent.",
+      "dar": "**Confirmatoire** : kant 3andna **hypothèse 9BEL** ma nchoufou data, w kantestiwha. **Exploratoire** : **ma kayn 7ta hypothèse** f lbdya, kanqellbou chnou mkhbbi f data.",
+      "en": "**Confirmatory**: we had a **hypothesis BEFORE** looking at the data and we test it. **Exploratory**: **no hypothesis** at the start, we look for what the data hides."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "AnalysisTypesCards"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-02",
+    "di-03",
+    "di-05"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Les 5 étapes de la démarche",
+    "dar": "4. 5 étapes dyal la démarche",
+    "en": "4. The 5 steps of the process"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Étape",
+     "dar": "Étape",
+     "en": "Step"
+    },
+    {
+     "fr": "Description",
+     "dar": "Chnou katdir",
+     "en": "Description"
+    },
+    {
+     "fr": "Exemple",
+     "dar": "Mithal",
+     "en": "Example"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "1. **Collecte**",
+      "dar": "1. **Collecte** (jam3)",
+      "en": "1. **Collection**"
+     },
+     {
+      "fr": "Acquisition des données pertinentes",
+      "dar": "Tjib data li mohimma",
+      "en": "Acquire the relevant data"
+     },
+     {
+      "fr": "Questionnaire, base de données",
+      "dar": "Questionnaire, base de données",
+      "en": "Questionnaire, database"
+     }
+    ],
+    [
+     {
+      "fr": "2. **Nettoyage**",
+      "dar": "2. **Nettoyage** (tn9iya)",
+      "en": "2. **Cleaning**"
+     },
+     {
+      "fr": "Suppression d'erreurs et de valeurs aberrantes",
+      "dar": "T7iyed l akhta2 w l qiyam l ghriba",
+      "en": "Remove errors and outliers"
+     },
+     {
+      "fr": "Valeurs manquantes, doublons",
+      "dar": "Valeurs manquantes, doublons",
+      "en": "Missing values, duplicates"
+     }
+    ],
+    [
+     {
+      "fr": "3. **Exploration**",
+      "dar": "3. **Exploration**",
+      "en": "3. **Exploration**"
+     },
+     {
+      "fr": "Calculs descriptifs, visualisations",
+      "dar": "7sab descriptif w graphiques",
+      "en": "Descriptive calculations, visualisations"
+     },
+     {
+      "fr": "Moyenne, histogrammes",
+      "dar": "Moyenne, histogrammes",
+      "en": "Mean, histograms"
+     }
+    ],
+    [
+     {
+      "fr": "4. **Modélisation**",
+      "dar": "4. **Modélisation**",
+      "en": "4. **Modelling**"
+     },
+     {
+      "fr": "Application d'outils statistiques",
+      "dar": "Tstakhdem outils statistiques",
+      "en": "Apply statistical tools"
+     },
+     {
+      "fr": "Régression, ACP, clustering",
+      "dar": "Régression, ACP, clustering",
+      "en": "Regression, PCA, clustering"
+     }
+    ],
+    [
+     {
+      "fr": "5. **Interprétation**",
+      "dar": "5. **Interprétation** (tafsir)",
+      "en": "5. **Interpretation**"
+     },
+     {
+      "fr": "Transformation des résultats en décision",
+      "dar": "Tbeddel natija l qarar",
+      "en": "Turn results into decisions"
+     },
+     {
+      "fr": "Identifier les profils à risque",
+      "dar": "T3ref les profils li fihom risque",
+      "en": "Identify at-risk profiles"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "→ Ces étapes constituent **le cycle complet de toute analyse de données**.",
+    "dar": "→ Had les étapes homa **cycle kamel dyal ay analyse de données**.",
+    "en": "→ These steps form **the complete cycle of any data analysis**."
+   }
+  },
+  {
+   "type": "steps",
+   "title": {
+    "fr": "Les 5 étapes sur un cas concret : « Pourquoi des étudiants ratent le contrôle ? »",
+    "dar": "5 étapes 3la mithal : « 3lach chi tlamid kaysqtou f contrôle ? »",
+    "en": "The 5 steps on a real case: \"Why do some students fail the test?\""
+   },
+   "items": [
+    {
+     "title": {
+      "fr": "Collecte",
+      "dar": "Collecte",
+      "en": "Collection"
+     },
+     "body": {
+      "fr": "On envoie un **questionnaire** à 120 étudiants : heures de révision, heures de sommeil, note obtenue.",
+      "dar": "Kansiftou **questionnaire** l 120 tlmid : ch7al d sa3a rajj3ou, ch7al n3sou, w no9ta li jabou.",
+      "en": "We send a **questionnaire** to 120 students: revision hours, sleep hours, mark obtained."
+     }
+    },
+    {
+     "title": {
+      "fr": "Nettoyage",
+      "dar": "Nettoyage",
+      "en": "Cleaning"
+     },
+     "body": {
+      "fr": "Certains n'ont pas répondu à « sommeil » (**valeurs manquantes**), un étudiant a répondu deux fois (**doublon**), un autre a écrit 250 heures de révision (**valeur aberrante**). On corrige tout ça — c'est le **Chap 2**.",
+      "dar": "Chi wa7din ma jawbouch 3la « n3as » (**valeurs manquantes**), wa7ed jaweb jouj merrat (**doublon**), w wa7ed ktb 250 sa3a d révision (**valeur aberrante**). Kansl7ou hadchi kamel — hada howa **Fasl 2**.",
+      "en": "Some did not answer \"sleep\" (**missing values**), one student answered twice (**duplicate**), another wrote 250 revision hours (**outlier**). We fix all that — this is **Ch. 2**."
+     },
+     "why": {
+      "fr": "Sans nettoyage, une seule valeur fausse (250 h) peut fausser toute la moyenne.",
+      "dar": "Bla nettoyage, qima wa7da ghalta (250 h) t9der tkhssr l moyenne kamla.",
+      "en": "Without cleaning, one wrong value (250 h) can distort the whole mean."
+     }
+    },
+    {
+     "title": {
+      "fr": "Exploration",
+      "dar": "Exploration",
+      "en": "Exploration"
+     },
+     "body": {
+      "fr": "On calcule la **moyenne** des heures de révision et on trace un **histogramme** des notes (Chap 4).",
+      "dar": "Kan7sbou **moyenne** dyal sa3at d révision w nrsmou **histogramme** dyal notes (Fasl 4).",
+      "en": "We compute the **mean** of revision hours and draw a **histogram** of marks (Ch. 4)."
+     }
+    },
+    {
+     "title": {
+      "fr": "Modélisation",
+      "dar": "Modélisation",
+      "en": "Modelling"
+     },
+     "body": {
+      "fr": "On applique une **régression linéaire** : note = a × heures + b. On trouve par exemple « +0,6 point par heure de révision ».",
+      "dar": "Kandirou **régression linéaire** : note = a × sa3at + b. Nl9aw mathalan « +0,6 point 3la kol sa3a d révision ».",
+      "en": "We fit a **linear regression**: mark = a × hours + b. We find, for example, \"+0.6 point per revision hour\"."
+     }
+    },
+    {
+     "title": {
+      "fr": "Interprétation",
+      "dar": "Interprétation",
+      "en": "Interpretation"
+     },
+     "body": {
+      "fr": "Décision : l'école organise des **séances de révision encadrées** pour les étudiants qui révisent moins de 3 heures.",
+      "dar": "Qarar : l'école kat-organiser **séances d révision m3a encadrant** l tlamid li kayrajj3ou 9el mn 3 sa3at.",
+      "en": "Decision: the school organises **supervised revision sessions** for students who revise less than 3 hours."
+     }
+    }
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "DataPipeline"
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Retiens l'ordre exact : **Collecte → Nettoyage → Exploration → Modélisation → Interprétation**. Astuce : « **C**ette **N**uit **E**lle **M**ange **I**ci » (C-N-E-M-I).",
+    "dar": "7fed tartib : **Collecte → Nettoyage → Exploration → Modélisation → Interprétation**. Astuce : « **C**ette **N**uit **E**lle **M**ange **I**ci » (C-N-E-M-I).",
+    "en": "Learn the exact order: **Collection → Cleaning → Exploration → Modelling → Interpretation**. Mnemonic (French initials): \"**C**ette **N**uit **E**lle **M**ange **I**ci\" (C-N-E-M-I)."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-06",
+    "di-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. Les outils fondamentaux",
+    "dar": "5. Les outils l asasiyin",
+    "en": "5. The core tools"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Famille",
+     "dar": "No3",
+     "en": "Family"
+    },
+    {
+     "fr": "Exemples du cours",
+     "dar": "Amthila mn dars",
+     "en": "Course examples"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "**Outils statistiques**",
+      "dar": "**Outils statistiques**",
+      "en": "**Statistical tools**"
+     },
+     {
+      "fr": "Moyenne, variance, corrélation, test t",
+      "dar": "Moyenne, variance, corrélation, test t",
+      "en": "Mean, variance, correlation, t-test"
+     }
+    ],
+    [
+     {
+      "fr": "**Outils informatiques**",
+      "dar": "**Outils informatiques**",
+      "en": "**Software tools**"
+     },
+     {
+      "fr": "Python (**Pandas, NumPy, Matplotlib**), R, Excel, SPSS, Power BI",
+      "dar": "Python (**Pandas, NumPy, Matplotlib**), R, Excel, SPSS, Power BI",
+      "en": "Python (**Pandas, NumPy, Matplotlib**), R, Excel, SPSS, Power BI"
+     }
+    ],
+    [
+     {
+      "fr": "**Outils de visualisation**",
+      "dar": "**Outils de visualisation**",
+      "en": "**Visualisation tools**"
+     },
+     {
+      "fr": "Graphiques, nuages de points, heatmaps, tableaux de bord",
+      "dar": "Graphiques, nuages de points, heatmaps, tableaux de bord",
+      "en": "Charts, scatter plots, heatmaps, dashboards"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Dans ce module on travaille en **Python** : **pandas** pour lire et nettoyer (Chap 1 et 2), **Matplotlib / Seaborn** pour visualiser (Chap 4), et les **tests statistiques** pour décider (Chap 5).",
+    "dar": "F had module kankhdmou b **Python** : **pandas** bach n9raw w nn9iw data (Fasl 1 w 2), **Matplotlib / Seaborn** l graphiques (Fasl 4), w **tests statistiques** bach nqarrrou (Fasl 5).",
+    "en": "In this module we work in **Python**: **pandas** to read and clean (Ch. 1 and 2), **Matplotlib / Seaborn** to visualise (Ch. 4), and **statistical tests** to decide (Ch. 5)."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. Importance dans différents domaines",
+    "dar": "6. Fin katsta3mel",
+    "en": "6. Importance across fields"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Domaine",
+     "dar": "Domaine",
+     "en": "Field"
+    },
+    {
+     "fr": "À quoi sert l'analyse",
+     "dar": "Fach kat3awen",
+     "en": "What analysis is used for"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Santé",
+      "dar": "Sa7a",
+      "en": "Health"
+     },
+     {
+      "fr": "Diagnostic, suivi des patients, analyse des traitements, recherche médicale",
+      "dar": "Diagnostic, tab3 lmrda, t7lil l traitements, recherche",
+      "en": "Diagnosis, patient follow-up, treatment analysis, medical research"
+     }
+    ],
+    [
+     {
+      "fr": "Finance",
+      "dar": "Finance",
+      "en": "Finance"
+     },
+     {
+      "fr": "Évaluation des risques, **détection de fraudes**, prévisions, investissements",
+      "dar": "Risques, **kachf l fraude**, prévisions, investissements",
+      "en": "Risk assessment, **fraud detection**, forecasting, investments"
+     }
+    ],
+    [
+     {
+      "fr": "Marketing et commerce",
+      "dar": "Marketing w tijara",
+      "en": "Marketing and retail"
+     },
+     {
+      "fr": "Comportement des clients, **segmentation du marché**, offres personnalisées, ventes",
+      "dar": "Slouk dyal clients, **segmentation**, offres personnalisées, ventes",
+      "en": "Customer behaviour, **market segmentation**, personalised offers, sales"
+     }
+    ],
+    [
+     {
+      "fr": "Industrie et production",
+      "dar": "Sina3a",
+      "en": "Industry"
+     },
+     {
+      "fr": "Optimisation des processus, **maintenance prédictive**, ressources",
+      "dar": "T7sin l process, **maintenance prédictive**, ressources",
+      "en": "Process optimisation, **predictive maintenance**, resources"
+     }
+    ],
+    [
+     {
+      "fr": "Sciences sociales",
+      "dar": "Sciences sociales",
+      "en": "Social sciences"
+     },
+     {
+      "fr": "Tendances, enquêtes statistiques, études de population",
+      "dar": "Tendances, enquêtes, dirasat dyal sokkan",
+      "en": "Trends, surveys, population studies"
+     }
+    ],
+    [
+     {
+      "fr": "Technologies de l'information",
+      "dar": "IT",
+      "en": "Information technology"
+     },
+     {
+      "fr": "Algorithmes, **big data**, intelligence artificielle",
+      "dar": "Algorithmes, **big data**, IA",
+      "en": "Algorithms, **big data**, artificial intelligence"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Ainsi, l'analyse de données est un **levier stratégique** : elle améliore la performance, anticipe les besoins et permet des décisions basées sur des **informations fiables**.",
+    "dar": "Donc analyse de données hiya **levier stratégique** : kat7ssen l performance, katsbe9 l i7tiyajat, w katkhllik t9arrer 3la **ma3loumat mwtou9 fiha**.",
+    "en": "Data analysis is therefore a **strategic lever**: it improves performance, anticipates needs and enables decisions based on **reliable information**."
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "7. Rôle dans la prise de décision",
+    "dar": "7. Dawrha f l qarar",
+    "en": "7. Role in decision-making"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "L'analyse de données fournit des informations **objectives et pertinentes**. Elle permet de :\n\n- **Identifier des tendances et des modèles** à partir des données historiques ;\n- **Évaluer les risques** et anticiper les conséquences des décisions ;\n- **Optimiser les stratégies** en se basant sur des **preuves concrètes plutôt que sur des intuitions** ;\n- **Mesurer l'impact** des actions entreprises et ajuster les décisions.\n\nRésultat : de meilleures décisions, **moins d'incertitude**, plus de compétitivité.",
+    "dar": "Analyse de données kat3tik ma3loumat **objectives w mfida**. Katkhllik :\n\n- **Tchouf tendances w modèles** mn data l9dima ;\n- **T9iyyem l risques** w tsbe9 l nata2ij dyal l qarar ;\n- **T7ssen strategies** 3la 7sab **preuves 7a9i9iya, machi 3la l 7ss (intuition)** ;\n- **T9is l impact** dyal dakchi li derti w tbeddel l qarar ila khass.\n\nNatija : qararat a7ssen, **chk 9lil**, w compétitivité ktar.",
+    "en": "Data analysis provides **objective and relevant** information. It lets you:\n\n- **Identify trends and patterns** in historical data;\n- **Assess risks** and anticipate the consequences of decisions;\n- **Optimise strategies** based on **concrete evidence rather than intuition**;\n- **Measure the impact** of actions taken and adjust decisions.\n\nResult: better decisions, **less uncertainty**, more competitiveness."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Le chapitre 0 se termine par un **rappel de statistique descriptive et de régression linéaire** : c'est le chapitre suivant, avec tous les calculs pas à pas.",
+    "dar": "Fasl 0 kaysali b **rappel dyal statistique descriptive w régression linéaire** : hada howa l fasl li jay, b ga3 l 7sabat étape par étape.",
+    "en": "Chapter 0 ends with a **reminder of descriptive statistics and linear regression**: that is the next chapter, with every calculation step by step."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "di-08",
+    "di-12"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Définition : collecter, transformer, organiser les données pour conclure, prédire et décider.",
+   "dar": "Ta3rif : njem3ou, nbeddlou w nrttbou data bach nkhrjou b conclusion, ntnab2ou w nqarrrou.",
+   "en": "Definition: collect, transform and organise data to conclude, predict and decide."
+  },
+  {
+   "fr": "4 objectifs : décrire, identifier les relations, prédire, aider à la décision.",
+   "dar": "4 ahdaf : wsef, l9a l 3ala9at, tnba2, 3awen f l qarar.",
+   "en": "4 goals: describe, identify relationships, predict, support decisions."
+  },
+  {
+   "fr": "5 types : descriptive (moyenne, variance, graphiques) · exploratoire (ACP, AFC, clustering) · confirmatoire (tests) · prédictive (régression, ML) · prescriptive (simulation, optimisation).",
+   "dar": "5 anwa3 : descriptive · exploratoire · confirmatoire · prédictive · prescriptive, m3a méthodes dyalhom.",
+   "en": "5 types: descriptive · exploratory · confirmatory · predictive · prescriptive, with their methods."
+  },
+  {
+   "fr": "5 étapes dans l'ordre : collecte → nettoyage → exploration → modélisation → interprétation.",
+   "dar": "5 étapes b tartib : collecte → nettoyage → exploration → modélisation → interprétation.",
+   "en": "5 steps in order: collection → cleaning → exploration → modelling → interpretation."
+  },
+  {
+   "fr": "Outils : statistiques (moyenne, variance, corrélation, test t), informatiques (Python : Pandas, NumPy, Matplotlib ; R, Excel, SPSS, Power BI), visualisation.",
+   "dar": "Outils : statistiques, informatiques (Python…), visualisation.",
+   "en": "Tools: statistical, software (Python…), visualisation."
+  }
+ ]
+}

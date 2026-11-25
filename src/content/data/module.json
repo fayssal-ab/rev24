@@ -6,58 +6,31 @@
   "en": "Data analysis"
  },
  "subtitle": {
-  "fr": "Pr. A. Kadiri — pandas, tests d'hypothèses (loi normale, Student, χ²) et leurs démonstrations",
-  "dar": "Pr. A. Kadiri — pandas, tests (normale, Student, χ²) w démonstrations",
-  "en": "Pr. A. Kadiri — pandas, hypothesis tests (normal, Student, χ²) and their proofs"
+  "fr": "Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests d'hypothèses et démonstrations",
+  "dar": "Pr. A. Kadiri — statistiques, pandas, nettoyage, visualisation, tests w démonstrations",
+  "en": "Pr. A. Kadiri — statistics, pandas, cleaning, visualisation, hypothesis tests and proofs"
  },
  "color": "#00844e",
  "icon": "chart",
  "theme": "violet",
  "chapters": [
+  "d-intro",
+  "rappel",
   "pandas",
+  "nettoyage",
+  "visu",
   "tests",
   "demos",
   "blanc"
  ],
  "upcoming": [
   {
-   "id": "d-intro",
-   "title": {
-    "fr": "Chap 0 — Introduction — verrouillé",
-    "dar": "Fasl 0 — Introduction — msdoud",
-    "en": "Ch. 0 — Introduction — locked"
-   }
-  },
-  {
-   "id": "rappel",
-   "title": {
-    "fr": "Rappel — statistique descriptive — verrouillé",
-    "dar": "Rappel — statistique descriptive — msdoud",
-    "en": "Recap — descriptive statistics — locked"
-   }
-  },
-  {
-   "id": "nettoyage",
-   "title": {
-    "fr": "Chap 2 — Nettoyage des données — verrouillé",
-    "dar": "Fasl 2 — Nettoyage — msdoud",
-    "en": "Ch. 2 — Data cleaning — locked"
-   }
-  },
-  {
    "id": "chap3",
+   "order": 4.5,
    "title": {
-    "fr": "Chap 3 — verrouillé",
-    "dar": "Fasl 3 — msdoud",
-    "en": "Ch. 3 — locked"
-   }
-  },
-  {
-   "id": "visu",
-   "title": {
-    "fr": "Chap 4 — Visualisation — verrouillé",
-    "dar": "Fasl 4 — Visualisation — msdoud",
-    "en": "Ch. 4 — Visualisation — locked"
+    "fr": "Chap 3 — (pas encore sur le Drive)",
+    "dar": "Fasl 3 — (mazal ma kaynch f Drive)",
+    "en": "Ch. 3 — (not on the Drive yet)"
    }
   }
  ],
@@ -95,6 +68,10 @@
   "tests": 5,
   "pandas": 4,
   "demos": 3,
+  "nettoyage": 3,
+  "rappel": 3,
+  "visu": 2,
+  "d-intro": 1,
   "blanc": 1
  }
 }

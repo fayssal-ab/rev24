@@ -99,6 +99,10 @@ export function order(id: string, d: 1 | 2 | 3, prompt: T, steps: T[], expl: T, 
 }
 
 // ---------- exercises / flashcards / missions / reference ----------
+/** marking-scheme item: label, accepted alternatives (" && " = all fragments required), weight */
+export type RubricT = { l: T; any: string[]; w?: number };
+/** shorthand: rb('label', 2, 'alt1', 'alt2 && frag') */
+export const rb = (l: T, w: number, ...any: string[]): RubricT => ({ l, w, any });
 export function ex(
   id: string,
   d: 2 | 3,
@@ -108,9 +112,10 @@ export function ex(
   steps: { t: T; b: T; code?: string; tex?: string }[],
   final: T,
   mistakes: T[],
-  extra: { data?: string; checks?: Exercise['checks']; missionId?: string } = {}
+  extra: { data?: string; checks?: Exercise['checks']; missionId?: string; rubric?: RubricT[] } = {}
 ): Exercise {
-  return { id, ...ctx, difficulty: d, title: L(title), statement: L(statement), hints: hints.map(L), solutionSteps: steps.map((s) => ({ title: L(s.t), body: L(isEmpty(s.b) ? ['Commandes :', 'Les commandes :', 'Commands:'] : s.b), ...(s.code ? { code: s.code } : {}), ...(s.tex ? { tex: s.tex } : {}) })), finalAnswer: L(final), commonMistakes: mistakes.map(L), ...extra };
+  const { rubric, ...rest } = extra;
+  return { id, ...ctx, difficulty: d, title: L(title), statement: L(statement), hints: hints.map(L), solutionSteps: steps.map((s) => ({ title: L(s.t), body: L(isEmpty(s.b) ? ['Commandes :', 'Les commandes :', 'Commands:'] : s.b), ...(s.code ? { code: s.code } : {}), ...(s.tex ? { tex: s.tex } : {}) })), finalAnswer: L(final), commonMistakes: mistakes.map(L), ...rest, ...(rubric ? { rubric: rubric.map((r) => ({ label: L(r.l), any: r.any, ...(r.w ? { w: r.w } : {}) })) } : {}) };
 }
 
 export const fc = (id: string, front: T, back: T): Flashcard => ({ id, ...ctx, front: L(front), back: L(back) });

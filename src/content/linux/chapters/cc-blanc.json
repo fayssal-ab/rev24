@@ -1,0 +1,396 @@
+{
+ "id": "cc-blanc",
+ "module": "linux",
+ "order": 7,
+ "title": {
+  "fr": "CC blanc corrigé — Installation, FHS, démarrage",
+  "dar": "CC blanc m-corrigé — Installation, FHS, démarrage",
+  "en": "Solved mock CC — Installation, FHS, boot"
+ },
+ "summary": {
+  "fr": "Le programme exact du CC de Pr Zbakh (Installation, FHS, processus de démarrage : GRUB, systemd), en 5 exercices de 4 points avec copies modèles. Documents papier autorisés.",
+  "dar": "Programme dyal CC (Installation, FHS, démarrage : GRUB, systemd), 5 exercices × 4 pts b copies modèles. Documents autorisés.",
+  "en": "The exact CC scope in 5 exercises of 4 points with model answers. Paper documents allowed."
+ },
+ "estimatedMinutes": 90,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "**Programme du CC** : Installation · FHS · Processus de démarrage (GRUB, systemd). **Documents papier autorisés** : imprime la **fiche PDF des commandes** (bouton plus bas, ou Supports) et apporte-la. Fais d'abord l'**examen blanc chronométré** (page Examen blanc → CC Linux), puis compare avec ces copies.",
+    "dar": "**Programme** : Installation · FHS · Démarrage (GRUB, systemd). **Documents autorisés** : imprimi **fiche PDF** w jibha. Dir examen blanc b chrono 9bel.",
+    "en": "**Scope**: Installation · FHS · Boot (GRUB, systemd). **Paper documents allowed**: print the **command sheet PDF**. Take the timed mock first."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "[Télécharger la fiche des commandes (PDF)](/docs/linux-cc-commandes.pdf)",
+    "dar": "[Téléchargi fiche dyal commandes (PDF)](/docs/linux-cc-commandes.pdf)",
+    "en": "[Download the command sheet (PDF)](/docs/linux-cc-commandes.pdf)"
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Ex. 1 — Partitionner un serveur web (4 pts)",
+    "dar": "Ex. 1 — Partitions serveur web (4 pts)",
+    "en": "Ex. 1 — Partition a web server (4 pts)"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Serveur web RHEL 9, UEFI, disque **60 Go**, 4 Go de RAM : schéma, justification de /boot, /var, /home, partition indispensable en UEFI, 3 commandes de vérification.",
+    "dar": "Serveur web, UEFI, **60 Go**, 4 Go : schéma, 3lach, UEFI, t2akked.",
+    "en": "Web server, UEFI, **60 GB**: scheme, why, UEFI, checks."
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Ex. 1",
+    "dar": "Copie modèle — Ex. 1",
+    "en": "Model answer — Ex. 1"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Schéma",
+      "dar": "Schéma",
+      "en": "Scheme"
+     },
+     "body": {
+      "fr": "/boot/efi 600 Mo **vfat** · /boot 1 Go xfs · / 20 Go xfs · **/var 25 Go** xfs · /home 10 Go xfs · swap 4 Go.",
+      "dar": "0,6 · 1 · 20 · 25 · 10 · 4.",
+      "en": "0.6 · 1 · 20 · 25 · 10 · 4."
+     }
+    },
+    {
+     "label": {
+      "fr": "/boot",
+      "dar": "/boot",
+      "en": "/boot"
+     },
+     "body": {
+      "fr": "Noyaux et initramfs, ≥ 1 Gio, partition séparée.",
+      "dar": "Noyaux, ≥ 1 Gio.",
+      "en": "Kernels, ≥ 1 GiB."
+     }
+    },
+    {
+     "label": {
+      "fr": "/var",
+      "dar": "/var",
+      "en": "/var"
+     },
+     "body": {
+      "fr": "Serveur web : logs et cache grossissent ; séparée, elle ne peut pas remplir /.",
+      "dar": "Logs ma y3emrouch /.",
+      "en": "Logs cannot fill /."
+     }
+    },
+    {
+     "label": {
+      "fr": "/home",
+      "dar": "/home",
+      "en": "/home"
+     },
+     "body": {
+      "fr": "Données utilisateurs conservées lors d'une réinstallation ou mise à jour.",
+      "dar": "Data mahfoda.",
+      "en": "User data kept."
+     }
+    },
+    {
+     "label": {
+      "fr": "UEFI",
+      "dar": "UEFI",
+      "en": "UEFI"
+     },
+     "body": {
+      "fr": "**/boot/efi** (ESP, FAT32) contient EFI/redhat/grubx64.efi : sans elle, pas de démarrage.",
+      "dar": "**/boot/efi** darouriya.",
+      "en": "**/boot/efi** is mandatory."
+     }
+    },
+    {
+     "label": {
+      "fr": "Vérification",
+      "dar": "T2akked",
+      "en": "Check"
+     },
+     "body": {
+      "fr": "`lsblk -f` · `df -hT` · `cat /etc/fstab`.",
+      "dar": "lsblk -f · df -hT · fstab.",
+      "en": "lsblk -f · df -hT · fstab."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Ex. 2 — FHS (4 pts)",
+    "dar": "Ex. 2 — FHS (4 pts)",
+    "en": "Ex. 2 — FHS (4 pts)"
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Ex. 2",
+    "dar": "Copie modèle — Ex. 2",
+    "en": "Model answer — Ex. 2"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "a–d",
+      "dar": "a–d",
+      "en": "a–d"
+     },
+     "body": {
+      "fr": "Config SSH **/etc/ssh/** · logs web **/var/log/httpd/** · noyau + initramfs **/boot** · useradd **/usr/sbin** (/sbin est un lien).",
+      "dar": "etc/ssh · var/log/httpd · boot · usr/sbin.",
+      "en": "etc/ssh · var/log/httpd · boot · usr/sbin."
+     }
+    },
+    {
+     "label": {
+      "fr": "e–h",
+      "dar": "e–h",
+      "en": "e–h"
+     },
+     "body": {
+      "fr": "2e disque **/dev/sdb** · mémoire **/proc/meminfo** · logiciel tiers **/opt** · home de root **/root**.",
+      "dar": "dev/sdb · proc/meminfo · opt · root.",
+      "en": "dev/sdb · proc/meminfo · opt · root."
+     }
+    },
+    {
+     "label": {
+      "fr": "/tmp",
+      "dar": "/tmp",
+      "en": "/tmp"
+     },
+     "body": {
+      "fr": "Vidé au démarrage : garder plutôt dans /var/tmp ou /home.",
+      "dar": "Kaytkhwa : /var/tmp.",
+      "en": "Wiped: use /var/tmp."
+     }
+    },
+    {
+     "label": {
+      "fr": "ls -ld /bin",
+      "dar": "ls -ld /bin",
+      "en": "ls -ld /bin"
+     },
+     "body": {
+      "fr": "`lrwxrwxrwx … /bin -> usr/bin` : fusion /usr de RHEL 9 ; le rôle FHS de /bin ne change pas.",
+      "dar": "/bin -> usr/bin.",
+      "en": "/bin -> usr/bin."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Ex. 3 — Démarrage et pannes (4 pts)",
+    "dar": "Ex. 3 — Démarrage w pannes (4 pts)",
+    "en": "Ex. 3 — Boot and failures (4 pts)"
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Ex. 3",
+    "dar": "Copie modèle — Ex. 3",
+    "en": "Model answer — Ex. 3"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Ordre",
+      "dar": "Tartib",
+      "en": "Order"
+     },
+     "body": {
+      "fr": "UEFI → GRUB2 → noyau → initramfs monté → systemd (PID 1) → default.target.",
+      "dar": "UEFI → GRUB2 → noyau → initramfs → systemd → target.",
+      "en": "UEFI → GRUB2 → kernel → initramfs → systemd → target."
+     }
+    },
+    {
+     "label": {
+      "fr": "a) grub>",
+      "dar": "a) grub>",
+      "en": "a) grub>"
+     },
+     "body": {
+      "fr": "Étape **GRUB2** : grub.cfg absent/illisible → régénérer `grub2-mkconfig -o /boot/grub2/grub.cfg` (depuis un mode de secours).",
+      "dar": "**GRUB2** : grub.cfg.",
+      "en": "**GRUB2**: grub.cfg."
+     }
+    },
+    {
+     "label": {
+      "fr": "b) Kernel panic",
+      "dar": "b) Kernel panic",
+      "en": "b) Kernel panic"
+     },
+     "body": {
+      "fr": "Étape **PID 1** : le noyau ne trouve pas init/systemd.",
+      "dar": "**PID 1**.",
+      "en": "**PID 1**."
+     }
+    },
+    {
+     "label": {
+      "fr": "c) cannot mount root",
+      "dar": "c) cannot mount root",
+      "en": "c) cannot mount root"
+     },
+     "body": {
+      "fr": "Étape **initramfs** : pilote ou volume LVM manquant, ou mauvais `root=` dans GRUB_CMDLINE_LINUX → vérifier, reconstruire (`dracut -f`).",
+      "dar": "**initramfs**.",
+      "en": "**initramfs**."
+     }
+    },
+    {
+     "label": {
+      "fr": "d) service",
+      "dar": "d) service",
+      "en": "d) service"
+     },
+     "body": {
+      "fr": "Étape **systemd** : `systemctl status httpd`, `journalctl -u httpd -b`, puis `systemctl restart httpd`.",
+      "dar": "**systemd** : status, journalctl, restart.",
+      "en": "**systemd**: status, journalctl, restart."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Ex. 4 — GRUB2 (4 pts)",
+    "dar": "Ex. 4 — GRUB2 (4 pts)",
+    "en": "Ex. 4 — GRUB2 (4 pts)"
+   }
+  },
+  {
+   "type": "copy",
+   "title": {
+    "fr": "Copie modèle — Ex. 4",
+    "dar": "Copie modèle — Ex. 4",
+    "en": "Model answer — Ex. 4"
+   },
+   "lines": [
+    {
+     "label": {
+      "fr": "Fichier",
+      "dar": "Fichier",
+      "en": "File"
+     },
+     "body": {
+      "fr": "**/etc/default/grub** ; /boot/grub2/grub.cfg est **généré** par grub2-mkconfig, une modification à la main serait écrasée.",
+      "dar": "/etc/default/grub (grub.cfg générée).",
+      "en": "/etc/default/grub (grub.cfg is generated)."
+     }
+    },
+    {
+     "label": {
+      "fr": "Lignes",
+      "dar": "Lignes",
+      "en": "Lines"
+     },
+     "body": {
+      "fr": "GRUB_TIMEOUT=15 · GRUB_DEFAULT=saved · GRUB_DISABLE_RECOVERY=\"true\" · GRUB_CMDLINE_LINUX=\"… quiet\".",
+      "dar": "TIMEOUT=15 · DEFAULT=saved · RECOVERY · quiet.",
+      "en": "TIMEOUT=15 · DEFAULT=saved · RECOVERY · quiet."
+     }
+    },
+    {
+     "label": {
+      "fr": "Appliquer",
+      "dar": "Appliquer",
+      "en": "Apply"
+     },
+     "body": {
+      "fr": "`grub2-mkconfig -o /boot/grub2/grub.cfg`.",
+      "dar": "grub2-mkconfig -o.",
+      "en": "grub2-mkconfig -o."
+     }
+    },
+    {
+     "label": {
+      "fr": "Vérifier",
+      "dar": "T2akked",
+      "en": "Check"
+     },
+     "body": {
+      "fr": "Après redémarrage : `cat /proc/cmdline` (options reçues par le noyau).",
+      "dar": "cat /proc/cmdline.",
+      "en": "cat /proc/cmdline."
+     }
+    }
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "Ex. 5 — systemd et arrêt (4 pts)",
+    "dar": "Ex. 5 — systemd w arrêt (4 pts)",
+    "en": "Ex. 5 — systemd and shutdown (4 pts)"
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "systemctl get-default                          # 1. ex. graphical.target\nsystemctl set-default multi-user.target        #    mode texte, permanent\nsystemctl isolate multi-user.target            # 2. tout de suite\nsystemctl enable --now httpd                   # 3. maintenant + au démarrage\nsystemctl mask cups                            # 4. démarrage impossible\nshutdown -P 23:00 \"Fin de journée\"             # 5. arrêt + coupure à 23h\nshutdown -c                                    #    annuler\njournalctl -u httpd -b -p err                  # 6. erreurs httpd, démarrage actuel",
+   "caption": {
+    "fr": "Copie modèle — Ex. 5",
+    "dar": "Copie modèle — Ex. 5",
+    "en": "Model answer — Ex. 5"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "`disable` n'empêche pas un autre service ou un utilisateur de lancer cups ; `mask` le relie à /dev/null : **aucun** démarrage possible.",
+    "dar": "disable ≠ mask.",
+    "en": "disable ≠ mask."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Barème indicatif : 4 points par exercice. Une commande exacte vaut plus qu'une longue définition : écris la commande, puis une phrase qui dit ce qu'elle fait.",
+    "dar": "4 pts l kol exercice. Commande s7i7a + jomla.",
+    "en": "4 pts each. An exact command beats a long definition."
+   }
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "Partitions : /boot/efi (UEFI, vfat), /boot ≥ 1 Go, /, /var (serveur), /home, swap.",
+   "dar": "/boot/efi, /boot, /, /var, /home, swap.",
+   "en": "/boot/efi, /boot, /, /var, /home, swap."
+  },
+  {
+   "fr": "Pannes : grub> = GRUB2 ; Kernel panic no init = PID 1 ; cannot mount root = initramfs ; service = systemctl status + journalctl -u.",
+   "dar": "grub>, panic, initramfs, service.",
+   "en": "grub>, panic, initramfs, service."
+  },
+  {
+   "fr": "set-default (permanent) · isolate (maintenant) · enable --now · mask · shutdown -P 23:00 \"msg\" / -c.",
+   "dar": "set-default, isolate, enable --now, mask, shutdown.",
+   "en": "set-default, isolate, enable --now, mask, shutdown."
+  }
+ ]
+}

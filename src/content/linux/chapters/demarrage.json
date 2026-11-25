@@ -1,0 +1,987 @@
+{
+ "id": "demarrage",
+ "module": "linux",
+ "order": 2.5,
+ "title": {
+  "fr": "Chap 2 — Processus de démarrage (GRUB2, systemd)",
+  "dar": "Fasl 2 — Démarrage (GRUB2, systemd)",
+  "en": "Ch. 2 — The boot process (GRUB2, systemd)"
+ },
+ "summary": {
+  "fr": "Au CC : BIOS/UEFI, MBR/GPT, GRUB2 et ses fichiers, noyau et initramfs, PID 1, SysVinit (niveaux 0–6) puis systemd (unités, cibles, services), arrêt du système et journalctl.",
+  "dar": "F CC : BIOS/UEFI, MBR/GPT, GRUB2, noyau w initramfs, PID 1, SysVinit (0–6), systemd (unités, targets, services), arrêt w journalctl.",
+  "en": "In the test: BIOS/UEFI, MBR/GPT, GRUB2 files, kernel and initramfs, PID 1, SysVinit (0–6) then systemd (units, targets, services), shutdown and journalctl."
+ },
+ "estimatedMinutes": 55,
+ "sections": [
+  {
+   "type": "callout",
+   "kind": "key",
+   "body": {
+    "fr": "1. **5 étapes** : firmware **BIOS/UEFI** → chargeur **GRUB2** → **noyau + initramfs** → **PID 1 = systemd** → **cible par défaut**.\n2. BIOS lit le **MBR** (512 octets : code + table) ; UEFI lit la **GPT** et lance **/boot/efi/EFI/redhat/grubx64.efi**.\n3. GRUB2 : on modifie **/etc/default/grub** (et /etc/grub.d/), puis **grub2-mkconfig -o /boot/grub2/grub.cfg** ; jamais grub.cfg à la main.\n4. **initramfs** = racine temporaire en RAM avec les pilotes pour monter le vrai **/**.\n5. systemd remplace SysVinit : **unités** (.service, .target…), **cibles** à la place des niveaux (3 → multi-user, 5 → graphical) ; **systemctl** et **journalctl** pour tout piloter.",
+    "dar": "1. **5 marahil** : **BIOS/UEFI** → **GRUB2** → **noyau + initramfs** → **systemd** → **cible**.\n2. BIOS → **MBR** (512 octets) ; UEFI → **GPT** → **grubx64.efi**.\n3. Beddel **/etc/default/grub** w **grub2-mkconfig -o /boot/grub2/grub.cfg**.\n4. **initramfs** = racine mo2a9ata f RAM.\n5. systemd : **unités**, **targets** (3 → multi-user, 5 → graphical) ; **systemctl** w **journalctl**.",
+    "en": "1. **5 steps**: **BIOS/UEFI** → **GRUB2** → **kernel + initramfs** → **systemd** → **default target**.\n2. BIOS → **MBR** (512 bytes); UEFI → **GPT** → **grubx64.efi**.\n3. Edit **/etc/default/grub**, run **grub2-mkconfig -o /boot/grub2/grub.cfg**.\n4. **initramfs** = temporary root in RAM.\n5. systemd: **units**, **targets** (3 → multi-user, 5 → graphical); **systemctl** and **journalctl**."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "[Fiche PDF des commandes du CC à imprimer](/docs/linux-cc-commandes.pdf) (documents papier autorisés)",
+    "dar": "[Fiche PDF dyal commandes](/docs/linux-cc-commandes.pdf) (documents autorisés)",
+    "en": "[Printable command sheet (PDF)](/docs/linux-cc-commandes.pdf) (paper documents allowed)"
+   }
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "1. Les étapes du démarrage",
+    "dar": "1. Marahil dyal démarrage",
+    "en": "1. The boot steps"
+   }
+  },
+  {
+   "type": "animation",
+   "component": "BootSequence"
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Étape",
+     "dar": "Marhala",
+     "en": "Step"
+    },
+    {
+     "fr": "Composant",
+     "dar": "Composant",
+     "en": "Component"
+    },
+    {
+     "fr": "Ce qu'il fait",
+     "dar": "Chnou kaydir",
+     "en": "What it does"
+    }
+   ],
+   "rows": [
+    [
+     "1. Pre-OS",
+     "BIOS / UEFI",
+     {
+      "fr": "POST, choix du périphérique de démarrage, lancement du chargeur",
+      "dar": "POST w lanci chargeur",
+      "en": "POST, choose boot device, start the loader"
+     }
+    ],
+    [
+     "2. Boot loader",
+     "GRUB2 (LILO, GRUB…)",
+     {
+      "fr": "Menu, charge le noyau + initramfs, passe les paramètres",
+      "dar": "Menu, noyau + initramfs",
+      "en": "Menu, loads kernel + initramfs"
+     }
+    ],
+    [
+     "3. Noyau",
+     "vmlinuz + initramfs",
+     {
+      "fr": "Détecte le matériel, monte l'initramfs puis le vrai /",
+      "dar": "Matériel, monte /",
+      "en": "Hardware, mounts /"
+     }
+    ],
+    [
+     "4. PID 1",
+     "systemd (SysVinit, Upstart)",
+     {
+      "fr": "Seul processus lancé par le noyau : initialise tout",
+      "dar": "Kay-initialisi kolchi",
+      "en": "Initialises everything"
+     }
+    ],
+    [
+     "5. Prêt",
+     "default.target",
+     {
+      "fr": "Services lancés, écran de connexion",
+      "dar": "Services w login",
+      "en": "Services up, login screen"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-01"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "2. Le firmware : BIOS/MBR ou UEFI/GPT",
+    "dar": "2. Firmware : BIOS/MBR wla UEFI/GPT",
+    "en": "2. Firmware: BIOS/MBR or UEFI/GPT"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**BIOS** (*Basic Input Output System*, en ROM sur la carte mère) : **POST** (mémoire, clavier, disques…), on peut l'interrompre pour le configurer (ex. touche DEL), puis il lit le **MBR** = **secteur 0, 512 octets** du disque de démarrage : **code d'amorçage** (chargeur étape 1) + **table des partitions**. L'étape 1 lance l'étape 2 (GRUB) depuis **/boot**.",
+    "dar": "**BIOS** : **POST**, mn ba3d **MBR** (512 octets : code + table) → GRUB f /boot.",
+    "en": "**BIOS**: **POST**, then the **MBR** (512 bytes: code + table) → GRUB in /boot."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**UEFI** (*Unified Extensible Firmware Interface*) remplace le BIOS : interface graphique, réseau, sécurité intégrée, écrit en C, support **GPT** (partitions > **2 To**). Il lit la GPT, monte l'**ESP** = **/boot/efi** et lance **/boot/efi/EFI/redhat/grubx64.efi** (GRUB compilé pour UEFI). Mode **Legacy** possible sur les cartes récentes.",
+    "dar": "**UEFI** : **GPT** (> 2 To), **ESP /boot/efi**, **grubx64.efi**.",
+    "en": "**UEFI**: **GPT** (> 2 TB), **ESP /boot/efi**, **grubx64.efi**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Critère",
+     "dar": "Critère",
+     "en": "Criterion"
+    },
+    {
+     "fr": "BIOS + MBR",
+     "dar": "BIOS + MBR",
+     "en": "BIOS + MBR"
+    },
+    {
+     "fr": "UEFI + GPT",
+     "dar": "UEFI + GPT",
+     "en": "UEFI + GPT"
+    }
+   ],
+   "rows": [
+    [
+     {
+      "fr": "Lieu du chargeur",
+      "dar": "Fin chargeur",
+      "en": "Loader location"
+     },
+     {
+      "fr": "MBR (secteur 0)",
+      "dar": "MBR",
+      "en": "MBR"
+     },
+     {
+      "fr": "ESP /boot/efi (vfat)",
+      "dar": "ESP /boot/efi",
+      "en": "ESP /boot/efi"
+     }
+    ],
+    [
+     {
+      "fr": "Taille max",
+      "dar": "Taille max",
+      "en": "Max size"
+     },
+     "2 To",
+     {
+      "fr": "> 2 To",
+      "dar": "> 2 To",
+      "en": "> 2 TB"
+     }
+    ],
+    [
+     {
+      "fr": "Partitions",
+      "dar": "Partitions",
+      "en": "Partitions"
+     },
+     {
+      "fr": "4 primaires (ou 3 + étendue)",
+      "dar": "4 primaires",
+      "en": "4 primary"
+     },
+     {
+      "fr": "128 par défaut",
+      "dar": "128",
+      "en": "128 by default"
+     }
+    ],
+    [
+     {
+      "fr": "Vérifier",
+      "dar": "T2akked",
+      "en": "Check"
+     },
+     "[ -d /sys/firmware/efi ] → BIOS",
+     "[ -d /sys/firmware/efi ] → UEFI"
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "[ -d /sys/firmware/efi ] && echo UEFI || echo BIOS\nls /boot/efi/EFI/redhat/        # grubx64.efi, shimx64.efi (UEFI)\nlsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-02",
+    "ld-03",
+    "ld-04"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "3. Le chargeur de démarrage GRUB2",
+    "dar": "3. Chargeur GRUB2",
+    "en": "3. The GRUB2 boot loader"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "def",
+   "body": {
+    "fr": "Le **chargeur de démarrage** (*boot loader*) localise le noyau, le **charge en mémoire** avec l'initramfs et le **lance**. Il permet aussi de choisir entre plusieurs noyaux/OS et de **passer des paramètres au noyau**. GRUB2 est installé automatiquement ; `os-prober` sert à trouver les autres systèmes.",
+    "dar": "**Chargeur** : kaychargi noyau w initramfs w kaylancih ; ikhtiyar w paramètres.",
+    "en": "The **boot loader** loads and starts the kernel and initramfs; lets you choose and pass parameters."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Fichier",
+     "dar": "Fichier",
+     "en": "File"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    }
+   ],
+   "rows": [
+    [
+     "/etc/default/grub",
+     {
+      "fr": "Paramètres du menu (VARIABLE=valeur) : on le modifie",
+      "dar": "Paramètres : hna katbeddel",
+      "en": "Menu settings: you edit this"
+     }
+    ],
+    [
+     "/etc/grub.d/",
+     {
+      "fr": "Scripts qui génèrent le menu (00_header, 10_linux, 40_custom…)",
+      "dar": "Scripts dyal menu",
+      "en": "Scripts that build the menu"
+     }
+    ],
+    [
+     "/boot/grub2/grub.cfg",
+     {
+      "fr": "Configuration finale **générée** : ne pas éditer",
+      "dar": "Finale **générée**",
+      "en": "Final **generated** config"
+     }
+    ],
+    [
+     "/boot/vmlinuz-*",
+     {
+      "fr": "Noyau compressé",
+      "dar": "Noyau",
+      "en": "Compressed kernel"
+     }
+    ],
+    [
+     "/boot/initramfs-*.img",
+     {
+      "fr": "Racine temporaire avec les pilotes",
+      "dar": "Racine mo2a9ata",
+      "en": "Temporary root with drivers"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Variable",
+     "dar": "Variable",
+     "en": "Variable"
+    },
+    {
+     "fr": "Sens",
+     "dar": "Ma3na",
+     "en": "Meaning"
+    }
+   ],
+   "rows": [
+    [
+     "GRUB_TIMEOUT",
+     {
+      "fr": "Secondes avant de démarrer l'entrée par défaut",
+      "dar": "Tawani 9bel default",
+      "en": "Seconds before default"
+     }
+    ],
+    [
+     "GRUB_DEFAULT",
+     {
+      "fr": "Entrée par défaut : numéro (0 = 1re), nom ou saved (dernière choisie)",
+      "dar": "0, smiya wla saved",
+      "en": "0, name or saved"
+     }
+    ],
+    [
+     "GRUB_DISTRIBUTOR",
+     {
+      "fr": "Titre des entrées du menu",
+      "dar": "Titre",
+      "en": "Menu titles"
+     }
+    ],
+    [
+     "GRUB_DISABLE_SUBMENU",
+     {
+      "fr": "Une entrée par noyau, sans sous-menu",
+      "dar": "Bla sous-menu",
+      "en": "No submenu"
+     }
+    ],
+    [
+     "GRUB_CMDLINE_LINUX",
+     {
+      "fr": "Arguments passés au noyau (ex. rhgb quiet)",
+      "dar": "Paramètres noyau",
+      "en": "Kernel arguments"
+     }
+    ],
+    [
+     "GRUB_DISABLE_RECOVERY",
+     {
+      "fr": "true : pas d'entrée Recovery",
+      "dar": "Bla Recovery",
+      "en": "No Recovery entry"
+     }
+    ],
+    [
+     "GRUB_BACKGROUND",
+     {
+      "fr": "Image d'arrière-plan",
+      "dar": "Image",
+      "en": "Background image"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "animation",
+   "component": "GrubConfigFlow"
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "cp -p /etc/default/grub /etc/default/grub.bak     # 1. sauvegarder\nvi /etc/default/grub                               # 2. GRUB_TIMEOUT=10, GRUB_DEFAULT=saved…\ngrub2-mkconfig -o /boot/grub2/grub.cfg            # 3. régénérer\ngrubby --default-kernel ; cat /proc/cmdline        # 4. vérifier (après reboot)",
+   "caption": {
+    "fr": "Modifier GRUB2 en 4 étapes",
+    "dar": "GRUB2 f 4 marahil",
+    "en": "Change GRUB2 in 4 steps"
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "tip",
+   "body": {
+    "fr": "Les détails pratiques (entrées personnalisées 40_custom, mot de passe GRUB, réinitialiser le mot de passe root avec rd.break) sont dans le chapitre **TP2 — GRUB2**.",
+    "dar": "Tafassil f **TP2 — GRUB2**.",
+    "en": "Hands-on details are in **TP2 — GRUB2**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-05",
+    "ld-06",
+    "ld-07"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "4. Noyau, initramfs et PID 1",
+    "dar": "4. Noyau, initramfs w PID 1",
+    "en": "4. Kernel, initramfs and PID 1"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le noyau (`vmlinuz`, version compressée de `vmlinux`) doit monter **/**, mais les **pilotes** du disque sont des **modules** (fichiers)… sur ce même disque. Solution : l'**initramfs** (*INITial RAM FileSystem*, ancien nom **initrd**), image chargée en mémoire par GRUB : **racine temporaire** avec le strict minimum (pilotes disque, LVM, partitions chiffrées). Le noyau la monte sur /, lance `/init`, puis bascule sur le vrai /.",
+    "dar": "**initramfs** = racine mo2a9ata f RAM b pilotes ; noyau kaymontiha, mn ba3d / l7a9i9i.",
+    "en": "**initramfs** = temporary root in RAM with drivers; then the real /."
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Le noyau lance ensuite le **premier processus, PID 1** : le **seul** lancé par le noyau, chargé de tout initialiser et de lancer les services. Sans lui : **Kernel panic - not syncing: No working init found**. `pstree` montre au sommet le gestionnaire utilisé : **SysVinit** (historique), **Upstart** (2006, Ubuntu) ou **systemd** (2010, RHEL 7+).",
+    "dar": "**PID 1** = l processus lowel ; bla bih → **kernel panic**. SysVinit, Upstart, **systemd**.",
+    "en": "**PID 1** is the first process; without it → **kernel panic**. SysVinit, Upstart, **systemd**."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "ls -lh /boot/vmlinuz-* /boot/initramfs-*\nlsinitrd | head          # contenu de l'initramfs\npstree | head -3         # systemd au sommet\nps -p 1 -o pid,comm"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-08",
+    "ld-09",
+    "ld-10"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "5. SysVinit : l'ancien système (niveaux d'exécution)",
+    "dar": "5. SysVinit : niveaux",
+    "en": "5. SysVinit: runlevels"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Niveau",
+     "dar": "Niveau",
+     "en": "Level"
+    },
+    {
+     "fr": "Mode",
+     "dar": "Mode",
+     "en": "Mode"
+    },
+    {
+     "fr": "Cible systemd",
+     "dar": "Target systemd",
+     "en": "systemd target"
+    }
+   ],
+   "rows": [
+    [
+     "0",
+     {
+      "fr": "Arrêt",
+      "dar": "Arrêt",
+      "en": "Halt"
+     },
+     "poweroff.target"
+    ],
+    [
+     "1, s, S",
+     {
+      "fr": "Mono-utilisateur : maintenance, root seul",
+      "dar": "Mono-user : maintenance",
+      "en": "Single user: maintenance"
+     },
+     "rescue.target"
+    ],
+    [
+     "2, 4",
+     {
+      "fr": "Non utilisés (définissables)",
+      "dar": "Ma mst3mlinch",
+      "en": "Unused"
+     },
+     "multi-user.target"
+    ],
+    [
+     "3",
+     {
+      "fr": "Multi-utilisateurs, mode texte",
+      "dar": "Multi-users texte",
+      "en": "Multi-user, text"
+     },
+     "multi-user.target"
+    ],
+    [
+     "5",
+     {
+      "fr": "Multi-utilisateurs, mode graphique",
+      "dar": "Multi-users graphique",
+      "en": "Multi-user, graphical"
+     },
+     "graphical.target"
+    ],
+    [
+     "6",
+     {
+      "fr": "Redémarrage",
+      "dar": "Redémarrage",
+      "en": "Reboot"
+     },
+     "reboot.target"
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Fonctionnement : **/sbin/init** (PID 1) lit **/etc/inittab** (lignes `id:niveaux:action:processus`, ex. `id:5:initdefault:`), puis exécute **/etc/rc.d/rc N**, qui lance les liens de **/etc/rc.d/rcN.d/** : `Snn…` (start) et `Knn…` (kill), dans l'ordre de nn, pointant vers les scripts de **/etc/init.d/**. Commandes : `init N` / `telinit N`, `runlevel` ou `who -r`.",
+    "dar": "**init** → **/etc/inittab** → **/etc/rcN.d/** (S = start, K = kill) → **/etc/init.d/**. `init N`, `runlevel`.",
+    "en": "**init** → **/etc/inittab** → **/etc/rcN.d/** (S/K) → **/etc/init.d/**."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "trap",
+   "body": {
+    "fr": "Défauts : démarrage **séquentiel**, dépendances **basiques**, tout en **scripts shell** → lent. D'où **systemd**.",
+    "dar": "Séquentiel, dépendances, scripts → bti2 → **systemd**.",
+    "en": "Sequential, basic deps, shell scripts → slow → **systemd**."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-11",
+    "ld-12"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "6. systemd : unités, cibles, services",
+    "dar": "6. systemd : unités, targets, services",
+    "en": "6. systemd: units, targets, services"
+   }
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "**systemd** (PID 1, remplace /sbin/init) **parallélise** le démarrage (une **socket** par service : les dépendants s'y connectent avant même que le service soit prêt), **uniformise** la gestion des services entre distributions et reste compatible avec les scripts init.",
+    "dar": "**systemd** : **parallèle** (sockets), **uniforme**.",
+    "en": "**systemd**: **parallel** (sockets), **uniform**."
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Unité",
+     "dar": "Unité",
+     "en": "Unit"
+    },
+    {
+     "fr": "Rôle",
+     "dar": "Dor",
+     "en": "Role"
+    }
+   ],
+   "rows": [
+    [
+     ".service",
+     {
+      "fr": "Lancer et administrer un processus",
+      "dar": "Processus",
+      "en": "A process"
+     }
+    ],
+    [
+     ".socket",
+     {
+      "fr": "Socket Unix ou réseau associée à un service",
+      "dar": "Socket",
+      "en": "A socket"
+     }
+    ],
+    [
+     ".target",
+     {
+      "fr": "Groupe d'unités : remplace les niveaux d'exécution",
+      "dar": "Groupe = runlevel",
+      "en": "Group = runlevel"
+     }
+    ],
+    [
+     ".mount / .automount",
+     {
+      "fr": "Montages (créés depuis /etc/fstab) / auto-montage",
+      "dar": "Montages",
+      "en": "Mounts"
+     }
+    ],
+    [
+     "snapshot",
+     {
+      "fr": "Sauvegarder puis restaurer l'état du système",
+      "dar": "État",
+      "en": "System state"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "Emplacements : **/usr/lib/systemd/system/** (unités fournies par les paquets) et **/etc/systemd/system/** (unités de l'administrateur, prioritaires). Après toute création/modification : **systemctl daemon-reload**.",
+    "dar": "/usr/lib/systemd/system (paquets) · /etc/systemd/system (admin) · daemon-reload.",
+    "en": "/usr/lib (packages) · /etc (admin) · daemon-reload."
+   }
+  },
+  {
+   "type": "code",
+   "lang": "ini",
+   "code": "# /etc/systemd/system/monservice.service\n[Unit]                      # métadonnées et conditions de démarrage\nDescription=Mon Service Web\nAfter=network.target\n\n[Service]                   # comment exécuter le service\nType=simple\nExecStart=/usr/bin/mon-service\nRestart=on-failure\n\n[Install]                   # intégration au démarrage (enable)\nWantedBy=multi-user.target",
+   "caption": {
+    "fr": "Les 3 sections d'une unité .service",
+    "dar": "3 sections",
+    "en": "The 3 sections"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Commande",
+     "dar": "Commande",
+     "en": "Command"
+    },
+    {
+     "fr": "Effet",
+     "dar": "Effet",
+     "en": "Effect"
+    }
+   ],
+   "rows": [
+    [
+     "systemctl status svc",
+     {
+      "fr": "État détaillé (diagnostic)",
+      "dar": "État",
+      "en": "Status"
+     }
+    ],
+    [
+     "systemctl start | stop | restart | reload svc",
+     {
+      "fr": "Maintenant (reload = relire la config)",
+      "dar": "Daba",
+      "en": "Now"
+     }
+    ],
+    [
+     "systemctl enable | disable svc",
+     {
+      "fr": "Au démarrage (--now : aussi maintenant)",
+      "dar": "F démarrage",
+      "en": "At boot"
+     }
+    ],
+    [
+     "systemctl mask | unmask svc",
+     {
+      "fr": "Interdire tout démarrage / lever",
+      "dar": "Bloqui",
+      "en": "Block"
+     }
+    ],
+    [
+     "systemctl is-active | is-enabled svc",
+     {
+      "fr": "Tests pour scripts",
+      "dar": "Tests",
+      "en": "Checks"
+     }
+    ],
+    [
+     "systemctl get-default · set-default X.target",
+     {
+      "fr": "Cible par défaut (permanent)",
+      "dar": "Cible par défaut",
+      "en": "Default target"
+     }
+    ],
+    [
+     "systemctl isolate X.target",
+     {
+      "fr": "Changer de cible maintenant (≈ init N)",
+      "dar": "Beddel daba",
+      "en": "Switch now"
+     }
+    ],
+    [
+     "systemctl list-unit-files · list-units --type=service",
+     {
+      "fr": "Inventaire",
+      "dar": "Liste",
+      "en": "Inventory"
+     }
+    ],
+    [
+     "systemd-analyze blame",
+     {
+      "fr": "Temps de démarrage par unité",
+      "dar": "Wa9t",
+      "en": "Boot time per unit"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "text",
+   "body": {
+    "fr": "États d'un service : **active**, **inactive**, **failed**, **masked**, **static** (ne s'active pas seule, dépend d'une autre unité), **alias**, **disabled**.",
+    "dar": "États : active, inactive, failed, masked, static, alias, disabled.",
+    "en": "States: active, inactive, failed, masked, static, alias, disabled."
+   }
+  },
+  {
+   "type": "animation",
+   "component": "SystemdStates"
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-13",
+    "ld-14",
+    "ld-15",
+    "ld-16",
+    "ld-17"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "7. Arrêter le système",
+    "dar": "7. Arrêt dyal système",
+    "en": "7. Shutting down"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Ancienne commande",
+     "dar": "Ancienne",
+     "en": "Old"
+    },
+    {
+     "fr": "systemctl",
+     "dar": "systemctl",
+     "en": "systemctl"
+    },
+    {
+     "fr": "Effet",
+     "dar": "Effet",
+     "en": "Effect"
+    }
+   ],
+   "rows": [
+    [
+     "halt",
+     "systemctl halt",
+     {
+      "fr": "Arrête le CPU, machine sous tension",
+      "dar": "CPU wa9ef, tension",
+      "en": "CPU halted, power on"
+     }
+    ],
+    [
+     "poweroff",
+     "systemctl poweroff",
+     {
+      "fr": "Arrête et coupe l'alimentation (ACPI)",
+      "dar": "Kay9te3 tension",
+      "en": "Cuts power"
+     }
+    ],
+    [
+     "reboot",
+     "systemctl reboot",
+     {
+      "fr": "Redémarre",
+      "dar": "Redémarrage",
+      "en": "Reboots"
+     }
+    ],
+    [
+     "pm-suspend",
+     "systemctl suspend",
+     {
+      "fr": "État en RAM",
+      "dar": "RAM",
+      "en": "State in RAM"
+     }
+    ],
+    [
+     "pm-hibernate",
+     "systemctl hibernate",
+     {
+      "fr": "État sur disque, éteint",
+      "dar": "Disque",
+      "en": "State on disk"
+     }
+    ],
+    [
+     "pm-suspend-hybrid",
+     "systemctl hybrid-sleep",
+     {
+      "fr": "Les deux",
+      "dar": "Jouj",
+      "en": "Both"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "code",
+   "lang": "bash",
+   "code": "shutdown -r +10 \"Maintenance\"   # redémarrer dans 10 min avec un message\nshutdown -h 22:30                # arrêter à 22h30\nshutdown -c                      # annuler\nsystemctl poweroff --no-wall     # sans prévenir les utilisateurs\nsystemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target",
+   "caption": {
+    "fr": "shutdown [OPTION] [HEURE] [MESSAGE] — -r redémarrer, -h arrêter, -P éteindre, -c annuler, -f sans fsck, -F fsck forcé",
+    "dar": "shutdown : -r, -h, -P, -c",
+    "en": "shutdown: -r, -h, -P, -c"
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-20",
+    "ld-21",
+    "ld-22"
+   ]
+  },
+  {
+   "type": "heading",
+   "body": {
+    "fr": "8. Dépannage avec journalctl",
+    "dar": "8. Dépannage b journalctl",
+    "en": "8. Troubleshooting with journalctl"
+   }
+  },
+  {
+   "type": "table",
+   "headers": [
+    {
+     "fr": "Commande",
+     "dar": "Commande",
+     "en": "Command"
+    },
+    {
+     "fr": "Usage",
+     "dar": "Isti3mal",
+     "en": "Use"
+    }
+   ],
+   "rows": [
+    [
+     "journalctl -b / -b -1 / --list-boots",
+     {
+      "fr": "Démarrage actuel / précédent / liste",
+      "dar": "Boot daba / 9bel / liste",
+      "en": "Current / previous boot / list"
+     }
+    ],
+    [
+     "journalctl -u nginx",
+     {
+      "fr": "Logs d'un service",
+      "dar": "Logs service",
+      "en": "One service"
+     }
+    ],
+    [
+     "journalctl -f",
+     {
+      "fr": "Suivre en direct",
+      "dar": "Direct",
+      "en": "Follow"
+     }
+    ],
+    [
+     "journalctl -p err · -p warning..emerg",
+     {
+      "fr": "Par priorité",
+      "dar": "B priorité",
+      "en": "By priority"
+     }
+    ],
+    [
+     "journalctl --since \"1 hour ago\" · --since \"09:00\" --until \"10:00\"",
+     {
+      "fr": "Par période",
+      "dar": "B wa9t",
+      "en": "By time"
+     }
+    ],
+    [
+     "journalctl -n 50 · -o verbose",
+     {
+      "fr": "50 dernières lignes · métadonnées",
+      "dar": "50 stour · tafassil",
+      "en": "Last 50 · metadata"
+     }
+    ]
+   ]
+  },
+  {
+   "type": "callout",
+   "kind": "darija",
+   "body": {
+    "fr": "Priorités : **emerg 0 · alert 1 · crit 2 · err 3 · warning 4 · notice 5 · info 6 · debug 7** ; `-p err` = err **et plus grave**. Combinaisons utiles : `journalctl -u nginx -b`, `journalctl -b -1 -p err` (crash précédent), `journalctl -p err..alert --since today`.",
+    "dar": "Priorités 0 → 7 ; `-p err` = err w ktar.",
+    "en": "Priorities 0 → 7; `-p err` = err and worse."
+   }
+  },
+  {
+   "type": "callout",
+   "kind": "exam",
+   "body": {
+    "fr": "Au CC, une question « panne » se rédige comme le cours : **diagnostic** (`systemctl status`), **recherche** (`journalctl` filtré), **action** (`restart`), **vérification** (`journalctl -f`).",
+    "dar": "Panne : status → journalctl → restart → -f.",
+    "en": "Outage: status → journalctl → restart → -f."
+   }
+  },
+  {
+   "type": "miniQuiz",
+   "questionIds": [
+    "ld-18",
+    "ld-19"
+   ]
+  }
+ ],
+ "keyPoints": [
+  {
+   "fr": "BIOS (POST, MBR 512 octets) ou UEFI (GPT, ESP /boot/efi, grubx64.efi) → GRUB2 → vmlinuz + initramfs → PID 1 systemd → default.target.",
+   "dar": "BIOS/UEFI → GRUB2 → noyau → systemd → cible.",
+   "en": "BIOS/UEFI → GRUB2 → kernel → systemd → target."
+  },
+  {
+   "fr": "GRUB2 : modifier /etc/default/grub (TIMEOUT, DEFAULT, CMDLINE_LINUX…) puis grub2-mkconfig -o /boot/grub2/grub.cfg.",
+   "dar": "/etc/default/grub → grub2-mkconfig.",
+   "en": "/etc/default/grub → grub2-mkconfig."
+  },
+  {
+   "fr": "SysVinit : /etc/inittab, /etc/rcN.d (S/K), niveaux 0–6 ; systemd : unités, cibles (3 → multi-user, 5 → graphical), parallèle.",
+   "dar": "SysVinit 0–6 → systemd targets.",
+   "en": "SysVinit 0–6 → systemd targets."
+  },
+  {
+   "fr": "systemctl start/enable/--now, mask, daemon-reload, get/set-default, isolate ; unités admin dans /etc/systemd/system.",
+   "dar": "systemctl ; /etc/systemd/system.",
+   "en": "systemctl; /etc/systemd/system."
+  },
+  {
+   "fr": "Arrêt : poweroff (coupe) / halt (CPU) / reboot / suspend (RAM) / hibernate (disque) ; shutdown -r +10 \"msg\" ; journalctl -b -1 -p err, -u svc -f.",
+   "dar": "poweroff, halt, shutdown, journalctl.",
+   "en": "poweroff, halt, shutdown, journalctl."
+  }
+ ]
+}

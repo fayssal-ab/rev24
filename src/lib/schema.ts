@@ -148,6 +148,8 @@ export const ExerciseSchema = z.object({
   /** numeric facts verified against the stats library by content:check and vitest */
   checks: z.array(z.object({ compute: ComputeSchema, expect: z.number(), tolerance: z.number() })).optional(),
   missionId: z.string().optional(),
+  /** marking scheme for the automatic correction of written answers (see lib/grade.ts) */
+  rubric: z.array(z.object({ label: L10nSchema, any: z.array(z.string()).min(1), w: z.number().optional() })).optional(),
   /** interactive widget shown in the exercise (e.g. random-graph Kruskal sheet) */
   widget: z.object({ component: z.string(), props: z.record(z.unknown()).optional() }).optional()
 });

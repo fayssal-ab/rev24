@@ -6,29 +6,168 @@
   "en": "Unix / Linux administration (RHEL 9)"
  },
  "subtitle": {
-  "fr": "Intro, TP1 → TP5, utilisateurs et droits",
-  "dar": "Intro, TP1 → TP5, users w droits",
-  "en": "Intro, TP1 → TP5, users and permissions"
+  "fr": "Pr Zbakh — CC : Installation, FHS, démarrage (GRUB, systemd) · documents papier autorisés",
+  "dar": "Pr Zbakh — CC : Installation, FHS, démarrage (GRUB, systemd) · documents autorisés",
+  "en": "Pr Zbakh — test: installation, FHS, boot (GRUB, systemd) · paper documents allowed"
  },
  "color": "#2d6a3e",
  "icon": "terminal",
  "theme": "terminal",
  "chapters": [
   "intro",
+  "install-fhs",
   "tp1",
+  "demarrage",
   "grub",
   "systemd",
   "paquets",
-  "users"
+  "users",
+  "cc-blanc"
  ],
  "upcoming": [],
- "annales": [],
+ "annales": [
+  {
+   "id": "cc-facile",
+   "title": {
+    "fr": "CC Linux — Niveau 1 · Facile",
+    "dar": "CC Linux — Niveau 1 · Sahel",
+    "en": "Linux test — Level 1 · Easy"
+   },
+   "minutes": 45,
+   "intro": {
+    "fr": "4 exercices de 5 points : les définitions et les commandes de base. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 exercices × 5 pts : définitions w commandes de base. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts: definitions and basic commands. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "lx-e-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-e-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-e-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-e-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "cc-moyen",
+   "title": {
+    "fr": "CC Linux — Niveau 2 · Moyen (type CC)",
+    "dar": "CC Linux — Niveau 2 · Moyen (b7al CC)",
+    "en": "Linux test — Level 2 · Medium (real test style)"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "5 exercices de 4 points, comme le vrai CC : partitionnement, FHS, pannes de démarrage, GRUB2, systemd. Documents autorisés.",
+    "dar": "5 × 4 pts b7al CC. Documents autorisés.",
+    "en": "5 × 4 pts like the real test. Documents allowed."
+   },
+   "parts": [
+    {
+     "exerciseId": "lx-cc-1",
+     "points": 4
+    },
+    {
+     "exerciseId": "lx-cc-2",
+     "points": 4
+    },
+    {
+     "exerciseId": "lx-cc-3",
+     "points": 4
+    },
+    {
+     "exerciseId": "lx-cc-4",
+     "points": 4
+    },
+    {
+     "exerciseId": "lx-cc-5",
+     "points": 4
+    }
+   ]
+  },
+  {
+   "id": "cc-difficile",
+   "title": {
+    "fr": "CC Linux — Niveau 3 · Difficile",
+    "dar": "CC Linux — Niveau 3 · S3ib",
+    "en": "Linux test — Level 3 · Hard"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "4 exercices de 5 points : MBR/GPT, entrée GRUB personnalisée, unité systemd avec dépendances, enquête journalctl.",
+    "dar": "4 × 5 pts : MBR/GPT, entrée GRUB, unité systemd, journalctl.",
+    "en": "4 × 5 pts: MBR/GPT, custom GRUB entry, systemd unit, journalctl."
+   },
+   "parts": [
+    {
+     "exerciseId": "lx-h-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-h-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-h-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-h-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "cc-expert",
+   "title": {
+    "fr": "CC Linux — Niveau 4 · Expert",
+    "dar": "CC Linux — Niveau 4 · Expert",
+    "en": "Linux test — Level 4 · Expert"
+   },
+   "minutes": 120,
+   "intro": {
+    "fr": "4 exercices de 5 points pour viser 20/20 : mot de passe root (rd.break), UEFI en détail, SysVinit → systemd, diagnostic complet d'un démarrage.",
+    "dar": "4 × 5 pts l 20/20 : rd.break, UEFI, SysVinit → systemd, diagnostic.",
+    "en": "4 × 5 pts for 20/20: rd.break, UEFI, SysVinit → systemd, diagnosis."
+   },
+   "parts": [
+    {
+     "exerciseId": "lx-x-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-x-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-x-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "lx-x-4",
+     "points": 5
+    }
+   ]
+  }
+ ],
  "weights": {
-  "users": 6,
-  "systemd": 4,
-  "paquets": 3,
-  "grub": 2.5,
-  "tp1": 2,
-  "intro": 1
+  "demarrage": 6,
+  "install-fhs": 5,
+  "grub": 5,
+  "systemd": 5,
+  "tp1": 3,
+  "cc-blanc": 2,
+  "intro": 1,
+  "users": 1,
+  "paquets": 1
  }
 }

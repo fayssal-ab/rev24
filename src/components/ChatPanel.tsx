@@ -1,13 +1,15 @@
 /**
  * Group chat, docked on the right like a casino-site chat (Stake / Rainbet): open or hide it with the bubble,
- * the choice is remembered. Only the last 20 messages exist (the API deletes older ones). Links are clickable.
+ * the choice is remembered. Only the last 20 messages exist (the API deletes older ones). Links are clickable,
+ * "@" mentions a member (autocomplete; the message is highlighted for them) and a message can be a poll.
  * Clicking a name opens that member's profile: picture, activity and what they studied.
  */
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { create } from 'zustand';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, type Variants } from 'framer-motion';
+import { StickToBottom, useStickToBottomContext } from 'use-stick-to-bottom';
 import { api, authEnabled, useApproved, useAuth, useIsAdmin } from '../auth/auth';
 import { useT, useL } from '../hooks/useT';
 import { MODULES } from '../lib/content';
@@ -15,16 +17,32 @@ import { useAllModules } from '../hooks/useModule';
 import { Avatar } from './Avatar';
 import { Icon } from './Icon';
 
+interface Poll {
+  options: string[];
+  counts: number[];
+  total: number;
+  /** index voted by me, null = not voted */
+  mine: number | null;
+}
 interface ChatMessage {
   id: number;
   body: string;
   at: string;
-  user: { id: string; name: string; avatar: string | null; admin: boolean };
+  poll: Poll | null;
+  user: { id: string; name: string; avatar: string | null };
+}
+interface Member {
+  id: string;
+  name: string;
+  avatar: string | null;
 }
 
 const OPEN_KEY = 'g22-chat-open';
 const SEEN_KEY = 'g22-chat-seen';
 const KEEP = 20;
+/** stored form of a mention: @[Name](user id) */
+const MENTION = /@\[([^\]\n]{1,60})\]\(([0-9a-f-]{36})\)/g;
+const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 /** Panel open / closed (remembered on the device); the layout reads it to make room on wide screens. */
 export const useChat = create<{ open: boolean; profile: string | null; setOpen: (o: boolean) => void; showProfile: (id: string | null) => void }>((set) => ({
@@ -66,6 +84,91 @@ function Linkified({ text }: { text: string }) {
   );
 }
 
+/** Message text: mentions as chips (mine stands out), then links. */
+function MessageText({ text, me, onMention }: { text: string; me?: string; onMention: (id: string) => void }) {
+  const out: ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(MENTION)) {
+    if (m.index! > last) out.push(<Linkified key={`t${last}`} text={text.slice(last, m.index)} />);
+    const isMe = m[2] === me;
+    out.push(
+      <button
+        key={`m${m.index}`}
+        type="button"
+        onClick={() => onMention(m[2])}
+        className={`rounded px-1 font-semibold transition hover:opacity-80 ${isMe ? 'bg-warn text-white' : 'bg-accent/15 text-accent'}`}
+      >
+        @{m[1]}
+      </button>
+    );
+    last = m.index! + m[0].length;
+  }
+  if (last < text.length) out.push(<Linkified key={`t${last}`} text={text.slice(last)} />);
+  return <>{out}</>;
+}
+
+const mentions = (text: string, id?: string) => !!id && [...text.matchAll(MENTION)].some((m) => m[2] === id);
+
+/** Poll card: bars with the share of votes; click to vote, click your choice again to take the vote back. */
+function PollCard({ poll, onVote, t }: { poll: Poll; onVote: (i: number) => void; t: (k: 'chat.poll.votes' | 'chat.poll.vote1' | 'chat.poll.hint') => string }) {
+  return (
+    <div className="mt-2 space-y-1.5" data-testid="chat-poll">
+      {poll.options.map((o, i) => {
+        const pct = poll.total ? Math.round((poll.counts[i] / poll.total) * 100) : 0;
+        const chosen = poll.mine === i;
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onVote(i)}
+            className={`relative block w-full overflow-hidden rounded-lg border px-3 py-2 text-left text-[13px] transition ${chosen ? 'border-accent' : 'border-line hover:border-accent/60'}`}
+            data-testid="chat-poll-option"
+          >
+            <span className={`absolute inset-y-0 left-0 transition-[width] duration-500 ${chosen ? 'bg-accent/25' : 'bg-surface2'}`} style={{ width: `${poll.mine !== null || poll.total ? pct : 0}%` }} />
+            <span className="relative flex items-center gap-2">
+              <span className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border ${chosen ? 'border-accent bg-accent text-white' : 'border-line'}`}>{chosen && <Icon name="check" size={10} />}</span>
+              <span className="min-w-0 flex-1 break-words font-medium">{o}</span>
+              {(poll.mine !== null || poll.total > 0) && <span className="shrink-0 font-mono text-[11px] text-muted">{pct}%</span>}
+            </span>
+          </button>
+        );
+      })}
+      <div className="text-[11px] text-muted">
+        {poll.total} {poll.total === 1 ? t('chat.poll.vote1') : t('chat.poll.votes')} · {t('chat.poll.hint')}
+      </div>
+    </div>
+  );
+}
+
+const SPRING = { type: 'spring', stiffness: 420, damping: 32, mass: 0.8 } as const;
+const PANEL: Variants = {
+  open: { x: 0, opacity: 1, visibility: 'visible', transition: { type: 'spring', stiffness: 380, damping: 36 } },
+  closed: { x: '100%', opacity: 0.6, transition: { type: 'spring', stiffness: 380, damping: 40 }, transitionEnd: { visibility: 'hidden' } }
+};
+
+/** "New messages" pill when the member has scrolled up (state from use-stick-to-bottom). */
+function JumpToLatest({ label }: { label: string }) {
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+  return (
+    <AnimatePresence>
+      {!isAtBottom && (
+        <motion.button
+          type="button"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={SPRING}
+          onClick={() => void scrollToBottom()}
+          className="absolute bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-fg px-3 py-1.5 text-xs font-semibold text-bg shadow-lg"
+          data-testid="chat-latest"
+        >
+          <Icon name="down" size={13} /> {label}
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
 function timeOf(iso: string, locale: string) {
   return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 }
@@ -85,90 +188,162 @@ function ChatDockInner() {
   const [text, setText] = useState('');
   const [err, setErr] = useState<string | null>(null);
   const [seen, setSeen] = useState(() => Number(localStorage.getItem(SEEN_KEY) ?? 0) || 0);
-  const list = useRef<HTMLDivElement>(null);
+  // poll being written: null = plain message
+  const [pollOpts, setPollOpts] = useState<string[] | null>(null);
+  // @mentions: members list, names inserted in the text, autocomplete state
+  const [members, setMembers] = useState<Member[]>([]);
+  const picked = useRef(new Map<string, string>());
+  const [ac, setAc] = useState<{ q: string; start: number; sel: number } | null>(null);
+  const input = useRef<HTMLTextAreaElement>(null);
   const lastId = msgs.at(-1)?.id ?? 0;
   const locale = lang === 'en' ? 'en-GB' : 'fr-FR';
 
-  const merge = useCallback((incoming: ChatMessage[], full: boolean) => {
-    setMsgs((cur) => {
-      const base = full ? [] : cur;
-      const ids = new Set(base.map((m) => m.id));
-      return [...base, ...incoming.filter((m) => !ids.has(m.id))].sort((a, b) => a.id - b.id).slice(-KEEP);
-    });
-  }, []);
-
-  // full list now and every 30 s (picks up deletions), new messages only in between when open
   const refresh = useCallback(async () => {
     const r = await api<{ messages: ChatMessage[] }>('GET', '/chat');
-    if (r.ok) merge(r.data.messages, true);
-  }, [merge]);
+    if (r.ok) setMsgs(r.data.messages.slice(-KEEP));
+  }, []);
+  // whole list (20 messages, so votes and deletions stay live): every 5 s when open, 20 s otherwise
   useEffect(() => {
     void refresh();
-    const id = setInterval(() => document.visibilityState === 'visible' && void refresh(), open ? 30_000 : 20_000);
+    const id = setInterval(() => document.visibilityState === 'visible' && void refresh(), open ? 5000 : 20_000);
     return () => clearInterval(id);
   }, [refresh, open]);
-  const lastRef = useRef(0);
-  lastRef.current = lastId;
   useEffect(() => {
-    if (!open) return;
-    const id = setInterval(async () => {
-      if (document.visibilityState !== 'visible') return;
-      const r = await api<{ messages: ChatMessage[] }>('GET', `/chat?after=${lastRef.current}`);
-      if (r.ok && r.data.messages.length) merge(r.data.messages, false);
-    }, 4000);
-    return () => clearInterval(id);
-  }, [open, merge]);
+    if (!open || members.length) return;
+    void api<{ members: Member[] }>('GET', '/members').then((r) => r.ok && setMembers(r.data.members));
+  }, [open, members.length]);
 
-  // read marker + scroll to the newest message
+  // read marker (scrolling is handled by use-stick-to-bottom)
   useEffect(() => {
     if (!open || !lastId) return;
     setSeen(lastId);
     localStorage.setItem(SEEN_KEY, String(lastId));
-    list.current?.scrollTo({ top: list.current.scrollHeight, behavior: 'smooth' });
   }, [open, lastId]);
-  const unread = open ? 0 : msgs.filter((m) => m.id > seen && m.user.id !== me?.id).length;
+  const fresh = open ? [] : msgs.filter((m) => m.id > seen && m.user.id !== me?.id);
+  const unread = fresh.length;
+  const mentioned = fresh.some((m) => mentions(m.body, me?.id));
 
-  const send = async (e: FormEvent) => {
-    e.preventDefault();
+  // ---- @ autocomplete
+  const matches = useMemo(() => {
+    if (!ac) return [];
+    const q = fold(ac.q);
+    return members.filter((m) => m.id !== me?.id && fold(m.name).includes(q)).slice(0, 6);
+  }, [ac, members, me?.id]);
+  const onType = (value: string, caret: number) => {
+    setText(value);
+    const m = /(^|\s)@([^\s@]{0,20})$/.exec(value.slice(0, caret));
+    setAc(m ? { q: m[2], start: caret - m[2].length - 1, sel: 0 } : null);
+  };
+  const pick = (m: Member) => {
+    if (!ac) return;
+    const caret = ac.start + 1 + ac.q.length;
+    const next = `${text.slice(0, ac.start)}@${m.name} ${text.slice(caret)}`;
+    picked.current.set(m.name, m.id);
+    setText(next);
+    setAc(null);
+    requestAnimationFrame(() => {
+      const pos = ac.start + m.name.length + 2;
+      input.current?.focus();
+      input.current?.setSelectionRange(pos, pos);
+    });
+  };
+  /** "@Name" typed through the autocomplete → stored token @[Name](id) */
+  const encode = (s: string) => {
+    let out = s;
+    for (const [name, id] of [...picked.current.entries()].sort((a, b) => b[0].length - a[0].length))
+      out = out.split(`@${name}`).join(`@[${name}](${id})`);
+    return out;
+  };
+
+  const send = async (e?: FormEvent) => {
+    e?.preventDefault();
     const body = text.trim();
     if (!body) return;
+    const options = pollOpts?.map((o) => o.trim()).filter(Boolean);
+    if (pollOpts && (!options || options.length < 2)) return setErr(t('chat.poll.need2'));
     setErr(null);
-    const r = await api<{ messages: ChatMessage[] }>('POST', '/chat', { body });
-    if (!r.ok) return setErr(r.error === 'too_fast' ? t('chat.tooFast') : t('chat.error'));
+    const r = await api<{ messages: ChatMessage[] }>('POST', '/chat', { body: encode(body), ...(options ? { poll: { options } } : {}) });
+    if (!r.ok) return setErr(r.error === 'too_fast' ? t('chat.tooFast') : r.error === 'invalid_poll' ? t('chat.poll.invalid') : t('chat.error'));
     setText('');
-    merge(r.data.messages, true);
+    setPollOpts(null);
+    picked.current.clear();
+    setMsgs(r.data.messages);
+  };
+  const vote = async (m: ChatMessage, choice: number) => {
+    const r = await api<{ messages: ChatMessage[] }>('POST', `/chat/${m.id}/vote`, { choice });
+    if (r.ok) setMsgs(r.data.messages);
   };
   const remove = async (m: ChatMessage) => {
-    const r = await api<{ messages: ChatMessage[] }>('DELETE', `/admin/chat/${m.id}`);
-    if (r.ok) merge(r.data.messages, true);
+    const r = await api<{ messages: ChatMessage[] }>('DELETE', `/chat/${m.id}`);
+    if (r.ok) setMsgs(r.data.messages);
+  };
+  const onKey = (e: ReactKeyboardEvent<HTMLTextAreaElement>) => {
+    if (ac && matches.length) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const d = e.key === 'ArrowDown' ? 1 : -1;
+        return setAc({ ...ac, sel: (ac.sel + d + matches.length) % matches.length });
+      }
+      if (e.key === 'Enter' || e.key === 'Tab') {
+        e.preventDefault();
+        return pick(matches[ac.sel]);
+      }
+      if (e.key === 'Escape') return setAc(null);
+    }
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      void send();
+    }
   };
 
   return (
     <>
-      {/* bubble: opens / hides the chat */}
-      {!open && (
-        <button
-          onClick={() => setOpen(true)}
-          className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-accent text-white shadow-[0_10px_30px_-8px_rgba(0,132,78,0.7)] transition hover:scale-105 active:scale-95"
-          aria-label={t('chat.open')}
-          data-testid="chat-open"
-        >
-          <Icon name="chat" size={24} />
-          {unread > 0 && <span className="absolute -right-1 -top-1 grid h-6 min-w-6 place-items-center rounded-full bg-bad px-1.5 text-[11px] font-bold">{unread > 9 ? '9+' : unread}</span>}
-        </button>
-      )}
-
+      {/* bubble: opens / hides the chat (framer-motion springs) */}
       <AnimatePresence>
-        {open && (
-          <motion.aside
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
-            className="fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col border-l border-line bg-surface shadow-2xl sm:w-[22rem] xl:shadow-none"
-            aria-label={t('chat.title')}
-            data-testid="chat-panel"
+        {!open && (
+          <motion.button
+            key="bubble"
+            initial={{ scale: 0.4, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.4, opacity: 0 }}
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            transition={SPRING}
+            onClick={() => setOpen(true)}
+            className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-accent text-white shadow-[0_10px_30px_-8px_rgba(0,132,78,0.7)]"
+            aria-label={t('chat.open')}
+            data-testid="chat-open"
           >
+            <Icon name="chat" size={24} />
+            <AnimatePresence>
+              {unread > 0 && (
+                <motion.span
+                  key={mentioned ? 'at' : 'n'}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  transition={{ type: 'spring', stiffness: 600, damping: 20 }}
+                  className={`absolute -right-1 -top-1 grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-[11px] font-bold ${mentioned ? 'bg-warn' : 'bg-bad'}`}
+                  data-testid="chat-unread"
+                >
+                  {mentioned ? '@' : unread > 9 ? '9+' : unread}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* always mounted, slid in / out by framer-motion (GPU transform, no re-mount when opening) */}
+      <motion.aside
+        initial={false}
+        animate={open ? 'open' : 'closed'}
+        variants={PANEL}
+        className="fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col border-l border-line bg-surface shadow-2xl will-change-transform sm:w-[22rem] xl:shadow-none"
+        aria-label={t('chat.title')}
+        aria-hidden={!open}
+        data-testid={open ? 'chat-panel' : undefined}
+      >
             <header className="flex items-center gap-2 border-b border-line px-4 py-3">
               <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent/10 text-accent">
                 <Icon name="chat" size={17} />
@@ -182,12 +357,25 @@ function ChatDockInner() {
               </button>
             </header>
 
-            <div ref={list} className="scroll-thin flex-1 space-y-3 overflow-y-auto px-3 py-4">
+            {/* use-stick-to-bottom: stays on the newest message with spring scrolling, stops when you scroll up */}
+            <StickToBottom className="relative min-h-0 flex-1" resize="smooth" initial="instant">
+              <StickToBottom.Content className="space-y-3 px-3 py-4" scrollClassName="scroll-thin">
               {!msgs.length && <p className="px-2 py-10 text-center text-sm text-muted">{t('chat.empty')}</p>}
+              <AnimatePresence initial={false}>
               {msgs.map((m) => {
                 const mine = m.user.id === me?.id;
+                const forMe = !mine && mentions(m.body, me?.id);
                 return (
-                  <div key={m.id} className="group flex gap-2.5" data-testid="chat-msg">
+                  <motion.div
+                    key={m.id}
+                    layout="position"
+                    initial={{ opacity: 0, y: 14, x: mine ? 12 : -12, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
+                    transition={SPRING}
+                    className="group flex gap-2.5"
+                    data-testid="chat-msg"
+                  >
                     <button onClick={() => showProfile(m.user.id)} className="mt-0.5 shrink-0 rounded-full transition hover:opacity-80" aria-label={m.user.name}>
                       <Avatar name={m.user.name} src={m.user.avatar} size={32} />
                     </button>
@@ -196,38 +384,119 @@ function ChatDockInner() {
                         <button onClick={() => showProfile(m.user.id)} className={`truncate text-[13px] font-semibold hover:underline ${mine ? 'text-accent' : ''}`}>
                           {m.user.name}
                         </button>
-                        {m.user.admin && <span className="rounded bg-accent px-1 text-[9px] font-bold uppercase text-white">Admin</span>}
                         <span className="ml-auto shrink-0 font-mono text-[10px] text-muted">{timeOf(m.at, locale)}</span>
-                        {isAdmin && (
-                          <button onClick={() => void remove(m)} className="shrink-0 text-muted opacity-0 transition hover:text-bad group-hover:opacity-100" aria-label={t('chat.delete')} title={t('chat.delete')}>
+                        {(mine || isAdmin) && (
+                          <button
+                            onClick={() => window.confirm(t('chat.deleteConfirm')) && void remove(m)}
+                            className="shrink-0 text-muted transition hover:text-bad sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
+                            aria-label={t('chat.delete')}
+                            title={t('chat.delete')}
+                            data-testid="chat-delete"
+                          >
                             <Icon name="trash" size={13} />
                           </button>
                         )}
                       </div>
-                      <p className={`mt-0.5 whitespace-pre-line break-words rounded-lg rounded-tl-sm px-3 py-2 text-[14px] leading-snug ${mine ? 'bg-accent/10' : 'bg-surface2'}`}>
-                        <Linkified text={m.body} />
-                      </p>
+                      <div
+                        className={`mt-0.5 whitespace-pre-line break-words rounded-lg rounded-tl-sm px-3 py-2 text-[14px] leading-snug ${forMe ? 'border-l-4 border-warn bg-warn/10' : mine ? 'bg-accent/10' : 'bg-surface2'}`}
+                        data-testid={forMe ? 'chat-mention-me' : undefined}
+                      >
+                        {m.poll && (
+                          <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-accent">
+                            <Icon name="chart" size={12} /> {t('chat.poll.label')}
+                          </div>
+                        )}
+                        <span className={m.poll ? 'font-semibold' : ''}>
+                          <MessageText text={m.body} me={me?.id} onMention={showProfile} />
+                        </span>
+                        {m.poll && <PollCard poll={m.poll} onVote={(i) => void vote(m, i)} t={t} />}
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
-            </div>
+              </AnimatePresence>
+              </StickToBottom.Content>
+              <JumpToLatest label={t('chat.latest')} />
+            </StickToBottom>
 
-            <form onSubmit={send} className="border-t border-line p-3">
+            <form onSubmit={send} className="relative border-t border-line p-3">
+              {/* @ autocomplete */}
+              {ac && matches.length > 0 && (
+                <ul className="absolute bottom-full left-3 right-3 mb-1 overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-xl" role="listbox" data-testid="chat-mentions">
+                  {matches.map((m, i) => (
+                    <li key={m.id}>
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected={i === ac.sel}
+                        onMouseDown={(e) => (e.preventDefault(), pick(m))}
+                        className={`flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm ${i === ac.sel ? 'bg-accent/10 text-accent' : 'hover:bg-surface2'}`}
+                      >
+                        <Avatar name={m.name} src={m.avatar} size={24} />
+                        <span className="truncate font-medium">{m.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {err && <p className="mb-2 text-xs text-bad">{err}</p>}
+
+              {/* poll options */}
+              {pollOpts && (
+                <div className="mb-2 space-y-1.5 rounded-xl border border-accent/40 bg-accent/[0.04] p-2.5" data-testid="chat-poll-editor">
+                  <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-accent">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="chart" size={12} /> {t('chat.poll.new')}
+                    </span>
+                    <button type="button" className="text-muted hover:text-fg" onClick={() => setPollOpts(null)} aria-label={t('common.close')}>
+                      <Icon name="x" size={14} />
+                    </button>
+                  </div>
+                  {pollOpts.map((o, i) => (
+                    <div key={i} className="flex gap-1.5">
+                      <input
+                        className="input !min-h-[36px] flex-1 !py-1.5 text-sm"
+                        value={o}
+                        maxLength={80}
+                        placeholder={`${t('chat.poll.option')} ${i + 1}`}
+                        onChange={(e) => setPollOpts(pollOpts.map((x, j) => (j === i ? e.target.value : x)))}
+                      />
+                      {pollOpts.length > 2 && (
+                        <button type="button" className="px-1 text-muted hover:text-bad" onClick={() => setPollOpts(pollOpts.filter((_, j) => j !== i))} aria-label={t('chat.delete')}>
+                          <Icon name="x" size={14} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  {pollOpts.length < 6 && (
+                    <button type="button" className="text-xs font-semibold text-accent hover:underline" onClick={() => setPollOpts([...pollOpts, ''])}>
+                      + {t('chat.poll.add')}
+                    </button>
+                  )}
+                </div>
+              )}
+
               <div className="flex items-end gap-2">
+                <button
+                  type="button"
+                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border transition ${pollOpts ? 'border-accent bg-accent/10 text-accent' : 'border-line text-muted hover:text-fg'}`}
+                  onClick={() => setPollOpts(pollOpts ? null : ['', ''])}
+                  aria-label={t('chat.poll.new')}
+                  title={t('chat.poll.new')}
+                  data-testid="chat-poll-toggle"
+                >
+                  <Icon name="chart" size={17} />
+                </button>
                 <textarea
+                  ref={input}
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      void send(e);
-                    }
-                  }}
+                  onChange={(e) => onType(e.target.value, e.target.selectionStart)}
+                  onKeyDown={onKey}
+                  onBlur={() => setTimeout(() => setAc(null), 150)}
                   rows={1}
                   maxLength={500}
-                  placeholder={t('chat.placeholder')}
+                  placeholder={pollOpts ? t('chat.poll.question') : t('chat.placeholder')}
                   className="input max-h-28 min-h-[44px] flex-1 resize-none !py-2.5 text-sm"
                   data-testid="chat-input"
                 />
@@ -235,10 +504,9 @@ function ChatDockInner() {
                   <Icon name="arrowRight" size={18} />
                 </button>
               </div>
+              <div className="mt-1.5 text-[10px] text-muted">{t('chat.tips')}</div>
             </form>
-          </motion.aside>
-        )}
-      </AnimatePresence>
+      </motion.aside>
       <MemberProfile />
     </>
   );
@@ -253,7 +521,9 @@ interface Profile {
   createdAt: string;
   online: boolean;
   seenAgo: number | null;
-  study: {
+  /** locked by its owner: study is null for other members */
+  private: boolean;
+  study: null | {
     xp: number;
     streak: number;
     read: string[];
@@ -302,7 +572,7 @@ function MemberProfile() {
   }, [id, showProfile]);
 
   // chapter titles for the modules this member touched
-  const keys = useMemo(() => (p ? [...p.study.read, ...p.study.inProgress.map((x) => x.key)] : []), [p]);
+  const keys = useMemo(() => (p?.study ? [...p.study.read, ...p.study.inProgress.map((x) => x.key)] : []), [p]);
   const moduleIds = useMemo(() => [...new Set(keys.map((k) => k.split('/')[0]).filter((m) => MODULES.some((x) => x.id === m)))], [keys]);
   const content = useAllModules(moduleIds);
   const chapterTitle = (key: string) => {
@@ -316,7 +586,7 @@ function MemberProfile() {
   };
   const readByModule = useMemo(() => {
     const g = new Map<string, string[]>();
-    for (const k of p?.study.read ?? []) {
+    for (const k of p?.study?.read ?? []) {
       const m = k.split('/')[0];
       g.set(m, [...(g.get(m) ?? []), k]);
     }
@@ -347,7 +617,10 @@ function MemberProfile() {
                 <div className="flex items-center gap-4">
                   <Avatar name={p.displayName} src={p.avatar} size={64} className="ring-2 ring-white/30" />
                   <div className="min-w-0">
-                    <div className="truncate text-xl font-extrabold">{p.displayName}</div>
+                    <div className="flex items-center gap-2 truncate text-xl font-extrabold">
+                      {p.displayName}
+                      {p.private && <Icon name="lock" size={15} className="shrink-0 text-white/60" />}
+                    </div>
                     <div className="text-sm text-white/70">{p.groupe}</div>
                     <div className={`mt-1 inline-flex items-center gap-1.5 text-xs font-semibold ${p.online ? 'text-emerald-300' : 'text-white/60'}`}>
                       <span className={`h-2 w-2 rounded-full ${p.online ? 'bg-emerald-400' : 'bg-white/40'}`} />
@@ -357,7 +630,15 @@ function MemberProfile() {
                 </div>
               )}
             </div>
-            {p && (
+            {p && !p.study && (
+              <div className="flex items-start gap-3 p-5 text-sm text-muted" data-testid="member-private">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-surface2 text-fg">
+                  <Icon name="lock" size={16} />
+                </span>
+                <span className="pt-1.5">{t('chat.private')}</span>
+              </div>
+            )}
+            {p && p.study && (
               <div className="space-y-5 p-5">
                 <div className="grid grid-cols-4 gap-2">
                   <Stat icon="star" value={p.study.xp} label="XP" />

@@ -64,7 +64,18 @@ CREATE TABLE IF NOT EXISTS events (
 CREATE TABLE IF NOT EXISTS chat_messages (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id CHAR(36) NOT NULL,
-  body VARCHAR(500) NOT NULL,
+  body VARCHAR(2000) NOT NULL,                    -- texte ; une mention est stockée @[Nom](id)
+  poll JSON NULL,                                 -- sondage : { "options": [...] } (la question = body)
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Votes des sondages du chat (un vote par membre, supprimés avec le message).
+CREATE TABLE IF NOT EXISTS chat_votes (
+  message_id BIGINT UNSIGNED NOT NULL,
+  user_id CHAR(36) NOT NULL,
+  choice TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (message_id, user_id),
+  CONSTRAINT fk_vote_msg FOREIGN KEY (message_id) REFERENCES chat_messages (id) ON DELETE CASCADE,
+  CONSTRAINT fk_vote_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

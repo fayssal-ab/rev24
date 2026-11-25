@@ -13,7 +13,10 @@
  *   GET  /api/supports                                           → documents added / edited by the admin
  *   GET  /api/announcements                                      → admin announcements
  *   GET  /api/chat?after=<id>                                    → last 20 chat messages (older ones are deleted)
- *   POST /api/chat            { body }                           → post a message (1 every 1.5 s)
+ *   POST /api/chat            { body, poll?: { options } }       → post a message or a poll (1 every 1.5 s); @[Name](id) = mention
+ *   DELETE /api/chat/:id                                         → delete my message (admins: any message)
+ *   POST /api/chat/:id/vote   { choice }                         → vote in a poll (same choice again = remove)
+ *   GET  /api/members                                            → approved members, for @mentions
  *   GET  /api/users/:id/avatar                                   → profile picture
  *   GET  /api/users/:id/profile                                  → a member's public profile + study summary
  *   GET  /api/events                                             → upcoming tests, exams and lab reports (past ones are deleted)
@@ -120,6 +123,8 @@ function migrate(): Promise<void> {
     // profile picture: small JPEG/PNG/WebP data URL (resized in the browser), served by GET /api/users/:id/avatar
     if (!have.has('avatar')) await p.query(`ALTER TABLE users ADD COLUMN avatar MEDIUMTEXT NULL`);
     if (!have.has('avatar_at')) await p.query(`ALTER TABLE users ADD COLUMN avatar_at DATETIME(3) NULL`);
+    // private profile: other members only see the name, picture and presence (admins still see everything)
+    if (!have.has('profile_private')) await p.query(`ALTER TABLE users ADD COLUMN profile_private TINYINT(1) NOT NULL DEFAULT 0`);
     // group chat: only the last CHAT_KEEP messages are kept
     await p.query(`CREATE TABLE IF NOT EXISTS chat_messages (
       id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -127,6 +132,20 @@ function migrate(): Promise<void> {
       body VARCHAR(500) NOT NULL,
       created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
       CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+    // mentions are stored as @[Name](id) tokens (longer than the visible text) and a message can carry a poll
+    const [chatCols] = await p.query<RowDataPacket[]>(`SELECT COLUMN_NAME AS c, CHARACTER_MAXIMUM_LENGTH AS len FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'chat_messages'`);
+    const chatHave = new Map(chatCols.map((r) => [String(r.c).toLowerCase(), Number(r.len ?? 0)]));
+    if ((chatHave.get('body') ?? 0) < 2000) await p.query(`ALTER TABLE chat_messages MODIFY body VARCHAR(2000) NOT NULL`);
+    if (!chatHave.has('poll')) await p.query(`ALTER TABLE chat_messages ADD COLUMN poll JSON NULL`);
+    // one vote per member and poll; deleted with the message
+    await p.query(`CREATE TABLE IF NOT EXISTS chat_votes (
+      message_id BIGINT UNSIGNED NOT NULL,
+      user_id CHAR(36) NOT NULL,
+      choice TINYINT UNSIGNED NOT NULL,
+      PRIMARY KEY (message_id, user_id),
+      CONSTRAINT fk_vote_msg FOREIGN KEY (message_id) REFERENCES chat_messages (id) ON DELETE CASCADE,
+      CONSTRAINT fk_vote_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     await p.query(`CREATE TABLE IF NOT EXISTS supports (
       id CHAR(36) NOT NULL PRIMARY KEY,
@@ -270,6 +289,7 @@ type UserRow = RowDataPacket & {
   session_id: string | null;
   last_seen: Date | null;
   avatar_at: Date | null;
+  profile_private?: number;
   created_at: Date;
   /** admin listing only (computed by MySQL) */
   seen_ago?: number | null;
@@ -306,6 +326,7 @@ const publicUser = (u: UserRow) => {
     role: admin ? 'admin' : 'user',
     status: admin ? 'approved' : u.status,
     avatar: avatarUrl(u),
+    privateProfile: !!u.profile_private,
     // the presentation coach is private to the principal admin (not other admins, not ORAL_EMAILS)
     features: isPrincipal(u) ? ['oral'] : []
   };
@@ -324,7 +345,7 @@ let dummyHash: string | null = null;
 const dummy = () => (dummyHash ??= bcrypt.hashSync('not-a-real-password', 11));
 
 async function findUser(where: 'id' | 'email', value: string) {
-  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
+  const [rows] = await db().query<UserRow[]>(`SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, profile_private, created_at FROM users WHERE ${where} = ? LIMIT 1`, [value]);
   return rows[0];
 }
 
@@ -412,6 +433,7 @@ async function route(req: Request): Promise<Response> {
     const displayName = str(b.displayName, 120);
     const groupe = str(b.groupe, 40);
     await db().query('UPDATE users SET display_name = COALESCE(NULLIF(?, \'\'), display_name), groupe = COALESCE(NULLIF(?, \'\'), groupe) WHERE id = ?', [displayName, groupe, userId]);
+    if (typeof b.privateProfile === 'boolean') await db().query('UPDATE users SET profile_private = ? WHERE id = ?', [b.privateProfile ? 1 : 0, userId]);
     // avatar: a data URL sets it, '' or null removes it, absent leaves it
     if (b.avatar === '' || b.avatar === null) await db().query('UPDATE users SET avatar = NULL, avatar_at = NULL WHERE id = ?', [userId]);
     else if (typeof b.avatar === 'string') {
@@ -449,7 +471,7 @@ async function route(req: Request): Promise<Response> {
   const pr = /^\/users\/([0-9a-f-]{36})\/profile$/.exec(path);
   if (method === 'GET' && pr) {
     const [rows] = await db().query<RowDataPacket[]>(
-      `SELECT u.id, u.display_name, u.email, u.groupe, u.role, u.status, u.session_id, u.avatar_at, u.created_at,
+      `SELECT u.id, u.display_name, u.email, u.groupe, u.role, u.status, u.session_id, u.avatar_at, u.profile_private, u.created_at,
               TIMESTAMPDIFF(SECOND, u.last_seen, NOW(3)) AS seen_ago, p.data
          FROM users u LEFT JOIN progress p ON p.user_id = u.id WHERE u.id = ? LIMIT 1`,
       [pr[1]]
@@ -457,6 +479,7 @@ async function route(req: Request): Promise<Response> {
     const u = rows[0];
     if (!u || (u.status !== 'approved' && !adminEmails().includes(String(u.email).toLowerCase()))) throw new HttpError(404, 'not_found');
     const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
+    const hidden = !!u.profile_private && u.id !== userId && !isAdmin(me);
     return json(200, {
       profile: {
         id: u.id,
@@ -466,7 +489,9 @@ async function route(req: Request): Promise<Response> {
         createdAt: u.created_at,
         online: !!u.session_id && seenAgo !== null && seenAgo < ONLINE_S,
         seenAgo,
-        study: studySummary(u.data)
+        private: !!u.profile_private,
+        // private profile: what they study stays hidden from other members (not from themselves or admins)
+        study: hidden ? null : studySummary(u.data)
       }
     });
   }
@@ -474,16 +499,51 @@ async function route(req: Request): Promise<Response> {
   // ----- group chat (last CHAT_KEEP messages; ?after=<id> returns only newer ones)
   if (method === 'GET' && path === '/chat') {
     const after = Number(new URL(req.url).searchParams.get('after') ?? 0) || 0;
-    return json(200, { messages: await chatList(after) });
+    return json(200, { messages: await chatList(after, userId) });
   }
   if (method === 'POST' && path === '/chat') {
-    const text = str((await body(req)).body, 500).replace(/\s+\n/g, '\n');
-    if (!text) throw new HttpError(400, 'empty');
+    const b = await body(req);
+    const text = str(b.body, 2000).replace(/\s+\n/g, '\n');
+    // 500 visible characters: a mention token counts as its name
+    if (!text || text.replace(MENTION, '@$1').length > 500) throw new HttpError(400, text ? 'too_long' : 'empty');
+    let poll: { options: string[] } | null = null;
+    if (b.poll && typeof b.poll === 'object') {
+      const raw = (b.poll as { options?: unknown }).options;
+      const options = Array.isArray(raw) ? raw.map((o) => str(o, 80)).filter(Boolean) : [];
+      if (options.length < 2 || options.length > 6 || new Set(options.map((o) => o.toLowerCase())).size !== options.length) throw new HttpError(400, 'invalid_poll');
+      poll = { options };
+    }
     const [last] = await db().query<RowDataPacket[]>('SELECT TIMESTAMPDIFF(MICROSECOND, MAX(created_at), NOW(3)) AS us FROM chat_messages WHERE user_id = ?', [userId]);
     if (last[0]?.us != null && Number(last[0].us) < 1_500_000) throw new HttpError(429, 'too_fast');
-    await db().query('INSERT INTO chat_messages (user_id, body) VALUES (?, ?)', [userId, text]);
+    await db().query('INSERT INTO chat_messages (user_id, body, poll) VALUES (?, ?, ?)', [userId, text, poll ? JSON.stringify(poll) : null]);
     await db().query(`DELETE FROM chat_messages WHERE id NOT IN (SELECT id FROM (SELECT id FROM chat_messages ORDER BY id DESC LIMIT ${CHAT_KEEP}) AS keep)`);
-    return json(201, { messages: await chatList(0) });
+    return json(201, { messages: await chatList(0, userId) });
+  }
+  // a member deletes one of their own messages (admins can delete any, here or in /admin/chat/:id)
+  const dm = /^\/chat\/(\d+)$/.exec(path);
+  if (method === 'DELETE' && dm) {
+    const [r] = await db().query<ResultSetHeader>('DELETE FROM chat_messages WHERE id = ? AND (user_id = ? OR ?)', [Number(dm[1]), userId, isAdmin(me)]);
+    if (!r.affectedRows) throw new HttpError(404, 'not_found');
+    return json(200, { messages: await chatList(0, userId) });
+  }
+  // vote (same choice again = remove the vote)
+  const vt = /^\/chat\/(\d+)\/vote$/.exec(path);
+  if (method === 'POST' && vt) {
+    const id = Number(vt[1]);
+    const choice = Number((await body(req)).choice);
+    const [rows] = await db().query<RowDataPacket[]>('SELECT poll FROM chat_messages WHERE id = ?', [id]);
+    const poll = rows[0]?.poll ? ((typeof rows[0].poll === 'string' ? JSON.parse(rows[0].poll) : rows[0].poll) as { options: string[] }) : null;
+    if (!poll) throw new HttpError(404, 'not_found');
+    if (!Number.isInteger(choice) || choice < 0 || choice >= poll.options.length) throw new HttpError(400, 'invalid_choice');
+    const [cur] = await db().query<RowDataPacket[]>('SELECT choice FROM chat_votes WHERE message_id = ? AND user_id = ?', [id, userId]);
+    if (cur[0] && Number(cur[0].choice) === choice) await db().query('DELETE FROM chat_votes WHERE message_id = ? AND user_id = ?', [id, userId]);
+    else await db().query('INSERT INTO chat_votes (message_id, user_id, choice) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE choice = VALUES(choice)', [id, userId, choice]);
+    return json(200, { messages: await chatList(0, userId) });
+  }
+  // members, for @mentions
+  if (method === 'GET' && path === '/members') {
+    const [rows] = await db().query<RowDataPacket[]>("SELECT id, display_name, email, avatar_at FROM users WHERE status = 'approved' OR role = 'admin' ORDER BY display_name");
+    return json(200, { members: rows.map((r) => ({ id: r.id, name: r.display_name || String(r.email).split('@')[0], avatar: avatarUrl(r as { id: string; avatar_at: Date | null }) })) });
   }
 
   if (method === 'GET' && path === '/supports') {
@@ -583,18 +643,44 @@ function eventFields(b: Record<string, unknown>) {
 }
 
 const CHAT_KEEP = 20;
-async function chatList(after: number) {
+/** @[Name](user id) */
+const MENTION = /@\[([^\]\n]{1,60})\]\([0-9a-f-]{36}\)/g;
+async function chatList(after: number, me: string) {
   const [rows] = await db().query<RowDataPacket[]>(
-    `SELECT m.id, m.body, m.created_at, u.id AS uid, u.display_name, u.email, u.avatar_at, u.role
+    `SELECT m.id, m.body, m.poll, m.created_at, u.id AS uid, u.display_name, u.email, u.avatar_at
        FROM chat_messages m JOIN users u ON u.id = m.user_id
       WHERE m.id > ? ORDER BY m.id DESC LIMIT ${CHAT_KEEP}`,
     [after]
   );
+  // poll results: votes per option + this member's choice
+  const pollIds = rows.filter((r) => r.poll).map((r) => Number(r.id));
+  const votes = new Map<number, { counts: Map<number, number>; mine: number | null }>();
+  if (pollIds.length) {
+    const [vr] = await db().query<RowDataPacket[]>(
+      'SELECT message_id, choice, COUNT(*) AS n, MAX(user_id = ?) AS mine FROM chat_votes WHERE message_id IN (?) GROUP BY message_id, choice',
+      [me, pollIds]
+    );
+    for (const v of vr) {
+      const k = Number(v.message_id);
+      const e = votes.get(k) ?? { counts: new Map(), mine: null };
+      e.counts.set(Number(v.choice), Number(v.n));
+      if (Number(v.mine)) e.mine = Number(v.choice);
+      votes.set(k, e);
+    }
+  }
   return rows.reverse().map((r) => ({
     id: Number(r.id),
     body: r.body,
     at: r.created_at,
-    user: { id: r.uid, name: r.display_name || String(r.email).split('@')[0], avatar: avatarUrl({ id: r.uid, avatar_at: r.avatar_at }), admin: r.role === 'admin' || adminEmails().includes(String(r.email).toLowerCase()) }
+    poll: r.poll
+      ? (() => {
+          const opts = ((typeof r.poll === 'string' ? JSON.parse(r.poll) : r.poll) as { options: string[] }).options;
+          const v = votes.get(Number(r.id));
+          const counts = opts.map((_, i) => v?.counts.get(i) ?? 0);
+          return { options: opts, counts, total: counts.reduce((a, c) => a + c, 0), mine: v?.mine ?? null };
+        })()
+      : null,
+    user: { id: r.uid, name: r.display_name || String(r.email).split('@')[0], avatar: avatarUrl({ id: r.uid, avatar_at: r.avatar_at }) }
   }));
 }
 
@@ -637,7 +723,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
   // ----- users
   if (method === 'GET' && path === '/users') {
     const [rows] = await p.query<UserRow[]>(
-      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, created_at,
+      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, profile_private, created_at,
               TIMESTAMPDIFF(SECOND, last_seen, NOW(3)) AS seen_ago,
               TIMESTAMPDIFF(SECOND, online_since, NOW(3)) AS online_for
          FROM users ORDER BY (status = 'pending') DESC, created_at DESC`
@@ -744,7 +830,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
   const cm = /^\/chat\/(\d+)$/.exec(path);
   if (cm && method === 'DELETE') {
     await p.query('DELETE FROM chat_messages WHERE id = ?', [Number(cm[1])]);
-    return json(200, { messages: await chatList(0) });
+    return json(200, { messages: await chatList(0, me.id) });
   }
 
   // ----- upcoming tests / exams / lab reports

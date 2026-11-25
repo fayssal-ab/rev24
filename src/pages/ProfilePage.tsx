@@ -352,6 +352,21 @@ function AccountCard() {
           </div>
           <p className="text-xs text-muted">{user.email}</p>
         </div>
+        {/* private profile: in the chat, other members only see the name, picture and presence */}
+        <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 md:col-span-2 ${user.privateProfile ? 'border-accent/50 bg-accent/[0.05]' : 'border-line'}`} data-testid="private-profile">
+          <input
+            type="checkbox"
+            className="mt-1"
+            checked={!!user.privateProfile}
+            onChange={async (e) => setMsg((await updateProfile({ privateProfile: e.target.checked })).ok ? { ok: true, key: 'auth.saved' } : { ok: false, key: 'auth.err.generic' })}
+          />
+          <span className="min-w-0">
+            <span className="flex items-center gap-1.5 font-semibold">
+              <Icon name="lock" size={14} className="text-accent" /> {t('profile.private')}
+            </span>
+            <span className="block text-xs text-muted">{t('profile.private.sub')}</span>
+          </span>
+        </label>
         <div className="space-y-2">
           <label className="block text-sm font-semibold">{t('auth.changePassword')}</label>
           <input className="input" type="password" placeholder={t('auth.currentPassword')} value={current} onChange={(e) => setCurrent(e.target.value)} autoComplete="current-password" />

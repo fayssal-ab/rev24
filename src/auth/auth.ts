@@ -19,6 +19,8 @@ export interface User {
   features: string[];
   /** profile picture URL (relative to the API), null = initials */
   avatar: string | null;
+  /** other members only see name, picture and presence */
+  privateProfile?: boolean;
 }
 
 interface AuthState {
@@ -178,12 +180,44 @@ export async function refreshMe() {
   }
 }
 
+/**
+ * Restores the session from the httpOnly cookie. Only a real "not signed in" answer (401) shows the sign-in page:
+ * a network error or a server that is still waking up is retried, so a signed-in member is never shown as signed out.
+ */
+let restoring = false;
+async function restoreSession() {
+  if (restoring) return;
+  restoring = true;
+  try {
+    for (let attempt = 0; ; attempt++) {
+      const r = await api<{ user: User }>('GET', '/auth/me');
+      if (r.ok) return void (await onUser(r.data.user));
+      if (r.status === 401 || r.status === 403) return void (await onUser(null));
+      if (attempt >= 4) {
+        // still unreachable: show the sign-in page, a later wake-up / "online" event tries again
+        if (!useAuth.getState().ready) await onUser(null);
+        return;
+      }
+      await new Promise((ok) => setTimeout(ok, 800 * 2 ** attempt));
+    }
+  } finally {
+    restoring = false;
+  }
+}
+
 /** Called once at startup: restores the session from the httpOnly cookie. */
 export function initAuth() {
   if (!authEnabled) return;
-  void api<{ user: User }>('GET', '/auth/me').then((r) => onUser(r.ok ? r.data.user : null));
+  void restoreSession();
   setInterval(() => document.visibilityState === 'visible' && void refreshMe(), 30_000);
-  document.addEventListener('visibilitychange', () => document.visibilityState === 'visible' && void refreshMe());
+  const wake = () => {
+    if (document.visibilityState !== 'visible') return;
+    // signed out after a failed check (bad mobile network, server waking up): the cookie may still be valid
+    if (!useAuth.getState().user) void restoreSession();
+    else void refreshMe();
+  };
+  document.addEventListener('visibilitychange', wake);
+  window.addEventListener('online', wake);
   // save before the tab closes
   window.addEventListener('pagehide', () => {
     if (useAuth.getState().user?.status !== 'approved' || !timer) return;
@@ -212,7 +246,7 @@ export async function changePassword(current: string, next: string): Promise<Aut
   return r.ok ? { ok: true } : { ok: false, error: r.error };
 }
 
-export async function updateProfile(p: { displayName?: string; groupe?: string; avatar?: string | null }): Promise<AuthResult> {
+export async function updateProfile(p: { displayName?: string; groupe?: string; avatar?: string | null; privateProfile?: boolean }): Promise<AuthResult> {
   const r = await api<{ user: User }>('PUT', '/profile', p);
   if (!r.ok) return { ok: false, error: r.error };
   useAuth.setState({ user: r.data.user });

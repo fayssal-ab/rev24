@@ -17,6 +17,7 @@ import { DocumentPreview } from './ui';
 import { GlobalSearch, useSearch } from './GlobalSearch';
 import { Avatar } from './Avatar';
 import { ChatDock, useChat, useChatEnabled } from './ChatPanel';
+import { NotificationBell } from './NotificationBell';
 
 
 const LANGS: { code: Lang; label: string; name: string }[] = [
@@ -389,12 +390,15 @@ export function TopBar() {
           </nav>
         )}
 
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2">
           {!locked && <SearchButton />}
           <span className={locked ? '' : 'hidden md:block'}>
             <LangSwitch variant="menu" />
           </span>
-          <ThemeButton />
+          <span className={locked ? '' : 'hidden sm:block'}>
+            <ThemeButton />
+          </span>
+          {!locked && <NotificationBell />}
           {!locked && <UserMenu />}
           {!locked && (
             <button className="grid h-10 w-10 place-items-center rounded-full border border-line lg:hidden" onClick={() => setDrawer(true)} aria-label={t('a11y.menu')} aria-expanded={drawer} data-testid="menu-open">
@@ -498,6 +502,10 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-semibold text-muted">{t('lang.label')}</span>
                 <LangSwitch />
+              </div>
+              <div className="flex items-center justify-between gap-2 sm:hidden">
+                <span className="text-xs font-semibold text-muted">{t('theme.toggle')}</span>
+                <ThemeButton />
               </div>
               {authEnabled && !user && (
                 <Link to="/connexion" className="btn-primary w-full">
@@ -605,7 +613,7 @@ export function Layout({ children }: { children: ReactNode }) {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
-    <div className={`flex min-h-[100dvh] flex-col transition-[padding] duration-200 ${chatOpen ? 'xl:pr-[22rem]' : ''}`}>
+    <div className={`flex min-h-[100dvh] flex-col ${chatOpen ? 'xl:pr-[22rem]' : ''}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-white">
         {t('a11y.skip')}
       </a>

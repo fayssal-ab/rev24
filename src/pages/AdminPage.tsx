@@ -9,6 +9,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Icon } from '../components/Icon';
+import { confirmDialog } from '../components/Confirm';
 import { api, useAuth } from '../auth/auth';
 import { KINDS, RESOURCES, SUBJECTS, subjectById, type ResourceKind } from '../lib/catalog';
 import { useRemoteSupports, type RemoteSupport } from '../lib/resources';
@@ -139,7 +140,7 @@ function ErrorLine({ error }: { error: string | null }) {
   );
 }
 
-const confirmDo = (msg: string) => window.confirm(msg);
+const confirmDo = (msg: string) => confirmDialog({ title: msg, danger: true, confirm: 'Supprimer' });
 
 // ---------------------------------------------------------------- users
 interface UserForm {
@@ -352,7 +353,7 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
                   <button
                     className="btn-ghost btn-sm text-bad"
                     title="Supprimer"
-                    onClick={() => confirmDo(`Supprimer le compte ${u.email} et sa progression ?`) && void act('DELETE', `/admin/users/${u.id}`)}
+                    onClick={async () => (await confirmDo(`Supprimer le compte ${u.email} et sa progression ?`)) && void act('DELETE', `/admin/users/${u.id}`)}
                   >
                     <Icon name="trash" size={14} />
                   </button>
@@ -567,7 +568,7 @@ function SupportsTab() {
                 </button>
               )}
               {!r.builtIn && r.row && (
-                <button className="btn-ghost btn-sm text-bad" title="Supprimer" onClick={() => confirmDo(`Supprimer « ${r.title} » ?`) && void run('DELETE', `/admin/supports/${r.row!.id}`)}>
+                <button className="btn-ghost btn-sm text-bad" title="Supprimer" onClick={async () => (await confirmDo(`Supprimer « ${r.title} » ?`)) && void run('DELETE', `/admin/supports/${r.row!.id}`)}>
                   <Icon name="trash" size={14} />
                 </button>
               )}
@@ -651,7 +652,7 @@ function AnnouncementsTab() {
     await load();
   };
   const remove = async (a: Announcement) => {
-    if (!confirmDo(`Supprimer l'annonce « ${a.title} » ?`)) return;
+    if (!(await confirmDo(`Supprimer l'annonce « ${a.title} » ?`))) return;
     await api('DELETE', `/admin/announcements/${a.id}`);
     await load();
   };
@@ -751,7 +752,7 @@ function EventsTab() {
     setForm({ ...emptyEvent(), kind: form.kind, date: form.date });
   };
   const remove = async (ev: UpcomingEvent) => {
-    if (!confirmDo(`Supprimer « ${KIND_LABEL[ev.kind]} · ${MODULES.find((m) => m.id === ev.module)?.title.fr ?? ev.module} » du ${ev.date} ?`)) return;
+    if (!(await confirmDo(`Supprimer « ${KIND_LABEL[ev.kind]} · ${MODULES.find((m) => m.id === ev.module)?.title.fr ?? ev.module} » du ${ev.date} ?`))) return;
     const r = await api<{ events: UpcomingEvent[] }>('DELETE', `/admin/events/${ev.id}`);
     if (!r.ok) return setError(errMsg(r.error));
     apply(r.data.events);

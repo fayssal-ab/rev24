@@ -12,6 +12,8 @@ import { Icon } from '../components/Icon';
 import type { UIKey } from '../i18n/ui';
 import { authEnabled, changePassword, signOut, updateProfile, useAuth, useCanSeeOral } from '../auth/auth';
 import { Avatar, toAvatarDataUrl } from '../components/Avatar';
+import { confirmDialog } from '../components/Confirm';
+import { toast } from 'sonner';
 
 /** Profile picture with "change" / "remove" (resized to 160 px in the browser before upload). */
 function AvatarEditor() {
@@ -28,6 +30,7 @@ function AvatarEditor() {
     try {
       const r = await updateProfile({ avatar: await toAvatarDataUrl(file) });
       setErr(!r.ok);
+      if (r.ok) toast.success(t('profile.avatar.saved'));
     } catch {
       setErr(true);
     }
@@ -290,7 +293,7 @@ function DataTab() {
           <Icon name="upload" size={16} /> {t('prog.import')}
         </button>
         <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importJson(e.target.files[0])} />
-        <button className="btn-ghost w-full text-bad" onClick={() => window.confirm(t('prog.resetConfirm')) && st.resetAll()}>
+        <button className="btn-ghost w-full text-bad" onClick={async () => (await confirmDialog({ title: t('prog.resetConfirm'), danger: true })) && st.resetAll()}>
           <Icon name="trash" size={16} /> {t('prog.resetAll')}
         </button>
         {msg && <p className="text-sm text-muted">{msg}</p>}

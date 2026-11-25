@@ -1,5 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+// fonts served by the site itself (no third-party request, cached by the service worker)
+import '@fontsource-variable/figtree';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource/geist-mono/400.css';
+import '@fontsource/geist-mono/600.css';
+import '@fontsource/anton/400.css';
+import '@fontsource/bungee/400.css';
 import './index.css';
 import { App } from './App';
 import { useStore } from './store/store';
@@ -11,6 +18,9 @@ window.addEventListener('vite:preloadError', (e) => {
   e.preventDefault();
   reloadOnce();
 });
+
+// old links (group22.dev/#/m/data) keep working: move the route out of the hash before the router starts
+if (window.location.hash.startsWith('#/')) window.history.replaceState(null, '', window.location.hash.slice(1) || '/');
 
 const s = useStore.getState();
 document.documentElement.classList.toggle('dark', s.theme === 'dark');

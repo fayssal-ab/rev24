@@ -1,4 +1,4 @@
-import type { Module, Chapter, Question, Exercise, Flashcard, Mission, RefEntry } from './schema';
+import type { Module, Chapter, Question, Exercise, Mission, RefEntry } from './schema';
 import { runCompute } from './compute';
 
 export interface ModuleContent {
@@ -6,19 +6,17 @@ export interface ModuleContent {
   chapters: Chapter[];
   questions: Question[];
   exercises: Exercise[];
-  flashcards: Flashcard[];
   missions: Mission[];
   reference: RefEntry[];
 }
 
 /** Assemble a module's content from its JSON files (shared by the app and node scripts). */
 export function assemble(module: Module, files: { path: string; data: unknown }[]): ModuleContent {
-  const c: ModuleContent = { module, chapters: [], questions: [], exercises: [], flashcards: [], missions: [], reference: [] };
+  const c: ModuleContent = { module, chapters: [], questions: [], exercises: [], missions: [], reference: [] };
   for (const { path, data } of files) {
     if (path.includes('/chapters/')) c.chapters.push(data as Chapter);
     else if (path.includes('/questions/')) c.questions.push(...(data as Question[]));
     else if (path.includes('/exercises/')) c.exercises.push(...(data as Exercise[]));
-    else if (path.includes('/flashcards/')) c.flashcards.push(...(data as Flashcard[]));
     else if (path.endsWith('/missions.json')) c.missions.push(...(data as Mission[]));
     else if (path.endsWith('/reference.json')) c.reference.push(...(data as RefEntry[]));
   }

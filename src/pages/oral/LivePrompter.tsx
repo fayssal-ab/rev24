@@ -212,6 +212,7 @@ export function LivePrompter({ slides, l }: { slides: Slide[]; l: Lang3 }) {
         <div className="pointer-events-none absolute inset-x-0 top-[35%] z-10 h-px bg-emerald-400/30" />
         <div
           ref={box}
+          data-lenis-prevent
           className="scroll-thin relative h-[62vh] overflow-y-auto px-6 pb-[45vh] pt-[22vh] font-semibold leading-[1.45] text-white sm:px-12"
           style={{ fontSize: size, transform: mirror ? 'scaleX(-1)' : undefined }}
           data-testid="live-text"

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo } from 'react';
-import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout, Loading, Narrow } from './components/Layout';
 import ModuleShell from './components/ModuleShell';
 import { authEnabled, useAuth, useCanSeeOral, useIsAdmin } from './auth/auth';
@@ -83,7 +83,7 @@ function BadgeWatcher() {
 
 export function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Layout>
         <Suspense fallback={<Loading />}>
           <AuthGate>
@@ -136,6 +136,6 @@ export function App() {
         </Suspense>
       </Layout>
       <BadgeWatcher />
-    </HashRouter>
+    </BrowserRouter>
   );
 }

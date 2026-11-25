@@ -1,5 +1,5 @@
 /**
- * Group chat, docked on the right like a casino-site chat (Stake / Rainbet): open or hide it with the bubble,
+ * Group chat in the GROUP22 style, docked on the right (Stake / Rainbet layout): open or hide it with the bubble,
  * the choice is remembered. Only the last 20 messages exist (the API deletes older ones). Links are clickable,
  * "@" mentions a member (autocomplete; the message is highlighted for them) and a message can be a poll.
  * Clicking a name opens that member's profile: picture, activity and what they studied.
@@ -17,6 +17,8 @@ import { MODULES } from '../lib/content';
 import { useAllModules } from '../hooks/useModule';
 import { Avatar } from './Avatar';
 import { Icon } from './Icon';
+import { confirmDialog } from './Confirm';
+import { toast } from 'sonner';
 
 interface Poll {
   options: string[];
@@ -43,9 +45,6 @@ const KEEP = 20;
 /** stored form of a mention: @[Name](user id), or @[everyone](everyone) for the whole group */
 const MENTION = /@\[([^\]\n]{1,60})\]\(([0-9a-f-]{36}|everyone)\)/g;
 const EVERYONE = 'everyone';
-/** stable colour per member name in group bubbles (WhatsApp-like) */
-const NAME_COLORS = ['#1fa855', '#d6336c', '#7048e8', '#e8590c', '#1c7ed6', '#0ca678', '#ae3ec9', '#f08c00'];
-const nameColor = (name: string) => NAME_COLORS[[...name].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 3) % NAME_COLORS.length];
 const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 /** Text with clickable http(s) links (opened in a new tab, no referrer). */
@@ -270,7 +269,10 @@ function ChatDockInner() {
   };
   const remove = async (m: ChatMessage) => {
     const r = await api<{ messages: ChatMessage[] }>('DELETE', `/chat/${m.id}`);
-    if (r.ok) setMsgs(r.data.messages);
+    if (r.ok) {
+      setMsgs(r.data.messages);
+      toast.success(t('chat.deleted'));
+    } else toast.error(t('chat.error'));
   };
   const onKey = (e: ReactKeyboardEvent<HTMLTextAreaElement>) => {
     if (ac && matches.length) {
@@ -339,80 +341,95 @@ function ChatDockInner() {
         aria-hidden={!open}
         data-testid={open ? 'chat-panel' : undefined}
       >
-            {/* WhatsApp-like header */}
-            <header className="flex items-center gap-3 bg-accent px-3 py-2.5 text-white">
-              <button className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-white/15" onClick={() => setOpen(false)} aria-label={t('chat.hide')} title={t('chat.hide')} data-testid="chat-hide">
-                <Icon name="right" size={20} />
-              </button>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white font-sign text-base text-accent">22</span>
-              <div className="min-w-0 flex-1">
-                <div className="truncate font-semibold leading-tight">{t('chat.title')}</div>
-                <div className="truncate text-[11px] text-white/80">{members.length ? `${members.length} ${t('chat.members')}` : t('chat.keep')}</div>
+            {/* GROUP22 header: navy with the grid of the cover, the "22" sticker */}
+            <header className="relative flex items-center gap-3 overflow-hidden bg-[#0B2440] px-3 py-3 text-white">
+              <div className="hero-grid pointer-events-none absolute inset-0 opacity-50" />
+              <span className="sticker relative grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent font-sign text-base text-white">22</span>
+              <div className="relative min-w-0 flex-1">
+                <div className="truncate font-street text-xl uppercase leading-none tracking-wide">{t('chat.title')}</div>
+                <div className="mt-1 flex items-center gap-1.5 truncate text-[11px] text-white/70">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  {members.length ? `${members.length} ${t('chat.members')}` : t('chat.keep')}
+                </div>
               </div>
+              <button className="relative grid h-9 w-9 place-items-center rounded-full bg-white/10 transition hover:bg-white/20" onClick={() => setOpen(false)} aria-label={t('chat.hide')} title={t('chat.hide')} data-testid="chat-hide">
+                <Icon name="right" size={18} />
+              </button>
             </header>
 
             {/* use-stick-to-bottom: stays on the newest message with spring scrolling, stops when you scroll up */}
-            <StickToBottom className="relative min-h-0 flex-1 bg-[#efeae2] dark:bg-[#0b141a]" resize="smooth" initial="instant">
+            <StickToBottom className="relative min-h-0 flex-1 bg-bg" resize="smooth" initial="instant" data-lenis-prevent>
               <StickToBottom.Content className="px-3 py-3" scrollClassName="scroll-thin">
-                {!msgs.length && <p className="mx-auto mt-10 w-fit rounded-lg bg-surface/90 px-3 py-2 text-center text-sm text-muted shadow-sm">{t('chat.empty')}</p>}
+                {!msgs.length && (
+                  <div className="mx-auto mt-12 max-w-[15rem] text-center">
+                    <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-accent/10 text-accent">
+                      <Icon name="chat" size={22} />
+                    </span>
+                    <p className="mt-3 text-sm text-muted">{t('chat.empty')}</p>
+                  </div>
+                )}
                 <AnimatePresence initial={false}>
                   {msgs.map((m, i) => {
                     const mine = m.user.id === me?.id;
                     const forMe = !mine && mentions(m.body, me?.id);
                     const prev = msgs[i - 1];
                     const newDay = !prev || new Date(prev.at).toDateString() !== new Date(m.at).toDateString();
-                    const first = newDay || prev.user.id !== m.user.id;
+                    const first = newDay || prev.user.id !== m.user.id || new Date(m.at).getTime() - new Date(prev.at).getTime() > 5 * 60_000;
                     return (
                       <motion.div
                         key={m.id}
                         layout="position"
-                        initial={{ opacity: 0, y: 12, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, height: 0, transition: { duration: 0.18 } }}
                         transition={SPRING}
-                        className={first ? 'mt-3 first:mt-0' : 'mt-0.5'}
+                        className={first ? 'pt-3 first:pt-0' : 'pt-1'}
                         data-testid="chat-msg"
                       >
                         {newDay && (
-                          <div className="mb-3 flex justify-center">
-                            <span className="rounded-lg bg-surface/90 px-2.5 py-1 text-[11px] font-medium text-muted shadow-sm">{dayOf(m.at, locale, t)}</span>
+                          <div className="mb-3 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.14em] text-muted">
+                            <span className="h-px flex-1 bg-line" />
+                            {dayOf(m.at, locale, t)}
+                            <span className="h-px flex-1 bg-line" />
                           </div>
                         )}
-                        <div className={`group flex items-end gap-1.5 ${mine ? 'justify-end' : ''}`}>
-                          {!mine &&
-                            (first ? (
-                              <button onClick={() => showProfile(m.user.id)} className="mb-0.5 shrink-0 self-start rounded-full transition hover:opacity-80" aria-label={m.user.name}>
-                                <Avatar name={m.user.name} src={m.user.avatar} size={28} />
-                              </button>
-                            ) : (
-                              <span className="w-7 shrink-0" />
-                            ))}
-                          <div
-                            className={`relative max-w-[82%] rounded-lg px-2.5 pb-1.5 pt-1.5 text-[14.5px] leading-snug shadow-[0_1px_0.5px_rgba(11,20,26,0.13)] ${
-                              mine ? 'bg-[#d9fdd3] text-[#111b21] dark:bg-[#005c4b] dark:text-[#e9edef]' : 'bg-white text-[#111b21] dark:bg-[#202c33] dark:text-[#e9edef]'
-                            } ${first ? (mine ? 'rounded-tr-none' : 'rounded-tl-none') : ''} ${forMe ? 'ring-2 ring-warn' : ''}`}
-                            data-testid={forMe ? 'chat-mention-me' : undefined}
-                          >
-                            {!mine && first && (
-                              <button onClick={() => showProfile(m.user.id)} className="mb-0.5 block max-w-full truncate text-[12.5px] font-semibold hover:underline" style={{ color: nameColor(m.user.name) }}>
-                                {m.user.name}
-                              </button>
-                            )}
-                            {m.poll && (
-                              <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-accent">
-                                <Icon name="chart" size={12} /> {t('chat.poll.label')}
+                        <div className={`group flex gap-2.5 ${mine ? 'justify-end' : ''}`}>
+                          {mine ? null : first ? (
+                            <button onClick={() => showProfile(m.user.id)} className="mt-0.5 h-9 shrink-0 rounded-xl transition hover:opacity-80" aria-label={m.user.name}>
+                              <Avatar name={m.user.name} src={m.user.avatar} size={36} className="!rounded-xl" />
+                            </button>
+                          ) : (
+                            <span className="w-9 shrink-0" />
+                          )}
+                          <div className={`flex min-w-0 flex-col ${mine ? 'max-w-[85%] items-end' : 'flex-1 items-start'}`}>
+                            {first && mine && <span className="mb-1 font-mono text-[10px] text-muted">{timeOf(m.at, locale)}</span>}
+                            {first && !mine && (
+                              <div className="mb-1 flex items-baseline gap-2">
+                                <button onClick={() => showProfile(m.user.id)} className={`truncate text-[13px] font-bold hover:underline ${mine ? 'text-accent' : 'text-fg'}`}>
+                                  {m.user.name}
+                                </button>
+                                <span className="shrink-0 font-mono text-[10px] text-muted">{timeOf(m.at, locale)}</span>
                               </div>
                             )}
-                            <span className={`whitespace-pre-line break-words ${m.poll ? 'font-semibold' : ''}`}>
-                              <MessageText text={m.body} me={me?.id} onMention={showProfile} />
-                            </span>
-                            {m.poll && <PollCard poll={m.poll} onVote={(n) => void vote(m, n)} t={t} />}
-                            {/* time (and delete for my messages / admins) at the bottom right, like WhatsApp */}
-                            <span className="float-right ml-2 mt-1 flex translate-y-0.5 items-center gap-1 text-[10.5px] leading-none text-[#667781] dark:text-[#8696a0]">
+                            <div
+                              className={`relative w-fit max-w-full rounded-2xl border px-3 py-2 text-[14px] leading-snug ${first ? (mine ? 'rounded-tr-md' : 'rounded-tl-md') : ''} ${
+                                forMe ? 'border-warn/60 bg-warn/10' : mine ? 'border-accent/30 bg-accent/[0.14]' : 'border-line bg-surface'
+                              }`}
+                              data-testid={forMe ? 'chat-mention-me' : undefined}
+                            >
+                              {m.poll && (
+                                <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-accent">
+                                  <Icon name="chart" size={12} /> {t('chat.poll.label')}
+                                </div>
+                              )}
+                              <span className={`whitespace-pre-line break-words ${m.poll ? 'font-semibold' : ''}`}>
+                                <MessageText text={m.body} me={me?.id} onMention={showProfile} />
+                              </span>
+                              {m.poll && <PollCard poll={m.poll} onVote={(n) => void vote(m, n)} t={t} />}
                               {(mine || isAdmin) && (
                                 <button
-                                  onClick={() => window.confirm(t('chat.deleteConfirm')) && void remove(m)}
-                                  className="transition hover:text-bad sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
+                                  onClick={async () => (await confirmDialog({ title: t('chat.deleteConfirm'), danger: true, confirm: t('chat.delete') })) && void remove(m)}
+                                  className={`absolute -top-2 ${mine ? '-left-2' : '-right-2'} grid h-6 w-6 place-items-center rounded-full border border-line bg-surface text-muted shadow-sm transition hover:text-bad sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100`}
                                   aria-label={t('chat.delete')}
                                   title={t('chat.delete')}
                                   data-testid="chat-delete"
@@ -420,8 +437,7 @@ function ChatDockInner() {
                                   <Icon name="trash" size={11} />
                                 </button>
                               )}
-                              {timeOf(m.at, locale)}
-                            </span>
+                            </div>
                           </div>
                         </div>
                       </motion.div>
@@ -432,8 +448,8 @@ function ChatDockInner() {
               <JumpToLatest label={t('chat.latest')} />
             </StickToBottom>
 
-            {/* WhatsApp-like composer: rounded field that grows with the text (react-textarea-autosize), round send button */}
-            <form onSubmit={send} className="relative bg-[#f0f2f5] px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 dark:bg-[#202c33]">
+            {/* composer: field that grows with the text (react-textarea-autosize), send button */}
+            <form onSubmit={send} className="relative border-t border-line bg-surface px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
               {ac && matches.length > 0 && (
                 <ul className="absolute bottom-full left-2 right-2 mb-1 overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-xl" role="listbox" data-testid="chat-mentions">
                   {matches.map((m, i) => (
@@ -459,7 +475,7 @@ function ChatDockInner() {
               {err && <p className="mb-1.5 px-2 text-xs text-bad">{err}</p>}
 
               {pollOpts && (
-                <div className="mb-2 space-y-1.5 rounded-xl bg-surface p-2.5 shadow-sm" data-testid="chat-poll-editor">
+                <div className="mb-2 space-y-1.5 rounded-xl border border-accent/30 bg-accent/[0.04] p-2.5" data-testid="chat-poll-editor">
                   <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-accent">
                     <span className="inline-flex items-center gap-1.5">
                       <Icon name="chart" size={12} /> {t('chat.poll.new')}
@@ -493,10 +509,10 @@ function ChatDockInner() {
               )}
 
               <div className="flex items-end gap-2">
-                <div className="flex min-h-[44px] flex-1 items-end rounded-3xl bg-surface pl-1 pr-3 shadow-sm ring-accent/40 transition-shadow focus-within:ring-2">
+                <div className="flex min-h-[44px] flex-1 items-end rounded-2xl border border-line bg-bg pl-1 pr-3 transition focus-within:border-accent/60 focus-within:ring-2 focus-within:ring-accent/20">
                   <button
                     type="button"
-                    className={`grid h-11 w-10 shrink-0 place-items-center rounded-full transition ${pollOpts ? 'text-accent' : 'text-[#54656f] hover:text-fg dark:text-[#8696a0]'}`}
+                    className={`grid h-11 w-10 shrink-0 place-items-center rounded-full transition ${pollOpts ? 'text-accent' : 'text-muted hover:text-fg'}`}
                     onClick={() => setPollOpts(pollOpts ? null : ['', ''])}
                     aria-label={t('chat.poll.new')}
                     title={t('chat.poll.new')}
@@ -514,13 +530,13 @@ function ChatDockInner() {
                     maxRows={5}
                     maxLength={500}
                     placeholder={pollOpts ? t('chat.poll.question') : t('chat.placeholder')}
-                    className="block w-full resize-none overflow-y-auto border-0 bg-transparent py-[11px] text-[15px] leading-[22px] text-fg !shadow-none !outline-none !ring-0 [scrollbar-width:none] placeholder:text-[#667781] [&::-webkit-scrollbar]:hidden"
+                    className="block w-full resize-none overflow-y-auto border-0 bg-transparent py-[11px] text-[15px] leading-[22px] text-fg !shadow-none !outline-none !ring-0 [scrollbar-width:none] placeholder:text-muted [&::-webkit-scrollbar]:hidden"
                     data-testid="chat-input"
                   />
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-white shadow-sm transition-opacity disabled:opacity-50"
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent text-white shadow-[0_6px_16px_-6px_rgba(0,132,78,0.7)] transition-opacity disabled:opacity-40 disabled:shadow-none"
                   disabled={!text.trim()}
                   aria-label={t('chat.send')}
                   data-testid="chat-send"
@@ -623,7 +639,7 @@ function MemberProfile() {
           <motion.div
             role="dialog"
             aria-modal="true"
-            className="scroll-thin max-h-[88dvh] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface shadow-2xl"
+            data-lenis-prevent className="scroll-thin max-h-[88dvh] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface shadow-2xl"
             initial={{ y: 16, scale: 0.98 }}
             animate={{ y: 0, scale: 1 }}
             exit={{ y: 16, scale: 0.98 }}

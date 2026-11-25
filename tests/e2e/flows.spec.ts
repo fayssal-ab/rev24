@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('1. changer la langue → tout le cours change', async ({ page }) => {
-  await page.goto('/#/m/linux/c/users');
+  await page.goto('/m/linux/c/users');
   const h1 = page.locator('h1');
   await expect(h1).toContainText('Utilisateurs, groupes et droits');
   await expect(page.getByTestId('module-contents')).toContainText('Sommaire');
@@ -43,8 +43,8 @@ test('2. QCM faux puis juste → sort de « Mes erreurs » après 3 réussites',
   // find a choice question (single or multi)
   let qid = '';
   for (let attempt = 0; attempt < 15 && !qid; attempt++) {
-    await page.goto('/#/');
-    await page.goto('/#/m/linux/qcm');
+    await page.goto('/');
+    await page.goto('/m/linux/qcm');
     await page.getByTestId('start-qcm').click();
     const q = page.getByTestId('question');
     await expect(q).toBeVisible();
@@ -54,8 +54,8 @@ test('2. QCM faux puis juste → sort de « Mes erreurs » après 3 réussites',
   await answer(page, false);
   await expect(page.getByTestId('feedback')).toContainText(/Pas tout à fait/);
 
-  await page.goto('/#/');
-  await page.goto('/#/m/linux/qcm');
+  await page.goto('/');
+  await page.goto('/m/linux/qcm');
   await expect(page.getByTestId('mistakes-tab')).toContainText('(1)');
   await page.getByTestId('mistakes-tab').click();
   await page.getByTestId('start-qcm').click();
@@ -66,13 +66,13 @@ test('2. QCM faux puis juste → sort de « Mes erreurs » après 3 réussites',
     await page.getByTestId('next').click();
   }
   await expect(page.getByTestId('quiz-finished')).toBeVisible();
-  await page.goto('/#/');
-  await page.goto('/#/m/linux/qcm');
+  await page.goto('/');
+  await page.goto('/m/linux/qcm');
   await expect(page.getByTestId('mistakes-tab')).toContainText('(0)');
 });
 
 test('3. mission terminal TP5 /opt/donnees validée', async ({ page }) => {
-  await page.goto('/#/terminal?mission=m-tp5-donnees');
+  await page.goto('/terminal?mission=m-tp5-donnees');
   const input = page.getByTestId('terminal-input');
   await expect(input).toBeVisible();
   await expect(page.getByTestId('mission-done')).toHaveCount(0);
@@ -84,15 +84,15 @@ test('3. mission terminal TP5 /opt/donnees validée', async ({ page }) => {
   await expect(page.locator('[data-testid="objectives"] li[data-ok="true"]')).toHaveCount(3);
   await expect(page.getByTestId('mission-done')).toBeVisible();
   // persisted as completed
-  await page.goto('/#/terminal');
+  await page.goto('/terminal');
   await expect(page.getByTestId('mission-m-tp5-donnees')).toBeVisible();
 });
 
 test('4. la progression d\'un chapitre est sauvegardée sur l\'appareil', async ({ page }) => {
-  await page.goto('/#/m/data/c/tests');
+  await page.goto('/m/data/c/tests');
   await page.getByTestId('mark-read').click();
   await page.reload();
   await expect(page.getByTestId('mark-read')).toHaveAttribute('data-done', 'true');
-  await page.goto('/#/');
+  await page.goto('/');
   await expect(page.getByTestId('resume')).toBeVisible();
 });

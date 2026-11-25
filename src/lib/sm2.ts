@@ -39,10 +39,3 @@ export function review(card: CardState, grade: Grade, now = Date.now()): CardSta
   c.due = now + c.interval * DAY;
   return c;
 }
-
-/** Cards to review now: due cards first (oldest due first), then new cards. */
-export function dueQueue<T extends { id: string }>(cards: T[], states: Record<string, CardState | undefined>, now = Date.now()): T[] {
-  const due = cards.filter((c) => states[c.id] && states[c.id]!.due <= now).sort((a, b) => states[a.id]!.due - states[b.id]!.due);
-  const fresh = cards.filter((c) => !states[c.id]);
-  return [...due, ...fresh];
-}

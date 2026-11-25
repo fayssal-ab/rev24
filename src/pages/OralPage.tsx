@@ -486,7 +486,7 @@ function Teleprompter({ text }: { text: string }) {
         <label className="chip"><input type="checkbox" checked={mirror} onChange={(e) => setMirror(e.target.checked)} /> miroir</label>
         <button className="chip" onClick={() => box.current?.requestFullscreen?.()} aria-label="fullscreen"><Icon name="maximize" size={13} /></button>
       </div>
-      <div ref={box} className="h-[55vh] overflow-y-auto rounded-2xl bg-[#0a1424] px-6 py-[25vh] text-3xl font-semibold leading-snug text-white" style={mirror ? { transform: 'scaleX(-1)' } : undefined}>
+      <div data-lenis-prevent ref={box} className="h-[55vh] overflow-y-auto rounded-2xl bg-[#0a1424] px-6 py-[25vh] text-3xl font-semibold leading-snug text-white" style={mirror ? { transform: 'scaleX(-1)' } : undefined}>
         {text}
       </div>
     </div>

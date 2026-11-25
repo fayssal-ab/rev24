@@ -128,7 +128,7 @@ export default function ModuleShell() {
   const tabs = [{ to: `/m/${id}`, icon: 'compass', key: 'module.overview' as UIKey, end: true }, ...PRACTICE.map((x) => ({ to: `/m/${id}/${x.to}`, icon: x.icon, key: x.key, end: false }))];
   return (
     <div className="lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-8 2xl:grid-cols-[19rem_minmax(0,1fr)] 2xl:gap-12">
-      <aside className="scroll-thin sticky top-28 hidden max-h-[calc(100dvh-7rem)] overflow-y-auto pb-6 pr-1 lg:block" aria-label={tl(data.module.title)}>
+      <aside data-lenis-prevent className="scroll-thin sticky top-28 hidden max-h-[calc(100dvh-7rem)] overflow-y-auto pb-6 pr-1 lg:block" aria-label={tl(data.module.title)}>
         <SidebarBody id={id} data={data} />
       </aside>
 
@@ -152,7 +152,8 @@ export default function ModuleShell() {
           <>
             <motion.div className="fixed inset-0 z-50 bg-black/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(false)} />
             <motion.div
-              className="scroll-thin fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] overflow-y-auto rounded-t-2xl border-t border-line bg-bg p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:hidden"
+              data-lenis-prevent
+          className="scroll-thin fixed inset-x-0 bottom-0 z-50 max-h-[85dvh] overflow-y-auto rounded-t-2xl border-t border-line bg-bg p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] lg:hidden"
               initial={{ y: '100%' }}
               animate={{ y: 0 }}
               exit={{ y: '100%' }}

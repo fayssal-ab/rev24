@@ -79,3 +79,23 @@ CREATE TABLE IF NOT EXISTS chat_votes (
   CONSTRAINT fk_vote_msg FOREIGN KEY (message_id) REFERENCES chat_messages (id) ON DELETE CASCADE,
   CONSTRAINT fk_vote_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Anti force brute : 7 tentatives / 10 min par IP, par e-mail et par compte (clé = sha256).
+CREATE TABLE IF NOT EXISTS rate_limits (
+  k CHAR(64) NOT NULL PRIMARY KEY,
+  n INT UNSIGNED NOT NULL,
+  reset_at DATETIME(3) NOT NULL,
+  KEY ix_rl_reset (reset_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Abonnements Web Push (un par navigateur / téléphone).
+CREATE TABLE IF NOT EXISTS push_subs (
+  id CHAR(64) NOT NULL PRIMARY KEY,
+  user_id CHAR(36) NOT NULL,
+  endpoint TEXT NOT NULL,
+  p256dh VARCHAR(200) NOT NULL,
+  auth VARCHAR(100) NOT NULL,
+  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  KEY ix_push_user (user_id),
+  CONSTRAINT fk_push_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

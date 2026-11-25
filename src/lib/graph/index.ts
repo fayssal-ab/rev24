@@ -60,16 +60,6 @@ export function degrees(gg: Graph | string): number[] {
   return d;
 }
 
-export function inOutDegrees(gg: Graph | string) {
-  const g = G(gg);
-  const din = g.labels.map(() => 0);
-  const dout = g.labels.map(() => 0);
-  for (const e of g.edges) {
-    dout[e.u]++;
-    din[e.v]++;
-  }
-  return { din, dout };
-}
 
 export function degreeOf(gg: Graph | string, label: string): number {
   const g = G(gg);
@@ -88,13 +78,6 @@ export function adjacency(gg: Graph | string): number[][] {
   return m;
 }
 
-/** Build an undirected (or directed) graph from an adjacency matrix. */
-export function fromMatrix(labels: string[], m: number[][], directed = false): Graph {
-  const edges: Edge[] = [];
-  for (let i = 0; i < m.length; i++)
-    for (let j = directed ? 0 : i; j < m.length; j++) for (let k = 0; k < m[i][j]; k++) edges.push({ u: i, v: j, w: 1 });
-  return { labels, directed, edges };
-}
 
 export function matMul(a: number[][], b: number[][]): number[][] {
   return a.map((row) => b[0].map((_, j) => row.reduce((s, x, k) => s + x * b[k][j], 0)));
@@ -159,9 +142,6 @@ export function isStronglyConnected(gg: Graph | string): boolean {
   return reach(0, false) === n && reach(0, true) === n;
 }
 
-export function hasLoop(gg: Graph | string) {
-  return G(gg).edges.some((e) => e.u === e.v);
-}
 
 export function isSimple(gg: Graph | string): boolean {
   const g = G(gg);

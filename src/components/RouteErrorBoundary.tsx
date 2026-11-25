@@ -4,11 +4,6 @@ import { useStore } from '../store/store';
 
 const KEY = 'rev24-chunk-reload';
 
-/** A page chunk that fails to download (old build still open in the browser) → reload once to get the new files. */
-export function isChunkError(e: unknown): boolean {
-  const m = e instanceof Error ? e.message : String(e);
-  return /dynamically imported module|Importing a module script failed|ChunkLoadError|Loading chunk|error loading dynamically/i.test(m);
-}
 
 export function reloadOnce(): boolean {
   try {

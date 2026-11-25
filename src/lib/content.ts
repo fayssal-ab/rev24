@@ -35,6 +35,3 @@ export function tr(s: L10n | string | undefined, lang: Lang): string {
   return s[lang] || s.fr;
 }
 
-export function isFallback(s: L10n | string | undefined, lang: Lang): boolean {
-  return typeof s === 'object' && !!s && lang !== 'fr' && !s[lang];
-}

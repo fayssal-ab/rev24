@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { confirmDialog } from '../components/Confirm';
 import { Link } from 'react-router-dom';
 import { useModuleContent } from '../hooks/useModule';
 import { Loading, PageTitle, useModuleParam } from '../components/Layout';
@@ -231,7 +232,7 @@ export function ExamRunner({ pool, weights, module, onDone, onRetry, onAgain, si
             {t('common.next')} <Icon name="right" size={16} />
           </button>
         ) : (
-          <button className="btn-primary flex-1" onClick={() => window.confirm(t('exam.confirm')) && submit()} data-testid="exam-submit">
+          <button className="btn-primary flex-1" onClick={async () => (await confirmDialog({ title: t('exam.confirm') })) && submit()} data-testid="exam-submit">
             <Icon name="flag" size={16} /> {t('exam.submit')}
           </button>
         )}
@@ -243,7 +244,7 @@ export function ExamRunner({ pool, weights, module, onDone, onRetry, onAgain, si
           </button>
         ))}
       </div>
-      <button className="btn-ghost btn-sm" onClick={() => window.confirm(t('exam.confirm')) && submit()}>
+      <button className="btn-ghost btn-sm" onClick={async () => (await confirmDialog({ title: t('exam.confirm') })) && submit()}>
         {t('exam.submit')}
       </button>
     </div>
@@ -367,7 +368,7 @@ function AnnaleRunner({ annale, exercises, module }: { annale: Module['annales']
           {String(Math.floor(left / 60000)).padStart(2, '0')}:{String(Math.floor((left % 60000) / 1000)).padStart(2, '0')}
         </span>
         {!done ? (
-          <button className="btn-primary btn-sm ml-auto" onClick={() => window.confirm(t('exam.confirm')) && setDone(true)}>
+          <button className="btn-primary btn-sm ml-auto" onClick={async () => (await confirmDialog({ title: t('exam.confirm') })) && setDone(true)}>
             {t('exam.submit')}
           </button>
         ) : (

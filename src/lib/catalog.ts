@@ -10,7 +10,6 @@ import meta from '../../cours/catalog.json';
 
 export const FILIERE = { id: '4IIR', title: { fr: 'Ingénierie Informatique et Réseaux', dar: 'Ingénierie Informatique et Réseaux', en: 'Computer and Network Engineering' } };
 export const ACADEMIC_YEAR = '2026/2027';
-export const YEAR_OF_STUDY = { fr: '4e année', dar: '4e année', en: '4th year' };
 /** All the material on the site is from the autumn semester of 4IIR. */
 export const SEMESTER = { id: 'S1', title: { fr: 'Semestre 1', dar: 'Semestre 1', en: 'Semester 1' } };
 
@@ -75,14 +74,7 @@ const sheets: Resource[] = MODULES.map((m) => ({
 
 export const RESOURCES: Resource[] = [...files, ...sheets];
 
-export const resourcesOf = (subject: string) => RESOURCES.filter((r) => r.subject === subject);
-export const countByKind = (list: Resource[]) => Object.fromEntries(KINDS.map((k) => [k, list.filter((r) => r.kind === k).length])) as Record<ResourceKind, number>;
 
-/** Most recent documents first (document date; undated ones last). */
-export const recentResources = (n: number) =>
-  RESOURCES.filter((r) => r.date)
-    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
-    .slice(0, n);
 
 export function formatSize(bytes: number | null) {
   if (!bytes) return '';

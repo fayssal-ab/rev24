@@ -7,14 +7,14 @@ export default {
       // restrained corners everywhere (existing rounded-xl / 2xl / 3xl classes shrink with this scale)
       borderRadius: { lg: '6px', xl: '8px', '2xl': '10px', '3xl': '12px' },
       fontFamily: {
-        sans: ['Figtree', 'system-ui', 'sans-serif'],
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
-        mono: ['"Geist Mono"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        hand: ['Caveat', 'cursive'],
+        sans: ['"Figtree Variable"', 'Figtree', 'system-ui', 'sans-serif'],
+        display: ['"Bricolage Grotesque Variable"', 'system-ui', 'sans-serif'],
+        serif: ['Georgia', 'serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+        hand: ['cursive'],
         street: ['Anton', 'Impact', 'sans-serif'],
         sign: ['Bungee', 'Impact', 'sans-serif'],
-        tag: ['"Permanent Marker"', 'cursive']
+        tag: ['cursive']
       },
       colors: {
         bg: 'rgb(var(--bg) / <alpha-value>)',

@@ -107,7 +107,7 @@ export function GlobalSearch() {
               />
               <kbd className="rounded border border-line px-1.5 py-0.5 text-[10px] text-muted">Esc</kbd>
             </div>
-            <ul className="scroll-thin max-h-[60vh] overflow-y-auto p-2" role="listbox">
+            <ul data-lenis-prevent className="scroll-thin max-h-[60vh] overflow-y-auto p-2" role="listbox">
               {q && !hits.length && <li className="px-3 py-8 text-center text-sm text-muted">{t('search.none')}</li>}
               {!q && <li className="px-3 py-6 text-center text-sm text-muted">{t('search.hint')}</li>}
               {hits.map((h, i) => (

@@ -12,6 +12,7 @@ import { getModule } from '../lib/content';
 import { setEventsCache, type UpcomingEvent } from '../lib/events';
 import type { Announcement } from './Announcements';
 import { Icon } from './Icon';
+import { toast } from 'sonner';
 import { enablePush, pushActive, pushSupported, syncPush } from '../lib/push';
 
 const SEEN_KEY = 'g22-notif-seen';
@@ -109,6 +110,8 @@ function Bell() {
     const ok = await enablePush(true);
     setPerm(Notification.permission);
     setPushOn(ok);
+    if (ok) toast.success(t('notif.on'));
+    else if (Notification.permission === 'granted') toast.error(t('notif.unavailable'));
   };
 
   return (
@@ -152,7 +155,7 @@ function Bell() {
                 {t('notif.ios')}
               </p>
             )}
-            <ul className="scroll-thin max-h-[60dvh] divide-y divide-line overflow-y-auto">
+            <ul data-lenis-prevent className="scroll-thin max-h-[60dvh] divide-y divide-line overflow-y-auto">
               {!items.length && <li className="px-4 py-8 text-center text-sm text-muted">{t('notif.empty')}</li>}
               {items.map((x) => {
                 const fresh = x.at > seen;

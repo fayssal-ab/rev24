@@ -20,6 +20,9 @@ import { useChat, useChatEnabled } from '../lib/chatStore';
 // the chat (and its libraries) is downloaded only for signed-in members, after the page itself
 const ChatDock = lazy(() => import('./ChatPanel').then((m) => ({ default: m.ChatDock })));
 import { NotificationBell } from './NotificationBell';
+import { scrollToTop, startSmoothScroll } from '../lib/smoothScroll';
+import { ConfirmHost } from './Confirm';
+import { Toaster } from 'sonner';
 
 
 const LANGS: { code: Lang; label: string; name: string }[] = [
@@ -266,6 +269,7 @@ function SearchButton() {
 /** Account button: avatar that opens a small menu (name, e-mail, profile, admin, sign out). */
 function UserMenu() {
   const { t } = useT();
+  const { theme, setTheme } = useStore();
   const user = useAuth((s) => s.user);
   const isAdmin = useIsAdmin();
   const [open, setOpen] = useState(false);
@@ -327,6 +331,10 @@ function UserMenu() {
                 <Icon name="settings" size={18} className="text-accent" /> {t('nav.admin')}
               </Link>
             )}
+            {/* on phones the theme switch lives here (the top bar has no room for it) */}
+            <button role="menuitem" className={`${item} w-full sm:hidden`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} data-testid="user-theme">
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} className="text-accent" /> {t(theme === 'dark' ? 'theme.light' : 'theme.dark')}
+            </button>
             {authEnabled && user && (
               <button role="menuitem" className={`${item} w-full text-bad`} onClick={() => void signOut()} data-testid="user-signout">
                 <Icon name="external" size={18} /> {t('auth.signout')}
@@ -440,6 +448,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         <>
           <motion.div className="fixed inset-0 z-50 bg-navy/40 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.aside
+            data-lenis-prevent
             className="scroll-thin fixed inset-y-0 right-0 z-50 flex w-[86vw] max-w-sm flex-col overflow-y-auto [&>*]:shrink-0 border-l border-line bg-surface p-4 lg:hidden"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
@@ -505,10 +514,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                 <span className="text-xs font-semibold text-muted">{t('lang.label')}</span>
                 <LangSwitch />
               </div>
-              <div className="flex items-center justify-between gap-2 sm:hidden">
-                <span className="text-xs font-semibold text-muted">{t('theme.toggle')}</span>
-                <ThemeButton />
-              </div>
+
               {authEnabled && !user && (
                 <Link to="/connexion" className="btn-primary w-full">
                   {t('auth.signin')}
@@ -607,12 +613,14 @@ export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = location;
   const reduce = useReducedMotion();
   const locked = useLocked();
+  const theme = useStore((st) => st.theme);
   // the chat is docked on the right: on wide screens the page makes room for it instead of being covered
   const chatWanted = useChat((s) => s.open);
   const chatEnabled = useChatEnabled();
   const chatOpen = chatWanted && chatEnabled && !locked;
+  useEffect(() => startSmoothScroll(), []);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop();
   }, [pathname]);
   return (
     <div className={`flex min-h-[100dvh] flex-col ${chatOpen ? 'xl:pr-[24rem]' : ''}`}>
@@ -620,6 +628,8 @@ export function Layout({ children }: { children: ReactNode }) {
         {t('a11y.skip')}
       </a>
       <TopBar />
+      <ConfirmHost />
+      <Toaster position="top-center" richColors closeButton theme={theme} toastOptions={{ className: 'font-sans' }} />
       {/* enter-only transition: the new page is never blocked behind an exit animation */}
       <main id="main" key={pathname.startsWith('/m/') ? pathname.split('/').slice(0, 3).join('/') : location.key} className={`mx-auto w-full max-w-[1760px] flex-1 px-4 pt-8 sm:px-6 xl:px-10 ${reduce ? '' : 'page-in'}`}>
         <RouteErrorBoundary>{children}</RouteErrorBoundary>

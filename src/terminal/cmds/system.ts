@@ -1269,9 +1269,6 @@ export const kill: CmdFn = () => ok();
 export const restorecon: CmdFn = () => ok();
 export const loadPolicy: CmdFn = () => ok();
 
-export function svcExists(sh: Shell, name: string): boolean {
-  return !!svcOf(sh, name);
-}
 
 export type { CmdRes, Ask, FNode };
 export { walk };

@@ -118,7 +118,7 @@ export function PdfViewer({ url, title, fill = false }: { url: string; title: st
           </button>
         </span>
       </div>
-      <div ref={box} className={`scroll-thin overflow-auto bg-surface2 py-4 ${fill ? 'min-h-0 flex-1' : 'h-[78vh]'}`} data-testid="pdf-viewer">
+      <div data-lenis-prevent ref={box} className={`scroll-thin overflow-auto bg-surface2 py-4 ${fill ? 'min-h-0 flex-1' : 'h-[78vh]'}`} data-testid="pdf-viewer">
         {error ? (
           <p className="flex items-center justify-center gap-2 p-10 text-sm text-bad">
             <Icon name="alert" size={16} /> {t('sup.error')}

@@ -91,4 +91,3 @@ export const SCHEDULE: Record<string, string> = {
   mobile: 'Samedi 08h30–11h45 (G2 puis G1)'
 };
 
-export const supportsOf = (module: string) => SUPPORTS.filter((s) => s.module === module);

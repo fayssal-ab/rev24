@@ -4,7 +4,7 @@
  * reference solution actually completes the mission in the terminal simulator.
  */
 import { z } from 'zod';
-import { ModuleSchema, ChapterSchema, QuestionSchema, ExerciseSchema, FlashcardSchema, MissionSchema, RefEntrySchema, type Question } from '../src/lib/schema';
+import { ModuleSchema, ChapterSchema, QuestionSchema, ExerciseSchema, MissionSchema, RefEntrySchema, type Question } from '../src/lib/schema';
 import { runCompute } from '../src/lib/compute';
 import { assemble } from '../src/lib/assemble';
 import { moduleDirs, readModuleFiles } from './load';
@@ -13,9 +13,9 @@ import { solveMission } from '../src/terminal/missions';
 const errors: string[] = [];
 const err = (m: string) => errors.push(m);
 
-const MIN: Record<string, { questions: number; command?: number; numeric?: number; hard: number; exercises: number; missions?: number; flashcards: number }> = {
-  linux: { questions: 120, command: 30, hard: 30, exercises: 25, missions: 10, flashcards: 80 },
-  data: { questions: 55, numeric: 20, hard: 15, exercises: 20, flashcards: 30 }
+const MIN: Record<string, { questions: number; command?: number; numeric?: number; hard: number; exercises: number; missions?: number }> = {
+  linux: { questions: 120, command: 30, hard: 30, exercises: 25, missions: 10 },
+  data: { questions: 55, numeric: 20, hard: 15, exercises: 20 }
 };
 
 const ids = new Set<string>();
@@ -30,7 +30,6 @@ for (const id of moduleDirs()) {
     if (f.path.includes('/chapters/')) schema = ChapterSchema;
     else if (f.path.includes('/questions/')) schema = z.array(QuestionSchema);
     else if (f.path.includes('/exercises/')) schema = z.array(ExerciseSchema);
-    else if (f.path.includes('/flashcards/')) schema = z.array(FlashcardSchema);
     else if (f.path.endsWith('/missions.json')) schema = z.array(MissionSchema);
     else if (f.path.endsWith('/reference.json')) schema = z.array(RefEntrySchema);
     if (!schema) {
@@ -46,7 +45,7 @@ for (const id of moduleDirs()) {
   for (const ch of module.chapters) if (!chapterIds.has(ch)) err(`${id}: chapter ${ch} listed in module.json but missing`);
   const qids = new Set(c.questions.map((q) => q.id));
   const mids = new Set(c.missions.map((x) => x.id));
-  const all = [...c.questions, ...c.exercises, ...c.flashcards, ...c.missions, ...c.reference];
+  const all = [...c.questions, ...c.exercises, ...c.missions, ...c.reference];
   for (const x of all) {
     const key = `${'module' in x ? '' : id + ':'}${x.id}`;
     if (ids.has(key)) err(`${id}: duplicate id ${x.id}`);
@@ -88,8 +87,7 @@ for (const id of moduleDirs()) {
     numeric: c.questions.filter((q) => q.kind === 'numeric').length,
     hard: c.questions.filter((q) => q.difficulty === 3).length,
     exercises: c.exercises.length,
-    missions: c.missions.length,
-    flashcards: c.flashcards.length
+    missions: c.missions.length
   };
   if (min)
     for (const [k, v] of Object.entries(min)) {
@@ -103,7 +101,7 @@ for (const id of moduleDirs()) {
     const missing = Array.from({ length: 44 }, (_, i) => i + 1).filter((n) => !covered.has(n));
     if (missing.length) err(`linux: TP5 questions not covered by a mission or exercise: ${missing.join(', ')}`);
   }
-  summary.push(`${id.padEnd(6)} chapters=${c.chapters.length} questions=${count.questions} (command=${count.command}, numeric=${count.numeric}, hard=${count.hard}) exercises=${count.exercises} missions=${count.missions} flashcards=${count.flashcards} reference=${c.reference.length}`);
+  summary.push(`${id.padEnd(6)} chapters=${c.chapters.length} questions=${count.questions} (command=${count.command}, numeric=${count.numeric}, hard=${count.hard}) exercises=${count.exercises} missions=${count.missions} reference=${c.reference.length}`);
 }
 
 for (const m of Object.keys(MIN)) if (!moduleDirs().includes(m)) err(`module ${m} is missing (run npm run content:build)`);

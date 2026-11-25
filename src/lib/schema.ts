@@ -214,4 +214,3 @@ export const RefEntrySchema = z.object({
 });
 export type RefEntry = z.infer<typeof RefEntrySchema>;
 
-export const GlossarySchema = z.array(RefEntrySchema);

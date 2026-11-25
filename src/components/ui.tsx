@@ -204,22 +204,3 @@ export function EmptyState({ icon = 'inbox', title, children }: { icon?: string;
     </div>
   );
 }
-
-export function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse rounded bg-surface2 ${className}`} />;
-}
-
-/** Editorial section header: mono index, serif title, a hairline rule running to the action. */
-export function SectionHeader({ title, action, eyebrow, n }: { title: ReactNode; action?: ReactNode; eyebrow?: ReactNode; n?: number }) {
-  return (
-    <div className="mb-6">
-      {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
-      <div className="flex items-baseline gap-4">
-        {n !== undefined && <span className="font-mono text-xs text-accent">{String(n).padStart(2, '0')}</span>}
-        <h2 className="font-display text-2xl font-medium tracking-tight sm:text-[1.9rem]">{title}</h2>
-        <span className="h-px min-w-6 flex-1 translate-y-[-0.35rem] bg-line" />
-        {action}
-      </div>
-    </div>
-  );
-}

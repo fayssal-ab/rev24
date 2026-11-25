@@ -130,7 +130,7 @@ export function TerminalView({ shell, onCommand, banner, className = '', inject 
         <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
         <span className="ml-2 truncate text-xs text-slate-400">{shell.user}@rhel9 — bash</span>
       </div>
-      <div ref={scrollRef} className="min-h-[260px] flex-1 overflow-y-auto whitespace-pre-wrap break-words px-3 py-2" aria-live="polite" role="log">
+      <div data-lenis-prevent ref={scrollRef} className="min-h-[260px] flex-1 overflow-y-auto whitespace-pre-wrap break-words px-3 py-2" aria-live="polite" role="log">
         {lines.map((l, i) => (
           <div key={i} className={l.err ? 'text-rose-300' : l.cmd ? 'text-slate-100' : 'text-slate-300'}>
             {l.cmd ? colorPrompt(l.text) : l.text.replace(/\n$/, '')}

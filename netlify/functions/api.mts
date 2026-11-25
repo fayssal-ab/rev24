@@ -41,7 +41,8 @@ import { SignJWT, jwtVerify } from 'jose';
 import { createHash, randomUUID } from 'node:crypto';
 import webpush from 'web-push';
 
-export const config = { path: '/api/*' };
+/** Netlify edge rate limit (DDoS / floods): at most 300 API requests per minute per IP, before the function runs. */
+export const config = { path: '/api/*', rateLimit: { windowLimit: 300, windowSize: 60, aggregateBy: ['ip', 'domain'] } };
 
 const COOKIE = 'g22_session';
 const SESSION_DAYS = 30;
@@ -139,6 +140,13 @@ function migrate(): Promise<void> {
     const chatHave = new Map(chatCols.map((r) => [String(r.c).toLowerCase(), Number(r.len ?? 0)]));
     if ((chatHave.get('body') ?? 0) < 2000) await p.query(`ALTER TABLE chat_messages MODIFY body VARCHAR(2000) NOT NULL`);
     if (!chatHave.has('poll')) await p.query(`ALTER TABLE chat_messages ADD COLUMN poll JSON NULL`);
+    // brute-force counters (login / signup / password), shared by every function instance
+    await p.query(`CREATE TABLE IF NOT EXISTS rate_limits (
+      k CHAR(64) NOT NULL PRIMARY KEY,
+      n INT UNSIGNED NOT NULL,
+      reset_at DATETIME(3) NOT NULL,
+      KEY ix_rl_reset (reset_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     // Web Push subscriptions (one per browser / phone), removed when the push service says they expired
     await p.query(`CREATE TABLE IF NOT EXISTS push_subs (
       id CHAR(64) NOT NULL PRIMARY KEY,
@@ -202,14 +210,15 @@ function migrate(): Promise<void> {
 class HttpError extends Error {
   constructor(
     public status: number,
-    public code: string
+    public code: string,
+    public headers: Record<string, string> = {}
   ) {
     super(code);
   }
 }
 
 const json = (status: number, body: unknown, headers: Record<string, string> = {}) =>
-  new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers } });
+  new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', ...headers } });
 
 function secret() {
   const s = process.env.JWT_SECRET;
@@ -281,13 +290,39 @@ async function body(req: Request): Promise<Record<string, unknown>> {
 const str = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/** Very small in-memory throttle per IP+email (per warm function instance) against password guessing. */
-const attempts = new Map<string, { n: number; until: number }>();
-function throttle(key: string) {
+/**
+ * Brute force: at most AUTH_MAX attempts per AUTH_WINDOW_S for a key (IP, e-mail, account), counted in the database
+ * so every function instance shares the same counters. Over the limit → 429 with Retry-After.
+ */
+const AUTH_MAX = 7;
+const AUTH_WINDOW_S = 600;
+async function limit(key: string, max = AUTH_MAX, windowS = AUTH_WINDOW_S) {
+  const k = createHash('sha256').update(key).digest('hex');
+  // MySQL evaluates SET left to right: n is reset with the old reset_at, then reset_at moves
+  await db().query(
+    `INSERT INTO rate_limits (k, n, reset_at) VALUES (?, 1, NOW(3) + INTERVAL ? SECOND)
+     ON DUPLICATE KEY UPDATE n = IF(reset_at < NOW(3), 1, n + 1), reset_at = IF(reset_at < NOW(3), NOW(3) + INTERVAL ? SECOND, reset_at)`,
+    [k, windowS, windowS]
+  );
+  const [rows] = await db().query<RowDataPacket[]>('SELECT n, GREATEST(1, TIMESTAMPDIFF(SECOND, NOW(3), reset_at)) AS wait FROM rate_limits WHERE k = ?', [k]);
+  if (Math.random() < 0.02) void db().query('DELETE FROM rate_limits WHERE reset_at < NOW(3) - INTERVAL 1 DAY').catch(() => undefined);
+  if (Number(rows[0]?.n ?? 0) > max) throw new HttpError(429, 'too_many_attempts', { 'retry-after': String(rows[0].wait) });
+}
+const clearLimit = (key: string) => db().query('DELETE FROM rate_limits WHERE k = ?', [createHash('sha256').update(key).digest('hex')]);
+
+/**
+ * Flood guard (first line, per warm instance, no database cost): FLOOD_MAX requests per minute and IP.
+ * Netlify's own rate limiting (config.rateLimit below) stops floods at the edge before they reach the function.
+ */
+const FLOOD_MAX = 240;
+const hits = new Map<string, { n: number; until: number }>();
+function flood(ip: string) {
   const now = Date.now();
-  const a = attempts.get(key);
-  if (a && a.until > now && a.n >= 8) throw new HttpError(429, 'too_many_attempts');
-  attempts.set(key, a && a.until > now ? { n: a.n + 1, until: a.until } : { n: 1, until: now + 10 * 60_000 });
+  const h = hits.get(ip);
+  if (!h || h.until < now) {
+    if (hits.size > 5000) hits.clear();
+    hits.set(ip, { n: 1, until: now + 60_000 });
+  } else if (++h.n > FLOOD_MAX) throw new HttpError(429, 'too_many_requests', { 'retry-after': String(Math.ceil((h.until - now) / 1000)) });
 }
 
 type UserRow = RowDataPacket & {
@@ -367,6 +402,26 @@ async function route(req: Request): Promise<Response> {
   const method = req.method.toUpperCase();
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for') ?? 'ip';
 
+  flood(ip);
+  // request size: nothing legitimate is bigger (progress is checked separately, 2 MB)
+  const size = Number(req.headers.get('content-length') ?? 0);
+  if (size > (path === '/progress' ? MAX_PROGRESS_BYTES : 300_000)) throw new HttpError(413, 'too_large');
+
+  // CSRF: a write must come from this site (the browser always sends Origin on cross-site POST / PUT / DELETE)
+  if (method !== 'GET' && method !== 'HEAD') {
+    const origin = req.headers.get('origin');
+    if (origin) {
+      const hosts = new Set([new URL(req.url).host, req.headers.get('host'), req.headers.get('x-forwarded-host')].filter(Boolean));
+      let from = '';
+      try {
+        from = new URL(origin).host;
+      } catch {
+        /* "null" or malformed origin */
+      }
+      if (!hosts.has(from)) throw new HttpError(403, 'bad_origin');
+    }
+  }
+
   if (method === 'GET' && path === '/health') return json(200, { ok: true });
   // Diagnostics without secrets: which variables are set, and the database error code if the connection fails.
   // public check used by the ping: only says whether the database answers (no configuration, no error details)
@@ -389,7 +444,7 @@ async function route(req: Request): Promise<Response> {
     const displayName = str(b.displayName, 120) || email.split('@')[0];
     if (!EMAIL.test(email)) throw new HttpError(400, 'invalid_email');
     if (password.length < 8 || password.length > 200) throw new HttpError(400, 'weak_password');
-    throttle(`signup:${ip}`);
+    await limit(`signup:${ip}`);
     if (await findUser('email', email)) throw new HttpError(409, 'email_taken');
     const id = randomUUID();
     const hash = await bcrypt.hash(password, 11);
@@ -408,12 +463,14 @@ async function route(req: Request): Promise<Response> {
     const b = await body(req);
     const email = str(b.email, 255).toLowerCase();
     const password = typeof b.password === 'string' ? b.password : '';
-    throttle(`login:${ip}:${email}`);
+    // 7 tries / 10 min per IP and per e-mail (an attacker spreading over many IPs still hits the e-mail limit)
+    await limit(`login-ip:${ip}`);
+    await limit(`login-email:${email}`);
     const u = await findUser('email', email);
     // compare even when the user does not exist, so timing does not reveal registered e-mails
     const ok = await bcrypt.compare(password, u?.password_hash ?? dummy());
     if (!u || !ok) throw new HttpError(401, 'invalid_credentials');
-    attempts.delete(`login:${ip}:${email}`);
+    await clearLimit(`login-email:${email}`);
     return json(200, { user: publicUser(u) }, { 'set-cookie': await issueCookie(u.id, req) });
   }
 
@@ -454,7 +511,7 @@ async function route(req: Request): Promise<Response> {
     const current = typeof b.current === 'string' ? b.current : '';
     const next = typeof b.next === 'string' ? b.next : '';
     if (next.length < 8 || next.length > 200) throw new HttpError(400, 'weak_password');
-    throttle(`password:${userId}`);
+    await limit(`password:${userId}`);
     const u = await findUser('id', userId);
     if (!u || !(await bcrypt.compare(current, u.password_hash))) throw new HttpError(401, 'invalid_credentials');
     await db().query('UPDATE users SET password_hash = ? WHERE id = ?', [await bcrypt.hash(next, 11), userId]);
@@ -501,7 +558,8 @@ async function route(req: Request): Promise<Response> {
       [pr[1]]
     );
     const u = rows[0];
-    if (!u || (u.status !== 'approved' && !adminEmails().includes(String(u.email).toLowerCase()))) throw new HttpError(404, 'not_found');
+    // any member who can appear in the chat (approved, or an admin whatever their stored status) has a profile
+    if (!u || (u.status !== 'approved' && u.role !== 'admin' && !adminEmails().includes(String(u.email).toLowerCase()))) throw new HttpError(404, 'not_found');
     const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
     const hidden = !!u.profile_private && u.id !== userId && !isAdmin(me);
     return json(200, {
@@ -544,7 +602,7 @@ async function route(req: Request): Promise<Response> {
     const targets = [...text.matchAll(MENTION_IDS)].map((m) => m[1]);
     if (targets.length) {
       const from = me.display_name || me.email.split('@')[0];
-      await pushTo(targets.includes('everyone') ? 'all' : targets, { title: `${from} · Discussion`, body: text.replace(MENTION, '@$1').slice(0, 140), url: '/#/', tag: 'chat' }, userId);
+      await pushTo(targets.includes('everyone') ? 'all' : targets, { title: `${from} · Discussion`, body: text.replace(MENTION, '@$1').slice(0, 140), url: '/', tag: 'chat' }, userId);
     }
     await db().query(`DELETE FROM chat_messages WHERE id NOT IN (SELECT id FROM (SELECT id FROM chat_messages ORDER BY id DESC LIMIT ${CHAT_KEEP}) AS keep)`);
     return json(201, { messages: await chatList(0, userId) });
@@ -915,7 +973,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     const label = f.label || f.module;
     const kindFr = f.kind === 'cr' ? 'Compte rendu' : f.kind === 'examen' ? 'Examen' : 'Contrôle';
     const [yy, mm, dd] = f.day.split('-');
-    await pushTo('all', { title: `${kindFr} · ${label}`, body: `${f.kind === 'cr' ? 'À rendre le' : 'Le'} ${dd}/${mm}/${yy}${f.time ? ` · ${f.time.replace(':', 'h')}` : ''}${f.message ? `\n${f.message.slice(0, 120)}` : ''}`, url: '/#/', tag: `event-${id}` }, me.id);
+    await pushTo('all', { title: `${kindFr} · ${label}`, body: `${f.kind === 'cr' ? 'À rendre le' : 'Le'} ${dd}/${mm}/${yy}${f.time ? ` · ${f.time.replace(':', 'h')}` : ''}${f.message ? `\n${f.message.slice(0, 120)}` : ''}`, url: '/', tag: `event-${id}` }, me.id);
     return json(201, { events: await listEvents() });
   }
   const ev = idOf('events');
@@ -941,7 +999,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     const f = annFields(await body(req));
     const id = randomUUID();
     await p.query('INSERT INTO announcements (id, title, body, pinned) VALUES (?, ?, ?, ?)', [id, f.title, f.text, f.pinned]);
-    await pushTo('all', { title: `Annonce · ${f.title}`, body: f.text.slice(0, 140), url: '/#/', tag: `ann-${id}` }, me.id);
+    await pushTo('all', { title: `Annonce · ${f.title}`, body: f.text.slice(0, 140), url: '/', tag: `ann-${id}` }, me.id);
     const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM announcements WHERE id = ?', [id]);
     return json(201, { announcement: annOut(rows[0]) });
   }
@@ -965,7 +1023,7 @@ export default async (req: Request): Promise<Response> => {
   try {
     return await route(req);
   } catch (e) {
-    if (e instanceof HttpError) return json(e.status, { error: e.code });
+    if (e instanceof HttpError) return json(e.status, { error: e.code }, e.headers);
     console.error('[api]', e);
     return json(500, { error: 'server_error' });
   }

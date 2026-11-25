@@ -193,5 +193,2005 @@
     "en": "Forgetting /EMSIPDB."
    }
   ]
+ },
+ {
+  "id": "or-e-1",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 1 : SGBDR, DBA, connexions (5 pts)",
+   "dar": "Facile — Ex. 1 : SGBDR, DBA, connexions (5 pts)",
+   "en": "Easy — Ex. 1: RDBMS, DBA, connections (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Définir un SGBDR et citer deux rôles. 2) Citer quatre tâches du DBA. 3) Lister les trois types de connexions à un serveur Oracle avec un exemple chacun.",
+   "dar": "1) SGBDR w 2 rôles. 2) 4 tâches dyal DBA. 3) 3 types dyal connexions b mithal.",
+   "en": "1) RDBMS and two roles. 2) Four DBA tasks. 3) Three connection types with examples."
+  },
+  "hints": [
+   {
+    "fr": "Corrigé du CC 2025-2026, questions 1 à 3.",
+    "dar": "CC 2025-2026, Q1–Q3.",
+    "en": "CC 2025-2026, Q1–Q3."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **SGBDR** : logiciel qui crée, stocke et interroge des données en **tables reliées** avec **SQL** ; rôles : stocker/manipuler (LDD, LMD), **sécuriser** l'accès, garantir l'**intégrité**, **sauvegarder/restaurer**. 2) DBA : installer/configurer Oracle, créer les bases, **démarrer/arrêter l'instance**, gérer **utilisateurs et privilèges**, gérer le stockage, **sauvegardes**, surveiller les **performances**. 3) **Locale** (sqlplus / as sysdba sur le serveur) · **client/serveur** (SQL Developer sur un portable) · **multi-tiers** (navigateur → serveur Web → Oracle).",
+     "dar": "SGBDR SQL ; DBA ; locale, client/serveur, multi-tiers.",
+     "en": "RDBMS SQL; DBA; local, client/server, multi-tier."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "SGBDR = tables reliées + SQL (stocker, sécuriser, intégrité, sauvegarde) ; DBA = installer, démarrer/arrêter, utilisateurs, sauvegardes, performances ; connexions locale, client/serveur, multi-tiers.",
+   "dar": "SGBDR, DBA, 3 connexions.",
+   "en": "RDBMS, DBA, 3 connections."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Confondre client/serveur (2 tiers) et multi-tiers (serveur applicatif).",
+    "dar": "2 tiers ≠ multi-tiers.",
+    "en": "2-tier ≠ multi-tier."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "SGBDR : tables reliées / relationnel + SQL",
+     "dar": "SGBDR : tables reliées / relationnel + SQL",
+     "en": "SGBDR : tables reliées / relationnel + SQL"
+    },
+    "any": [
+     "relationnel && sql",
+     "table && sql"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Deux rôles (sécurité, intégrité, sauvegarde, manipulation)",
+     "dar": "Deux rôles (sécurité, intégrité, sauvegarde, manipulation)",
+     "en": "Deux rôles (sécurité, intégrité, sauvegarde, manipulation)"
+    },
+    "any": [
+     "secur && integr",
+     "secur && sauvegard",
+     "integr && sauvegard"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "DBA : démarrer/arrêter l'instance",
+     "dar": "DBA : démarrer/arrêter l'instance",
+     "en": "DBA : démarrer/arrêter l'instance"
+    },
+    "any": [
+     "demarr",
+     "arret"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "DBA : utilisateurs / privilèges",
+     "dar": "DBA : utilisateurs / privilèges",
+     "en": "DBA : utilisateurs / privilèges"
+    },
+    "any": [
+     "utilisateur",
+     "privilege"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "DBA : sauvegardes / performances",
+     "dar": "DBA : sauvegardes / performances",
+     "en": "DBA : sauvegardes / performances"
+    },
+    "any": [
+     "sauvegard",
+     "perform"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Connexion locale",
+     "dar": "Connexion locale",
+     "en": "Connexion locale"
+    },
+    "any": [
+     "locale"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Client / serveur",
+     "dar": "Client / serveur",
+     "en": "Client / serveur"
+    },
+    "any": [
+     "client"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Multi-tiers",
+     "dar": "Multi-tiers",
+     "en": "Multi-tiers"
+    },
+    "any": [
+     "multi",
+     "trois tiers",
+     "3 tiers"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-e-2",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 2 : instance et base de données (5 pts)",
+   "dar": "Facile — Ex. 2 : instance w base (5 pts)",
+   "en": "Easy — Ex. 2: instance and database (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Compléter : « Un serveur Oracle = ____ + ____ ». 2) De quoi est composée une instance ? 3) Quelles sont les trois grandes structures d'un serveur Oracle ? 4) Nommer les trois types de fichiers physiques d'une base (CDB). 5) Que deviennent l'instance et la base à l'arrêt ?",
+   "dar": "1) Serveur = ___ + ___. 2) Instance fiha chnou ? 3) 3 structures. 4) 3 types fichiers. 5) Mli kat-arrêta ?",
+   "en": "1) Server = ___ + ___. 2) Instance content? 3) Three structures. 4) Three file types. 5) At shutdown?"
+  },
+  "hints": [
+   {
+    "fr": "L'instance vit en mémoire, la base sur disque.",
+    "dar": "Instance f RAM, base f disque.",
+    "en": "Instance in RAM, database on disk."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **instance + base de données**. 2) **SGA** (mémoire partagée) + **processus d'arrière-plan** (PMON, SMON, DBWn, LGWR, CKPT…). 3) **Structures mémoire** (SGA, PGA), **structures de processus** (utilisateur, serveur, arrière-plan), **structures de stockage** (fichiers). 4) **Fichiers de données**, **fichiers de contrôle**, **fichiers de journalisation (redo log)**. 5) L'**instance disparaît** (RAM libérée) ; la **base reste** sur disque.",
+     "dar": "Instance + base ; SGA + processus ; mémoire, processus, stockage ; données, contrôle, redo ; instance disparaît.",
+     "en": "Instance + DB; SGA + processes; memory, process, storage; data, control, redo; instance vanishes."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Serveur = instance + base ; instance = SGA + processus d'arrière-plan ; structures mémoire, processus, stockage ; data files, control files, redo log files ; l'instance disparaît, la base reste.",
+   "dar": "Instance + base, SGA + processus.",
+   "en": "Instance + DB, SGA + processes."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que la base est en mémoire.",
+    "dar": "Base f disque.",
+    "en": "The database is on disk."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Instance + base de données",
+     "dar": "Instance + base de données",
+     "en": "Instance + base de données"
+    },
+    "any": [
+     "instance && base"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Instance = SGA + processus d'arrière-plan",
+     "dar": "Instance = SGA + processus d'arrière-plan",
+     "en": "Instance = SGA + processus d'arrière-plan"
+    },
+    "any": [
+     "sga && process"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Mémoire, processus, stockage",
+     "dar": "Mémoire, processus, stockage",
+     "en": "Mémoire, processus, stockage"
+    },
+    "any": [
+     "memoire && process && stockage"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Fichiers de données, contrôle, redo log",
+     "dar": "Fichiers de données, contrôle, redo log",
+     "en": "Fichiers de données, contrôle, redo log"
+    },
+    "any": [
+     "donnees && controle && redo",
+     "datafile && control && redo"
+    ],
+    "w": 1.5
+   },
+   {
+    "label": {
+     "fr": "L'instance disparaît, la base reste",
+     "dar": "L'instance disparaît, la base reste",
+     "en": "L'instance disparaît, la base reste"
+    },
+    "any": [
+     "dispar",
+     "reste"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-e-3",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 3 : démarrer et arrêter (5 pts)",
+   "dar": "Facile — Ex. 3 : démarrer w arrêter (5 pts)",
+   "en": "Easy — Ex. 3: start and stop (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Commande pour se connecter en SYSDBA sans saisir de nom d'utilisateur. 2) Les trois étapes de STARTUP et le message affiché à chacune. 3) Les quatre modes de SHUTDOWN. 4) Quel est le mode par défaut ?",
+   "dar": "1) Connexion SYSDBA bla user. 2) 3 marahil dyal STARTUP w messages. 3) 4 modes SHUTDOWN. 4) Par défaut ?",
+   "en": "1) SYSDBA login without a user name. 2) The three STARTUP steps and messages. 3) Four SHUTDOWN modes. 4) Default?"
+  },
+  "hints": [
+   {
+    "fr": "NOMOUNT → MOUNT → OPEN.",
+    "dar": "NOMOUNT → MOUNT → OPEN.",
+    "en": "NOMOUNT → MOUNT → OPEN."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **sqlplus / as sysdba**. 2) **NOMOUNT** : lecture du fichier de paramètres (SPFILE/PFILE), SGA + processus → « Instance ORACLE lancée » ; **MOUNT** : lecture des **fichiers de contrôle** → « Base de données montée » ; **OPEN** : ouverture des **fichiers de données et redo** → « Base de données ouverte ». 3) **NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT**. 4) **NORMAL**.",
+     "dar": "sqlplus / as sysdba ; NOMOUNT/MOUNT/OPEN ; 4 modes ; NORMAL.",
+     "en": "sqlplus / as sysdba; NOMOUNT/MOUNT/OPEN; 4 modes; NORMAL."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "sqlplus / as sysdba ; NOMOUNT (paramètres, SGA, processus) → MOUNT (contrôle) → OPEN (données + redo) ; NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT ; NORMAL par défaut.",
+   "dar": "NOMOUNT, MOUNT, OPEN ; NORMAL.",
+   "en": "NOMOUNT, MOUNT, OPEN; NORMAL."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Inverser MOUNT (contrôle) et OPEN (données).",
+    "dar": "MOUNT = contrôle.",
+    "en": "MOUNT = control files."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "sqlplus / as sysdba",
+     "dar": "sqlplus / as sysdba",
+     "en": "sqlplus / as sysdba"
+    },
+    "any": [
+     "sqlplus / as sysdba"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "NOMOUNT : paramètres + SGA + processus",
+     "dar": "NOMOUNT : paramètres + SGA + processus",
+     "en": "NOMOUNT : paramètres + SGA + processus"
+    },
+    "any": [
+     "nomount && param",
+     "nomount && sga"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "MOUNT : fichiers de contrôle",
+     "dar": "MOUNT : fichiers de contrôle",
+     "en": "MOUNT : fichiers de contrôle"
+    },
+    "any": [
+     "mount && control"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "OPEN : fichiers de données + redo",
+     "dar": "OPEN : fichiers de données + redo",
+     "en": "OPEN : fichiers de données + redo"
+    },
+    "any": [
+     "open && donnees",
+     "open && redo"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT",
+     "dar": "NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT",
+     "en": "NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT"
+    },
+    "any": [
+     "normal && transaction && immediate && abort"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "NORMAL par défaut",
+     "dar": "NORMAL par défaut",
+     "en": "NORMAL par défaut"
+    },
+    "any": [
+     "defaut"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-e-4",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 2,
+  "title": {
+   "fr": "Facile — Ex. 4 : CDB et PDB (5 pts)",
+   "dar": "Facile — Ex. 4 : CDB w PDB (5 pts)",
+   "en": "Easy — Ex. 4: CDB and PDB (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Définir une CDB et une PDB. 2) Rôle de CDB$ROOT et de PDB$SEED. 3) Deux avantages de l'architecture multitenant. 4) Commandes SQL*Plus pour afficher le conteneur courant et la liste des PDB.",
+   "dar": "1) CDB w PDB. 2) CDB$ROOT w PDB$SEED. 3) 2 avantages. 4) Commandes : conteneur courant w liste PDB.",
+   "en": "1) CDB and PDB. 2) CDB$ROOT and PDB$SEED. 3) Two advantages. 4) Show current container and PDB list."
+  },
+  "hints": [
+   {
+    "fr": "show con_name · show pdbs.",
+    "dar": "show con_name · show pdbs.",
+    "en": "show con_name · show pdbs."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **CDB** (Container Database) : conteneur qui regroupe CDB$ROOT, PDB$SEED et 0..n PDB. **PDB** (Pluggable Database) : base **branchable**, portable, vue comme une base classique. 2) **CDB$ROOT** : racine, dictionnaire commun et utilisateurs communs ; **PDB$SEED** : **modèle en lecture seule** pour créer les PDB. 3) **Partage des ressources** (une seule SGA et un seul jeu de processus) et **administration simplifiée** (sauvegarde, mise à jour une fois) ; déplacement facile des PDB. 4) **show con_name** et **show pdbs**.",
+     "dar": "CDB conteneur, PDB branchable ; ROOT, SEED lecture seule ; partage, administration ; show con_name, show pdbs.",
+     "en": "CDB container, PDB pluggable; ROOT, read-only SEED; sharing, admin; show con_name, show pdbs."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "CDB = conteneur (ROOT + SEED + PDB) ; PDB = base branchable ; SEED = modèle READ ONLY ; avantages : ressources partagées, administration simplifiée ; show con_name, show pdbs.",
+   "dar": "CDB, PDB, SEED, show pdbs.",
+   "en": "CDB, PDB, SEED, show pdbs."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire qu'on travaille dans PDB$SEED.",
+    "dar": "SEED lecture seule.",
+    "en": "SEED is read-only."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "CDB = conteneur",
+     "dar": "CDB = conteneur",
+     "en": "CDB = conteneur"
+    },
+    "any": [
+     "conteneur",
+     "container"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "PDB = base branchable",
+     "dar": "PDB = base branchable",
+     "en": "PDB = base branchable"
+    },
+    "any": [
+     "branchable",
+     "pluggable"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "PDB$SEED = modèle en lecture seule",
+     "dar": "PDB$SEED = modèle en lecture seule",
+     "en": "PDB$SEED = modèle en lecture seule"
+    },
+    "any": [
+     "seed && lecture seule",
+     "seed && read only",
+     "modele"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Partage des ressources",
+     "dar": "Partage des ressources",
+     "en": "Partage des ressources"
+    },
+    "any": [
+     "partage",
+     "une seule sga"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Administration simplifiée",
+     "dar": "Administration simplifiée",
+     "en": "Administration simplifiée"
+    },
+    "any": [
+     "administration",
+     "gestion"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "show con_name",
+     "dar": "show con_name",
+     "en": "show con_name"
+    },
+    "any": [
+     "show con_name"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "show pdbs",
+     "dar": "show pdbs",
+     "en": "show pdbs"
+    },
+    "any": [
+     "show pdbs"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-m-1",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Moyen — Ex. 1 : composants de la SGA (5 pts)",
+   "dar": "Moyen — Ex. 1 : SGA (5 pts)",
+   "en": "Medium — Ex. 1: SGA components (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Différence entre SGA et PGA. 2) Rôle de la Shared Pool et de ses deux composants principaux. 3) Rôle du Database Buffer Cache et du Redo Log Buffer. 4) Rôle de la Large Pool, de la Java Pool et de la Streams Pool. 5) Commande SQL*Plus qui affiche la taille de la SGA.",
+   "dar": "1) SGA vs PGA. 2) Shared Pool w 2 composants. 3) Buffer Cache w Redo Log Buffer. 4) Large, Java, Streams Pool. 5) Commande taille SGA.",
+   "en": "1) SGA vs PGA. 2) Shared Pool and its two parts. 3) Buffer Cache and Redo Log Buffer. 4) Large, Java, Streams Pool. 5) Command showing SGA size."
+  },
+  "hints": [
+   {
+    "fr": "Library cache et data dictionary cache.",
+    "dar": "Library cache w dictionary cache.",
+    "en": "Library cache and dictionary cache."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **SGA** : mémoire **partagée** par tous les processus serveur ; **PGA** : mémoire **privée** de chaque processus serveur. 2) **Shared Pool** : **library cache** (texte, arbre et **plan d'exécution** des requêtes récentes, réutilisés) + **data dictionary cache** (définitions d'objets, colonnes, privilèges). 3) **Buffer Cache** : copies des **blocs de données** lus/modifiés ; **Redo Log Buffer** : **entrées de journalisation** des modifications, avant écriture par LGWR. 4) **Large Pool** : UGA en serveur partagé, sauvegardes (RMAN), E/S ; **Java Pool** : code Java/JVM ; **Streams Pool** : Oracle Streams. 5) **show sga** (ou `SELECT * FROM v$sga`).",
+     "dar": "SGA partagée / PGA privée ; library + dictionary cache ; blocs / redo ; large, java, streams ; show sga.",
+     "en": "SGA shared / PGA private; library + dictionary; blocks / redo; large, java, streams; show sga."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "SGA partagée vs PGA privée ; Shared Pool = library cache (plans) + data dictionary cache ; Buffer Cache = blocs de données ; Redo Log Buffer = journal ; Large/Java/Streams Pool ; show sga.",
+   "dar": "SGA, Shared Pool, Buffer Cache, Redo, show sga.",
+   "en": "SGA, Shared Pool, Buffer Cache, Redo, show sga."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre les plans d'exécution dans le Buffer Cache.",
+    "dar": "Plans f library cache.",
+    "en": "Plans live in the library cache."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "SGA partagée / PGA privée",
+     "dar": "SGA partagée / PGA privée",
+     "en": "SGA partagée / PGA privée"
+    },
+    "any": [
+     "partag && priv"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Library cache (plans d'exécution)",
+     "dar": "Library cache (plans d'exécution)",
+     "en": "Library cache (plans d'exécution)"
+    },
+    "any": [
+     "library"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Data dictionary cache",
+     "dar": "Data dictionary cache",
+     "en": "Data dictionary cache"
+    },
+    "any": [
+     "dictionary",
+     "dictionnaire"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Buffer Cache = blocs de données",
+     "dar": "Buffer Cache = blocs de données",
+     "en": "Buffer Cache = blocs de données"
+    },
+    "any": [
+     "buffer cache && bloc",
+     "buffer && donnees"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Redo Log Buffer = journalisation",
+     "dar": "Redo Log Buffer = journalisation",
+     "en": "Redo Log Buffer = journalisation"
+    },
+    "any": [
+     "redo log buffer",
+     "redo && journal"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Large / Java / Streams Pool",
+     "dar": "Large / Java / Streams Pool",
+     "en": "Large / Java / Streams Pool"
+    },
+    "any": [
+     "large && java && streams"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "show sga",
+     "dar": "show sga",
+     "en": "show sga"
+    },
+    "any": [
+     "show sga",
+     "v$sga"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-m-2",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Moyen — Ex. 2 : processus d'arrière-plan (5 pts)",
+   "dar": "Moyen — Ex. 2 : processus (5 pts)",
+   "en": "Medium — Ex. 2: background processes (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Citer les cinq processus d'arrière-plan obligatoires et le rôle de chacun. 2) Quel processus est facultatif et quand est-il utilisé ? 3) Quand LGWR écrit-il ? 4) Quel processus fait la restauration de l'instance après un SHUTDOWN ABORT ?",
+   "dar": "1) 5 processus obligatoires w dor. 2) Facultatif ? 3) Imta LGWR kaykteb ? 4) Chkoun kay-restauri mor ABORT ?",
+   "en": "1) Five mandatory processes and roles. 2) Optional one? 3) When does LGWR write? 4) Who recovers after ABORT?"
+  },
+  "hints": [
+   {
+    "fr": "PMON, SMON, DBWn, LGWR, CKPT ; ARCn facultatif.",
+    "dar": "PMON, SMON, DBWn, LGWR, CKPT ; ARCn.",
+    "en": "PMON, SMON, DBWn, LGWR, CKPT; ARCn."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **PMON** : nettoie après l'échec d'un processus utilisateur (libère verrous, ressources) ; **SMON** : **restauration de l'instance** au démarrage, nettoyage ; **DBWn** : écrit les **blocs modifiés** du Buffer Cache dans les **fichiers de données** ; **LGWR** : écrit le **Redo Log Buffer** dans les **fichiers redo** ; **CKPT** : déclenche les **points de contrôle** et met à jour les en-têtes des fichiers et les fichiers de contrôle. 2) **ARCn** : archive les fichiers redo en mode **ARCHIVELOG**. 3) LGWR écrit au **COMMIT**, toutes les **3 secondes**, quand le buffer est rempli au **1/3**, et avant que DBWn écrive. 4) **SMON**.",
+     "dar": "PMON, SMON, DBWn, LGWR, CKPT ; ARCn (ARCHIVELOG) ; COMMIT, 3 s, 1/3 ; SMON.",
+     "en": "PMON, SMON, DBWn, LGWR, CKPT; ARCn; COMMIT, 3 s, 1/3; SMON."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "PMON (nettoyage processus), SMON (restauration instance), DBWn (blocs → data files), LGWR (redo buffer → redo files), CKPT (checkpoints) ; ARCn en ARCHIVELOG ; LGWR au COMMIT / 3 s / 1/3 ; SMON.",
+   "dar": "5 processus, ARCn, LGWR, SMON.",
+   "en": "5 processes, ARCn, LGWR, SMON."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que DBWn écrit au COMMIT (c'est LGWR).",
+    "dar": "COMMIT = LGWR.",
+    "en": "COMMIT = LGWR."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "PMON",
+     "dar": "PMON",
+     "en": "PMON"
+    },
+    "any": [
+     "pmon"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "SMON (restauration)",
+     "dar": "SMON (restauration)",
+     "en": "SMON (restauration)"
+    },
+    "any": [
+     "smon"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "DBWn : blocs → fichiers de données",
+     "dar": "DBWn : blocs → fichiers de données",
+     "en": "DBWn : blocs → fichiers de données"
+    },
+    "any": [
+     "dbw"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "LGWR : redo → fichiers redo",
+     "dar": "LGWR : redo → fichiers redo",
+     "en": "LGWR : redo → fichiers redo"
+    },
+    "any": [
+     "lgwr"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "CKPT : points de contrôle",
+     "dar": "CKPT : points de contrôle",
+     "en": "CKPT : points de contrôle"
+    },
+    "any": [
+     "ckpt"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "ARCn facultatif (ARCHIVELOG)",
+     "dar": "ARCn facultatif (ARCHIVELOG)",
+     "en": "ARCn facultatif (ARCHIVELOG)"
+    },
+    "any": [
+     "arc"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "LGWR au COMMIT / 3 s / 1/3",
+     "dar": "LGWR au COMMIT / 3 s / 1/3",
+     "en": "LGWR au COMMIT / 3 s / 1/3"
+    },
+    "any": [
+     "commit && 3"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "SMON restaure après ABORT",
+     "dar": "SMON restaure après ABORT",
+     "en": "SMON restaure après ABORT"
+    },
+    "any": [
+     "smon && restaur",
+     "smon && abort"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-m-3",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Moyen — Ex. 3 : exécution d'un UPDATE et COMMIT (5 pts)",
+   "dar": "Moyen — Ex. 3 : UPDATE w COMMIT (5 pts)",
+   "en": "Medium — Ex. 3: UPDATE and COMMIT (5 pts)"
+  },
+  "statement": {
+   "fr": "Exercice du cours : `UPDATE customers SET city = 'Rabat' WHERE id_customer = 123; COMMIT;` Listez dans l'ordre les étapes et les éléments (processus, mémoires, fichiers) qui interviennent, de l'envoi de la requête jusqu'au COMMIT.",
+   "dar": "Exercice dyal cours : `UPDATE customers SET city = 'Rabat' WHERE id_customer = 123; COMMIT;` Marahil w 3anasir b tartib.",
+   "en": "Course exercise: list in order the steps and components for this UPDATE and COMMIT."
+  },
+  "hints": [
+   {
+    "fr": "Analyse (shared pool) → bloc (buffer cache) → modification + redo → COMMIT (LGWR).",
+    "dar": "Analyse → bloc → redo → COMMIT.",
+    "en": "Parse → block → redo → COMMIT."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Étapes",
+     "dar": "Marahil",
+     "en": "Steps"
+    },
+    "body": {
+     "fr": "1) Le **processus utilisateur** envoie la requête au **processus serveur**. 2) **Analyse** : la **Shared Pool** (library cache) cherche un plan existant, sinon analyse syntaxique/sémantique (**data dictionary cache** : table, colonnes, privilèges) et calcule le plan. 3) Le serveur cherche le bloc de la ligne 123 dans le **Database Buffer Cache** ; s'il n'y est pas, il le lit depuis le **fichier de données**. 4) Il écrit l'image avant dans l'**undo**, modifie le bloc (bloc « sale ») et place les **entrées redo** dans le **Redo Log Buffer**. 5) **COMMIT** : **LGWR** écrit le Redo Log Buffer dans les **fichiers redo** → « Validation effectuée ». 6) Plus tard, **DBWn** écrit le bloc modifié dans le fichier de données (au checkpoint de **CKPT**).",
+     "dar": "Serveur → Shared Pool → Buffer Cache → undo + redo buffer → COMMIT : LGWR → plus tard DBWn.",
+     "en": "Server → Shared Pool → Buffer Cache → undo + redo → COMMIT: LGWR → later DBWn."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Processus utilisateur → serveur ; analyse en Shared Pool (library + dictionary) ; bloc lu dans le Buffer Cache (sinon data file) ; undo + redo dans le Redo Log Buffer ; COMMIT = LGWR écrit les redo ; DBWn écrit le bloc plus tard (checkpoint).",
+   "dar": "Shared Pool, Buffer Cache, Redo, LGWR, DBWn.",
+   "en": "Shared Pool, Buffer Cache, Redo, LGWR, DBWn."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que le COMMIT écrit le bloc de données sur disque.",
+    "dar": "COMMIT = redo, machi bloc.",
+    "en": "COMMIT writes redo, not the block."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Processus utilisateur → processus serveur",
+     "dar": "Processus utilisateur → processus serveur",
+     "en": "Processus utilisateur → processus serveur"
+    },
+    "any": [
+     "processus serveur",
+     "server process"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Analyse en Shared Pool (library / dictionary)",
+     "dar": "Analyse en Shared Pool (library / dictionary)",
+     "en": "Analyse en Shared Pool (library / dictionary)"
+    },
+    "any": [
+     "shared pool",
+     "library"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Bloc dans le Buffer Cache (sinon fichier de données)",
+     "dar": "Bloc dans le Buffer Cache (sinon fichier de données)",
+     "en": "Bloc dans le Buffer Cache (sinon fichier de données)"
+    },
+    "any": [
+     "buffer cache"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Entrées redo dans le Redo Log Buffer",
+     "dar": "Entrées redo dans le Redo Log Buffer",
+     "en": "Entrées redo dans le Redo Log Buffer"
+    },
+    "any": [
+     "redo log buffer",
+     "redo"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "COMMIT : LGWR écrit les fichiers redo",
+     "dar": "COMMIT : LGWR écrit les fichiers redo",
+     "en": "COMMIT : LGWR écrit les fichiers redo"
+    },
+    "any": [
+     "lgwr"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "DBWn écrit le bloc plus tard",
+     "dar": "DBWn écrit le bloc plus tard",
+     "en": "DBWn écrit le bloc plus tard"
+    },
+    "any": [
+     "dbw"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-m-4",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Moyen — Ex. 4 : SQL*Plus en situation (5 pts)",
+   "dar": "Moyen — Ex. 4 : SQL*Plus (5 pts)",
+   "en": "Medium — Ex. 4: SQL*Plus in practice (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Après `sqlplus / as sysdba`, le message « Connecté à une instance inactive » s'affiche : état de la base et commande à lancer ? 2) Après `sqlplus HR/HR as sysdba`, que renvoie `show user` ? Pourquoi ? 3) Que se passe-t-il avec `STARTUP MOUNT` ? Comment ouvrir ensuite la base ? 4) Comment ouvrir la PDB ORCLPDB et s'y placer ?",
+   "dar": "1) « instance inactive » : état w commande ? 2) `show user` mor HR/HR as sysdba ? 3) STARTUP MOUNT, mn ba3d ? 4) 7ell ORCLPDB w dkhel lih.",
+   "en": "1) \"idle instance\": state and command? 2) `show user` after HR/HR as sysdba? 3) STARTUP MOUNT then? 4) Open ORCLPDB and switch to it."
+  },
+  "hints": [
+   {
+    "fr": "AS SYSDBA connecte toujours en SYS.",
+    "dar": "AS SYSDBA = SYS.",
+    "en": "AS SYSDBA = SYS."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Instance **arrêtée** (base fermée, ni SGA ni processus) → **STARTUP**. 2) **USER est \"SYS\"** : AS SYSDBA connecte toujours en SYS (authentification par l'OS). 3) « Instance ORACLE lancée » puis « Base de données montée » : **contrôle lu, données fermées** → **ALTER DATABASE OPEN**. 4) **ALTER PLUGGABLE DATABASE orclpdb OPEN;** puis **ALTER SESSION SET CONTAINER = orclpdb;** (vérifier avec show con_name).",
+     "dar": "STARTUP ; SYS ; MOUNT puis ALTER DATABASE OPEN ; ALTER PLUGGABLE DATABASE … OPEN + SET CONTAINER.",
+     "en": "STARTUP; SYS; MOUNT then ALTER DATABASE OPEN; open PDB + SET CONTAINER."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Instance arrêtée → STARTUP ; show user = SYS ; STARTUP MOUNT : montée non ouverte → ALTER DATABASE OPEN ; ALTER PLUGGABLE DATABASE orclpdb OPEN + ALTER SESSION SET CONTAINER = orclpdb.",
+   "dar": "STARTUP, SYS, ALTER DATABASE OPEN, SET CONTAINER.",
+   "en": "STARTUP, SYS, ALTER DATABASE OPEN, SET CONTAINER."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Répondre « HR » à show user.",
+    "dar": "Machi HR.",
+    "en": "Not HR."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Instance arrêtée / inactive",
+     "dar": "Instance arrêtée / inactive",
+     "en": "Instance arrêtée / inactive"
+    },
+    "any": [
+     "arret",
+     "inactive",
+     "shutdown"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "STARTUP",
+     "dar": "STARTUP",
+     "en": "STARTUP"
+    },
+    "any": [
+     "startup"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "show user = SYS",
+     "dar": "show user = SYS",
+     "en": "show user = SYS"
+    },
+    "any": [
+     "sys"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "MOUNT : montée, non ouverte",
+     "dar": "MOUNT : montée, non ouverte",
+     "en": "MOUNT : montée, non ouverte"
+    },
+    "any": [
+     "montee",
+     "mount"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "ALTER DATABASE OPEN",
+     "dar": "ALTER DATABASE OPEN",
+     "en": "ALTER DATABASE OPEN"
+    },
+    "any": [
+     "alter database open"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "ALTER PLUGGABLE DATABASE … OPEN",
+     "dar": "ALTER PLUGGABLE DATABASE … OPEN",
+     "en": "ALTER PLUGGABLE DATABASE … OPEN"
+    },
+    "any": [
+     "alter pluggable database"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "ALTER SESSION SET CONTAINER",
+     "dar": "ALTER SESSION SET CONTAINER",
+     "en": "ALTER SESSION SET CONTAINER"
+    },
+    "any": [
+     "set container"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-h-1",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 1 : serveur dédié ou partagé (5 pts)",
+   "dar": "Difficile — Ex. 1 : dédié wla partagé (5 pts)",
+   "en": "Hard — Ex. 1: dedicated or shared server (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Que contient la PGA en mode serveur **dédié** ? 2) Que devient l'UGA en mode serveur **partagé** et où est-elle placée ? 3) Que contient alors la PGA ? 4) Dans quel cas privilégier le mode partagé ? 5) Différence entre connexion et session (avec l'image du cours).",
+   "dar": "1) PGA f mode **dédié** ? 2) UGA f mode **partagé** fin ? 3) PGA chnou b9a ? 4) Imta partagé ? 5) Connexion vs session.",
+   "en": "1) PGA in **dedicated** mode? 2) UGA in **shared** mode? 3) Remaining PGA? 4) When shared? 5) Connection vs session."
+  },
+  "hints": [
+   {
+    "fr": "Dédié : PGA = stack + UGA ; partagé : UGA dans la SGA.",
+    "dar": "Dédié : stack + UGA ; partagé : UGA f SGA.",
+    "en": "Dedicated: stack + UGA; shared: UGA in SGA."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **Stack space** (pile) + **UGA** (User Global Area : zone de tri, infos de session, état du curseur). 2) L'**UGA** est transférée dans la **SGA**, dans la **Large Pool** si elle est configurée (sinon la Shared Pool). 3) Uniquement le **stack space**. 4) **Beaucoup d'utilisateurs** avec des sessions **peu actives** (économie de mémoire et de processus). 5) **Connexion** = lien de communication processus utilisateur ↔ serveur ; **session** = la connexion d'un utilisateur validé (login → logout). Image : la connexion est le **câble**, la session l'**appel** ; une connexion peut porter plusieurs sessions.",
+     "dar": "Stack + UGA ; UGA → Large Pool ; stack ; beaucoup d utilisateurs ; câble / appel.",
+     "en": "Stack + UGA; UGA → Large Pool; stack; many users; cable / call."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Dédié : PGA = stack + UGA ; partagé : UGA dans la SGA (Large Pool sinon Shared Pool), PGA = stack seul ; partagé pour beaucoup d'utilisateurs peu actifs ; connexion = câble, session = appel.",
+   "dar": "UGA, Large Pool, stack, connexion/session.",
+   "en": "UGA, Large Pool, stack, connection/session."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Mettre la PGA dans la SGA.",
+    "dar": "PGA ma katmchich l SGA.",
+    "en": "The PGA does not move to the SGA."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Dédié : stack space + UGA",
+     "dar": "Dédié : stack space + UGA",
+     "en": "Dédié : stack space + UGA"
+    },
+    "any": [
+     "stack && uga",
+     "pile && uga"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Partagé : UGA dans la SGA",
+     "dar": "Partagé : UGA dans la SGA",
+     "en": "Partagé : UGA dans la SGA"
+    },
+    "any": [
+     "uga && sga"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Large Pool (sinon Shared Pool)",
+     "dar": "Large Pool (sinon Shared Pool)",
+     "en": "Large Pool (sinon Shared Pool)"
+    },
+    "any": [
+     "large pool"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "PGA partagé = stack seul",
+     "dar": "PGA partagé = stack seul",
+     "en": "PGA partagé = stack seul"
+    },
+    "any": [
+     "stack",
+     "pile"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Beaucoup d'utilisateurs peu actifs",
+     "dar": "Beaucoup d'utilisateurs peu actifs",
+     "en": "Beaucoup d'utilisateurs peu actifs"
+    },
+    "any": [
+     "utilisateurs",
+     "nombreux",
+     "beaucoup"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Connexion = lien / câble ; session = utilisateur validé",
+     "dar": "Connexion = lien / câble ; session = utilisateur validé",
+     "en": "Connexion = lien / câble ; session = utilisateur validé"
+    },
+    "any": [
+     "session && connexion"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "or-h-2",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 2 : options de STARTUP (5 pts)",
+   "dar": "Difficile — Ex. 2 : options STARTUP (5 pts)",
+   "en": "Hard — Ex. 2: STARTUP options (5 pts)"
+  },
+  "statement": {
+   "fr": "Pour chaque besoin, donnez la commande et justifiez : 1) recréer les fichiers de contrôle ; 2) faire une maintenance sans que les utilisateurs normaux se connectent ; 3) la base refuse de démarrer normalement ; 4) consulter les données sans risque de modification ; 5) passer de MOUNT à OPEN.",
+   "dar": "L kol besoin commande w 3lach : 1) recréer contrôle ; 2) maintenance bla users ; 3) ma bghatch tbda ; 4) lecture seule ; 5) MOUNT → OPEN.",
+   "en": "Command and why: 1) recreate control files; 2) maintenance without normal users; 3) refuses to start; 4) read without changes; 5) MOUNT → OPEN."
+  },
+  "hints": [
+   {
+    "fr": "NOMOUNT, RESTRICT, FORCE, READ ONLY, ALTER DATABASE.",
+    "dar": "NOMOUNT, RESTRICT, FORCE, READ ONLY.",
+    "en": "NOMOUNT, RESTRICT, FORCE, READ ONLY."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **STARTUP NOMOUNT** : instance sans fichiers de contrôle (création de base / recréation du contrôle). 2) **STARTUP RESTRICT** : base ouverte mais accès réservé aux utilisateurs ayant le privilège (RESTRICTED SESSION). 3) **STARTUP FORCE** : fait un **SHUTDOWN ABORT** puis redémarre. 4) **ALTER DATABASE OPEN READ ONLY** (depuis l'état MOUNT). 5) **ALTER DATABASE OPEN**.",
+     "dar": "NOMOUNT, RESTRICT, FORCE (abort + restart), OPEN READ ONLY, ALTER DATABASE OPEN.",
+     "en": "NOMOUNT, RESTRICT, FORCE, OPEN READ ONLY, ALTER DATABASE OPEN."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "STARTUP NOMOUNT ; STARTUP RESTRICT ; STARTUP FORCE (= ABORT + démarrage) ; ALTER DATABASE OPEN READ ONLY ; ALTER DATABASE OPEN.",
+   "dar": "NOMOUNT, RESTRICT, FORCE, READ ONLY, OPEN.",
+   "en": "NOMOUNT, RESTRICT, FORCE, READ ONLY, OPEN."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que FORCE est un arrêt propre.",
+    "dar": "FORCE = ABORT.",
+    "en": "FORCE = ABORT."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "STARTUP NOMOUNT",
+     "dar": "STARTUP NOMOUNT",
+     "en": "STARTUP NOMOUNT"
+    },
+    "any": [
+     "nomount"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "STARTUP RESTRICT",
+     "dar": "STARTUP RESTRICT",
+     "en": "STARTUP RESTRICT"
+    },
+    "any": [
+     "restrict"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "STARTUP FORCE (ABORT + redémarrage)",
+     "dar": "STARTUP FORCE (ABORT + redémarrage)",
+     "en": "STARTUP FORCE (ABORT + redémarrage)"
+    },
+    "any": [
+     "force"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "OPEN READ ONLY",
+     "dar": "OPEN READ ONLY",
+     "en": "OPEN READ ONLY"
+    },
+    "any": [
+     "read only"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "ALTER DATABASE OPEN",
+     "dar": "ALTER DATABASE OPEN",
+     "en": "ALTER DATABASE OPEN"
+    },
+    "any": [
+     "alter database open"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "or-h-3",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 3 : choisir le mode d'arrêt (5 pts)",
+   "dar": "Difficile — Ex. 3 : mode d arrêt (5 pts)",
+   "en": "Hard — Ex. 3: choose the shutdown mode (5 pts)"
+  },
+  "statement": {
+   "fr": "Pour chaque situation, choisissez le mode de SHUTDOWN et justifiez : 1) fin de journée, des utilisateurs restent connectés sans rien faire ; 2) une transaction de paie importante est en cours et doit se terminer ; 3) une coupure électrique arrive dans 2 minutes ; 4) la base est bloquée et ne répond plus. 5) Après lequel de ces arrêts une restauration de l'instance aura-t-elle lieu, et par quel processus ?",
+   "dar": "L kol 7ala mode SHUTDOWN w 3lach : 1) users mconnectés bla ma ydirou walou ; 2) transaction mohimma ; 3) coupure f 2 d9ay9 ; 4) base bloquée. 5) Imta restauration w b chkoun ?",
+   "en": "Shutdown mode and why: 1) idle users remain; 2) an important transaction must finish; 3) power cut in 2 minutes; 4) the DB hangs. 5) After which one is instance recovery needed, by whom?"
+  },
+  "hints": [
+   {
+    "fr": "NORMAL attend les déconnexions ; TRANSACTIONAL la fin des transactions ; IMMEDIATE annule ; ABORT sans fermer les fichiers.",
+    "dar": "NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT.",
+    "en": "NORMAL, TRANSACTIONAL, IMMEDIATE, ABORT."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **IMMEDIATE** (NORMAL attendrait indéfiniment des utilisateurs inactifs) : les transactions en cours sont annulées, fichiers fermés proprement. 2) **TRANSACTIONAL** : plus de nouvelles connexions, chaque client est déconnecté à la fin de sa transaction. 3) **IMMEDIATE** : rapide et propre. 4) **ABORT** : l'instance s'arrête sans fermer les fichiers. 5) Seulement après **ABORT** : **restauration de l'instance** par **SMON** au démarrage suivant (rollback des transactions non validées).",
+     "dar": "IMMEDIATE, TRANSACTIONAL, IMMEDIATE, ABORT ; SMON après ABORT.",
+     "en": "IMMEDIATE, TRANSACTIONAL, IMMEDIATE, ABORT; SMON after ABORT."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "1) IMMEDIATE 2) TRANSACTIONAL 3) IMMEDIATE 4) ABORT ; restauration seulement après ABORT, par SMON.",
+   "dar": "IMMEDIATE, TRANSACTIONAL, ABORT, SMON.",
+   "en": "IMMEDIATE, TRANSACTIONAL, ABORT, SMON."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Choisir NORMAL avec des utilisateurs inactifs (attente sans fin).",
+    "dar": "NORMAL kaytsenna bla nihaya.",
+    "en": "NORMAL may wait forever."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Situation 1 : IMMEDIATE",
+     "dar": "Situation 1 : IMMEDIATE",
+     "en": "Situation 1 : IMMEDIATE"
+    },
+    "any": [
+     "immediate"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Situation 2 : TRANSACTIONAL",
+     "dar": "Situation 2 : TRANSACTIONAL",
+     "en": "Situation 2 : TRANSACTIONAL"
+    },
+    "any": [
+     "transaction"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Situation 4 : ABORT",
+     "dar": "Situation 4 : ABORT",
+     "en": "Situation 4 : ABORT"
+    },
+    "any": [
+     "abort"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "NORMAL attendrait les utilisateurs",
+     "dar": "NORMAL attendrait les utilisateurs",
+     "en": "NORMAL attendrait les utilisateurs"
+    },
+    "any": [
+     "normal && attend"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Restauration après ABORT par SMON",
+     "dar": "Restauration après ABORT par SMON",
+     "en": "Restauration après ABORT par SMON"
+    },
+    "any": [
+     "smon"
+    ],
+    "w": 1.5
+   }
+  ]
+ },
+ {
+  "id": "or-h-4",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Difficile — Ex. 4 : variables et vues dynamiques (5 pts)",
+   "dar": "Difficile — Ex. 4 : variables w vues (5 pts)",
+   "en": "Hard — Ex. 4: variables and dynamic views (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Que désignent ORACLE_BASE, ORACLE_HOME et ORACLE_SID ? Lequel contient l'autre ? 2) Quelle requête affiche le nom et l'état de l'instance ? 3) Quelle requête affiche le nom de la base et son mode d'ouverture ? 4) Comment lister les processus d'arrière-plan actifs ? 5) Comment afficher les paramètres de la mémoire (ex. sga_target) ?",
+   "dar": "1) ORACLE_BASE, ORACLE_HOME, ORACLE_SID ; chkoun fih lakhor ? 2) Instance w état. 3) Base w open_mode. 4) Processus actifs. 5) Paramètres mémoire.",
+   "en": "1) ORACLE_BASE, ORACLE_HOME, ORACLE_SID; which contains which? 2) Instance name and status. 3) Database name and open mode. 4) Active background processes. 5) Memory parameters."
+  },
+  "hints": [
+   {
+    "fr": "v$instance, v$database, v$bgprocess, show parameter.",
+    "dar": "v$instance, v$database, v$bgprocess, show parameter.",
+    "en": "v$instance, v$database, v$bgprocess, show parameter."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **ORACLE_BASE** : racine de l'arborescence Oracle ; **ORACLE_HOME** : répertoire d'installation du logiciel (binaires, sqlplus) ; **ORACLE_SID** : nom de l'instance par défaut. **ORACLE_HOME est dans ORACLE_BASE**. 2) `SELECT instance_name, status FROM v$instance;` 3) `SELECT name, open_mode FROM v$database;` 4) `SELECT name, description FROM v$bgprocess WHERE paddr <> '00';` (ou v$process). 5) `show parameter sga` (sga_target, sga_max_size).",
+     "dar": "BASE ⊃ HOME, SID ; v$instance ; v$database ; v$bgprocess ; show parameter sga.",
+     "en": "BASE ⊃ HOME, SID; v$instance; v$database; v$bgprocess; show parameter sga."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "ORACLE_HOME ⊂ ORACLE_BASE, ORACLE_SID = instance ; v$instance (instance_name, status) ; v$database (name, open_mode) ; v$bgprocess ; show parameter sga.",
+   "dar": "v$instance, v$database, v$bgprocess.",
+   "en": "v$instance, v$database, v$bgprocess."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Dire que ORACLE_BASE est dans ORACLE_HOME.",
+    "dar": "L3aks.",
+    "en": "The other way round."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "ORACLE_BASE racine, ORACLE_HOME installation",
+     "dar": "ORACLE_BASE racine, ORACLE_HOME installation",
+     "en": "ORACLE_BASE racine, ORACLE_HOME installation"
+    },
+    "any": [
+     "base && home && install"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "ORACLE_SID = nom de l'instance",
+     "dar": "ORACLE_SID = nom de l'instance",
+     "en": "ORACLE_SID = nom de l'instance"
+    },
+    "any": [
+     "sid && instance"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "ORACLE_HOME est dans ORACLE_BASE",
+     "dar": "ORACLE_HOME est dans ORACLE_BASE",
+     "en": "ORACLE_HOME est dans ORACLE_BASE"
+    },
+    "any": [
+     "home && dans && base"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "v$instance (instance_name, status)",
+     "dar": "v$instance (instance_name, status)",
+     "en": "v$instance (instance_name, status)"
+    },
+    "any": [
+     "v$instance"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "v$database (name, open_mode)",
+     "dar": "v$database (name, open_mode)",
+     "en": "v$database (name, open_mode)"
+    },
+    "any": [
+     "v$database",
+     "open_mode"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "v$bgprocess",
+     "dar": "v$bgprocess",
+     "en": "v$bgprocess"
+    },
+    "any": [
+     "v$bgprocess",
+     "v$process"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "show parameter sga",
+     "dar": "show parameter sga",
+     "en": "show parameter sga"
+    },
+    "any": [
+     "show parameter"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-xx-1",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 1 : le cycle complet d'une instance (5 pts)",
+   "dar": "Expert — Ex. 1 : cycle kamel (5 pts)",
+   "en": "Expert — Ex. 1: the full instance life cycle (5 pts)"
+  },
+  "statement": {
+   "fr": "En partant d'une instance arrêtée, écrivez la session SQL*Plus complète pour : démarrer **étape par étape** (en affichant l'état après chaque étape), ouvrir la PDB ORCLPDB et la garder ouverte au prochain redémarrage, puis arrêter proprement. Expliquez ce qui est lu/ouvert à chaque étape et les messages obtenus.",
+   "dar": "Mn instance wa9fa : STARTUP **marhala b marhala** (état f kol marhala), 7ell ORCLPDB w khalliha m7loula mor redémarrage, w arrêt propre. Chre7 chnou kayt9ra/yt7ell w messages.",
+   "en": "From a stopped instance: start **step by step** (state after each), open ORCLPDB and keep it open after restart, then stop cleanly. Explain each step and messages."
+  },
+  "hints": [
+   {
+    "fr": "STARTUP NOMOUNT → ALTER DATABASE MOUNT → ALTER DATABASE OPEN ; SAVE STATE.",
+    "dar": "NOMOUNT → MOUNT → OPEN ; SAVE STATE.",
+    "en": "NOMOUNT → MOUNT → OPEN; SAVE STATE."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Session",
+     "dar": "Session",
+     "en": "Session"
+    },
+    "body": {
+     "fr": "NOMOUNT lit le **fichier de paramètres** (SGA + processus) ; MOUNT lit les **fichiers de contrôle** ; OPEN ouvre **données + redo**. L'arrêt fait l'inverse : fermée → démontée → instance arrêtée.",
+     "dar": "Paramètres → contrôle → données + redo ; arrêt l3aks.",
+     "en": "Parameters → control → data + redo; shutdown reversed."
+    },
+    "code": "sqlplus / as sysdba\nSTARTUP NOMOUNT                 -- Instance ORACLE lancée\nSELECT status FROM v$instance;  -- STARTED\nALTER DATABASE MOUNT;           -- Base de données modifiée\nSELECT status FROM v$instance;  -- MOUNTED\nALTER DATABASE OPEN;\nSELECT status FROM v$instance;  -- OPEN\nALTER PLUGGABLE DATABASE orclpdb OPEN;\nALTER PLUGGABLE DATABASE orclpdb SAVE STATE;\nshow pdbs\nSHUTDOWN IMMEDIATE              -- fermée, démontée, instance arrêtée"
+   }
+  ],
+  "finalAnswer": {
+   "fr": "STARTUP NOMOUNT (STARTED) → ALTER DATABASE MOUNT (MOUNTED) → ALTER DATABASE OPEN (OPEN) ; ALTER PLUGGABLE DATABASE orclpdb OPEN + SAVE STATE ; SHUTDOWN IMMEDIATE (fermée, démontée, arrêtée).",
+   "dar": "NOMOUNT, MOUNT, OPEN, SAVE STATE, IMMEDIATE.",
+   "en": "NOMOUNT, MOUNT, OPEN, SAVE STATE, IMMEDIATE."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Oublier SAVE STATE : la PDB redémarre en MOUNTED.",
+    "dar": "Bla SAVE STATE, PDB katbqa MOUNTED.",
+    "en": "Without SAVE STATE the PDB stays MOUNTED."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "STARTUP NOMOUNT",
+     "dar": "STARTUP NOMOUNT",
+     "en": "STARTUP NOMOUNT"
+    },
+    "any": [
+     "startup nomount"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "ALTER DATABASE MOUNT",
+     "dar": "ALTER DATABASE MOUNT",
+     "en": "ALTER DATABASE MOUNT"
+    },
+    "any": [
+     "alter database mount"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "ALTER DATABASE OPEN",
+     "dar": "ALTER DATABASE OPEN",
+     "en": "ALTER DATABASE OPEN"
+    },
+    "any": [
+     "alter database open"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "v$instance (STARTED / MOUNTED / OPEN)",
+     "dar": "v$instance (STARTED / MOUNTED / OPEN)",
+     "en": "v$instance (STARTED / MOUNTED / OPEN)"
+    },
+    "any": [
+     "v$instance",
+     "mounted"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "ALTER PLUGGABLE DATABASE … OPEN",
+     "dar": "ALTER PLUGGABLE DATABASE … OPEN",
+     "en": "ALTER PLUGGABLE DATABASE … OPEN"
+    },
+    "any": [
+     "alter pluggable database"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "SAVE STATE",
+     "dar": "SAVE STATE",
+     "en": "SAVE STATE"
+    },
+    "any": [
+     "save state"
+    ],
+    "w": 0.75
+   },
+   {
+    "label": {
+     "fr": "SHUTDOWN IMMEDIATE (arrêt propre)",
+     "dar": "SHUTDOWN IMMEDIATE (arrêt propre)",
+     "en": "SHUTDOWN IMMEDIATE (arrêt propre)"
+    },
+    "any": [
+     "shutdown immediate",
+     "shutdown normal",
+     "shutdown transactional"
+    ],
+    "w": 0.75
+   }
+  ]
+ },
+ {
+  "id": "or-xx-2",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 2 : panne après SHUTDOWN ABORT (5 pts)",
+   "dar": "Expert — Ex. 2 : panne mor ABORT (5 pts)",
+   "en": "Expert — Ex. 2: crash after SHUTDOWN ABORT (5 pts)"
+  },
+  "statement": {
+   "fr": "La base a été arrêtée par SHUTDOWN ABORT alors qu'une transaction A était validée (COMMIT) et une transaction B non validée. 1) Dans quel état sont les fichiers ? 2) Que fait Oracle au STARTUP suivant, quel processus, avec quels fichiers ? 3) Que deviennent A et B ? 4) Pourquoi A n'est-elle pas perdue alors que ses blocs n'étaient peut-être pas encore dans les fichiers de données ?",
+   "dar": "ABORT m3a transaction A COMMIT w B la. 1) Fichiers ? 2) STARTUP jay : chnou, chkoun, ina fichiers ? 3) A w B ? 4) 3lach A ma tlfatch ?",
+   "en": "ABORT with A committed and B not. 1) Files? 2) Next STARTUP: what, who, which files? 3) A and B? 4) Why is A not lost?"
+  },
+  "hints": [
+   {
+    "fr": "Redo = rejouer ; undo = annuler.",
+    "dar": "Redo kay3awed ; undo kay-annuli.",
+    "en": "Redo replays; undo rolls back."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) Fichiers **non fermés proprement**, base **incohérente** (pas de checkpoint final). 2) **Restauration de l'instance** par **SMON** : **roll forward** avec les **fichiers redo** (rejoue les modifications), puis **rollback** des transactions non validées avec l'**undo**. 3) **A est conservée**, **B est annulée**. 4) Au **COMMIT**, **LGWR** a écrit ses entrées dans les **fichiers redo** : le redo suffit pour reconstruire ses blocs, même si DBWn ne les avait pas encore écrits.",
+     "dar": "Incohérente ; SMON redo + undo ; A gardée, B annulée ; LGWR au COMMIT.",
+     "en": "Inconsistent; SMON redo + undo; A kept, B rolled back; LGWR at COMMIT."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "Fichiers incohérents ; SMON : roll forward (redo) puis rollback (undo) ; A gardée, B annulée ; A sûre car LGWR a écrit son redo au COMMIT.",
+   "dar": "SMON, redo, undo, LGWR.",
+   "en": "SMON, redo, undo, LGWR."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que le COMMIT écrit le bloc dans le fichier de données.",
+    "dar": "COMMIT kaykteb redo.",
+    "en": "COMMIT writes redo."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "Fichiers non fermés / incohérents",
+     "dar": "Fichiers non fermés / incohérents",
+     "en": "Fichiers non fermés / incohérents"
+    },
+    "any": [
+     "incoheren",
+     "non ferme",
+     "pas ferme"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "SMON fait la restauration de l'instance",
+     "dar": "SMON fait la restauration de l'instance",
+     "en": "SMON fait la restauration de l'instance"
+    },
+    "any": [
+     "smon"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Roll forward avec les fichiers redo",
+     "dar": "Roll forward avec les fichiers redo",
+     "en": "Roll forward avec les fichiers redo"
+    },
+    "any": [
+     "redo"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Rollback avec l'undo",
+     "dar": "Rollback avec l'undo",
+     "en": "Rollback avec l'undo"
+    },
+    "any": [
+     "undo",
+     "rollback",
+     "annul"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "A conservée, B annulée",
+     "dar": "A conservée, B annulée",
+     "en": "A conservée, B annulée"
+    },
+    "any": [
+     "a && b"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "LGWR a écrit le redo au COMMIT",
+     "dar": "LGWR a écrit le redo au COMMIT",
+     "en": "LGWR a écrit le redo au COMMIT"
+    },
+    "any": [
+     "lgwr"
+    ],
+    "w": 1
+   }
+  ]
+ },
+ {
+  "id": "or-xx-3",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 3 : multitenant en profondeur (5 pts)",
+   "dar": "Expert — Ex. 3 : multitenant (5 pts)",
+   "en": "Expert — Ex. 3: multitenant in depth (5 pts)"
+  },
+  "statement": {
+   "fr": "1) Une CDB contient combien de CDB$ROOT, de PDB$SEED et de PDB ? 2) Dans une CDB, l'instance (SGA, processus) est-elle partagée entre les PDB ? Conséquence ? 3) Quelle différence entre un utilisateur commun et un utilisateur local ? 4) Quelles commandes depuis la racine pour : lister les PDB et leur mode, ouvrir toutes les PDB, revenir à la racine ? 5) Pourquoi peut-on « débrancher » une PDB ?",
+   "dar": "1) Ch7al ROOT, SEED, PDB ? 2) Instance partagée ? 3) Commun vs local. 4) Commandes. 5) 3lach débrancher ?",
+   "en": "1) How many ROOT, SEED, PDB? 2) Is the instance shared? 3) Common vs local user. 4) Commands. 5) Why unplug?"
+  },
+  "hints": [
+   {
+    "fr": "Un seul ROOT et un seul SEED ; une seule instance pour tous.",
+    "dar": "ROOT wa7ed, SEED wa7ed, instance wa7da.",
+    "en": "One ROOT, one SEED, one instance."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) **Un** CDB$ROOT, **un** PDB$SEED, **0, 1 ou plusieurs** PDB. 2) **Oui** : une **seule SGA** et **un seul jeu de processus** pour toutes les PDB → économie de ressources, administration en une fois. 3) **Commun** : créé dans la racine, existe dans **tous** les conteneurs (nom préfixé **C##**) ; **local** : n'existe que dans **une PDB**. 4) `show pdbs` (ou `SELECT name, open_mode FROM v$pdbs`), `ALTER PLUGGABLE DATABASE ALL OPEN;`, `ALTER SESSION SET CONTAINER = CDB$ROOT;`. 5) La PDB est **portable** : on la débranche d'une CDB pour la **brancher dans une autre** (migration, mise à jour).",
+     "dar": "1/1/0..n ; instance partagée ; C## vs local ; show pdbs, ALL OPEN, CDB$ROOT ; portable.",
+     "en": "1/1/0..n; shared instance; C## vs local; show pdbs, ALL OPEN, CDB$ROOT; portable."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "1 ROOT, 1 SEED, 0..n PDB ; une seule SGA + processus ; commun (C##, partout) vs local (une PDB) ; show pdbs / v$pdbs, ALTER PLUGGABLE DATABASE ALL OPEN, SET CONTAINER = CDB$ROOT ; PDB portable.",
+   "dar": "C##, ALL OPEN, CDB$ROOT.",
+   "en": "C##, ALL OPEN, CDB$ROOT."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Croire que chaque PDB a sa propre instance.",
+    "dar": "Instance wa7da.",
+    "en": "One instance."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "1 ROOT, 1 SEED, 0..n PDB",
+     "dar": "1 ROOT, 1 SEED, 0..n PDB",
+     "en": "1 ROOT, 1 SEED, 0..n PDB"
+    },
+    "any": [
+     "un && seed",
+     "1 && seed"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Une seule SGA / instance partagée",
+     "dar": "Une seule SGA / instance partagée",
+     "en": "Une seule SGA / instance partagée"
+    },
+    "any": [
+     "seule sga",
+     "partag"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Utilisateur commun C## / local",
+     "dar": "Utilisateur commun C## / local",
+     "en": "Utilisateur commun C## / local"
+    },
+    "any": [
+     "c##"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "show pdbs / v$pdbs",
+     "dar": "show pdbs / v$pdbs",
+     "en": "show pdbs / v$pdbs"
+    },
+    "any": [
+     "show pdbs",
+     "v$pdbs"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "ALTER PLUGGABLE DATABASE ALL OPEN",
+     "dar": "ALTER PLUGGABLE DATABASE ALL OPEN",
+     "en": "ALTER PLUGGABLE DATABASE ALL OPEN"
+    },
+    "any": [
+     "all open"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "SET CONTAINER = CDB$ROOT",
+     "dar": "SET CONTAINER = CDB$ROOT",
+     "en": "SET CONTAINER = CDB$ROOT"
+    },
+    "any": [
+     "cdb$root"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "PDB portable (brancher ailleurs)",
+     "dar": "PDB portable (brancher ailleurs)",
+     "en": "PDB portable (brancher ailleurs)"
+    },
+    "any": [
+     "portable",
+     "brancher",
+     "debranch"
+    ],
+    "w": 0.5
+   }
+  ]
+ },
+ {
+  "id": "or-xx-4",
+  "module": "oracle",
+  "chapter": "annale",
+  "difficulty": 3,
+  "title": {
+   "fr": "Expert — Ex. 4 : diagnostiquer la mémoire et les sessions (5 pts)",
+   "dar": "Expert — Ex. 4 : mémoire w sessions (5 pts)",
+   "en": "Expert — Ex. 4: diagnose memory and sessions (5 pts)"
+  },
+  "statement": {
+   "fr": "Les utilisateurs se plaignent de lenteurs. 1) Quelles requêtes pour voir les sessions connectées (utilisateur, machine, statut) ? 2) Comment voir la taille des composants de la SGA ? 3) Quel composant agrandir si les mêmes requêtes sont sans cesse réanalysées, et pourquoi ? 4) Quel composant si les lectures disque sont très nombreuses ? 5) Comment déconnecter une session gênante ?",
+   "dar": "Lenteurs. 1) Sessions mconnectés ? 2) Taille composants SGA ? 3) Requêtes kayt3awed analyse : ina composant ? 4) Lectures disque bzaf : ina ? 5) Déconnecter session.",
+   "en": "Slowness. 1) Connected sessions? 2) SGA component sizes? 3) Constant re-parsing: which component? 4) Many disk reads: which? 5) Kill a session."
+  },
+  "hints": [
+   {
+    "fr": "v$session, v$sgainfo ; library cache ; buffer cache ; ALTER SYSTEM KILL SESSION.",
+    "dar": "v$session, v$sgainfo, KILL SESSION.",
+    "en": "v$session, v$sgainfo, KILL SESSION."
+   }
+  ],
+  "solutionSteps": [
+   {
+    "title": {
+     "fr": "Réponses",
+     "dar": "Jawabat",
+     "en": "Answers"
+    },
+    "body": {
+     "fr": "1) `SELECT sid, serial#, username, machine, status FROM v$session WHERE username IS NOT NULL;` 2) `show sga` ou `SELECT * FROM v$sgainfo;` 3) La **Shared Pool** (**library cache**) : trop petite, les **plans d'exécution** sont évincés et les requêtes réanalysées. 4) Le **Database Buffer Cache** : plus grand, plus de **blocs** restent en mémoire, moins de lectures des fichiers de données. 5) `ALTER SYSTEM KILL SESSION 'sid,serial#';` (PMON libère ensuite ses ressources).",
+     "dar": "v$session ; v$sgainfo ; Shared Pool ; Buffer Cache ; KILL SESSION.",
+     "en": "v$session; v$sgainfo; Shared Pool; Buffer Cache; KILL SESSION."
+    }
+   }
+  ],
+  "finalAnswer": {
+   "fr": "v$session (sid, serial#, username, status) ; show sga / v$sgainfo ; agrandir la Shared Pool (library cache) contre les réanalyses, le Buffer Cache contre les lectures disque ; ALTER SYSTEM KILL SESSION 'sid,serial#' (PMON nettoie).",
+   "dar": "v$session, Shared Pool, Buffer Cache, KILL.",
+   "en": "v$session, Shared Pool, Buffer Cache, KILL."
+  },
+  "commonMistakes": [
+   {
+    "fr": "Agrandir le Redo Log Buffer pour réduire les lectures (il ne sert qu'au journal).",
+    "dar": "Redo ma 3ndo 3la9a.",
+    "en": "Redo buffer is unrelated."
+   }
+  ],
+  "rubric": [
+   {
+    "label": {
+     "fr": "v$session (sid, serial#, username, status)",
+     "dar": "v$session (sid, serial#, username, status)",
+     "en": "v$session (sid, serial#, username, status)"
+    },
+    "any": [
+     "v$session"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "show sga / v$sgainfo",
+     "dar": "show sga / v$sgainfo",
+     "en": "show sga / v$sgainfo"
+    },
+    "any": [
+     "show sga",
+     "v$sgainfo",
+     "v$sga"
+    ],
+    "w": 0.5
+   },
+   {
+    "label": {
+     "fr": "Shared Pool / library cache contre les réanalyses",
+     "dar": "Shared Pool / library cache contre les réanalyses",
+     "en": "Shared Pool / library cache contre les réanalyses"
+    },
+    "any": [
+     "shared pool",
+     "library"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "Buffer Cache contre les lectures disque",
+     "dar": "Buffer Cache contre les lectures disque",
+     "en": "Buffer Cache contre les lectures disque"
+    },
+    "any": [
+     "buffer cache"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "ALTER SYSTEM KILL SESSION",
+     "dar": "ALTER SYSTEM KILL SESSION",
+     "en": "ALTER SYSTEM KILL SESSION"
+    },
+    "any": [
+     "kill session"
+    ],
+    "w": 1
+   },
+   {
+    "label": {
+     "fr": "PMON libère les ressources",
+     "dar": "PMON libère les ressources",
+     "en": "PMON libère les ressources"
+    },
+    "any": [
+     "pmon"
+    ],
+    "w": 0.5
+   }
+  ]
  }
 ]

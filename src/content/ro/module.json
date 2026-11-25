@@ -85,6 +85,134 @@
      "points": 6
     }
    ]
+  },
+  {
+   "id": "blanc-facile",
+   "title": {
+    "fr": "Examen blanc RO — Niveau 1 · Facile",
+    "dar": "Examen blanc RO — Niveau 1 · Sahel",
+    "en": "OR mock test — Level 1 · Easy"
+   },
+   "minutes": 45,
+   "intro": {
+    "fr": "4 exercices de 5 points : vocabulaire, matrice d'adjacence, chaîne eulérienne, formule de Cayley. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts : vocabulaire, matrice, Euler, Cayley. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts: vocabulary, matrix, Euler, Cayley. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-e-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-e-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-e-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-e-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-moyen",
+   "title": {
+    "fr": "Examen blanc RO — Niveau 2 · Moyen (type CC)",
+    "dar": "Examen blanc RO — Niveau 2 · Moyen (b7al CC)",
+    "en": "OR mock test — Level 2 · Medium"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "4 exercices de 5 points, type CC : Kruskal, Dijkstra, puissances de matrice, coloration. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts b7al CC : Kruskal, Dijkstra, M³, coloration. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts like the test: Kruskal, Dijkstra, matrix powers, colouring. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-m-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-m-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-m-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-m-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-difficile",
+   "title": {
+    "fr": "Examen blanc RO — Niveau 3 · Difficile",
+    "dar": "Examen blanc RO — Niveau 3 · S3ib",
+    "en": "OR mock test — Level 3 · Hard"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "4 exercices de 5 points : Prim, Dijkstra orienté, Welsh-Powell, graphe orienté et forte connexité. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts : Prim, Dijkstra orienté, Welsh-Powell, forte connexité. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts: Prim, directed Dijkstra, Welsh-Powell, strong connectivity. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-h-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-h-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-h-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-h-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-expert",
+   "title": {
+    "fr": "Examen blanc RO — Niveau 4 · Expert",
+    "dar": "Examen blanc RO — Niveau 4 · Expert",
+    "en": "OR mock test — Level 4 · Expert"
+   },
+   "minutes": 120,
+   "intro": {
+    "fr": "4 exercices de 5 points pour viser 20/20 : ACM non unique, Dijkstra avec horaires, postier chinois, triangles par la trace. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts l 20/20 : ACM, Dijkstra horaires, postier chinois, trace. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts for 20/20: non-unique MST, timed Dijkstra, Chinese postman, triangles via trace. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "ro-x-e1",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-x-e2",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-x-e3",
+     "points": 5
+    },
+    {
+     "exerciseId": "ro-x-e4",
+     "points": 5
+    }
+   ]
   }
  ],
  "weights": {

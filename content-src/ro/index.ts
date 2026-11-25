@@ -1,4 +1,5 @@
 import { COURSE } from './course';
+import { exercises as roExams } from './exams';
 import { setCtx, L, h, p, code, tip, trap, exam, quiz, single, multi, num, ex, fc, ref, type T } from '../lib';
 import type { Module, Chapter, Question, Exercise, Flashcard, RefEntry } from '../../src/lib/schema';
 
@@ -280,6 +281,34 @@ export const module: Module = {
       minutes: 90,
       intro: L(['3 exercices : graphe et matrice (M³), arbre couvrant minimal (5 villes), Dijkstra sur un graphe orienté. Rapporter les tableaux.', '3 exercices : graphe w M³, ACM, Dijkstra orienté. Ktb tableaux.', '3 exercises: graph and M³, MST (5 cities), Dijkstra on a directed graph. Show the tables.']),
       parts: [{ exerciseId: 'ro-x-6', points: 8 }, { exerciseId: 'ro-x-7', points: 6 }, { exerciseId: 'ro-x-8', points: 6 }]
+    },
+    {
+      id: 'blanc-facile',
+      title: L(['Examen blanc RO — Niveau 1 · Facile', 'Examen blanc RO — Niveau 1 · Sahel', 'OR mock test — Level 1 · Easy']),
+      minutes: 45,
+      intro: L(['4 exercices de 5 points : vocabulaire, matrice d\'adjacence, chaîne eulérienne, formule de Cayley. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts : vocabulaire, matrice, Euler, Cayley. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts: vocabulary, matrix, Euler, Cayley. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'ro-e-1', points: 5 }, { exerciseId: 'ro-e-2', points: 5 }, { exerciseId: 'ro-e-3', points: 5 }, { exerciseId: 'ro-e-4', points: 5 }]
+    },
+    {
+      id: 'blanc-moyen',
+      title: L(['Examen blanc RO — Niveau 2 · Moyen (type CC)', 'Examen blanc RO — Niveau 2 · Moyen (b7al CC)', 'OR mock test — Level 2 · Medium']),
+      minutes: 90,
+      intro: L(['4 exercices de 5 points, type CC : Kruskal, Dijkstra, puissances de matrice, coloration. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts b7al CC : Kruskal, Dijkstra, M³, coloration. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts like the test: Kruskal, Dijkstra, matrix powers, colouring. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'ro-m-1', points: 5 }, { exerciseId: 'ro-m-2', points: 5 }, { exerciseId: 'ro-m-3', points: 5 }, { exerciseId: 'ro-m-4', points: 5 }]
+    },
+    {
+      id: 'blanc-difficile',
+      title: L(['Examen blanc RO — Niveau 3 · Difficile', 'Examen blanc RO — Niveau 3 · S3ib', 'OR mock test — Level 3 · Hard']),
+      minutes: 90,
+      intro: L(['4 exercices de 5 points : Prim, Dijkstra orienté, Welsh-Powell, graphe orienté et forte connexité. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts : Prim, Dijkstra orienté, Welsh-Powell, forte connexité. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts: Prim, directed Dijkstra, Welsh-Powell, strong connectivity. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'ro-h-1', points: 5 }, { exerciseId: 'ro-h-2', points: 5 }, { exerciseId: 'ro-h-3', points: 5 }, { exerciseId: 'ro-h-4', points: 5 }]
+    },
+    {
+      id: 'blanc-expert',
+      title: L(['Examen blanc RO — Niveau 4 · Expert', 'Examen blanc RO — Niveau 4 · Expert', 'OR mock test — Level 4 · Expert']),
+      minutes: 120,
+      intro: L(['4 exercices de 5 points pour viser 20/20 : ACM non unique, Dijkstra avec horaires, postier chinois, triangles par la trace. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts l 20/20 : ACM, Dijkstra horaires, postier chinois, trace. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts for 20/20: non-unique MST, timed Dijkstra, Chinese postman, triangles via trace. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'ro-x-e1', points: 5 }, { exerciseId: 'ro-x-e2', points: 5 }, { exerciseId: 'ro-x-e3', points: 5 }, { exerciseId: 'ro-x-e4', points: 5 }]
     }
   ],
   weights: { defs: 4, matrices: 4, arbres: 3, dijkstra: 3, euler: 2, particuliers: 1, annale: 2 }
@@ -288,7 +317,7 @@ export const module: Module = {
 // chapter texts come from course.ts (rewritten from the Drive); ids, order, questions and exercises stay here
 export const chapters = [c1, c2, c3, c4, c5, c6, c7].map((c) => ({ ...c, ...COURSE[c.id] }));
 export const questions = Q;
-export const exercises = E;
+export const exercises = [...E, ...roExams];
 export const flashcards = F;
 export const reference = R;
 export const missions = [];

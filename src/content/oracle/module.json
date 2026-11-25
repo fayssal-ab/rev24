@@ -103,6 +103,134 @@
      "points": 6
     }
    ]
+  },
+  {
+   "id": "blanc-facile",
+   "title": {
+    "fr": "Examen blanc Oracle — Niveau 1 · Facile",
+    "dar": "Examen blanc Oracle — Niveau 1 · Sahel",
+    "en": "Oracle mock test — Level 1 · Easy"
+   },
+   "minutes": 45,
+   "intro": {
+    "fr": "4 exercices de 5 points : SGBDR et DBA, instance et base, STARTUP / SHUTDOWN, CDB et PDB. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts : SGBDR, instance, STARTUP/SHUTDOWN, CDB/PDB. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts: RDBMS, instance, startup/shutdown, CDB/PDB. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "or-e-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-e-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-e-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-e-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-moyen",
+   "title": {
+    "fr": "Examen blanc Oracle — Niveau 2 · Moyen (type CC)",
+    "dar": "Examen blanc Oracle — Niveau 2 · Moyen (b7al CC)",
+    "en": "Oracle mock test — Level 2 · Medium"
+   },
+   "minutes": 60,
+   "intro": {
+    "fr": "4 exercices de 5 points, type CC : SGA, processus d'arrière-plan, exécution d'un UPDATE, SQL*Plus. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts b7al CC : SGA, processus, UPDATE, SQL*Plus. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts like the test: SGA, processes, UPDATE, SQL*Plus. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "or-m-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-m-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-m-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-m-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-difficile",
+   "title": {
+    "fr": "Examen blanc Oracle — Niveau 3 · Difficile",
+    "dar": "Examen blanc Oracle — Niveau 3 · S3ib",
+    "en": "Oracle mock test — Level 3 · Hard"
+   },
+   "minutes": 75,
+   "intro": {
+    "fr": "4 exercices de 5 points : serveur dédié / partagé, options de STARTUP, choix du SHUTDOWN, vues dynamiques. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts : dédié/partagé, STARTUP, SHUTDOWN, vues v$. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts: dedicated/shared, STARTUP options, shutdown, v$ views. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "or-h-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-h-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-h-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-h-4",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "id": "blanc-expert",
+   "title": {
+    "fr": "Examen blanc Oracle — Niveau 4 · Expert",
+    "dar": "Examen blanc Oracle — Niveau 4 · Expert",
+    "en": "Oracle mock test — Level 4 · Expert"
+   },
+   "minutes": 90,
+   "intro": {
+    "fr": "4 exercices de 5 points pour viser 20/20 : cycle complet d'une instance, panne après ABORT, multitenant, diagnostic mémoire. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.",
+    "dar": "4 × 5 pts l 20/20 : cycle, ABORT, multitenant, diagnostic. Kteb jawab ta7t kol exercice ; correction automatique.",
+    "en": "4 × 5 pts for 20/20: life cycle, crash recovery, multitenant, memory diagnosis. Automatic marking at the end."
+   },
+   "parts": [
+    {
+     "exerciseId": "or-xx-1",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-xx-2",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-xx-3",
+     "points": 5
+    },
+    {
+     "exerciseId": "or-xx-4",
+     "points": 5
+    }
+   ]
   }
  ],
  "weights": {

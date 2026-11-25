@@ -1,6 +1,7 @@
 import { c1, c2, c3 } from './course';
 import { c4, annaleQuestions, annaleExercises, annaleFlashcards } from './annale';
 import { setCtx, L, single, multi, cmd, order, ex, fc, ref } from '../lib';
+import { exercises as oraExams } from './exams';
 import type { Module } from '../../src/lib/schema';
 
 // ================= Chap 2 — Architecture =================
@@ -168,6 +169,34 @@ export const module: Module = {
       minutes: 60,
       intro: L(['20 questions, 1 point chacune, documents interdits. Réponses courtes : définition + exemple, et le message SQL*Plus pour les commandes.', '20 so2al, kol wa7ed 1 point. Jawab 9sir : ta3rif + mithal.', '20 questions, 1 point each. Short answers: definition + example.']),
       parts: [{ exerciseId: 'or-x-6', points: 7 }, { exerciseId: 'or-x-7', points: 7 }, { exerciseId: 'or-x-8', points: 6 }]
+    },
+    {
+      id: 'blanc-facile',
+      title: L(['Examen blanc Oracle — Niveau 1 · Facile', 'Examen blanc Oracle — Niveau 1 · Sahel', 'Oracle mock test — Level 1 · Easy']),
+      minutes: 45,
+      intro: L(['4 exercices de 5 points : SGBDR et DBA, instance et base, STARTUP / SHUTDOWN, CDB et PDB. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts : SGBDR, instance, STARTUP/SHUTDOWN, CDB/PDB. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts: RDBMS, instance, startup/shutdown, CDB/PDB. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'or-e-1', points: 5 }, { exerciseId: 'or-e-2', points: 5 }, { exerciseId: 'or-e-3', points: 5 }, { exerciseId: 'or-e-4', points: 5 }]
+    },
+    {
+      id: 'blanc-moyen',
+      title: L(['Examen blanc Oracle — Niveau 2 · Moyen (type CC)', 'Examen blanc Oracle — Niveau 2 · Moyen (b7al CC)', 'Oracle mock test — Level 2 · Medium']),
+      minutes: 60,
+      intro: L(['4 exercices de 5 points, type CC : SGA, processus d\'arrière-plan, exécution d\'un UPDATE, SQL*Plus. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts b7al CC : SGA, processus, UPDATE, SQL*Plus. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts like the test: SGA, processes, UPDATE, SQL*Plus. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'or-m-1', points: 5 }, { exerciseId: 'or-m-2', points: 5 }, { exerciseId: 'or-m-3', points: 5 }, { exerciseId: 'or-m-4', points: 5 }]
+    },
+    {
+      id: 'blanc-difficile',
+      title: L(['Examen blanc Oracle — Niveau 3 · Difficile', 'Examen blanc Oracle — Niveau 3 · S3ib', 'Oracle mock test — Level 3 · Hard']),
+      minutes: 75,
+      intro: L(['4 exercices de 5 points : serveur dédié / partagé, options de STARTUP, choix du SHUTDOWN, vues dynamiques. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts : dédié/partagé, STARTUP, SHUTDOWN, vues v$. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts: dedicated/shared, STARTUP options, shutdown, v$ views. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'or-h-1', points: 5 }, { exerciseId: 'or-h-2', points: 5 }, { exerciseId: 'or-h-3', points: 5 }, { exerciseId: 'or-h-4', points: 5 }]
+    },
+    {
+      id: 'blanc-expert',
+      title: L(['Examen blanc Oracle — Niveau 4 · Expert', 'Examen blanc Oracle — Niveau 4 · Expert', 'Oracle mock test — Level 4 · Expert']),
+      minutes: 90,
+      intro: L(['4 exercices de 5 points pour viser 20/20 : cycle complet d\'une instance, panne après ABORT, multitenant, diagnostic mémoire. Écris ta réponse sous chaque exercice ; la correction est automatique à la fin.', '4 × 5 pts l 20/20 : cycle, ABORT, multitenant, diagnostic. Kteb jawab ta7t kol exercice ; correction automatique.', '4 × 5 pts for 20/20: life cycle, crash recovery, multitenant, memory diagnosis. Automatic marking at the end.']),
+      parts: [{ exerciseId: 'or-xx-1', points: 5 }, { exerciseId: 'or-xx-2', points: 5 }, { exerciseId: 'or-xx-3', points: 5 }, { exerciseId: 'or-xx-4', points: 5 }]
     }
   ],
   weights: { instance: 5, architecture: 4, tp1: 3, annale: 3 }
@@ -175,7 +204,7 @@ export const module: Module = {
 
 export const chapters = [c1, c2, c3, c4];
 export const questions = [...qa, ...qi, ...annaleQuestions];
-export const exercises = [...exs, ...annaleExercises];
+export const exercises = [...exs, ...annaleExercises, ...oraExams];
 export const flashcards = [...archFc, ...instFc, ...annaleFlashcards];
 export const reference = [
   ref('r-or-1', 'SHOW PDBS · SHOW CON_NAME · SHOW SGA · SHOW PARAMETER x', ['Commandes SQL*Plus', 'SQL*Plus', 'SQL*Plus commands']),

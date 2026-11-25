@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
   status VARCHAR(10) NOT NULL DEFAULT 'pending', -- 'pending' (en attente) | 'approved' | 'blocked'
   session_id CHAR(36) NULL,                      -- session partagée par les appareils du compte (remise à zéro par l'admin)
   last_seen DATETIME(3) NULL,                    -- dernière activité (mise à jour toutes les ~45 s quand l'onglet est ouvert)
-  online_since DATETIME(3) NULL,                 -- début de la visite en cours (pour « en ligne depuis »)
+  online_since DATETIME(3) NULL,
+  last_device VARCHAR(80) NULL,                  -- appareil de la dernière activité : "mobile|Android|Chrome"                 -- début de la visite en cours (pour « en ligne depuis »)
   avatar MEDIUMTEXT NULL,                        -- photo de profil (data URL JPEG/PNG/WebP, redimensionnée dans le navigateur)
   avatar_at DATETIME(3) NULL,                    -- version de la photo (URL mise en cache)
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

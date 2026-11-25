@@ -32,6 +32,8 @@ interface AdminUser {
   seenAgo: number | null;
   /** seconds since the current visit started, only when online */
   onlineFor: number | null;
+  /** device of the last activity */
+  device: { type: string; os: string; browser: string } | null;
   createdAt: string;
 }
 
@@ -319,8 +321,17 @@ function UsersTab({ onPending }: { onPending: (n: number) => void }) {
                   <span className={`rounded border px-1.5 text-[10px] font-bold uppercase ${STATUS[u.status].cls}`}>{STATUS[u.status].label}</span>
                   {u.online && (u.onlineFor ?? Infinity) < NEW_S && <span className="rounded bg-ok px-1.5 text-[10px] font-bold uppercase text-white">Vient d'arriver</span>}
                 </div>
-                <div className={`text-xs font-medium ${presence(u).cls}`} data-testid="admin-presence">
-                  {presence(u).text}
+                <div className="flex flex-wrap items-center gap-x-2 text-xs">
+                  <span className={`font-medium ${presence(u).cls}`} data-testid="admin-presence">
+                    {presence(u).text}
+                  </span>
+                  {u.device && (
+                    <span className="inline-flex items-center gap-1 rounded-md bg-surface2 px-1.5 py-0.5 text-[11px] text-muted" title="Appareil de la dernière activité" data-testid="admin-device">
+                      <Icon name={u.device.type === 'mobile' ? 'phone' : u.device.type === 'tablet' ? 'tablet' : 'monitor'} size={12} />
+                      {u.device.type === 'mobile' ? 'Téléphone' : u.device.type === 'tablet' ? 'Tablette' : 'Ordinateur'}
+                      {(u.device.os || u.device.browser) && ` · ${[u.device.os, u.device.browser].filter(Boolean).join(' · ')}`}
+                    </span>
+                  )}
                 </div>
                 <div className="truncate text-xs text-muted">
                   {u.email} · {u.groupe} · inscrit le {fmt(u.createdAt)}

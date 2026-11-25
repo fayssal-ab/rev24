@@ -122,6 +122,8 @@ function migrate(): Promise<void> {
     if (!have.has('session_id')) await p.query(`ALTER TABLE users ADD COLUMN session_id CHAR(36) NULL`);
     if (!have.has('last_seen')) await p.query(`ALTER TABLE users ADD COLUMN last_seen DATETIME(3) NULL`);
     if (!have.has('online_since')) await p.query(`ALTER TABLE users ADD COLUMN online_since DATETIME(3) NULL`);
+    // device of the last activity ("mobile|Android|Chrome"), shown to the admin
+    if (!have.has('last_device')) await p.query(`ALTER TABLE users ADD COLUMN last_device VARCHAR(80) NULL`);
     // profile picture: small JPEG/PNG/WebP data URL (resized in the browser), served by GET /api/users/:id/avatar
     if (!have.has('avatar')) await p.query(`ALTER TABLE users ADD COLUMN avatar MEDIUMTEXT NULL`);
     if (!have.has('avatar_at')) await p.query(`ALTER TABLE users ADD COLUMN avatar_at DATETIME(3) NULL`);
@@ -231,7 +233,7 @@ async function issueCookie(userId: string, req: Request) {
   const [rows] = await db().query<UserRow[]>('SELECT session_id FROM users WHERE id = ? LIMIT 1', [userId]);
   const sid = rows[0]?.session_id ?? randomUUID();
   await db().query('UPDATE users SET session_id = ? WHERE id = ?', [sid, userId]);
-  await touch(userId, true);
+  await touch(userId, req, true);
   const token = await new SignJWT({ sid }).setProtectedHeader({ alg: 'HS256' }).setSubject(userId).setIssuedAt().setExpirationTime(`${SESSION_DAYS}d`).sign(secret());
   const secure = new URL(req.url).protocol === 'https:' ? '; Secure' : '';
   return `${COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${secure}`;
@@ -255,7 +257,7 @@ async function currentUser(req: Request): Promise<UserRow> {
   const u = await findUser('id', sub);
   if (!u) throw new HttpError(401, 'not_authenticated');
   if (!u.session_id || u.session_id !== sid) throw new HttpError(401, 'session_replaced');
-  await touch(u.id);
+  await touch(u.id, req);
   return u;
 }
 
@@ -267,15 +269,24 @@ async function currentUser(req: Request): Promise<UserRow> {
  */
 const ONLINE_S = 120;
 const VISIT_GAP_S = 180;
-async function touch(id: string, force = false) {
+async function touch(id: string, req: Request, force = false) {
   // online_since is assigned first: MySQL evaluates SET left to right, so it still sees the previous last_seen
   await db().query(
     `UPDATE users
         SET online_since = IF(last_seen IS NULL OR online_since IS NULL OR last_seen < NOW(3) - INTERVAL ${VISIT_GAP_S} SECOND, NOW(3), online_since),
-            last_seen = NOW(3)
+            last_seen = NOW(3),
+            last_device = ?
       WHERE id = ? AND (? OR last_seen IS NULL OR last_seen < NOW(3) - INTERVAL 45 SECOND)`,
-    [id, force]
+    [deviceOf(req.headers.get('user-agent') ?? ''), id, force]
   );
+}
+
+/** "mobile|Android|Chrome" from the User-Agent: type (mobile / tablet / desktop), system, browser. */
+function deviceOf(ua: string) {
+  const type = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua) ? 'tablet' : /Mobi|iPhone|iPod|Android/i.test(ua) ? 'mobile' : 'desktop';
+  const os = /iPhone|iPad|iPod/.test(ua) ? 'iOS' : /Android/.test(ua) ? 'Android' : /CrOS/.test(ua) ? 'ChromeOS' : /Windows/.test(ua) ? 'Windows' : /Mac OS X|Macintosh/.test(ua) ? 'macOS' : /Linux/.test(ua) ? 'Linux' : '';
+  const browser = /Edg\//.test(ua) ? 'Edge' : /OPR\/|Opera/.test(ua) ? 'Opera' : /SamsungBrowser/.test(ua) ? 'Samsung' : /Firefox|FxiOS/.test(ua) ? 'Firefox' : /CriOS|Chrome/.test(ua) ? 'Chrome' : /Safari/.test(ua) ? 'Safari' : '';
+  return `${type}|${os}|${browser}`;
 }
 
 async function body(req: Request): Promise<Record<string, unknown>> {
@@ -340,6 +351,7 @@ type UserRow = RowDataPacket & {
   created_at: Date;
   /** admin listing only (computed by MySQL) */
   seen_ago?: number | null;
+  last_device?: string | null;
   online_for?: number | null;
 };
 type Role = 'admin' | 'user';
@@ -384,7 +396,8 @@ const avatarUrl = (u: { id: string; avatar_at: Date | null }) => (u.avatar_at ? 
 const adminUser = (u: UserRow) => {
   const seenAgo = u.seen_ago == null ? null : Number(u.seen_ago);
   const online = !!u.session_id && seenAgo !== null && seenAgo < ONLINE_S;
-  return { ...publicUser(u), online, lastSeen: u.last_seen, seenAgo, onlineFor: online && u.online_for != null ? Number(u.online_for) : null };
+  const [type = '', os = '', browser = ''] = (u.last_device ?? '').split('|');
+  return { ...publicUser(u), online, lastSeen: u.last_seen, seenAgo, onlineFor: online && u.online_for != null ? Number(u.online_for) : null, device: type ? { type, os, browser } : null };
 };
 
 /** Hash compared against when the e-mail is unknown, so the response time does not reveal which e-mails exist. */
@@ -855,7 +868,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
   // ----- users
   if (method === 'GET' && path === '/users') {
     const [rows] = await p.query<UserRow[]>(
-      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, profile_private, created_at,
+      `SELECT id, email, password_hash, display_name, groupe, role, status, session_id, last_seen, avatar_at, profile_private, last_device, created_at,
               TIMESTAMPDIFF(SECOND, last_seen, NOW(3)) AS seen_ago,
               TIMESTAMPDIFF(SECOND, online_since, NOW(3)) AS online_for
          FROM users ORDER BY (status = 'pending') DESC, created_at DESC`

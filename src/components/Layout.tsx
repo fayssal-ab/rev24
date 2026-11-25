@@ -21,6 +21,7 @@ import { useChat, useChatEnabled } from '../lib/chatStore';
 const ChatDock = lazy(() => import('./ChatPanel').then((m) => ({ default: m.ChatDock })));
 import { NotificationBell } from './NotificationBell';
 import { scrollToTop, startSmoothScroll } from '../lib/smoothScroll';
+import { buildLabel, hardReset } from '../lib/appUpdate';
 import { ConfirmHost } from './Confirm';
 import { PushPrompt } from './PushPrompt';
 import { Toaster } from 'sonner';
@@ -530,6 +531,15 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                   <Icon name="external" size={17} /> {t('auth.signout')}
                 </button>
               )}
+              {/* version on this device + manual repair when an update does not show up */}
+              <div className="flex items-center justify-between gap-2 px-1 text-[11px] text-muted" data-testid="app-version">
+                <span>
+                  {t('app.version')} {buildLabel()}
+                </span>
+                <button className="font-semibold text-accent hover:underline" onClick={() => void hardReset()}>
+                  {t('app.update')}
+                </button>
+              </div>
             </div>
           </motion.aside>
         </>
@@ -601,7 +611,15 @@ function Footer() {
       <div className="border-t border-line">
         <div className="mx-auto flex max-w-[1760px] flex-wrap justify-between gap-2 px-4 py-4 text-xs text-muted sm:px-6 xl:px-10">
           <span>GROUP22 · 4IIR · EMSI Rabat · 2026/2027</span>
-          <span>{t('footer.sources')}</span>
+          <span className="flex flex-wrap items-center gap-x-3">
+            <span>{t('footer.sources')}</span>
+            <span>
+              {t('app.version')} {buildLabel()} ·{' '}
+              <button className="font-semibold text-accent hover:underline" onClick={() => void hardReset()}>
+                {t('app.update')}
+              </button>
+            </span>
+          </span>
         </div>
       </div>
     </footer>

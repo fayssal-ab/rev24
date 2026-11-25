@@ -12,6 +12,7 @@ import { App } from './App';
 import { useStore } from './store/store';
 import { reloadOnce, RootErrorBoundary } from './components/RouteErrorBoundary';
 import { initAuth } from './auth/auth';
+import { hardReset } from './lib/appUpdate';
 
 // a lazily-loaded page from an older build is missing on the server → reload to get the fresh files
 window.addEventListener('vite:preloadError', (e) => {
@@ -19,6 +20,12 @@ window.addEventListener('vite:preloadError', (e) => {
   reloadOnce();
 });
 
+// after a repair the address carries ?v=…: remove it
+if (new URLSearchParams(window.location.search).has('v')) {
+  const u = new URL(window.location.href);
+  u.searchParams.delete('v');
+  window.history.replaceState(null, '', u.pathname + u.search + u.hash);
+}
 // old links (group22.dev/#/m/data) keep working: move the route out of the hash before the router starts
 if (window.location.hash.startsWith('#/')) window.history.replaceState(null, '', window.location.hash.slice(1) || '/');
 
@@ -64,15 +71,16 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
         }
       })
     )
-    .catch(() => undefined);
+    .catch(() => watchVersion());
 }
+if (!('serviceWorker' in navigator) && import.meta.env.PROD) watchVersion();
 
 
 /**
  * Second safety net, independent of the browser's service-worker checks: /version.json (never cached) holds the id of
  * the build that is online. When it differs from the running one, update the service worker and reload once.
  */
-function watchVersion(reg: ServiceWorkerRegistration) {
+function watchVersion(reg?: ServiceWorkerRegistration) {
   let busy = false;
   const check = async () => {
     if (busy || !navigator.onLine || document.visibilityState !== 'visible') return;
@@ -82,10 +90,16 @@ function watchVersion(reg: ServiceWorkerRegistration) {
       const online = r.ok ? ((await r.json()) as { build?: string }).build : undefined;
       if (online && online !== __BUILD_ID__) {
         const key = 'g22-version-reload';
-        // never loop: at most one forced reload per online build
-        if (sessionStorage.getItem(key) === online) return;
+        if (sessionStorage.getItem(key) === online) {
+          // a normal reload did not bring the new version (stuck service worker / caches): repair once per build
+          if (localStorage.getItem('g22-hard-reset') !== online) {
+            localStorage.setItem('g22-hard-reset', online);
+            await hardReset();
+          }
+          return;
+        }
         sessionStorage.setItem(key, online);
-        await reg.update().catch(() => undefined);
+        await reg?.update().catch(() => undefined);
         // give the new service worker a moment to take over, then load the new version
         await new Promise((ok) => setTimeout(ok, 1500));
         window.location.reload();

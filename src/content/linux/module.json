@@ -14,17 +14,50 @@
  "icon": "terminal",
  "theme": "terminal",
  "chapters": [
-  "intro",
   "install-fhs",
-  "tp1",
   "demarrage",
   "grub",
   "systemd",
-  "paquets",
-  "users",
   "cc-blanc"
  ],
- "upcoming": [],
+ "upcoming": [
+  {
+   "id": "intro",
+   "order": 1,
+   "title": {
+    "fr": "Chap 1 — Introduction — verrouillé (hors CC)",
+    "dar": "Fasl 1 — Mo9addima — msdoud (barra CC)",
+    "en": "Ch. 1 — Introduction — locked (not in the test)"
+   }
+  },
+  {
+   "id": "tp1",
+   "order": 2,
+   "title": {
+    "fr": "TP1 — Prise en main du shell — verrouillé (hors CC)",
+    "dar": "TP1 — Shell — msdoud (barra CC)",
+    "en": "TP1 — Shell basics — locked (not in the test)"
+   }
+  },
+  {
+   "id": "paquets",
+   "order": 5,
+   "title": {
+    "fr": "TP4 — Paquetages (rpm, dnf) — verrouillé (hors CC)",
+    "dar": "TP4 — Paquets — msdoud (barra CC)",
+    "en": "TP4 — Packages — locked (not in the test)"
+   }
+  },
+  {
+   "id": "users",
+   "order": 6,
+   "title": {
+    "fr": "Chap 4 + TP5 — Utilisateurs, groupes et droits — verrouillé (hors CC)",
+    "dar": "Fasl 4 + TP5 — Users w droits — msdoud (barra CC)",
+    "en": "Ch. 4 + TP5 — Users and permissions — locked (not in the test)"
+   }
+  }
+ ],
  "annales": [
   {
    "id": "cc-facile",
@@ -164,10 +197,6 @@
   "install-fhs": 5,
   "grub": 5,
   "systemd": 5,
-  "tp1": 3,
-  "cc-blanc": 2,
-  "intro": 1,
-  "users": 1,
-  "paquets": 1
+  "cc-blanc": 3
  }
 }

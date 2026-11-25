@@ -14,7 +14,7 @@ const errors: string[] = [];
 const err = (m: string) => errors.push(m);
 
 const MIN: Record<string, { questions: number; command?: number; numeric?: number; hard: number; exercises: number; missions?: number }> = {
-  linux: { questions: 120, command: 30, hard: 30, exercises: 25, missions: 10 },
+  linux: { questions: 60, command: 15, hard: 10, exercises: 25, missions: 5 },
   data: { questions: 80, numeric: 20, hard: 20, exercises: 20 }
 };
 
@@ -94,7 +94,7 @@ for (const id of moduleDirs()) {
       const have = count[k as keyof typeof count];
       if (have < v) err(`${id}: ${k} = ${have} < minimum ${v}`);
     }
-  if (id === 'linux') {
+  if (id === 'linux' && c.chapters.some((ch) => ch.id === 'users')) {
     const covered = new Set([...c.missions.flatMap((x) => x.tp5), ...c.exercises.flatMap((e) => ((e as unknown as { tp5?: number[] }).tp5 ?? []))]);
     const tp5ex = c.exercises.filter((e) => /tp5/i.test(e.id));
     for (const e of tp5ex) for (const n of (e.id.match(/q(\d+)/g) ?? []).map((s) => +s.slice(1))) covered.add(n);

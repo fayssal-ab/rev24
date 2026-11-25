@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -16,7 +16,9 @@ import { authEnabled, signOut, useAuth, useCanSeeOral, useIsAdmin } from '../aut
 import { DocumentPreview } from './ui';
 import { GlobalSearch, useSearch } from './GlobalSearch';
 import { Avatar } from './Avatar';
-import { ChatDock, useChat, useChatEnabled } from './ChatPanel';
+import { useChat, useChatEnabled } from '../lib/chatStore';
+// the chat (and its libraries) is downloaded only for signed-in members, after the page itself
+const ChatDock = lazy(() => import('./ChatPanel').then((m) => ({ default: m.ChatDock })));
 import { NotificationBell } from './NotificationBell';
 
 
@@ -613,7 +615,7 @@ export function Layout({ children }: { children: ReactNode }) {
     window.scrollTo(0, 0);
   }, [pathname]);
   return (
-    <div className={`flex min-h-[100dvh] flex-col ${chatOpen ? 'xl:pr-[22rem]' : ''}`}>
+    <div className={`flex min-h-[100dvh] flex-col ${chatOpen ? 'xl:pr-[24rem]' : ''}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-accent focus:px-3 focus:py-2 focus:text-white">
         {t('a11y.skip')}
       </a>
@@ -628,7 +630,11 @@ export function Layout({ children }: { children: ReactNode }) {
           <BadgeToast />
           <DocumentPreview />
           <GlobalSearch />
-          <ChatDock />
+          {chatEnabled && (
+            <Suspense fallback={null}>
+              <ChatDock />
+            </Suspense>
+          )}
         </>
       )}
     </div>

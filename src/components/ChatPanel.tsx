@@ -7,10 +7,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { create } from 'zustand';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { StickToBottom, useStickToBottomContext } from 'use-stick-to-bottom';
-import { api, authEnabled, useApproved, useAuth, useIsAdmin } from '../auth/auth';
+import TextareaAutosize from 'react-textarea-autosize';
+import { api, useAuth, useIsAdmin } from '../auth/auth';
+import { useChat, useChatEnabled } from '../lib/chatStore';
 import { useT, useL } from '../hooks/useT';
 import { MODULES } from '../lib/content';
 import { useAllModules } from '../hooks/useModule';
@@ -37,34 +38,15 @@ interface Member {
   avatar: string | null;
 }
 
-const OPEN_KEY = 'g22-chat-open';
 const SEEN_KEY = 'g22-chat-seen';
 const KEEP = 20;
-/** stored form of a mention: @[Name](user id) */
-const MENTION = /@\[([^\]\n]{1,60})\]\(([0-9a-f-]{36})\)/g;
+/** stored form of a mention: @[Name](user id), or @[everyone](everyone) for the whole group */
+const MENTION = /@\[([^\]\n]{1,60})\]\(([0-9a-f-]{36}|everyone)\)/g;
+const EVERYONE = 'everyone';
+/** stable colour per member name in group bubbles (WhatsApp-like) */
+const NAME_COLORS = ['#1fa855', '#d6336c', '#7048e8', '#e8590c', '#1c7ed6', '#0ca678', '#ae3ec9', '#f08c00'];
+const nameColor = (name: string) => NAME_COLORS[[...name].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 3) % NAME_COLORS.length];
 const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-
-/** Panel open / closed (remembered on the device); the layout reads it to make room on wide screens. */
-export const useChat = create<{ open: boolean; profile: string | null; setOpen: (o: boolean) => void; showProfile: (id: string | null) => void }>((set) => ({
-  open: typeof localStorage !== 'undefined' && localStorage.getItem(OPEN_KEY) === '1',
-  profile: null,
-  setOpen: (open) => {
-    try {
-      localStorage.setItem(OPEN_KEY, open ? '1' : '0');
-    } catch {
-      /* private mode */
-    }
-    set({ open });
-  },
-  showProfile: (profile) => set({ profile })
-}));
-
-/** Whether the chat exists for this visitor (signed in and approved). */
-export const useChatEnabled = () => {
-  const approved = useApproved();
-  const user = useAuth((s) => s.user);
-  return authEnabled && approved && !!user;
-};
 
 /** Text with clickable http(s) links (opened in a new tab, no referrer). */
 function Linkified({ text }: { text: string }) {
@@ -90,12 +72,12 @@ function MessageText({ text, me, onMention }: { text: string; me?: string; onMen
   let last = 0;
   for (const m of text.matchAll(MENTION)) {
     if (m.index! > last) out.push(<Linkified key={`t${last}`} text={text.slice(last, m.index)} />);
-    const isMe = m[2] === me;
+    const isMe = m[2] === me || m[2] === EVERYONE;
     out.push(
       <button
         key={`m${m.index}`}
         type="button"
-        onClick={() => onMention(m[2])}
+        onClick={() => m[2] !== EVERYONE && onMention(m[2])}
         className={`rounded px-1 font-semibold transition hover:opacity-80 ${isMe ? 'bg-warn text-white' : 'bg-accent/15 text-accent'}`}
       >
         @{m[1]}
@@ -107,7 +89,7 @@ function MessageText({ text, me, onMention }: { text: string; me?: string; onMen
   return <>{out}</>;
 }
 
-const mentions = (text: string, id?: string) => !!id && [...text.matchAll(MENTION)].some((m) => m[2] === id);
+const mentions = (text: string, id?: string) => !!id && [...text.matchAll(MENTION)].some((m) => m[2] === id || m[2] === EVERYONE);
 
 /** Poll card: bars with the share of votes; click to vote, click your choice again to take the vote back. */
 function PollCard({ poll, onVote, t }: { poll: Poll; onVote: (i: number) => void; t: (k: 'chat.poll.votes' | 'chat.poll.vote1' | 'chat.poll.hint') => string }) {
@@ -169,6 +151,17 @@ function JumpToLatest({ label }: { label: string }) {
   );
 }
 
+/** "Aujourd'hui", "Hier" or the date, for the day separators */
+function dayOf(iso: string, locale: string, t: (k: 'up.today' | 'chat.yesterday') => string) {
+  const d = new Date(iso);
+  const today = new Date();
+  const y = new Date(today);
+  y.setDate(today.getDate() - 1);
+  if (d.toDateString() === today.toDateString()) return t('up.today');
+  if (d.toDateString() === y.toDateString()) return t('chat.yesterday');
+  return d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
 function timeOf(iso: string, locale: string) {
   return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 }
@@ -227,8 +220,10 @@ function ChatDockInner() {
   const matches = useMemo(() => {
     if (!ac) return [];
     const q = fold(ac.q);
-    return members.filter((m) => m.id !== me?.id && fold(m.name).includes(q)).slice(0, 6);
-  }, [ac, members, me?.id]);
+    const people = members.filter((m) => m.id !== me?.id && fold(m.name).includes(q)).slice(0, 6);
+    const all = 'everyone'.startsWith(q) || fold(t('chat.everyone')).includes(q) ? [{ id: EVERYONE, name: EVERYONE, avatar: null }] : [];
+    return [...all, ...people];
+  }, [ac, members, me?.id, t]);
   const onType = (value: string, caret: number) => {
     setText(value);
     const m = /(^|\s)@([^\s@]{0,20})$/.exec(value.slice(0, caret));
@@ -339,91 +334,108 @@ function ChatDockInner() {
         initial={false}
         animate={open ? 'open' : 'closed'}
         variants={PANEL}
-        className="fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col border-l border-line bg-surface shadow-2xl will-change-transform sm:w-[22rem] xl:shadow-none"
+        className="fixed bottom-0 right-0 top-0 z-50 flex w-full flex-col border-l border-line bg-surface shadow-2xl will-change-transform sm:w-[24rem] xl:shadow-none"
         aria-label={t('chat.title')}
         aria-hidden={!open}
         data-testid={open ? 'chat-panel' : undefined}
       >
-            <header className="flex items-center gap-2 border-b border-line px-4 py-3">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent/10 text-accent">
-                <Icon name="chat" size={17} />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="font-semibold leading-tight">{t('chat.title')}</div>
-                <div className="text-[11px] text-muted">{t('chat.keep')}</div>
-              </div>
-              <button className="grid h-9 w-9 place-items-center rounded-lg border border-line text-muted transition hover:text-fg" onClick={() => setOpen(false)} aria-label={t('chat.hide')} title={t('chat.hide')} data-testid="chat-hide">
-                <Icon name="right" size={18} />
+            {/* WhatsApp-like header */}
+            <header className="flex items-center gap-3 bg-accent px-3 py-2.5 text-white">
+              <button className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-white/15" onClick={() => setOpen(false)} aria-label={t('chat.hide')} title={t('chat.hide')} data-testid="chat-hide">
+                <Icon name="right" size={20} />
               </button>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white font-sign text-base text-accent">22</span>
+              <div className="min-w-0 flex-1">
+                <div className="truncate font-semibold leading-tight">{t('chat.title')}</div>
+                <div className="truncate text-[11px] text-white/80">{members.length ? `${members.length} ${t('chat.members')}` : t('chat.keep')}</div>
+              </div>
             </header>
 
             {/* use-stick-to-bottom: stays on the newest message with spring scrolling, stops when you scroll up */}
-            <StickToBottom className="relative min-h-0 flex-1" resize="smooth" initial="instant">
-              <StickToBottom.Content className="space-y-3 px-3 py-4" scrollClassName="scroll-thin">
-              {!msgs.length && <p className="px-2 py-10 text-center text-sm text-muted">{t('chat.empty')}</p>}
-              <AnimatePresence initial={false}>
-              {msgs.map((m) => {
-                const mine = m.user.id === me?.id;
-                const forMe = !mine && mentions(m.body, me?.id);
-                return (
-                  <motion.div
-                    key={m.id}
-                    layout="position"
-                    initial={{ opacity: 0, y: 14, x: mine ? 12 : -12, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                    transition={SPRING}
-                    className="group flex gap-2.5"
-                    data-testid="chat-msg"
-                  >
-                    <button onClick={() => showProfile(m.user.id)} className="mt-0.5 shrink-0 rounded-full transition hover:opacity-80" aria-label={m.user.name}>
-                      <Avatar name={m.user.name} src={m.user.avatar} size={32} />
-                    </button>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline gap-2">
-                        <button onClick={() => showProfile(m.user.id)} className={`truncate text-[13px] font-semibold hover:underline ${mine ? 'text-accent' : ''}`}>
-                          {m.user.name}
-                        </button>
-                        <span className="ml-auto shrink-0 font-mono text-[10px] text-muted">{timeOf(m.at, locale)}</span>
-                        {(mine || isAdmin) && (
-                          <button
-                            onClick={() => window.confirm(t('chat.deleteConfirm')) && void remove(m)}
-                            className="shrink-0 text-muted transition hover:text-bad sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
-                            aria-label={t('chat.delete')}
-                            title={t('chat.delete')}
-                            data-testid="chat-delete"
-                          >
-                            <Icon name="trash" size={13} />
-                          </button>
-                        )}
-                      </div>
-                      <div
-                        className={`mt-0.5 whitespace-pre-line break-words rounded-lg rounded-tl-sm px-3 py-2 text-[14px] leading-snug ${forMe ? 'border-l-4 border-warn bg-warn/10' : mine ? 'bg-accent/10' : 'bg-surface2'}`}
-                        data-testid={forMe ? 'chat-mention-me' : undefined}
+            <StickToBottom className="relative min-h-0 flex-1 bg-[#efeae2] dark:bg-[#0b141a]" resize="smooth" initial="instant">
+              <StickToBottom.Content className="px-3 py-3" scrollClassName="scroll-thin">
+                {!msgs.length && <p className="mx-auto mt-10 w-fit rounded-lg bg-surface/90 px-3 py-2 text-center text-sm text-muted shadow-sm">{t('chat.empty')}</p>}
+                <AnimatePresence initial={false}>
+                  {msgs.map((m, i) => {
+                    const mine = m.user.id === me?.id;
+                    const forMe = !mine && mentions(m.body, me?.id);
+                    const prev = msgs[i - 1];
+                    const newDay = !prev || new Date(prev.at).toDateString() !== new Date(m.at).toDateString();
+                    const first = newDay || prev.user.id !== m.user.id;
+                    return (
+                      <motion.div
+                        key={m.id}
+                        layout="position"
+                        initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
+                        transition={SPRING}
+                        className={first ? 'mt-3 first:mt-0' : 'mt-0.5'}
+                        data-testid="chat-msg"
                       >
-                        {m.poll && (
-                          <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-accent">
-                            <Icon name="chart" size={12} /> {t('chat.poll.label')}
+                        {newDay && (
+                          <div className="mb-3 flex justify-center">
+                            <span className="rounded-lg bg-surface/90 px-2.5 py-1 text-[11px] font-medium text-muted shadow-sm">{dayOf(m.at, locale, t)}</span>
                           </div>
                         )}
-                        <span className={m.poll ? 'font-semibold' : ''}>
-                          <MessageText text={m.body} me={me?.id} onMention={showProfile} />
-                        </span>
-                        {m.poll && <PollCard poll={m.poll} onVote={(i) => void vote(m, i)} t={t} />}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-              </AnimatePresence>
+                        <div className={`group flex items-end gap-1.5 ${mine ? 'justify-end' : ''}`}>
+                          {!mine &&
+                            (first ? (
+                              <button onClick={() => showProfile(m.user.id)} className="mb-0.5 shrink-0 self-start rounded-full transition hover:opacity-80" aria-label={m.user.name}>
+                                <Avatar name={m.user.name} src={m.user.avatar} size={28} />
+                              </button>
+                            ) : (
+                              <span className="w-7 shrink-0" />
+                            ))}
+                          <div
+                            className={`relative max-w-[82%] rounded-lg px-2.5 pb-1.5 pt-1.5 text-[14.5px] leading-snug shadow-[0_1px_0.5px_rgba(11,20,26,0.13)] ${
+                              mine ? 'bg-[#d9fdd3] text-[#111b21] dark:bg-[#005c4b] dark:text-[#e9edef]' : 'bg-white text-[#111b21] dark:bg-[#202c33] dark:text-[#e9edef]'
+                            } ${first ? (mine ? 'rounded-tr-none' : 'rounded-tl-none') : ''} ${forMe ? 'ring-2 ring-warn' : ''}`}
+                            data-testid={forMe ? 'chat-mention-me' : undefined}
+                          >
+                            {!mine && first && (
+                              <button onClick={() => showProfile(m.user.id)} className="mb-0.5 block max-w-full truncate text-[12.5px] font-semibold hover:underline" style={{ color: nameColor(m.user.name) }}>
+                                {m.user.name}
+                              </button>
+                            )}
+                            {m.poll && (
+                              <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-accent">
+                                <Icon name="chart" size={12} /> {t('chat.poll.label')}
+                              </div>
+                            )}
+                            <span className={`whitespace-pre-line break-words ${m.poll ? 'font-semibold' : ''}`}>
+                              <MessageText text={m.body} me={me?.id} onMention={showProfile} />
+                            </span>
+                            {m.poll && <PollCard poll={m.poll} onVote={(n) => void vote(m, n)} t={t} />}
+                            {/* time (and delete for my messages / admins) at the bottom right, like WhatsApp */}
+                            <span className="float-right ml-2 mt-1 flex translate-y-0.5 items-center gap-1 text-[10.5px] leading-none text-[#667781] dark:text-[#8696a0]">
+                              {(mine || isAdmin) && (
+                                <button
+                                  onClick={() => window.confirm(t('chat.deleteConfirm')) && void remove(m)}
+                                  className="transition hover:text-bad sm:opacity-0 sm:group-hover:opacity-100 sm:focus-visible:opacity-100"
+                                  aria-label={t('chat.delete')}
+                                  title={t('chat.delete')}
+                                  data-testid="chat-delete"
+                                >
+                                  <Icon name="trash" size={11} />
+                                </button>
+                              )}
+                              {timeOf(m.at, locale)}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
               </StickToBottom.Content>
               <JumpToLatest label={t('chat.latest')} />
             </StickToBottom>
 
-            <form onSubmit={send} className="relative border-t border-line p-3">
-              {/* @ autocomplete */}
+            {/* WhatsApp-like composer: rounded field that grows with the text (react-textarea-autosize), round send button */}
+            <form onSubmit={send} className="relative bg-[#f0f2f5] px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 dark:bg-[#202c33]">
               {ac && matches.length > 0 && (
-                <ul className="absolute bottom-full left-3 right-3 mb-1 overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-xl" role="listbox" data-testid="chat-mentions">
+                <ul className="absolute bottom-full left-2 right-2 mb-1 overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-xl" role="listbox" data-testid="chat-mentions">
                   {matches.map((m, i) => (
                     <li key={m.id}>
                       <button
@@ -433,18 +445,21 @@ function ChatDockInner() {
                         onMouseDown={(e) => (e.preventDefault(), pick(m))}
                         className={`flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm ${i === ac.sel ? 'bg-accent/10 text-accent' : 'hover:bg-surface2'}`}
                       >
-                        <Avatar name={m.name} src={m.avatar} size={24} />
-                        <span className="truncate font-medium">{m.name}</span>
+                        {m.id === EVERYONE ? (
+                          <span className="grid h-6 w-6 place-items-center rounded-full bg-warn text-[11px] font-bold text-white">@</span>
+                        ) : (
+                          <Avatar name={m.name} src={m.avatar} size={24} />
+                        )}
+                        <span className="truncate font-medium">{m.id === EVERYONE ? `@everyone · ${t('chat.everyone')}` : m.name}</span>
                       </button>
                     </li>
                   ))}
                 </ul>
               )}
-              {err && <p className="mb-2 text-xs text-bad">{err}</p>}
+              {err && <p className="mb-1.5 px-2 text-xs text-bad">{err}</p>}
 
-              {/* poll options */}
               {pollOpts && (
-                <div className="mb-2 space-y-1.5 rounded-xl border border-accent/40 bg-accent/[0.04] p-2.5" data-testid="chat-poll-editor">
+                <div className="mb-2 space-y-1.5 rounded-xl bg-surface p-2.5 shadow-sm" data-testid="chat-poll-editor">
                   <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wide text-accent">
                     <span className="inline-flex items-center gap-1.5">
                       <Icon name="chart" size={12} /> {t('chat.poll.new')}
@@ -478,33 +493,41 @@ function ChatDockInner() {
               )}
 
               <div className="flex items-end gap-2">
-                <button
-                  type="button"
-                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border transition ${pollOpts ? 'border-accent bg-accent/10 text-accent' : 'border-line text-muted hover:text-fg'}`}
-                  onClick={() => setPollOpts(pollOpts ? null : ['', ''])}
-                  aria-label={t('chat.poll.new')}
-                  title={t('chat.poll.new')}
-                  data-testid="chat-poll-toggle"
+                <div className="flex min-h-[44px] flex-1 items-end rounded-3xl bg-surface pl-1 pr-3 shadow-sm ring-accent/40 transition-shadow focus-within:ring-2">
+                  <button
+                    type="button"
+                    className={`grid h-11 w-10 shrink-0 place-items-center rounded-full transition ${pollOpts ? 'text-accent' : 'text-[#54656f] hover:text-fg dark:text-[#8696a0]'}`}
+                    onClick={() => setPollOpts(pollOpts ? null : ['', ''])}
+                    aria-label={t('chat.poll.new')}
+                    title={t('chat.poll.new')}
+                    data-testid="chat-poll-toggle"
+                  >
+                    <Icon name="chart" size={19} />
+                  </button>
+                  <TextareaAutosize
+                    ref={input}
+                    value={text}
+                    onChange={(e) => onType(e.target.value, e.target.selectionStart)}
+                    onKeyDown={onKey}
+                    onBlur={() => setTimeout(() => setAc(null), 150)}
+                    minRows={1}
+                    maxRows={5}
+                    maxLength={500}
+                    placeholder={pollOpts ? t('chat.poll.question') : t('chat.placeholder')}
+                    className="block w-full resize-none overflow-y-auto border-0 bg-transparent py-[11px] text-[15px] leading-[22px] text-fg !shadow-none !outline-none !ring-0 [scrollbar-width:none] placeholder:text-[#667781] [&::-webkit-scrollbar]:hidden"
+                    data-testid="chat-input"
+                  />
+                </div>
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-white shadow-sm transition-opacity disabled:opacity-50"
+                  disabled={!text.trim()}
+                  aria-label={t('chat.send')}
+                  data-testid="chat-send"
                 >
-                  <Icon name="chart" size={17} />
-                </button>
-                <textarea
-                  ref={input}
-                  value={text}
-                  onChange={(e) => onType(e.target.value, e.target.selectionStart)}
-                  onKeyDown={onKey}
-                  onBlur={() => setTimeout(() => setAc(null), 150)}
-                  rows={1}
-                  maxLength={500}
-                  placeholder={pollOpts ? t('chat.poll.question') : t('chat.placeholder')}
-                  className="input max-h-28 min-h-[44px] flex-1 resize-none !py-2.5 text-sm"
-                  data-testid="chat-input"
-                />
-                <button className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent text-white transition hover:opacity-90 disabled:opacity-40" disabled={!text.trim()} aria-label={t('chat.send')} data-testid="chat-send">
-                  <Icon name="arrowRight" size={18} />
-                </button>
+                  <Icon name="arrowRight" size={19} />
+                </motion.button>
               </div>
-              <div className="mt-1.5 text-[10px] text-muted">{t('chat.tips')}</div>
             </form>
       </motion.aside>
       <MemberProfile />

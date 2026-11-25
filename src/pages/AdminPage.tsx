@@ -742,7 +742,7 @@ function EventsTab() {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const payload = { kind: form.kind, module: form.module, date: form.date, time: form.time, message: form.message, endsAt: endsAtIso(form.date, form.time) };
+    const payload = { kind: form.kind, module: form.module, label: MODULES.find((m) => m.id === form.module)?.title.fr ?? form.module, date: form.date, time: form.time, message: form.message, endsAt: endsAtIso(form.date, form.time) };
     const r = form.id ? await api<{ events: UpcomingEvent[] }>('PUT', `/admin/events/${form.id}`, payload) : await api<{ events: UpcomingEvent[] }>('POST', '/admin/events', payload);
     setBusy(false);
     if (!r.ok) return setError(errMsg(r.error));

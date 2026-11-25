@@ -12,6 +12,7 @@ import { getModule } from '../lib/content';
 import { setEventsCache, type UpcomingEvent } from '../lib/events';
 import type { Announcement } from './Announcements';
 import { Icon } from './Icon';
+import { enablePush, pushActive, pushSupported, syncPush } from '../lib/push';
 
 const SEEN_KEY = 'g22-notif-seen';
 const NOTIFIED_KEY = 'g22-notif-notified';
@@ -64,7 +65,8 @@ function Bell() {
     const fresh = list.filter((x) => x.at > notified);
     if (fresh.length) {
       localStorage.setItem(NOTIFIED_KEY, String(Math.max(...fresh.map((x) => x.at))));
-      if (typeof Notification !== 'undefined' && Notification.permission === 'granted')
+      // with Web Push on, the service worker already shows it: no duplicate from the page
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted' && !pushActive())
         for (const x of fresh.slice(0, 3)) new Notification(`${kindLabel(x.kind)} · ${x.title}`, { body: x.body.slice(0, 140), icon: `${import.meta.env.BASE_URL}icon-192.png`, tag: x.id });
     }
   }, [kindLabel, tl]);
@@ -98,9 +100,15 @@ function Bell() {
 
   const unread = items.filter((x) => x.at > seen).length;
   const locale = lang === 'en' ? 'en-GB' : 'fr-FR';
+  const [pushOn, setPushOn] = useState(pushActive);
+  useEffect(() => {
+    void syncPush().then(() => setPushOn(pushActive()));
+  }, []);
   const ask = async () => {
     if (typeof Notification === 'undefined') return;
-    setPerm(await Notification.requestPermission());
+    const ok = await enablePush(true);
+    setPerm(Notification.permission);
+    setPushOn(ok);
   };
 
   return (
@@ -131,14 +139,19 @@ function Bell() {
           >
             <div className="flex items-center justify-between border-b border-line px-4 py-3">
               <span className="font-semibold">{t('notif.title')}</span>
-              {perm === 'default' && (
+              {(perm === 'default' || (perm === 'granted' && !pushOn && pushSupported())) && (
                 <button className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-2.5 py-1 text-xs font-semibold text-white hover:opacity-90" onClick={() => void ask()} data-testid="notif-enable">
                   <Icon name="bell" size={12} /> {t('notif.enable')}
                 </button>
               )}
-              {perm === 'granted' && <span className="text-[11px] font-semibold text-ok">{t('notif.on')}</span>}
+              {perm === 'granted' && pushOn && <span className="text-[11px] font-semibold text-ok">{t('notif.on')}</span>}
               {perm === 'denied' && <span className="text-[11px] text-muted">{t('notif.denied')}</span>}
             </div>
+            {!pushSupported() && /iPhone|iPad/.test(navigator.userAgent) && (
+              <p className="border-b border-line bg-warn/10 px-4 py-2 text-[11px] text-fg" data-testid="notif-ios">
+                {t('notif.ios')}
+              </p>
+            )}
             <ul className="scroll-thin max-h-[60dvh] divide-y divide-line overflow-y-auto">
               {!items.length && <li className="px-4 py-8 text-center text-sm text-muted">{t('notif.empty')}</li>}
               {items.map((x) => {

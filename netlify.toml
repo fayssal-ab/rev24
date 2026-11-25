@@ -29,6 +29,14 @@
   [headers.values]
     Cache-Control = "no-cache"
 [[headers]]
+  for = "/version.json"
+  [headers.values]
+    Cache-Control = "no-store"
+[[headers]]
+  for = "/push-sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
   for = "/registerSW.js"
   [headers.values]
     Cache-Control = "no-cache"

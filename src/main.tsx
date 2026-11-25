@@ -50,9 +50,43 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
           setInterval(check, 60_000);
           document.addEventListener('visibilitychange', check);
           window.addEventListener('focus', check);
+          watchVersion(reg);
         }
       })
     )
     .catch(() => undefined);
 }
 
+
+/**
+ * Second safety net, independent of the browser's service-worker checks: /version.json (never cached) holds the id of
+ * the build that is online. When it differs from the running one, update the service worker and reload once.
+ */
+function watchVersion(reg: ServiceWorkerRegistration) {
+  let busy = false;
+  const check = async () => {
+    if (busy || !navigator.onLine || document.visibilityState !== 'visible') return;
+    busy = true;
+    try {
+      const r = await fetch(`${import.meta.env.BASE_URL}version.json?t=${Date.now()}`, { cache: 'no-store' });
+      const online = r.ok ? ((await r.json()) as { build?: string }).build : undefined;
+      if (online && online !== __BUILD_ID__) {
+        const key = 'g22-version-reload';
+        // never loop: at most one forced reload per online build
+        if (sessionStorage.getItem(key) === online) return;
+        sessionStorage.setItem(key, online);
+        await reg.update().catch(() => undefined);
+        // give the new service worker a moment to take over, then load the new version
+        await new Promise((ok) => setTimeout(ok, 1500));
+        window.location.reload();
+      }
+    } catch {
+      /* offline or server busy: next time */
+    } finally {
+      busy = false;
+    }
+  };
+  void check();
+  setInterval(check, 60_000);
+  document.addEventListener('visibilitychange', check);
+}

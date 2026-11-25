@@ -38,7 +38,8 @@
 import mysql, { type Pool, type ResultSetHeader, type RowDataPacket } from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
+import webpush from 'web-push';
 
 export const config = { path: '/api/*' };
 
@@ -138,6 +139,17 @@ function migrate(): Promise<void> {
     const chatHave = new Map(chatCols.map((r) => [String(r.c).toLowerCase(), Number(r.len ?? 0)]));
     if ((chatHave.get('body') ?? 0) < 2000) await p.query(`ALTER TABLE chat_messages MODIFY body VARCHAR(2000) NOT NULL`);
     if (!chatHave.has('poll')) await p.query(`ALTER TABLE chat_messages ADD COLUMN poll JSON NULL`);
+    // Web Push subscriptions (one per browser / phone), removed when the push service says they expired
+    await p.query(`CREATE TABLE IF NOT EXISTS push_subs (
+      id CHAR(64) NOT NULL PRIMARY KEY,
+      user_id CHAR(36) NOT NULL,
+      endpoint TEXT NOT NULL,
+      p256dh VARCHAR(200) NOT NULL,
+      auth VARCHAR(100) NOT NULL,
+      created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+      KEY ix_push_user (user_id),
+      CONSTRAINT fk_push_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
     // one vote per member and poll; deleted with the message
     await p.query(`CREATE TABLE IF NOT EXISTS chat_votes (
       message_id BIGINT UNSIGNED NOT NULL,
@@ -357,21 +369,15 @@ async function route(req: Request): Promise<Response> {
 
   if (method === 'GET' && path === '/health') return json(200, { ok: true });
   // Diagnostics without secrets: which variables are set, and the database error code if the connection fails.
+  // public check used by the ping: only says whether the database answers (no configuration, no error details)
   if (method === 'GET' && path === '/health/db') {
-    const env = {
-      DATABASE_URL: !!process.env.DATABASE_URL,
-      DB_CA_CERT: !!process.env.DB_CA_CERT && /BEGIN CERTIFICATE/.test(process.env.DB_CA_CERT),
-      DB_CA_CERT_blocks: (process.env.DB_CA_CERT?.match(/BEGIN CERTIFICATE/g) ?? []).length,
-      DB_CA_CERT_newlines: (process.env.DB_CA_CERT?.match(/\n/g) ?? []).length,
-      JWT_SECRET: (process.env.JWT_SECRET?.length ?? 0) >= 32,
-    };
     try {
       await migrate();
-      return json(200, { ok: true, env });
+      await db().query('SELECT 1');
+      return json(200, { ok: true });
     } catch (e) {
-      const err = e as { code?: string; errno?: number; message?: string };
-      // keep only the error code / a short message, never the URL or credentials
-      return json(500, { ok: false, env, code: err.code ?? null, errno: err.errno ?? null, message: (err.message ?? '').replace(/\/\/[^@]*@/g, '//***@').slice(0, 160) });
+      console.error('[health/db]', (e as { code?: string }).code ?? e);
+      return json(503, { ok: false });
     }
   }
   await migrate();
@@ -458,6 +464,24 @@ async function route(req: Request): Promise<Response> {
   // ----- everything below needs an approved account
   if (publicUser(me).status !== 'approved') throw new HttpError(403, me.status === 'blocked' ? 'blocked' : 'pending');
 
+  // ----- Web Push: notifications on the phone / computer even when the site is closed
+  if (method === 'GET' && path === '/push/key') return json(200, { key: pushReady() ? process.env.VAPID_PUBLIC_KEY : null });
+  if (method === 'POST' && path === '/push/subscribe') {
+    const sub = (await body(req)).subscription as { endpoint?: unknown; keys?: { p256dh?: unknown; auth?: unknown } } | undefined;
+    const endpoint = typeof sub?.endpoint === 'string' && /^https:\/\//.test(sub.endpoint) ? sub.endpoint.slice(0, 2000) : '';
+    const p256dh = typeof sub?.keys?.p256dh === 'string' ? sub.keys.p256dh.slice(0, 200) : '';
+    const auth = typeof sub?.keys?.auth === 'string' ? sub.keys.auth.slice(0, 100) : '';
+    if (!endpoint || !p256dh || !auth) throw new HttpError(400, 'invalid_subscription');
+    const id = createHash('sha256').update(endpoint).digest('hex');
+    await db().query('INSERT INTO push_subs (id, user_id, endpoint, p256dh, auth) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE user_id = VALUES(user_id), p256dh = VALUES(p256dh), auth = VALUES(auth)', [id, userId, endpoint, p256dh, auth]);
+    return json(200, { ok: true });
+  }
+  if (method === 'POST' && path === '/push/unsubscribe') {
+    const endpoint = str((await body(req)).endpoint, 2000);
+    if (endpoint) await db().query('DELETE FROM push_subs WHERE id = ? AND user_id = ?', [createHash('sha256').update(endpoint).digest('hex'), userId]);
+    return json(200, { ok: true });
+  }
+
   // ----- profile pictures (versioned URL → cached for a long time)
   const av = /^\/users\/([0-9a-f-]{36})\/avatar$/.exec(path);
   if (method === 'GET' && av) {
@@ -516,6 +540,12 @@ async function route(req: Request): Promise<Response> {
     const [last] = await db().query<RowDataPacket[]>('SELECT TIMESTAMPDIFF(MICROSECOND, MAX(created_at), NOW(3)) AS us FROM chat_messages WHERE user_id = ?', [userId]);
     if (last[0]?.us != null && Number(last[0].us) < 1_500_000) throw new HttpError(429, 'too_fast');
     await db().query('INSERT INTO chat_messages (user_id, body, poll) VALUES (?, ?, ?)', [userId, text, poll ? JSON.stringify(poll) : null]);
+    // push to the members mentioned (@everyone = the whole group), never to the author
+    const targets = [...text.matchAll(MENTION_IDS)].map((m) => m[1]);
+    if (targets.length) {
+      const from = me.display_name || me.email.split('@')[0];
+      await pushTo(targets.includes('everyone') ? 'all' : targets, { title: `${from} · Discussion`, body: text.replace(MENTION, '@$1').slice(0, 140), url: '/#/', tag: 'chat' }, userId);
+    }
     await db().query(`DELETE FROM chat_messages WHERE id NOT IN (SELECT id FROM (SELECT id FROM chat_messages ORDER BY id DESC LIMIT ${CHAT_KEEP}) AS keep)`);
     return json(201, { messages: await chatList(0, userId) });
   }
@@ -639,12 +669,56 @@ function eventFields(b: Record<string, unknown>) {
   if (!module || !day || !ends || Number.isNaN(ends.getTime())) throw new HttpError(400, 'missing_fields');
   if (ends.getTime() < Date.now()) throw new HttpError(400, 'past_date');
   const message = typeof b.message === 'string' ? b.message.trim().slice(0, 3000) : '';
-  return { kind, module, day, time, ends, message };
+  // module title as shown to the admin, only used in the push notification
+  const label = str(b.label, 120);
+  return { kind, module, day, time, ends, message, label };
+}
+
+// ---------------------------------------------------------------- Web Push
+/** VAPID keys come from the environment (VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY); without them push is simply off. */
+let vapidSet = false;
+function pushReady() {
+  const pub = process.env.VAPID_PUBLIC_KEY;
+  const priv = process.env.VAPID_PRIVATE_KEY;
+  if (!pub || !priv) return false;
+  if (!vapidSet) {
+    webpush.setVapidDetails(process.env.VAPID_SUBJECT || `mailto:${PRINCIPAL_ADMIN}`, pub, priv);
+    vapidSet = true;
+  }
+  return true;
+}
+/** Sends a notification to members ('all' = every approved member), except `exceptUser`; dead subscriptions are removed. */
+async function pushTo(users: 'all' | string[], payload: { title: string; body: string; url: string; tag: string }, exceptUser?: string) {
+  if (!pushReady()) return;
+  try {
+    const [rows] =
+      users === 'all'
+        ? await db().query<RowDataPacket[]>("SELECT s.id, s.endpoint, s.p256dh, s.auth FROM push_subs s JOIN users u ON u.id = s.user_id WHERE (u.status = 'approved' OR u.role = 'admin') AND s.user_id <> ?", [exceptUser ?? ''])
+        : users.length
+          ? await db().query<RowDataPacket[]>('SELECT id, endpoint, p256dh, auth FROM push_subs WHERE user_id IN (?) AND user_id <> ?', [users, exceptUser ?? ''])
+          : [[] as RowDataPacket[]];
+    const data = JSON.stringify(payload);
+    // bounded: the function must answer quickly, a slow push service is skipped
+    await Promise.race([
+      Promise.allSettled(
+        rows.map((r) =>
+          webpush.sendNotification({ endpoint: r.endpoint, keys: { p256dh: r.p256dh, auth: r.auth } }, data, { TTL: 86400, urgency: 'high' }).catch(async (e: { statusCode?: number }) => {
+            if (e.statusCode === 404 || e.statusCode === 410) await db().query('DELETE FROM push_subs WHERE id = ?', [r.id]);
+          })
+        )
+      ),
+      new Promise((ok) => setTimeout(ok, 6000))
+    ]);
+  } catch (e) {
+    console.error('[push]', e);
+  }
 }
 
 const CHAT_KEEP = 20;
+/** mentioned ids in stored tokens (a member id or "everyone") */
+const MENTION_IDS = /@\[[^\]\n]{1,60}\]\(([0-9a-f-]{36}|everyone)\)/g;
 /** @[Name](user id) */
-const MENTION = /@\[([^\]\n]{1,60})\]\([0-9a-f-]{36}\)/g;
+const MENTION = /@\[([^\]\n]{1,60})\]\((?:[0-9a-f-]{36}|everyone)\)/g;
 async function chatList(after: number, me: string) {
   const [rows] = await db().query<RowDataPacket[]>(
     `SELECT m.id, m.body, m.poll, m.created_at, u.id AS uid, u.display_name, u.email, u.avatar_at
@@ -838,6 +912,10 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     const f = eventFields(await body(req));
     const id = randomUUID();
     await p.query('INSERT INTO events (id, kind, module, day, time, ends_at, message) VALUES (?, ?, ?, ?, ?, ?, ?)', [id, f.kind, f.module, f.day, f.time, f.ends, f.message]);
+    const label = f.label || f.module;
+    const kindFr = f.kind === 'cr' ? 'Compte rendu' : f.kind === 'examen' ? 'Examen' : 'Contrôle';
+    const [yy, mm, dd] = f.day.split('-');
+    await pushTo('all', { title: `${kindFr} · ${label}`, body: `${f.kind === 'cr' ? 'À rendre le' : 'Le'} ${dd}/${mm}/${yy}${f.time ? ` · ${f.time.replace(':', 'h')}` : ''}${f.message ? `\n${f.message.slice(0, 120)}` : ''}`, url: '/#/', tag: `event-${id}` }, me.id);
     return json(201, { events: await listEvents() });
   }
   const ev = idOf('events');
@@ -863,6 +941,7 @@ async function admin(req: Request, method: string, path: string, me: UserRow): P
     const f = annFields(await body(req));
     const id = randomUUID();
     await p.query('INSERT INTO announcements (id, title, body, pinned) VALUES (?, ?, ?, ?)', [id, f.title, f.text, f.pinned]);
+    await pushTo('all', { title: `Annonce · ${f.title}`, body: f.text.slice(0, 140), url: '/#/', tag: `ann-${id}` }, me.id);
     const [rows] = await p.query<RowDataPacket[]>('SELECT * FROM announcements WHERE id = ?', [id]);
     return json(201, { announcement: annOut(rows[0]) });
   }

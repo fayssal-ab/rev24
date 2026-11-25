@@ -163,3 +163,9 @@ h1, h2, h3, .font-display { font-family: 'Bricolage Grotesque', system-ui, sans-
 /* long inline commands / identifiers never push the page wider than the phone */
 main :not(pre) > code { overflow-wrap: anywhere; }
 
+
+/* mobile: a long formula never widens the page; never a sideways-scrolling page (clip keeps position: sticky working) */
+.katex-display { max-width: 100%; }
+html {
+  overflow-x: clip;
+}

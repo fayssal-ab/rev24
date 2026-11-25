@@ -15,7 +15,8 @@ import { KINDS, RESOURCES, SUBJECTS, subjectById, type ResourceKind } from '../l
 import { useRemoteSupports, type RemoteSupport } from '../lib/resources';
 import type { Announcement } from '../components/Announcements';
 import { MODULES } from '../lib/content';
-import { endsAtIso, setEventsCache, type EventKind, type UpcomingEvent } from '../lib/events';
+import { endsAtIso, type EventKind, type UpcomingEvent } from '../lib/events';
+import { refreshAnnouncements, setEvents } from '../lib/live';
 
 type Status = 'pending' | 'approved' | 'blocked';
 interface AdminUser {
@@ -650,11 +651,13 @@ function AnnouncementsTab() {
     if (!r.ok) return setError(errMsg(r.error));
     setForm(null);
     await load();
+    void refreshAnnouncements();
   };
   const remove = async (a: Announcement) => {
     if (!(await confirmDo(`Supprimer l'annonce « ${a.title} » ?`))) return;
     await api('DELETE', `/admin/announcements/${a.id}`);
     await load();
+    void refreshAnnouncements();
   };
   return (
     <div>
@@ -727,7 +730,7 @@ function EventsTab() {
 
   const apply = (events: UpcomingEvent[]) => {
     setList(events);
-    setEventsCache(events);
+    void setEvents(events);
   };
   const load = useCallback(async () => {
     const r = await api<{ events: UpcomingEvent[] }>('GET', '/events');

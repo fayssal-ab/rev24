@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { api, authEnabled, useApproved } from '../auth/auth';
+import { useAnnouncements } from '../lib/live';
 import { Icon } from './Icon';
 import { useT } from '../hooks/useT';
 
@@ -14,12 +13,8 @@ export interface Announcement {
 /** Messages posted by the admin, shown at the top of the home page. */
 export function Announcements() {
   const { t, lang } = useT();
-  const approved = useApproved();
-  const [list, setList] = useState<Announcement[]>([]);
-  useEffect(() => {
-    if (!authEnabled || !approved) return;
-    void api<{ announcements: Announcement[] }>('GET', '/announcements').then((r) => r.ok && setList(r.data.announcements.slice(0, 3)));
-  }, [approved]);
+  // live: a new announcement appears without reloading (lib/live.ts)
+  const list = (useAnnouncements().data?.announcements ?? []).slice(0, 3);
   if (!list.length) return null;
   return (
     <section aria-label={t('ann.title')} className="space-y-2">

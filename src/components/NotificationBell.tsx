@@ -6,18 +6,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { api, authEnabled, useApproved, useAuth } from '../auth/auth';
+import { authEnabled, useApproved, useAuth } from '../auth/auth';
 import { useT, useL } from '../hooks/useT';
 import { getModule } from '../lib/content';
-import { setEventsCache, type UpcomingEvent } from '../lib/events';
-import type { Announcement } from './Announcements';
 import { Icon } from './Icon';
+import { useAnnouncements, useEventsData } from '../lib/live';
+import type { UpcomingEvent } from '../lib/events';
 import { toast } from 'sonner';
 import { enablePush, pushActive, pushSupported, syncPush } from '../lib/push';
 
 const SEEN_KEY = 'g22-notif-seen';
 const NOTIFIED_KEY = 'g22-notif-notified';
-const POLL_MS = 60_000;
 
 type Item = { id: string; kind: 'ann' | UpcomingEvent['kind']; title: string; body: string; at: number; date?: string };
 
@@ -47,16 +46,16 @@ function Bell() {
 
   const kindLabel = useCallback((k: Item['kind']) => (k === 'ann' ? t('notif.ann') : t(`up.kind.${k}`)), [t]);
 
-  const load = useCallback(async () => {
-    const [a, e] = await Promise.all([api<{ announcements: Announcement[] }>('GET', '/announcements'), api<{ events: UpcomingEvent[] }>('GET', '/events')]);
+  // live data shared with the home page (SWR, refreshed every 30 s and on focus)
+  const anns = useAnnouncements().data?.announcements;
+  const evs = useEventsData().data?.events;
+  useEffect(() => {
+    if (!anns && !evs) return;
     const list: Item[] = [];
-    if (a.ok) for (const x of a.data.announcements) list.push({ id: `a-${x.id}`, kind: 'ann', title: x.title, body: x.body, at: new Date(x.createdAt).getTime() });
-    if (e.ok) {
-      setEventsCache(e.data.events);
-      for (const x of e.data.events) {
-        const mod = getModule(x.module);
-        list.push({ id: `e-${x.id}`, kind: x.kind, title: mod ? tl(mod.title) : x.module, body: x.message, at: new Date(x.createdAt).getTime(), date: x.date });
-      }
+    for (const x of anns ?? []) list.push({ id: `a-${x.id}`, kind: 'ann', title: x.title, body: x.body, at: new Date(x.createdAt).getTime() });
+    for (const x of evs ?? []) {
+      const mod = getModule(x.module);
+      list.push({ id: `e-${x.id}`, kind: x.kind, title: mod ? tl(mod.title) : x.module, body: x.message, at: new Date(x.createdAt).getTime(), date: x.date });
     }
     list.sort((x, y) => y.at - x.at);
     setItems(list);
@@ -68,19 +67,9 @@ function Bell() {
       localStorage.setItem(NOTIFIED_KEY, String(Math.max(...fresh.map((x) => x.at))));
       // with Web Push on, the service worker already shows it: no duplicate from the page
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted' && !pushActive())
-        for (const x of fresh.slice(0, 3)) new Notification(`${kindLabel(x.kind)} · ${x.title}`, { body: x.body.slice(0, 140), icon: `${import.meta.env.BASE_URL}icon-192.png`, tag: x.id });
+        for (const x of fresh.slice(0, 3)) new Notification(`${kindLabel(x.kind)} · ${x.title}`, { body: x.body.slice(0, 140), icon: '/icon-192.png', tag: x.id });
     }
-  }, [kindLabel, tl]);
-  useEffect(() => {
-    void load();
-    const id = setInterval(() => document.visibilityState === 'visible' && void load(), POLL_MS);
-    const onVis = () => document.visibilityState === 'visible' && void load();
-    document.addEventListener('visibilitychange', onVis);
-    return () => {
-      clearInterval(id);
-      document.removeEventListener('visibilitychange', onVis);
-    };
-  }, [load]);
+  }, [anns, evs, kindLabel, tl]);
 
   useEffect(() => {
     if (!open) return;

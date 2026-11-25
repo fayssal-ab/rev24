@@ -22,6 +22,7 @@ const ChatDock = lazy(() => import('./ChatPanel').then((m) => ({ default: m.Chat
 import { NotificationBell } from './NotificationBell';
 import { scrollToTop, startSmoothScroll } from '../lib/smoothScroll';
 import { ConfirmHost } from './Confirm';
+import { PushPrompt } from './PushPrompt';
 import { Toaster } from 'sonner';
 
 
@@ -640,6 +641,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <BadgeToast />
           <DocumentPreview />
           <GlobalSearch />
+          <PushPrompt />
           {chatEnabled && (
             <Suspense fallback={null}>
               <ChatDock />

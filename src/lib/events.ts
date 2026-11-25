@@ -4,7 +4,8 @@
  * the client also hides it as soon as `endsAt` is past, without waiting for a reload.
  */
 import { useEffect, useState } from 'react';
-import { api, authEnabled, useApproved } from '../auth/auth';
+import { authEnabled } from '../auth/auth';
+import { useEventsData } from './live';
 
 export type EventKind = 'controle' | 'examen' | 'cr';
 export interface UpcomingEvent {
@@ -22,15 +23,6 @@ export interface UpcomingEvent {
   createdAt: string;
 }
 
-let cache: UpcomingEvent[] | undefined;
-const listeners = new Set<(e: UpcomingEvent[]) => void>();
-
-/** Called by the admin page after a change, so the home page updates without a reload. */
-export function setEventsCache(list: UpcomingEvent[]) {
-  cache = list;
-  listeners.forEach((l) => l(list));
-}
-
 /** End instant of an item in the browser's time zone: its time, or 23:59 of its day. */
 export function endsAtIso(date: string, time: string): string {
   const [y, m, d] = date.split('-').map(Number);
@@ -38,25 +30,17 @@ export function endsAtIso(date: string, time: string): string {
   return new Date(y, m - 1, d, hh, mm, time ? 0 : 59).toISOString();
 }
 
-/** Upcoming items, soonest first (fetched once per session). */
+/** Upcoming items, soonest first (shared, live: see lib/live.ts). Past ones disappear on the next minute tick. */
 export function useEvents(): { events: UpcomingEvent[]; loaded: boolean } {
-  const approved = useApproved();
-  const [list, setList] = useState<UpcomingEvent[] | undefined>(cache);
+  const { data, error } = useEventsData();
   const [, tick] = useState(0);
   useEffect(() => {
-    listeners.add(setList);
-    if (authEnabled && approved && cache === undefined)
-      void api<{ events: UpcomingEvent[] }>('GET', '/events').then((r) => r.ok && setEventsCache(r.data.events));
-    // re-render every minute so an item disappears when its time passes
     const id = setInterval(() => tick((n) => n + 1), 60_000);
-    return () => {
-      listeners.delete(setList);
-      clearInterval(id);
-    };
-  }, [approved]);
+    return () => clearInterval(id);
+  }, []);
   const now = Date.now();
-  const events = (list ?? []).filter((e) => new Date(e.endsAt).getTime() > now).sort((a, b) => a.endsAt.localeCompare(b.endsAt));
-  return { events, loaded: !authEnabled || list !== undefined };
+  const events = (data?.events ?? []).filter((e) => new Date(e.endsAt).getTime() > now).sort((a, b) => a.endsAt.localeCompare(b.endsAt));
+  return { events, loaded: !authEnabled || !!data || !!error };
 }
 
 /** Whole days from today to `date` (0 = today). */

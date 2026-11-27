@@ -32,6 +32,14 @@
    }
   },
   {
+   "type": "text",
+   "body": {
+    "fr": "[Cours + questions-réponses du CC en PDF (14 pages, à imprimer)](/docs/linux-cc-cours-qr.pdf)",
+    "dar": "[Cours + questions w ajwiba dyal CC (PDF, 14 pages)](/docs/linux-cc-cours-qr.pdf)",
+    "en": "[Course + test Q&A (PDF, 14 pages, printable)](/docs/linux-cc-cours-qr.pdf)"
+   }
+  },
+  {
    "type": "callout",
    "kind": "exam",
    "body": {
